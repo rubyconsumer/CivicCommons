@@ -39,6 +39,10 @@ describe EventsController do
   end
 
   describe "POST create" do
+    before(:each) do
+      @normal_person = Factory.create(:normal_person)
+      @controller.stub(:current_person).and_return(@mock_user)
+    end
 
     describe "with valid params" do
       it "assigns a newly created event as @event" do
