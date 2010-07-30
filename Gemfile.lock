@@ -52,7 +52,6 @@ GEM
       rails (>= 3.0.0.beta4)
     haml (3.0.15)
     hpricot (0.8.2)
-    hpricot (0.8.2-java)
     i18n (0.4.1)
     mail (2.2.5)
       activesupport (>= 2.3.6)
@@ -60,8 +59,6 @@ GEM
       treetop (>= 1.4.5)
     mime-types (1.16)
     nokogiri (1.4.3.1)
-    nokogiri (1.4.3.1-java)
-      weakling (>= 0.0.3)
     polyglot (0.3.1)
     rack (1.2.1)
     rack-mount (0.6.9)
@@ -104,14 +101,12 @@ GEM
     tzinfo (0.3.22)
     warden (0.10.7)
       rack (>= 1.0.0)
-    weakling (0.0.4-java)
     webrat (0.7.2.beta.1)
       nokogiri (>= 1.2.0)
       rack (>= 1.0)
       rack-test (>= 0.5.3)
 
 PLATFORMS
-  java
   ruby
 
 DEPENDENCIES
