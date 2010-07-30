@@ -1,4 +1,5 @@
 %strong Issues:
+#chosenissues.supplementary
 %ul
   - @chosenissues.each do |x|
     %li
@@ -7,17 +8,17 @@
       %a(href="#{url_for(:controller => 'issues', :action => 'show', :id => @issuenumber)}" title="#{@issuedetail.description}") #{@issuedetail.description}
       %a(href="javascript:void()" title="Remove this Issue" onclick='alert("Removing issue #{@issuenumber}")')
         %img(src="/images/trash-can.png")
-  - if (@chosenissues.length == 0)
-    %li
-      This Conversation has no issues yet.
-  %li
-    %a(id='addissueprompt' href='javascript:void();' class='privileged' onclick='$("#addissueprompt").hide(); $("#addissue").show();')Add an Issue
-    #addissue(style="display:none")
-      %select(name="newissue" id="newissue")
-        =render :partial => 'issues'
-      -# This is "obtrusive Javascript." Should make it unobtrusive.
-      -# CONFIRM button
-      = confirm_add_issue_link(1)
-      = link_to_function("Confirm adding issue", 'var s = $("#newissue"); add_and_refresh(s)', :class => "privileged")
-      -# CANCEL button
-      %a(href='javascript:void();' class='privileged' onclick='$("#addissue").hide();$("#addissueprompt").show();') Cancel adding issue
+    - if (@chosenissues.length == 0)
+      %li
+        This Conversation has no issues yet.
+#addissueprompt
+  %a(href='javascript:void();' class='privileged' onclick='$("#addissueprompt").hide(); $("#addissue").show();')Add an Issue
+#addissue(style="display:none")
+  %select(name="newissue" id="newissue")
+    =render :partial => 'issues'
+  -# This is "obtrusive Javascript." Should make it unobtrusive.
+  -# CONFIRM button
+  = confirm_add_issue_link(1)
+  = link_to_function("Confirm adding issue", 'var s = $("#newissue"); add_and_refresh(s)', :class => "privileged")
+  -# CANCEL button
+  %a(href='javascript:void();' class='privileged' onclick='$("#addissue").hide();$("#addissueprompt").show();') Cancel adding issue
