@@ -18,7 +18,7 @@ class Person < ActiveRecord::Base
   def name=(value)
     @name = value
     names = value.split(' ')
-    first_name, last_name = names.first, names.last
+    self.first_name, self.last_name = names.first, names.last
   end
 
 
