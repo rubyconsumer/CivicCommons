@@ -9,9 +9,8 @@
         = f.label :title, 'Event Name'
         = f.text_field :title, :placeholder => 'Picnic in the Park', :class=>"textbox"
       .form-block					
-        = f.label :when_date
-        = f.text_field :when, :placeholder=>Time.now.strftime("%m/%d/%Y")
-        = f.time_select :when, {:twelve_hour => true}
+        = f.label :when
+        = f.datetime_select :when, {:twelve_hour => true, :ignore_date=>true}
       .form-block					
         = f.label :where
         = f.text_field :where, :placeholder => 'Central Park', :class=>"textbox"
