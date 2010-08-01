@@ -109,6 +109,7 @@ function add_and_refresh(sel)
 {
   try
   {
+	
 var n = sel.val()
 var div = $("#chosenissues")
     chosen_issues.add(n)
@@ -136,9 +137,9 @@ $.ajax({
  async: false,
  })
   for (var i = 0; i < all_issues.length; i++)
-  {
+  {	
     var x = all_issues[i].issue
-    if ($.inArray(x.id,chosen_issues.data) < 0)
+    if ($.inArray(x.id.toString(),chosen_issues.data) == -1)
     {
       output += "<option value=" + x.id + ">" + x.description + "</option>\n"
     }
