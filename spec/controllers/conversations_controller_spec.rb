@@ -41,7 +41,27 @@ describe ConversationsController do
   describe "POST create" do
 
     describe "with valid params" do
-      it "assigns a newly created conversation as @conversation" do
+      it "adds selected issues to the conversation" do
+        mock_issue = mock_model(Issue)
+        Conversation.stub(:new).with({'these' => 'params'}) { mock_conversation(:save => true) }
+        Issue.stub!(:find).with(["1"]).and_return([mock_issue])
+        mock_conversation.should_receive(:issues=).with([mock_issue])
+
+        post :create, {:conversation => {'these' => 'params'}, :issue_ids=>["1"]}
+      end
+      
+      it "set the start time as the current time" do
+        current_time = Time.now
+        Time.stub!(:now).and_return(current_time)
+        mock_issue = mock_model(Issue)
+        Conversation.stub(:new).with({'these' => 'params'}) { mock_conversation(:save => true) }
+        mock_conversation.should_receive(:started_at=).with(current_time)
+
+        post :create, {:conversation => {'these' => 'params'}}
+      end
+      
+      
+      it "assigns a newly created conversation as @conversation" do        
         Conversation.stub(:new).with({'these' => 'params'}) { mock_conversation(:save => true) }
         post :create, :conversation => {'these' => 'params'}
         assigns(:conversation).should be(mock_conversation)
