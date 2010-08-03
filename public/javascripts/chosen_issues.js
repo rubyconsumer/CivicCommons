@@ -13,6 +13,8 @@
 */
 
 var chosen_issues = new SelectionList()
+var chosen_guides = new SelectionList()
+var chosen_spotlights = new SelectionList()
 
 function SelectionList()
 {
