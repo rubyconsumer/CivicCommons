@@ -18,68 +18,99 @@ var chosen_spotlights = new SelectionList()
 
 function SelectionList()
 {
-  this.data = []
-  this.remove = function(x)
-  {
-    var tmp = $.inArray(this.data,x)
-    if (tmp >= 0)
-    {
-      this.data.splice(tmp,tmp)
-      return true
-    }
-    return false
-  }
-  this.add = function(x)
-  {
-    if ($.inArray(this.data,x) < 0)
-    {
-      this.data.push(x)
-      return true
-    }
-    return false
-  }
-  this.values = function()
-  {
-    return this.data
-  }
-}
-
-/*
- Redisplay the chosen items with links to detail and links
- to remove chosen items.
-*/
-function refresh_chosen_issues(div)
-{
-var output = "";
   try
   {
-  output += "<ul>\n"
-    for (var i = 0; i < chosen_issues.data.length; i++)
+    this.data = []
+    this.remove = function(x)
     {
-var issue_detail = "";
-var description;
-      x = chosen_issues.data[i]
-      $.ajax({
-       url: "http://localhost:3000/issues/" + x + ".json",
-       success: function(data) { issue_detail = data; },
-       failure: function(data) { alert("couldn't pick up details for issue #" + x + "!"); },
-       async: false,
-       })
-      description = issue_detail.issue.description
-      output += "<li>\n"
-var id = issue_detail.issue.id
-      output += '<a href="/issues/' + id + ' title="' + description + '">' + description + "</a>\n"
-      output += '<input name="issue_ids[]" id="issue_'+id+'" type="hidden" value="'+id+'" />\n'
-      output += '<a href="javascript:void()" onclick="drop_issue(' + id + ')" title="' + description + '"><img src="/images/trash-can.png" alt=" [remove issue] "></a>' + "\n"
-      output += "</li>\n"
+      var tmp = $.inArray(this.data,x)
+      if (tmp >= 0)
+      {
+        this.data.splice(tmp,tmp)
+        return true
+      }
+      return false
     }
-    output += "</ul>\n"
-    div.html(output)
+    this.add = function(x)
+    {
+      if ($.inArray(this.data,x) < 0)
+      {
+        this.data.push(x)
+        return true
+      }
+      return false
+    }
+    this.values = function()
+    {
+      return this.data
+    }
+    this.add_and_refresh = function(sel)
+    {
+      try
+      {
+      var n = sel.val()
+      var div = $("#chosenissues")
+      var link = $("#addissueprompt")
+        this.add(n)
+        this.refresh_chosen(div)
+        link.fadeIn();
+        $("#addissue").fadeOut();
+        refresh_issues_select($("#newissue"))
+      }
+      catch (ex)
+      {
+        alert("Exception in add/refresh: " + ex);
+      }
+    }
+
+    /*
+     Redisplay the chosen items with links to detail and links
+     to remove chosen items.
+    */
+    this.refresh_chosen = function(div)
+    {
+    var output = "";
+      try
+      {
+      output += "<ul>\n"
+        for (var i = 0; i < this.data.length; i++)
+        {
+    var issue_detail = "";
+    var description;
+          x = this.data[i]
+          $.ajax({
+           url: "http://localhost:3000/issues/" + x + ".json",
+           success: function(data) { issue_detail = data; },
+           failure: function(data) { alert("couldn't pick up details for issue #" + x + "!"); },
+           async: false,
+           })
+          description = issue_detail.issue.description
+          output += "<li>\n"
+    var id = issue_detail.issue.id
+          output += '<a href="/issues/' + id + ' title="' + description + '">' + description + "</a>\n"
+          output += '<input name="issue_ids[]" id="issue_'+id+'" type="hidden" value="'+id+'" />\n'
+          output += '<a href="javascript:void()" onclick="drop_issue(' + id + ')" title="' + description + '"><img src="/images/trash-can.png" alt=" [remove issue] "></a>' + "\n"
+          output += "</li>\n"
+        }
+        output += "</ul>\n"
+        div.html(output)
+      }
+      catch (e)
+      {
+        alert ("Exception in refresh_chosen_issue: " + e)
+      }
+    }
   }
   catch (e)
   {
-    alert ("Exception in refresh_chosen_issue: " + e)
+    alert ("Exception in SelectionList ctor: " + e)
   }
+}
+
+
+function refresh_chosen_issues(div)
+{
+  return chosen_issues.refresh_chosen(div)
 }
 
 /*
@@ -110,22 +141,7 @@ var link = $("#addissueprompt")
 */
 function add_and_refresh(sel)
 {
-  try
-  {
-	
-var n = sel.val()
-var div = $("#chosenissues")
-    chosen_issues.add(n)
-    refresh_chosen_issues(div)
-  var link = $("#addissueprompt")
-    link.fadeIn();
-    $("#addissue").fadeOut();
-    refresh_issues_select($("#newissue"))
-  }
-  catch (ex)
-  {
-    alert("Exception in add/refresh: " + ex);
-  }
+  return chosen_issues.add_and_refresh(sel)
 }
 
 function refresh_issues_select(el)
@@ -149,3 +165,4 @@ $.ajax({
   }
   el.html(output)
 }
+
