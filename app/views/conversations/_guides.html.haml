@@ -1,0 +1,4 @@
+- @notchosenguides = @allguides.reject {|x| @chosenguides.include?(x.id)}
+- @notchosenguides.each do |x|
+- @value=x.id
+    %option(value=@value) #{x.description}
