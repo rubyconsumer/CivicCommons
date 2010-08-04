@@ -59,6 +59,11 @@ GEM
       activesupport (>= 2.3.6)
       mime-types
       treetop (>= 1.4.5)
+    meta_search (0.5.4)
+      actionpack (>= 3.0.0.beta4)
+      activerecord (>= 3.0.0.beta4)
+      activesupport (>= 3.0.0.beta4)
+      arel (>= 0.4.0)
     mime-types (1.16)
     nokogiri (1.4.3.1)
     polyglot (0.3.1)
@@ -118,6 +123,7 @@ DEPENDENCIES
   haml
   hassle!
   hpricot
+  meta_search
   rails (= 3.0.0.rc)
   rails3-generators
   rspec-rails (>= 2.0.0.beta.10)

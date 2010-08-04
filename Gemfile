@@ -24,3 +24,5 @@ end
 
 gem 'devise', '1.1'
 
+gem 'meta_search'
+
