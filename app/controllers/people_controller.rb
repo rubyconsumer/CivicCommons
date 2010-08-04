@@ -4,7 +4,6 @@ class PeopleController < ApplicationController
   def index
     @search = Person.search(params[:search])
     @people = @search.all   # or @search.relation to lazy load in view
-    @people = Person.all
 
     respond_to do |format|
       format.html # index.html.erb

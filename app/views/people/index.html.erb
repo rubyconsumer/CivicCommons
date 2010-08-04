@@ -1,8 +1,17 @@
+<h1>Search</h1>
+  <%= form_for @search do |f| %>
+    <%= f.label "First name contains:" %>
+    <%= f.text_field :first_name_contains %><br />
+    <%= f.label "Last name contains:" %>
+    <%= f.text_field :last_name_contains %><br />
+    <%= f.submit %>
+  <% end %>
+
 <h1>Listing people</h1>
 
 <table>
   <tr>
-    <th>Furst name</th>
+    <th>First name</th>
     <th>Last name</th>
     <th>Email address</th>
     <th>Validated</th>
