@@ -636,10 +636,12 @@ float: left;
         font-size: 1em;
         text-transform: uppercase;
         @include text-shadow(black, 1px, 1px, 1px);
+        font-weight:bold;
         span.day {
           display: block;
           font-size: 1.9em;
           letter-spacing: 1px;
+          font-weight:bold;
         }
         p {
           padding-left: 0;
@@ -700,6 +702,7 @@ ol.conversations {
 ul.event-details {
   li {
     font-size: 1.2em;
+    margin-bottom:0;
     strong {
       text-transform: uppercase;
       @include one-column;
