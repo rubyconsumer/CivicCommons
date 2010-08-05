@@ -1,8 +1,8 @@
 class Conversation < ActiveRecord::Base
 #  include ActiveModel::Validations
   has_and_belongs_to_many :issues
+  has_many :comments, :as => :commentable 
   has_many :events
-  # has_many :comments # if we later decide to enable comments on Conversations
   has_many :questions
   has_many :answers
   has_and_belongs_to_many :guides, :class_name => 'People', :join_table => 'conversations_guides', :association_foreign_key => :guide_id

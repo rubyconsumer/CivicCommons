@@ -8,9 +8,12 @@ describe IssuesController do
 
   describe "GET index" do
     it "assigns all issues as @issues" do
-      Issue.stub(:all) { [mock_issue] }
+      result = [mock_issue]
+      Issue.stub(:search).and_return(result)
+      result.stub(:all).and_return(result)
+      
       get :index
-      assigns(:issues).should eq([mock_issue])
+      assigns(:issues).should == [mock_issue]
     end
   end
 

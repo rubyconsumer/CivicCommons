@@ -8,7 +8,9 @@ describe PeopleController do
 
   describe "GET index" do
     it "assigns all people as @people" do
-      Person.stub(:all) { [mock_person] }
+      result = [mock_person]
+      Person.stub(:search).and_return(result)
+      result.stub(:all).and_return(result)
       get :index
       assigns(:people).should eq([mock_person])
     end

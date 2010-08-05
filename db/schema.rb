@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100804193426) do
+ActiveRecord::Schema.define(:version => 20100805020037) do
 
   create_table "answers", :force => true do |t|
     t.datetime "datetime"
@@ -24,11 +24,11 @@ ActiveRecord::Schema.define(:version => 20100804193426) do
   create_table "comments", :force => true do |t|
     t.datetime "datetime"
     t.integer  "owner"
-    t.integer  "parent_type"
-    t.integer  "parent_id"
     t.text     "content"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "commentable_id"
+    t.string   "commentable_type"
   end
 
   create_table "conversations", :force => true do |t|
@@ -77,12 +77,12 @@ ActiveRecord::Schema.define(:version => 20100804193426) do
   create_table "people", :force => true do |t|
     t.string   "first_name"
     t.string   "last_name"
-    t.string   "email",                               :default => "", :null => false
     t.boolean  "validated"
     t.boolean  "admin"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "password"
+    t.string   "email",                               :default => "", :null => false
     t.string   "encrypted_password",   :limit => 128, :default => "", :null => false
     t.string   "password_salt",                       :default => "", :null => false
     t.string   "reset_password_token"

@@ -1,4 +1,8 @@
 Civiccommons::Application.routes.draw do
+  get "question_comments/create"
+
+  get "rating_comments/create"
+
   devise_for :people,
              :controllers => { :registrations => 'registrations' },
              :path_names => { :sign_in => 'login', :sign_out => 'logout', :password => 'secret', :confirmation => 'verification', :unlock => 'unblock', :registration => 'register', :sign_up => 'new' }
@@ -14,6 +18,7 @@ Civiccommons::Application.routes.draw do
   resources :issues
 
   resources :conversations
+  resources :conversation_comments  
 
   resources :questions
 

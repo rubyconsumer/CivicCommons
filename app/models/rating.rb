@@ -4,6 +4,7 @@ require 'rating_validator'
 class Rating < ActiveRecord::Base
   include ActiveModel::Validations
   belongs_to :person # who made this rating
+  has_many :comments, :as => :commentable
   validates_with RatingValidator
   validates_with ParentValidator
   # FIXME: Polymorphic relation to Comment, Question, or Answer
