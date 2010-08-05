@@ -583,6 +583,14 @@ float: left;
           background-color: $light-grey-color;
           color: white;
           @include border-radius(3px);
+          padding-top:2px;
+          padding-bottom:2px;
+          &.reply {
+            background-color:transparent;
+          }
+          &.answer {
+            background-color:transparent;
+          }
           &.unofficial {
             background: url(/images/comment-unofficial.png) no-repeat right;
             padding: 0;
