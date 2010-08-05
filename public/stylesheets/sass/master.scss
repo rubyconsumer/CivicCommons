@@ -27,6 +27,17 @@ $orange-color: #b06c00;
 
 @mixin one-column {
   @include gutter-margin;
+  width:70px;
+}
+
+@mixin two-column {
+  @include gutter-margin;
+  width:150px;
+}
+
+@mixin three-column {
+  @include gutter-margin;
+  width:230px;
 }
 
 /* Animations */
@@ -182,7 +193,7 @@ input.submit
   @include text-shadow(rgba(black, .41));
   @include easing;
   width:150px;
-  margin-right:10px;
+  @include three-column;
   margin-left:80px;
 }
 
@@ -277,8 +288,8 @@ a.button:link, a.button:visited, .button {
   @include box-shadow(rgba(black, .75), 1px, 1px, 1px);
   @include text-shadow(rgba(black, .41));
   @include easing;
+  @include one-column;
   &.tertiary {
-    @include one-column;
     padding-top: 4px;
     text-transform: inherit;
     height: 12px;
@@ -333,6 +344,20 @@ a.privileged {
   font-weight: bold;
   text-transform: uppercase;
   font-size: 11px;
+}
+
+a.summary-link
+{
+  color: $grey-color;
+  font-weight:normal;
+  text-transform:uppercase;
+  font-size:1.1em;
+  text-decoration:underline;
+}
+
+p a.summary-link
+{
+  font-size:1em;
 }
 
 /* page structure
@@ -558,6 +583,14 @@ float: left;
           background-color: $light-grey-color;
           color: white;
           @include border-radius(3px);
+          padding-top:2px;
+          padding-bottom:2px;
+          &.reply {
+            background-color:transparent;
+          }
+          &.answer {
+            background-color:transparent;
+          }
           &.unofficial {
             background: url(/images/comment-unofficial.png) no-repeat right;
             padding: 0;
@@ -603,10 +636,12 @@ float: left;
         font-size: 1em;
         text-transform: uppercase;
         @include text-shadow(black, 1px, 1px, 1px);
+        font-weight:bold;
         span.day {
           display: block;
           font-size: 1.9em;
           letter-spacing: 1px;
+          font-weight:bold;
         }
         p {
           padding-left: 0;
@@ -667,6 +702,7 @@ ol.conversations {
 ul.event-details {
   li {
     font-size: 1.2em;
+    margin-bottom:0;
     strong {
       text-transform: uppercase;
       @include one-column;
