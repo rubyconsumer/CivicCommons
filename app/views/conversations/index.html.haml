@@ -1,41 +1,18 @@
 - content_for :main do
   %h1 Conversations
   %hr
-  %table.conversation-list
-    %tr
-      %th
-        %strong Title
-      %th
-        %strong Started
-      %th
-        %strong Issues
-      %th
-        %strong Guides
-      %th
-        %strong Summary
-      %th{:colspan => 3}
-        %strong Actions
-    - @conversations.each do |conversation|
-      %tr
-        %td #{conversation.title}
-        %td #{conversation.start_time_text}
-        %td #{conversation.issues_text}
-        %td #{conversation.guides_text}
-        %td #{conversation.summary}
-        %td #{link_to 'Show', conversation}
-        %td #{link_to 'Edit', edit_conversation_path(conversation)}
-        %td #{link_to 'Destroy', conversation, :confirm => 'Are you sure?', :method => :delete}
-  #{link_to 'Start a new conversation!', new_conversation_path}
 
   %br
-  %li
-    .article.issue.conversation-ticker
-      .date
+  - @conversations.each do |conversation|
+    %li
+      .article.issue.conversation-ticker
+        .date
+          %p
+            #{conversation.start_month_text}
+            %span.day #{conversation.start_day}
+        %p Started discussing a new issue: #{conversation.title}
         %p
-          May
-          %span.day 05
-      %p Started discussing a new issue:
-      %p
-        %a(href="#" title="Starting talking about creating new jobs in Cuyahoga County")
-          Creating New Jobs in Cuyahoga County
+          %a(href="#" title="#{conversation.title}")
+            #{conversation.summary}
 
+  #{link_to 'Start a new conversation!', new_conversation_path}

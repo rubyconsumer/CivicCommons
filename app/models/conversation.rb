@@ -54,5 +54,20 @@ class Conversation < ActiveRecord::Base
    end
   end
 
+  def start_month_text
+    if started_at == nil
+      "?"
+    else
+      started_at.strftime("%B")
+    end
+  end
+
+  def start_day
+    if started_at == nil
+      "?"
+    else
+      started_at.mday
+    end
+  end
 end
 
