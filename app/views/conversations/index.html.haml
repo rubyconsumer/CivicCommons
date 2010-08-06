@@ -12,7 +12,8 @@
             %span.day #{conversation.start_day}
         %p Started discussing a new issue: #{conversation.title}
         %p
-          %a(href="#" title="#{conversation.title}")
+          %a(href="#{url_for(:controller => 'conversations', :action => :show, :id => conversation.id)}" title="#{conversation.title}")
             #{conversation.summary}
 
   #{link_to 'Start a new conversation!', new_conversation_path}
+
