@@ -28,4 +28,8 @@ Civiccommons::Application.configure do
 
   config.active_support.deprecation = :log
 
+  # For devise gem
+  config.action_mailer.default_url_options = { :host => 'staging.theciviccommons.com' }
+
+
 end
