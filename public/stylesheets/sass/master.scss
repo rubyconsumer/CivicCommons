@@ -294,6 +294,15 @@ a.button:link, a.button:visited, .button {
     text-transform: inherit;
     height: 12px;
   }
+  &.answer {
+    padding-top: 4px;
+    text-transform: inherit;
+    height: 12px;
+ 	font-size: .8em;
+    vertical-align: middle;
+	line-height: 15px;
+    text-transform: uppercase;
+  }
 }
 
 a.button:hover, input.submit:hover {
@@ -411,51 +420,68 @@ width: 100%;
 }
 
 .section.main {
-  @include centered-box;
-  .header {
-    margin-bottom: 30px;
-  }
-  .feature {
-    @include two-thirds;
-    .join-conversation {
-float: left;
-    }
-    ul.event-details {
-      margin-top: 1.5em;
-      margin-left: 160px;
-      margin-bottom: 32px;
-      li strong {
-        width: 150px;
-        margin-right: .6em;
-        text-transform: uppercase;
-      }
-      a, em {
-        font-size: 1.1666667em;
-      }
-    }
-    img {
-      @include box-shadow(rgba(0, 0, 0, .75), 1px, 1px, 2px);
-      margin-right: 1em;
-    }
-    .button {
-      margin-top: .8em;
-    }
-    .conversation-ticker {
-      padding: 16px;
-      width: 593px;
-    }
-    h1 {
-      margin-left: 160px;
-    }
-    p {
-      margin-top: .7em;
-      margin-left: 160px;
-    }
-    a.primary.button {
-      display: block;
-      font-size: 1.2em;
-    }
-  }
+	@include centered-box;
+	.header {
+		margin-bottom: 30px;
+	}
+	.feature {
+		@include two-thirds;
+    	.join-conversation {
+			float: left;
+    	}
+    	ul.event-details {
+			margin-top: 1.5em;
+			margin-left: 160px;
+			margin-bottom: 32px;
+			li strong {
+				width: 150px;
+				margin-right: .6em;
+				text-transform: uppercase;
+			}
+      		a, em {
+        		font-size: 1.1666667em;
+      		}
+		}
+		img {
+	      @include box-shadow(rgba(0, 0, 0, .75), 1px, 1px, 2px);
+	      margin-right: 1em;
+	    }
+	    .button {
+	      margin-top: .8em;
+	    }
+	    .conversation-ticker {
+	      padding: 16px;
+	      width: 593px;
+	    }
+	    h1 {
+	      margin-left: 160px;
+	    }
+	    p {
+	      margin-top: .7em;
+	      margin-left: 160px;
+	    }
+	    a.primary.button {
+	      display: block;
+	      font-size: 1.2em;
+	    }
+	  }
+	ul.thread-list {
+		margin-left: 0px;
+		li { 
+			list-style: none;
+			margin-bottom: 10px;
+			p.content { 
+	 			font-size: 1.2em;
+			}
+			ul {
+	   			li { 
+	     			margin-left: 50px;
+					margin-bottom: 10px;
+	   			}
+			}
+		}
+	}
+    
 
   .section.activity, .section.conversations, .aside {
 width: 33%;
@@ -543,8 +569,16 @@ float: left;
       }
     }
     .article.comment {
+		margin-bottom: 20px;
+ 		p { 
+			padding-left: 115px;
+			margin-bottom: 0;
+		}
+		a.question_recipient {
+			font-size: 1.0em;
+			font-weight: normal;
+	  }
       p {
-        padding-left: 115px;
         span.action {
           font-size: .9em;
         }
@@ -610,11 +644,24 @@ float: left;
           display: block;
           color: $grey-color;
           font-size: 1.1em;
-          text-align: right;
+          text-align: center;
           padding-left: 0;
+		  width: 20px;
+		float: right; 
           &:hover {
             text-decoration: none;
           }
+        }
+		a.positive, a.negative {
+			padding: 2px; 
+			margin: 4px -2px 4px 0px;
+			@include border-radius(3px);
+	  		border-color: rgba(black, .07);
+	  		@include box-shadow(rgba(black, .26), 1px, 1px, 1px);
+	  		color: #fff;
+        }
+		a.positive {
+			background-color: #53b848;	
         }
       }
       img {
@@ -623,8 +670,7 @@ float: left;
     }
     .article.issue {
       position: relative;
-      padding-top: 15px;
-      padding-bottom: 15px;
+      padding: 0px;
       .date {
         top: 0;
         position: absolute;
@@ -645,7 +691,7 @@ float: left;
         }
         p {
           padding-left: 0;
-          margin-top: 15px;
+          margin-top: 10px;
           color: white;
         }
       }
@@ -672,7 +718,10 @@ float: left;
       }
       ul {
          padding-left: 0;
-         margin-bottom: 1.5em;
+         margin: 0 0 1.5em 0;
+         li { 
+		    list-style: none;
+		 }
       }
     }
     .guides {
@@ -707,6 +756,7 @@ ul.event-details {
       text-transform: uppercase;
       @include one-column;
       font-size: 1em;
+      color: $grey-color;
       display: inline-block;
       text-align: right;
     }
@@ -716,10 +766,15 @@ ul.event-details {
       font-weight: bold;
     }
     a{
-      font-size: 1em;
+      font-size: 1.2em;
+	  font-weight: bold;
+	  color: $grey-color;
     }
-    a.button {
-      font-size: 1em;
+    a.button,
+	a.button:link, a.button:visited {
+    	font-size: 1.2em;
+	  	font-weight: bold;
+  		color: $grey-color;
     }
   }
 }

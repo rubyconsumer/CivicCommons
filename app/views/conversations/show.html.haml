@@ -18,7 +18,7 @@
     %li
       %strong Where:
       %a.text.button(href="#" title="City Club of Cleveland") City Club of Cleveland
-  %ul
+  %ul.thread-list
     %li
       .article.comment
         .meta
@@ -44,7 +44,54 @@
         %p
           %a(href="#" title="Starting talking about creating new jobs in Cuyahoga County")
             Creating New Jobs in Cuyahoga County
-
+    %li
+      .article.comment
+        .meta
+          .comment-type.unofficial
+          %a.rating(href="#" title="Rate this comment") +0
+        %img(src="/images/wilson-avatar-small.png" alt="Unofficial Comment from James Wilson")
+        %p
+          %a(href="#" title="James Wilson's Profile")
+            %strong James Wilson
+          %span.action commented:
+        %p.content I can't believe Frank Jackson shows up to this event wearing a Yankee's hat. Seriously?
+        %p
+          %a.text.button.conversation-action(href="#" title="Reply") Reply
+          %a(href="#" class="privileged" title="Delete this comment") Delete
+      %ul 
+        %li
+          .article.comment
+            .meta
+              .comment-type.unofficial
+              %a.rating(href="#" title="Rate this comment") +0
+            %img(src="/images/wilson-avatar-small.png" alt="Unofficial Comment from James Wilson")
+            %p
+              %a(href="#" title="James Wilson's Profile")
+                %strong James Wilson
+              %span.action commented:
+            %p.content I can't believe Frank Jackson shows up to this event wearing a Yankee's hat. Seriously?
+            %p
+              %a.text.button.conversation-action(href="#" title="Reply") Reply
+              %a(href="#" class="privileged" title="Delete this comment") Delete
+    %li
+      .article.comment
+        .meta
+          .comment-type.question
+          %a.rating.positive(href="#" title="Rate this comment") +13
+        %img(src="/images/fiorini-avatar-small.png" alt="Question from Joe Fiorini")
+        %p
+          %a(href="#" title="Joe Fiorini's Profile")
+            %strong Joe Fiorini
+          %span.action asked a question to:
+          %a.question_recipient(href="#" title="Frank Jackson's Profile")
+            Frank Jackson   
+        %p.content
+          Mayor Jackson: 
+          %br 
+          Why did you put a stop to the proposed Apple Multimedia lab downtown?
+        %p
+          %a.button.answer(href="#" title="Answer Joe's Question") Answer
+          %a(href="#" class="privileged" title="Delete this comment") Delete
 -content_for :sidebar do
   .aside.guides
     %strong Guides
