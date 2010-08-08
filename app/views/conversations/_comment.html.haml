@@ -13,6 +13,6 @@
       %a.text.button.conversation-action(href="#" title="Leave a comment") Leave a comment
       %a(href="#" class="privileged" title="Delete this comment") Delete
   %ul
-    - postable.posts.each do |post|
+    - postable.posts.order('created_at DESC').each do |post|
       =render :partial => post.postable_type.downcase, :locals => { :postable => post.postable }
   
