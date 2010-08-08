@@ -44,6 +44,6 @@ module Civiccommons
     config.filter_parameters += [:password]
 
     # For devise gem
-    config.action_mailer.default_url_options = { }
+    config.action_mailer.default_url_options = { :host => Rails.env == "production" ? "" : "localhost:3000" }
   end
 end
