@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100807230016) do
+ActiveRecord::Schema.define(:version => 20100808023926) do
 
   create_table "answers", :force => true do |t|
     t.datetime "datetime"
@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(:version => 20100807230016) do
     t.text     "content"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "official",   :default => false
   end
 
   create_table "conversations", :force => true do |t|

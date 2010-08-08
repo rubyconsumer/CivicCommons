@@ -1,0 +1,18 @@
+%li
+  .article.comment
+    .meta
+      .comment-type{:class=>postable.official ? "" : "unofficial"}=  "Official" if postable.official
+      %a.rating(href="#" title="Rate this comment") +0
+    %img{:src=>"/images/nemeth-avatar-small.png", :alt=>"Comment from #{postable.person.name}"}
+    %p
+      %a{:href=>"#", :title=>"#{postable.person.name}'s Profile"}
+        %strong= postable.person.name
+      %span.action commented:
+    %p.content= postable.content
+    %p
+      %a.text.button.conversation-action(href="#" title="Leave a comment") Leave a comment
+      %a(href="#" class="privileged" title="Delete this comment") Delete
+  %ul
+    - postable.posts.each do |post|
+      =render :partial => post.postable_type.downcase, :locals => { :postable => post.postable }
+  

@@ -1,5 +1,10 @@
-class ConversationCommentsController < ApplicationController
-  respond_to :html, :xml, :json  
+class PostCommentsController < ApplicationController
+  respond_to :html, :xml, :json    
+  def new 
+    @comment = Comment.new
+    render :layout=>false
+  end
+  
   def create
     @comment = Comment.create_for_conversation(params[:comment], params[:conversation_id])
     if @comment.errors.blank?

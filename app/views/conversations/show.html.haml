@@ -1,6 +1,6 @@
 - content_for :main do
-  %h1 Mayoral Round-up
-  %p.conversation_description George and Dan meetup with a panel of Cleveland mayors to discuss potential ways of stimulating the economy throughout the city.
+  %h1= @conversation.title
+  %p.conversation_description= @conversation.summary
   %select(name="comment[type]" id="comment_type")
     %option Official
     %option Other
@@ -19,21 +19,8 @@
       %strong Where:
       %a.text.button(href="#" title="City Club of Cleveland") City Club of Cleveland
   %ul.thread-list
-    %li
-      .article.comment
-        .meta
-          .comment-type Official
-          %a.rating(href="#" title="Rate this comment") +0
-        %img(src="/images/nemeth-avatar-small.png" alt="Official Comment from George Nemeth")
-        %p
-          %a(href="#" title="George Nemeth's Profile")
-            %strong George Nemeth
-          %span.action reported:
-        %p.content Dan welcomes the audience and introduces the panelists: |
-                   Frank Jackson, Jane Campbell and Michael White.         |
-        %p
-          %a.text.button.conversation-action(href="#" title="Leave a comment") Leave a comment
-          %a(href="#" class="privileged" title="Delete this comment") Delete
+    - @conversation.posts.each do |post|
+      =render :partial => post.postable_type.downcase, :locals => { :postable => post.postable }
     %li
       .article.issue.conversation-ticker
         .date
@@ -72,36 +59,15 @@
             %p.content I can't believe Frank Jackson shows up to this event wearing a Yankee's hat. Seriously?
             %p
               %a.text.button.conversation-action(href="#" title="Reply") Reply
-              %a(href="#" class="privileged" title="Delete this comment") Delete
-    %li
-      .article.comment
-        .meta
-          .comment-type.question
-          %a.rating.positive(href="#" title="Rate this comment") +13
-        %img(src="/images/fiorini-avatar-small.png" alt="Question from Joe Fiorini")
-        %p
-          %a(href="#" title="Joe Fiorini's Profile")
-            %strong Joe Fiorini
-          %span.action asked a question to:
-          %a.question_recipient(href="#" title="Frank Jackson's Profile")
-            Frank Jackson   
-        %p.content
-          Mayor Jackson: 
-          %br 
-          Why did you put a stop to the proposed Apple Multimedia lab downtown?
-        %p
-          %a.button.answer(href="#" title="Answer Joe's Question") Answer
-          %a(href="#" class="privileged" title="Delete this comment") Delete
+              %a(href="#" class="privileged" title="Delete this comment") Delete    
 -content_for :sidebar do
   .aside.guides
     %strong Guides
     %ul
-      %li
-        %a(href="#" title="George Nemeth") George Nemeth
-        = delete_button_for(:guide_id => 1)
-      %li
-        %a(href="#" title="Dan Moulthroup") Dan Moulthroup
-        = delete_button_for(:guide_id => 2)
+      -@conversation.guides.each do |guide|
+        %li
+          %a{:href=>"#", :title=>"#{guide.name}"} guide.name
+          = delete_button_for(:guide_id => guide.id)       
     %a(href="#" title="Add Guide" class="privileged") Add Guide
   .aside.spotlight
     %strong Spotlight

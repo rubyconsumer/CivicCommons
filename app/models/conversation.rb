@@ -1,5 +1,4 @@
 class Conversation < ActiveRecord::Base
-#  include ActiveModel::Validations
   has_and_belongs_to_many :issues
 
   has_many :posts, :as => :conversable

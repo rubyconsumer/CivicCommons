@@ -1,7 +1,6 @@
 require 'spec_helper'
 
-describe ConversationCommentsController do
-
+describe PostCommentsController do
   describe "GET 'create'" do
     it "should be successful" do
       mock_comment = mock_model(Comment)
