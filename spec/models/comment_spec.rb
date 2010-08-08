@@ -22,9 +22,14 @@ describe Comment do
         conversation = Factory.create(:conversation)
         Conversation.stub(:find).with(1).and_return(conversation)
         comment = Comment.create_for_conversation({:datetime=>Time.now, :owner=>1, :content=>"Hello World"}, 1)
-        conversation.comments.include?(comment).should == true
+        conversation.posts.count.should == 1
+        conversation.posts[0].postable.should == comment
       end
       it "should return a comment with no errors" do
+        conversation = Factory.create(:conversation)
+        Conversation.stub(:find).with(1).and_return(conversation)
+        comment = Comment.create_for_conversation({:datetime=>Time.now, :owner=>1, :content=>"Hello World"}, 1)
+        comment.errors.count.should == 0
       end      
     end
   end
