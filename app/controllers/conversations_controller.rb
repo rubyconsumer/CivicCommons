@@ -2,7 +2,8 @@ class ConversationsController < ApplicationController
   # GET /conversations
   # GET /conversations.xml
   def index
-    @conversations = Conversation.all
+    @search = Conversation.search(params[:search])
+    @conversations = @search.all   # or @search.relation to lazy load in view
 
     respond_to do |format|
       format.html # index.html.erb

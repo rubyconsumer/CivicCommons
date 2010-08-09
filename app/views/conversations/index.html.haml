@@ -1,4 +1,13 @@
 - content_for :main do
+  %h1 Search for Conversations
+  %hr
+  - form_for :search, @search, :html => {:method => :get} do |f|
+    - f.label "Conversation started between:"
+    - f.text_field :started_at_greater_than_or_equal_to
+    - f.label "and:"
+    - f.text_field :started_at_less_than_or_equal_to
+    - f.submit
+
   %h1 Conversations
   %hr
 
@@ -16,4 +25,3 @@
             #{conversation.summary}
 
   #{link_to 'Start a new conversation!', new_conversation_path}
-
