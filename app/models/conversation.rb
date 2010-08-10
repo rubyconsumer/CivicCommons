@@ -1,7 +1,6 @@
 class Conversation < ActiveRecord::Base
   has_many :posts, :as => :conversable
 
-  has_many :events
   has_and_belongs_to_many :guides, :class_name => 'People', :join_table => 'conversations_guides', :association_foreign_key => :guide_id
   
   def issues
