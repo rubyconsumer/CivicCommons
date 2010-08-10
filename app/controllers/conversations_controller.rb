@@ -1,4 +1,5 @@
 class ConversationsController < ApplicationController
+  before_filter :verify_admin, :only=>[:new, :create, :edit, :update, :destroy]
   # GET /conversations
   # GET /conversations.xml
   def index
