@@ -2,11 +2,14 @@ require 'spec_helper'
 
 describe Conversation do
   describe "when retrieving all of the issues associated with a conversation" do
+    before(:each) do
+      @normal_person = Factory.create(:normal_person)      
+    end
     it "should return only issue posts" do
       conversation = Factory.create(:conversation)
       issue = Factory.create(:issue)
       Issue.add_to_conversation(issue, conversation.id)
-      Comment.create_for_conversation({:content=>"Test"}, conversation.id)
+      Comment.create_for_conversation({:content=>"Test"}, conversation.id, @normal_person)
       conversation.save
       
       conversation.issues.count.should == 1      
@@ -18,7 +21,7 @@ describe Conversation do
       conversation = Factory.create(:conversation)
       issue = Factory.create(:issue)
       Issue.add_to_conversation(issue, conversation.id)
-      Comment.create_for_conversation({:content=>"Test"}, conversation.id)
+      Comment.create_for_conversation({:content=>"Test"}, conversation.id, @normal_person)
       conversation.save
       conversation.issues = nil
       

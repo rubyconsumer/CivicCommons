@@ -9,14 +9,17 @@ class Comment < ActiveRecord::Base
     
   validates :content, :presence=>true  
   
-  def Comment.create_for_conversation(comment_params, conversation_id)  
-    comment = Comment.new(comment_params)    
+  def Comment.create_for_conversation(comment_params, conversation_id, owner)  
+    comment = Comment.new(comment_params)        
+    comment.errors.add "conversation_id", "The conversation could not be found." and return comment if conversation_id.nil? 
+    
     conversation = Conversation.find(conversation_id)
-
     comment.errors.add "conversation_id", "The conversation could not be found." and return comment if conversation.nil? 
     
+    comment.person = owner
+    
     if comment.save
-      conversation.posts << Post.new({:postable=>comment})
+      conversation.posts << Post.new({:postable=>comment, :display_time=>Time.now})
       conversation.save
     end
     return comment

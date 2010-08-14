@@ -25,6 +25,10 @@ describe ConversationsController do
   end
 
   describe "GET new" do
+    before(:each) do
+      @admin_person = Factory.create(:admin_person)
+      @controller.stub(:current_person).and_return(@admin_person)
+    end    
     it "assigns a new conversation as @conversation" do
       Conversation.stub(:new) { mock_conversation }
       get :new
@@ -33,6 +37,10 @@ describe ConversationsController do
   end
 
   describe "GET edit" do
+    before(:each) do
+      @admin_person = Factory.create(:admin_person)
+      @controller.stub(:current_person).and_return(@admin_person)
+    end    
     it "assigns the requested conversation as @conversation" do
       Conversation.stub(:find).with("37") { mock_conversation }
       get :edit, :id => "37"
@@ -41,7 +49,10 @@ describe ConversationsController do
   end
 
   describe "POST create" do
-
+    before(:each) do
+      @admin_person = Factory.create(:admin_person)
+      @controller.stub(:current_person).and_return(@admin_person)
+    end    
     describe "with valid params" do
       it "adds selected issues to the conversation" do
         mock_issue = mock_model(Issue)
@@ -93,7 +104,10 @@ describe ConversationsController do
   end
 
   describe "PUT update" do
-
+    before(:each) do
+      @admin_person = Factory.create(:admin_person)
+      @controller.stub(:current_person).and_return(@admin_person)
+    end    
     describe "with valid params" do
       it "updates the requested conversation" do
         Conversation.should_receive(:find).with("37") { mock_conversation }
@@ -131,6 +145,10 @@ describe ConversationsController do
   end
 
   describe "DELETE destroy" do
+    before(:each) do
+      @admin_person = Factory.create(:admin_person)
+      @controller.stub(:current_person).and_return(@admin_person)
+    end        
     it "destroys the requested conversation" do
       Conversation.should_receive(:find).with("37") { mock_conversation }
       mock_conversation.should_receive(:destroy)

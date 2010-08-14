@@ -1,12 +1,14 @@
 - content_for :main do
   %h1= @conversation.title
   %p.conversation_description= @conversation.summary
-  %select(name="comment[type]" id="comment_type")
+  %select(name="random[type]" id="comment_type")
     %option Official
     %option Other
-  %textarea(name="comment[text]" id="comment_text" rows="3")
+  %textarea(name="comment[content]" id="comment_content" rows="3")
     Leave a comment...
-  %a.button.tertiary(href="#" title="Save to the Stream") Save
+  %input(type="hidden" id="postable_type" value="comment")
+  %input{:type=>"hidden", :id=>"conversation_id", :value=>"#{@conversation.id}"}
+  %a.button.tertiary(href="#" title="Save to the Stream" id="save_post") Save
   %hr
   %ul.thread-list
     - @conversation.posts.order('display_time DESC').each do |post|
@@ -33,3 +35,5 @@
         %a(href="#" title="Michael White") Michael White
         = delete_button_for(:spotlight_id => 5)
     %a(href="#" title="Add Guide" class="privileged") Add to Spotlight
+    - content_for :header do 
+      = javascript_include_tag 'conversations/show'

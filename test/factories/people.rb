@@ -5,4 +5,9 @@ Factory.define :people do |f|
     u.password 'password'
     u.email 'test.account@mysite.com'
   end
+  Factory.define :admin_person, :class=>Person do |u|
+    u.password 'password'
+    u.email 'test.account@mysite.com'
+    u.admin true
+  end  
 end
