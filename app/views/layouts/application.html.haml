@@ -2,12 +2,12 @@
 %html
   %head
     %title Civiccommons
-    = javascript_include_tag 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js'
-    = javascript_include_tag 'sammy-latest.min'
-    = javascript_include_tag 'rails'
+    = javascript_include_tag 'jquery-1.4.2.min'
     = javascript_include_tag 'modernizr-1.5.min'
+    = javascript_include_tag 'rails'
     = javascript_include_tag 'placeholder'
     = javascript_include_tag 'master'
+    = javascript_include_tag 'chosen_issues'
     :plain
       <!--[if gte IE 7]><!-->
       <link media="screen, projection" rel="stylesheet" href="/stylesheets/screen.css" type="text/css" />
@@ -20,20 +20,7 @@
       %span.subtitle Real Logo Coming Soon
     / /.header
     #body.section
-      #user
-        - if person_signed_in?
-          - surround "Signed in as ", "." do
-            = current_person.email
-          - precede "Not you? " do
-            = link_to "Sign out", destroy_person_session_path
-        - else
-          = succeed " |" do
-            = link_to "Sign in!", new_person_session_path
-          = link_to "Sign up!", new_person_registration_path
-      %p.notice= notice
-      %p.alert= alert
-      .section
-        = yield
+      = yield :main_body
     #footer.footer
       .section
     / /.footer

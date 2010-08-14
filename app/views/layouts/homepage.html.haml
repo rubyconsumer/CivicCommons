@@ -1,0 +1,16 @@
+- content_for :main_body do
+  #user
+    - if person_signed_in?
+      - surround "Signed in as ", "." do
+        = current_person.email
+      - precede "Not you? " do
+        = link_to "Sign out", destroy_person_session_path
+    - else
+      = succeed " |" do
+        = link_to "Sign in!", new_person_session_path
+      = link_to "Sign up!", new_person_registration_path
+  %p.notice= notice
+  %p.alert= alert
+  .section
+    = yield
+= render :file => 'layouts/application'
