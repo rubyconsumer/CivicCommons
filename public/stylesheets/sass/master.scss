@@ -312,6 +312,16 @@ a.button:hover, input.submit:hover {
   text-decoration: none;
 }
 
+a.absent:after {
+  background-color: #c2c2c2;
+  @include border-radius(3px);
+  content: ("absent");
+  margin-left: 8px;
+  padding: 3px;
+  text-transform: uppercase;
+  color: white;
+}
+
 form.delete-button {
   display: inline;
   margin-left: 8px;
