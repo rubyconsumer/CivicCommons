@@ -444,6 +444,7 @@ width: 100%;
       margin-top: 1.5em;
       margin-left: 160px;
       margin-bottom: 32px;
+      list-style-type: none;
       li strong {
         width: 150px;
         margin-right: .6em;
@@ -541,10 +542,16 @@ background: url(/images/event-icon.png) no-repeat;
     ul {
       padding-left:80px;
       margin-bottom:2em;
+      list-style-type: none;
     }
     ul li
     {
       margin-bottom:0.2em;
+    }
+  }
+  .aside.upcoming-events {
+    ul {
+      list-style-type: none;
     }
   }
   .section.activity {
