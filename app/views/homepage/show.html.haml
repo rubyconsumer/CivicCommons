@@ -3,7 +3,9 @@
     .join-conversation
       %img{:alt => "Drew Carey confronts Cleveland City Council", :src => "/images/featured-image.png"}/
       %a.button.primary{:href => "#"} Join Conversation
-    %h1 Drew Carey confronts Cleveland City Council
+    %h1
+      Drew Carey confronts Cleveland City Council
+      %a.privileged(href="#") Manage
     %p Cleveland's woes - population loss, failing schools, lack of economic spark - are no joke to comedian and native son Drew Carey, who advocates for less government, more competition and lower taxes to bring the city back.
     %ul.event-details
       %li
@@ -48,10 +50,13 @@
         %a{:href => "#", :title => "Lebron James", :class => "absent"} Lebron James
       %li
         %a.text.button{:href => :people, :title => "People"} More People&hellip;
+
 #engaging-content.main.section
   .section.conversations
     .wrapper
-      %h2 Active Conversations
+      %h2
+        Active Conversations
+        %a.privileged(href="#") Manage
       .article
         %p
           %a{:href => "#", :title => "Comment from John P. Gardner"}
@@ -67,7 +72,11 @@
         %a.secondary.button{:href => "#"} Join
         %a.text.button{:href => "#", :title => "Active 2 hours ago"} Active 2 hours ago
   .section.activity
-    %h2 Highest Rated
+
+    %h2
+      Highest Rated
+      %a.privileged(href="#") Manage
+
     .article
       %p
         %a{:href => "#", :title => "Comment from John P. Gardner"}
@@ -75,6 +84,7 @@
         \&ndash; Cleveland Opportunity Corridor is an economic development project aimed at connecting I-490 to the University Circle neighborhood.
       %a.secondary.button{:href => "#"} Join
       %a.text.button{:href => "#", :title => "320 people found this productive"} 320 people found this productive
+
     .article
       %p
         %a{:href => "#", :title => "Comment from Mr. Clean"}
@@ -82,6 +92,7 @@
         \&ndash; The Tall Ships Festival returns to the Cleveland lakefront July 8.  To celebrate and promote the event, the U.S. Brig Niagara sailed into the port of Cleveland Wednesday for a few hours. It fired its cannons twice in greeting.
       %a.secondary.button{:href => "#"} Join
       %a.text.button{:href => "#", :title => "298 people found this productive"} 320 people found this productive
+
   .aside
     %h2 Upcoming Events
     .article

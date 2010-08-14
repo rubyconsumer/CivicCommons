@@ -363,6 +363,7 @@ a.privileged {
   font-weight: bold;
   text-transform: uppercase;
   font-size: 11px;
+  @include text-shadow(rgba(black, .0));
 }
 
 a.summary-link
