@@ -288,7 +288,6 @@ a.button:link, a.button:visited, .button {
   @include box-shadow(rgba(black, .75), 1px, 1px, 1px);
   @include text-shadow(rgba(black, .41));
   @include easing;
-  @include one-column;
   &.tertiary {
     padding-top: 4px;
     text-transform: inherit;
