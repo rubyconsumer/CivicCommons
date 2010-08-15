@@ -2,16 +2,30 @@
 %html
   %head
     %title Civiccommons
-    = javascript_include_tag 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js'
-    = javascript_include_tag 'sammy-latest.min'
-    = javascript_include_tag 'rails'
-    = javascript_include_tag 'modernizr-1.5.min'
-    = javascript_include_tag 'placeholder'
-    = javascript_include_tag 'master'
+    = javascript_include_tag 'vendor/jquery-1.4.2.min'
+    = javascript_include_tag 'vendor/jquery-ui-1.8.2.custom.min'
+    = javascript_include_tag 'vendor/jquery-ui-timepicker-addon-0.5.min'
+    = javascript_include_tag 'vendor/placeholder-1.0.1.min'
+    = javascript_include_tag 'vendor/modernizr-1.5.min'
+    = javascript_include_tag 'lib/rails'
+    = javascript_include_tag 'lib/master'
+    = javascript_include_tag 'lib/chosen_issues'
     :plain
       <!--[if gte IE 7]><!-->
       <link media="screen, projection" rel="stylesheet" href="/stylesheets/screen.css" type="text/css" />
+      <link media="screen, projection" rel="stylesheet" href="/stylesheets/ui-lightness/jquery-ui-1.8.2.custom.css" type="text/css" />
       <!--<![endif]-->
+    :javascript
+      $(document).ready(function(){
+
+        $("input.datetime").datetimepicker({
+          ampm: true,
+          stepMinute: 15
+        });
+
+        #{yield :document_ready}
+
+      });
     = yield :header
     = csrf_meta_tag
   %body
@@ -20,20 +34,7 @@
       %span.subtitle Real Logo Coming Soon
     / /.header
     #body.section
-      #user
-        - if person_signed_in?
-          - surround "Signed in as ", "." do
-            = current_person.email
-          - precede "Not you? " do
-            = link_to "Sign out", destroy_person_session_path
-        - else
-          = succeed " |" do
-            = link_to "Sign in!", new_person_session_path
-          = link_to "Sign up!", new_person_registration_path
-      %p.notice= notice
-      %p.alert= alert
-      .section
-        = yield
+      = yield :main_body
     #footer.footer
       .section
     / /.footer

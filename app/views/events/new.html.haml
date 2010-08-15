@@ -1,26 +1,22 @@
-.main.section
-  .header
-    %h1 New Event
-    %p
-      Create a new event happening in your community			
+- content_for :main do
+  %h1 Create a New Event
   - form_for(@event) do |f|
     %fieldset.form-group
-      .form-block			
-        = f.label :title, 'Event Name'
+      .form-block
+        = f.label :title, 'Name'
         = f.text_field :title, :placeholder => 'Picnic in the Park', :class=>"textbox"
-      .form-block					
+      .form-block
         = f.label :when
-        = f.datetime_select :when, {:twelve_hour => true, :ignore_date=>true}
-      .form-block					
+        = f.text_field :when, :class => "textbox datetime", :placeholder => Time.now.to_s(:long_friendly)
+      .form-block
         = f.label :where
         = f.text_field :where, :placeholder => 'Central Park', :class=>"textbox"
       .form-block
         = f.label :moderator_id, "Moderator"
         = f.collection_select :moderator_id, Person.all, :id, :name
     %fieldset.footer
-      = f.submit 'Save Event', :class => "submit"		
-    = javascript_include_tag 'jquery-ui-1.8.2.custom.min'
-    = javascript_include_tag 'date'
-    = javascript_include_tag 'new_event'
-    - content_for :header do 
-      <link media="screen, projection" rel="stylesheet" href="/stylesheets/ui-lightness/jquery-ui-1.8.2.custom.css" type="text/css" />
+      .form-block
+        %p
+          - succeed "or" do
+            = f.submit 'Create Event', :class => "submit"
+          %a.cancel(href="#") cancel
