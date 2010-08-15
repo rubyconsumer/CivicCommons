@@ -2,15 +2,22 @@
   .article.comment
     .meta
       .comment-type.question
-      %a.rating.positive(href="#" title="Rate this comment") +13
-    %img{:src=>"/images/fiorini-avatar-small.png", :alt=>"Question from #{postable.person.name}")
+      %a.rating.positive(href="#" title="Rate this comment")=format_rating(postable)
+    %img{:src=>"", :alt=>"Question from #{postable.person.name}"}
     %p
       %a{:href=>person_path(postable.person), :title=>"#{postable.person.name}'s Profile"}
         %strong= postable.person.name
-      %span.action asked a question to:
-      %a.question_recipient(href="#" title="Frank Jackson's Profile")
-        Frank Jackson   
+      - if postable.askee.nil?
+        %span.action asked a question.
+      - else
+        %span.action asked a question to:
+        %a.question_recipient(href="#" title="Frank Jackson's Profile")=postable.askee.name             
     %p.content= postable.content
     %p
-      %a.button.answer(href="#" title="Answer Question") Answer
-      %a(href="#" class="privileged" title="Delete this comment") Delete
+      - if person_signed_in?
+        %a.button.answer(href="#" title="Answer Question") Answer
+      - if can_edit?(postable.owner)
+        %a{:href=>"#", :class=>"privileged", :title=>"Delete this comment"} Delete
+  %ul
+    - postable.posts.order('created_at DESC').each do |post|
+      =render :partial => post.postable_type.downcase, :locals => { :postable => post.postable }

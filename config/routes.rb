@@ -15,6 +15,8 @@ Civiccommons::Application.routes.draw do
 
   resources :conversations
   resources :post_comments  
+  resources :post_questions  
+  resources :post_ratings
 
   resources :questions
 

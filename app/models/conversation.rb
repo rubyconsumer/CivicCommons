@@ -13,6 +13,11 @@ class Conversation < ActiveRecord::Base
       Issue.add_to_conversation(issue, self.id)
     end unless issues.nil?
   end
+  
+  def rating
+    self.posts.where({:postable_type=>Rating.to_s}).collect { |post| post.postable }.sum {|rating| rating.rating} || 0
+  end  
+
 
   # Return a comma-and-space-delimited list of the Issues
   # relevant to this Conversation, e.g., "Jobs, Sports, Religion"

@@ -5,26 +5,17 @@ class Comment < ActiveRecord::Base
   belongs_to :person, :foreign_key=>"owner"
   belongs_to :postable, :polymorphic => true
   has_many :posts, :as => :conversable
+    
+  validates :content, :presence=>true 
   
-    
-  validates :content, :presence=>true  
-  
-  def Comment.create_for_conversation(comment_params, conversation_id, owner)  
-    comment = Comment.new(comment_params)        
-    comment.errors.add "conversation_id", "The conversation could not be found." and return comment if conversation_id.nil? 
-    
-    conversation = Conversation.find(conversation_id)
-    comment.errors.add "conversation_id", "The conversation could not be found." and return comment if conversation.nil? 
-    
-    comment.person = owner
-    
-    if comment.save
-      conversation.posts << Post.new({:postable=>comment, :display_time=>Time.now})
-      conversation.save
-    end
-    return comment
+  def rating
+    self.posts.where({:postable_type=>Rating.to_s}).inject{|sum, rating| sum + rating.rating} || 0
+  end  
+
+  def Comment.create_for_conversation(params, conversation_id, owner)  
+    return Post.create_post(params, conversation_id, owner, Conversation, Comment)
   end
-  
+     
   def Comment.create_for_comment(comment_params, comment_id)  
     comment = Comment.new(comment_params)    
     parent_comment = Comment.find(comment_id)

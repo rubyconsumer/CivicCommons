@@ -1,18 +1,27 @@
 - content_for :main do
-  %h1= @conversation.title
-  %p.conversation_description= @conversation.summary
-  %select(name="random[type]" id="comment_type")
-    %option Official
-    %option Other
-  %textarea(name="comment[content]" id="comment_content" rows="3")
-    Leave a comment...
-  %input(type="hidden" id="postable_type" value="comment")
-  %input{:type=>"hidden", :id=>"conversation_id", :value=>"#{@conversation.id}"}
-  %a.button.tertiary(href="#" title="Save to the Stream" id="save_post") Save
-  %hr
-  %ul.thread-list
-    - @conversation.posts.order('display_time DESC').each do |post|
-      =render :partial => post.postable_type.downcase, :locals => { :postable => post.postable }
+  %div(id="show_conversation")
+    %h1= @conversation.title
+    %p.conversation_description= @conversation.summary
+    - if person_signed_in?
+      %select(name="random[type]" id="comment_type")
+        %option Official
+        %option Other
+      %textarea(name="question[content]" id="question_content" rows="3")
+        Leave a comment...
+      %input(type="hidden" id="postable_type" value="question")
+      %a.button.tertiary(href="#" title="Save to the Stream" id="save_post") Save
+    %input{:type=>"hidden", :id=>"conversation_id", :value=>"#{@conversation.id}"}
+    %span(id="conversation_rating")
+      - if person_signed_in?    
+        %a.rating{:class=>"rating_down hide toggle", :href=>"#", :title=>"Rate this comment -1", :onclick=>"RateConversation(#{@conversation.id}, -1);"} -1
+      %a.rating(href="#" title="Rate this comment" class="current_rating")=format_rating(@conversation)
+      - if person_signed_in?    
+        %a.rating{:class=>"rating_up hide toggle", :href=>"#", :title=>"Rate this comment +1", :onclick=>"RateConversation(#{@conversation.id}, +1);"} +1
+    %span (This is the conversation rating until we get a mockup for it)
+    %hr
+    %ul.thread-list
+      - @conversation.posts.order('display_time DESC').each do |post|
+        =render :partial => post.postable_type.downcase, :locals => { :postable => post.postable }
 -content_for :sidebar do
   .aside.guides
     %strong Guides

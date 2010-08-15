@@ -9,8 +9,8 @@ describe Comment do
       it "should return a comment with an error" do
         Conversation.stub(:find).with(999).and_return(nil)
         comment = Comment.create_for_conversation({:datetime=>Time.now, :owner=>1, :content=>"Hello World"}, 999, @mock_person)
-        comment.errors[:conversation_id].nil?.should == false
-        comment.errors[:conversation_id].blank?.should == false  
+        comment.errors[:parent_id].nil?.should == false
+        comment.errors[:parent_id].blank?.should == false  
       end
     end
     context "and there is a validation error with the comment" do
