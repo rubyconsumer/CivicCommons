@@ -207,6 +207,25 @@ input.placeholder, textarea.placeholder
   color:#ccc;
 }
 
+.input-with-options {
+  label {
+    display: block;
+    text-align: left;
+    position: relative;
+    top: -40px;
+    left: 2px;
+    background-color: #4b728b;
+    color: #d3e7f4;
+    text-transform: none;
+    height: 22px;
+    width: 480px;
+    padding: 7px;
+  }
+  textarea {
+    height: 100px;
+  }
+}
+
 a:link.cancel
 {
   font-weight:normal;
@@ -558,9 +577,34 @@ float: left;
   }
   .main-content {
     @include two-thirds;
+    div.tab-strip ul {
+      list-style-type: none;
+      margin-bottom: 0;
+      @include group;
+      li {
+        float: left;
+        width: 70px;
+        margin-bottom: 0;
+        padding: 5px 5px;
+        text-align: center;
+        &.ui-state-active {
+          background-color: white;
+          @include border-top-radius(3px);
+          @include box-shadow(rgba(black, .26), 1px, 0, 1px);
+        }
+      }
+    }
+    div.tab-area {
+      background-color: white;
+border: solid thin rgba(black, .07);
+      @include border-radius(3px);
+      @include box-shadow(rgba(black, .26), 1px, 1px, 1px);
+    }
     textarea#comment_text {
       width: 598px;
       margin-bottom: 8px;
+      border: 0;
+      @include box-shadow(0);
     }
     .header {
       margin-bottom: 15px;
