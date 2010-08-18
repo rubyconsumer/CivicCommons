@@ -2,11 +2,18 @@
   %h1 Search for Conversations
   %hr
   = form_for @search, :as => :search, :html => {:method => :get} do |f|
+    <br>
     = f.label "Conversation started between:"
     = f.datetime_select :started_at_greater_than
     <br>
     = f.label "and:"
     = f.datetime_select :started_at_less_than
+    <br>
+    = f.label "With guide name(s) containing:"
+    = f.text_field :containing_guide
+    <br>
+    = f.label "With issue description(s) containing:"
+    = f.text_field :containing_issue
     <br>
     = f.submit
 
