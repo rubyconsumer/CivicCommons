@@ -7,13 +7,9 @@ class Issue < ActiveRecord::Base
     self.posts.where({:postable_type=>Rating.to_s}).inject{|sum, rating| sum + rating.rating} || 0
   end  
   
-  def Issue.add_to_conversation(issue, conversation_id)
-    conversation = Conversation.find(conversation_id)
-
-    issue.errors.add "conversation_id", "The conversation could not be found." and return issue if conversation.nil? 
-    
+  def Issue.add_to_conversation(issue, conversation)
     conversation.posts << Post.new({:postable=>issue})
-    conversation.save
     return issue    
   end
+
 end

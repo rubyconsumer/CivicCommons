@@ -2,7 +2,18 @@ class Conversation < ActiveRecord::Base
   has_many :posts, :as => :conversable
 
   has_and_belongs_to_many :guides, :class_name => 'People', :join_table => 'conversations_guides', :association_foreign_key => :guide_id
-  
+
+  search_methods :containing_issue, :containing_guide
+
+  scope :containing_guide,
+    lambda {|target| joins(:guides).map{|x| (x.first_name + x.last_name).includes? target}}
+
+  scope :containing_issue,
+    lambda {|target|
+     joins("inner join posts on conversations.id = posts.conversable_id inner join issues on posts.postable_id = issues.id")
+      .where("posts.postable_type = 'Issue'")
+      .where("lower(issues.description) like ?", "%" + target.downcase.strip + "%")}
+
   def issues
     self.posts.where({:postable_type=>Issue.to_s}).collect{|x| x.postable}
   end
@@ -10,7 +21,7 @@ class Conversation < ActiveRecord::Base
   def issues=(issues)
     self.posts.delete(self.posts.where(:postable_type=>Issue.to_s))
     issues.each do |issue|
-      Issue.add_to_conversation(issue, self.id)
+      Issue.add_to_conversation(issue, self)
     end unless issues.nil?
   end
   
