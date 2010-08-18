@@ -5,7 +5,7 @@
 - @chosenguides = []
 - content_for :main do
   %h1 Create a New Conversation
-  - form_for :conversation, :url => {:controller => "conversations", :action => "create" } do
+  - form_for :conversation, :url => {:controller => "conversations", :action => "create" }, :html => {:multipart => true} do
     .form-group
       .form-block
         %label(for="title")
@@ -18,7 +18,7 @@
       .form-block
         %label(for="image")
           Image:
-        %input(class="file" type="file" name="conversation[image]")
+        %input(class="file" type="file" name="conversation[image]" size=60)
     .form-group
       .form-block
         %label(for="event")
@@ -28,7 +28,8 @@
         .form-block
           %label(for="event-when")
             When:
-          = datetime_select("post", "event[when]")
+          -# = datetime_select("post", "event[when]")
+          %input(class="datetime" name="event[when]")
         .form-block
           %label(for="event-where")
             Where:
