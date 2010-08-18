@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100810002509) do
+ActiveRecord::Schema.define(:version => 20100818001327) do
 
   create_table "answers", :force => true do |t|
     t.datetime "datetime"
@@ -40,6 +40,9 @@ ActiveRecord::Schema.define(:version => 20100810002509) do
     t.datetime "updated_at"
     t.string   "title"
     t.binary   "image"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
   end
 
   create_table "conversations_guides", :id => false, :force => true do |t|
@@ -108,7 +111,7 @@ ActiveRecord::Schema.define(:version => 20100810002509) do
     t.string   "postable_type"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.datetime "display_time",     :default => '2010-08-14 18:38:59'
+    t.datetime "display_time",     :default => '2010-08-11 04:17:30'
   end
 
   create_table "questions", :force => true do |t|
