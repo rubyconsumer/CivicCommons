@@ -19,6 +19,10 @@ Civiccommons::Application.routes.draw do
   resources :post_ratings
 
   resources :questions
+  
+  match '/top_items/newest', :to=>'top_items#newest', :as =>'newest_items'
+  match '/top_items/highest_rated', :to=>'top_items#highest_rated', :as =>'highest_rated_items'
+  match '/top_items/most_visited', :to=>'top_items#most_visited', :as =>'most_visited_items'
 
   match '/mockup/:template_name', :to => 'mockups#show', :as => 'mockup'
 
