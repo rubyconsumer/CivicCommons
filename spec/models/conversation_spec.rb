@@ -8,7 +8,7 @@ describe Conversation do
     it "should return only issue posts" do
       conversation = Factory.create(:conversation)
       issue = Factory.create(:issue)
-      Issue.add_to_conversation(issue, conversation.id)
+      Issue.add_to_conversation(issue, conversation)
       Comment.create_for_conversation({:content=>"Test"}, conversation.id, @normal_person)
       conversation.save
       
@@ -20,7 +20,7 @@ describe Conversation do
     it "should remove only issue posts" do
       conversation = Factory.create(:conversation)
       issue = Factory.create(:issue)
-      Issue.add_to_conversation(issue, conversation.id)
+      Issue.add_to_conversation(issue, conversation)
       Comment.create_for_conversation({:content=>"Test"}, conversation.id, @normal_person)
       conversation.save
       conversation.issues = nil
