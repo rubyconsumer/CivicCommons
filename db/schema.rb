@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100818001327) do
+ActiveRecord::Schema.define(:version => 20100819000247) do
 
   create_table "answers", :force => true do |t|
     t.datetime "datetime"
@@ -27,7 +27,10 @@ ActiveRecord::Schema.define(:version => 20100818001327) do
     t.text     "content"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "official",   :default => false
+    t.boolean  "official",         :default => false
+    t.integer  "total_rating",     :default => 0
+    t.integer  "recent_rating",    :default => 0
+    t.datetime "last_rating_date"
   end
 
   create_table "conversations", :force => true do |t|
@@ -43,6 +46,9 @@ ActiveRecord::Schema.define(:version => 20100818001327) do
     t.string   "image_file_name"
     t.string   "image_content_type"
     t.integer  "image_file_size"
+    t.integer  "total_rating",       :default => 0
+    t.integer  "recent_rating",      :default => 0
+    t.datetime "last_rating_date"
   end
 
   create_table "conversations_guides", :id => false, :force => true do |t|
@@ -63,6 +69,9 @@ ActiveRecord::Schema.define(:version => 20100818001327) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "creator_id"
+    t.integer  "total_rating",     :default => 0
+    t.integer  "recent_rating",    :default => 0
+    t.datetime "last_rating_date"
   end
 
   create_table "events_guides", :id => false, :force => true do |t|
@@ -74,17 +83,20 @@ ActiveRecord::Schema.define(:version => 20100818001327) do
     t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "total_rating",     :default => 0
+    t.integer  "recent_rating",    :default => 0
+    t.datetime "last_rating_date"
   end
 
   create_table "people", :force => true do |t|
     t.string   "first_name"
     t.string   "last_name"
-    t.string   "email",                               :default => "", :null => false
     t.boolean  "validated"
     t.boolean  "admin"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "password"
+    t.string   "email",                               :default => "", :null => false
     t.string   "encrypted_password",   :limit => 128, :default => "", :null => false
     t.string   "password_salt",                       :default => "", :null => false
     t.string   "reset_password_token"
@@ -111,7 +123,7 @@ ActiveRecord::Schema.define(:version => 20100818001327) do
     t.string   "postable_type"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.datetime "display_time",     :default => '2010-08-11 04:17:30'
+    t.datetime "display_time",     :default => '2010-08-10 00:28:05'
   end
 
   create_table "questions", :force => true do |t|
@@ -122,6 +134,9 @@ ActiveRecord::Schema.define(:version => 20100818001327) do
     t.text     "content"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "total_rating",     :default => 0
+    t.integer  "recent_rating",    :default => 0
+    t.datetime "last_rating_date"
   end
 
   create_table "ratings", :force => true do |t|

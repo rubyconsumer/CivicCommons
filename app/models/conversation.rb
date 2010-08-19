@@ -1,4 +1,6 @@
 class Conversation < ActiveRecord::Base
+  include Rateable
+  
   has_many :posts, :as => :conversable
 
   has_and_belongs_to_many :guides, :class_name => 'People', :join_table => 'conversations_guides', :association_foreign_key => :guide_id
@@ -25,11 +27,6 @@ class Conversation < ActiveRecord::Base
     end unless issues.nil?
   end
   
-  def rating
-    self.posts.where({:postable_type=>Rating.to_s}).collect { |post| post.postable }.sum {|rating| rating.rating} || 0
-  end  
-
-
   # Return a comma-and-space-delimited list of the Issues
   # relevant to this Conversation, e.g., "Jobs, Sports, Religion"
   def issues_text
