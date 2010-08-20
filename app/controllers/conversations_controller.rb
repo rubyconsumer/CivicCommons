@@ -6,14 +6,16 @@ class ConversationsController < ApplicationController
   def index
     # Converting US date input to ISO because we don't trust the implicit string-to-date 
     # conversion in Ruby.
-    unless params[:search][:started_at_less_than].blank?
-      params[:search][:started_at_less_than] = convert_us_date_to_iso(params[:search][:started_at_less_than])
+    unless params[:search].blank?
+      unless params[:search][:started_at_less_than].blank?
+        params[:search][:started_at_less_than] = convert_us_date_to_iso(params[:search][:started_at_less_than])
+      end
+      unless params[:search][:started_at_greater_than].blank?
+        params[:search][:started_at_greater_than] = convert_us_date_to_iso(params[:search][:started_at_greater_than])
+      end
+      logger.info "Search from " + params[:search][:started_at_greater_than] unless params[:search][:started_at_greater_than].blank?
+      logger.info "Search to " + params[:search][:started_at_less_than] unless params[:search][:started_at_less_than].blank?
     end
-    unless params[:search][:started_at_greater_than].blank?
-      params[:search][:started_at_greater_than] = convert_us_date_to_iso(params[:search][:started_at_greater_than])
-    end
-    logger.info "Search from " + params[:search][:started_at_greater_than] unless params[:search][:started_at_greater_than].blank?
-    logger.info "Search to " + params[:search][:started_at_less_than] unless params[:search][:started_at_less_than].blank?
     @search = Conversation.search(params[:search])
     @conversations = @search.all   # or @search.relation to lazy load in view
 
