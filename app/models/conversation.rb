@@ -5,6 +5,12 @@ class Conversation < ActiveRecord::Base
 
   has_and_belongs_to_many :guides, :class_name => 'People', :join_table => 'conversations_guides', :association_foreign_key => :guide_id
 
+  has_attached_file :image,
+    :styles => {
+       :thumb => "100x100#",
+       :small => "150x150>",
+       :normal => "480x300" }
+
   search_methods :containing_issue, :containing_guide
 
   scope :containing_guide,

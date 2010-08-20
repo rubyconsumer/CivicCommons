@@ -26,3 +26,4 @@ gem 'devise', '1.1'
 
 gem 'meta_search'
 
+gem 'paperclip'
