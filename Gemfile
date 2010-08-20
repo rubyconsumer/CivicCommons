@@ -27,3 +27,6 @@ gem 'devise', '1.1'
 gem 'meta_search'
 
 gem 'paperclip'
+
+# For EngineYard
+gem 'mysql', '2.8.1'
