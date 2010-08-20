@@ -1,8 +1,21 @@
 class ConversationsController < ApplicationController
   before_filter :verify_admin, :only=>[:new, :create, :edit, :update, :destroy]
+
   # GET /conversations
   # GET /conversations.xml
   def index
+    # Converting US date input to ISO because we don't trust the implicit string-to-date 
+    # conversion in Ruby.
+    unless params[:search].blank?
+      unless params[:search][:started_at_less_than].blank?
+        params[:search][:started_at_less_than] = convert_us_date_to_iso(params[:search][:started_at_less_than])
+      end
+      unless params[:search][:started_at_greater_than].blank?
+        params[:search][:started_at_greater_than] = convert_us_date_to_iso(params[:search][:started_at_greater_than])
+      end
+      logger.info "Search from " + params[:search][:started_at_greater_than] unless params[:search][:started_at_greater_than].blank?
+      logger.info "Search to " + params[:search][:started_at_less_than] unless params[:search][:started_at_less_than].blank?
+    end
     @search = Conversation.search(params[:search])
     @conversations = @search.all   # or @search.relation to lazy load in view
 
@@ -84,4 +97,21 @@ class ConversationsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
+  # Kludge to convert US date-time (mm/dd/yyyy hh:mm am) to an
+  # ISO-like date-time (yyyy-mm-ddThh:mm:ss).
+  # There is probably a better way to do this. Please refactor.
+  private
+  def convert_us_date_to_iso(input)
+    hour = input[11,2].to_i
+    if (hour == 12)
+      hour = 0
+    end
+    if (input[17,2] == "pm")
+      hour += 12
+    end
+    hour = sprintf("%02d",hour)
+    input[6,4]+"-"+input[0,2]+"-"+input[3,2]+"T"+hour+":"+input[14,2]+":00"
+  end
+
 end
