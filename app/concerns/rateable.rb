@@ -1,4 +1,14 @@
 module Rateable
+  module ClassMethods
+    def get_top_rated(limit = 10)
+      self.where("last_rating_date >= '#{(Time.now - 30.days)}'").order("recent_rating DESC").limit(limit)
+    end
+  end
+  
+  def self.included(base)
+    base.extend(ClassMethods)
+  end
+  
   def ratings
     self.posts.where({:postable_type=>Rating.to_s}).collect{|x| x.postable}
   end  
@@ -29,5 +39,5 @@ module Rateable
       sum = sum + post.postable.rating
     end
     return sum     
-  end  
+  end 
 end
