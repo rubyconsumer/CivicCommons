@@ -221,15 +221,22 @@ input.placeholder, textarea.placeholder
 }
 
 .input-with-options {
+  margin-bottom: 12px;
   label {
+    text-transform: uppercase;
     display: block;
     text-align: left;
     background-color: #4b728b;
     color: #d3e7f4;
     text-transform: none;
     height: 22px;
-    padding: 0px;
-    width: 100%;
+    padding: 10px;
+    width: 97%;
+
+    input.link {
+      padding: 3px;
+      font-size: .9em;
+    }
   }
   textarea {
     height: 100px;

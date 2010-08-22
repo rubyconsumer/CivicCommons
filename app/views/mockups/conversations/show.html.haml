@@ -26,12 +26,18 @@
               %option(value="1") Anyone
               %option(value="2") Moderator
         #new-file
-          This is a file
+          %label
+            Upload a file:
+            %input(type="file" name="conversation[attachment_file_name]")
         #new-link
-          This is a link
+          %label
+            URL:
+            %input(type="text" name="conversation[link_url]" class="textbox link" placeholder="http://www.youtube.com")
         #new-video
-          This is a video
-    %a.button.tertiary(href="#" title="Save to the Stream") Save
+          %label
+            Embed code:
+            %input(type="text" name="conversation[video_embed_code]" class="textbox link" placeholder="Copy/paste the HTML embed code here.")
+    %a.button.tertiary(href="#" title="Save to the Stream") Preview
   %hr
   %ul.event-details
     %li
