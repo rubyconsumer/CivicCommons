@@ -207,19 +207,29 @@ input.placeholder, textarea.placeholder
   color:#ccc;
 }
 
+.main-content {
+  .tab-strip {
+    &.ui-widget-content {
+      border: none;
+      background: none;
+    }
+    ul.ui-widget-header {
+      background: none;
+      border: none;
+    }
+  }
+}
+
 .input-with-options {
   label {
     display: block;
     text-align: left;
-    position: relative;
-    top: -40px;
-    left: 2px;
     background-color: #4b728b;
     color: #d3e7f4;
     text-transform: none;
     height: 22px;
-    width: 480px;
-    padding: 7px;
+    padding: 0px;
+    width: 100%;
   }
   textarea {
     height: 100px;
@@ -583,20 +593,24 @@ float: left;
       @include group;
       li {
         float: left;
-        width: 70px;
-        margin-bottom: 0;
-        padding: 5px 5px;
+        margin-bottom: -1px;
         text-align: center;
-        &.ui-state-active {
+        a {
+          display: block;
+          padding: 5px 9px;
+        }
+        a.tab-active {
           background-color: white;
           @include border-top-radius(3px);
-          @include box-shadow(rgba(black, .26), 1px, 0, 1px);
+          border: solid thin rgba(black, .07);
+          border-bottom: none;
         }
       }
     }
     div.tab-area {
+      @include group;
       background-color: white;
-border: solid thin rgba(black, .07);
+      border: solid thin rgba(black, .07);
       @include border-radius(3px);
       @include box-shadow(rgba(black, .26), 1px, 1px, 1px);
     }
@@ -604,7 +618,7 @@ border: solid thin rgba(black, .07);
       width: 598px;
       margin-bottom: 8px;
       border: 0;
-      @include box-shadow(0);
+      @include box-shadow(none);
     }
     .header {
       margin-bottom: 15px;
