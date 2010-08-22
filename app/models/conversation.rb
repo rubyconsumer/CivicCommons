@@ -1,5 +1,6 @@
 class Conversation < ActiveRecord::Base
   include Rateable
+  include Visitable
   
   has_many :posts, :as => :conversable
 

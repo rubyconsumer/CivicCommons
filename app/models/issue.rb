@@ -1,5 +1,6 @@
 class Issue < ActiveRecord::Base
   include Rateable
+  include Visitable
   
   validates :description, :presence => true, :length => { :minimum => 5 }  
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100819000247) do
+ActiveRecord::Schema.define(:version => 20100821164949) do
 
   create_table "answers", :force => true do |t|
     t.datetime "datetime"
@@ -31,6 +31,9 @@ ActiveRecord::Schema.define(:version => 20100819000247) do
     t.integer  "total_rating",     :default => 0
     t.integer  "recent_rating",    :default => 0
     t.datetime "last_rating_date"
+    t.integer  "total_visits",     :default => 0
+    t.integer  "recent_visits",    :default => 0
+    t.datetime "last_visit_date"
   end
 
   create_table "conversations", :force => true do |t|
@@ -49,6 +52,9 @@ ActiveRecord::Schema.define(:version => 20100819000247) do
     t.integer  "total_rating",       :default => 0
     t.integer  "recent_rating",      :default => 0
     t.datetime "last_rating_date"
+    t.integer  "total_visits",       :default => 0
+    t.integer  "recent_visits",      :default => 0
+    t.datetime "last_visit_date"
   end
 
   create_table "conversations_guides", :id => false, :force => true do |t|
@@ -72,6 +78,9 @@ ActiveRecord::Schema.define(:version => 20100819000247) do
     t.integer  "total_rating",     :default => 0
     t.integer  "recent_rating",    :default => 0
     t.datetime "last_rating_date"
+    t.integer  "total_visits",     :default => 0
+    t.integer  "recent_visits",    :default => 0
+    t.datetime "last_visit_date"
   end
 
   create_table "events_guides", :id => false, :force => true do |t|
@@ -86,6 +95,9 @@ ActiveRecord::Schema.define(:version => 20100819000247) do
     t.integer  "total_rating",     :default => 0
     t.integer  "recent_rating",    :default => 0
     t.datetime "last_rating_date"
+    t.integer  "total_visits",     :default => 0
+    t.integer  "recent_visits",    :default => 0
+    t.datetime "last_visit_date"
   end
 
   create_table "people", :force => true do |t|
@@ -137,6 +149,9 @@ ActiveRecord::Schema.define(:version => 20100819000247) do
     t.integer  "total_rating",     :default => 0
     t.integer  "recent_rating",    :default => 0
     t.datetime "last_rating_date"
+    t.integer  "total_visits",     :default => 0
+    t.integer  "recent_visits",    :default => 0
+    t.datetime "last_visit_date"
   end
 
   create_table "ratings", :force => true do |t|
@@ -145,6 +160,14 @@ ActiveRecord::Schema.define(:version => 20100819000247) do
     t.integer  "parent_type"
     t.integer  "parent_id"
     t.integer  "rating"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "visits", :force => true do |t|
+    t.integer  "person_id"
+    t.integer  "visitable_id"
+    t.string   "visitable_type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

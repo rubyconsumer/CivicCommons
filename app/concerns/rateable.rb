@@ -5,16 +5,7 @@ module Rateable
       self.where("last_rating_date >= '#{(Time.now - 30.days)}'").order("recent_rating DESC").limit(limit)
     end
   end
-  
-  module Includers
-    def includers
-      ObjectSpace.each_object(Class) do |c|
-        next unless c.is_a? self
-        puts c.to_s
-      end
-    end
-  end
-  
+    
   def self.included(base)
     base.extend(ClassMethods)
   end

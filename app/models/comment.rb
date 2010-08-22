@@ -2,6 +2,7 @@ require 'parent_validator'
 
 class Comment < ActiveRecord::Base
   include Rateable
+  include Visitable
   
   belongs_to :person, :foreign_key=>"owner"
   belongs_to :postable, :polymorphic => true

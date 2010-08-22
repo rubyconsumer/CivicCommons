@@ -7,6 +7,8 @@ class TopItemsController < ApplicationController
   end
   
   def highest_rated
+    @highest_rated = TopItem.highest_rated(params[:limit] || 10)
+    respond_with(@highest_rated)
   end
   
   def most_visited

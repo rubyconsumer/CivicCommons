@@ -66,3 +66,99 @@ describe TopItem, "when retrieving the top items by date" do
     result.include?(@today_rating).should == false    
   end
 end
+
+describe TopItem, "when retrieving the top items by rating" do
+  before(:each) do
+    @ten_rating_conversation = Factory.create(:conversation, {:recent_rating=>10})
+    @five_rating_conversation = Factory.create(:conversation, {:recent_rating=>5})    
+    @one_rating_conversation = Factory.create(:conversation, {:recent_rating=>1})    
+    Conversation.stub(:get_top_rated).and_return([@ten_rating_conversation, @five_rating_conversation, @one_rating_conversation])
+    
+    @ten_rating_comment = Factory.create(:comment, {:recent_rating=>10})
+    @five_rating_comment = Factory.create(:comment, {:recent_rating=>5})    
+    @one_rating_comment = Factory.create(:comment, {:recent_rating=>1})
+    Comment.stub(:get_top_rated).and_return([@ten_rating_comment, @five_rating_comment, @one_rating_comment])
+    
+    @ten_rating_issue = Factory.create(:issue, {:recent_rating=>10})
+    @five_rating_issue = Factory.create(:issue, {:recent_rating=>5})    
+    @one_rating_issue = Factory.create(:issue, {:recent_rating=>1})
+    Issue.stub(:get_top_rated).and_return([@ten_rating_issue, @five_rating_issue, @one_rating_issue])
+    
+    @ten_rating_question = Factory.create(:question, {:recent_rating=>10})
+    @five_rating_question = Factory.create(:question, {:recent_rating=>5})    
+    @one_rating_question = Factory.create(:question, {:recent_rating=>1})
+    Question.stub(:get_top_rated).and_return([@ten_rating_question, @five_rating_question, @one_rating_question])
+    
+    @ten_rating_event = Factory.create(:event, {:recent_rating=>10})
+    @five_rating_event = Factory.create(:event, {:recent_rating=>5})    
+    @one_rating_event = Factory.create(:event, {:recent_rating=>1})
+    Event.stub(:get_top_rated).and_return([@ten_rating_event, @five_rating_event, @one_rating_event])
+  end
+  
+  it "should merge all rateable types" do
+    result = TopItem.highest_rated
+    result.include?(@ten_rating_conversation).should == true
+    result.include?(@ten_rating_comment).should == true
+    result.include?(@ten_rating_issue).should == true
+    result.include?(@ten_rating_question).should == true
+    result.include?(@ten_rating_event).should == true        
+  end  
+  
+  it "should return the number passed in" do
+    result = TopItem.highest_rated(5)
+    result.count.should == 5
+  end
+  
+  it "should return 10 items if no limit is passed in" do
+    result = TopItem.highest_rated
+    result.count.should == 10
+  end
+end
+
+describe TopItem, "when retrieving the top items by number of visits" do
+  before(:each) do
+    @ten_visit_conversation = Factory.create(:conversation, {:recent_visits=>10})
+    @five_visit_conversation = Factory.create(:conversation, {:recent_visits=>5})    
+    @one_visit_conversation = Factory.create(:conversation, {:recent_visits=>1})    
+    Conversation.stub(:get_top_visited).and_return([@ten_visit_conversation, @five_visit_conversation, @one_visit_conversation])
+    
+    @ten_visit_comment = Factory.create(:comment, {:recent_visits=>10})
+    @five_visit_comment = Factory.create(:comment, {:recent_visits=>5})    
+    @one_visit_comment = Factory.create(:comment, {:recent_visits=>1})
+    Comment.stub(:get_top_visited).and_return([@ten_visit_comment, @five_visit_comment, @one_visit_comment])
+    
+    @ten_visit_issue = Factory.create(:issue, {:recent_visits=>10})
+    @five_visit_issue = Factory.create(:issue, {:recent_visits=>5})    
+    @one_visit_issue = Factory.create(:issue, {:recent_visits=>1})
+    Issue.stub(:get_top_visited).and_return([@ten_visit_issue, @five_visit_issue, @one_visit_issue])
+    
+    @ten_visit_question = Factory.create(:question, {:recent_visits=>10})
+    @five_visit_question = Factory.create(:question, {:recent_visits=>5})    
+    @one_visit_question = Factory.create(:question, {:recent_visits=>1})
+    Question.stub(:get_top_visited).and_return([@ten_visit_question, @five_visit_question, @one_visit_question])
+    
+    @ten_visit_event = Factory.create(:event, {:recent_visits=>10})
+    @five_visit_event = Factory.create(:event, {:recent_visits=>5})    
+    @one_visit_event = Factory.create(:event, {:recent_visits=>1})
+    Event.stub(:get_top_visited).and_return([@ten_visit_event, @five_visit_event, @one_visit_event])
+  end
+  
+  it "should merge all visitable types" do
+    result = TopItem.most_visited
+    result.include?(@ten_visit_conversation).should == true
+    result.include?(@ten_visit_comment).should == true
+    result.include?(@ten_visit_issue).should == true
+    result.include?(@ten_visit_question).should == true
+    result.include?(@ten_visit_event).should == true        
+  end  
+  
+  it "should return the number passed in" do
+    result = TopItem.most_visited(5)
+    result.count.should == 5
+  end
+  
+  it "should return 10 items if no limit is passed in" do
+    result = TopItem.most_visited
+    result.count.should == 10
+  end
+end
