@@ -27,8 +27,9 @@ class ConversationsController < ApplicationController
 
   # GET /conversations/1
   # GET /conversations/1.xml
-  def show
+  def show    
     @conversation = Conversation.find(params[:id])
+    @conversation.visit!((current_person.nil? ? nil : current_person.id))
 
     respond_to do |format|
       format.html # show.html.erb
@@ -83,6 +84,18 @@ class ConversationsController < ApplicationController
         format.html { render :action => "edit" }
         format.xml  { render :xml => @conversation.errors, :status => :unprocessable_entity }
       end
+    end
+  end
+  
+  # POST /conversations/rate
+  # POST /conversations/rate.xml
+  def rate
+    return if current_person.nil?
+    
+    @conversation = Conversation.find(params[:conversation_id])
+    unless @conversation.nil?
+      @conversation.rate!(params[:rating].to_i, current_person) unless params[:rating].nil?
+      render :text=>@conversation.total_rating
     end
   end
 

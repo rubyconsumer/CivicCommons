@@ -10,8 +10,8 @@ require 'spec_helper'
        it "adds a rating to the #{model_type.to_s}" do      
          @item.rate(1, @person)
        
-         @item.posts[0].postable.rating.should == 1
-         @item.posts[0].postable.person.should == @person      
+         @item.ratings[0].rating.should == 1
+         @item.ratings[0].person.should == @person      
        end
        it "modifies the total_rating for the #{model_type.to_s}" do
          @item.rate(1, @person)
@@ -53,11 +53,11 @@ require 'spec_helper'
     context "and calculating the recent rating" do
       it "should sum all ratings in the last 30 days" do
         rating_one = Rating.create({:rating=>1, :person_id=>@person.id, :created_at=>(Time.now - 60.days)})
-        Post.create({:postable_id=>rating_one.id, :postable_type=>Rating.to_s, :conversable_type => model_type.to_s, :conversable_id=>@item.id, :display_time=>(Time.now - 60.days), :created_at=>(Time.now - 60.days)})
+        @item.ratings << rating_one
         rating_two = Rating.create({:rating=>1, :person_id=>@person.id, :created_at=>(Time.now - 29.days)})
-        Post.create({:postable_id=>rating_two.id, :postable_type=>Rating.to_s, :conversable_type => model_type.to_s, :conversable_id=>@item.id, :display_time=>(Time.now - 29.days), :created_at=>(Time.now - 29.days)})
+        @item.ratings << rating_two
         rating_three = Rating.create({:rating=>1, :person_id=>@person.id, :created_at=>Time.now})
-        Post.create({:postable_id=>rating_three.id, :postable_type=>Rating.to_s, :conversable_type => model_type.to_s, :conversable_id=>@item.id, :display_time=>Time.now, :created_at=>Time.now})
+        @item.ratings << rating_three
       
         @item.calculate_recent_rating.should == 2
       end

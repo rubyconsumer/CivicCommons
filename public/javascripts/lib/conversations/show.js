@@ -14,10 +14,10 @@ function HideRatingTools() {
 function RateConversation(conversation_id, rating) {
 	var data = "";
 	data = data + "conversation_id=" + $("#conversation_id").val();
-	data = data + "&rating[rating]="+rating;
+	data = data + "&rating="+rating;
 	
 	$.ajax({
-		url: "/post_ratings",
+		url: "/conversations/rate",
 		type: "POST",
 		data: data,
 		success: function(response) {

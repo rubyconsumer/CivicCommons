@@ -15,11 +15,21 @@ describe EventsController do
   end
 
   describe "GET show" do
+    before(:each) do 
+      @person = Factory.create(:normal_person)
+      @controller.stub(:current_person).and_return(@person)      
+    end        
     it "assigns the requested event as @event" do
       Event.stub(:find).with("37") { mock_event }
       get :show, :id => "37"
       assigns(:event).should be(mock_event)
     end
+    it "records a visit to the issue passing the current user" do
+      Event.stub(:find).with("37") { mock_event }
+      mock_event.should_receive(:visit!).with(@person.id)      
+      get :show, :id => "37"
+    end    
+    
   end
 
   describe "GET new" do

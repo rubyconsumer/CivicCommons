@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100821164949) do
+ActiveRecord::Schema.define(:version => 20100822215644) do
 
   create_table "answers", :force => true do |t|
     t.datetime "datetime"
@@ -135,7 +135,7 @@ ActiveRecord::Schema.define(:version => 20100821164949) do
     t.string   "postable_type"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.datetime "display_time",     :default => '2010-08-10 00:28:05'
+    t.datetime "display_time",     :default => '2010-08-22 21:14:27'
   end
 
   create_table "questions", :force => true do |t|
@@ -157,11 +157,11 @@ ActiveRecord::Schema.define(:version => 20100821164949) do
   create_table "ratings", :force => true do |t|
     t.datetime "datetime"
     t.integer  "person_id"
-    t.integer  "parent_type"
-    t.integer  "parent_id"
     t.integer  "rating"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "rateable_id"
+    t.string   "rateable_type"
   end
 
   create_table "visits", :force => true do |t|

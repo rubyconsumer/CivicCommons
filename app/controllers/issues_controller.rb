@@ -16,6 +16,7 @@ class IssuesController < ApplicationController
   # GET /issues/1.xml
   def show
     @issue = Issue.find(params[:id])
+    @issue.visit!((current_person.nil? ? nil : current_person.id))
 
     respond_to do |format|
       format.html # show.html.erb

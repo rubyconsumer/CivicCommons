@@ -15,11 +15,21 @@ describe CommentsController do
   end
 
   describe "GET show" do
+    before(:each) do 
+      @person = Factory.create(:normal_person)
+      @controller.stub(:current_person).and_return(@person)      
+    end            
     it "assigns the requested comment as @comment" do
       Comment.stub(:find).with("37") { mock_comment }
       get :show, :id => "37"
       assigns(:comment).should be(mock_comment)
     end
+    it "records a visit to the issue passing the current user" do
+      Comment.stub(:find).with("37") { mock_comment }
+      mock_comment.should_receive(:visit!).with(@person.id)      
+      get :show, :id => "37"
+    end        
+    
   end
 
   describe "GET new" do

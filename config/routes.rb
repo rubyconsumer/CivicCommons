@@ -14,10 +14,11 @@ Civiccommons::Application.routes.draw do
   resources :issues
 
   resources :conversations
+  match '/conversations/rate', :to=>'conversations#rate', :via=>[:post]
+  
   resources :post_comments  
   resources :post_questions  
-  resources :post_ratings
-
+  
   resources :questions
   
   match '/top_items/newest', :to=>'top_items#newest', :as =>'newest_items'

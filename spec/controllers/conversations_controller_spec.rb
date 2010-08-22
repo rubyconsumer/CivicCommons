@@ -17,10 +17,19 @@ describe ConversationsController do
   end
 
   describe "GET show" do
+    before(:each) do 
+      @person = Factory.create(:normal_person)
+      @controller.stub(:current_person).and_return(@person)      
+    end
     it "assigns the requested conversation as @conversation" do
       Conversation.stub(:find).with("37") { mock_conversation }
       get :show, :id => "37"
       assigns(:conversation).should be(mock_conversation)
+    end
+    it "records a visit to the conversation passing the current user" do
+      Conversation.stub(:find).with("37") { mock_conversation }
+      mock_conversation.should_receive(:visit!).with(@person.id)
+      get :show, :id => "37"
     end
   end
 
@@ -100,7 +109,21 @@ describe ConversationsController do
         response.should render_template("new")
       end
     end
-
+  end
+  
+  describe "POST rate" do
+    before(:each) do
+      @person = Factory.create(:normal_person)
+      @controller.stub(:current_person).and_return(@person)
+    end    
+    it "should return the new conversation rating" do
+      Conversation.stub(:find).with(1) { mock_conversation }
+      mock_conversation.stub(:rate!)
+      mock_conversation.stub(:total_rating).and_return(5)
+      post :rate, {:conversation_id=>1, :rating=>1}
+      response.should be_success
+      response.body.should == "5"
+    end    
   end
 
   describe "PUT update" do

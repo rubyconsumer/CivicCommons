@@ -3,7 +3,7 @@
     .meta
       .comment-type.question
       %a.rating.positive(href="#" title="Rate this comment")=format_rating(postable)
-    %img{:src=>"", :alt=>"Question from #{postable.person.name}"}
+    %img{:alt=>"Question from #{postable.person.name}"}
     %p
       %a{:href=>person_path(postable.person), :title=>"#{postable.person.name}'s Profile"}
         %strong= postable.person.name

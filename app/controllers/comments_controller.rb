@@ -14,6 +14,7 @@ class CommentsController < ApplicationController
   # GET /comments/1.xml
   def show
     @comment = Comment.find(params[:id])
+    @comment.visit!((current_person.nil? ? nil : current_person.id))
 
     respond_to do |format|
       format.html # show.html.erb

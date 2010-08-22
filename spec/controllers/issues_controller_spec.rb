@@ -18,11 +18,20 @@ describe IssuesController do
   end
 
   describe "GET show" do
+    before(:each) do 
+      @person = Factory.create(:normal_person)
+      @controller.stub(:current_person).and_return(@person)      
+    end    
     it "assigns the requested issue as @issue" do
       Issue.stub(:find).with("37") { mock_issue }
       get :show, :id => "37"
       assigns(:issue).should be(mock_issue)
     end
+    it "records a visit to the issue passing the current user" do
+      Issue.stub(:find).with("37") { mock_issue }
+      mock_issue.should_receive(:visit!).with(@person.id)      
+      get :show, :id => "37"
+    end    
   end
 
   describe "GET new" do

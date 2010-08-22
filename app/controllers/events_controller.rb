@@ -12,8 +12,10 @@ class EventsController < ApplicationController
 
   # GET /events/1
   # GET /events/1.xml
-  def show
+  def show  
     @event = Event.find(params[:id])
+    @event.visit!((current_person.nil? ? nil : current_person.id))
+    
 
     respond_to do |format|
       format.html # show.html.erb

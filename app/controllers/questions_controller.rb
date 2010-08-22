@@ -14,6 +14,7 @@ class QuestionsController < ApplicationController
   # GET /questions/1.xml
   def show
     @question = Question.find(params[:id])
+    @question.visit!((current_person.nil? ? nil : current_person.id))
 
     respond_to do |format|
       format.html # show.html.erb

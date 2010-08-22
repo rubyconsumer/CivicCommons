@@ -15,11 +15,20 @@ describe QuestionsController do
   end
 
   describe "GET show" do
+    before(:each) do 
+      @person = Factory.create(:normal_person)
+      @controller.stub(:current_person).and_return(@person)      
+    end            
     it "assigns the requested question as @question" do
       Question.stub(:find).with("37") { mock_question }
       get :show, :id => "37"
       assigns(:question).should be(mock_question)
     end
+    it "records a visit to the issue passing the current user" do
+      Question.stub(:find).with("37") { mock_question }
+      mock_question.should_receive(:visit!).with(@person.id)      
+      get :show, :id => "37"
+    end        
   end
 
   describe "GET new" do
