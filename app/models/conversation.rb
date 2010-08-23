@@ -19,9 +19,9 @@ class Conversation < ActiveRecord::Base
 
   scope :containing_issue,
     lambda {|target|
-     joins("inner join posts on conversations.id = posts.conversable_id inner join issues on posts.postable_id = issues.id")
-      .where("posts.postable_type = 'Issue'")
-      .where("lower(issues.description) like ?", "%" + target.downcase.strip + "%")}
+     joins("inner join posts on conversations.id = posts.conversable_id inner join issues on posts.postable_id = issues.id").
+      where("posts.postable_type = 'Issue'").
+      where("lower(issues.description) like ?", "%" + target.downcase.strip + "%")}
 
   def issues
     self.posts.where({:postable_type=>Issue.to_s}).collect{|x| x.postable}
