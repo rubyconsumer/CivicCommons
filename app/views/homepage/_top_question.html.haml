@@ -1,0 +1,7 @@
+.article
+  %p
+    %a{:href => question_path(item), :title => "#{item.content}"}= "#{item.person.name} asked"
+    \&ndash;
+    %span=item.content
+  %a.secondary.button{:href => question_path(item)} Join
+  %a.text.button{:href => question_path(item), :title => "#{item.total_rating} people found this productive"} #{item.total_rating} found this productive

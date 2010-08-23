@@ -57,42 +57,22 @@
       %h2
         Active Conversations
         %a.privileged(href="#") Manage
-      .article
-        %p
-          %a{:href => "#", :title => "Comment from John P. Gardner"}
-            %strong Opportunity Corridor
-          \&ndash; Cleveland Opportunity Corridor is an economic development project aimed at connecting I-490 to the University Circle neighborhood.
-        %a.secondary.button{:href => "#"} Join
-        %a.text.button{:href => "#", :title => "Active 35 minutes ago"} Active 35 minutes ago
-      .article
-        %p
-          %a{:href => "#", :title => "Cleveland Tall Ships"}
-            %strong Cleveland Tall Ships
-          \&ndash; The Tall Ships Festival returns to the Cleveland lakefront July 8.  To celebrate and promote the event, the U.S. Brig Niagara sailed into the port of Cleveland Wednesday for a few hours. It fired its cannons twice in greeting.
-        %a.secondary.button{:href => "#"} Join
-        %a.text.button{:href => "#", :title => "Active 2 hours ago"} Active 2 hours ago
+      - @most_visited_conversations.each do |conversation|      
+        .article
+          %p
+            %a{:href =>"#{conversation_path(conversation)}", :title => conversation.title}
+              %strong=conversation.title
+            \&ndash;
+            %span=conversation.summary
+          %a.secondary.button{:href => "#{conversation_path(conversation)}"} Join
+          %a.text.button{:href => "#{conversation_path(conversation)}", :title => "Active Minutes Ago"} Active Minutes Ago
   .section.activity
 
     %h2
       Highest Rated
       %a.privileged(href="#") Manage
-
-    .article
-      %p
-        %a{:href => "#", :title => "Comment from John P. Gardner"}
-          %strong Opportunity Corridor
-        \&ndash; Cleveland Opportunity Corridor is an economic development project aimed at connecting I-490 to the University Circle neighborhood.
-      %a.secondary.button{:href => "#"} Join
-      %a.text.button{:href => "#", :title => "320 people found this productive"} 320 people found this productive
-
-    .article
-      %p
-        %a{:href => "#", :title => "Comment from Mr. Clean"}
-          %strong Cleveland Tall Ships
-        \&ndash; The Tall Ships Festival returns to the Cleveland lakefront July 8.  To celebrate and promote the event, the U.S. Brig Niagara sailed into the port of Cleveland Wednesday for a few hours. It fired its cannons twice in greeting.
-      %a.secondary.button{:href => "#"} Join
-      %a.text.button{:href => "#", :title => "298 people found this productive"} 320 people found this productive
-
+    - @top_rated.each do |item|
+      =render :partial => "top_"+item.class.to_s.downcase, :locals => { :item => item }
   .aside
     %h2 Upcoming Events
     .article

@@ -1,0 +1,7 @@
+.article
+  %p
+    %a{:href => comment_path(item), :title => "#{item.content}"}= "#{item.person.name} commented"
+    \&ndash;
+    %span=item.content
+  %a.secondary.button{:href => comment_path(item)} Join
+  %a.text.button{:href => comment_path(item), :title => "#{item.total_rating} people found this productive"} #{item.total_rating} found this productive
