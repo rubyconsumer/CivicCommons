@@ -65,7 +65,7 @@
             \&ndash;
             %span=conversation.summary
           %a.secondary.button{:href => "#{conversation_path(conversation)}"} Join
-          %a.text.button{:href => "#{conversation_path(conversation)}", :title => "Active Minutes Ago"} Active Minutes Ago
+          %a.text.button{:href => "#{conversation_path(conversation)}", :title => "Active #{distance_of_time_in_words(Time.now, conversation.last_visit_date)} Ago"} Active #{distance_of_time_in_words(Time.now, conversation.last_visit_date)} Ago
   .section.activity
 
     %h2
