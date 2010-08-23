@@ -28,3 +28,7 @@ gem 'meta_search'
 
 gem 'paperclip'
 
+group :test do
+  gem 'mysql', '2.8.1'
+end
+
