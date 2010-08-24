@@ -85,10 +85,10 @@ ul, ol {
 ul { list-style-type:disc; }
 ol { list-style-type:decimal; }
 
-ul.link-list, ol.link-list 
-{ 
+ul.link-list, ol.link-list
+{
   font-size:1.2em;
-  list-style:none; 
+  list-style:none;
   margin-left:0;
 }
 
@@ -207,6 +207,42 @@ input.placeholder, textarea.placeholder
   color:#ccc;
 }
 
+.main-content {
+  .tab-strip {
+    &.ui-widget-content {
+      border: none;
+      background: none;
+    }
+    ul.ui-widget-header {
+      background: none;
+      border: none;
+    }
+  }
+}
+
+.input-with-options {
+  margin-bottom: 12px;
+  label {
+    text-transform: uppercase;
+    display: block;
+    text-align: left;
+    background-color: #4b728b;
+    color: #d3e7f4;
+    text-transform: none;
+    height: 22px;
+    padding: 10px;
+    width: 97%;
+
+    input.link {
+      padding: 3px;
+      font-size: .9em;
+    }
+  }
+  textarea {
+    height: 100px;
+  }
+}
+
 a:link.cancel
 {
   font-weight:normal;
@@ -288,7 +324,6 @@ a.button:link, a.button:visited, .button {
   @include box-shadow(rgba(black, .75), 1px, 1px, 1px);
   @include text-shadow(rgba(black, .41));
   @include easing;
-  @include one-column;
   &.tertiary {
     padding-top: 4px;
     text-transform: inherit;
@@ -298,9 +333,9 @@ a.button:link, a.button:visited, .button {
     padding-top: 4px;
     text-transform: inherit;
     height: 12px;
- 	font-size: .8em;
+   font-size: .8em;
     vertical-align: middle;
-	line-height: 15px;
+  line-height: 15px;
     text-transform: uppercase;
   }
 }
@@ -431,67 +466,68 @@ width: 100%;
 }
 
 .section.main {
-	@include centered-box;
-	.header {
-		margin-bottom: 30px;
-	}
-	.feature {
-		@include two-thirds;
-    	.join-conversation {
-			float: left;
-    	}
-    	ul.event-details {
-			margin-top: 1.5em;
-			margin-left: 160px;
-			margin-bottom: 32px;
-			li strong {
-				width: 150px;
-				margin-right: .6em;
-				text-transform: uppercase;
-			}
-      		a, em {
-        		font-size: 1.1666667em;
-      		}
-		}
-		img {
-	      @include box-shadow(rgba(0, 0, 0, .75), 1px, 1px, 2px);
-	      margin-right: 1em;
-	    }
-	    .button {
-	      margin-top: .8em;
-	    }
-	    .conversation-ticker {
-	      padding: 16px;
-	      width: 593px;
-	    }
-	    h1 {
-	      margin-left: 160px;
-	    }
-	    p {
-	      margin-top: .7em;
-	      margin-left: 160px;
-	    }
-	    a.primary.button {
-	      display: block;
-	      font-size: 1.2em;
-	    }
-	  }
-	ul.thread-list {
-		margin-left: 0px;
-		li { 
-			list-style: none;
-			margin-bottom: 10px;
-			p.content { 
-	 			font-size: 1.2em;
-			}
-			ul {
-	   			li { 
-					margin-bottom: 10px;
-	   			}
-			}
-		}
-	}
-    
+  @include centered-box;
+  .header {
+    margin-bottom: 30px;
+  }
+  .feature {
+    @include two-thirds;
+      .join-conversation {
+      float: left;
+      }
+      ul.event-details {
+      margin-top: 1.5em;
+      margin-left: 160px;
+      margin-bottom: 32px;
+      list-style-type: none;
+      li strong {
+        width: 150px;
+        margin-right: .6em;
+        text-transform: uppercase;
+      }
+          a, em {
+            font-size: 1.1666667em;
+          }
+    }
+    img {
+        @include box-shadow(rgba(0, 0, 0, .75), 1px, 1px, 2px);
+        margin-right: 1em;
+      }
+      .button {
+        margin-top: .8em;
+      }
+      .conversation-ticker {
+        padding: 16px;
+        width: 593px;
+      }
+      h1 {
+        margin-left: 160px;
+      }
+      p {
+        margin-top: .7em;
+        margin-left: 160px;
+      }
+      a.primary.button {
+        display: block;
+        font-size: 1.2em;
+      }
+    }
+  ul.thread-list {
+    margin-left: 0px;
+    li {
+      list-style: none;
+      margin-bottom: 10px;
+      p.content {
+         font-size: 1.2em;
+      }
+      ul {
+           li {
+          margin-bottom: 10px;
+           }
+      }
+    }
+  }
+
 
   .section.activity, .section.conversations, .aside {
 width: 33%;
@@ -541,10 +577,16 @@ background: url(/images/event-icon.png) no-repeat;
     ul {
       padding-left:80px;
       margin-bottom:2em;
+      list-style-type: none;
     }
     ul li
     {
       margin-bottom:0.2em;
+    }
+  }
+  .aside.upcoming-events {
+    ul {
+      list-style-type: none;
     }
   }
   .section.activity {
@@ -552,9 +594,38 @@ float: left;
   }
   .main-content {
     @include two-thirds;
+    div.tab-strip ul {
+      list-style-type: none;
+      margin-bottom: 0;
+      @include group;
+      li {
+        float: left;
+        margin-bottom: -1px;
+        text-align: center;
+        a {
+          display: block;
+          padding: 5px 9px;
+        }
+        a.tab-active {
+          background-color: white;
+          @include border-top-radius(3px);
+          border: solid thin rgba(black, .07);
+          border-bottom: none;
+        }
+      }
+    }
+    div.tab-area {
+      @include group;
+      background-color: white;
+      border: solid thin rgba(black, .07);
+      @include border-radius(3px);
+      @include box-shadow(rgba(black, .26), 1px, 1px, 1px);
+    }
     textarea#comment_text {
       width: 598px;
       margin-bottom: 8px;
+      border: 0;
+      @include box-shadow(none);
     }
     .header {
       margin-bottom: 15px;
@@ -579,15 +650,15 @@ float: left;
       }
     }
     .article.comment {
-		margin-bottom: 20px;
- 		p { 
-			padding-left: 115px;
-			margin-bottom: 0;
-		}
-		a.question_recipient {
-			font-size: 1.0em;
-			font-weight: normal;
-	  }
+    margin-bottom: 20px;
+     p {
+      padding-left: 115px;
+      margin-bottom: 0;
+    }
+    a.question_recipient {
+      font-size: 1.0em;
+      font-weight: normal;
+    }
       p {
         span.action {
           font-size: .9em;
@@ -656,22 +727,22 @@ float: left;
           font-size: 1.1em;
           text-align: center;
           padding-left: 0;
-		  width: 20px;
-		float: right; 
+      width: 20px;
+    float: right;
           &:hover {
             text-decoration: none;
           }
         }
-		a.positive, a.negative {
-			padding: 2px; 
-			margin: 4px -2px 4px 0px;
-			@include border-radius(3px);
-	  		border-color: rgba(black, .07);
-	  		@include box-shadow(rgba(black, .26), 1px, 1px, 1px);
-	  		color: #fff;
+    a.positive, a.negative {
+      padding: 2px;
+      margin: 4px -2px 4px 0px;
+      @include border-radius(3px);
+        border-color: rgba(black, .07);
+        @include box-shadow(rgba(black, .26), 1px, 1px, 1px);
+        color: #fff;
         }
-		a.positive {
-			background-color: #53b848;	
+    a.positive {
+      background-color: #53b848;
         }
       }
       img {
@@ -729,9 +800,9 @@ float: left;
       ul {
          padding-left: 0;
          margin: 0 0 1.5em 0;
-         li { 
-		    list-style: none;
-		 }
+         li {
+        list-style: none;
+     }
       }
     }
     .guides {
@@ -777,14 +848,14 @@ ul.event-details {
     }
     a{
       font-size: 1.2em;
-	  font-weight: bold;
-	  color: $grey-color;
+    font-weight: bold;
+    color: $grey-color;
     }
     a.button,
-	a.button:link, a.button:visited {
-    	font-size: 1.2em;
-	  	font-weight: bold;
-  		color: $grey-color;
+  a.button:link, a.button:visited {
+      font-size: 1.2em;
+      font-weight: bold;
+      color: $grey-color;
     }
   }
 }

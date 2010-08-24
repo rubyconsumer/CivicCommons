@@ -1,23 +1,43 @@
+- content_for :document_ready do
+  $("#conversation_1_comment_input").customTabs();
+
 - content_for :main do
   .header
     %h1 The Ed Show Wrapup - July 10, 2010 
-    .tab-strip
-      %a(href="#/comment/new" title="Add Comment") Comment
-      %a(href="#/question/new" title="Ask a Question") Question
-      %a(href="#/file/new" title="Upload a File") Image/File
-      %a(href="#/link/new" title="Post a Link") Link
-      %a(href="#/video/new" title="Post a Video") Video
-    .tab-area
-      %textarea(name="comment[text]" id="comment_text" rows="3" placeholder="Leave a Comment...")
-      #question_text
-        This is a question
-      #file_url
-        This is a file
-      #link_url
-        This is a link
-      #video_url
-        This is a video
-    %a.button.tertiary(href="#" title="Save to the Stream") Save
+    #conversation_1_comment_input.tab-strip
+      %ul
+        %li
+          %a(href="#new-comment" title="Add Comment") Comment
+        %li
+          %a(href="#new-question" title="Ask a Question") Question
+        %li
+          %a(href="#new-file" title="Upload a File") Image/File
+        %li
+          %a(href="#new-link" title="Post a Link") Link
+        %li
+          %a(href="#new-video" title="Post a Video") Video
+      .tab-area.input-with-options
+        %textarea(name="comment[text]" id="comment_text" rows="3" placeholder="Leave a Comment...")
+        #new-comment
+        #new-question
+          %label
+            Who can answer?
+            %select(id="conversation_question_answerer_role_id" name="conversation[question][answerer_role_id]")
+              %option(value="1") Anyone
+              %option(value="2") Moderator
+        #new-file
+          %label
+            Upload a file:
+            %input(type="file" name="conversation[attachment_file_name]")
+        #new-link
+          %label
+            URL:
+            %input(type="text" name="conversation[link_url]" class="textbox link" placeholder="http://www.youtube.com")
+        #new-video
+          %label
+            Embed code:
+            %input(type="text" name="conversation[video_embed_code]" class="textbox link" placeholder="Copy/paste the HTML embed code here.")
+    %a.button.tertiary(href="#" title="Save to the Stream") Preview
   %hr
   %ul.event-details
     %li
