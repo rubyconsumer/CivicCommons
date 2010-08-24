@@ -27,6 +27,7 @@ gem 'devise', '1.1'
 gem 'meta_search'
 
 gem 'paperclip'
+gem 'aws-s3'
 
 group :test do
   gem 'mysql', '2.8.1'
