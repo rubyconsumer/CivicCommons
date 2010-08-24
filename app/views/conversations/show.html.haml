@@ -1,7 +1,8 @@
 - content_for :main do
   %div(id="show_conversation")
     %h1= @conversation.title
-    %img{:src => @conversation.image.url(:normal), :alt => " [image for " + @conversation.title + "] "}
+    - if @conversation.image
+      %img{:src => @conversation.image.url(:normal), :alt => " [image for " + (@conversation.title || "conversation") + "] "}
     %p.conversation_description= @conversation.summary
     - if person_signed_in?
       %select(name="random[type]" id="comment_type")
