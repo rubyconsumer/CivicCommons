@@ -1,4 +1,4 @@
-rvm use --create --install 1.9.2@civiccommons >/dev/null 2>&1
+rvm use --create --install --passenger 1.9.2@civiccommons >/dev/null 2>&1
 
 if [[ -s "./civiccommons.gems" ]]; then
   if ! rvm gemset import civiccommons.gems >/dev/null 2>&1; then
