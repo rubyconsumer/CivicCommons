@@ -184,5 +184,33 @@ describe ConversationsController do
       response.should redirect_to(conversations_url)
     end
   end
-
+  
+  describe "POST 'create_post'" do
+    before(:each) do      
+      @person = Factory.create(:normal_person)
+      @controller.stub(:current_person).and_return(@person)
+      
+      
+      @params = {:comment=>{:content=>"Foo"}, :id=>1}
+      @conversation = Factory.create(:conversation)
+      @comment = Factory.create(:comment)      
+      
+      Conversation.stub(:find).with(1).and_return(@conversation)
+      @conversation.stub(:create_post_comment).and_return(@comment)
+    end
+    context "when requesting a json object" do
+      before(:each) do      
+        @params = {:comment=>{:content=>"Foo"}, :id=>1, :format=>"json"}
+      end      
+      it "should be successful" do
+        post :create_post, @params
+        response.should be_success
+      end
+      
+      it "should render a valid json string" do
+        post :create_post, @params
+        response.body.should == @comment.to_json        
+      end
+    end
+  end
 end

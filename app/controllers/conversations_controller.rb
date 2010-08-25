@@ -119,8 +119,12 @@ class ConversationsController < ApplicationController
     # @postable = params[:postable_type].constantize.new(params[params[:postable_type].to_sym])
     # @conversation.create_post(@postable, current_person)
     
-    @conversation.create_post_comment(@comment, current_person)
-    redirect_to conversation_path(@conversation)
+    @comment = @conversation.create_post_comment(@comment, current_person)
+    
+    respond_to do |format|
+      format.html { redirect_to conversation_path(@conversation) }      
+      format.json { render :json => @comment.to_json }
+    end
   end
 
   # Kludge to convert US date-time (mm/dd/yyyy hh:mm am) to an
