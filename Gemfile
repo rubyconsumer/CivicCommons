@@ -26,6 +26,6 @@ gem 'paperclip'
 gem 'aws-s3'
 
 group :test do
-  gem 'mysql', '2.8.1'
+  #gem 'mysql', '2.8.1'
 end
 

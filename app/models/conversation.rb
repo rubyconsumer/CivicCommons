@@ -109,5 +109,14 @@ class Conversation < ActiveRecord::Base
       started_at.mday
     end
   end
+  
+  #creates a post, with the conversation instance saved as conversable/parent, and 
+  #the comment as postable/child
+  def create_post_comment(comment_params, current_person)
+    comment = Comment.create(comment_params)
+    comment.owner = current_person
+    Post.create(:conversable_type => self.class, :conversable_id => self.id,
+                :postable_type => comment.class, :postable_id => comment.id)
+  end
 end
 

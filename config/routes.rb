@@ -13,7 +13,9 @@ Civiccommons::Application.routes.draw do
 
   resources :issues
 
-  resources :conversations
+  resources :conversations do
+    resources :post_comments
+  end
   match '/conversations/rate', :to=>'conversations#rate', :via=>[:post]
   
   resources :post_comments  
