@@ -449,6 +449,35 @@ p a.summary-link
 }
 
 
+.nav-wrapper {
+  width: 100%;
+  background-color: #d0dfe9;
+  border-bottom: solid 1px #a3afb7;
+  #main-nav.nav {
+    @include group;
+    padding-top: 15px;
+    padding-bottom: 7px;
+    margin: auto;
+    width: 960px;
+
+    ul {
+      list-style-type: none;
+      margin-left: 0;
+      li {
+        float: left;
+        margin-right: 30px;
+
+        a {
+          color: #08669f;
+          font-size: 1.4em;
+          text-transform: uppercase;
+          @include text-shadow(white, 1px, 1px, 1px);
+        }
+      }
+    }
+  }
+}
+
 #body.section {
 background: url(/images/body-gradient.png) repeat-x,
               url(/images/body-background.png) repeat;
