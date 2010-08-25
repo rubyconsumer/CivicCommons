@@ -22,9 +22,6 @@ Civiccommons::Application.routes.draw do
 
   match '/conversations/rate', :to=>'conversations#rate', :via=>[:post]
   
-  resources :post_comments  
-  resources :post_questions  
-  
   resources :questions
   
   match '/top_items/newest', :to=>'top_items#newest', :as =>'newest_items'
