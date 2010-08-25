@@ -16,7 +16,7 @@
     <td><%= event.title %></td>
     <td><%= event.when %></td>
     <td><%= event.where %></td>
-    <td><%= event.moderator_id %></td>
+    <td><%= event.moderator ? event.moderator.name : "none" %></td>
     <td><%= link_to 'Show', event %></td>
     <td><%= link_to 'Edit', edit_event_path(event) %></td>
     <td><%= link_to 'Destroy', event, :confirm => 'Are you sure?', :method => :delete %></td>
