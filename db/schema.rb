@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100822215644) do
+ActiveRecord::Schema.define(:version => 20100825161925) do
 
   create_table "answers", :force => true do |t|
     t.datetime "datetime"
@@ -98,6 +98,7 @@ ActiveRecord::Schema.define(:version => 20100822215644) do
     t.integer  "total_visits",     :default => 0
     t.integer  "recent_visits",    :default => 0
     t.datetime "last_visit_date"
+    t.string   "summary"
   end
 
   create_table "people", :force => true do |t|
@@ -135,7 +136,7 @@ ActiveRecord::Schema.define(:version => 20100822215644) do
     t.string   "postable_type"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.datetime "display_time",     :default => '2010-08-14 18:38:59'
+    t.datetime "display_time",     :default => '2010-08-11 04:17:30'
   end
 
   create_table "questions", :force => true do |t|
