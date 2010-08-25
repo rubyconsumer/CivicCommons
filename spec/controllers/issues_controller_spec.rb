@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe IssuesController do
-
   def mock_issue(stubs={})
     @mock_issue ||= mock_model(Issue, stubs).as_null_object
   end
@@ -35,6 +34,11 @@ describe IssuesController do
   end
 
   describe "GET new" do
+    before(:each) do 
+      @person = Factory.create(:admin_person)
+      @controller.stub(:current_person).and_return(@person)      
+    end    
+    
     it "assigns a new issue as @issue" do
       Issue.stub(:new) { mock_issue }
       get :new
@@ -43,6 +47,11 @@ describe IssuesController do
   end
 
   describe "GET edit" do
+    before(:each) do 
+      @person = Factory.create(:admin_person)
+      @controller.stub(:current_person).and_return(@person)      
+    end    
+    
     it "assigns the requested issue as @issue" do
       Issue.stub(:find).with("37") { mock_issue }
       get :edit, :id => "37"
@@ -51,6 +60,10 @@ describe IssuesController do
   end
 
   describe "POST create" do
+    before(:each) do 
+      @person = Factory.create(:admin_person)
+      @controller.stub(:current_person).and_return(@person)      
+    end    
 
     describe "with valid params" do
       it "assigns a newly created issue as @issue" do
@@ -83,6 +96,10 @@ describe IssuesController do
   end
 
   describe "PUT update" do
+    before(:each) do 
+      @person = Factory.create(:admin_person)
+      @controller.stub(:current_person).and_return(@person)      
+    end    
 
     describe "with valid params" do
       it "updates the requested issue" do
@@ -121,6 +138,11 @@ describe IssuesController do
   end
 
   describe "DELETE destroy" do
+    before(:each) do 
+      @person = Factory.create(:admin_person)
+      @controller.stub(:current_person).and_return(@person)      
+    end    
+    
     it "destroys the requested issue" do
       Issue.should_receive(:find).with("37") { mock_issue }
       mock_issue.should_receive(:destroy)
