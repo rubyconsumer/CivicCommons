@@ -1,3 +1,6 @@
+- content_for :document_ready do
+  $("#conversation_1_comment_input").customTabs();
+
 - content_for :main do
   %div(id="show_conversation")
     %h1= @conversation.title
@@ -24,6 +27,11 @@
     %ul.thread-list
       - @conversation.posts.order('display_time DESC').each do |post|
         =render :partial => post.postable_type.downcase, :locals => { :postable => post.postable }
+    -form_for :comment, @comment, :url => {:controller => 'conversations', :action => 'create_post'} do |f|
+      =f.label :content
+      =f.text_area :content
+      =f.submit
+
 -content_for :sidebar do
   .aside.guides
     %strong Guides

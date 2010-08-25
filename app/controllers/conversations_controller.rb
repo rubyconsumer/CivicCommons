@@ -111,6 +111,14 @@ class ConversationsController < ApplicationController
     end
   end
 
+  # POST /conversations/1/create_post
+  def create_post
+    @conversation = Conversation.find(params[:id])
+    @comment = Comment.new(params[:comment])
+    @conversation.create_post_comment(@comment, current_person)
+    redirect_to conversation_path(@conversation)
+  end
+
   # Kludge to convert US date-time (mm/dd/yyyy hh:mm am) to an
   # ISO-like date-time (yyyy-mm-ddThh:mm:ss).
   # There is probably a better way to do this. Please refactor.
