@@ -25,7 +25,7 @@
   </div>
   <div class="field">
     <%= f.label :moderator_id %><br />
-    <%= f.text_field :moderator_id %>
+    <%= f.collection_select :moderator_id, Person.all, :id, :name %><br />
   </div>
   <div class="actions">
     <%= f.submit %>
