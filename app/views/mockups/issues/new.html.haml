@@ -1,0 +1,15 @@
+%h1 Create a New Issue
+%form
+  .form-group
+    .form-block
+      %label(for="title")
+        Title:
+      %input(class="textbox" name="issue-name" placeholder="Finding Plutonium in the Year 1885")
+    .form-block
+      %label(for="summary") Summary:
+      %input(class="textbox" name="issue-summary" placeholder="A brief description of the issue")
+    .form-block
+      %p
+        - succeed "or" do
+          %input(type="submit" class="submit" value="Create Issue")
+        %a.cancel(href="#") cancel

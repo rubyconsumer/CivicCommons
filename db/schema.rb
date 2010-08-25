@@ -135,7 +135,7 @@ ActiveRecord::Schema.define(:version => 20100822215644) do
     t.string   "postable_type"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.datetime "display_time",     :default => '2010-08-11 04:17:30'
+    t.datetime "display_time",     :default => '2010-08-14 18:38:59'
   end
 
   create_table "questions", :force => true do |t|

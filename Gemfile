@@ -7,10 +7,6 @@ gem 'sqlite3-ruby', :require => 'sqlite3'
 gem 'haml'
 gem 'date_validator'
 
-group :production do
-  gem 'hassle', :git => 'git://github.com/Papipo/hassle.git'
-end
-
 group :development do
   gem "rails3-generators"
   gem "hpricot"

@@ -4,7 +4,7 @@ class Conversation < ActiveRecord::Base
   
   has_many :posts, :as => :conversable
 
-  has_and_belongs_to_many :guides, :class_name => 'People', :join_table => 'conversations_guides', :association_foreign_key => :guide_id
+  has_and_belongs_to_many :guides, :class_name => 'Person', :join_table => 'conversations_guides', :association_foreign_key => :guide_id
 
   if File.exist? '/usr/local/etc/amazon_s3.yml'
     s3_credential_file_name = '/usr/local/etc/amazon_s3.yml'
