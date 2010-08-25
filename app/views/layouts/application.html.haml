@@ -38,15 +38,15 @@
       #main-nav.nav
         %ul
           %li
-            %a(href="#" title="Home") Home
+            = link_to ('Home', { :controller => :homepage, :action => :show }, :title => 'Home')
           %li
-            %a(href="#" title="Conversations") Conversations
+            = link_to ('Conversations', :conversations, :title => 'Conversations')
           %li
-            %a(href="#" title="Events") Events
+            = link_to ('Events', :events, :title => 'Events')
           %li
-            %a(href="#" title="Issues") Issues
+            = link_to ('Issues', :issues, :title => 'Issues')
           %li
-            %a(href="#" title="People") People
+            = link_to ('People', :people, :title => 'People')
     #body.section
       = yield :main_body
     #footer.footer
