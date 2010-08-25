@@ -5,3 +5,4 @@ tmp/*
 tmp/**/*
 rake/**/*
 public/stylesheets/*.css
+config/amazon_s3.yml
