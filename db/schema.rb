@@ -104,12 +104,12 @@ ActiveRecord::Schema.define(:version => 20100825161925) do
   create_table "people", :force => true do |t|
     t.string   "first_name"
     t.string   "last_name"
-    t.string   "email",                               :default => "", :null => false
     t.boolean  "validated"
     t.boolean  "admin"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "password"
+    t.string   "email",                               :default => "", :null => false
     t.string   "encrypted_password",   :limit => 128, :default => "", :null => false
     t.string   "password_salt",                       :default => "", :null => false
     t.string   "reset_password_token"
@@ -136,7 +136,7 @@ ActiveRecord::Schema.define(:version => 20100825161925) do
     t.string   "postable_type"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.datetime "display_time",     :default => '2010-08-11 04:17:30'
+    t.datetime "display_time",     :default => '2010-08-22 21:14:27'
   end
 
   create_table "questions", :force => true do |t|

@@ -115,6 +115,10 @@ class ConversationsController < ApplicationController
   def create_post
     @conversation = Conversation.find(params[:id])
     @comment = Comment.new(params[:comment])
+    
+    # @postable = params[:postable_type].constantize.new(params[params[:postable_type].to_sym])
+    # @conversation.create_post(@postable, current_person)
+    
     @conversation.create_post_comment(@comment, current_person)
     redirect_to conversation_path(@conversation)
   end

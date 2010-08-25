@@ -9,7 +9,7 @@ class Conversation < ActiveRecord::Base
   if File.exist? '/usr/local/etc/amazon_s3.yml'
     s3_credential_file_name = '/usr/local/etc/amazon_s3.yml'
   else
-    s3_credential_file_name = 'config/amazon_s3.yml'
+    s3_credential_file_name = Rails.root + 'config/amazon_s3.yml'
   end
 
   s3_credential_file = File.new(s3_credential_file_name)
