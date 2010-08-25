@@ -1,4 +1,6 @@
 class IssuesController < ApplicationController
+  before_filter :verify_admin, :only=>[:new, :create, :edit, :update, :destroy]
+
   # GET /issues
   # GET /issues.xml
   def index
