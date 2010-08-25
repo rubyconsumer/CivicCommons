@@ -38,15 +38,15 @@
       #main-nav.nav
         %ul
           %li
-            = link_to ('Home', root_path, :title => 'Home')
+            = link_to 'Home', root_path, :title => 'Home'
           %li
-            = link_to ('Conversations', conversations_path, :title => 'Conversations')
+            = link_to 'Conversations', conversations_path, :title => 'Conversations'
           %li
-            = link_to ('Events', events_path, :title => 'Events')
+            = link_to 'Events', events_path, :title => 'Events'
           %li
-            = link_to ('Issues', issues_path, :title => 'Issues')
+            = link_to 'Issues', issues_path, :title => 'Issues'
           %li
-            = link_to ('People', people_path, :title => 'People')
+            = link_to 'People', people_path, :title => 'People'
     #body.section
       = yield :main_body
     #footer.footer
