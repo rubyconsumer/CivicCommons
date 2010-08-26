@@ -26,4 +26,4 @@
 
 <br />
 
-<%= link_to 'New Issue', new_issue_path %>
+<%= link_to 'New Issue', new_issue_path if (current_person && current_person.admin) %>
