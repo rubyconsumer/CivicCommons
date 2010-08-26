@@ -111,19 +111,6 @@ class ConversationsController < ApplicationController
     end
   end
 
-  # POST /conversations/1/create_post
-  def create_post
-    @conversation = Conversation.find(params[:id])
-    
-    model_name = params[:post_model_type].downcase.to_sym
-    @postable = params[:post_model_type].constantize.new(params[model_name])
-    
-    @postable = @conversation.create_post(@postable, current_person)
-    
-    respond_to do |format|
-      format.html { render :partial=>"/conversations/"+params[:post_model_type].downcase, :locals => { :postable => @postable }}      
-    end
-  end
 
   # Kludge to convert US date-time (mm/dd/yyyy hh:mm am) to an
   # ISO-like date-time (yyyy-mm-ddThh:mm:ss).

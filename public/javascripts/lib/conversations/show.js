@@ -81,9 +81,10 @@ function PostComment() {
 	$("[name*=comment]:input").each(function(){
 		data = data + $(this).attr("name") + "=" + escape($(this).val()) + "&";
 	});
+	data = data + "conversation_id=" + escape($("#conversation_id").val()) + "&";
 	data = data + "post_model_type=" + escape($("#post_model_type").val());
 	$.ajax({
-		url: "/conversations/"+$("#conversation_id").val()+"/create_post",
+		url: "/conversations/create_post",
 		type: "POST",
 		data: data,
 		success: function(response) {
@@ -101,9 +102,10 @@ function PostQuestion() {
 	$("[name*=question]:input").each(function(){
 		data = data + $(this).attr("name") + "=" + escape($(this).val()) + "&";
 	});
+	data = data + "conversation_id=" + escape($("#conversation_id").val()) + "&";	
 	data = data + "post_model_type=" + escape($("#post_model_type").val());	
 	$.ajax({
-		url: "/conversations/"+$("#conversation_id").val()+"/create_post",
+		url: "/conversations/create_post",
 		type: "POST",
 		data: data,
 		success: function(response) {

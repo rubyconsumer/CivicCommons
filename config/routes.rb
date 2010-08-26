@@ -13,14 +13,10 @@ Civiccommons::Application.routes.draw do
 
   resources :issues
 
-  resources :conversations  do
-    member do
-      post :create_post
-    end
-    resources :post_comments
-  end
-
+  resources :conversations
+  
   match '/conversations/rate', :to=>'conversations#rate', :via=>[:post]
+  match '/conversations/create_post', :to=>'conversations#create_post', :via=>[:post]  
   
   resources :questions
   

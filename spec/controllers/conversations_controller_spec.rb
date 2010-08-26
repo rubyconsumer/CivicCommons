@@ -198,7 +198,7 @@ describe ConversationsController do
       Conversation.stub(:find).with(1).and_return(@conversation)
       @conversation.stub(:create_post_comment).and_return(@comment)
       
-      @params = {:comment=>{:content=>"Foo"}, :id=>1, :post_model_type=>"Comment"}      
+      @params = {:comment=>{:content=>"Foo"}, :id=>1, :post_model_type=>"Comment", :conversation_id=>1}      
     end
     it "should be successful" do
       post :create_post, @params
