@@ -7,12 +7,18 @@ $(document).ready(function() {
 function SetupComment() {
 	$("#post_content").attr("name", "comment[content]");
 	$("#post_content").attr("placeholder", "Leave a Comment...");	
+	$("#post_model_type").val("Comment");	
+	$("#post_content").val("");
+	$("#preview_post").unbind();
 	$("#preview_post").click(PreviewComment);
 }
 
 function SetupQuestion() {
 	$("#post_content").attr("name", "question[content]");
 	$("#post_content").attr("placeholder", "Ask a Question...");	
+	$("#post_model_type").val("Question");
+	$("#post_content").val("");	
+	$("#preview_post").unbind();	
 	$("#preview_post").click(PreviewQuestion);
 }
 
@@ -75,6 +81,7 @@ function PostComment() {
 	$("[name*=comment]:input").each(function(){
 		data = data + $(this).attr("name") + "=" + escape($(this).val()) + "&";
 	});
+	data = data + "post_model_type=" + escape($("#post_model_type").val());
 	$.ajax({
 		url: "/conversations/"+$("#conversation_id").val()+"/create_post",
 		type: "POST",
@@ -94,12 +101,13 @@ function PostQuestion() {
 	$("[name*=question]:input").each(function(){
 		data = data + $(this).attr("name") + "=" + escape($(this).val()) + "&";
 	});
+	data = data + "post_model_type=" + escape($("#post_model_type").val());	
 	$.ajax({
 		url: "/conversations/"+$("#conversation_id").val()+"/create_post",
 		type: "POST",
 		data: data,
 		success: function(response) {
-			$(response).hide().prependTo($("ul.thread-list")).slideDown("slow");
+			$(response).hide().appendTo($("ul.thread-list")).slideDown("slow");
 			SetupQuestion();
 		},
 		error: function(xhr, status, error) {
