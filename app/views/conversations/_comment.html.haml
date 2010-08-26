@@ -7,10 +7,13 @@
       .meta
         .comment-type{:class=>postable.official ? "" : "unofficial"}=  "Official" if postable.official
         %a.rating(href="#" title="Rate this comment")=format_rating(postable)
-      %img{:alt=>"Comment from #{postable.person.name}"}
-      %p
-        %a{:href=>person_path(postable), :title=>"#{postable.person.name}'s Profile"}
-          %strong= postable.person.name
+        -if postable.person
+          %img{:alt=>"Comment from #{postable.person.name}"}
+          %p
+            %a{:href=>person_path(postable), :title=>"#{postable.person.name}'s Profile"}
+              %strong= postable.person.name
+        -else
+          %strong= 'An unknown person'
         %span.action commented:
       %p.content= postable.content
       %p
