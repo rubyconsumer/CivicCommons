@@ -43,6 +43,18 @@ function HideRatingTools() {
 	$("#show_conversation #conversation_rating a.toggle").hide();
 }
 
+function ShowError(xhr, status, error, memo) {
+var string = "There was a " + status + " in " + memo + ".\n"
+	if (error) {
+		string += " The error text is " + error.toString() + ".\n"
+	}
+	if (xhr) {
+		string += " Status: " + xhr.status + "\n";
+		string += " See server log for details.\n";
+	}
+	alert(string);
+}
+
 function RateConversation(conversation_id, rating) {
 	var data = "";
 	data = data + "conversation_id=" + $("#conversation_id").val();
@@ -92,7 +104,7 @@ function PostComment() {
 			SetupComment();
 		},
 		error: function(xhr, status, error) {
-			alert(error + " " + status);
+			ShowError(xhr, status, error, "posting your comment")
 		}
 	})
 }
@@ -113,7 +125,7 @@ function PostQuestion() {
 			SetupQuestion();
 		},
 		error: function(xhr, status, error) {
-			alert(error + " " + status);
+			ShowError(xhr, status, error, "posting your question")
 		}
 	})
 }

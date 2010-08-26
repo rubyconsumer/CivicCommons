@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
     @postable = @conversable.create_post(@postable, current_person)
     
     respond_to do |format|
-      format.html { render :partial=>"/"+find_conversable.class.to_s.pluralize+"/"+params[:post_model_type].downcase, :locals => { :postable => @postable }}      
+      format.html { render :partial=>"/"+find_conversable.class.to_s.pluralize.downcase+"/"+params[:post_model_type].downcase, :locals => { :postable => @postable }}      
     end
   end  
   

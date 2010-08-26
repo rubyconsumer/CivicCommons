@@ -6,16 +6,13 @@ class Conversation < ActiveRecord::Base
 
   has_and_belongs_to_many :guides, :class_name => 'Person', :join_table => 'conversations_guides', :association_foreign_key => :guide_id
 
-  if File.exist? '/usr/local/etc/amazon_s3.yml'
-    s3_credential_file_name = '/usr/local/etc/amazon_s3.yml'
-  else
-    s3_credential_file_name = Rails.root + 'config/amazon_s3.yml'
-  end
-
-  s3_credential_file = File.new(s3_credential_file_name)
-
   # paperclip bug: if you don't specify the path, you will get
   # a stack overflow when trying to upload an image.
+  # return an open File object that contains our Amazon S3 credentials.
+  filename = '/data/TheCivicCommons/shared/config/amazon_s3.yml' # the way it lands on EngineYard
+  filename = Rails.root + 'config/amazon_s3.yml' unless File.exist? filename
+  s3_credential_file = File.new(filename)
+
   has_attached_file :image,
     :styles => {
        :thumb => "100x100#",
