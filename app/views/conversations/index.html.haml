@@ -45,4 +45,5 @@
           %a(href="#{url_for(:controller => 'conversations', :action => :show, :id => conversation.id)}" title="#{conversation.title}")
             #{conversation.summary}
 
-  #{link_to 'Start a new conversation!', new_conversation_path}
+  - if (current_person && current_person.admin)
+    #{link_to 'Start a new conversation!', new_conversation_path}
