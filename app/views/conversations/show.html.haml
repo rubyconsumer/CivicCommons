@@ -10,6 +10,7 @@
     - if person_signed_in?
       =render :partial => "tabbed_post_box"      
     %input{:type=>"hidden", :id=>"conversation_id", :value=>"#{@conversation.id}"}
+    %input{:type=>"hidden", :id=>"post_model_type", :value="Comment"}
     %span(id="conversation_rating")
       - if person_signed_in?    
         %a.rating{:class=>"rating_down hide toggle", :href=>"#", :title=>"Rate this comment -1", :onclick=>"RateConversation(#{@conversation.id}, -1);"} -1

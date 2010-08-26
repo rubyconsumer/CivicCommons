@@ -25,7 +25,7 @@ function PreviewComment() {
 	PostComment();
 }
 
-function PreviewComment() {
+function PreviewQuestion() {
 	PostQuestion();
 }
 

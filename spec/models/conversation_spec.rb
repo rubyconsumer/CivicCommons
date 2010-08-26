@@ -29,8 +29,8 @@ describe Conversation do
       conversation.posts.count.should == 1
     end
   end
-  
-  describe "when creating a comment for the conversation" do
+    
+  describe "when creating a post for the conversation" do
     before(:each) do
       @comment = Factory.create(:comment)
       @person = Factory.create(:normal_person)
@@ -38,14 +38,15 @@ describe Conversation do
     end
     
     it "should save the comment" do      
-      result = @conversation.create_post_comment(@comment, @person)
+      result = @conversation.create_post(@comment, @person)
       result.person.should == @person
     end
     
     it "should create the post" do
-      result = @conversation.create_post_comment(@comment, @person)
+      result = @conversation.create_post(@comment, @person)
       @conversation.posts.count.should == 1
       @conversation.posts[0].postable.should == result      
     end
   end  
+  
 end

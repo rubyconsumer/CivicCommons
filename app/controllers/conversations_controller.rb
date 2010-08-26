@@ -114,15 +114,14 @@ class ConversationsController < ApplicationController
   # POST /conversations/1/create_post
   def create_post
     @conversation = Conversation.find(params[:id])
-    @comment = Comment.new(params[:comment])
     
-    # @postable = params[:postable_type].constantize.new(params[params[:postable_type].to_sym])
-    # @conversation.create_post(@postable, current_person)
+    model_name = params[:post_model_type].downcase.to_sym
+    @postable = params[:post_model_type].constantize.new(params[model_name])
     
-    @comment = @conversation.create_post_comment(@comment, current_person)
+    @postable = @conversation.create_post(@postable, current_person)
     
     respond_to do |format|
-      format.html { render :partial=>"/conversations/comment", :locals => { :postable => @comment }}      
+      format.html { render :partial=>"/conversations/"+params[:post_model_type].downcase, :locals => { :postable => @postable }}      
     end
   end
 
