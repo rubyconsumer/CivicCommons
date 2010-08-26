@@ -8,13 +8,7 @@
       %img{:src => @conversation.image.url(:normal), :alt => " [image for " + (@conversation.title || "conversation") + "] "}
     %p.conversation_description= @conversation.summary
     - if person_signed_in?
-      %select(name="random[type]" id="comment_type")
-        %option Official
-        %option Other
-      %textarea(name="question[content]" id="question_content" rows="3")
-        Leave a comment...
-      %input(type="hidden" id="postable_type" value="question")
-      %a.button.tertiary(href="#" title="Save to the Stream" id="save_post") Save
+      =render :partial => "tabbed_post_box"      
     %input{:type=>"hidden", :id=>"conversation_id", :value=>"#{@conversation.id}"}
     %span(id="conversation_rating")
       - if person_signed_in?    
@@ -27,10 +21,6 @@
     %ul.thread-list
       - @conversation.posts.order('display_time DESC').each do |post|
         =render :partial => post.postable_type.downcase, :locals => { :postable => post.postable }
-    -form_for :comment, @comment, :url => {:controller => 'conversations', :action => 'create_post'} do |f|
-      =f.label :content
-      =f.text_area :content
-      =f.submit
 
 -content_for :sidebar do
   .aside.guides

@@ -197,20 +197,12 @@ describe ConversationsController do
       
       Conversation.stub(:find).with(1).and_return(@conversation)
       @conversation.stub(:create_post_comment).and_return(@comment)
-    end
-    context "when requesting a json object" do
-      before(:each) do      
-        @params = {:comment=>{:content=>"Foo"}, :id=>1, :format=>"json"}
-      end      
-      it "should be successful" do
-        post :create_post, @params
-        response.should be_success
-      end
       
-      it "should render a valid json string" do
-        post :create_post, @params
-        response.body.should == @comment.to_json        
-      end
+      @params = {:comment=>{:content=>"Foo"}, :id=>1}      
+    end
+    it "should be successful" do
+      post :create_post, @params
+      response.should be_success
     end
   end
 end

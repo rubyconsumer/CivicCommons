@@ -1,0 +1,34 @@
+#conversation_1_comment_input.tab-strip
+  %ul
+    %li
+      %a(href="#new-comment" title="Add Comment" id="comment_tab" onclick="SetupComment();") Comment
+    %li
+      %a(href="#new-question" title="Ask a Question" id="question_tab" onclick="SetupQuestion();") Question
+    %li
+      %a(href="#new-file" title="Upload a File" id="image_tab" onclick="SetPostModel('File');") Image/File
+    %li
+      %a(href="#new-link" title="Post a Link" id="link_tab" onclick="SetPostModel('Link');") Link
+    %li
+      %a(href="#new-video" title="Post a Video" id="video_tab" onclick="SetPostModel('Video');") Video
+  .tab-area.input-with-options
+    %textarea(name="" id="post_content" rows="3" placeholder="Leave a Comment...")
+    #new-comment
+    #new-question
+      %label
+        Who can answer?
+        %select(id="post_askee" name="")
+          %option(value="1") Anyone
+          %option(value="2") Moderator
+    #new-file
+      %label
+        Upload a file:
+        %input(type="file" name="" id="post_file")
+    #new-link
+      %label
+        URL:
+        %input(type="text" name="" id="post_url" class="textbox link" placeholder="http://www.youtube.com")
+    #new-video
+      %label
+        Embed code:
+        %input(type="text" name="" id="post_code" class="textbox link" placeholder="Copy/paste the HTML embed code here.")
+%a.button.tertiary(href="#" title="Save to the Stream" id="preview_post") Preview

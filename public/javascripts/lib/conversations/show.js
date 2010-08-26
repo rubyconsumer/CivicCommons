@@ -1,7 +1,33 @@
 $(document).ready(function() {
 	$("#show_conversation #save_post").click(SavePost);
 	$("#show_conversation #conversation_rating").hover(ShowRatingTools, HideRatingTools);
+	InitializePostBox();
 });
+
+function SetupComment() {
+	$("#post_content").attr("name", "comment[content]");
+	$("#post_content").attr("placeholder", "Leave a Comment...");	
+	$("#preview_post").click(PreviewComment);
+}
+
+function SetupQuestion() {
+	$("#post_content").attr("name", "question[content]");
+	$("#post_content").attr("placeholder", "Ask a Question...");	
+	$("#preview_post").click(PreviewQuestion);
+}
+
+
+function InitializePostBox() {
+	SetupComment();
+}
+
+function PreviewComment() {
+	PostComment();
+}
+
+function PreviewComment() {
+	PostQuestion();
+}
 
 function ShowRatingTools() {
 	$("#show_conversation #conversation_rating a.toggle").show();
@@ -49,14 +75,13 @@ function PostComment() {
 	$("[name*=comment]:input").each(function(){
 		data = data + $(this).attr("name") + "=" + escape($(this).val()) + "&";
 	});
-	data = data + "conversation_id=" + $("#conversation_id").val();
 	$.ajax({
-		url: "/post_comments",
+		url: "/conversations/"+$("#conversation_id").val()+"/create_post",
 		type: "POST",
 		data: data,
 		success: function(response) {
-			$(response).hide().prependTo($("ul.thread-list")).slideDown("slow");
-			$("#comment_content").val("");
+			$(response).hide().appendTo($("ul.thread-list")).slideDown("slow");
+			SetupComment();
 		},
 		error: function(xhr, status, error) {
 			alert(error + " " + status);
@@ -69,14 +94,13 @@ function PostQuestion() {
 	$("[name*=question]:input").each(function(){
 		data = data + $(this).attr("name") + "=" + escape($(this).val()) + "&";
 	});
-	data = data + "conversation_id=" + $("#conversation_id").val();
 	$.ajax({
-		url: "/post_questions",
+		url: "/conversations/"+$("#conversation_id").val()+"/create_post",
 		type: "POST",
 		data: data,
 		success: function(response) {
 			$(response).hide().prependTo($("ul.thread-list")).slideDown("slow");
-			$("#question_content").val("");
+			SetupQuestion();
 		},
 		error: function(xhr, status, error) {
 			alert(error + " " + status);

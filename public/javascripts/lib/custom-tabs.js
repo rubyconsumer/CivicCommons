@@ -15,7 +15,6 @@
           var id = $(this).attr("href");
           $self.find("a").removeClass("tab-active");
           $(this).addClass("tab-active");
-          console.log(id);
           $(id).show();
           return false;
         });
