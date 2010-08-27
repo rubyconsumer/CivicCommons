@@ -7,7 +7,7 @@ class Comment < ActiveRecord::Base
   belongs_to :person, :foreign_key=>"owner"
   #Do not believe we need the polymorphic true declaration on the comment model.  #belongs_to :postable, :polymorphic => true
   has_many :posts, :as => :conversable
-  has_many :posts, :as => :postable  
+  has_many :postables, :as => :postable, :class_name => :post
   validates :content, :presence=>true 
   
   def Comment.create_for_conversation(params, conversation_id, owner)  
