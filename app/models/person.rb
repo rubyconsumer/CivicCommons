@@ -30,5 +30,10 @@ class Person < ActiveRecord::Base
     @name ||= "%s %s" % [self.first_name, self.last_name]
   end
 
+  # Until we get some way to input real avatars, everyone's gonna look like George.
+  def avatar_url(size)
+    size = "small"
+    return '/images/nemeth-avatar-small.png'
+  end
 
 end
