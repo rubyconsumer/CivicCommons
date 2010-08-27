@@ -5,6 +5,7 @@
   %div
     - if postable
       .article.comment
+        %a{:name=>"#post#{postable.id}"}
         .meta
           .comment-type{:class=>postable.official ? "" : "unofficial"}
             - "Official" if postable.official
@@ -16,7 +17,8 @@
               %strong= postable.person.name
           -else
             %strong= 'An unknown person'
-          %span.action commented:
+          - tmp = format_time(postable.datetime)
+          %span.action commented at #{link_to(tmp, comment_path(postable))}
         %p.content= postable.content
         %p
           - if person_signed_in?
@@ -29,4 +31,3 @@
 -#%ul
 -#  - postable.posts.order('created_at DESC').each do |post|
 -#    =render :partial => post.postable_type.downcase, :locals => { :postable => post.postable }
-  

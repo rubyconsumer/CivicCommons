@@ -5,9 +5,9 @@ class Comment < ActiveRecord::Base
   include Visitable
   
   belongs_to :person, :foreign_key=>"owner"
-  belongs_to :postable, :polymorphic => true
+  #Do not believe we need the polymorphic true declaration on the comment model.  #belongs_to :postable, :polymorphic => true
   has_many :posts, :as => :conversable
-    
+  has_many :posts, :as => :postable  
   validates :content, :presence=>true 
   
   def Comment.create_for_conversation(params, conversation_id, owner)  

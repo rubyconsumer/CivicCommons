@@ -109,6 +109,7 @@ class Conversation < ActiveRecord::Base
     
   def create_post(postable, current_person)
     postable.person = current_person
+    postable.datetime = Time.now
     postable.save
     Post.create(:conversable_type => self.class.to_s, :conversable_id => self.id,
                 :postable_type => postable.class.to_s, :postable_id => postable.id)
