@@ -6,11 +6,14 @@ $(document).ready(function() {
 
 function SetupComment() {
 	$("#post_content").attr("name", "comment[content]");
-	$("#post_content").attr("placeholder", "Leave a Comment...");	
+	//$("#post_content").attr("placeholder", "Leave a Comment...");	
 	$("#post_model_type").val("Comment");	
-	$("#post_content").val("");
 	$("#preview_post").unbind();
 	$("#preview_post").click(PreviewComment);
+}
+
+function TearDownComment() {
+	$("#post_content").val("");
 }
 
 function SetupQuestion() {
@@ -101,6 +104,7 @@ function PostComment() {
 		data: data,
 		success: function(response) {
 			$(response).hide().appendTo($("ul.thread-list")).slideDown("slow");
+			TearDownComment();
 			SetupComment();
 		},
 		error: function(xhr, status, error) {
