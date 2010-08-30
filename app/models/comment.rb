@@ -26,4 +26,14 @@ class Comment < ActiveRecord::Base
     end
     return comment
   end
+
+  def create_post(postable, current_person)
+    postable.person = current_person
+    postable.datetime = Time.now
+    postable.save
+    Post.create(:conversable_type => self.class.to_s, :conversable_id => self.id,
+                :postable_type => postable.class.to_s, :postable_id => postable.id)
+    return postable
+  end
+  
 end

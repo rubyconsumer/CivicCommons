@@ -22,7 +22,7 @@
         %p.content= postable.content
         %p
           - if person_signed_in?
-            %a.text.button.conversation-action(id="action-link-#{postable.id}" href="#" title="Leave a comment") Leave a comment
+            %a.text.button.conversation-action(id="action-link-#{postable.id}" href="javascript:void(0)" title="Leave a comment here") Comment on this
           - if can_edit?(postable.person)
             %a(href="#" class="privileged" title="Delete this comment") Delete (doesn't work)
       %div{:clear => 'both'}

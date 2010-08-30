@@ -1,34 +1,39 @@
 $(document).ready(function() {
-        $('a.conversation-action').click(CommentAction);
+	$('a.conversation-action').click(PopulateCommentActionDiv);
+	$('a.conversation-action').href = "javascript:void();";
 	$("#show_conversation #save_post").click(SavePost);
 	$("#show_conversation #conversation_rating").hover(ShowRatingTools, HideRatingTools);
 	InitializePostBox();
 });
 
-function CommentAction() {
-	//alert("I am action-link!\n" + this.id);
+/*
+	Populate a DIV with HTML to enter a comment/question/etc. at the indicated
+	point in the conversation.
+*/
+function PopulateCommentActionDiv() {
 	var action_link_id = this.id;
 	var action_div_id = action_link_id.replace(/action-link/, 'action-div');
 	var id = action_link_id.replace(/^action-link-/, '');
-	//alert("My action div is " + action_div_id + "!");
 	var comment_input = $("#conversation_1_comment_input").html();
 	var preview_input_id = "preview_post-" + id;
 	var preview_input = '<a class="button tertiary" href="#" title="Save to the Stream" id="' + preview_input_id + '">Preview</a>'
-	$("#" + action_div_id).html(comment_input + preview_input);
-	$("#" + preview_input_id).click(function(){ClickSubmit(id)});
-	/*
-	var preview_button = new Element("a");
-	preview_button.className = "button tertiary"
-	preview_button.href = "#"
-	preview_button.title = "Save to the Stream"
-	preview_button.id = "preview_post-" + id
-	//preview_button.onClick...
-	$("#" + action_div_id).append(preview_button);
-	*/
+	try {
+		$("#" + action_div_id).html(comment_input + preview_input); // load the HTML
+		$("#" + preview_input_id).click (function(){ClickSubmit(id)}); // set the Preview button (to do a Submit actually)
+		$("#" + preview_input_id).each(function(){
+			this.href = "javascript:void(0);"; // fix the URL of the Preview button to avoid page refresh
+		})
+	}
+	catch (e) {
+		alert("Error in setting up new comment div: " + e);
+	}
 }
 
+/*
+	Right now there is not really a Preview. It's the same as Submit.
+*/
 function ClickSubmit(id) {
-	alert(id);
+	PostComment('Comment', id);
 }
 
 function SetupComment() {
@@ -52,13 +57,12 @@ function SetupQuestion() {
 	$("#preview_post").click(PreviewQuestion);
 }
 
-
 function InitializePostBox() {
 	SetupComment();
 }
 
 function PreviewComment() {
-	PostComment();
+	PostComment('Conversation');
 }
 
 function PreviewQuestion() {
@@ -118,21 +122,41 @@ function SavePost() {
 	}
 }
 
-function PostComment() {
+/*
+	Example:
+		PostComment('Conversation', 10) ---> posts to Conversation #10
+		PostComment('Comment', 48) ---> posts to Comment #48
+*/
+
+function PostComment(conversable_type, conversable_id) {
 	var data = "";
+	if (null == conversable_type)
+	{
+		conversable_type = 'Conversation'
+	}
+	if (null == conversable_id)
+	{
+		conversable_id = $("#conversation_id").val();
+	}
 	$("[name*=comment]:input").each(function(){
 		data = data + $(this).attr("name") + "=" + escape($(this).val()) + "&";
 	});
-	data = data + "conversation_id=" + escape($("#conversation_id").val()) + "&";
+	data = data + conversable_type + "_id=" + escape(conversable_id) + "&";
 	data = data + "post_model_type=" + escape($("#post_model_type").val());
 	$.ajax({
 		url: "/conversations/create_post",
 		type: "POST",
 		data: data,
 		success: function(response) {
-			$(response).hide().appendTo($("ul.thread-list")).slideDown("slow");
-			TearDownComment();
-			SetupComment();
+			try {
+				alert ("Your comment posted, but you have to refresh the page to see it. Sorry.");
+				$(response).hide().appendTo($("ul.thread-list")).slideDown("slow");
+				TearDownComment();
+				SetupComment();
+			}
+			catch (e) {
+				alert ("Your comment posted, but something went wrong when redisplaying it in the thread: " + e);
+			}
 		},
 		error: function(xhr, status, error) {
 			ShowError(xhr, status, error, "posting your comment")
