@@ -2,7 +2,7 @@ class Conversation < ActiveRecord::Base
   include Rateable
   include Visitable
   
-  has_many :posts, :as => :conversable
+  has_many :comments
 
   has_and_belongs_to_many :guides, :class_name => 'Person', :join_table => 'conversations_guides', :association_foreign_key => :guide_id
 
@@ -105,14 +105,6 @@ class Conversation < ActiveRecord::Base
     else
       started_at.mday
     end
-  end
-    
-  def create_post(postable, current_person)
-    postable.person = current_person
-    postable.save
-    Post.create(:conversable_type => self.class.to_s, :conversable_id => self.id,
-                :postable_type => postable.class.to_s, :postable_id => postable.id)
-    return postable
   end
   
 end

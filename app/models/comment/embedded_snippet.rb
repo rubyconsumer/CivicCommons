@@ -1,0 +1,3 @@
+class EmbeddedSnippet < Comment
+  
+end
