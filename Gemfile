@@ -29,3 +29,4 @@ group :test do
   #gem 'mysql', '2.8.1'
 end
 
+gem 'acts_as_tree'

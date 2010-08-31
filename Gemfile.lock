@@ -28,6 +28,7 @@ GEM
       activemodel (= 3.0.0.rc)
       activesupport (= 3.0.0.rc)
     activesupport (3.0.0.rc)
+    acts_as_tree (0.1.1)
     arel (0.4.0)
       activesupport (>= 3.0.0.beta)
     aws-s3 (0.6.2)
@@ -111,6 +112,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  acts_as_tree
   aws-s3
   date_validator
   devise (= 1.1)

@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
-[Event, Comment, Issue, Question, Conversation].each do |model_type|
+[Event, Comment, Issue, Conversation].each do |model_type|
   describe model_type.to_s, "When working with visits" do
     before(:each) do
       @person = Factory.create(:normal_person)
