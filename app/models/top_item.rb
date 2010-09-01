@@ -1,7 +1,10 @@
 class TopItem  
   def TopItem.newest_items(limit=10)
-    comments = Comment.order("created_at DESC").limit(limit).collect{ |x| x.postable }    
+    comments = Comment.order("created_at DESC AND comment_type='Comment'").limit(limit)
     conversations = Conversation.order("created_at DESC").limit(limit)
+    # issues
+    # questions
+    # events
     
     (comments | conversations).sort{|x,y| y.created_at <=> x.created_at}.first(limit)
   end

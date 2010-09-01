@@ -28,7 +28,7 @@ class ConversationsController < ApplicationController
   # GET /conversations/1
   # GET /conversations/1.xml
   def show    
-    @conversation = Conversation.find(params[:id])
+    @conversation = Conversation.find(params[:id], :include => :comments)
     @conversation.visit!((current_person.nil? ? nil : current_person.id))
 
     respond_to do |format|

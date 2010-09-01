@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100831180922) do
+ActiveRecord::Schema.define(:version => 20100901170124) do
 
   create_table "comments", :force => true do |t|
     t.datetime "datetime"
@@ -25,8 +25,10 @@ ActiveRecord::Schema.define(:version => 20100831180922) do
     t.integer  "total_visits",            :default => 0
     t.integer  "recent_visits",           :default => 0
     t.datetime "last_visit_date"
+    t.integer  "conversation_id"
     t.text     "comment_type",            :default => "Comment"
     t.integer  "target_person_id"
+    t.integer  "issue_id"
     t.string   "attachment_file_name"
     t.string   "attachment_content_type"
     t.integer  "attachment_file_size"
@@ -36,7 +38,6 @@ ActiveRecord::Schema.define(:version => 20100831180922) do
   create_table "conversations", :force => true do |t|
     t.datetime "started_at"
     t.datetime "finished_at"
-    t.integer  "issue_id"
     t.integer  "moderator"
     t.string   "summary"
     t.datetime "created_at"
@@ -52,6 +53,11 @@ ActiveRecord::Schema.define(:version => 20100831180922) do
     t.integer  "total_visits",       :default => 0
     t.integer  "recent_visits",      :default => 0
     t.datetime "last_visit_date"
+  end
+
+  create_table "conversations_events", :id => false, :force => true do |t|
+    t.integer "conversation_id"
+    t.integer "event_id"
   end
 
   create_table "conversations_guides", :id => false, :force => true do |t|
