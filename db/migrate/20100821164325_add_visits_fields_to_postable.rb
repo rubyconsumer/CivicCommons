@@ -6,12 +6,6 @@ class AddVisitsFieldsToPostable < ActiveRecord::Migration
       t.timestamp :last_visit_date
     end
     
-    change_table :questions do |t|
-      t.integer :total_visits, :default=>0
-      t.integer :recent_visits, :default=>0
-      t.timestamp :last_visit_date
-    end
-    
     change_table :conversations do |t|
       t.integer :total_visits, :default=>0
       t.integer :recent_visits, :default=>0
