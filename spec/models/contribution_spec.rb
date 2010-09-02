@@ -26,13 +26,13 @@ describe Contribution do
     context "and the contribution saves successfully" do
       it "should add the contribution to a conversation" do
         conversation = Factory.create(:conversation)
-        contribution = Contribution.create({:conversation=>conversation, :person=>@mock_person, :content=>"Hello World"})
+        contribution = TopLevelContribution.create({:conversation=>conversation, :person=>@mock_person, :content=>"Hello World"})
         conversation.contributions.count.should == 1
         conversation.contributions[0].should == contribution
       end
       it "should return a contribution with no errors" do
         conversation = Factory.create(:conversation)
-        contribution = Contribution.create({:conversation=>conversation, :person=>@mock_person, :content=>"Hello World"})
+        contribution = TopLevelContribution.create({:conversation=>conversation, :person=>@mock_person, :content=>"Hello World"})
         contribution.errors.count.should == 0
       end  
       it "should set the passed in user as the owner" do

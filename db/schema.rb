@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100901212527) do
+ActiveRecord::Schema.define(:version => 20100902030019) do
 
   create_table "contributions", :force => true do |t|
     t.datetime "datetime"
@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(:version => 20100901212527) do
     t.string   "attachment_content_type"
     t.integer  "attachment_file_size"
     t.datetime "attachment_updated_at"
-    t.string   "contribution_type",       :default => "Contribution"
+    t.string   "type",                    :default => "Contribution"
   end
 
   create_table "conversations", :force => true do |t|

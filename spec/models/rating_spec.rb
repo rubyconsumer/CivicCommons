@@ -5,41 +5,45 @@ describe Rating do
     before(:each) do
       @mock_person = Factory.create(:normal_person)      
     end
-    context "and the conversation id is not correct" do
+    context "and the conversation id is not given" do
       it "should return a rating with an error" do
-        Conversation.stub(:find).with(999).and_return(nil)
-        rating = Rating.create_for_conversation({:datetime=>Time.now, :person_id=>1, :rating=>1}, 999, @mock_person)
-        rating.errors[:parent_id].nil?.should == false
-        rating.errors[:parent_id].blank?.should == false  
+        rating = Rating.create({:person_id=>1, :rating=>1})
+        rating.errors[:rateable_id].nil?.should == false
+        rating.errors[:rateable_id].blank?.should == false  
       end
     end
     context "and there is a validation error with the rating" do
       it "should return a rating with an error" do
-        Conversation.stub(:find).with(999).and_return(nil)
-        rating = Rating.create_for_conversation({:datetime=>Time.now, :person_id=>1, :rating=>11}, 999, @mock_person)
-        rating.errors.count.should_not == 0
+        conversation = Factory.create(:conversation)
+        conversation.rate!(11,@mock_person)
+        conversation.ratings.count.should == 0
       end
     end
     context "and the rating saves successfully" do
       it "should add the rating to a conversation" do
         conversation = Factory.create(:conversation)
-        Conversation.stub(:find).with(1).and_return(conversation)
-        rating = Rating.create_for_conversation({:datetime=>Time.now, :person_id=>1, :rating=>1}, 1, @mock_person)
-        conversation.posts.count.should == 1
-        conversation.posts[0].postable.should == rating
+        conversation.rate!(1, @mock_person)
+        conversation.ratings.count.should == 1
       end
-      it "should return a rating with no errors" do
-        conversation = Factory.create(:conversation)
-        Conversation.stub(:find).with(1).and_return(conversation)
-        rating = Rating.create_for_conversation({:datetime=>Time.now, :person_id=>1, :rating=>1}, 1, @mock_person)
-        rating.errors.count.should == 0
-      end  
       it "should set the passed in user as the owner" do
         conversation = Factory.create(:conversation)
-        Conversation.stub(:find).with(1).and_return(conversation)
-        rating = Rating.create_for_conversation({:datetime=>Time.now, :person_id=>1, :rating=>1}, 1, @mock_person)
-        rating.person.should == @mock_person
-      end    
+        conversation.rate!(1, @mock_person)
+        conversation.ratings[0].person.should == @mock_person
+      end
+      it "should properly calculate total rating" do
+        conversation = Factory.create(:conversation)
+        conversation.rate!(1, @mock_person)
+        conversation.rate!(1, @mock_person)
+        conversation.total_rating.should == 2
+      end
+      it "should properly calculate recent rating" do
+        conversation = Factory.create(:conversation)
+        conversation.rate!(1, @mock_person)
+        conversation.ratings[0].update_attribute(:created_at, (Time.now - 31.days))
+        conversation.rate!(1, @mock_person)
+        conversation.rate!(0, @mock_person)
+        conversation.recent_rating.should == 1
+      end
     end
   end  
 end

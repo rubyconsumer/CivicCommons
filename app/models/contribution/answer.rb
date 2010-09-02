@@ -1,3 +1,3 @@
 class Answer < Contribution
-  
+
 end

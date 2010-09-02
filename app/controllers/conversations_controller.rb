@@ -28,7 +28,7 @@ class ConversationsController < ApplicationController
   # GET /conversations/1
   # GET /conversations/1.xml
   def show    
-    @conversation = Conversation.find(params[:id], :include => :contributions)
+    @conversation = Conversation.find(params[:id]).include(:contributions)
     @conversation.visit!((current_person.nil? ? nil : current_person.id))
 
     respond_to do |format|
@@ -57,6 +57,8 @@ class ConversationsController < ApplicationController
   # POST /conversations.xml
   def create
     @conversation = Conversation.new(params[:conversation])
+    #TODO: Fix this conversation issues creation since old conversation.issues= method has been destroyed
+    #NOTE: Issues were previously defined as Conversation has_many Issues, but this is wrong, should be habtm
     @conversation.issues = Issue.find(params[:issue_ids]) unless params[:issue_ids].blank?
     @conversation.started_at = Time.now
 

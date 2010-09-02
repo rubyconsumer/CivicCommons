@@ -35,17 +35,6 @@ class Conversation < ActiveRecord::Base
       where("posts.postable_type = 'Issue'").
       where("lower(issues.description) like ?", "%" + target.downcase.strip + "%")}
 
-  def issues
-    self.posts.where({:postable_type=>Issue.to_s}).collect{|x| x.postable}
-  end
-  
-  def issues=(issues)
-    self.posts.delete(self.posts.where(:postable_type=>Issue.to_s))
-    issues.each do |issue|
-      Issue.add_to_conversation(issue, self)
-    end unless issues.nil?
-  end
-  
   # Return a comma-and-space-delimited list of the Issues
   # relevant to this Conversation, e.g., "Jobs, Sports, Religion"
   def issues_text

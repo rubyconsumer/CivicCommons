@@ -185,24 +185,4 @@ describe ConversationsController do
     end
   end
   
-  describe "POST 'create_post'" do
-    before(:each) do      
-      @person = Factory.create(:normal_person)
-      @controller.stub(:current_person).and_return(@person)
-      
-      
-      @params = {:comment=>{:content=>"Foo"}, :id=>1}
-      @conversation = Factory.create(:conversation)
-      @comment = Factory.create(:comment)      
-      
-      Conversation.stub(:find).with(1).and_return(@conversation)
-      @conversation.stub(:create_post_comment).and_return(@comment)
-      
-      @params = {:comment=>{:content=>"Foo"}, :id=>1, :post_model_type=>"Comment", :conversation_id=>1}      
-    end
-    it "should be successful" do
-      post :create_post, @params
-      response.should be_success
-    end
-  end
 end
