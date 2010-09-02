@@ -1,4 +1,6 @@
 Civiccommons::Application.routes.draw do
+  get "dashboard/show"
+
   devise_for :people,
              :controllers => { :registrations => 'registrations' },
              :path_names => { :sign_in => 'login', :sign_out => 'logout', :password => 'secret', :confirmation => 'verification', :unlock => 'unblock', :registration => 'register', :sign_up => 'new' }
@@ -14,6 +16,11 @@ Civiccommons::Application.routes.draw do
   resources :issues
 
   resources :conversations
+  
+  namespace "admin" do
+    resources :conversations
+    root :to => "dashboard#show"
+  end
   
   match '/conversations/rate', :to=>'conversations#rate', :via=>[:post]
   match '/conversations/create_post', :to=>'conversations#create_post', :via=>[:post]  

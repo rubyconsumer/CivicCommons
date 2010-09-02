@@ -1,0 +1,14 @@
+
+%table 
+  %thead  
+    %tr
+      %th Conversation Title
+      %th Created Date
+    %tr
+  %tbody
+  -@conversations.each do |conversation|
+    %tr
+      %td =conversation.name
+      %td =conversation.created_at
+    %tr
+%br
