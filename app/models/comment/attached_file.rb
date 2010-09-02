@@ -1,3 +1,0 @@
-class AttachedFile < Comment
-  
-end

@@ -2,7 +2,7 @@ class Conversation < ActiveRecord::Base
   include Rateable
   include Visitable
   
-  has_many :comments
+  has_many :contributions
 
   has_and_belongs_to_many :guides, :class_name => 'Person', :join_table => 'conversations_guides', :association_foreign_key => :guide_id
   has_and_belongs_to_many :issues

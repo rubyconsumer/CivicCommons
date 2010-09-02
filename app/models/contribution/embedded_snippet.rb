@@ -1,0 +1,3 @@
+class EmbeddedSnippet < Contribution
+  
+end

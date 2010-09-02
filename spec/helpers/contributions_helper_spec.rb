@@ -10,5 +10,5 @@ require 'spec_helper'
 #     end
 #   end
 # end
-describe CommentsHelper do
+describe ContributionsHelper do
 end
