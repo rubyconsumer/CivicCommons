@@ -4,4 +4,14 @@
     =stylesheet_link_tag 'admin.css'
     %title CivicCommins Admin
   %body
-    =yield
+    %header
+      %h1 Civic Commons Admin
+    %nav
+      %ul
+        %li
+          =link_to "Conversations", admin_conversations_path
+          %ul
+            %li
+              =link_to "Add Conversation", new_admin_conversation_path
+    %div#main
+      = yield

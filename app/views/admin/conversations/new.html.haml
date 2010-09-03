@@ -1,0 +1,5 @@
+-form_for @conversation, :multipart => true do |conversation|
+  %div
+    =conversation.label :moderator
+    %br
+    =conversation.collection_select(:moderator, Person.all, :id, :first_name, :prompt => true)

@@ -7,4 +7,9 @@ class Admin::ConversationsController < ApplicationController
     @conversations = Conversation.all
   end  
   
+  #GET admin/conversations/new
+  def new
+    @conversation = Conversation.new(params[:conversation])
+  end
+  
 end
