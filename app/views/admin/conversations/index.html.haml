@@ -8,7 +8,7 @@
   %tbody
   -@conversations.each do |conversation|
     %tr
-      %td =conversation.name
-      %td =conversation.created_at
+      %td= link_to conversation.title, admin_conversation_path(conversation)
+      %td=conversation.created_at
     %tr
 %br

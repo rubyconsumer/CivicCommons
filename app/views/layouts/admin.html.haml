@@ -14,4 +14,7 @@
             %li
               =link_to "Add Conversation", new_admin_conversation_path
     %div#main
+      -if flash[:notice]
+        %div
+          =flash[:notice]
       = yield
