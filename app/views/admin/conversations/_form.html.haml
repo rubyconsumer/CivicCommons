@@ -30,9 +30,9 @@
     =conversation.date_select :finished_at, :order => [:month, :day, :year]
    
   %p
-    =conversation.label :moderator
+    =conversation.label :moderator_id, "Moderator"
     %br
-    =conversation.collection_select(:moderator, Person.all, :id, :first_name, :prompt => true)
+    =conversation.collection_select :moderator_id, Person.all, :id, :full_name, :prompt => true
 
   %p
     =conversation.submit

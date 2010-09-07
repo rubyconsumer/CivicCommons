@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100907133839) do
+ActiveRecord::Schema.define(:version => 20100907211743) do
 
   create_table "contributions", :force => true do |t|
     t.datetime "datetime"
@@ -39,7 +39,7 @@ ActiveRecord::Schema.define(:version => 20100907133839) do
   create_table "conversations", :force => true do |t|
     t.datetime "started_at"
     t.datetime "finished_at"
-    t.integer  "moderator"
+    t.integer  "moderator_id"
     t.string   "summary"
     t.datetime "created_at"
     t.datetime "updated_at"

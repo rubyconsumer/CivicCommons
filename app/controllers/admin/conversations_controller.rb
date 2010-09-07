@@ -16,7 +16,6 @@ class Admin::ConversationsController < Admin::DashboardController
     @conversation = Conversation.new(params[:conversation])
     if @conversation.save
       @conversation.top_level_contribution.datetime = Time.now
-      @conversation.top_level_contribution.owner = current_person
       flash[:notice] = "Thank you for creating a new conversation"
       redirect_to admin_conversations_path
     else
