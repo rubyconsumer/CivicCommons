@@ -16,6 +16,7 @@ end
 group :test do
   gem 'cucumber'
   gem 'cucumber-rails'
+  gem 'rb-appscript'
   gem 'safariwatir'
   gem 'firewatir'
   gem 'rspec-rails', '>= 2.0.0.beta.10'

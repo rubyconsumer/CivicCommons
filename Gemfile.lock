@@ -105,6 +105,7 @@ GEM
       rake (>= 0.8.4)
       thor (~> 0.14.0)
     rake (0.8.7)
+    rb-appscript (0.5.3)
     rspec (2.0.0.beta.20)
       rspec-core (= 2.0.0.beta.20)
       rspec-expectations (= 2.0.0.beta.20)
@@ -156,6 +157,7 @@ DEPENDENCIES
   paperclip
   rails (= 3.0.0)
   rails3-generators
+  rb-appscript
   rspec-rails (>= 2.0.0.beta.10)
   ruby_parser
   safariwatir
