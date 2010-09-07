@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100902030019) do
+ActiveRecord::Schema.define(:version => 20100907133839) do
 
   create_table "contributions", :force => true do |t|
     t.datetime "datetime"
@@ -143,10 +143,23 @@ ActiveRecord::Schema.define(:version => 20100902030019) do
     t.string   "rateable_type"
   end
 
+  create_table "regions", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "visits", :force => true do |t|
     t.integer  "person_id"
     t.integer  "visitable_id"
     t.string   "visitable_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "zip_codes", :force => true do |t|
+    t.integer  "region_id"
+    t.string   "zip_code"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
