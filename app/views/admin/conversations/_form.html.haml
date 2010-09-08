@@ -35,4 +35,9 @@
     =conversation.collection_select :moderator_id, Person.all, :id, :full_name, :prompt => true
 
   %p
+    =conversation.label :zip_code, "Enter Zip Code"
+    %br
+    =conversation.text_field :zip_code
+
+  %p
     =conversation.submit

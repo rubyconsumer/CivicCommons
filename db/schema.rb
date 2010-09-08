@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100907211743) do
+ActiveRecord::Schema.define(:version => 20100908191112) do
 
   create_table "contributions", :force => true do |t|
     t.datetime "datetime"
@@ -54,6 +54,7 @@ ActiveRecord::Schema.define(:version => 20100907211743) do
     t.integer  "total_visits",       :default => 0
     t.integer  "recent_visits",      :default => 0
     t.datetime "last_visit_date"
+    t.string   "zip_code"
   end
 
   create_table "conversations_events", :id => false, :force => true do |t|

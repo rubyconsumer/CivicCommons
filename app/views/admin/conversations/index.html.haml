@@ -1,14 +1,12 @@
 
-%table 
+%table(summary="List of Conversations") 
   %thead  
     %tr
       %th Conversation Title
       %th Created Date
-    %tr
   %tbody
   -@conversations.each do |conversation|
     %tr
       %td= link_to conversation.title, admin_conversation_path(conversation)
-      %td=conversation.created_at
-    %tr
+      %td= conversation.created_at.strftime("%m-%d-%Y")
 %br
