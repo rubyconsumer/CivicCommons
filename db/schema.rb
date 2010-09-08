@@ -21,6 +21,20 @@ ActiveRecord::Schema.define(:version => 20100902030019) do
     t.datetime "updated_at"
   end
 
+  create_table "articles", :force => true do |t|
+    t.string   "title"
+    t.string   "author"
+    t.text     "description"
+    t.string   "link"
+    t.string   "image_url"
+    t.string   "video_url"
+    t.string   "percent"
+    t.boolean  "current"
+    t.boolean  "main"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "comments", :force => true do |t|
     t.datetime "datetime"
     t.integer  "owner"
@@ -165,7 +179,7 @@ ActiveRecord::Schema.define(:version => 20100902030019) do
     t.string   "postable_type"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.datetime "display_time",     :default => '2010-08-22 21:14:27'
+    t.datetime "display_time",     :default => '2010-09-08 14:08:36'
   end
 
   create_table "questions", :force => true do |t|
