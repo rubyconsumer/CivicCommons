@@ -1,0 +1,49 @@
+<% content_for :main_body do %>
+
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Title:</b>
+  <%= @article.title %>
+</p>
+
+<p>
+  <b>Author:</b>
+  <%= @article.author %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @article.description %>
+</p>
+
+<p>
+  <b>Link:</b>
+  <%= @article.link %>
+</p>
+
+<p>
+  <b>Image url:</b>
+  <%= @article.image_url %>
+</p>
+
+<p>
+  <b>Video url:</b>
+  <%= @article.video_url %>
+</p>
+
+<p>
+  <b>Current:</b>
+  <%= @article.current %>
+</p>
+
+<p>
+  <b>Main:</b>
+  <%= @article.main %>
+</p>
+
+
+<%= link_to 'Edit', edit_article_path(@article) %> |
+<%= link_to 'Back', articles_path %>
+
+<% end %>
