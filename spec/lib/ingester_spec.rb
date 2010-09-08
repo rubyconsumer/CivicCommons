@@ -1,7 +1,5 @@
 require 'spec_helper'
 
-require 'ingester'
-
 module IngesterExampleHelperMethods
   def expects_exception(options)
     exception_message = build_exception_message(options[:line_number],

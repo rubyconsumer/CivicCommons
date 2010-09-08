@@ -6,3 +6,6 @@ gem 'devise'
 Civiccommons::Application.initialize!
 
 Dir["#{Rails.root}/app/models/*"].find_all { |f| File.stat(f).directory? }.collect{ |f| ActiveSupport::Dependencies.autoload_paths << f }
+
+require 'ingester'
+

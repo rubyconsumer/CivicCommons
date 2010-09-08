@@ -17,11 +17,10 @@ class Person < ActiveRecord::Base
   validate :zip_code, :length => 10
   validates_numericality_of :top, :allow_nil => true
 
-  # FIXME: name parsing code is simplistic--won't handle "van Buren" and the like. Drops middle names.
+
   def name=(value)
     @name = value
-    names = value.split(' ')
-    self.first_name, self.last_name = names.first, names.last
+    self.first_name, self.last_name = self.class.parse_name(value)
   end
 
 
@@ -31,6 +30,16 @@ class Person < ActiveRecord::Base
   
   def full_name
     first_name.capitalize + " " + last_name.capitalize
+  end
+
+  def self.find_all_by_name(name)
+    first, last = parse_name(name)
+    where(:first_name => first, :last_name => last)
+  end
+
+  # FIXME: name parsing code is simplistic--won't handle "van Buren" and the like. Drops middle names.
+  def self.parse_name(name)
+    names = name.split(' ')
   end
 
   # Until we get some way to input real avatars, everyone's gonna look like George.
