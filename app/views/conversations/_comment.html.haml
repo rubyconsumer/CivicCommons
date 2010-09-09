@@ -5,6 +5,7 @@
   %div
     - if postable
       .article.comment
+        %a{:name=>"#post#{postable.id}"}
         .meta
           .comment-type{:class=>postable.official ? "" : "unofficial"}
             - "Official" if postable.official
@@ -16,17 +17,16 @@
               %strong= postable.person.name
           -else
             %strong= 'An unknown person'
-          %span.action commented:
+          - tmp = format_time(postable.datetime)
+          %span.action commented at #{link_to(tmp, comment_path(postable))}
         %p.content= postable.content
         %p
           - if person_signed_in?
-            %a.text.button.conversation-action(href="#" title="Leave a comment") Leave a comment (doesn't work)
+            %a.text.button.conversation-action(id="action-link-#{postable.id}" href="javascript:void(0)" title="Leave a comment here") Comment on this
           - if can_edit?(postable.person)
             %a(href="#" class="privileged" title="Delete this comment") Delete (doesn't work)
       %div{:clear => 'both'}
-
--# Save this code for when we can do nested posts
--#%ul
--#  - postable.posts.order('created_at DESC').each do |post|
--#    =render :partial => post.postable_type.downcase, :locals => { :postable => post.postable }
-  
+      .tab-strip(id="action-div-#{postable.id}")
+      %ul
+        - postable.posts.order('created_at DESC').each do |post|
+          =render :partial => post.postable_type.downcase, :locals => { :postable => post.postable }

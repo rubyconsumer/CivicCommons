@@ -8,5 +8,5 @@ class ApplicationController < ActionController::Base
       redirect_to person_session_new_path
     end
   end
-end    
-  
+end   
+

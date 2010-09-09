@@ -1,18 +1,18 @@
 # Ask Mark Schumann for the actual key file. This is a placeholder.
 development:
-  bucket_name: appname_development
+  bucket: appname_development
   access_key_id: some access key
   secret_access_key: some secret access key
   distribution_domain: XXXX.cloudfront.net
 
 test:
-  bucket_name: appname_test
+  bucket: appname_test
   access_key_id: some access key
   secret_access_key: some secret access key
   distribution_domain: XXXX.cloudfront.net
 
 production:
-  bucket_name: appname
+  bucket: appname
   access_key_id: 
   secret_access_key: 
   distribution_domain: XXXX.cloudfront.net

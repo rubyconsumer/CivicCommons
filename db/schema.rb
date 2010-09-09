@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100908191112) do
+ActiveRecord::Schema.define(:version => 20100909135436) do
 
   create_table "contributions", :force => true do |t|
     t.datetime "datetime"
@@ -34,6 +34,25 @@ ActiveRecord::Schema.define(:version => 20100908191112) do
     t.integer  "attachment_file_size"
     t.datetime "attachment_updated_at"
     t.string   "type",                    :default => "Contribution"
+  end
+
+  end
+
+  create_table "articles", :force => true do |t|
+    t.string   "title"
+    t.string   "author"
+    t.text     "description"
+    t.string   "link"
+    t.string   "video_url"
+    t.string   "percent"
+    t.boolean  "current"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "main"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
   end
 
   create_table "conversations", :force => true do |t|

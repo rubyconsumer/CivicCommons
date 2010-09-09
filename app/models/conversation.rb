@@ -102,6 +102,4 @@ class Conversation < ActiveRecord::Base
       started_at.mday
     end
   end
-  
 end
-

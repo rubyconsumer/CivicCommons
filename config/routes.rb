@@ -1,5 +1,6 @@
 Civiccommons::Application.routes.draw do
   get "dashboard/show"
+  resources :articles
 
   devise_for :people,
              :controllers => { :registrations => 'registrations' },

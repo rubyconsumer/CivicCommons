@@ -1,55 +1,31 @@
-.main.section
-  .feature
-    .join-conversation
-      %img{:alt => "Drew Carey confronts Cleveland City Council", :src => "/images/featured-image.png"}/
-      %a.button.primary{:href => "#"} Join Conversation
+.wrapper
+  %p.notice
+  %p.alert
+  .content-container
     %h1
-      Drew Carey confronts Cleveland City Council
-      %a.privileged(href="#") Manage
-    %p Cleveland's woes - population loss, failing schools, lack of economic spark - are no joke to comedian and native son Drew Carey, who advocates for less government, more competition and lower taxes to bring the city back.
-    %ul.event-details
-      %li
-        %strong Covered By:
-        %a{:href => "#"} Dan Moulthrop
-      %li
-        %strong Event:
-        %em May 24, 2010
-      %li
-        %strong Conversations:
-        %a{:href => "#"} 42 Responses
-    .conversation-ticker
-      %strong Issue:
-      %a{:href => "#", :title => "Taxes in Cuyahoga County"}
-        Taxes in Cuyahoga County
-  .aside.supplementary
-    %strong
-      %a{:href => :issues, :title => "Issues"}
-        Issues:
-    %ul
-      %li
-        %a{:href => "#", :title => "Immigration"} Immigration
-      %li
-        %a{:href => "#", :title => "Opportunity Corridor"} Opportunity Corridor
-      %li
-        %a{:href => "#", :title => "Public Transportation"} Public Transportation
-      %li
-        %a{:href => "#", :title => "Shrinkage"} Shrinkage
-      %li
-        %a.text.button{:href => :issues, :title => "Issues"} More Issues&hellip;
-    %strong
-      %a{:href => :people, :title => "People"}
-        People:
-    %ul
-      %li
-        %a{:href => "#", :title => "Connie Schultz"} Connie Schultz
-      %li
-        %a{:href => "#", :title => "Drew Carey", :class => "absent"} Drew Carey
-      %li
-        %a{:href => "#", :title => "Jane Campbell"} Jane Campbell
-      %li
-        %a{:href => "#", :title => "Lebron James", :class => "absent"} Lebron James
-      %li
-        %a.text.button{:href => :people, :title => "People"} More People&hellip;
+      = @main_article.title
+    %h2
+      = @main_article.author
+    .main-content
+      .feature
+        .feat-callout
+          %img{:src => @main_article.image.url(:mainfeature), :height => "225", :width => "300" }
+        .feat-content
+          = @main_article.description
+        %a{:href => @main_article.link} Read The Article
+        
+    - @sub_articles.each do |article|
+      .aside.supplementary
+        %ol.conversations
+          %li.article.offset-1
+            %img{:src => article.image.url(:subfeature), :height => "60", :width=>"60", :class=>"callout" }
+            %h3
+              %a{:href => article.link}
+                = article.title
+            %p
+              = "By: #{article.author}"
+
+
 
 #engaging-content.main.section
   .section.conversations
