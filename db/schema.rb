@@ -10,16 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100909135436) do
-
-  create_table "answers", :force => true do |t|
-    t.datetime "datetime"
-    t.integer  "owner"
-    t.integer  "question_id"
-    t.text     "content"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
+ActiveRecord::Schema.define(:version => 20100909180716) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -38,25 +29,33 @@ ActiveRecord::Schema.define(:version => 20100909135436) do
     t.datetime "image_updated_at"
   end
 
-  create_table "comments", :force => true do |t|
+  create_table "contributions", :force => true do |t|
     t.datetime "datetime"
     t.integer  "owner"
     t.text     "content"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "official",         :default => false
-    t.integer  "total_rating",     :default => 0
-    t.integer  "recent_rating",    :default => 0
+    t.boolean  "official",                :default => false
+    t.integer  "total_rating",            :default => 0
+    t.integer  "recent_rating",           :default => 0
     t.datetime "last_rating_date"
-    t.integer  "total_visits",     :default => 0
-    t.integer  "recent_visits",    :default => 0
+    t.integer  "total_visits",            :default => 0
+    t.integer  "recent_visits",           :default => 0
     t.datetime "last_visit_date"
+    t.integer  "conversation_id"
+    t.integer  "contribution_id"
+    t.integer  "target_person_id"
+    t.integer  "issue_id"
+    t.string   "attachment_file_name"
+    t.string   "attachment_content_type"
+    t.integer  "attachment_file_size"
+    t.datetime "attachment_updated_at"
+    t.string   "type",                    :default => "Contribution"
   end
 
   create_table "conversations", :force => true do |t|
     t.datetime "started_at"
     t.datetime "finished_at"
-    t.integer  "issue_id"
     t.integer  "moderator"
     t.string   "summary"
     t.datetime "created_at"
@@ -72,6 +71,11 @@ ActiveRecord::Schema.define(:version => 20100909135436) do
     t.integer  "total_visits",       :default => 0
     t.integer  "recent_visits",      :default => 0
     t.datetime "last_visit_date"
+  end
+
+  create_table "conversations_events", :id => false, :force => true do |t|
+    t.integer "conversation_id"
+    t.integer "event_id"
   end
 
   create_table "conversations_guides", :id => false, :force => true do |t|
@@ -141,36 +145,11 @@ ActiveRecord::Schema.define(:version => 20100909135436) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "zip_code"
+    t.integer  "top"
   end
 
   add_index "people", ["email"], :name => "index_people_on_email", :unique => true
   add_index "people", ["reset_password_token"], :name => "index_people_on_reset_password_token", :unique => true
-
-  create_table "posts", :force => true do |t|
-    t.integer  "conversable_id"
-    t.string   "conversable_type"
-    t.integer  "postable_id"
-    t.string   "postable_type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "display_time",     :default => '2010-08-22 21:14:27'
-  end
-
-  create_table "questions", :force => true do |t|
-    t.datetime "datetime"
-    t.integer  "owner"
-    t.integer  "askee"
-    t.integer  "issue_id"
-    t.text     "content"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "total_rating",     :default => 0
-    t.integer  "recent_rating",    :default => 0
-    t.datetime "last_rating_date"
-    t.integer  "total_visits",     :default => 0
-    t.integer  "recent_visits",    :default => 0
-    t.datetime "last_visit_date"
-  end
 
   create_table "ratings", :force => true do |t|
     t.datetime "datetime"
@@ -180,6 +159,14 @@ ActiveRecord::Schema.define(:version => 20100909135436) do
     t.datetime "updated_at"
     t.integer  "rateable_id"
     t.string   "rateable_type"
+  end
+
+  create_table "top_items", :force => true do |t|
+    t.integer  "item_id"
+    t.string   "item_type"
+    t.datetime "item_created_at"
+    t.decimal  "recent_rating",   :precision => 3, :scale => 2
+    t.integer  "recent_visits"
   end
 
   create_table "visits", :force => true do |t|
