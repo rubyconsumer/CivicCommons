@@ -1,6 +1,7 @@
 class Event < ActiveRecord::Base
   include Rateable
   include Visitable
+  include TopItemable
     
   has_and_belongs_to_many :conversations
   has_and_belongs_to_many :guides, :class_name => 'Person', :join_table => 'events_guides'

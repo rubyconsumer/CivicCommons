@@ -1,6 +1,7 @@
 class Conversation < ActiveRecord::Base
   include Rateable
   include Visitable
+  include TopItemable
   
   has_many :contributions
 
