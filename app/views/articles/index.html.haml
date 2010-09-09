@@ -7,7 +7,7 @@
       %th Author
       %th Description
       %th Link
-      %th Image URL
+      %th Image
       %th Video URL
       %th Current
       %th Main
@@ -26,7 +26,7 @@
       %td
         = article.link
       %td
-        = article.image_url
+        = article.image.url(:main)
       %td
         = article.video_url
       %td
