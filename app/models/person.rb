@@ -27,6 +27,10 @@ class Person < ActiveRecord::Base
   def name
     @name ||= "%s %s" % [self.first_name, self.last_name]
   end
+  
+  def full_name
+    first_name.capitalize + " " + last_name.capitalize
+  end
 
   # Until we get some way to input real avatars, everyone's gonna look like George.
   def avatar_url(size)

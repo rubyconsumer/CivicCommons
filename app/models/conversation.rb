@@ -3,10 +3,15 @@ class Conversation < ActiveRecord::Base
   include Visitable
   
   has_many :contributions
+  has_one  :top_level_contribution
+  accepts_nested_attributes_for :top_level_contribution, :allow_destroy => true
+  accepts_nested_attributes_for :contributions, :allow_destroy => true
 
   has_and_belongs_to_many :guides, :class_name => 'Person', :join_table => 'conversations_guides', :association_foreign_key => :guide_id
   has_and_belongs_to_many :issues
   has_and_belongs_to_many :events
+  
+  belongs_to :moderator, :class_name => 'Person'
 
   # paperclip bug: if you don't specify the path, you will get
   # a stack overflow when trying to upload an image.

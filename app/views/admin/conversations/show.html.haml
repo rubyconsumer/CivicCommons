@@ -1,0 +1,22 @@
+%article
+  %header
+    %h1= @conversation.title
+    %h2= "This Conversation is being moderated by: #{@conversation.moderator.full_name}"
+  %section
+    %header 
+      %h2 Summary:
+    %div= image_tag @conversation.image.url(:normal), :alt => 'Blue Angels' 
+    = @conversation.summary
+  %section 
+    %header
+      %h2 Top Node/Contribution:
+    = @conversation.top_level_contribution.content
+  %footer
+    %p= "This conversation was started at: #{@conversation.started_at}"
+    -if @conversation.finished_at
+      %p= "This conversation was concluded at: #{@conversation.finished_at}"
+   
+  
+=link_to "Back", admin_conversations_path
+|
+=link_to "Edit", edit_admin_conversation_path(@conversation)

@@ -1,9 +1,5 @@
 class UpdateToNewCommentSchema < ActiveRecord::Migration
   def self.up
-    drop_table :questions
-    drop_table :answers
-    drop_table :posts
-    
     add_column :comments, :conversation_id, :integer
     add_column :comments, :comment_id, :integer
     add_column :comments, :comment_type, :text, :default => "Comment"
@@ -12,9 +8,6 @@ class UpdateToNewCommentSchema < ActiveRecord::Migration
   end
 
   def self.down
-    create_table :questions
-    create_table :answers
-    create_table :posts
     remove_column :comments, :conversation_id
     remove_column :comments, :comment_id, :integer
     remove_column :comments, :comment_type

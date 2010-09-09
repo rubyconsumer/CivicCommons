@@ -1,0 +1,43 @@
+-form_for [:admin, @conversation], :multipart => true do |conversation|
+  %p
+    =conversation.label :title
+    %br
+    =conversation.text_field :title
+
+  %p
+    =conversation.label :image, "Attach an Image"
+    %br
+    =conversation.file_field :image
+
+  %p
+    =conversation.label :summary
+    %br
+    =conversation.text_area :summary
+
+  =conversation.fields_for :top_level_contribution  do |contribution|
+    =contribution.hidden_field :type, :value => "TopLevelContribution"
+    %p
+      =contribution.label :content, "Transcripts"
+      %br
+      =contribution.text_area :content
+
+  %p
+    =conversation.label :started_at
+    =conversation.date_select :started_at, :order => [:month, :day, :year]
+  
+  %p
+    =conversation.label :finished_at
+    =conversation.date_select :finished_at, :order => [:month, :day, :year]
+   
+  %p
+    =conversation.label :moderator_id, "Moderator"
+    %br
+    =conversation.collection_select :moderator_id, Person.all, :id, :full_name, :prompt => true
+
+  %p
+    =conversation.label :zip_code, "Enter Zip Code"
+    %br
+    =conversation.text_field :zip_code
+
+  %p
+    =conversation.submit
