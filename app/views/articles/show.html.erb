@@ -22,10 +22,13 @@
   <%= @article.link %>
 </p>
 
-<p>
-  <b>Image url:</b>
-  <%= @article.image_url %>
-</p>
+<% if @article.image.exists? -%>
+  <p>
+    <b>Image:</b>
+    <%= @article.image.url(:mainfeature) %>
+    <img src="<%= @article.image.url(:mainfeature) %>"/>
+  </p>
+<% end -%>
 
 <p>
   <b>Video url:</b>
