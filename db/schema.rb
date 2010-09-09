@@ -12,6 +12,44 @@
 
 ActiveRecord::Schema.define(:version => 20100908215814) do
 
+  create_table "answers", :force => true do |t|
+    t.datetime "datetime"
+    t.integer  "owner"
+    t.integer  "question_id"
+    t.text     "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "articles", :force => true do |t|
+    t.string   "title"
+    t.string   "author"
+    t.text     "description"
+    t.string   "link"
+    t.string   "image_url"
+    t.string   "video_url"
+    t.string   "percent"
+    t.boolean  "current"
+    t.boolean  "main"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "comments", :force => true do |t|
+    t.datetime "datetime"
+    t.integer  "owner"
+    t.text     "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "official",         :default => false
+    t.integer  "total_rating",     :default => 0
+    t.integer  "recent_rating",    :default => 0
+    t.datetime "last_rating_date"
+    t.integer  "total_visits",     :default => 0
+    t.integer  "recent_visits",    :default => 0
+    t.datetime "last_visit_date"
+  end
+
   create_table "contributions", :force => true do |t|
     t.datetime "datetime"
     t.integer  "owner"
@@ -39,6 +77,7 @@ ActiveRecord::Schema.define(:version => 20100908215814) do
   create_table "conversations", :force => true do |t|
     t.datetime "started_at"
     t.datetime "finished_at"
+    t.integer  "issue_id"
     t.integer  "moderator"
     t.string   "summary"
     t.datetime "created_at"
@@ -132,6 +171,32 @@ ActiveRecord::Schema.define(:version => 20100908215814) do
 
   add_index "people", ["email"], :name => "index_people_on_email", :unique => true
   add_index "people", ["reset_password_token"], :name => "index_people_on_reset_password_token", :unique => true
+
+  create_table "posts", :force => true do |t|
+    t.integer  "conversable_id"
+    t.string   "conversable_type"
+    t.integer  "postable_id"
+    t.string   "postable_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.datetime "display_time",     :default => '2010-09-08 14:08:36'
+  end
+
+  create_table "questions", :force => true do |t|
+    t.datetime "datetime"
+    t.integer  "owner"
+    t.integer  "askee"
+    t.integer  "issue_id"
+    t.text     "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "total_rating",     :default => 0
+    t.integer  "recent_rating",    :default => 0
+    t.datetime "last_rating_date"
+    t.integer  "total_visits",     :default => 0
+    t.integer  "recent_visits",    :default => 0
+    t.datetime "last_visit_date"
+  end
 
   create_table "ratings", :force => true do |t|
     t.datetime "datetime"
