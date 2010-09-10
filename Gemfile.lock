@@ -49,7 +49,7 @@ GEM
       cucumber (>= 0.8.0)
     date_validator (0.5.7)
       activemodel (>= 3.0.0.rc)
-    devise (1.1.0)
+    devise (1.1.2)
       bcrypt-ruby (~> 2.1.2)
       warden (~> 0.10.7)
     diff-lcs (1.1.2)
@@ -148,7 +148,7 @@ DEPENDENCIES
   cucumber
   cucumber-rails
   date_validator
-  devise (= 1.1)
+  devise (= 1.1.2)
   factory_girl_rails
   firewatir
   haml

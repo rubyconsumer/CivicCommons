@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   def verify_admin
     unless current_person && current_person.admin?
       flash[:error] = "You must be an admin to view this page."
-      redirect_to person_session_new_path
+      redirect_to new_person_session_path
     end
   end
 end   
