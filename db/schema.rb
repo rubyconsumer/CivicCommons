@@ -20,9 +20,9 @@ ActiveRecord::Schema.define(:version => 20100909180716) do
     t.string   "video_url"
     t.string   "percent"
     t.boolean  "current"
+    t.boolean  "main"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "main"
     t.string   "image_file_name"
     t.string   "image_content_type"
     t.integer  "image_file_size"
@@ -165,7 +165,7 @@ ActiveRecord::Schema.define(:version => 20100909180716) do
     t.integer  "item_id"
     t.string   "item_type"
     t.datetime "item_created_at"
-    t.decimal  "recent_rating", :precision => 3, :scale => 2
+    t.decimal  "recent_rating",   :precision => 3, :scale => 2
     t.integer  "recent_visits"
   end
 

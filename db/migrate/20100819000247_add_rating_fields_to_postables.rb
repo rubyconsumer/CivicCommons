@@ -6,11 +6,6 @@ class AddRatingFieldsToPostables < ActiveRecord::Migration
       t.timestamp :last_rating_date
     end
     
-    change_table :questions do |t|
-      t.integer :total_rating, :default=>0
-      t.integer :recent_rating, :default=>0
-      t.timestamp :last_rating_date
-    end
     
     change_table :conversations do |t|
       t.integer :total_rating, :default=>0
@@ -35,9 +30,6 @@ class AddRatingFieldsToPostables < ActiveRecord::Migration
     remove_column :comments, :total_rating
     remove_column :comments, :recent_rating
     remove_column :comments, :last_rating_date
-    remove_column :questions, :total_rating
-    remove_column :questions, :recent_rating
-    remove_column :questions, :last_rating_date
     remove_column :conversations, :total_rating
     remove_column :conversations, :recent_rating
     remove_column :conversations, :last_rating_date
