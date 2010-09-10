@@ -1,29 +1,30 @@
 .wrapper
   %p.notice
   %p.alert
-  .content-container
-    %h1
-      = @main_article.title
-    %h2
-      = @main_article.author
-    .main-content
-      .feature
-        .feat-callout
-          %img{:src => @main_article.image.url(:mainfeature), :height => "225", :width => "300" }
-        .feat-content
-          = @main_article.description
-        %a{:href => @main_article.link} Read The Article
+  - if @main_article.exists? && @sub_articles.exists?
+    .content-container
+      %h1
+        = @main_article.title
+      %h2
+        = @main_article.author
+      .main-content
+        .feature
+          .feat-callout
+            %img{:src => @main_article.image.url(:mainfeature), :height => "225", :width => "300" }
+          .feat-content
+            = @main_article.description
+          %a{:href => @main_article.link} Read The Article
         
-    - @sub_articles.each do |article|
-      .aside.supplementary
-        %ol.conversations
-          %li.article.offset-1
-            %img{:src => article.image.url(:subfeature), :height => "60", :width=>"60", :class=>"callout" }
-            %h3
-              %a{:href => article.link}
-                = article.title
-            %p
-              = "By: #{article.author}"
+      - @sub_articles.each do |article|
+        .aside.supplementary
+          %ol.conversations
+            %li.article.offset-1
+              %img{:src => article.image.url(:subfeature), :height => "60", :width=>"60", :class=>"callout" }
+              %h3
+                %a{:href => article.link}
+                  = article.title
+              %p
+                = "By: #{article.author}"
 
 
 
