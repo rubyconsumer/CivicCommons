@@ -12,7 +12,7 @@ class Article < ActiveRecord::Base
     :s3_credentials => s3_credential_file,
     :path => ":attachment/:id/:style/:filename"
 
-  scope :main_article, where(:current => true, :main => true)
+  scope :main_article, where(:current => true, :main => true).first
   scope :sub_articles, where("main is not ? AND current = ? ", true, true)
 
 end
