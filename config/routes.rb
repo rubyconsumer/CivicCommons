@@ -1,5 +1,4 @@
 Civiccommons::Application.routes.draw do
-  get "dashboard/show"
   resources :articles
 
   devise_for :people,
@@ -19,8 +18,10 @@ Civiccommons::Application.routes.draw do
   resources :conversations
   
   namespace "admin" do
-    resources :conversations
-    root :to => "dashboard#show"
+    resources   :conversations
+    resources   :issues
+
+    root        :to => "dashboard#show"
   end
   
   match '/conversations/rate', :to=>'conversations#rate', :via=>[:post]
