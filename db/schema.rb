@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100909180716) do
+ActiveRecord::Schema.define(:version => 20100910191645) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -36,12 +36,6 @@ ActiveRecord::Schema.define(:version => 20100909180716) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "official",                :default => false
-    t.integer  "total_rating",            :default => 0
-    t.integer  "recent_rating",           :default => 0
-    t.datetime "last_rating_date"
-    t.integer  "total_visits",            :default => 0
-    t.integer  "recent_visits",           :default => 0
-    t.datetime "last_visit_date"
     t.integer  "conversation_id"
     t.integer  "contribution_id"
     t.integer  "target_person_id"
@@ -52,7 +46,6 @@ ActiveRecord::Schema.define(:version => 20100909180716) do
     t.datetime "attachment_updated_at"
     t.string   "type",                    :default => "Contribution"
   end
-
 
   create_table "conversations", :force => true do |t|
     t.datetime "started_at"
@@ -66,13 +59,10 @@ ActiveRecord::Schema.define(:version => 20100909180716) do
     t.string   "image_file_name"
     t.string   "image_content_type"
     t.integer  "image_file_size"
-    t.integer  "total_rating",       :default => 0
-    t.integer  "recent_rating",      :default => 0
-    t.datetime "last_rating_date"
+    t.string   "zip_code"
     t.integer  "total_visits",       :default => 0
     t.integer  "recent_visits",      :default => 0
     t.datetime "last_visit_date"
-    t.string   "zip_code"
   end
 
   create_table "conversations_events", :id => false, :force => true do |t|
@@ -98,12 +88,6 @@ ActiveRecord::Schema.define(:version => 20100909180716) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "creator_id"
-    t.integer  "total_rating",     :default => 0
-    t.integer  "recent_rating",    :default => 0
-    t.datetime "last_rating_date"
-    t.integer  "total_visits",     :default => 0
-    t.integer  "recent_visits",    :default => 0
-    t.datetime "last_visit_date"
   end
 
   create_table "events_guides", :id => false, :force => true do |t|
@@ -115,12 +99,6 @@ ActiveRecord::Schema.define(:version => 20100909180716) do
     t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "total_rating",     :default => 0
-    t.integer  "recent_rating",    :default => 0
-    t.datetime "last_rating_date"
-    t.integer  "total_visits",     :default => 0
-    t.integer  "recent_visits",    :default => 0
-    t.datetime "last_visit_date"
     t.string   "summary"
   end
 
@@ -167,6 +145,7 @@ ActiveRecord::Schema.define(:version => 20100909180716) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
 
   create_table "top_items", :force => true do |t|
     t.integer  "item_id"
