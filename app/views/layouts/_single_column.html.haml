@@ -1,8 +1,8 @@
 #user
   - if person_signed_in?
-    - surround "Signed in as ", "." do
+    = surround "Signed in as ", "." do
       = current_person.email
-    - precede "Not you? " do
+    = precede "Not you? " do
       = link_to "Sign out", destroy_person_session_path
   - else
     = succeed " |" do
