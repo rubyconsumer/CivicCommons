@@ -3,6 +3,7 @@ require 'parent_validator'
 class Contribution < ActiveRecord::Base
   include Rateable
   include Visitable
+  include TopItemable
   
   belongs_to :person, :foreign_key => "owner"
   belongs_to :conversation

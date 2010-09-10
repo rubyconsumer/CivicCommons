@@ -37,6 +37,16 @@ GEM
       xml-simple
     bcrypt-ruby (2.1.2)
     builder (2.1.2)
+    commonwatir (1.6.5)
+      user-choices
+    cucumber (0.8.5)
+      builder (~> 2.1.2)
+      diff-lcs (~> 1.1.2)
+      gherkin (~> 2.1.4)
+      json_pure (~> 1.4.3)
+      term-ansicolor (~> 1.0.4)
+    cucumber-rails (0.3.2)
+      cucumber (>= 0.8.0)
     date_validator (0.5.7)
       activemodel (>= 3.0.0.rc)
     devise (1.1.0)
@@ -49,9 +59,18 @@ GEM
     factory_girl_rails (1.0)
       factory_girl (~> 1.3)
       rails (>= 3.0.0.beta4)
+    firewatir (1.6.5)
+      activesupport
+      commonwatir (= 1.6.5)
+    gherkin (2.1.5)
+      trollop (~> 1.16.2)
     haml (3.0.18)
+    hoe (2.6.2)
+      rake (>= 0.8.7)
+      rubyforge (>= 2.0.4)
     hpricot (0.8.2)
     i18n (0.4.1)
+    json_pure (1.4.6)
     mail (2.2.5)
       activesupport (>= 2.3.6)
       mime-types
@@ -86,6 +105,7 @@ GEM
       rake (>= 0.8.4)
       thor (~> 0.14.0)
     rake (0.8.7)
+    rb-appscript (0.5.3)
     rspec (2.0.0.beta.20)
       rspec-core (= 2.0.0.beta.20)
       rspec-expectations (= 2.0.0.beta.20)
@@ -98,12 +118,23 @@ GEM
       rspec (= 2.0.0.beta.20)
     ruby_parser (2.0.5)
       sexp_processor (~> 3.0)
+    rubyforge (2.0.4)
+      json_pure (>= 1.1.7)
+    s4t-utils (1.0.4)
+      hoe (>= 1.3.0)
+    safariwatir (0.3.8)
     sexp_processor (3.0.5)
     sqlite3-ruby (1.3.1)
+    term-ansicolor (1.0.5)
     thor (0.14.0)
     treetop (1.4.8)
       polyglot (>= 0.3.1)
+    trollop (1.16.2)
     tzinfo (0.3.23)
+    user-choices (1.1.6.1)
+      builder (>= 2.1.2)
+      s4t-utils (>= 1.0.3)
+      xml-simple (>= 1.0.11)
     warden (0.10.7)
       rack (>= 1.0.0)
     xml-simple (1.0.12)
@@ -114,15 +145,20 @@ PLATFORMS
 DEPENDENCIES
   acts_as_tree
   aws-s3
+  cucumber
+  cucumber-rails
   date_validator
   devise (= 1.1)
   factory_girl_rails
+  firewatir
   haml
   hpricot
   meta_search
   paperclip
   rails (= 3.0.0)
   rails3-generators
+  rb-appscript
   rspec-rails (>= 2.0.0.beta.10)
   ruby_parser
+  safariwatir
   sqlite3-ruby
