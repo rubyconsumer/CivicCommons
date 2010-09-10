@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-[Event, Comment, Issue, Question, Conversation].each do |model_type|
+[Event, Contribution, Issue, Conversation].each do |model_type|
   describe model_type.to_s, "When working with ratings" do
     before(:each) do
       @person = Factory.create(:normal_person)

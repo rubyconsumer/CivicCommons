@@ -9,7 +9,7 @@ Civiccommons::Application.routes.draw do
 
   resources :ratings
 
-  resources :comments
+  resources :contributions
 
   resources :answers
 

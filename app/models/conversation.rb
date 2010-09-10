@@ -1,10 +1,13 @@
 class Conversation < ActiveRecord::Base
   include Rateable
   include Visitable
+  include TopItemable
   
-  has_many :posts, :as => :conversable
+  has_many :contributions
 
   has_and_belongs_to_many :guides, :class_name => 'Person', :join_table => 'conversations_guides', :association_foreign_key => :guide_id
+  has_and_belongs_to_many :issues
+  has_and_belongs_to_many :events
 
   # paperclip bug: if you don't specify the path, you will get
   # a stack overflow when trying to upload an image.
@@ -33,17 +36,6 @@ class Conversation < ActiveRecord::Base
       where("posts.postable_type = 'Issue'").
       where("lower(issues.description) like ?", "%" + target.downcase.strip + "%")}
 
-  def issues
-    self.posts.where({:postable_type=>Issue.to_s}).collect{|x| x.postable}
-  end
-  
-  def issues=(issues)
-    self.posts.delete(self.posts.where(:postable_type=>Issue.to_s))
-    issues.each do |issue|
-      Issue.add_to_conversation(issue, self)
-    end unless issues.nil?
-  end
-  
   # Return a comma-and-space-delimited list of the Issues
   # relevant to this Conversation, e.g., "Jobs, Sports, Religion"
   def issues_text
@@ -106,15 +98,6 @@ class Conversation < ActiveRecord::Base
       started_at.mday
     end
   end
-    
-  def create_post(postable, current_person)
-    postable.person = current_person
-    postable.datetime = Time.now
-    postable.save
-    Post.create(:conversable_type => self.class.to_s, :conversable_id => self.id,
-                :postable_type => postable.class.to_s, :postable_id => postable.id)
-    return postable
-  end
-  
+
 end
 

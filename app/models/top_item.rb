@@ -1,27 +1,42 @@
-class TopItem  
-  def TopItem.newest_items(limit=10)
-    postables = Post.where("postable_type != 'Rating'").order("created_at DESC").limit(limit).collect{ |x| x.postable }    
-    conversations = Conversation.order("created_at DESC").limit(limit)
-    
-    (postables | conversations).sort{|x,y| y.created_at <=> x.created_at}.first(limit)
+class TopItem < ActiveRecord::Base
+  belongs_to :item, :polymorphic => true
+  belongs_to :person
+  
+  before_create :set_item_created_at
+  before_create :set_item_recent_rating, :if => :item_rateable?
+  before_create :set_item_recent_visits, :if => :item_visitable?
+  
+  def self.newest_items(limit=10)
+    self.order("item_created_at DESC").limit(limit)
   end
   
   def TopItem.highest_rated(limit=10)
-    top_rated = []
-    [Comment,Issue,Event,Conversation,Question].each do |model_name|
-      top_rated = (top_rated | model_name.get_top_rated(limit))
-    end
-        
-    top_rated.sort{|x,y| y.recent_rating <=> x.recent_rating}.first(limit)
+    self.order("recent_rating DESC").limit(limit)
   end
   
   def TopItem.most_visited(limit=10)
-    top_visited = []
-    [Comment,Issue,Event,Conversation,Question].each do |model_name|
-      top_visited = (top_visited | model_name.get_top_visited(limit))
-    end
-        
-    top_visited.sort{|x,y| y.recent_visits <=> x.recent_visits}.first(limit)
+    self.order("recent_visits DESC").limit(limit)
   end
   
+  protected
+  
+  def item_rateable?
+    self.item.respond_to?(:recent_rating)
+  end
+  
+  def item_visitable?
+    self.item.respond_to?(:recent_visits)
+  end
+  
+  def set_item_created_at
+    self.item_created_at = self.item.created_at
+  end
+  
+  def set_item_recent_rating
+    self.recent_rating = self.item.recent_rating
+  end
+  
+  def set_item_recent_visits
+    self.recent_visits = self.item.recent_visits
+  end
 end
