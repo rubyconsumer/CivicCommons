@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   def verify_admin
     if current_person.nil? || !current_person.admin
       flash[:error] = "You must be an admin to view this page."
-      redirect_to new_person_session_path
+      redirect_to person_session_new_path
     end
   end    
   

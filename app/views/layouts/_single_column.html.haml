@@ -3,7 +3,7 @@
     = surround "Signed in as ", "." do
       = current_person.email
     = precede "Not you? " do
-      = link_to "Sign out", destroy_person_session_path
+      = link_to "Sign out", person_session_destroy_path
   - else
     = succeed " |" do
       = link_to "Sign in!", person_session_new_path
