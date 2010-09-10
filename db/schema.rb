@@ -10,7 +10,24 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100909135436) do
+ActiveRecord::Schema.define(:version => 20100909180716) do
+
+  create_table "articles", :force => true do |t|
+    t.string   "title"
+    t.string   "author"
+    t.text     "description"
+    t.string   "link"
+    t.string   "video_url"
+    t.string   "percent"
+    t.boolean  "current"
+    t.boolean  "main"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+  end
 
   create_table "contributions", :force => true do |t|
     t.datetime "datetime"
@@ -36,24 +53,6 @@ ActiveRecord::Schema.define(:version => 20100909135436) do
     t.string   "type",                    :default => "Contribution"
   end
 
-  end
-
-  create_table "articles", :force => true do |t|
-    t.string   "title"
-    t.string   "author"
-    t.text     "description"
-    t.string   "link"
-    t.string   "video_url"
-    t.string   "percent"
-    t.boolean  "current"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.boolean  "main"
-    t.string   "image_file_name"
-    t.string   "image_content_type"
-    t.integer  "image_file_size"
-    t.datetime "image_updated_at"
-  end
 
   create_table "conversations", :force => true do |t|
     t.datetime "started_at"
@@ -148,6 +147,7 @@ ActiveRecord::Schema.define(:version => 20100909135436) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "zip_code"
+    t.integer  "top"
   end
 
   add_index "people", ["email"], :name => "index_people_on_email", :unique => true
@@ -167,6 +167,13 @@ ActiveRecord::Schema.define(:version => 20100909135436) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+
+  create_table "top_items", :force => true do |t|
+    t.integer  "item_id"
+    t.string   "item_type"
+    t.datetime "item_created_at"
+    t.decimal  "recent_rating",   :precision => 3, :scale => 2
+    t.integer  "recent_visits"
   end
 
   create_table "visits", :force => true do |t|
