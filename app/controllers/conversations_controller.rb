@@ -41,6 +41,7 @@ class ConversationsController < ApplicationController
   # GET /conversations/new.xml
   def new
     @conversation = Conversation.new
+    @presenter = IngestPresenter.new(@conversation)
 
     respond_to do |format|
       format.html # new.html.erb
@@ -56,23 +57,27 @@ class ConversationsController < ApplicationController
   # POST /conversations
   # POST /conversations.xml
   def create
-    @conversation = Conversation.new(params[:conversation])
-    #TODO: Fix this conversation issues creation since old conversation.issues= method has been destroyed
-    #NOTE: Issues were previously defined as Conversation has_many Issues, but this is wrong, should be habtm
-    @conversation.issues = Issue.find(params[:issue_ids]) unless params[:issue_ids].blank?
-    @conversation.started_at = Time.now
+    ActiveRecord::Base.transaction do 
+      @conversation = Conversation.new(params[:conversation])
+      #TODO: Fix this conversation issues creation since old conversation.issues= method has been destroyed
+      #NOTE: Issues were previously defined as Conversation has_many Issues, but this is wrong, should be habtm
+      @conversation.issues = Issue.find(params[:issue_ids]) unless params[:issue_ids].blank?
+      @conversation.started_at = Time.now
+      @presenter = IngestPresenter.new(@conversation, params[:file])
 
-    respond_to do |format|
-      if @conversation.save
+      @conversation.save!
+      @presenter.save!
+      respond_to do |format|
         format.html { redirect_to(@conversation, :notice => 'Conversation was successfully created.') }
         format.xml  { render :xml => @conversation, :status => :created, :location => @conversation }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @conversation.errors, :status => :unprocessable_entity }
       end
     end
+  rescue ActiveRecord::RecordInvalid => e
+    respond_to do |format|
+      format.html { render :action => "new" }
+      format.xml  { render :xml => @conversation.errors + @presenter.errors, :status => :unprocessable_entity }
+    end
   end
-
   # PUT /conversations/1
   # PUT /conversations/1.xml
   def update

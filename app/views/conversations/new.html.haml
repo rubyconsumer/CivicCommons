@@ -6,6 +6,15 @@
 - content_for :main do
   %h1 Create a New Conversation
   - form_for :conversation, :url => {:controller => "conversations", :action => "create" }, :html => {:multipart => true} do
+    - all_errors = @conversation.errors.full_messages + @presenter.errors.full_messages
+    - if all_errors.any?
+      #error_explanation
+        %h2
+          = pluralize(all_errors.size, "error")
+          prohibited this conversation from being saved:
+        %ul
+          - all_errors.each do |msg|
+            %li= msg
     .form-group
       .form-block
         %label(for="title")
@@ -19,6 +28,10 @@
         %label(for="image")
           Image:
         %input(class="file" type="file" name="conversation[image]" size=60)
+      .form-block
+        %label(for="file")
+          Transcript:
+        %input(class="file" type="file" name="file" size=60)
     .form-group
       .form-block
         %label(for="event")
