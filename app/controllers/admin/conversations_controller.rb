@@ -8,20 +8,29 @@ class Admin::ConversationsController < Admin::DashboardController
   #GET admin/conversations/new
   def new
     @conversation = Conversation.new(params[:conversation])
-    @conversation.build_top_level_contribution(params[:top_level_contribution_attributes])
+    @presenter = IngestPresenter.new(@conversation)
   end
   
   #POST admin/conversations/
   def create
-    @conversation = Conversation.new(params[:conversation])
-    if @conversation.save
-      @conversation.top_level_contribution.datetime = Time.now
-      flash[:notice] = "Thank you for creating a new conversation"
-      redirect_to admin_conversations_path
-    else
-      redirect_to new_admin_conversation_path
+    ActiveRecord::Base.transaction do
+      @conversation = Conversation.new(params[:conversation])
+      @presenter = IngestPresenter.new(@conversation, params[:transcript_file])
+
+      @conversation.save!
+      @presenter.save!
+      respond_to do |format|
+        format.html { redirect_to(admin_conversation_path(@conversation), :notice => 'Conversation was successfully created.') }
+        format.xml  { render :xml => @conversation, :status => :created, :location => @conversation }
+      end
     end
-  end
+  rescue ActiveRecord::RecordInvalid => e
+    respond_to do |format|
+      format.html { render new_admin_conversation_path }
+      format.xml  { render :xml => @conversation.errors + @presenter.errors, :status => :unprocessable_entity }
+    end
+  end  
+  
   
   #GET admin/conversations/:id/edit
   def edit

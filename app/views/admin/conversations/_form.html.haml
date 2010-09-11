@@ -1,4 +1,13 @@
--form_for [:admin, @conversation], :multipart => true do |conversation|
+-form_for [:admin, @conversation], :html =>{:multipart => true} do |conversation|
+  - all_errors = @conversation.errors.full_messages + @presenter.errors.full_messages
+  - if all_errors.any?
+    #error_explanation
+      %h2
+        = pluralize(all_errors.size, "error")
+        prohibited this conversation from being saved:
+      %ul
+        - all_errors.each do |msg|
+          %li= msg
   %p
     =conversation.label :title
     %br
@@ -13,14 +22,12 @@
     =conversation.label :summary
     %br
     =conversation.text_area :summary
-
-  =conversation.fields_for :top_level_contribution  do |contribution|
-    =contribution.hidden_field :type, :value => "TopLevelContribution"
-    %p
-      =contribution.label :content, "Transcripts"
-      %br
-      =contribution.text_area :content
-
+    
+  %p
+    =label_tag 'Transcript'
+    %br
+    =file_field_tag 'transcript_file'
+    
   %p
     =conversation.label :started_at
     =conversation.date_select :started_at, :order => [:month, :day, :year]
