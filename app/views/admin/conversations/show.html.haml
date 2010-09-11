@@ -9,8 +9,13 @@
     = @conversation.summary
   %section 
     %header
-      %h2 Top Node/Contribution:
-    = @conversation.top_level_contribution.content
+      %h2 Top Node/Contributions:
+    - # TODO - we should really be iterating over top level contributions only
+    - @conversation.contributions.each do |c|
+      = c.person.full_name + ":"
+      %br
+      = c.content
+      %hr
   %footer
     %p= "This conversation was started at: #{@conversation.started_at}"
     -if @conversation.finished_at
