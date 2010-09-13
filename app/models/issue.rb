@@ -5,7 +5,8 @@ class Issue < ActiveRecord::Base
   
   belongs_to :person
   has_and_belongs_to_many :conversations
+  has_many :contributions
   
   validates :description, :presence => true, :length => { :minimum => 5 }  
-   
+  
 end

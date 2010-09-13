@@ -7,6 +7,7 @@ class Contribution < ActiveRecord::Base
   
   belongs_to :person, :foreign_key => "owner"
   belongs_to :conversation
+  belongs_to :issue
   
   acts_as_tree :foreign_key => 'contribution_id'
   
