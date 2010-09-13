@@ -1,0 +1,23 @@
+%li
+  .article.comment
+    .meta
+      .comment-type.question
+      %a.rating.positive(href="#" title="Rate this contribution")=format_rating(contribution)
+    %img{:alt=>"Question from #{contribution.person.name}"}
+    %p
+      %a{:href=>person_path(contribution.person), :title=>"#{contribution.person.name}'s Profile"}
+        %strong= contribution.person.name
+      - if contribution.askee.nil?
+        %span.action asked a question.
+      - else
+        %span.action asked a question to:
+        %a.question_recipient(href="#" title="Frank Jackson's Profile")=contribution.askee.name             
+    %p.content= contribution.content
+    %p
+      - if person_signed_in?
+        %a.button.answer(href="#" title="Answer Question") Answer
+      - if can_edit?(contribution.owner)
+        %a{:href=>"#", :class=>"privileged", :title=>"Delete this comment"} Delete
+  %ul
+    - contribution.posts.order('created_at DESC').each do |post|
+      =render :partial => post.contribution_type.downcase, :locals => { :contribution => post.contribution }

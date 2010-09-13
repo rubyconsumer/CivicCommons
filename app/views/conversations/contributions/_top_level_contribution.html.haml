@@ -1,0 +1,29 @@
+%li
+  %div
+    - if contribution
+      .article.comment
+        %a{:name=>"#post#{contribution.id}"}
+        .meta
+          .comment-type{:class=>contribution.official ? "" : "unofficial"}
+            - "Official" if contribution.official
+          %img{:alt=>" [#{contribution.person.name} image] ", :height => 25, :width => 25, :src=>"#{contribution.person.avatar_url(:small)}"}
+          %br
+          %br
+          = format_time_only(contribution.created_at)
+        %p
+          -if contribution.person
+            %a{:href=>person_path(contribution), :title=>"#{contribution.person.name}'s Profile"}
+              %strong= contribution.person.name
+          -else
+            %strong= 'An unknown person'
+          %span.action commented:
+        %p.content= contribution.content
+        %p
+          %a.rating.float-right(href="#" title="Rate this contribution")=format_rating(contribution)
+          - if person_signed_in?
+            %a.text.button.conversation-action(id="action-link-#{contribution.id}" href="javascript:void(0)" title="Leave a comment here") Be the first to respond
+          - if can_edit?(contribution.person)
+            %a(href="#" class="privileged" title="Delete this contribution") Delete (doesn't work)
+      %div{:clear => 'both'}
+      .tab-strip(id="action-div-#{contribution.id}")
+      %ul

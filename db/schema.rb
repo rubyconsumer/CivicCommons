@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100910191645) do
+ActiveRecord::Schema.define(:version => 20100913073148) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -45,6 +45,12 @@ ActiveRecord::Schema.define(:version => 20100910191645) do
     t.integer  "attachment_file_size"
     t.datetime "attachment_updated_at"
     t.string   "type",                    :default => "Contribution"
+    t.integer  "total_visits"
+    t.integer  "recent_visits"
+    t.integer  "total_rating"
+    t.integer  "recent_rating"
+    t.datetime "last_visit_date"
+    t.datetime "last_rating_date"
   end
 
   create_table "conversations", :force => true do |t|
@@ -63,6 +69,9 @@ ActiveRecord::Schema.define(:version => 20100910191645) do
     t.integer  "total_visits",       :default => 0
     t.integer  "recent_visits",      :default => 0
     t.datetime "last_visit_date"
+    t.integer  "total_rating"
+    t.integer  "recent_rating"
+    t.datetime "last_rating_date"
   end
 
   create_table "conversations_events", :id => false, :force => true do |t|
@@ -88,6 +97,12 @@ ActiveRecord::Schema.define(:version => 20100910191645) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "creator_id"
+    t.integer  "total_visits"
+    t.integer  "recent_visits"
+    t.integer  "total_rating"
+    t.integer  "recent_rating"
+    t.datetime "last_visit_date"
+    t.datetime "last_rating_date"
   end
 
   create_table "events_guides", :id => false, :force => true do |t|
@@ -100,6 +115,12 @@ ActiveRecord::Schema.define(:version => 20100910191645) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "summary"
+    t.integer  "total_visits"
+    t.integer  "recent_visits"
+    t.integer  "total_rating"
+    t.integer  "recent_rating"
+    t.datetime "last_visit_date"
+    t.datetime "last_rating_date"
   end
 
   create_table "people", :force => true do |t|

@@ -126,6 +126,14 @@ h2 {
   @include text-shadow(rgba(white, 1));
 }
 
+.float-right {
+	float: right;
+}
+
+.float-left {
+	float: left;
+}
+
 /* forms */
 
 @mixin text-input {
@@ -753,11 +761,8 @@ float: left;
         a.rating {
           display: block;
           color: $grey-color;
-          font-size: 1.1em;
-          text-align: center;
           padding-left: 0;
-      width: 20px;
-    float: right;
+      		float: right;
           &:hover {
             text-decoration: none;
           }

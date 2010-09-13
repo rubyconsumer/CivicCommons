@@ -1,0 +1,32 @@
+%li
+  -# if contribution is nil, that means this Comment doesn't have a matching Post record.
+  -# Right now, in that case, we just skip the Comment. FIXME
+  / A comment entry follows.
+  %div
+    - if contribution
+      .article.comment
+        %a{:name=>"#post#{contribution.id}"}
+        .meta
+          .comment-type{:class=>contribution.official ? "" : "unofficial"}
+            - "Official" if contribution.official
+          %img{:alt=>" [#{contribution.person.name} image] ", :height => 25, :width => 25, :src=>"#{contribution.person.avatar_url(:small)}"}
+          %a.rating(href="#" title="Rate this comment")=format_rating(contribution)
+        %p
+          -if contribution.person
+            %a{:href=>person_path(contribution), :title=>"#{contribution.person.name}'s Profile"}
+              %strong= contribution.person.name
+          -else
+            %strong= 'An unknown person'
+          - tmp = format_time(contribution.datetime)
+          %span.action commented at #{link_to(tmp, comment_path(contribution))}
+        %p.content= contribution.content
+        %p
+          - if person_signed_in?
+            %a.text.button.conversation-action(id="action-link-#{contribution.id}" href="javascript:void(0)" title="Leave a comment here") Comment on this
+          - if can_edit?(contribution.person)
+            %a(href="#" class="privileged" title="Delete this comment") Delete (doesn't work)
+      %div{:clear => 'both'}
+      .tab-strip(id="action-div-#{contribution.id}")
+      %ul
+        - contribution.posts.order('created_at DESC').each do |post|
+          =render :partial => post.contribution_type.downcase, :locals => { :contribution => post.contribution }
