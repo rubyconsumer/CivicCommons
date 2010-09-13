@@ -3,6 +3,5 @@
 Factory.define :conversation do |f|
   f.started_at ""
   f.finished_at ""
-  f.moderator ""
   f.summary "MyString"
 end
