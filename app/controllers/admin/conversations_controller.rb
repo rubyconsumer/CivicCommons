@@ -35,6 +35,7 @@ class Admin::ConversationsController < Admin::DashboardController
   #GET admin/conversations/:id/edit
   def edit
     @conversation = Conversation.find(params[:id])
+    @presenter = IngestPresenter.new(@conversation)
   end
   
   #PUT admin/conversations/:id

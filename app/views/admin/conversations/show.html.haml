@@ -5,13 +5,12 @@
   %section
     %header 
       %h2 Summary:
-    %div= image_tag @conversation.image.url(:normal), :alt => 'Blue Angels' 
+    %div= image_tag @conversation.image.url(:normal)
     = @conversation.summary
   %section 
     %header
       %h2 Top Node/Contributions:
-    - # TODO - we should really be iterating over top level contributions only
-    - @conversation.contributions.each do |c|
+    - @conversation.top_level_contributions.each do |c|
       = c.person.full_name + ":"
       %br
       = c.content
