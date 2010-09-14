@@ -1,5 +1,4 @@
-class ArticlesController < ApplicationController
-  before_filter :verify_admin
+class Admin::ArticlesController < Admin::DashboardController
   
   # GET /articles
   # GET /articles.xml
@@ -7,7 +6,7 @@ class ArticlesController < ApplicationController
     @articles = Article.all
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html  
       format.xml  { render :xml => @articles }
     end
   end
@@ -18,7 +17,7 @@ class ArticlesController < ApplicationController
     @article = Article.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html  
       format.xml  { render :xml => @article }
     end
   end
@@ -29,7 +28,7 @@ class ArticlesController < ApplicationController
     @article = Article.new
 
     respond_to do |format|
-      format.html # new.html.erb
+      format.html 
       format.xml  { render :xml => @article }
     end
   end
@@ -46,7 +45,7 @@ class ArticlesController < ApplicationController
 
     respond_to do |format|
       if @article.save
-        format.html { redirect_to(@article, :notice => 'Article was successfully created.') }
+        format.html { redirect_to(admin_article_path @article, :notice => 'Article was successfully created.') }
         format.xml  { render :xml => @article, :status => :created, :location => @article }
       else
         format.html { render :action => "new" }
@@ -78,7 +77,7 @@ class ArticlesController < ApplicationController
     @article.destroy
 
     respond_to do |format|
-      format.html { redirect_to(articles_url) }
+      format.html { redirect_to(admin_articles_url) }
       format.xml  { head :ok }
     end
   end

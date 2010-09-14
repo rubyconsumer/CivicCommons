@@ -13,6 +13,11 @@
       .nav
         %ul
           %li
+            =link_to "Articles", admin_articles_path
+            %ul
+              %li
+                =link_to "Add Article", new_admin_article_path
+          %li
             =link_to "Conversations", admin_conversations_path
             %ul
               %li

@@ -1,5 +1,4 @@
 Civiccommons::Application.routes.draw do
-  resources :articles
 
   devise_for :people,
              :controllers => { :registrations => 'registrations' },
@@ -18,9 +17,9 @@ Civiccommons::Application.routes.draw do
   resources :conversations
   
   namespace "admin" do
+    resources   :articles
     resources   :conversations
     resources   :issues
-
     root        :to => "dashboard#show"
   end
   
