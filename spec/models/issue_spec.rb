@@ -44,4 +44,29 @@ describe Issue do
       @issue.visits.count.should == 1
     end
   end
+  context "Sort filter" do
+    def given_3_issues
+      @issue1 = Factory.create(:issue, :description => 'A first issue')
+      @issue2 = Factory.create(:issue, :description => 'Before I had a problem')
+      @issue3 = Factory.create(:issue, :description => 'Cat in the bag')
+    end
+    it "should sort issue by alphabetical" do
+      given_3_issues
+      Issue.sort('alphabetical').should == [@issue1, @issue2, @issue3]
+    end
+    it "should sort issue by date created" do
+      given_3_issues
+      Issue.sort('most_recent').should == [@issue3, @issue2, @issue1]
+    end
+    it "should sort issue by recently updated" do
+      given_3_issues
+      @issue1.touch
+      @issue2.touch
+      @issue3.touch
+      Issue.sort('most_recent_update').should == [@issue3, @issue2, @issue1]      
+    end
+    it "should sort issue by region" do
+      pending
+    end
+  end
 end
