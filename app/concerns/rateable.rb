@@ -17,6 +17,8 @@ module Rateable
     
     self.ratings << rating    
     
+    self.total_rating ||= 0
+    
     self.total_rating = self.total_rating + value
     self.last_rating_date = Time.now
     self.recent_rating = calculate_recent_rating    
