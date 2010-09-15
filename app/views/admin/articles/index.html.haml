@@ -34,11 +34,11 @@
     %td
       = article.main
     %td
-      = link_to 'Show', article
+      = link_to 'Show', admin_article_path(article)
     %td
       = link_to 'Edit', edit_admin_article_path(article)
     %td
-      = link_to 'Destroy', article, :confirm => 'Are you sure?', :method => :delete
+      = link_to 'Destroy', admin_article_path(article), :confirm => 'Are you sure?', :method => :delete
   %br
 
 = link_to 'New Article', new_admin_article_path 
