@@ -1,5 +1,7 @@
 source 'http://rubygems.org'
 
+gem 'mysql2'
+
 gem 'rails', "3.0.0"
 
 gem 'sqlite3-ruby', :require => 'sqlite3'
@@ -30,7 +32,5 @@ gem 'meta_search'
 
 gem 'paperclip'
 gem 'aws-s3'
-
-gem 'mysql2'
 
 gem 'acts_as_tree'
