@@ -2,6 +2,7 @@
   %p.notice
   %p.alert
   - if @main_article.exists? && @sub_articles.exists?
+    - @main_article = @main_article.first
     .content-container
       %h1
         = @main_article.title
