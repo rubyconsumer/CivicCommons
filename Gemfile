@@ -1,5 +1,7 @@
 source 'http://rubygems.org'
 
+gem 'mysql2'
+
 gem 'rails', "3.0.0"
 
 gem 'sqlite3-ruby', :require => 'sqlite3'
@@ -11,6 +13,7 @@ group :development do
   gem "rails3-generators"
   gem "hpricot"
   gem "ruby_parser"
+  gem "engineyard"
 end
 
 group :test do
@@ -29,9 +32,5 @@ gem 'meta_search'
 
 gem 'paperclip'
 gem 'aws-s3'
-
-group :test do
-  #gem 'mysql', '2.8.1'
-end
 
 gem 'acts_as_tree'
