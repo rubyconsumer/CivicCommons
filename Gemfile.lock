@@ -53,8 +53,16 @@ GEM
       bcrypt-ruby (~> 2.1.2)
       warden (~> 0.10.7)
     diff-lcs (1.1.2)
+    engineyard (1.3.0)
+      escape (~> 0.0.4)
+      highline (~> 1.5.2)
+      json_pure
+      rest-client (~> 1.4)
+      ruby-termios
+      thor (~> 0.14.0)
     erubis (2.6.6)
       abstract (>= 1.0.0)
+    escape (0.0.4)
     factory_girl (1.3.2)
     factory_girl_rails (1.0)
       factory_girl (~> 1.3)
@@ -65,6 +73,7 @@ GEM
     gherkin (2.1.5)
       trollop (~> 1.16.2)
     haml (3.0.18)
+    highline (1.5.2)
     hoe (2.6.2)
       rake (>= 0.8.7)
       rubyforge (>= 2.0.4)
@@ -81,7 +90,7 @@ GEM
       activesupport (~> 3.0.0.rc2)
       arel (~> 1.0.0.rc1)
     mime-types (1.16)
-    mysql (2.8.1)
+    mysql2 (0.2.3)
     paperclip (2.3.3)
       activerecord
       activesupport
@@ -107,6 +116,8 @@ GEM
       thor (~> 0.14.0)
     rake (0.8.7)
     rb-appscript (0.5.3)
+    rest-client (1.6.1)
+      mime-types (>= 1.16)
     rspec (2.0.0.beta.20)
       rspec-core (= 2.0.0.beta.20)
       rspec-expectations (= 2.0.0.beta.20)
@@ -117,6 +128,7 @@ GEM
     rspec-mocks (2.0.0.beta.20)
     rspec-rails (2.0.0.beta.20)
       rspec (= 2.0.0.beta.20)
+    ruby-termios (0.9.6)
     ruby_parser (2.0.5)
       sexp_processor (~> 3.0)
     rubyforge (2.0.4)
@@ -150,12 +162,13 @@ DEPENDENCIES
   cucumber-rails
   date_validator
   devise (= 1.1.2)
+  engineyard
   factory_girl_rails
   firewatir
   haml
   hpricot
   meta_search
-  mysql (= 2.8.1)
+  mysql2
   paperclip
   rails (= 3.0.0)
   rails3-generators

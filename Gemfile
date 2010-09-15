@@ -11,6 +11,7 @@ group :development do
   gem "rails3-generators"
   gem "hpricot"
   gem "ruby_parser"
+  gem "engineyard"
 end
 
 group :test do
@@ -30,9 +31,6 @@ gem 'meta_search'
 gem 'paperclip'
 gem 'aws-s3'
 
-group :test do
-  #gem 'mysql', '2.8.1'
-end
-gem 'mysql', '2.8.1'
+gem 'mysql2'
 
 gem 'acts_as_tree'
