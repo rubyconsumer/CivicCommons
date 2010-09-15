@@ -90,6 +90,10 @@ GEM
       activesupport (~> 3.0.0.rc2)
       arel (~> 1.0.0.rc1)
     mime-types (1.16)
+<<<<<<< HEAD
+=======
+    mysql (2.8.1)
+>>>>>>> 2e4b7382640fe8739d53f60a5804810c39ef5d34
     paperclip (2.3.3)
       activerecord
       activesupport
@@ -167,6 +171,10 @@ DEPENDENCIES
   haml
   hpricot
   meta_search
+<<<<<<< HEAD
+=======
+  mysql (= 2.8.1)
+>>>>>>> 2e4b7382640fe8739d53f60a5804810c39ef5d34
   paperclip
   rails (= 3.0.0)
   rails3-generators
