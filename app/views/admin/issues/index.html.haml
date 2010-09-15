@@ -1,0 +1,15 @@
+%h2 Issues
+%table{:summary => 'Listing of Issues in the Area'}
+  %thead
+    %tr
+      %td Description
+      %td Summary
+  %tbody
+    -@issues.each do |issue|
+      %tr
+        %td= link_to 'issue.description', admin_issue_path(issue)
+        %td= issue.summary
+
+=link_to "Add Issue", new_admin_issue_path
+|  
+=link_to "Back", admin_root_path
