@@ -9,4 +9,17 @@ describe Person do
       person.last_name.should == "Doe"
     end
   end
+  context "as participants of an issue" do
+    def given_an_issue_with_conversations_and_participants
+      @issue = Factory.create(:issue, )
+      @person1 = Factory.create(:normal_person)
+      @person2 = Factory.create(:normal_person)
+      @conversation1 = Factory.create(:conversation,:guides => [@person1,@person2],:issues => [@issue])
+      @conversation2 = Factory.create(:conversation,:guides => [@person1],:issues => [@issue])
+    end
+    it "should return the correct participants" do
+      given_an_issue_with_conversations_and_participants
+      Person.participants_of_issue(@issue).should == [@person1,@person2]
+    end
+  end
 end

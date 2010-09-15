@@ -17,6 +17,9 @@ class Person < ActiveRecord::Base
   validate :zip_code, :length => 10
   validates_numericality_of :top, :allow_nil => true
 
+  scope :participants_of_issue, lambda{ |issue|
+      joins(:conversations => :issues).where(['issue_id = ?',issue.id]).select('DISTINCT(people.id),people.*') if issue
+    }
 
   def name=(value)
     @name = value

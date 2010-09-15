@@ -7,6 +7,10 @@ class Issue < ActiveRecord::Base
   has_and_belongs_to_many :conversations
   has_many :contributions
   
+  def participants
+    Person.participants_of_issue(self)
+  end
+  
   validates :description, :presence => true, :length => { :minimum => 5 }  
   
   scope :most_recent, {:order => 'created_at DESC'}

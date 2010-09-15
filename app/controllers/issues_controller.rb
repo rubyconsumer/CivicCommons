@@ -4,7 +4,7 @@ class IssuesController < ApplicationController
   # GET /issues
   # GET /issues.xml
   def index
-    @search = Issue.search(params[:search])
+    @search = Issue.sort(params[:sort]).search(params[:search])
     @issues = @search.all   # or @search.relation to lazy load in view
     @leaders = Person.all(:limit => 6)
     @organizations = Person.all(:limit => 6)

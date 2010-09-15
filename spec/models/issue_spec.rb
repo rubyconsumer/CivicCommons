@@ -1,6 +1,18 @@
 require 'spec_helper'
 
 describe Issue do
+  def given_3_issues
+    @issue1 = Factory.create(:issue, :description => 'A first issue')
+    @issue2 = Factory.create(:issue, :description => 'Before I had a problem')
+    @issue3 = Factory.create(:issue, :description => 'Cat in the bag')
+  end
+  def given_an_issue_with_conversations_and_participants
+    @issue = Factory.create(:issue, )
+    @person1 = Factory.create(:normal_person)
+    @person2 = Factory.create(:normal_person)
+    @conversation1 = Factory.create(:conversation,:guides => [@person1,@person2],:issues => [@issue])
+    @conversation2 = Factory.create(:conversation,:guides => [@person1],:issues => [@issue])
+  end
   def given_an_issue_with_contributions_and_conversations_and_page_visits
     @issue = Factory.create(:issue)
     @contribution = Factory.create(:contribution,:issue => @issue)
@@ -44,12 +56,13 @@ describe Issue do
       @issue.visits.count.should == 1
     end
   end
-  context "Sort filter" do
-    def given_3_issues
-      @issue1 = Factory.create(:issue, :description => 'A first issue')
-      @issue2 = Factory.create(:issue, :description => 'Before I had a problem')
-      @issue3 = Factory.create(:issue, :description => 'Cat in the bag')
+  context "with participants" do
+    it "should have the correct number of participants" do
+      given_an_issue_with_conversations_and_participants
+      @issue.participants.should == [@person1,@person2]
     end
+  end
+  context "Sort filter" do
     it "should sort issue by alphabetical" do
       given_3_issues
       Issue.sort('alphabetical').should == [@issue1, @issue2, @issue3]
@@ -64,6 +77,9 @@ describe Issue do
       @issue2.touch
       @issue3.touch
       Issue.sort('most_recent_update').should == [@issue3, @issue2, @issue1]      
+    end
+    it "should sort by hotness(# of participants and # of contributions)" do
+      
     end
     it "should sort issue by region" do
       pending
