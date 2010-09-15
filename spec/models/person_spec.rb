@@ -21,5 +21,9 @@ describe Person do
       given_an_issue_with_conversations_and_participants
       Person.participants_of_issue(@issue).should == [@person1,@person2]
     end
+    it "should return the correct number of participants" do
+      given_an_issue_with_conversations_and_participants
+      Person.participants_of_issue(@issue).count.should == 2
+    end
   end
 end
