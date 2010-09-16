@@ -24,6 +24,11 @@
             %ul
               %li
                 =link_to "Add Conversation", new_admin_conversation_path
+          %li
+            =link_to "Issues", admin_issues_path
+            %ul
+              %li
+                =link_to "Add Issue", new_admin_issue_path
       %div#main
         -if flash[:notice]
           %div
