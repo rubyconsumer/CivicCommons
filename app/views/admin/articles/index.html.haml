@@ -15,31 +15,31 @@
     %th
     %th
   
-- @articles.each do |article|
-  %tr
-    %td
-      = article.title
-    %td
-      = article.author
-    %td
-      = article.description
-    %td
-      = article.link
-    %td
-      = article.image.url(:main)
-    %td
-      = article.video_url
-    %td
-      = article.current
-    %td
-      = article.main
-    %td
-      = link_to 'Show', admin_article_path(article)
-    %td
-      = link_to 'Edit', edit_admin_article_path(article)
-    %td
-      = link_to 'Destroy', admin_article_path(article), :confirm => 'Are you sure?', :method => :delete
-  %br
+  - @articles.each do |article|
+    %tr
+      %td
+        = article.title
+      %td
+        = article.author
+      %td
+        = article.description
+      %td
+        = article.link
+      %td
+        = image_tag article.image.url(:subfeature)
+      %td
+        = article.video_url
+      %td
+        = article.current
+      %td
+        = article.main
+      %td
+        = link_to 'Show', admin_article_path(article)
+      %td
+        = link_to 'Edit', edit_admin_article_path(article)
+      %td
+        = link_to 'Destroy', admin_article_path(article), :confirm => 'Are you sure?', :method => :delete
+    %br
 
 = link_to 'New Article', new_admin_article_path 
 
