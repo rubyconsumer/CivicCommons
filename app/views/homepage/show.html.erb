@@ -13,7 +13,7 @@
         <a href="<%= @main_article.link %>">Read The Article</a>
       </div>
     <div class="feat-content">
-      <%= @main_article.description %>
+      <%= @main_article.description.html_safe %>
     </div>
   </div>
   <% end -%>
