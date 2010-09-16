@@ -14,6 +14,7 @@ describe Person do
       @issue = Factory.create(:issue, )
       @person1 = Factory.create(:normal_person)
       @person2 = Factory.create(:normal_person)
+      @person3 = Factory.create(:normal_person)
       @conversation1 = Factory.create(:conversation,:guides => [@person1,@person2],:issues => [@issue])
       @conversation2 = Factory.create(:conversation,:guides => [@person1],:issues => [@issue])
     end
@@ -23,7 +24,7 @@ describe Person do
     end
     it "should return the correct number of participants" do
       given_an_issue_with_conversations_and_participants
-      Person.participants_of_issue(@issue).count.should == 2
+      Person.participants_of_issue(@issue).count('DISTINCT(people.id)').should == 2
     end
   end
 end

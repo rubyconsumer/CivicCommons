@@ -19,10 +19,7 @@ class Person < ActiveRecord::Base
 
   scope :participants_of_issue, lambda{ |issue|
       joins(:conversations => :issues).where(['issue_id = ?',issue.id]).select('DISTINCT(people.id),people.*') if issue
-      def count 
-        self.count('DISTINCT(people.id)')
-      end
-    }
+    } 
 
   def name=(value)
     @name = value
