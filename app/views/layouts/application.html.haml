@@ -63,7 +63,7 @@
         %form#search{ :method=>"post" }
           %input.textbox#search{ :type=>"text", :name=>"search", :placeholder=>"Name, Keyword, Date..." }
           %input.submit{ :type=>"submit", :value=>"Search" }
-    .wrapper
+    #wrapper
       %p.notice
       %p.alert
       = yield :main_body
