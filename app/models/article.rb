@@ -13,6 +13,6 @@ class Article < ActiveRecord::Base
     :path => ":attachment/:id/:style/:filename"
 
   scope :main_article, where(:current => true, :main => true)
-  scope :sub_articles, where("main is not ? AND current = ? ", true, true)
+  scope :sub_articles, where("main != ? AND current = ? ", true, true)
 
 end
