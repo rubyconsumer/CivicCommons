@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100913073148) do
+ActiveRecord::Schema.define(:version => 20100916000209) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -38,7 +38,6 @@ ActiveRecord::Schema.define(:version => 20100913073148) do
     t.boolean  "official",                :default => false
     t.integer  "conversation_id"
     t.integer  "contribution_id"
-    t.integer  "target_person_id"
     t.integer  "issue_id"
     t.string   "attachment_file_name"
     t.string   "attachment_content_type"
@@ -51,6 +50,7 @@ ActiveRecord::Schema.define(:version => 20100913073148) do
     t.integer  "recent_rating"
     t.datetime "last_visit_date"
     t.datetime "last_rating_date"
+    t.string   "askee"
   end
 
   create_table "conversations", :force => true do |t|

@@ -15,6 +15,8 @@ Civiccommons::Application.routes.draw do
 
   resources :issues
 
+  match '/conversations/create_node_contribution', :to=>'conversations#create_node_contribution', :via=>[:post]  
+  match '/conversations/new_node_contribution', :to=>'conversations#new_node_contribution', :via=>[:get]
   resources :conversations
   
   namespace "admin" do
@@ -23,9 +25,6 @@ Civiccommons::Application.routes.draw do
 
     root        :to => "dashboard#show"
   end
-  
-  match '/conversations/rate', :to=>'conversations#rate', :via=>[:post]
-  match '/conversations/create_post', :to=>'conversations#create_post', :via=>[:post]  
   
   resources :questions
   

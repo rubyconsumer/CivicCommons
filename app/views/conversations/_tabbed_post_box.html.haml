@@ -1,34 +1,64 @@
-#conversation_1_comment_input.tab-strip
+%div{:id => div_id, :class => "tab-strip" }
   %ul
     %li
-      %a(href="#new-comment" title="Add Comment" id="comment_tab" onclick="SetupComment();") Comment
+      %a{:href => "##{div_id}-new-comment", :title => "Add Comment", :id => "comment_tab"} Comment
     %li
-      %a(href="#new-question" title="Ask a Question" id="question_tab" onclick="SetupQuestion();") Question
+      %a{:href => "##{div_id}-new-question", :title => "Ask a Question", :id => "question_tab"} Question
     %li
-      %a(href="#new-file" title="Upload a File" id="image_tab" onclick="SetPostModel('File');") Image/File
+      %a{:href => "##{div_id}-new-file", :title => "Upload a File", :id => "image_tab"} Image/File
     %li
-      %a(href="#new-link" title="Post a Link" id="link_tab" onclick="SetPostModel('Link');") Link
+      %a{:href => "##{div_id}-new-link", :title => "Post a Link", :id => "link_tab"} Link
     %li
-      %a(href="#new-video" title="Post a Video" id="video_tab" onclick="SetPostModel('Video');") Video
-  .tab-area.input-with-options
-    %textarea(name="" id="post_content" rows="3" placeholder="Leave a Comment...")
-    #new-comment
-    #new-question
-      %label
-        Who can answer?
-        %select(id="post_askee" name="")
-          %option(value="1") Anyone
-          %option(value="2") Moderator
-    #new-file
-      %label
-        Upload a file:
-        %input(type="file" name="" id="post_file")
-    #new-link
-      %label
-        URL:
-        %input(type="text" name="" id="post_url" class="textbox link" placeholder="http://www.youtube.com")
-    #new-video
-      %label
-        Embed code:
-        %input(type="text" name="" id="post_code" class="textbox link" placeholder="Copy/paste the HTML embed code here.")
-%a.button.tertiary(href="#" title="Save to the Stream" id="preview_post") Preview
+      %a{:href => "##{div_id}-new-video", :title => "Post a Video", :id => "video_tab"} Video
+    .tab-area.text_field-with-options
+      %div{:id => "#{div_id}-new-comment" }
+        - form_for @contribution, :url => "create_node_contribution", :remote => true do |f|
+          = f.hidden_field(:conversation_id, :value => conversation_id)
+          - if defined?(contribution_id)
+            = f.hidden_field(:contribution_id, :value => contribution_id)
+          = f.hidden_field(:type, :value => "Comment")
+          = f.text_area(:content, :rows => "3", :placeholder => "Leave a Comment...")
+          = f.submit("Submit")
+      %div{:id => "#{div_id}-new-question" }
+        - form_for @contribution, :url => "create_node_contribution", :remote => true do |f|
+          = f.hidden_field(:conversation_id, :value => conversation_id)
+          - if defined?(contribution_id)
+            = f.hidden_field(:contribution_id, :value => contribution_id)
+          = f.hidden_field(:type, :value => "Question")
+          = f.text_area(:content, :rows => "3", :placeholder => "Ask a Question...")
+          %label
+            Who can answer?
+            %select(id="contribution_askee")
+              %option Anyone
+              %option Moderator
+          = f.submit("Submit")
+      %div{:id => "#{div_id}-new-file" }
+        - form_for @contribution, :url => "create_node_contribution", :remote => true do |f|
+          = f.hidden_field(:conversation_id, :value => conversation_id)
+          - if defined?(contribution_id)
+            = f.hidden_field(:contribution_id, :value => contribution_id)
+          = f.hidden_field(:type, :value => "AttachedFile")
+          %label
+            Upload a file:
+            = f.text_field(:attachment, :type => "file")
+          = f.submit("Submit")
+      %div{:id => "#{div_id}-new-link" }
+        - form_for @contribution, :url => "create_node_contribution", :remote => true do |f|
+          = f.hidden_field(:conversation_id, :value => conversation_id)
+          - if defined?(contribution_id)
+            = f.hidden_field(:contribution_id, :value => contribution_id)
+          = f.text_field(:type, :type => "hidden", :value => "Link")
+          %label
+            URL:
+            = f.text_field(:content, :type => "text", :class => "textbox link", :placeholder => "http://www.youtube.com")
+          = f.submit("Submit")
+      %div{:id => "#{div_id}-new-video" }
+        - form_for @contribution, :url => "create_node_contribution", :remote => true do |f|
+          = f.hidden_field(:conversation_id, :value => conversation_id)
+          - if defined?(contribution_id)
+            = f.hidden_field(:contribution_id, :value => contribution_id)
+          = f.hidden_field(:type, :value => "EmbeddedSnippet")
+          %label
+            Embed code:
+            = f.text_field(:content, :type => "text", :class => "textbox link", :placeholder => "Copy/paste the HTML embed code here.")
+          = f.submit("Submit")

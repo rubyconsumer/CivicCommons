@@ -1,5 +1,8 @@
+- content_for :header do 
+  = javascript_include_tag('lib/conversations/show')
+
 - content_for :document_ready do
-  $("#conversation_1_comment_input").customTabs();
+  $(".tab-strip").easyTabs({tabActiveClass: 'tab-active'});
 
 - content_for :main do
   %div(id="show_conversation")
@@ -18,10 +21,10 @@
     %span (This is the conversation rating until we get a mockup for it)
     %hr
     %ul.thread-list
-      - @conversation.contributions.order('created_at DESC').each do |contribution|
+      - @conversation.top_level_contributions.order('created_at DESC').each do |contribution|
         =render :partial => "conversations/contributions/#{contribution.type.underscore}", :locals => { :contribution => contribution }
     - if person_signed_in?
-      =render :partial => "tabbed_post_box"
+      =render :partial => "tabbed_post_box", :locals => {:conversation_id => @conversation.id, :div_id => "conversation-#{@conversation.id}"}
 
 -content_for :sidebar do
   .aside.guides
@@ -45,5 +48,3 @@
         %a(href="#" title="Michael White") Michael White
         = delete_button_for(:spotlight_id => 5)
     %a(href="#" title="Add Guide" class="privileged") Add to Spotlight
-    - content_for :header do 
-      = javascript_include_tag 'lib/conversations/show'

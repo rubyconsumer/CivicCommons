@@ -1,6 +1,6 @@
 class ConversationsController < ApplicationController
   before_filter :verify_admin, :only=>[:new, :create, :edit, :update, :destroy]
-
+  
   # GET /conversations
   # GET /conversations.xml
   def index
@@ -28,12 +28,49 @@ class ConversationsController < ApplicationController
   # GET /conversations/1
   # GET /conversations/1.xml
   def show    
-    @conversation = Conversation.includes(:contributions).find(params[:id])
+    @conversation = Conversation.includes({:top_level_contributions => :children}).find(params[:id])
     @conversation.visit!((current_person.nil? ? nil : current_person.id))
+    @contribution = Contribution.new # for conversation comment form
 
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @conversation }
+    end
+  end
+  
+  def node_conversation
+    @contribution = Contribution.includes(:children).find(params[:id])
+    @contribution.visit!((current_person.nil? ? nil : current_person.id))
+    
+    respond_to do |format|
+      format.js { render :partial => "conversations/contribution/#{@contribution.type.downcase}"}
+      format.html # show.html.erb
+      format.xml  { render :xml => @conversation }
+    end
+  end
+  
+  def new_node_contribution
+    @contribution = Contribution.new
+    respond_to do |format|
+      format.js { render(:partial => "conversations/tabbed_post_box", :locals => {:conversation_id => params[:conversation_id], :contribution_id => params[:contribution_id], :div_id => params[:div_id], :layout => false}) }
+      format.html { render(:partial => "conversations/tabbed_post_box", :locals => {:conversation_id => params[:conversation_id], :contribution_id => params[:contribution_id], :div_id => params[:div_id], :layout => 'application'}) }
+    end
+  end
+  
+  def create_node_contribution
+    parent_contribution = Contribution.find(params[:contribution][:conversation_id])
+    model = params[:contribution][:type].constantize
+    @contribution = model.create(:parent => parent_contribution, :content => params[:contribution][:content])
+    
+    respond_to do |format|
+      if @contribution.save
+        format.js   { render :partial => "conversations/contributions/#{@contribution.type.downcase}", :locals => {:contribution => @contribution} }
+        format.html { redirect_to(@contribution, :notice => 'Contribution was successfully created.') }
+        format.xml  { render :xml => @contribution, :status => :created, :location => @contribution }
+      else
+        format.html { render :action => "new_node_contribution" }
+        format.xml  { render :xml => @contribution.errors, :status => :unprocessable_entity }
+      end
     end
   end
 
