@@ -476,10 +476,10 @@ background-color: #fff;
 border: 1px solid #ccc;
 }
 div.tab-strip ul li a.tab-active {border-bottom: none;}
-textarea#comment_text {
-width: 604px;
+textarea#contribution_content {
+width: 98%;
 margin-bottom: 8px;
-border: 0;
+border-width: 1px 0 0;
 }
 
 /* Conversation Divider */

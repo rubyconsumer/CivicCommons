@@ -22,11 +22,11 @@
           %a.rating.float-right(href="#" title="Rate this contribution")=format_rating(contribution)
           - if person_signed_in?
             - if contribution.children.size == 0
-              = link_to("Be the first to respond", {:action => "new_node_contribution", :conversation_id => contribution.conversation_id, :contribution_id => contribution.id, :div_id => "contribution-#{contribution.id}"}, :class => "text button conversation-action", :id => "action-link-#{contribution.id}", :title => "Leave a comment here", 'data-target' => "#action-div-#{contribution.id}", :remote => true)
+              = link_to("Be the first to respond", {:action => "new_node_contribution", :contribution_id => contribution.id, :id => contribution.conversation_id, :div_id => "contribution-#{contribution.id}"}, :class => "text button conversation-action", :id => "action-link-#{contribution.id}", :title => "Leave a comment here", 'data-target' => "#action-div-#{contribution.id}", :remote => true)
             - else
-              View conversation
+              = link_to("View conversation (#{contribution.descendants_count})", {:action => "node_conversation", :id => contribution.id, :div_id => "contribution-#{contribution.id}"}, :class => "text button conversation-action", :id => "action-link-#{contribution.id}", :title => "View the conversation", 'data-target' => "#action-div-#{contribution.id}", :remote => true)
           - if can_edit?(contribution.person)
             %a(href="#" class="privileged" title="Delete this contribution") Delete (doesn't work)
       %div{:clear => 'both'}
-      .top-level-contribution-action(id="action-div-#{contribution.id}")
       %ul
+        .top-level-contribution-action(id="action-div-#{contribution.id}")

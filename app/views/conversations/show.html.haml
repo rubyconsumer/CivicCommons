@@ -21,7 +21,7 @@
     %span (This is the conversation rating until we get a mockup for it)
     %hr
     %ul.thread-list
-      - @conversation.top_level_contributions.order('created_at DESC').each do |contribution|
+      - @contributions.each do |contribution|
         =render :partial => "conversations/contributions/#{contribution.type.underscore}", :locals => { :contribution => contribution }
     - if person_signed_in?
       =render :partial => "tabbed_post_box", :locals => {:conversation_id => @conversation.id, :div_id => "conversation-#{@conversation.id}"}

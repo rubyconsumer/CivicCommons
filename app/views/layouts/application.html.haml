@@ -10,12 +10,14 @@
     = javascript_include_tag 'lib/rails'
     = javascript_include_tag 'lib/master'
     = javascript_include_tag 'lib/chosen_issues'
+    = javascript_include_tag 'vendor/jquery.loadmask.min'
     = javascript_include_tag 'vendor/jquery.hashchange.min'
     = javascript_include_tag 'vendor/jquery.easytabs'
     :plain
       <!--[if gte IE 7]><!-->
       <link media="screen, projection" rel="stylesheet" href="/stylesheets/screen.css" type="text/css" />
       <link media="screen, projection" rel="stylesheet" href="/stylesheets/ui-lightness/jquery-ui-1.8.2.custom.css" type="text/css" />
+      <link media="screen, projection" rel="stylesheet" href="/stylesheets/jquery.loadmask.css" type="text/css" />
       <!--<![endif]-->
     :javascript
       $(document).ready(function(){

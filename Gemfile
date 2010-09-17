@@ -33,5 +33,3 @@ gem 'meta_search'
 
 gem 'paperclip'
 gem 'aws-s3'
-
-gem 'acts_as_tree'

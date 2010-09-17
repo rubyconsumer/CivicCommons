@@ -13,6 +13,7 @@ module Visitable
   
   def visit(user_id)  
     self.visits << Visit.new({:person_id=>user_id})
+    self.total_visits ||= 0
     self.total_visits = self.total_visits + 1
     self.last_visit_date = Time.now
     self.recent_visits = calculate_recent_visits    

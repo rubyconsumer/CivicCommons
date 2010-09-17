@@ -1,4 +1,4 @@
-%div{:id => div_id, :class => "tab-strip" }
+%div{:id => div_id, :class => "tab-strip"}
   %ul
     %li
       %a{:href => "##{div_id}-new-comment", :title => "Add Comment", :id => "comment_tab"} Comment
@@ -10,21 +10,21 @@
       %a{:href => "##{div_id}-new-link", :title => "Post a Link", :id => "link_tab"} Link
     %li
       %a{:href => "##{div_id}-new-video", :title => "Post a Video", :id => "video_tab"} Video
-    .tab-area.text_field-with-options
+    .tab-area.input-with-options
       %div{:id => "#{div_id}-new-comment" }
-        - form_for @contribution, :url => "create_node_contribution", :remote => true do |f|
+        = form_for @contribution, :url => "create_node_contribution", :remote => true do |f|
           = f.hidden_field(:conversation_id, :value => conversation_id)
           - if defined?(contribution_id)
-            = f.hidden_field(:contribution_id, :value => contribution_id)
+            = f.hidden_field(:parent_id, :value => contribution_id)
           = f.hidden_field(:type, :value => "Comment")
           = f.text_area(:content, :rows => "3", :placeholder => "Leave a Comment...")
           %div.errors
           = f.submit("Submit")
       %div{:id => "#{div_id}-new-question" }
-        - form_for @contribution, :url => "create_node_contribution", :remote => true do |f|
+        = form_for @contribution, :url => "create_node_contribution", :remote => true do |f|
           = f.hidden_field(:conversation_id, :value => conversation_id)
           - if defined?(contribution_id)
-            = f.hidden_field(:contribution_id, :value => contribution_id)
+            = f.hidden_field(:parent_id, :value => contribution_id)
           = f.hidden_field(:type, :value => "Question")
           = f.text_area(:content, :rows => "3", :placeholder => "Ask a Question...")
           %label
@@ -35,10 +35,10 @@
           %div.errors
           = f.submit("Submit")
       %div{:id => "#{div_id}-new-file" }
-        - form_for @contribution, :url => "create_node_contribution", :remote => true do |f|
+        = form_for @contribution, :url => "create_node_contribution", :remote => true do |f|
           = f.hidden_field(:conversation_id, :value => conversation_id)
           - if defined?(contribution_id)
-            = f.hidden_field(:contribution_id, :value => contribution_id)
+            = f.hidden_field(:parent_id, :value => contribution_id)
           = f.hidden_field(:type, :value => "AttachedFile")
           %label
             Upload a file:
@@ -46,10 +46,10 @@
           %div.errors
           = f.submit("Submit")
       %div{:id => "#{div_id}-new-link" }
-        - form_for @contribution, :url => "create_node_contribution", :remote => true do |f|
+        = form_for @contribution, :url => "create_node_contribution", :remote => true do |f|
           = f.hidden_field(:conversation_id, :value => conversation_id)
           - if defined?(contribution_id)
-            = f.hidden_field(:contribution_id, :value => contribution_id)
+            = f.hidden_field(:parent_id, :value => contribution_id)
           = f.text_field(:type, :type => "hidden", :value => "Link")
           %label
             URL:
@@ -57,10 +57,10 @@
           %div.errors
           = f.submit("Submit")
       %div{:id => "#{div_id}-new-video" }
-        - form_for @contribution, :url => "create_node_contribution", :remote => true do |f|
+        = form_for @contribution, :url => "create_node_contribution", :remote => true do |f|
           = f.hidden_field(:conversation_id, :value => conversation_id)
           - if defined?(contribution_id)
-            = f.hidden_field(:contribution_id, :value => contribution_id)
+            = f.hidden_field(:parent_id, :value => contribution_id)
           = f.hidden_field(:type, :value => "EmbeddedSnippet")
           %label
             Embed code:
