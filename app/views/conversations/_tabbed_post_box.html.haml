@@ -18,6 +18,7 @@
             = f.hidden_field(:contribution_id, :value => contribution_id)
           = f.hidden_field(:type, :value => "Comment")
           = f.text_area(:content, :rows => "3", :placeholder => "Leave a Comment...")
+          %div.errors
           = f.submit("Submit")
       %div{:id => "#{div_id}-new-question" }
         - form_for @contribution, :url => "create_node_contribution", :remote => true do |f|
@@ -31,6 +32,7 @@
             %select(id="contribution_askee")
               %option Anyone
               %option Moderator
+          %div.errors
           = f.submit("Submit")
       %div{:id => "#{div_id}-new-file" }
         - form_for @contribution, :url => "create_node_contribution", :remote => true do |f|
@@ -41,6 +43,7 @@
           %label
             Upload a file:
             = f.text_field(:attachment, :type => "file")
+          %div.errors
           = f.submit("Submit")
       %div{:id => "#{div_id}-new-link" }
         - form_for @contribution, :url => "create_node_contribution", :remote => true do |f|
@@ -51,6 +54,7 @@
           %label
             URL:
             = f.text_field(:content, :type => "text", :class => "textbox link", :placeholder => "http://www.youtube.com")
+          %div.errors
           = f.submit("Submit")
       %div{:id => "#{div_id}-new-video" }
         - form_for @contribution, :url => "create_node_contribution", :remote => true do |f|
@@ -61,4 +65,5 @@
           %label
             Embed code:
             = f.text_field(:content, :type => "text", :class => "textbox link", :placeholder => "Copy/paste the HTML embed code here.")
+          %div.errors
           = f.submit("Submit")

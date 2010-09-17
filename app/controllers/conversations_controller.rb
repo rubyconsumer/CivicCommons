@@ -60,7 +60,7 @@ class ConversationsController < ApplicationController
   def create_node_contribution
     parent_contribution = Contribution.find(params[:contribution][:conversation_id])
     model = params[:contribution][:type].constantize
-    @contribution = model.create(:parent => parent_contribution, :content => params[:contribution][:content])
+    @contribution = model.create(:parent => parent_contribution, :content => params[:contribution][:content], :person => current_person)
     
     respond_to do |format|
       if @contribution.save
@@ -68,6 +68,7 @@ class ConversationsController < ApplicationController
         format.html { redirect_to(@contribution, :notice => 'Contribution was successfully created.') }
         format.xml  { render :xml => @contribution, :status => :created, :location => @contribution }
       else
+        format.js   { render :json => @contribution.errors, :status => :unprocessable_entity }
         format.html { render :action => "new_node_contribution" }
         format.xml  { render :xml => @contribution.errors, :status => :unprocessable_entity }
       end
