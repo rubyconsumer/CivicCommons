@@ -5,17 +5,32 @@
     =stylesheet_link_tag 'admin.css'
     %title CivicCommons Admin
   %body
-    %header.primary
-      %h1 Civic Commons Admin
-    %nav
-      %ul
-        %li
-          =link_to "Conversations", admin_conversations_path
-          %ul
-            %li
-              =link_to "Add Conversation", new_admin_conversation_path
-    %div#main
-      -if flash[:notice]
-        %div
-          =flash[:notice]
-      = yield
+    .header
+      .wrapper
+        %h1
+          =link_to "Civic Commons Admin", admin_root_path
+    .wrapper
+      .nav
+        %ul
+          %li
+            =link_to "Civic Commons Home", root_path
+          %li
+            =link_to "Articles", admin_articles_path
+            %ul
+              %li
+                =link_to "Add Article", new_admin_article_path
+          %li
+            =link_to "Conversations", admin_conversations_path
+            %ul
+              %li
+                =link_to "Add Conversation", new_admin_conversation_path
+          %li
+            =link_to "Issues", admin_issues_path
+            %ul
+              %li
+                =link_to "Add Issue", new_admin_issue_path
+      %div#main
+        -if flash[:notice]
+          %div
+            =flash[:notice]
+        = yield

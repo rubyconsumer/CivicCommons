@@ -5,7 +5,7 @@
   $(".tab-strip").easyTabs({tabActiveClass: 'tab-active'});
 
 - content_for :main do
-  %div(id="show_conversation")
+  #show_conversation
     %h1= @conversation.title
     - if @conversation.image
       %img{:src => @conversation.image.url(:normal), :alt => " [image for " + (@conversation.title || "conversation") + "] "}

@@ -30,14 +30,25 @@
       });
     = yield :header
     = csrf_meta_tag
+
   %body
-    #logo.header
-      %a.title{:href => "/", :title => "Civic Commons - Real Logo Coming Soon"} Civic Commons
-      %span.subtitle Real Logo Coming Soon
-    / /.header
-    .nav-wrapper
-      #main-nav.nav
-        %ul
+    #header-wrapper
+      #header
+        %a#logo{:href=>'/', :title => "Civic Commons"} Civic Commons
+        #login-status
+          .offset-2
+            %img.callout{:src => "/images/avatar_40.gif", :alt=>"avatar", :width=>"40", :height=>"40"}
+            - if current_person
+              %h3
+                %a 
+                  = current_person.email
+              %a
+                = link_to "Logout", destroy_person_session_path
+            - else
+              = render :partial => 'layouts/single_column'
+    #nav-wrapper
+      #nav
+        %ul#main-nav.nav
           %li
             = link_to 'Home', root_path, :title => 'Home'
           %li
@@ -48,11 +59,15 @@
             = link_to 'Issues', issues_path, :title => 'Issues'
           %li
             = link_to 'People', people_path, :title => 'People'
-    #body.section
+          %li
+            = link_to 'Organizations', people_path, :title => 'Organizations'
+        %form#search{ :method=>"post" }
+          %input.textbox#search{ :type=>"text", :name=>"search", :placeholder=>"Name, Keyword, Date..." }
+          %input.submit{ :type=>"submit", :value=>"Search" }
+    #wrapper
+      %p.notice
+      %p.alert
       = yield :main_body
     #footer.footer
-      .section
-    / /.footer
     #legal.footer
       %p The Civic Commons is Copyright 2010 by the Legal Entity.  Content is licensed under License.
-

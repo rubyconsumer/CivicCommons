@@ -1,0 +1,123 @@
+
+<div id="wrapper">
+ 	<p class='notice'/>
+  <p class='alert'/>
+  
+  <% if @main_article.exists? && @sub_articles.exists?
+       @main_article = @main_article.first -%>
+  <div class="content-container">
+    <h1><%= @main_article.title %></h1>
+    <div><%= @main_article.author %></div>
+    <div class="main-content">
+    <div class='feature'>
+      <div class='feat-callout'>
+        <img src="<%= @main_article.image.url(:mainfeature) %>" alt="featured" width="300" height="225" />
+        <a href="<%= @main_article.link %>">Read The Article</a>
+      </div>
+    <div class="feat-content">
+      <%= @main_article.description.html_safe %>
+    </div>
+  </div>
+  <% end -%>
+</div><!-- .#main-content -->
+
+<div class='aside supplementary'>
+  <ol class='conversations'>
+    <% @sub_articles.each do |article| -%>
+    <li class='article offset-1'>
+      <img class="callout" src="<%= article.image.url(:subfeature) %>" alt="avatar_60" width="60" height="60" />
+      <h3><a href="<%= article.link %>"><%= article.title %></a></h3>
+      <p>By: <%= article.author %></p>
+    </li>
+    <% end -%>
+  </ol>
+</div><!-- /.aside -->
+
+
+
+
+<div class='conversation-ticker'>
+  <strong>Issue:</strong>
+  <a href='#' title='Taxes in Cuyahoga County'>Taxes in Cuyahoga County</a>
+</div>
+    <div class="content-container">
+      <div class='three-col'>
+    <div class="cols">
+      <h2>Leaders</h2>
+        <div class="photobank">
+          <img src="images/avatar_40.gif" alt="avatar" width="40" height="40" />
+          <img src="images/avatar_40.gif" alt="avatar" width="40" height="40" />
+          <img src="images/avatar_40.gif" alt="avatar" width="40" height="40" />
+          <img src="images/avatar_40.gif" alt="avatar" width="40" height="40" />
+          <img src="images/avatar_40.gif" alt="avatar" width="40" height="40" />
+          <img src="images/avatar_40.gif" alt="avatar" width="40" height="40" />
+        </div>
+        <h2>Organizations</h2>
+        <div class="photobank">
+          <img src="images/avatar_40.gif" alt="avatar" width="40" height="40" />
+          <img src="images/avatar_40.gif" alt="avatar" width="40" height="40" />
+          <img src="images/avatar_40.gif" alt="avatar" width="40" height="40" />
+          <img src="images/avatar_40.gif" alt="avatar" width="40" height="40" />
+          <img src="images/avatar_40.gif" alt="avatar" width="40" height="40" />
+          <img src="images/avatar_40.gif" alt="avatar" width="40" height="40" />
+        </div>
+    </div>
+    <div class="cols">
+      <h2>Issues</h2>
+      <ul class="link-list">
+        <li><a href="#">The Title of an Issue</a></li>
+        <li><a href="#">The Title of an Issue</a></li>
+        <li><a href="#">The Title of an Issue</a></li>
+        <li><a href="#">The Title of an Issue</a></li>
+        <li><a href="#">The Title of an Issue</a></li>
+        <li><a href="#">The Title of an Issue</a></li>
+      </ul>
+    </div>
+    <div class="cols">
+      <h2>Select a Region</h2>
+      <ul class="conversations">
+        <li>
+          <h3><a href="#">Secondary Article Title</a></h3>
+          <p>By: Person's Name</p>
+        </li>
+        <li>
+          <h3><a href="#">Secondary Article Title</a></h3>
+          <p>By: Person's Name</p>
+        </li>
+        <li>
+          <h3><a href="#">Secondary Article Title</a></h3>
+          <p>By: Person's Name</p>
+        </li>
+      </ul>
+    </div>          
+  </div>
+</div><!-- /.content-container -->
+<div class="content-container">       
+      <div class="main-content">
+    <ol class='conversations'>
+              <li class='article offset-1'>
+                <img class="callout" src="images/avatar_60.gif" alt="avatar_60" width="60" height="60" />
+                <h3><a href='#' title='A Conversation Title'>A Conversation Title</a></h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec in tortor ut diam ultrices laoreet. In laoreet nunc et purus volutpat sit amet suscipit  est sagittis. Vestibulum in lorem dui. Aenean et magna nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra.</p>
+                  <a class='tertiary button' href='#' title='Join this Conversation!'>Join</a>
+                  <a class='summary-link' href='#' title='View Responses to this Conversation'>57 Responses</a>
+              </li>
+              <li class='article offset-1'>
+                <img class="callout" src="images/avatar_60.gif" alt="avatar_60" width="60" height="60" />
+                <h3><a href='#' title='A Conversation Title'>A Conversation Title</a></h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec in tortor ut diam ultrices laoreet. In laoreet nunc et purus volutpat sit amet suscipit  est sagittis. Vestibulum in lorem dui. Aenean et magna nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra.</p>
+                  <a class='tertiary button' href='#' title='Join this Conversation!'>Join</a>
+                  <a class='summary-link' href='#' title='View Responses to this Conversation'>57 Responses</a>
+              </li>
+    </ol>
+  </div><!-- .#main-content -->
+  <div class='aside supplementary'>
+    <div class="call-out">
+      <h3>We need your help</h3>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      <a class="button" href="#">Suggest a Topic</a>
+    </div>
+  </div><!-- /.aside -->
+</div><!-- /.content-container -->
+
+</div>

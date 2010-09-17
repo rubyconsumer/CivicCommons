@@ -1,5 +1,8 @@
-class Admin::IssuesController < ApplicationController
+class Admin::IssuesController < Admin::DashboardController
+  
+  #GET admin/issues/
   def index
+    @issues = Issue.all
   end
 
   def new

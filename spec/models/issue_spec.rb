@@ -5,11 +5,19 @@ describe Issue do
     @issue1 = Factory.create(:issue, :description => 'A first issue')
     @issue2 = Factory.create(:issue, :description => 'Before I had a problem')
     @issue3 = Factory.create(:issue, :description => 'Cat in the bag')
-  end
-  def given_an_issue_with_conversations_and_participants
-    @issue = Factory.create(:issue, )
     @person1 = Factory.create(:normal_person)
     @person2 = Factory.create(:normal_person)
+    @person3 = Factory.create(:normal_person)
+    @conversation1 = Factory.create(:conversation,:guides => [@person1,@person2],:issues => [@issue2])
+    @conversation2 = Factory.create(:conversation,:guides => [@person1],:issues => [@issue2])
+    @conversation3 = Factory.create(:conversation,:guides => [@person1],:issues => [@issue1])
+    @contribution = Factory.create(:contribution,:issue => @issue2)
+  end
+  def given_an_issue_with_conversations_and_participants
+    @issue = Factory.create(:issue)
+    @person1 = Factory.create(:normal_person)
+    @person2 = Factory.create(:normal_person)
+    @person3 = Factory.create(:normal_person)
     @conversation1 = Factory.create(:conversation,:guides => [@person1,@person2],:issues => [@issue])
     @conversation2 = Factory.create(:conversation,:guides => [@person1],:issues => [@issue])
   end
@@ -57,9 +65,14 @@ describe Issue do
     end
   end
   context "with participants" do
-    it "should have the correct number of participants" do
+    it "should have the correct participants" do
       given_an_issue_with_conversations_and_participants
       @issue.participants.should == [@person1,@person2]
+    end
+    it "should have the correct number of participants" do
+      given_an_issue_with_conversations_and_participants
+      #there's gotta be a better way than this below
+      @issue.participants.count('DISTINCT(people.id)').should == 2
     end
   end
   context "Sort filter" do
@@ -79,7 +92,15 @@ describe Issue do
       Issue.sort('most_recent_update').should == [@issue3, @issue2, @issue1]      
     end
     it "should sort by hotness(# of participants and # of contributions)" do
-      
+      given_3_issues
+      pending 'need to fix this, what happens if issue does not have contributions'
+      issues = Issue.most_hot
+      issues.length.should == 3
+      # issues.collect(&:id).should == []
+      issues.collect(&:hotness).should == []
+      # issues[].id.should == @issue2.id
+      # issues.second.id.should == @issue1.id
+      # issues.third.id.should == @issue3.id
     end
     it "should sort issue by region" do
       pending
