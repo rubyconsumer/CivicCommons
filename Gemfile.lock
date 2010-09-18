@@ -36,6 +36,13 @@ GEM
       xml-simple
     bcrypt-ruby (2.1.2)
     builder (2.1.2)
+    capybara (0.3.9)
+      culerity (>= 0.2.4)
+      mime-types (>= 1.16)
+      nokogiri (>= 1.3.3)
+      rack (>= 1.0.0)
+      rack-test (>= 0.5.4)
+      selenium-webdriver (>= 0.0.3)
     commonwatir (1.6.5)
       user-choices
     cucumber (0.8.5)
@@ -46,6 +53,7 @@ GEM
       term-ansicolor (~> 1.0.4)
     cucumber-rails (0.3.2)
       cucumber (>= 0.8.0)
+    culerity (0.2.12)
     date_validator (0.5.7)
       activemodel (>= 3.0.0.rc)
     devise (1.1.2)
@@ -66,6 +74,8 @@ GEM
     factory_girl_rails (1.0)
       factory_girl (~> 1.3)
       rails (>= 3.0.0.beta4)
+    ffi (0.6.3)
+      rake (>= 0.8.7)
     firewatir (1.6.5)
       activesupport
       commonwatir (= 1.6.5)
@@ -133,9 +143,14 @@ GEM
       sexp_processor (~> 3.0)
     rubyforge (2.0.4)
       json_pure (>= 1.1.7)
+    rubyzip (0.9.4)
     s4t-utils (1.0.4)
       hoe (>= 1.3.0)
     safariwatir (0.3.8)
+    selenium-webdriver (0.0.28)
+      ffi (>= 0.6.1)
+      json_pure
+      rubyzip
     sexp_processor (3.0.5)
     sqlite3-ruby (1.3.1)
     term-ansicolor (1.0.5)
@@ -158,6 +173,7 @@ PLATFORMS
 
 DEPENDENCIES
   aws-s3
+  capybara
   cucumber
   cucumber-rails
   date_validator

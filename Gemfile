@@ -20,6 +20,7 @@ end
 
 group :test do
   gem 'cucumber'
+  gem 'capybara'
   gem 'cucumber-rails'
   gem 'rb-appscript'
   gem 'safariwatir'
