@@ -25,8 +25,9 @@ Feature:
       | Email     | joe@test.com  |
       | Zip       | 44444         |
       | Password  | abcd1234      |
-    When the user confirms his account
-    Then the user should be confirmed
+    When "joe@test.com" confirms his account
+    Then "joe@test.com" should be confirmed
+    And "joe@test.com" should be logged in
     And a People Aggregator shadow account should be created
     And the user should have a valid People Aggregator token
 

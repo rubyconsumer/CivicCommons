@@ -29,3 +29,25 @@ Then /^a confirmation email is sent:$/ do |table|
   mailing.subject.should == values['Subject']
 end
 
+
+When /^"([^"]*)" confirms his account$/ do |email|
+
+  confirmation_token = Person.where(:email => email).first.confirmation_token
+
+  visit '/people/verification?confirmation_token=%s' % confirmation_token
+
+end
+
+
+Then /^"([^"]*)" should be confirmed$/ do |email|
+  Person.where(:email => email).first.confirmed_at.to_date.should == Date.today
+end
+
+
+Then /^"([^"]*)" should be logged in$/ do |email|
+  find("#login-status").text.should =~ /#{email}/
+end
+
+
+
+
