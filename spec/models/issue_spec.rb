@@ -93,14 +93,8 @@ describe Issue do
     end
     it "should sort by hotness(# of participants and # of contributions)" do
       given_3_issues
-      pending 'need to fix this, what happens if issue does not have contributions'
       issues = Issue.most_hot
-      issues.length.should == 3
-      # issues.collect(&:id).should == []
-      issues.collect(&:hotness).should == []
-      # issues[].id.should == @issue2.id
-      # issues.second.id.should == @issue1.id
-      # issues.third.id.should == @issue3.id
+      issues.collect(&:id).should == [@issue2.id,@issue1.id,@issue3.id]
     end
     it "should sort issue by region" do
       pending
