@@ -1,0 +1,74 @@
+#wrapper
+  %p.notice
+  %p.alert
+  .content-container
+    %h1 Issues
+    .main-content
+      - if @first_featured_issue
+        .feature
+          .feat-callout
+            %img{:alt => "featured", :height => "225", :src => "/images/featured.gif", :width => "340"}/
+          .feat-content
+            %h2=h @first_featured_issue.description
+            %p=h @first_featured_issue.summary
+            %p
+              =link_to pluralize(@first_featured_issue.contributions.count, 'contribution'), ''
+              =link_to pluralize(@first_featured_issue.conversations.count, 'conversation'), ''
+    .aside.supplementary
+      %ol.conversations
+        %li.article.offset-1
+          %img.callout{:alt => "avatar_70", :height => "70", :src => "images/avatar_70.gif", :width => "70"}/
+          %h3
+            %a{:href => "#"} Secondary Article Title
+          %p By: Person's Name
+        %li.article.offset-1
+          %img.callout{:alt => "avatar_70", :height => "70", :src => "images/avatar_70.gif", :width => "70"}/
+          %h3
+            %a{:href => "#"} Secondary Article Title
+          %p By: Person's Name
+  .content-container
+    .main-content
+      .topic-header.group
+        %p.topic-count Showing 250 of 300 issues
+        %p.topic-selection
+          =link_to "Most Recent", :sort => :most_recent
+          =link_to "Most Active", :sort => :most_hot
+      %table.data-table
+        %colgroup.issue-title
+        %colgroup.contrib-count
+        %colgroup.convo-count
+        %tbody
+          - @issues.each do |issue|
+            %tr
+              %th{:scope => "row"}
+                =link_to h(issue.description), issue
+              %td
+                =link_to pluralize(issue.contributions.count, 'contribution'), ''
+              %td
+                =link_to pluralize(issue.conversations.count, 'conversation'), ''
+
+      .pagination
+        %p
+          Page
+          = succeed "," do
+            %span.current 1
+          = succeed "," do
+            %a{:href => "#"} 2
+          = succeed "," do
+            %a{:href => "#"} 3
+          %a{:href => "#"} Next
+    / /.main-content
+    .aside.supplementary
+      %h2 Leaders
+      .photobank
+        - @leaders.each do |leader|
+          =link_to image_tag('avatar_50.gif',:alt => 'avatar',:height => 50,:width => 50,:title => leader.name), leader
+      %h2 Organizations
+      .photobank
+        - @organizations.each do |organization|
+          =link_to image_tag('avatar_50.gif',:alt => 'avatar',:height => 50,:width => 50,:title => organization.name), organization
+      %h2 Top Conversations
+      %ul.link-list
+        - @top_conversations.each do |conversation|
+          %li
+            link_to h(conversation.title), conversation
