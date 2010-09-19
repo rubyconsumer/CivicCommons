@@ -1,13 +1,18 @@
 $(document).ready(function() {
-  conversationToggle = function(button,conversation){
+  scrollTo = function(node) {
+     var top = node.offset().top - 100; // 100px top padding in viewport
+     $('html,body').animate({scrollTop: top}, 1000);
+  }
+  actionToggle = function(button,action){
+    var href = $(button).attr("href");
     $(button).toggle(
 			function(){
-				$(this).text("Hide conversation");
-				$(conversation).slideDown();
+				$(this).text(href.match(/\/conversations\/node_conversation/) ? 'Hide conversation' : 'Cancel');
+				$(action).slideDown();
 			}, 
 			function(){
-				$(this).text("Show conversation");
-				$(conversation).slideUp();
+				$(this).text($(this).data('origText'));
+				$(action).slideUp();
 			}
 		);
   }
@@ -15,15 +20,17 @@ $(document).ready(function() {
 	  .live("ajax:loading", function(){
 	    var href = $(this).attr("href");
 	    var label = href.match(/\/conversations\/node_conversation/) ? "Getting conversation..." : "Loading...";
-	    $(this).text(label);
+	    
+	    $(this).data('origText', $(this).text()).text(label);
 	  })
 	  .live("ajax:complete", function(evt, xhr){
+	    var clicked = this;
 	    var target = this.getAttribute("data-target");
 	    var tabStrip = target+" > .tab-strip";
 	    var form = tabStrip+" form";
 	    var errorDiv = form+" > .errors";
 	    
-	    $(this).click(conversationToggle(this,target)); // change this to hide conversation
+	    $(clicked).click(actionToggle(clicked,target)); // turn button into a toggle to hide/show what gets loaded so that subsequent clicks to redo the ajax call
 	    
       $(target).hide().html(xhr.responseText).slideDown(); // insert content
       $(tabStrip).easyTabs({tabActiveClass: 'tab-active', tabActivePanel: 'panel-active'});
@@ -35,7 +42,11 @@ $(document).ready(function() {
           $(tabStrip).unmask();
         })
         .bind("ajax:success", function(evt, data, status, xhr){
-          $(target).html(xhr.responseText);
+          $(clicked).text($(clicked).data('origText'));
+          $(target).empty();
+          var responseNode = $(xhr.responseText)
+          $(target).parent().append(responseNode);
+          scrollTo(responseNode);
         })
         .bind("ajax:failure", function(evt, xhr, status, error){
           var errors = $.parseJSON(xhr.responseText);
