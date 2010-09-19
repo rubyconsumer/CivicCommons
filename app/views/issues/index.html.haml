@@ -9,7 +9,7 @@
           .feat-callout
             %img{:alt => "featured", :height => "225", :src => "/images/featured.gif", :width => "340"}/
           .feat-content
-            %h2=h @first_featured_issue.description
+            %h2=link_to h(@first_featured_issue.description), @first_featured_issue
             %p=h @first_featured_issue.summary
             %p
               =link_to pluralize(@first_featured_issue.contributions.count, 'contribution'), ''
