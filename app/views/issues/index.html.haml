@@ -61,14 +61,12 @@
     .aside.supplementary
       %h2 Leaders
       .photobank
-        - @leaders.each do |leader|
-          =link_to image_tag('avatar_50.gif',:alt => 'avatar',:height => 50,:width => 50,:title => leader.name), leader
+        = render :partial => '/people/thumbnail', :collection => @leaders
       %h2 Organizations
       .photobank
-        - @organizations.each do |organization|
-          =link_to image_tag('avatar_50.gif',:alt => 'avatar',:height => 50,:width => 50,:title => organization.name), organization
+        = render :partial => '/people/thumbnail', :collection => @organizations
       %h2 Top Conversations
       %ul.link-list
         - @top_conversations.each do |conversation|
           %li
-            link_to h(conversation.title), conversation
+            =link_to h(conversation.title), conversation
