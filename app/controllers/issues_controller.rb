@@ -24,7 +24,7 @@ class IssuesController < ApplicationController
   # GET /issues/1.xml
   def show
     @issue = Issue.find(params[:id])
-    @conversations = @issue.conversations
+    @conversations = @issue.conversations.latest_updated.limit(3)
     @leaders = @issue.participants
     @organizations = @issue.participants
     @contributions = @issue.contributions
