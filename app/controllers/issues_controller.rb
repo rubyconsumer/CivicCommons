@@ -9,8 +9,9 @@ class IssuesController < ApplicationController
     @leaders = Person.all(:limit => 6)
     @organizations = Person.all(:limit => 6)
     @top_conversations = Conversation.get_top_visited(3)
-    @featured_issues = Issue.all # pending, this should have shown the correct one get_top_visited(3)
-    @first_featured_issue = @featured_issues.pop unless @featured_issues.blank?
+    @main_article = Article.main_article.first
+    @sub_articles = Article.sub_articles.limit(3)
+    
     
     respond_to do |format|
       format.html # index.html.erb

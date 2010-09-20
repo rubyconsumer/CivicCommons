@@ -3,29 +3,7 @@
   %p.alert
   .content-container
     %h1 Issues
-    .main-content
-      - if @first_featured_issue
-        .feature
-          .feat-callout
-            %img{:alt => "featured", :height => "225", :src => "/images/featured.gif", :width => "340"}/
-          .feat-content
-            %h2=link_to h(@first_featured_issue.description), @first_featured_issue
-            %p=h @first_featured_issue.summary
-            %p
-              =link_to pluralize(@first_featured_issue.contributions.count, 'contribution'), ''
-              =link_to pluralize(@first_featured_issue.conversations.count, 'conversation'), ''
-    .aside.supplementary
-      %ol.conversations
-        %li.article.offset-1
-          %img.callout{:alt => "avatar_70", :height => "70", :src => "images/avatar_70.gif", :width => "70"}/
-          %h3
-            %a{:href => "#"} Secondary Article Title
-          %p By: Person's Name
-        %li.article.offset-1
-          %img.callout{:alt => "avatar_70", :height => "70", :src => "images/avatar_70.gif", :width => "70"}/
-          %h3
-            %a{:href => "#"} Secondary Article Title
-          %p By: Person's Name
+    = render :partial => '/articles/featured'
   .content-container
     .main-content
       .topic-header.group
@@ -46,7 +24,6 @@
                 =link_to pluralize(issue.contributions.count, 'contribution'), ''
               %td
                 =link_to pluralize(issue.conversations.count, 'conversation'), ''
-
       .pagination
         %p
           Page

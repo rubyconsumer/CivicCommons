@@ -1,0 +1,21 @@
+-unless @main_article.blank?
+  %h1= @main_article.title
+  %div= @main_article.author
+  .main-content
+    .feature
+      .feat-callout
+        %img{:alt => "featured", :height => "225", :src => @main_article.image.url(:mainfeature), :width => "300"}/
+        %a{:href => @main_article.link} Read The Article
+      .feat-content
+        = @main_article.description.html_safe
+-unless @sub_articles.blank?
+  .aside.supplementary
+    %ol.conversations
+      - @sub_articles.each do |article|
+        %li.article.offset-1
+          %img.callout{:alt => "avatar_60", :height => "60", :src => article.image.url(:subfeature), :width => "60"}/
+          %h3
+            %a{:href => article.link}= article.title
+          %p
+            By: #{article.author}
+

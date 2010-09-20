@@ -1,41 +1,9 @@
-
 <div id="wrapper">
  	<p class='notice'/>
   <p class='alert'/>
-  
-  <% if @main_article.exists? && @sub_articles.exists?
-       @main_article = @main_article.first -%>
   <div class="content-container">
-    <h1><%= @main_article.title %></h1>
-    <div><%= @main_article.author %></div>
-    <div class="main-content">
-    <div class='feature'>
-      <div class='feat-callout'>
-        <img src="<%= @main_article.image.url(:mainfeature) %>" alt="featured" width="300" height="225" />
-        <a href="<%= @main_article.link %>">Read The Article</a>
-      </div>
-    <div class="feat-content">
-      <%= @main_article.description.html_safe %>
-    </div>
+    <%= render :partial => '/articles/featured' %>
   </div>
-  <% end -%>
-</div><!-- .#main-content -->
-
-<div class='aside supplementary'>
-  <ol class='conversations'>
-    <% @sub_articles.each do |article| -%>
-    <li class='article offset-1'>
-      <img class="callout" src="<%= article.image.url(:subfeature) %>" alt="avatar_60" width="60" height="60" />
-      <h3><a href="<%= article.link %>"><%= article.title %></a></h3>
-      <p>By: <%= article.author %></p>
-    </li>
-    <% end -%>
-  </ol>
-</div><!-- /.aside -->
-
-
-
-
 <div class='conversation-ticker'>
   <strong>Issue:</strong>
   <a href='#' title='Taxes in Cuyahoga County'>Taxes in Cuyahoga County</a>
