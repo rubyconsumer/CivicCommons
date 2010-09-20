@@ -7,8 +7,9 @@
   %tbody
     -@issues.each do |issue|
       %tr
-        %td= link_to 'issue.description', admin_issue_path(issue)
+        %td= link_to issue.description, admin_issue_path(issue)
         %td= issue.summary
+        %td= link_to 'Edit', edit_admin_issue_path(issue)
 
 =link_to "Add Issue", new_admin_issue_path
 |  
