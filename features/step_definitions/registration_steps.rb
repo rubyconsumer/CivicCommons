@@ -11,6 +11,8 @@ Given /^the user signs up with:$/ do |table|
 
   click 'Register'
 
+  @current_person = Person.where(email: values['Email']).first
+
 end
 
 
@@ -30,22 +32,23 @@ Then /^a confirmation email is sent:$/ do |table|
 end
 
 
-When /^"([^"]*)" confirms his account$/ do |email|
+When /^the user confirms his account$/ do
 
-  confirmation_token = Person.where(:email => email).first.confirmation_token
+  confirmation_token = @current_person.confirmation_token
 
   visit '/people/verification?confirmation_token=%s' % confirmation_token
 
 end
 
 
-Then /^"([^"]*)" should be confirmed$/ do |email|
-  Person.where(:email => email).first.confirmed_at.to_date.should == Date.today
+Then /^the user should be confirmed$/ do
+  @current_person = Person.where(email: @current_person.email).first
+  @current_person.confirmed_at.to_date.should == Time.now.utc.to_date
 end
 
 
-Then /^"([^"]*)" should be logged in$/ do |email|
-  find("#login-status").text.should =~ /#{email}/
+Then /^the user should be logged in$/ do
+  find("#login-status").text.should =~ /#{@current_person.email}/
 end
 
 
