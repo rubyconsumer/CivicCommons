@@ -11,7 +11,7 @@ require 'spec_helper'
          @item.top_item.should be_an_instance_of(TopItem)
        end
        it "should set the item_created_at time to equal the #{model_type}'s created_at time" do
-         @item.top_item.item_created_at.should == @item.created_at
+         @item.top_item.item_created_at.to_s.should == @item.created_at.to_s
        end
        it "should set the recent_rating to the #{model_type}'s recent_rating if rateable" do
          if @item.respond_to?(:recent_rating)
