@@ -16,8 +16,8 @@ class Issue < ActiveRecord::Base
   scope :most_hot,
     :select => '(SELECT COUNT(contributions.id) FROM contributions WHERE (contributions.issue_id = issues.id)) + 
       (SELECT COUNT(DISTINCT(people.id)) FROM people INNER JOIN conversations_guides ON conversations_guides.guide_id = people.id INNER JOIN conversations ON conversations.id = conversations_guides.conversation_id INNER JOIN conversations_issues ON conversations_issues.conversation_id = conversations.id INNER JOIN issues ON issues.id = conversations_issues.issue_id WHERE (issue_id = issues.id)) 
-      AS hotness, *',  
-    :order => 'hotness DESC'
+      AS hotness, issues.*',  
+    :order => 'hotness DESC'    
   
   scope :most_recent, {:order => 'created_at DESC'}
   scope :most_recent_update, {:order => 'updated_at DESC'}

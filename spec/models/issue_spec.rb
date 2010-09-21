@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe Issue do
   def given_3_issues
-    @issue1 = Factory.create(:issue, :description => 'A first issue')
-    @issue2 = Factory.create(:issue, :description => 'Before I had a problem')
-    @issue3 = Factory.create(:issue, :description => 'Cat in the bag')
+    @issue1 = Factory.create(:issue, {:created_at => (Time.now - 3.seconds), :updated_at => (Time.now - 3.seconds), :description => 'A first issue'})
+    @issue2 = Factory.create(:issue, {:created_at => (Time.now - 2.seconds), :updated_at => (Time.now - 2.seconds), :description => 'Before I had a problem'})
+    @issue3 = Factory.create(:issue, {:created_at => (Time.now - 1.second), :updated_at => (Time.now - 1.second), :description => 'Cat in the bag'})
     @person1 = Factory.create(:normal_person)
     @person2 = Factory.create(:normal_person)
     @person3 = Factory.create(:normal_person)
@@ -87,9 +87,7 @@ describe Issue do
     it "should sort issue by recently updated" do
       given_3_issues
       @issue1.touch
-      @issue2.touch
-      @issue3.touch
-      Issue.sort('most_recent_update').should == [@issue3, @issue2, @issue1]      
+      Issue.sort('most_recent_update').first.should == @issue1
     end
     it "should sort by hotness(# of participants and # of contributions)" do
       given_3_issues
