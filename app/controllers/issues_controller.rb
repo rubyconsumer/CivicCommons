@@ -9,8 +9,8 @@ class IssuesController < ApplicationController
     @leaders = Person.all(:limit => 6)
     @organizations = Person.all(:limit => 6)
     @top_conversations = Conversation.get_top_visited(3)
-    @main_article = Article.main_article.first
-    @sub_articles = Article.sub_articles.limit(3)
+    @main_article = Article.issue_main_article.first
+    @sub_articles = Article.issue_sub_articles.limit(3)
     
     
     respond_to do |format|
