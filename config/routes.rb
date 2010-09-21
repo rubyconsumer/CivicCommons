@@ -17,6 +17,7 @@ Civiccommons::Application.routes.draw do
   match '/conversations/node_conversation', :to=>'conversations#node_conversation', :via=>[:get]
   match '/conversations/create_node_contribution', :to=>'conversations#create_node_contribution', :via=>[:post]  
   match '/conversations/new_node_contribution', :to=>'conversations#new_node_contribution', :via=>[:get]
+  match '/conversations/rate', :to=>'conversations#rate', :via=>[:post]
   resources :conversations
   
   namespace "admin" do
