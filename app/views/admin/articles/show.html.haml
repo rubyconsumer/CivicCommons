@@ -40,6 +40,21 @@
   = @article.main 
 
 
+%p
+  %b Homepage Article?
+  = @article.homepage_article
+
+
+%p
+  %b Conversation Article?
+  = @article.conversation_article
+
+
+%p
+  %b Issue Article?
+  = @article.issue_article
+
+
 
 = link_to 'Edit', edit_admin_article_path(@article)  
 |

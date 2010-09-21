@@ -11,6 +11,9 @@
     %th Video URL
     %th Current
     %th Main
+    %th Homepage Article?
+    %th Conversation Article?
+    %th Issue Article?
     %th
     %th
     %th
@@ -33,6 +36,12 @@
         = article.current
       %td
         = article.main
+      %td
+        = article.homepage_article
+      %td
+        = article.conversation_article
+      %td
+        = article.issue_article
       %td
         = link_to 'Show', admin_article_path(article)
       %td
