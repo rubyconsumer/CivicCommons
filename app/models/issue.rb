@@ -30,6 +30,8 @@ class Issue < ActiveRecord::Base
         alphabetical
       when 'most_recent_update'
         most_recent_update
+      when 'most_hot'
+        most_hot
       end
     }
   

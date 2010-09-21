@@ -1,0 +1,49 @@
+#wrapper
+  %p.notice
+  %p.alert
+  .content-container
+    %h1 Issues
+    = render :partial => '/articles/featured'
+  .content-container
+    .main-content
+      .topic-header.group
+        %p.topic-count Showing 250 of 300 issues
+        %p.topic-selection
+          =link_to "Most Recent", :sort => :most_recent
+          =link_to "Most Active", :sort => :most_hot
+      %table.data-table
+        %colgroup.issue-title
+        %colgroup.contrib-count
+        %colgroup.convo-count
+        %tbody
+          - @issues.each do |issue|
+            %tr
+              %th{:scope => "row"}
+                =link_to h(issue.description), issue
+              %td
+                =link_to pluralize(issue.contributions.count, 'contribution'), ''
+              %td
+                =link_to pluralize(issue.conversations.count, 'conversation'), ''
+      .pagination
+        %p
+          Page
+          = succeed "," do
+            %span.current 1
+          = succeed "," do
+            %a{:href => "#"} 2
+          = succeed "," do
+            %a{:href => "#"} 3
+          %a{:href => "#"} Next
+    / /.main-content
+    .aside.supplementary
+      %h2 Leaders
+      .photobank
+        = render :partial => '/people/thumbnail', :collection => @leaders
+      %h2 Organizations
+      .photobank
+        = render :partial => '/people/thumbnail', :collection => @organizations
+      %h2 Top Conversations
+      %ul.link-list
+        - @top_conversations.each do |conversation|
+          %li
+            =link_to h(conversation.title), conversation

@@ -29,6 +29,8 @@ class Conversation < ActiveRecord::Base
     :path => ":attachment/:id/:style/:filename"
 
   search_methods :containing_issue, :containing_guide
+  
+  scope :latest_updated, :order => 'updated_at DESC'
 
   scope :containing_guide,
     lambda {|target| joins(:guides).map{|x| (x.first_name + x.last_name).includes? target}}

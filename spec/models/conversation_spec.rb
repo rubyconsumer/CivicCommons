@@ -22,5 +22,17 @@ describe Conversation do
     end
 
   end  
+  context "about an issue" do
+    
+    it "should sort by the latest updated conversations" do
+      @issue = Factory.create(:issue, :description => 'A first issue')
+      @conversation1 = Factory.create(:conversation, :issues => [@issue])
+      @conversation2 = Factory.create(:conversation, :issues => [@issue])
+      @conversation3 = Factory.create(:conversation, :issues => [@issue])
+      @conversation4 = Factory.create(:conversation)
+      @conversation2.touch
+      @issue.conversations.latest_updated.should == [@conversation2,@conversation3,@conversation1]
+    end
+  end
   
 end
