@@ -18,6 +18,8 @@ class ConversationsController < ApplicationController
     end
     @search = Conversation.search(params[:search])
     @conversations = @search.all   # or @search.relation to lazy load in view
+    @main_article = Article.conversation_main_article.first
+    @sub_articles = Article.conversation_sub_articles.limit(3)
 
     respond_to do |format|
       format.html # index.html.erb
