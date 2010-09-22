@@ -8,5 +8,4 @@ config/amazon_s3.yml
 .DS_Store
 **/.DS_Store
 .rvmrc
-config/database.yml
 
