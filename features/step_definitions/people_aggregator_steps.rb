@@ -10,8 +10,8 @@ When /^I try to create the user without a login:$/ do |table|
 end
 
 
-Then /^I should recieve an "([^"]*)" with the message:$/ do |arg1, string|
+Then /^I should recieve an "([^"]*)" with the message:$/ do |error, string|
 
-  @code_to_run.should raise_error(ArgumentError, string)
+  @code_to_run.should raise_error(error.constantize, string)
 end
 
