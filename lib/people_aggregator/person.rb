@@ -14,6 +14,12 @@ class PeopleAggregator::Person
   def save
     @attrs.merge!(adminPassword: "admin")
     r = self.class.post('/newUser', body: @attrs)
+
+    case r.code
+    when 412
+      missing_key = r.parsed_response['msg'][/key (.*) is required/, 1]
+      raise ArgumentError, 'The key "%s" is required.' % missing_key
+    end
   end
 
 
