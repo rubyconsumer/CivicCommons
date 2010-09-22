@@ -52,5 +52,13 @@ Then /^the user should be logged in$/ do
 end
 
 
+Then /^a People Aggregator shadow account should be created$/ do
+  peep_agg_person = PeopleAggregator::Person.find_by_email(@current_person.email)
+
+  peep_agg_person.should_not be_nil
+  peep_agg_person.login.should == @current_person.email
+end
+
+
 
 

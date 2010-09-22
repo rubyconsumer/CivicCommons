@@ -1,7 +1,7 @@
 Civiccommons::Application.routes.draw do
 
   devise_for :people,
-             :controllers => { :registrations => 'registrations' },
+             :controllers => { :registrations => 'registrations', :confirmations => 'confirmations' },
              :path_names => { :sign_in => 'login', :sign_out => 'logout', :password => 'secret', :confirmation => 'verification', :unlock => 'unblock', :registration => 'register', :sign_up => 'new' }
 
   resources :events
