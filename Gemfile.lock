@@ -45,6 +45,7 @@ GEM
       selenium-webdriver (>= 0.0.3)
     commonwatir (1.6.5)
       user-choices
+    crack (0.1.8)
     cucumber (0.8.5)
       builder (~> 2.1.2)
       diff-lcs (~> 1.1.2)
@@ -87,6 +88,8 @@ GEM
       rake (>= 0.8.7)
       rubyforge (>= 2.0.4)
     hpricot (0.8.2)
+    httparty (0.6.1)
+      crack (= 0.1.8)
     i18n (0.4.1)
     json_pure (1.4.6)
     mail (2.2.5)
@@ -183,6 +186,7 @@ DEPENDENCIES
   firewatir
   haml
   hpricot
+  httparty
   meta_search
   mysql (= 2.8.1)
   nokogiri

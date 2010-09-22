@@ -11,6 +11,8 @@ gem 'haml'
 gem 'date_validator'
 gem "will_paginate", "~> 3.0.pre2"
 
+gem 'httparty'
+
 group :development do
   gem "rails3-generators"
   gem "hpricot"
