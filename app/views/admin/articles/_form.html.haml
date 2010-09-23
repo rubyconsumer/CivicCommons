@@ -29,8 +29,8 @@
   .field
     = f.label :video_url
     %br 
-    = f.text_field :video_url 
-  
+    = f.text_field :video_url, :class => "youtube"
+    #youtube-thumbnail 
   .field
     = f.label :current 
     %br
@@ -64,7 +64,7 @@
   .field
     = f.label :image 
     = f.file_field :image 
-  
+
   .actions
     = f.submit 
 
