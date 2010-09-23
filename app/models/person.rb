@@ -53,7 +53,7 @@ class Person < ActiveRecord::Base
   end
   
   def create_proxy
-    self.email = first_name.downcase + last_name.gsub(/['\s]/,'').downcase + "@example.com"
+    self.email = (first_name + last_name).gsub(/['\s]/,'').downcase + "@example.com"
     self.password = 'p4s$w0Rd'
     self.proxy = true
   end
