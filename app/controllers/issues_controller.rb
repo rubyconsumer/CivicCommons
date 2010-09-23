@@ -5,13 +5,10 @@ class IssuesController < ApplicationController
   # GET /issues.xml
   def index
     @search = Issue.sort(params[:sort]).search(params[:search])
-    @issues = @search.all   # or @search.relation to lazy load in view
-    @leaders = Person.all(:limit => 6)
-    @organizations = Person.all(:limit => 6)
-    @top_conversations = Conversation.get_top_visited(3)
-    @main_article = Article.issue_main_article.first
-    @sub_articles = Article.issue_sub_articles.limit(3)
+    @issues = @search.paginate(:page => params[:page], :per_page => 20)
     
+@main_article = Article.issue_main_article.first
+    @sub_articles = Article.issue_sub_articles.limit(3)
     
     respond_to do |format|
       format.html # index.html.erb

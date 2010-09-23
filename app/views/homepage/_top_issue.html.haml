@@ -1,5 +1,5 @@
 .article
   %p
-    %a{:href => issue_path(item), :title => "#{item.description}"}=item.description
+    %a{:href => issue_path(item), :title => "#{item.name}"}=item.description
   %a.secondary.button{:href => issue_path(item)} Join
   %a.text.button{:href => issue_path(item), :title => "#{item.total_rating} people found this productive"} #{item.total_rating} found this productive

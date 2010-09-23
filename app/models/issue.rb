@@ -4,24 +4,28 @@ class Issue < ActiveRecord::Base
   include TopItemable
   
   belongs_to :person
+
   has_and_belongs_to_many :conversations
+  # Contributions directly related to this Issue
   has_many :contributions
+  # Anyone who has contributed directly to the issue via a contribution
+  has_many(:participants,
+           :through => :contributions,
+           :source => :person,
+           :uniq => true)
   
-  def participants
-    Person.participants_of_issue(self)
-  end
+  validates :name, :presence => true, :length => { :minimum => 5 }  
   
-  validates :description, :presence => true, :length => { :minimum => 5 }  
-      
-  scope :most_hot,
-    :select => '(SELECT COUNT(contributions.id) FROM contributions WHERE (contributions.issue_id = issues.id)) + 
-      (SELECT COUNT(DISTINCT(people.id)) FROM people INNER JOIN conversations_guides ON conversations_guides.guide_id = people.id INNER JOIN conversations ON conversations.id = conversations_guides.conversation_id INNER JOIN conversations_issues ON conversations_issues.conversation_id = conversations.id INNER JOIN issues ON issues.id = conversations_issues.issue_id WHERE (issue_id = issues.id)) 
-      AS hotness, issues.*',  
-    :order => 'hotness DESC'    
+  
+  scope(:most_active, :select =>
+        'count(1) as contribution_count, issues.*',
+        :joins => [:contributions],
+        :group => "issues.id",
+        :order => 'contribution_count DESC')
   
   scope :most_recent, {:order => 'created_at DESC'}
   scope :most_recent_update, {:order => 'updated_at DESC'}
-  scope :alphabetical, {:order => 'description ASC'}
+  scope :alphabetical, {:order => 'name ASC'}
   scope :sort, lambda { |sort_type|
       case sort_type
       when 'most_recent'
@@ -30,8 +34,8 @@ class Issue < ActiveRecord::Base
         alphabetical
       when 'most_recent_update'
         most_recent_update
-      when 'most_hot'
-        most_hot
+      when 'most_active'
+        most_active
       end
     }
   
