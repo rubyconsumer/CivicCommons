@@ -44,13 +44,8 @@ class Conversation < ActiveRecord::Base
   # Return a comma-and-space-delimited list of the Issues
   # relevant to this Conversation, e.g., "Jobs, Sports, Religion"
   def issues_text
-    if (issues.count > 0)
-      r = ""
-      issues.each do |issue|
-        r += ", "
-        r += issue.name
-      end
-      r[2,r.length-2] # lose starting comma-space
+    if issues.any?
+       issues.map(&:name).join(", ")
     else
       "No issues yet"
     end
