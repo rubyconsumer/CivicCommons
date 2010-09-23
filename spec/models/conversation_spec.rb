@@ -25,7 +25,7 @@ describe Conversation do
   context "about an issue" do
     
     it "should sort by the latest updated conversations" do
-      issue = Factory.create(:issue, :description => 'A first issue')
+      issue = Factory.create(:issue, :name => 'A first issue')
       conversation1 = Factory.create(:conversation, {:issues => [issue], :updated_at => (Time.now - 3.seconds)})
       conversation2 = Factory.create(:conversation, {:issues => [issue], :updated_at => (Time.now - 2.seconds)})
       conversation3 = Factory.create(:conversation, {:issues => [issue], :updated_at => (Time.now - 1.second)})

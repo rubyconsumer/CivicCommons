@@ -39,7 +39,7 @@ class Conversation < ActiveRecord::Base
     lambda {|target|
      joins("inner join posts on conversations.id = posts.conversable_id inner join issues on posts.postable_id = issues.id").
       where("posts.postable_type = 'Issue'").
-      where("lower(issues.description) like ?", "%" + target.downcase.strip + "%")}
+      where("lower(issues.name) like ?", "%" + target.downcase.strip + "%")}
 
   # Return a comma-and-space-delimited list of the Issues
   # relevant to this Conversation, e.g., "Jobs, Sports, Religion"
@@ -48,7 +48,7 @@ class Conversation < ActiveRecord::Base
       r = ""
       issues.each do |issue|
         r += ", "
-        r += issue.description
+        r += issue.name
       end
       r[2,r.length-2] # lose starting comma-space
     else

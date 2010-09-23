@@ -11,7 +11,7 @@ class Issue < ActiveRecord::Base
     Person.participants_of_issue(self)
   end
   
-  validates :description, :presence => true, :length => { :minimum => 5 }  
+  validates :name, :presence => true, :length => { :minimum => 5 }  
       
   scope :most_hot,
     :select => '(SELECT COUNT(contributions.id) FROM contributions WHERE (contributions.issue_id = issues.id)) + 
@@ -21,7 +21,7 @@ class Issue < ActiveRecord::Base
   
   scope :most_recent, {:order => 'created_at DESC'}
   scope :most_recent_update, {:order => 'updated_at DESC'}
-  scope :alphabetical, {:order => 'description ASC'}
+  scope :alphabetical, {:order => 'name ASC'}
   scope :sort, lambda { |sort_type|
       case sort_type
       when 'most_recent'

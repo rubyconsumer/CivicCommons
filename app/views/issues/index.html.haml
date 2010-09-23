@@ -19,7 +19,7 @@
           - @issues.each do |issue|
             %tr
               %th{:scope => "row"}
-                =link_to h(issue.description), issue
+                =link_to h(issue.name), issue
               %td
                 =link_to pluralize(issue.contributions.count, 'contribution'), ''
               %td
