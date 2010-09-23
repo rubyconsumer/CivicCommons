@@ -4,6 +4,8 @@ class Admin::PeopleController < Admin::Dashboard
   def index
     @people = Person.all
   end
+  
+  #GET admin/proxies
 
   #GET admin/people/new
   def new

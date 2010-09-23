@@ -29,6 +29,11 @@
             %ul
               %li
                 =link_to "Add Issue", new_admin_issue_path
+          %li
+            =link_to "People", admin_people_path
+            %ul
+              %li
+                =link_to "Proxy Accounts", admin_proxies_path
       %div#main
         -if flash[:notice]
           %div

@@ -24,7 +24,11 @@ Civiccommons::Application.routes.draw do
     resources   :articles
     resources   :conversations
     resources   :issues
-    resources   :people
+    resources   :people do
+      :collection do
+        get 'proxies'
+      end
+    end
     root        :to => "dashboard#show"
   end
   
