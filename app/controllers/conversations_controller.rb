@@ -1,6 +1,6 @@
 class ConversationsController < ApplicationController
   before_filter :verify_admin, :only=>[:new, :create, :edit, :update, :destroy]
-
+  
   # GET /conversations
   # GET /conversations.xml
   def index
@@ -18,6 +18,8 @@ class ConversationsController < ApplicationController
     end
     @search = Conversation.search(params[:search])
     @conversations = @search.all   # or @search.relation to lazy load in view
+    @main_article = Article.conversation_main_article.first
+    @sub_articles = Article.conversation_sub_articles.limit(3)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -28,12 +30,50 @@ class ConversationsController < ApplicationController
   # GET /conversations/1
   # GET /conversations/1.xml
   def show    
-    @conversation = Conversation.includes(:contributions).find(params[:id])
+    @conversation = Conversation.find(params[:id])
     @conversation.visit!((current_person.nil? ? nil : current_person.id))
+    @contributions = TopLevelContribution.where(:conversation_id => @conversation.id).includes([:person]).order('created_at ASC')
+    @contribution = Contribution.new # for conversation comment form
 
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @conversation }
+    end
+  end
+  
+  def node_conversation
+    @contribution = Contribution.includes({:children => :person}).find(params[:id])
+    @contribution.visit!((current_person.nil? ? nil : current_person.id))
+    
+    respond_to do |format|
+      format.js { render :partial => "conversations/node_conversation", :layout => false}
+      format.html # show.html.erb
+      format.xml  { render :xml => @conversation }
+    end
+  end
+  
+  def new_node_contribution
+    @contribution = Contribution.new
+    respond_to do |format|
+      format.js { render(:partial => "conversations/tabbed_post_box", :locals => {:conversation_id => params[:id], :contribution_id => params[:contribution_id], :div_id => params[:div_id], :layout => false}) }
+      format.html { render(:partial => "conversations/tabbed_post_box", :locals => {:conversation_id => params[:id], :contribution_id => params[:contribution_id], :div_id => params[:div_id], :layout => 'application'}) }
+    end
+  end
+  
+  def create_node_contribution
+    model = params[:contribution][:type].constantize
+    @contribution = model.create(:conversation_id => params[:contribution][:conversation_id], :parent_id => params[:contribution][:parent_id], :content => params[:contribution][:content], :person => current_person)
+    
+    respond_to do |format|
+      if @contribution.save
+        format.js   { render :partial => "conversations/contributions/#{@contribution.type.downcase}", :locals => {:contribution => @contribution}, :status => :created }
+        format.html { redirect_to(@contribution, :notice => 'Contribution was successfully created.') }
+        format.xml  { render :xml => @contribution, :status => :created, :location => @contribution }
+      else
+        format.js   { render :json => @contribution.errors, :status => :unprocessable_entity }
+        format.html { render :action => "new_node_contribution" }
+        format.xml  { render :xml => @contribution.errors, :status => :unprocessable_entity }
+      end
     end
   end
 

@@ -30,15 +30,15 @@ describe TopItem, "when retrieving the top items by date" do
     result = TopItem.newest_items.includes(:item)
     items = result.collect{ |ti| ti.item }
     old_top_items = TopItem.order("item_created_at ASC").includes(:item).limit(TopItem.count - 10)
-    
+
     items.include?(@today_conversation).should == true
     items.include?(@today_contribution).should == true
     items.include?(@today_issue).should == true
     items.include?(@today_event).should == true
     
-    old_top_items.each do |oti|
-      items.include?(oti.item).should == false
-    end
+    # old_top_items.each do |oti|                     # <= Please don't do stuff like this. I'm leaving this in here for educational purposes. You can't do this, because 4 items all have the same created_at timestamp
+    #   items.include?(oti.item).should == false      #     and MySQL is not consistent about which 2 of the 4 latest items will be included in TopItems.newest_items. This is not a bug, just a trivial and unrealistic
+    # end                                             #     test that there is no reason to have a spec for.
   end  
   
 end

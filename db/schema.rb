@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100913073148) do
+ActiveRecord::Schema.define(:version => 20100923162134) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -19,14 +19,17 @@ ActiveRecord::Schema.define(:version => 20100913073148) do
     t.string   "link"
     t.string   "video_url"
     t.string   "percent"
-    t.boolean  "current"
-    t.boolean  "main"
+    t.boolean  "current",              :default => false
+    t.boolean  "main",                 :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "image_file_name"
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
+    t.boolean  "homepage_article",     :default => false
+    t.boolean  "issue_article",        :default => false
+    t.boolean  "conversation_article", :default => false
   end
 
   create_table "contributions", :force => true do |t|
@@ -37,8 +40,7 @@ ActiveRecord::Schema.define(:version => 20100913073148) do
     t.datetime "updated_at"
     t.boolean  "official",                :default => false
     t.integer  "conversation_id"
-    t.integer  "contribution_id"
-    t.integer  "target_person_id"
+    t.integer  "parent_id"
     t.integer  "issue_id"
     t.string   "attachment_file_name"
     t.string   "attachment_content_type"
@@ -51,6 +53,9 @@ ActiveRecord::Schema.define(:version => 20100913073148) do
     t.integer  "recent_rating"
     t.datetime "last_visit_date"
     t.datetime "last_rating_date"
+    t.string   "askee"
+    t.integer  "lft"
+    t.integer  "rgt"
   end
 
   create_table "conversations", :force => true do |t|
@@ -111,16 +116,17 @@ ActiveRecord::Schema.define(:version => 20100913073148) do
   end
 
   create_table "issues", :force => true do |t|
-    t.string   "description"
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "summary"
+    t.text     "summary"
     t.integer  "total_visits"
     t.integer  "recent_visits"
     t.integer  "total_rating"
     t.integer  "recent_rating"
     t.datetime "last_visit_date"
     t.datetime "last_rating_date"
+    t.string   "zip_code"
   end
 
   create_table "people", :force => true do |t|
@@ -147,6 +153,7 @@ ActiveRecord::Schema.define(:version => 20100913073148) do
     t.datetime "confirmation_sent_at"
     t.string   "zip_code"
     t.integer  "top"
+    t.boolean  "proxy"
   end
 
   add_index "people", ["email"], :name => "index_people_on_email", :unique => true

@@ -9,6 +9,7 @@ gem 'sqlite3-ruby', :require => 'sqlite3'
 
 gem 'haml'
 gem 'date_validator'
+gem "will_paginate", "~> 3.0.pre2"
 
 group :development do
   gem "rails3-generators"
@@ -33,5 +34,3 @@ gem 'meta_search'
 
 gem 'paperclip'
 gem 'aws-s3'
-
-gem 'acts_as_tree'

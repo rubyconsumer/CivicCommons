@@ -1,7 +1,4 @@
 %li
-  -# if contribution is nil, that means this Comment doesn't have a matching Post record.
-  -# Right now, in that case, we just skip the Comment. FIXME
-  / A comment entry follows.
   %div
     - if contribution
       .article.comment
@@ -18,15 +15,14 @@
           -else
             %strong= 'An unknown person'
           - tmp = format_time(contribution.datetime)
-          %span.action commented at #{link_to(tmp, comment_path(contribution))}
+          %span.action commented at #{link_to(tmp, contribution_path(contribution))}
         %p.content= contribution.content
         %p
           - if person_signed_in?
-            %a.text.button.conversation-action(id="action-link-#{contribution.id}" href="javascript:void(0)" title="Leave a comment here") Comment on this
+            = link_to("Respond", {:action => "new_node_contribution", :contribution_id => contribution.id, :id => contribution.conversation_id, :div_id => "contribution-#{contribution.id}"}, :class => "text button conversation-action", :id => "action-link-#{contribution.id}", :title => "Leave a comment here", 'data-target' => "#action-div-#{contribution.id}", :remote => true)
           - if can_edit?(contribution.person)
             %a(href="#" class="privileged" title="Delete this comment") Delete (doesn't work)
       %div{:clear => 'both'}
-      .tab-strip(id="action-div-#{contribution.id}")
       %ul
-        - contribution.posts.order('created_at DESC').each do |post|
-          =render :partial => post.contribution_type.downcase, :locals => { :contribution => post.contribution }
+        .comment-contribution-action(id="action-div-#{contribution.id}")
+        = display_direct_descendant_subset(@contribution, contribution.id)

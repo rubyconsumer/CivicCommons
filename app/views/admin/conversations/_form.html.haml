@@ -50,12 +50,12 @@
     =conversation.label :issues, "Select Issues"
     %br
     %table
-      - Issue.order("summary").each_slice(2) do |slice|
+      - Issue.alphabetical.each_slice(2) do |slice|
         %tr
           -slice.each do |issue|
             %td
               =check_box_tag "conversation[issue_ids][]", issue.id
-              =issue.summary
+              =issue.name
 
   %p
     =conversation.submit

@@ -1,0 +1,27 @@
+-form_for [:admin, @issue] do |f|
+  - all_errors = @issue.errors.full_messages
+  - if all_errors.any?
+    #error_explanation
+      %h2
+        = pluralize(all_errors.size, "error")
+        prohibited this issue from being saved:
+      %ul
+        - all_errors.each do |msg|
+          %li= msg
+  
+  %p        
+    =f.label :name
+    %br
+    =f.text_field :name
+    
+  %p
+    =f.label :summary
+    %br
+    =f.text_area :summary
+    
+  %p
+    =f.label :zip_code
+    =f.text_field :zip_code
+    
+  %p
+    =f.submit 

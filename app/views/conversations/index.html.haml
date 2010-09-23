@@ -1,4 +1,11 @@
 - content_for :main do
+  #wrapper
+    %p.notice
+    %p.alert
+    .content-container
+      %h1 Conversations
+      = render :partial => '/articles/featured'
+
   %h1 Search for Conversations
   %hr
   = form_for @search, :as => :search, :html => {:method => :get} do |f|
@@ -22,7 +29,7 @@
           = f.text_field :containing_guide
       %tr
         %td
-          = f.label "With issue description(s) containing:"
+          = f.label "With issue names(s) containing:"
         %td
           = f.text_field :containing_issue
       %tr

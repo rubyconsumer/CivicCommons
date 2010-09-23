@@ -1,0 +1,6 @@
+%ul
+  = link_to("Respond", {:action => "new_node_contribution", :contribution_id => @contribution.id, :id => @contribution.conversation_id, :div_id => "contribution-#{@contribution.id}"}, :class => "text button conversation-action", :id => "action-link-#{@contribution.id}", :title => "Leave a comment here", 'data-target' => "#action-div-#{@contribution.id}-respond", :remote => true)
+  
+  %div{:id => "action-div-#{@contribution.id}-respond"}
+
+  = display_direct_descendant_subset(@contribution, @contribution.id)

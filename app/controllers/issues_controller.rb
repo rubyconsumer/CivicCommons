@@ -9,8 +9,9 @@ class IssuesController < ApplicationController
     @leaders = Person.all(:limit => 6)
     @organizations = Person.all(:limit => 6)
     @top_conversations = Conversation.get_top_visited(3)
-    @featured_issues = Issue.all # pending, this should have shown the correct one get_top_visited(3)
-    @first_featured_issue = @featured_issues.pop unless @featured_issues.blank?
+    @main_article = Article.issue_main_article.first
+    @sub_articles = Article.issue_sub_articles.limit(3)
+    
     
     respond_to do |format|
       format.html # index.html.erb
@@ -23,6 +24,10 @@ class IssuesController < ApplicationController
   # GET /issues/1.xml
   def show
     @issue = Issue.find(params[:id])
+    @conversations = @issue.conversations.latest_updated.limit(3)
+    @leaders = @issue.participants
+    @organizations = @issue.participants
+    @contributions = @issue.contributions
     @issue.visit!((current_person.nil? ? nil : current_person.id))
 
     respond_to do |format|

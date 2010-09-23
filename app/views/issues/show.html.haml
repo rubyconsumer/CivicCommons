@@ -1,0 +1,56 @@
+#wrapper
+  %p.notice
+  %p.alert
+  .content-container
+    %h1= h @issue.name
+    .main-content
+      .feature
+        .feat-callout
+          =image_tag 'featured.gif',:alt => 'featured', :height => 225, :width => 340
+        .feat-content
+          %p= h @issue.summary
+          %p
+            %a{:href => "#"} Read More
+      %h2 Conversations about this issue:
+      .topic-header.group
+        %p.topic-count Showing 25 of 300 conversations
+        %p.topic-selection
+          %a{:href => "#"} Most Recent
+          %a{:href => "#"} Most Active
+      %ol.conversations
+        -@conversations.each do |conversation|          
+          %li.article.offset-1
+            =image_tag('avatar_70.gif', :class => 'callout', :alt => 'avatar_70', :height => 70, :width => 70 )
+            %h4=link_to h(conversation.title), conversation, :title => h(conversation.title)
+            %p=h(conversation.summary) 
+            =link_to 'View', conversation, :title => 'View this Conversation!',:class => 'tertiary button'
+            =link_to '57 Responses', '', :title => 'View Responses to this Conversation',:class => 'summary-link'
+      .pagination
+        %p
+          Page
+          = succeed "," do
+            %span.current 1
+          = succeed "," do
+            %a{:href => "#"} 2
+          = succeed "," do
+            %a{:href => "#"} 3
+          %a{:href => "#"} Next
+    / .#main-content
+    .aside.supplementary
+      %h2 Leaders
+      .photobank
+        = render :partial => '/people/thumbnail', :collection => @leaders
+      %h2 Organizations
+      .photobank
+        = render :partial => '/people/thumbnail', :collection => @organizations
+      %h2 Contributions
+      %ol.conversations.divided
+        - @contributions.each do |contribution|        
+          %li.article.offset-1
+            =image_tag('avatar_70.gif',:class => 'callout',:alt => 'avatar_70',:height => 70, :width => 70)
+            %h3
+              =link_to contribution.content, ''
+            %p
+              == By: #{(contribution.person.name if contribution)}
+      %a{:href => "#"} Write a contribution
+

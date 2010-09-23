@@ -41,6 +41,21 @@
     %br
     = f.check_box :main 
   
+  .field
+    = f.label :homepage_article
+    %br
+    = f.check_box :homepage_article
+
+  .field
+    = f.label :conversation_article
+    %br
+    = f.check_box :conversation_article
+
+  .field
+    = f.label :issue_article
+    %br
+    = f.check_box :issue_article
+
   -if @article.image.exists? 
     .field
       = f.label "Image Url" 

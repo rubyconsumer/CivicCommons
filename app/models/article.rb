@@ -11,8 +11,10 @@ class Article < ActiveRecord::Base
     :storage => :s3,
     :s3_credentials => s3_credential_file,
     :path => ":attachment/:id/:style/:filename"
-
-  scope :main_article, where(:current => true, :main => true).first
-  scope :sub_articles, where("main is not ? AND current = ? ", true, true)
+  
+  ['homepage', 'conversation', 'issue'].each do |type|
+    scope :"#{type}_main_article", where(:current => true, :main => true, :"#{type}_article" => true)
+    scope :"#{type}_sub_articles", where("main != ? AND current = ? AND #{type}_article = ?", true, true, true)
+  end
 
 end

@@ -1,0 +1,5 @@
+<% unless @contribution.errors.any? %>
+  $("#action-div-<%= @contribution.contribution_id %>").html("<%= escape_javascript( render(:partial => "conversation/contribution/#{@contribution.type.downcase}") ) %>");
+<% else %>
+  $("#action-div-<%= @contribution.contribution_id %>").html("<%= escape_javascript(error_messages_for(@contribution))%>");
+<% end %>

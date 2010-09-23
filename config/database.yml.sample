@@ -1,0 +1,16 @@
+development:
+  adapter:   mysql
+  database:  TheCivicCommons_dev
+  username:  civiccommons
+  password:  S0M3FaKePaSSwORD
+  host:      localhost
+
+
+
+test:
+  adapter:   mysql
+  database:  TheCivicCommons_test
+  username:  civiccommons
+  password:  S0M3FaKePaSSwORD
+  host:      localhost
+
