@@ -62,11 +62,14 @@ class ConversationsController < ApplicationController
   
   def create_node_contribution
     model = params[:contribution][:type].constantize
-    @contribution = model.create(:conversation_id => params[:contribution][:conversation_id], :parent_id => params[:contribution][:parent_id], :content => params[:contribution][:content], :person => current_person)
-    
+    # could probably do this much cleaner, but still need to sanitize this for now
+    raise ArgumentError("not a valid node-level Contribution type") unless [Answer,AttachedFile,Comment,EmbeddedSnippet,Link,Question].include?(model)
+    params[:contribution] = params[:contribution].merge({:person => current_person})
+    @contribution = model.create(params[:contribution])
+
     respond_to do |format|
       if @contribution.save
-        format.js   { render :partial => "conversations/contributions/#{@contribution.type.downcase}", :locals => {:contribution => @contribution}, :status => :created }
+        format.js   { render :partial => "conversations/contributions/#{@contribution.type.underscore}", :locals => {:contribution => @contribution}, :status => :created }
         format.html { redirect_to(@contribution, :notice => 'Contribution was successfully created.') }
         format.xml  { render :xml => @contribution, :status => :created, :location => @contribution }
       else

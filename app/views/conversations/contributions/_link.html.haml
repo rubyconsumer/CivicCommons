@@ -15,14 +15,12 @@
           -else
             %strong= 'An unknown person'
           - tmp = format_time(contribution.datetime)
-          %span.action shared a video at #{link_to(tmp, contribution_path(contribution))}
+          %span.action shared a link at #{link_to(tmp, contribution_path(contribution))}
         %p.link-title
           = link_to(contribution.title, contribution.url)
           %br
           %span.link-url
             = contribution.url
-        %p.content.embedded
-          = raw contribution.content
         %p.content.link-quote
           = contribution.description
         %p

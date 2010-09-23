@@ -330,6 +330,9 @@ width: 300px;
 }
 .article img {float: left;}
 .content {padding-left: 80px;}
+.link-title {  }
+.link-url { font-size: .8em; }
+.link-quote { font-style: italic; font-size: .9em; }
 .article ul {
 background: url(/images/event-icon.png) no-repeat;
 padding-left: 40px;

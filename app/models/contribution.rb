@@ -11,7 +11,7 @@ class Contribution < ActiveRecord::Base
   belongs_to :issue
   
   validates_with ContributionValidator
-  validates :content, :person, :presence=>true 
+  validates :person, :presence=>true 
   validates_associated :conversation, :parent, :person
   
   # paperclip bug: if you don't specify the path, you will get

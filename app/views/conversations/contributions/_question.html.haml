@@ -1,9 +1,10 @@
 %li
   .article.comment
     .meta
-      .comment-type.question
-      %a.rating.positive(href="#" title="Rate this contribution")=format_rating(contribution)
-    %img{:alt=>"Question from #{contribution.person.name}"}
+      .comment-type.question{:class=>contribution.official ? "" : "unofficial"}
+        - "Official" if contribution.official
+      %img{:alt=>" [#{contribution.person.name} image] ", :height => 25, :width => 25, :src=>"#{contribution.person.avatar_url(:small)}"}
+      %a.rating(href="#" title="Rate this comment")=format_rating(contribution)
     %p
       %a{:href=>person_path(contribution.person), :title=>"#{contribution.person.name}'s Profile"}
         %strong= contribution.person.name
