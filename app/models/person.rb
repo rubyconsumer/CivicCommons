@@ -50,5 +50,10 @@ class Person < ActiveRecord::Base
     size = "small"
     return '/images/nemeth-avatar-small.png'
   end
-
+  
+  def creat_proxy
+    email = first_name + last_name.gsub(/['\s]/) + "@example.com"
+    password = 'p4s$w0Rd'
+    proxy = true
+  end
 end

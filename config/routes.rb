@@ -24,6 +24,7 @@ Civiccommons::Application.routes.draw do
     resources   :articles
     resources   :conversations
     resources   :issues
+    resources   :people
     root        :to => "dashboard#show"
   end
   
