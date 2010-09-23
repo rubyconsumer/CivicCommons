@@ -8,18 +8,24 @@ describe Issue do
     @person1 = Factory.create(:normal_person)
     @person2 = Factory.create(:normal_person)
     @person3 = Factory.create(:normal_person)
-    @conversation1 = Factory.create(:conversation,:guides => [@person1,@person2],:issues => [@issue2])
-    @conversation2 = Factory.create(:conversation,:guides => [@person1],:issues => [@issue2])
-    @conversation3 = Factory.create(:conversation,:guides => [@person1],:issues => [@issue1])
-    @contribution = Factory.create(:contribution,:issue => @issue2)
+
+    @contribution1 = Factory.create(:contribution,:issue => @issue1)
+    @contribution2 = Factory.create(:contribution,:issue => @issue1)
+    
+    @contribution3 = Factory.create(:contribution,:issue => @issue2)
+    @contribution4 = Factory.create(:contribution,:issue => @issue2)
+    @contribution5 = Factory.create(:contribution,:issue => @issue2)
+
+    @contribution6 = Factory.create(:contribution,:issue => @issue3)
   end
-  def given_an_issue_with_conversations_and_participants
+  def given_an_issue_with_contributions_and_participants
     @issue = Factory.create(:issue)
     @person1 = Factory.create(:normal_person)
     @person2 = Factory.create(:normal_person)
     @person3 = Factory.create(:normal_person)
-    @conversation1 = Factory.create(:conversation,:guides => [@person1,@person2],:issues => [@issue])
-    @conversation2 = Factory.create(:conversation,:guides => [@person1],:issues => [@issue])
+    @contribution1 = Factory.create(:contribution, :person => @person1, :issue => @issue)
+    @contribution2 = Factory.create(:contribution, :person => @person2, :issue => @issue)
+    @contribution3 = Factory.create(:contribution, :person => @person2, :issue => @issue)
   end
   def given_an_issue_with_contributions_and_conversations_and_page_visits
     @issue = Factory.create(:issue)
@@ -66,13 +72,12 @@ describe Issue do
   end
   context "with participants" do
     it "should have the correct participants" do
-      given_an_issue_with_conversations_and_participants
+      given_an_issue_with_contributions_and_participants
       @issue.participants.should == [@person1,@person2]
     end
     it "should have the correct number of participants" do
-      given_an_issue_with_conversations_and_participants
-      #there's gotta be a better way than this below
-      @issue.participants.count('DISTINCT(people.id)').should == 2
+      given_an_issue_with_contributions_and_participants
+      @issue.participants.count.should == 2
     end
   end
   context "Sort filter" do
@@ -89,9 +94,9 @@ describe Issue do
       @issue1.touch
       Issue.sort('most_recent_update').first.should == @issue1
     end
-    it "should sort by hotness(# of participants and # of contributions)" do
+    it "should sort by most active(# of participants and # of contributions)" do
       given_3_issues
-      issues = Issue.most_hot
+      issues = Issue.most_active
       issues.collect(&:id).should == [@issue2.id,@issue1.id,@issue3.id]
     end
     it "should sort issue by region" do
