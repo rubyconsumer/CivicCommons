@@ -1,4 +1,4 @@
-class Admin::PeopleController < Admin::Dashboard
+class Admin::PeopleController < Admin::DashboardController
   
   #GET admin/people/
   def index
@@ -6,6 +6,10 @@ class Admin::PeopleController < Admin::Dashboard
   end
   
   #GET admin/proxies
+  def proxies
+    @people = Person.proxy_accounts
+    render :action => 'index'
+  end
 
   #GET admin/people/new
   def new
@@ -26,10 +30,11 @@ class Admin::PeopleController < Admin::Dashboard
   
   #GET admin/people/1/edit
   def edit
+    @person = Person.find(params[:id])
   end
   
   #PUT admin/people/1
-  def create
+  def update
     @person = Person.find(params[:id])
     if @person.update_attributes(params[:person])
       flash[:notice] = "Successfully updated person record"

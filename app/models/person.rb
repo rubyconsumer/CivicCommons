@@ -20,7 +20,7 @@ class Person < ActiveRecord::Base
   scope :participants_of_issue, lambda{ |issue|
       joins(:conversations => :issues).where(['issue_id = ?',issue.id]).select('DISTINCT(people.id),people.*') if issue
     } 
-  scope :proxy_accounts, :condition => {:proxy => true}
+  scope :proxy_accounts, where(:proxy => true)
 
   def name=(value)
     @name = value
@@ -52,9 +52,9 @@ class Person < ActiveRecord::Base
     return '/images/nemeth-avatar-small.png'
   end
   
-  def creat_proxy
-    email = first_name + last_name.gsub(/['\s]/) + "@example.com"
-    password = 'p4s$w0Rd'
-    proxy = true
+  def create_proxy
+    self.email = first_name.downcase + last_name.gsub(/['\s]/,'').downcase + "@example.com"
+    self.password = 'p4s$w0Rd'
+    self.proxy = true
   end
 end

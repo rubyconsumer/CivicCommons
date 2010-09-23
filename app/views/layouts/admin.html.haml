@@ -33,7 +33,9 @@
             =link_to "People", admin_people_path
             %ul
               %li
-                =link_to "Proxy Accounts", admin_proxies_path
+                =link_to "Proxy Accounts", proxies_admin_people_path
+              %li
+                =link_to "Add Proxy Account", new_admin_person_path
       %div#main
         -if flash[:notice]
           %div
