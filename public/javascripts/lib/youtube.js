@@ -1,7 +1,4 @@
-
-
 var youtube = function() { 
-
   var thumbnail_fetch = function (url, callback) {
     var query_string = url.split(/\?/)[1];
     var query_pairs = {};
@@ -48,7 +45,13 @@ var youtube = function() {
 
   var self = {};
   self.init = function() {
-    $(".youtube").change(display_thumbnail);
+    $(".youtube").change(function() {
+        try {
+          display_thumbnail();
+        } catch(e) {
+          civic.error("Error showing YouTube preview.");
+        }
+    });
   };
   return self;
 }();
