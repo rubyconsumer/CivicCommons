@@ -17,6 +17,7 @@ Feature:
         | To      | joe@test.com                  |
         | Subject | Confirmation instructions     |
 
+  @api
   Scenario: User clicks confirmation link in email
 
     Given the user signs up with:
