@@ -17,7 +17,6 @@ Feature:
         | To      | joe@test.com                  |
         | Subject | Confirmation instructions     |
 
-  @wip
   Scenario: User clicks confirmation link in email
 
     Given the user signs up with:
@@ -29,5 +28,4 @@ Feature:
     Then the user should be confirmed
     And the user should be logged in
     And a People Aggregator shadow account should be created
-    And the user should have a valid People Aggregator token
 
