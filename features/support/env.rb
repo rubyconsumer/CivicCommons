@@ -19,7 +19,6 @@ require 'cucumber/rails/capybara_javascript_emulation' # Lets you click links wi
 
 
 After("@api") do |s|
-  puts "After @api"
   person = PeopleAggregator::Person.find_by_email("joe@test.com")
   person.destroy if person
   person = PeopleAggregator::Person.find_by_email("joe@duplicate.com")
