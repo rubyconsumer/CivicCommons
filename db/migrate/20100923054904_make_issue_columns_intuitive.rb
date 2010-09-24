@@ -8,6 +8,6 @@ class MakeIssueColumnsIntuitive < ActiveRecord::Migration
 
   def self.down
     rename_column(:issues, :name, :description)
-    change_olumn(:issues, :summary, :string)
+    change_column(:issues, :summary, :string)
   end
 end
