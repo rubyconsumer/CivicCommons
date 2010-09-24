@@ -25,5 +25,8 @@ class Contribution < ActiveRecord::Base
     :storage => :s3,
     :s3_credentials => s3_credential_file,
     :path => ":attachment/:id/:filename"
-      
+  
+
+  scope :most_recent, {:order => 'created_at DESC'}
+  
 end

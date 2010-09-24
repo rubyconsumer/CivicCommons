@@ -1,52 +1,52 @@
-      	<div class="content-container">
-      		<h1>Issues</h1>
-                <%= render :partial => '/articles/featured' %>
-	</div><!-- /.content-container -->
-	<div class="content-container">
-	  <div class="main-content">
-	    <div class="topic-header group">
-	      <p class="topic-count">
-                <%= paginated_showing_info(@issues, 'issue') %>
-              </p>
-	      <p class="topic-selection">
-                <%= link_to "Most Recent", :sort => :most_recent %>
-		<%= link_to "Most Active", :sort => :most_host %>
-	      </p>
-	    </div>
-	    <table class="data-table">
-	      <colgroup class="issue-title"></colgroup>
-	      <colgroup class="contrib-count"></colgroup>
-	      <colgroup class="convo-count"></colgroup>
-	      <tbody>
-                <% @issues.each do |issue| %>
-		<tr>
-		  <th scope="row">
-                    <%= link_to issue.name, issue %>
-                  </th>
-		  <td>
-                    <%= link_to pluralize(issue.contributions.size, "Contributions"), issue %>
-                  </td>
-		  <td>
-                    <%= link_to pluralize(issue.conversations.size, "Conversations"), issue %>
-                  </td>
-		</tr>
-                <% end %>
-	      </tbody>
-	    </table>
-	    <div class="pagination">
-              <%= will_paginate(@issues) %>
-	    </div>
-	  </div><!-- /.main-content -->			
-	  <div class='aside supplementary'>
-	    <h3>Select a Region</h3>
-	    <ul class='link-list'>
-	      <li><a href="#">Name of Region</a></li>
-	      <li><a href="#">Name of Region</a></li>
-	      <li><a href="#">Name of Region</a></li>
-	      <li><a href="#">Name of Region</a></li>
-	      <li><a href="#">Name of Region</a></li>
-	      <li><a href="#">Name of Region</a></li>
-	    </ul>
-	  </div><!-- /.aside -->			
-	</div><!-- /.content-container -->
+<div class="content-container">
+  <h1>Issues</h1>
+  <%= render :partial => '/articles/featured' %>
+</div><!-- /.content-container -->
+<div class="content-container">
+  <div class="main-content">
+    <div class="topic-header group">
+      <p class="topic-count">
+        <%= paginated_showing_info(@issues, 'issue') %>
+      </p>
+      <p class="topic-selection">
+        <%= link_to "Most Recent", :sort => :most_recent %>
+	<%= link_to "Most Active", :sort => :most_host %>
+      </p>
     </div>
+    <table class="data-table">
+      <colgroup class="issue-title"></colgroup>
+      <colgroup class="contrib-count"></colgroup>
+      <colgroup class="convo-count"></colgroup>
+      <tbody>
+        <% @issues.each do |issue| %>
+	<tr>
+	  <th scope="row">
+            <%= link_to issue.name, issue %>
+          </th>
+	  <td>
+            <%= link_to pluralize(issue.contributions.size, "Contributions"), issue %>
+          </td>
+	  <td>
+            <%= link_to pluralize(issue.conversations.size, "Conversations"), issue %>
+          </td>
+	</tr>
+        <% end %>
+      </tbody>
+    </table>
+    <div class="pagination">
+      <%= will_paginate(@issues) %>
+    </div>
+  </div><!-- /.main-content -->			
+  <div class='aside supplementary'>
+    <h3>Select a Region</h3>
+    <ul class='link-list'>
+      <li><a href="#">Name of Region</a></li>
+      <li><a href="#">Name of Region</a></li>
+      <li><a href="#">Name of Region</a></li>
+      <li><a href="#">Name of Region</a></li>
+      <li><a href="#">Name of Region</a></li>
+      <li><a href="#">Name of Region</a></li>
+    </ul>
+  </div><!-- /.aside -->			
+</div><!-- /.content-container -->
+</div>

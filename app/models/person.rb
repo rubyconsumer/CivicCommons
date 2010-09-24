@@ -14,6 +14,8 @@ class Person < ActiveRecord::Base
   has_and_belongs_to_many :conversations, :join_table => 'conversations_guides', :foreign_key => :guide_id
   has_and_belongs_to_many :events, :join_table => 'events_guides', :foreign_key => :guide_id
 
+  has_many :contributed_conversations, :through => :contributions, :source => :conversation
+
   validate :zip_code, :length => 10
   validates_numericality_of :top, :allow_nil => true
 
@@ -23,8 +25,8 @@ class Person < ActiveRecord::Base
     } 
 
   # Stubbed out. We will need ot distinguish between a person and an org
-  scope(:exclude_people)
-  scope(:exclude_organizations)
+  scope(:exclude_people, :conditions => {:organization => true})
+  scope(:exclude_organizations, :conditions => {:organization => false})
   
   scope :proxy_accounts, where(:proxy => true)
 
