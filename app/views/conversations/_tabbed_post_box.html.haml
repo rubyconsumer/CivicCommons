@@ -64,7 +64,7 @@
           = f.hidden_field(:type, :value => "EmbeddedSnippet")
           %label
             Link:
-            = f.text_field(:content, :type => "text", :class => "textbox link youtube", :placeholder => "Copy/paste the video link here.")
-            #youtube-thumbnail
+          =f.text_field(:content, :type => "text", :class => "textbox link youtube", :placeholder => "Copy/paste the video link here.")
+          .youtube-thumbnail
           %div.errors
           = f.submit("Submit")
