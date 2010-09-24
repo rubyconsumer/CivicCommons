@@ -1,7 +1,52 @@
+//$.fn.extend({
+//  updateButtonText: function(){
+//    var el = this;
+//    if(el.data('origText')!='Respond'){
+//      if( /^[^\d]+$/.test(el.data('origText')) ){ // if origText does not contain a number (most likely says something like "Be the first to respond", but we'll be flexible)
+//        el.data('origText',"View conversation (0)");
+//      }
+//      var integers = el.data('origText').match(/(\d+)/g);
+//      $.each(integers, function(){
+//        incrementedText = el.data('origText').replace(this,parseInt(this)+1);
+//      });
+//      $(el).data('origText', incrementedText);
+//    }
+//    if( el.attr("href").match(/\/conversations\/node_conversation/) ){
+//      el.text(el.data('cancelText'));
+//    }else{
+//      el.text(el.data('origText'));
+//    }
+//  },
+//  
+//  scrollTo: function(){
+//    var top = $(this).offset().top - 100; // 100px top padding in viewport
+//    $('html,body').animate({scrollTop: top}, 1000);
+//  }
+//});
+
 $(document).ready(function() {
-  scrollTo = function(node) {
-     var top = node.offset().top - 100; // 100px top padding in viewport
-     $('html,body').animate({scrollTop: top}, 1000);
+  updateButtonText = function(node){
+    var el = $(node);
+    if(el.data('origText')!='Respond'){
+      if( /^[^\d]+$/.test(el.data('origText')) ){ // if origText does not contain a number (most likely says something like "Be the first to respond", but we'll be flexible)
+        el.data('origText',"View conversation (0)");
+      }
+      var integers = el.data('origText').match(/(\d+)/g);
+      $.each(integers, function(){
+        incrementedText = el.data('origText').replace(this,parseInt(this)+1);
+      });
+      $(el).data('origText', incrementedText);
+    }
+    if( /^[^\d]+$/.test(el.data('origText')) ){
+      el.text(el.data('origText'));
+    }else{
+      el.text('Respond');
+    }
+  }
+  
+  scrollTo = function(node){
+    var top = node.offset().top - 100; // 100px top padding in viewport
+    $('html,body').animate({scrollTop: top}, 1000);
   }
   actionToggle = function(clicked,target,clickedCancelText){
     $(clicked).toggle(
@@ -45,11 +90,14 @@ $(document).ready(function() {
           $(tabStrip).unmask();
         })
         .bind("ajax:success", function(evt, data, status, xhr){
-          $(clicked).text($(clicked).data('origText')).unbind('click'); // only unbinds the click function that attaches the toggle, since all the other events are indirectly attached through .live()
+          updateButtonText(clicked);
+          //$(clicked).updateButtonText();
+          $(clicked).unbind('click'); // only unbinds the click function that attaches the toggle, since all the other events are indirectly attached through .live()
           $(target).empty();
           var responseNode = $(xhr.responseText)
           $(target).parent().append(responseNode);
           scrollTo(responseNode);
+          //responseNode.scrollTo();
         })
         .bind("ajax:failure", function(evt, xhr, status, error){
           var errors = $.parseJSON(xhr.responseText);
