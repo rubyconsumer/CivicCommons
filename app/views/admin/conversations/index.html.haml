@@ -3,11 +3,13 @@
   %thead  
     %tr
       %th Conversation Title
+      %th Moderator
       %th Created Date
   %tbody
   -@conversations.each do |conversation|
     %tr
       %td= link_to conversation.title, admin_conversation_path(conversation)
+      %td= conversation.moderator.full_name
       %td= conversation.created_at.strftime("%m-%d-%Y")
       %td= link_to "Edit", edit_admin_conversation_path(conversation)
       %td= link_to "Destroy", admin_conversation_url(conversation), :method => :delete, :confirm => "Are you sure?"

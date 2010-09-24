@@ -1,3 +1,4 @@
+%p= link_to "Go to the perma link page", conversations_path(@conversation), :id => 'perma-link'
 %article
   %header
     %h1= @conversation.title
@@ -16,10 +17,8 @@
       = c.content
       %hr
   %footer
-    %p= "This conversation was started at: #{@conversation.started_at}"
-    -if @conversation.finished_at
-      %p= "This conversation was concluded at: #{@conversation.finished_at}"
-   
+    %p= "This conversation was started at: #{@conversation.created_at}"
+    
   
 =link_to "Back", admin_conversations_path
 |
