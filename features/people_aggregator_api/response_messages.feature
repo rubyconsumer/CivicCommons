@@ -10,7 +10,7 @@ Feature:
       | Email     | joe@test.com  |
       | Zip       | 44444         |
       | Password  | abcd1234      |
-    Then I should recieve an "ArgumentError" with the message:
+    Then I should receive an "ArgumentError" with the message:
       """
       The key "login" is required.
       """

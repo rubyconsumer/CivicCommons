@@ -24,8 +24,3 @@ When /^I try to create a duplicate user with login "([^"]*)"$/ do |login|
   }
 end
 
-Then /^I should receive an? "([^"]*)" with the message:$/ do |error, string|
-
-  @code_to_run.should raise_error(error.constantize, string)
-end
-
