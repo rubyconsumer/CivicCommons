@@ -1,0 +1,116 @@
+<div id='wrapper'>
+  <p class='notice'></p>
+  <p class='alert'></p>
+  <div class="content-container">
+    <h1><%= @issue.name %></h1>
+    <p class="convo-meta"><a class="button" href="#" title="Follow this conversation">Follow</a></p>
+    <div class='main-content'>
+      <div class='feature'>
+	<div class='feat-callout'>
+	  <img src="images/featured.gif" alt="featured" width="340" height="225" />
+	</div>
+	<div class="feat-content">
+	  <p><%= @issue.summary %></p>
+	  <p><strong>Created On:</strong> <%= @issue.created_at.strftime("%m/%d/%Y") %></p>
+          <!--
+              # TODO - admin only? or remove?
+	  <p><a href="#">Edit summary</a></p>
+          -->
+	</div>
+      </div>
+      <div class="two-col">
+	<div class="cols">
+	  <h3>People active in this issue</h3>
+	  <div class="photobank">
+            <% @people.each do |person| %>
+            <%= avatar_tag(person, :height => 50, :width => 50) %>
+            <% end %>
+	  </div>
+	</div>
+	<div class="cols">
+	  <h3>Organizations active in this issue</h3>
+	  <div class="photobank">
+            <% @organizations.each do |org| %>
+            <%= avatar_tag(org, :height => 50, :width => 50) %>
+            <% end %>
+	  </div>
+	</div>
+      </div>
+    </div><!-- /.main-content -->
+    <div class='aside supplementary'>
+      <div class="dnld document">
+	<p><strong><a href="#">Name of File to Download</a></strong></p>
+	<p>Brief description or caption of the file.</p>
+	<p><em>By: Person's Name</em></p>
+      </div>
+      <div class="dnld image">
+	<p><strong><a href="#">Name of an Image</a></strong></p>
+	<p>Brief description or caption of the file.</p>
+	<p><em>By: Person's Name</em></p>
+      </div>
+      <div class="dnld video">
+	<p><strong><a href="#">A YouTube Video</a></strong></p>
+	<p>Brief description or caption of the file.</p>
+	<p><em>By: Person's Name</em></p>
+      </div>
+      <p>Add a <a href="#">File</a>/<a href="#">Image</a>/<a href="#">Video</a></p>
+    </div><!-- /.aside -->
+  </div><!-- /.content-container -->
+  <div class="content-container">
+    <h2>Conversations about this issue:</h2>
+    <div class="main-content">
+      <div class="topic-header group">
+	<p class="topic-selection">
+	  <a href="#">Most Recent</a>
+	  <a href="#">Most Active</a>
+	</p>
+      </div>
+      <div class="three-col-sm">
+        <% @latest_conversations.each do |conversation| %>
+        <div class="cols call-out">
+          <img class="main-img" src="images/convo_img_mod.gif" alt="convo_img_mod" width="198" height="130" />
+	  <h4><%= conversation.title %></h4>
+          <p><%= conversation.summary %></p>
+	  <div class="photobank">
+            <% conversation.participants.each do |person| %>
+            <%= avatar_tag(person, :width => "42", :height => "42") %>
+            <% end %>
+	  </div>
+	</div>
+        <% end %>
+      </div>
+    </div><!-- /.main-content -->
+    <div class="aside supplementary">
+      <h3>Contributions</h3>
+      <ol class='conversations divided'>
+        <% @contributions.each do |contribution| %>
+	<li class='offset-1'>
+          <%= avatar_tag(contribution.person, :class => "callout", :width => 60, :height => 60) %>
+	  <h4><a href="#"><%= truncate(contribution.content) %> </a></h4>
+	  <p>By: <%= contribution.person.name %></p>
+	</li>
+        <% end %>
+      </ol>
+      <p><a href="#">Write a contribution</a></p>
+      <h3>Suggest an Action</h3>
+      <ol class='conversations divided'>
+	<li class='offset-1'>
+	  <img class="callout" src="images/avatar_70.gif" alt="avatar_70" width="70" height="70" />
+	  <p><strong><a href="#">Person's Name</a></strong> suggests:</p>
+	  <p>Aliquam erat volutpat. Mauris vel neque sit amet nunc gravida congue sed.</p>
+	</li>
+	<li class='offset-1'>
+	  <img class="callout" src="images/avatar_70.gif" alt="avatar_70" width="70" height="70" />
+	  <p><strong><a href="#">Person's Name</a></strong> suggests:</p>
+	  <p>Aliquam erat volutpat. Mauris vel neque sit amet nunc gravida congue sed.</p>
+	</li>
+      </ol>
+      <form class="general-aside">
+	<div class='form-block'>
+	  <textarea id="sugest-action" name="suggest-action" placeholder="Suggested action"></textarea>
+	</div>
+	<input class="submit" type="submit" value="Submit" />
+      </form>
+    </div><!-- /.aside -->
+  </div><!-- /.content-container -->
+</div>

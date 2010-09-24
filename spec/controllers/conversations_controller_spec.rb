@@ -8,9 +8,7 @@ describe ConversationsController do
 
   describe "GET index" do
     it "assigns all conversations as @conversations" do
-      mock_search_results = mock(Object)
-      Conversation.stub(:search) { mock_search_results }
-      mock_search_results.stub(:all).and_return([mock_conversation])
+      Conversation.stub(:paginate) { [mock_conversation] }
       get :index
       assigns(:conversations).should eq([mock_conversation])
     end

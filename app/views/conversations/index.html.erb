@@ -1,0 +1,49 @@
+<% content_for :main do %>
+<div class="content-container">
+  <h1>Conversations</h1>
+  <%= render :partial => '/articles/featured' %>
+
+      <div class="content-container">
+        <div class="main-content">
+          <div class="topic-header group">
+            <p class="topic-selection">
+              <a href="#">Most Recent</a>
+              <a href="#">Most Active</a>
+            </p>
+          </div>
+
+        <% @conversations.each_slice(3) do |conversation_mini_array|%>
+          <div class="three-col-sm">
+            <% conversation_mini_array.each do |conversation| %>
+            <div class="cols call-out">
+              <img class="main-img" src="images/convo_img_mod.gif" alt="convo_img_mod" width="198" height="130" />
+              <h4><%= conversation.title %></h4>
+              <p><%= conversation.summary %></p>
+              <div class="photobank">
+                <img src="images/avatar_42.gif" alt="avatar" width="42" height="42" />
+                <img src="images/avatar_42.gif" alt="avatar" width="42" height="42" />
+                <img src="images/avatar_42.gif" alt="avatar" width="42" height="42" />
+                <img src="images/avatar_42.gif" alt="avatar" width="42" height="42" />
+              </div>
+            </div>
+            <% end %>
+          </div>
+        <% end %>
+        <%= will_paginate @conversations %>
+
+        </div><!-- /.main-content -->     
+        <div class='aside supplementary'>
+          <h3>Select a Region</h3>
+          <ul class='link-list'>
+            <li><a href="#">Name of Region</a></li>
+            <li><a href="#">Name of Region</a></li>
+            <li><a href="#">Name of Region</a></li>
+            <li><a href="#">Name of Region</a></li>
+            <li><a href="#">Name of Region</a></li>
+            <li><a href="#">Name of Region</a></li>
+          </ul>
+        </div><!-- /.aside -->      
+      </div><!-- /.content-container -->
+  </div>
+     
+<% end %>

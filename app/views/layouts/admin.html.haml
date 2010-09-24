@@ -2,6 +2,8 @@
 %html
   %head
     =javascript_include_tag 'vendor/jquery-1.4.2.min'
+    =javascript_include_tag 'lib/master'
+    =javascript_include_tag 'lib/youtube'
     =stylesheet_link_tag 'admin.css'
     %title CivicCommons Admin
   %body
@@ -29,6 +31,13 @@
             %ul
               %li
                 =link_to "Add Issue", new_admin_issue_path
+          %li
+            =link_to "People", admin_people_path
+            %ul
+              %li
+                =link_to "Proxy Accounts", proxies_admin_people_path
+              %li
+                =link_to "Add Proxy Account", new_admin_person_path
       %div#main
         -if flash[:notice]
           %div

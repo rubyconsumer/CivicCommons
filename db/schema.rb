@@ -120,16 +120,17 @@ ActiveRecord::Schema.define(:version => 20100922233855) do
   end
 
   create_table "issues", :force => true do |t|
-    t.string   "description"
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "summary"
+    t.text     "summary"
     t.integer  "total_visits"
     t.integer  "recent_visits"
     t.integer  "total_rating"
     t.integer  "recent_rating"
     t.datetime "last_visit_date"
     t.datetime "last_rating_date"
+    t.string   "zip_code"
   end
 
   create_table "people", :force => true do |t|
@@ -140,9 +141,9 @@ ActiveRecord::Schema.define(:version => 20100922233855) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "password"
-    t.string   "email",                               :default => "", :null => false
-    t.string   "encrypted_password",   :limit => 128, :default => "", :null => false
-    t.string   "password_salt",                       :default => "", :null => false
+    t.string   "email",                               :default => "",    :null => false
+    t.string   "encrypted_password",   :limit => 128, :default => "",    :null => false
+    t.string   "password_salt",                       :default => "",    :null => false
     t.string   "reset_password_token"
     t.string   "remember_token"
     t.datetime "remember_created_at"
@@ -156,6 +157,8 @@ ActiveRecord::Schema.define(:version => 20100922233855) do
     t.datetime "confirmation_sent_at"
     t.string   "zip_code"
     t.integer  "top"
+    t.boolean  "proxy"
+    t.boolean  "organization",                        :default => false
   end
 
   add_index "people", ["email"], :name => "index_people_on_email", :unique => true

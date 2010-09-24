@@ -1,11 +1,6 @@
 - content_for :main_body do
-  %p.notice= notice
-  %p.alert= alert
-  .section
-    .main.section
-      .main-content
-        = yield
-      .aside.supplementary
-        = yield :sidebar
+  = yield
+  .aside.supplementary
+    = yield :sidebar
 = render :file => 'layouts/application'
 

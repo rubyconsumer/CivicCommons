@@ -10,14 +10,18 @@
           %li= msg
   
   %p        
-    =f.label :description
+    =f.label :name
     %br
-    =f.text_field :description
+    =f.text_field :name
     
   %p
     =f.label :summary
     %br
-    =f.text_field :summary
+    =f.text_area :summary
+    
+  %p
+    =f.label :zip_code
+    =f.text_field :zip_code
     
   %p
     =f.submit 

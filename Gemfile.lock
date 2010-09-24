@@ -150,6 +150,7 @@ GEM
       xml-simple (>= 1.0.11)
     warden (0.10.7)
       rack (>= 1.0.0)
+    will_paginate (3.0.pre2)
     xml-simple (1.0.12)
 
 PLATFORMS
@@ -177,3 +178,4 @@ DEPENDENCIES
   ruby_parser
   safariwatir
   sqlite3-ruby
+  will_paginate (~> 3.0.pre2)

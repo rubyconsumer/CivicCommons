@@ -18,12 +18,16 @@ Civiccommons::Application.routes.draw do
   match '/conversations/create_node_contribution', :to=>'conversations#create_node_contribution', :via=>[:post]  
   match '/conversations/new_node_contribution', :to=>'conversations#new_node_contribution', :via=>[:get]
   match '/conversations/rate', :to=>'conversations#rate', :via=>[:post]
+  
   resources :conversations
   
   namespace "admin" do
     resources   :articles
     resources   :conversations
     resources   :issues
+    resources   :people do
+      get 'proxies', :on => :collection
+    end
     root        :to => "dashboard#show"
   end
   

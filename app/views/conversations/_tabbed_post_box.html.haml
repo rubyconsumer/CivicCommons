@@ -69,7 +69,8 @@
           = f.text_area(:content, :rows => "3", :placeholder => "Comment on video...")
           %label
             YouTube Link:
-            = f.text_field(:url, :type => "text", :class => "textbox link", :placeholder => "Copy/paste the link to the YouTube video here.")
+            = f.text_field(:url, :type => "text", :class => "textbox link youtube", :placeholder => "Copy/paste the video link here.")
+            .youtube-thumbnail
           %div.errors
           = f.submit("Submit")
       %div{:id => "#{div_id}-new-suggested-action" }

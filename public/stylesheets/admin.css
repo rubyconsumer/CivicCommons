@@ -12,6 +12,27 @@ fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
   font-size: 100%;
   font-family: inherit;
   vertical-align: baseline; }
+/*-----------------------------------------------
+= Message Styles
+-----------------------------------------------*/
+div.message {  
+position: fixed;
+top:0px;
+left:0px;
+width:100%;
+padding:10px;
+z-index:9999;
+text-align:center; }
+
+div.error {
+background-color:#500;
+color:#FFF;
+}
+
+div.alert {
+background-color: #ffffcc;
+color: #333;
+}
 
 body {
   line-height: 1;

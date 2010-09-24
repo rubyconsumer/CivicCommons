@@ -4,7 +4,11 @@ class Conversation < ActiveRecord::Base
   include TopItemable
   
   has_many :contributions
-  has_many  :top_level_contributions
+  has_many :top_level_contributions
+
+  # any person that has made a contribution to the convo
+  has_many(:participants, :through => :contributions, :source => :person,
+           :uniq => true, :order => "last_name")
 
   has_and_belongs_to_many :guides, :class_name => 'Person', :join_table => 'conversations_guides', :association_foreign_key => :guide_id
   has_and_belongs_to_many :issues
@@ -23,7 +27,8 @@ class Conversation < ActiveRecord::Base
     :styles => {
        :thumb => "100x100#",
        :small => "150x150>",
-       :normal => "480x300" },
+       :normal => "480x300",
+       :panel => "198x130" },
     :storage => :s3,
     :s3_credentials => s3_credential_file,
     :path => ":attachment/:id/:style/:filename"
@@ -39,18 +44,13 @@ class Conversation < ActiveRecord::Base
     lambda {|target|
      joins("inner join posts on conversations.id = posts.conversable_id inner join issues on posts.postable_id = issues.id").
       where("posts.postable_type = 'Issue'").
-      where("lower(issues.description) like ?", "%" + target.downcase.strip + "%")}
-
+      where("lower(issues.name) like ?", "%" + target.downcase.strip + "%")}
+  
   # Return a comma-and-space-delimited list of the Issues
   # relevant to this Conversation, e.g., "Jobs, Sports, Religion"
   def issues_text
-    if (issues.count > 0)
-      r = ""
-      issues.each do |issue|
-        r += ", "
-        r += issue.description
-      end
-      r[2,r.length-2] # lose starting comma-space
+    if issues.any?
+       issues.map(&:name).join(", ")
     else
       "No issues yet"
     end

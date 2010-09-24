@@ -5,13 +5,10 @@ class IssuesController < ApplicationController
   # GET /issues.xml
   def index
     @search = Issue.sort(params[:sort]).search(params[:search])
-    @issues = @search.all   # or @search.relation to lazy load in view
-    @leaders = Person.all(:limit => 6)
-    @organizations = Person.all(:limit => 6)
-    @top_conversations = Conversation.get_top_visited(3)
+    @issues = @search.paginate(:page => params[:page], :per_page => 20)
+    
     @main_article = Article.issue_main_article.first
     @sub_articles = Article.issue_sub_articles.limit(3)
-    
     
     respond_to do |format|
       format.html # index.html.erb
@@ -24,10 +21,10 @@ class IssuesController < ApplicationController
   # GET /issues/1.xml
   def show
     @issue = Issue.find(params[:id])
-    @conversations = @issue.conversations.latest_updated.limit(3)
-    @leaders = @issue.participants
-    @organizations = @issue.participants
-    @contributions = @issue.contributions
+    @latest_conversations = @issue.conversations.latest_updated.limit(3)
+    @people = @issue.participants.exclude_organizations
+    @organizations = @issue.participants.exclude_people
+    @contributions = @issue.contributions.most_recent.first(6)
     @issue.visit!((current_person.nil? ? nil : current_person.id))
 
     respond_to do |format|
