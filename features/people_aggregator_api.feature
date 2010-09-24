@@ -15,3 +15,10 @@ Feature:
       The key "login" is required.
       """
 
+  @api
+  Scenario: Creating a user that already exists
+    When I try to create a duplicate user with login "joe@duplicate.com"
+    Then I should receive a "StandardError" with the message:
+      """
+      The user with login "joe@duplicate.com" already exists.
+      """
