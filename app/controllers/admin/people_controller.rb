@@ -53,6 +53,7 @@ class Admin::PeopleController < Admin::DashboardController
   def destroy
     @person = Person.find(params[:id])
     @person.destroy
+    redirect_to admin_people_path
   end
 
 end

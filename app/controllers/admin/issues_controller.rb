@@ -46,6 +46,7 @@ class Admin::IssuesController < Admin::DashboardController
   def destroy
     @issue = Issue.find(params[:id])
     @issue.destroy
+    redirect_to admin_issues_path
   end
 
 end

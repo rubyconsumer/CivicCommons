@@ -56,6 +56,9 @@ class Admin::ConversationsController < Admin::DashboardController
 
   #DELETE admin/conversations/:id
   def destroy
+    @conversation = Conversation.find(params[:id])
+    @conversation.destroy
+    redirect_to admin_conversations_path
   end
   
 end
