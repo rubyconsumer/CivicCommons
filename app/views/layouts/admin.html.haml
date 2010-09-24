@@ -11,6 +11,9 @@
       .wrapper
         %h1
           =link_to "Civic Commons Admin", admin_root_path
+    -if flash[:notice]
+      .flash-notice
+        =flash[:notice]      
     .wrapper
       .nav
         %ul
@@ -39,7 +42,5 @@
               %li
                 =link_to "Add Proxy Account", new_admin_person_path
       %div#main
-        -if flash[:notice]
-          %div
-            =flash[:notice]
-        = yield
+        =yield
+        
