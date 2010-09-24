@@ -15,17 +15,19 @@
         <% @conversations.each_slice(3) do |conversation_mini_array|%>
           <div class="three-col-sm">
             <% conversation_mini_array.each do |conversation| %>
-            <div class="cols call-out">
-              <img class="main-img" src="images/convo_img_mod.gif" alt="convo_img_mod" width="198" height="130" />
-              <h4><%= conversation.title %></h4>
-              <p><%= conversation.summary %></p>
-              <div class="photobank">
-                <img src="images/avatar_42.gif" alt="avatar" width="42" height="42" />
-                <img src="images/avatar_42.gif" alt="avatar" width="42" height="42" />
-                <img src="images/avatar_42.gif" alt="avatar" width="42" height="42" />
-                <img src="images/avatar_42.gif" alt="avatar" width="42" height="42" />
+            <a href="<%= conversation_path(conversation)%>">
+              <div class="cols call-out">
+                <img class="main-img" src="images/convo_img_mod.gif" alt="convo_img_mod" width="198" height="130" />
+                <h4><%= conversation.title %></h4>
+                <p><%= conversation.summary %></p>
+                <div class="photobank">
+                  <img src="images/avatar_42.gif" alt="avatar" width="42" height="42" />
+                  <img src="images/avatar_42.gif" alt="avatar" width="42" height="42" />
+                  <img src="images/avatar_42.gif" alt="avatar" width="42" height="42" />
+                  <img src="images/avatar_42.gif" alt="avatar" width="42" height="42" />
+                </div>
               </div>
-            </div>
+            </a>
             <% end %>
           </div>
         <% end %>
