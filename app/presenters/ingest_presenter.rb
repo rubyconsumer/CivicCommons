@@ -10,7 +10,7 @@ class IngestPresenter
 
   def save!
     if @file.nil?
-      @errors.add_to_base("You must provide a transcript file")
+      @errors.add(:base,"You must provide a transcript file")
       raise ActiveRecord::RecordInvalid.new(self)
     end
     
