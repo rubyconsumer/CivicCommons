@@ -10,6 +10,8 @@
       %a{:href => "##{div_id}-new-link", :title => "Post a Link", :id => "link_tab"} Link
     %li
       %a{:href => "##{div_id}-new-video", :title => "Post a Video", :id => "video_tab"} Video
+    %li
+      %a{:href => "##{div_id}-new-suggested-action", :title => "Suggest an Action", :id => "suggested_action_tab"} Suggest Action
     .tab-area.input-with-options
       %div{:id => "#{div_id}-new-comment" }
         = form_for @contribution, :url => "create_node_contribution", :remote => true do |f|
@@ -40,6 +42,7 @@
           - if defined?(contribution_id)
             = f.hidden_field(:parent_id, :value => contribution_id)
           = f.hidden_field(:type, :value => "AttachedFile")
+          = f.text_area(:content, :rows => "3", :placeholder => "Comment on file...")
           %label
             Upload a file:
             = f.text_field(:attachment, :type => "file")
@@ -51,6 +54,7 @@
           - if defined?(contribution_id)
             = f.hidden_field(:parent_id, :value => contribution_id)
           = f.text_field(:type, :type => "hidden", :value => "Link")
+          = f.text_area(:content, :rows => "3", :placeholder => "Comment on file..")
           %label
             URL:
             = f.text_field(:url, :type => "text", :class => "textbox link", :placeholder => "http://www.youtube.com")
@@ -62,8 +66,18 @@
           - if defined?(contribution_id)
             = f.hidden_field(:parent_id, :value => contribution_id)
           = f.hidden_field(:type, :value => "EmbeddedSnippet")
+          = f.text_area(:content, :rows => "3", :placeholder => "Comment on video...")
           %label
             YouTube Link:
             = f.text_field(:url, :type => "text", :class => "textbox link", :placeholder => "Copy/paste the link to the YouTube video here.")
+          %div.errors
+          = f.submit("Submit")
+      %div{:id => "#{div_id}-new-suggested-action" }
+        = form_for @contribution, :url => "create_node_contribution", :remote => true do |f|
+          = f.hidden_field(:conversation_id, :value => conversation_id)
+          - if defined?(contribution_id)
+            = f.hidden_field(:parent_id, :value => contribution_id)
+          = f.hidden_field(:type, :value => "SuggestedAction")
+          = f.text_area(:content, :rows => "3", :placeholder => "Suggest an action...")
           %div.errors
           = f.submit("Submit")

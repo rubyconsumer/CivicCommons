@@ -22,7 +22,7 @@ module EmbeddedLinkable
     else
       description = doc.search("//p[1]").first
     end
-    self.title = title.content.strip if title
+    self.title = title.content.strip.gsub(/\s+/, ' ') if title
     self.description = description.content.strip if description
   end
   
@@ -32,6 +32,6 @@ module EmbeddedLinkable
   
   def embed_youtube_video
     video_id = self.url.gsub(YOUTUBE_REGEX, '\1')
-    self.content = "<object width='320' height='192'><param name='movie' value='http://www.youtube.com/v/#{video_id}?fs=1&amp;hl=en_US'></param><param name='allowFullScreen' value='true'></param><param name='allowscriptaccess' value='always'></param><embed src='http://www.youtube.com/v/#{video_id}?fs=1&amp;hl=en_US' type='application/x-shockwave-flash' allowscriptaccess='always' allowfullscreen='true' width='320' height='192'></embed></object>"
+    self.embed_target = "<object width='320' height='192'><param name='movie' value='http://www.youtube.com/v/#{video_id}?fs=1&amp;hl=en_US'></param><param name='allowFullScreen' value='true'></param><param name='allowscriptaccess' value='always'></param><embed src='http://www.youtube.com/v/#{video_id}?fs=1&amp;hl=en_US' type='application/x-shockwave-flash' allowscriptaccess='always' allowfullscreen='true' width='320' height='192'></embed></object>"
   end
 end

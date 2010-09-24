@@ -3,25 +3,26 @@ $(document).ready(function() {
      var top = node.offset().top - 100; // 100px top padding in viewport
      $('html,body').animate({scrollTop: top}, 1000);
   }
-  actionToggle = function(button,action){
-    var href = $(button).attr("href");
-    $(button).toggle(
-			function(){
-				$(this).text(href.match(/\/conversations\/node_conversation/) ? 'Hide conversation' : 'Cancel');
-				$(action).slideDown();
-			}, 
-			function(){
-				$(this).text($(this).data('origText'));
-				$(action).slideUp();
-			}
-		);
+  actionToggle = function(clicked,target,clickedCancelText){
+    $(clicked).toggle(
+  		function(){
+  			$(this).text(clickedCancelText);
+  			$(target).slideDown();
+  		}, 
+  		function(){
+  			$(this).text($(this).data('origText'));
+  			$(target).slideUp();
+  		}
+  	);
   }
 	$('a.conversation-action')
 	  .live("ajax:loading", function(){
 	    var href = $(this).attr("href");
-	    var label = href.match(/\/conversations\/node_conversation/) ? "Getting conversation..." : "Loading...";
+	    $(this).data('origText', $(this).text())
+	    $(this).data('cancelText', href.match(/\/conversations\/node_conversation/) ? 'Hide conversation' : 'Cancel')
 	    
-	    $(this).data('origText', $(this).text()).text(label);
+	    var label = href.match(/\/conversations\/node_conversation/) ? "Getting conversation..." : "Loading...";
+	    $(this).text(label);
 	  })
 	  .live("ajax:complete", function(evt, xhr){
 	    var clicked = this;
@@ -30,8 +31,10 @@ $(document).ready(function() {
 	    var form = tabStrip+" form";
 	    var errorDiv = form+" > .errors";
 	    
-	    $(clicked).click(actionToggle(clicked,target)); // turn button into a toggle to hide/show what gets loaded so that subsequent clicks to redo the ajax call
+	    // turn button into a toggle to hide/show what gets loaded so that subsequent clicks to redo the ajax call
+	    $(clicked).click(actionToggle(clicked,target,$(clicked).data('cancelText')));
 	    
+	    $(clicked).text($(clicked).data('cancelText'));
       $(target).hide().html(xhr.responseText).slideDown(); // insert content
       $(tabStrip).easyTabs({tabActiveClass: 'tab-active', tabActivePanel: 'panel-active'});
       $(form)
@@ -42,7 +45,7 @@ $(document).ready(function() {
           $(tabStrip).unmask();
         })
         .bind("ajax:success", function(evt, data, status, xhr){
-          $(clicked).text($(clicked).data('origText'));
+          $(clicked).text($(clicked).data('origText')).unbind('click'); // only unbinds the click function that attaches the toggle, since all the other events are indirectly attached through .live()
           $(target).empty();
           var responseNode = $(xhr.responseText)
           $(target).parent().append(responseNode);
@@ -58,21 +61,9 @@ $(document).ready(function() {
         });
     });
 	
-	$("#show_conversation #conversation_rating").hover(ShowRatingTools, HideRatingTools);
+//	$("#show_conversation #conversation_rating").hover(ShowRatingTools, HideRatingTools);
   
 });
-
-function ShowError(xhr, status, error, memo) {
-var string = "There was a " + status + " in " + memo + ".\n"
-	if (error) {
-		string += " The error text is " + error.toString() + ".\n"
-	}
-	if (xhr) {
-		string += " Status: " + xhr.status + "\n";
-		string += " See server log for details.\n";
-	}
-	alert(string);
-}
 
 //function RateConversation(conversation_id, rating) {
 //	var data = "";

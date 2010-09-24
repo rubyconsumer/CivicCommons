@@ -16,6 +16,8 @@
             %strong= 'An unknown person'
           - tmp = format_time(contribution.datetime)
           %span.action shared a link at #{link_to(tmp, contribution_path(contribution))}
+        %p.content
+          = contribution.content
         %p.link-title
           = link_to(contribution.title, contribution.url)
           %br

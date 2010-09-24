@@ -7,7 +7,7 @@
           .comment-type{:class=>contribution.official ? "" : "unofficial"}
             - "Official" if contribution.official
           %img{:alt=>" [#{contribution.person.name} image] ", :height => 25, :width => 25, :src=>"#{contribution.person.avatar_url(:small)}"}
-          %a.rating(href="#" title="Rate this shared link")=format_rating(contribution)
+          %a.rating(href="#" title="Rate this comment")=format_rating(contribution)
         %p
           -if contribution.person
             %a{:href=>person_path(contribution), :title=>"#{contribution.person.name}'s Profile"}
@@ -15,18 +15,8 @@
           -else
             %strong= 'An unknown person'
           - tmp = format_time(contribution.datetime)
-          %span.action shared a video at #{link_to(tmp, contribution_path(contribution))}
-        %p.content
-          = contribution.content
-        %p.link-title
-          = link_to(contribution.title, contribution.url)
-          %br
-          %span.link-url
-            = contribution.url
-        %p.content.embedded
-          = raw contribution.embed_target
-        %p.content.link-quote
-          = contribution.description
+          %span.action suggested an action at #{link_to(tmp, contribution_path(contribution))}
+        %p.content= contribution.content
         %p
           - if person_signed_in?
             = link_to("Respond", {:action => "new_node_contribution", :contribution_id => contribution.id, :id => contribution.conversation_id, :div_id => "contribution-#{contribution.id}"}, :class => "text button conversation-action", :id => "action-link-#{contribution.id}", :title => "Leave a comment here", 'data-target' => "#action-div-#{contribution.id}", :remote => true)

@@ -32,7 +32,9 @@ class ConversationsController < ApplicationController
   def show    
     @conversation = Conversation.find(params[:id])
     @conversation.visit!((current_person.nil? ? nil : current_person.id))
-    @contributions = TopLevelContribution.where(:conversation_id => @conversation.id).includes([:person]).order('created_at ASC')
+    @top_level_contributions = TopLevelContribution.where(:conversation_id => @conversation.id).includes([:person]).order('created_at ASC')
+    # grab all direct contributions to conversation that aren't TLC
+    @contributions = Contribution.not_top_level.without_parent.where(:conversation_id => @conversation.id).includes([:person]).order('created_at ASC')
     @contribution = Contribution.new # for conversation comment form
 
     respond_to do |format|
@@ -61,11 +63,7 @@ class ConversationsController < ApplicationController
   end
   
   def create_node_contribution
-    model = params[:contribution][:type].constantize
-    # could probably do this much cleaner, but still need to sanitize this for now
-    raise ArgumentError("not a valid node-level Contribution type") unless [Answer,AttachedFile,Comment,EmbeddedSnippet,Link,Question].include?(model)
-    params[:contribution] = params[:contribution].merge({:person => current_person})
-    @contribution = model.create(params[:contribution])
+    @contribution = Contribution.create_node_level_contribution(params[:contribution], current_person)
 
     respond_to do |format|
       if @contribution.save
