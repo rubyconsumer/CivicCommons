@@ -45,13 +45,18 @@ var youtube = function() {
 
   var self = {};
   self.init = function() {
-    $(".youtube").change(function() {
-        try {
+  var updatePreview = function() { try {
           display_thumbnail();
         } catch(e) {
           civic.error("Error showing YouTube preview.");
         }
-    });
+    }
+
+    $(".youtube").bind("paste", function() { setTimeout(updatePreview, 50)});
+
+    // TODO: consider the value of the change event, since 
+    // no one will probably type a youtube url
+    $(".youtube").change(updatePreview);
   };
   return self;
 }();
