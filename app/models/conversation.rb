@@ -23,7 +23,8 @@ class Conversation < ActiveRecord::Base
     :styles => {
        :thumb => "100x100#",
        :small => "150x150>",
-       :normal => "480x300" },
+       :normal => "480x300",
+       :panel => "198x130" },
     :storage => :s3,
     :s3_credentials => s3_credential_file,
     :path => ":attachment/:id/:style/:filename"
