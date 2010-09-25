@@ -1,9 +1,6 @@
 - content_for :header do 
   = javascript_include_tag('lib/conversations/show')
 
-- content_for :document_ready do
-  $(".tab-strip").easyTabs({tabActiveClass: 'tab-active'});
-
 - content_for :main do
   #show_conversation
     %h1= @conversation.title
