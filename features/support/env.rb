@@ -17,14 +17,18 @@ require 'capybara/cucumber'
 require 'capybara/session'
 require 'cucumber/rails/capybara_javascript_emulation' # Lets you click links with onclick javascript handlers without using @culerity or @javascript
 
-
-After("@api") do |s|
+def cleanup_shadow_accounts
   person = PeopleAggregator::Person.find_by_email("joe@test.com")
-  person.destroy if person
+  person.destroy($encrypted_passwords['joe@test.com']) if person
   person = PeopleAggregator::Person.find_by_email("joe@duplicate.com")
-  person.destroy if person
+  person.destroy('abcd1234') if person
 end
 
+After("@api") do |s|
+  cleanup_shadow_accounts
+end
+
+$encrypted_passwords = Hash.new
 
 Capybara.default_selector = :css
 
