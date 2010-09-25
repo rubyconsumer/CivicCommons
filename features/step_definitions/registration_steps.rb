@@ -61,5 +61,8 @@ Then /^a People Aggregator shadow account should be created$/ do
 end
 
 
-
+Given /^a registered user:$/ do |table|
+  # table is a Cucumber::Ast::Table
+  pending # express the regexp above with the code you wish you had
+end
 
