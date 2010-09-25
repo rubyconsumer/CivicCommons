@@ -1,0 +1,17 @@
+var widget = function() {
+  var domain = "<%=request.domain%>";
+  var link;
+
+  var self = {};
+  self.init = function(){
+    link = $("#CivicCommonsWidgit");
+    link.attr("href", "http://" + domain + "/widget/");
+    var url = "http://" + domain + "/images/cc_thumb.jpg";
+    url = "/images/cc_thumb.jpg";
+    link.append($("<img>", {"src":url}));
+  };
+  return self;
+
+}();
+$(widget.init);
+

@@ -42,7 +42,7 @@ Civiccommons::Application.routes.draw do
   match '/mockups_index', :to => 'mockups#index', :as => 'mockups_index'
 
   match '/mockups', :to => 'mockups#frameset', :as => 'mockups'
-
+  match '/widget', :to => "widget#index"
 
   resources :people
 
