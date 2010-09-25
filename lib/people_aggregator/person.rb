@@ -28,15 +28,18 @@ class PeopleAggregator::Person
   end
 
 
-  def destroy
+  def destroy(password)
     @attrs.merge!(adminPassword: "admin")
     r = self.class.post('/deleteUser', body: { adminPassword: @attrs[:adminPassword],
                                                login: self.login,
-                                               password: self.password })
+                                               password: password})
 
     self.class.log_people_aggregator_response r
 
     case r.code
+    when 412
+      missing_key = r.parsed_response['msg'][/key (.*) is required/, 1]
+      raise ArgumentError, 'The key "%s" is required.' % missing_key
     when 404
       login_name = r.parsed_response['msg'][/Login name (.*) is already taken/, 1]
       raise StandardError, 'The user with login "%s" doesn\'t exist.' % login_name
