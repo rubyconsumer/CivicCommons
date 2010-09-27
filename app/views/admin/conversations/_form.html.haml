@@ -39,7 +39,7 @@
   %p
     =conversation.label :moderator_id, "Moderator"
     %br
-    =conversation.collection_select :moderator_id, Person.all, :id, :full_name, :prompt => true
+    =conversation.collection_select :moderator_id, Person.all, :id, :name, :prompt => true
 
   %p
     =conversation.label :zip_code, "Enter Zip Code"
