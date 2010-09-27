@@ -62,7 +62,13 @@ end
 
 
 Given /^a registered user:$/ do |table|
-  # table is a Cucumber::Ast::Table
-  pending # express the regexp above with the code you wish you had
+  user = table.rows_hash
+
+  Factory.create(:registered_user,
+                 first_name:  user['First Name'],
+                 last_name:   user['Last Name'],
+                 email:       user['Email'],
+                 zip_code:    user['Zip'],
+                 password:    user['Password'])
 end
 
