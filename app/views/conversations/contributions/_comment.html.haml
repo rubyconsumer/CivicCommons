@@ -15,7 +15,7 @@
             %strong= 'An unknown person'
           - tmp = format_time(contribution.datetime)
           %span.action commented at #{link_to(tmp, contribution_path(contribution))}
-        %p.content= contribution.content
+        %p.content= auto_link(contribution.content)
         %div.action-bar
           - if person_signed_in?
             %a.rating.float-right(href="#" title="Rate this contribution")=format_rating(contribution)

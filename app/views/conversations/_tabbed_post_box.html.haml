@@ -1,22 +1,22 @@
 %div{:id => div_id, :class => "tab-strip"}
   .tab-area.input-with-options
     %div{:id => "#{div_id}-options", :class => 'tab-strip-options'}
+      %a{:href => "#", :class => 'button blue float-right', :onclick => "javascript: alert(\"This isn\'t hooked up yet\"); return false;"} Write Contribution
       %ul
         %li#default-tab
           %a{:href => "##{div_id}-options", :style => 'display: none;'}
         %li
           %a{:href => "##{div_id}-new-comment", :title => "Add Comment", :id => "comment_tab", :class => 'button'} Comment
         %li
-          %a{:href => "##{div_id}-new-question", :title => "Ask a Question", :id => "question_tab", :class => 'button'} Question
+          %a{:href => "##{div_id}-new-suggested-action", :title => "Suggest an Action", :id => "suggested_action_tab", :class => 'button'} Suggest Action
+        %li
+          %a{:href => "##{div_id}-new-question", :title => "Ask a Question", :id => "question_tab", :class => 'button'} Ask Question
         %li
           %a{:href => "##{div_id}-new-file", :title => "Upload a File", :id => "image_tab", :class => 'button'} Image/File
         %li
           %a{:href => "##{div_id}-new-link", :title => "Post a Link", :id => "link_tab", :class => 'button'} Link
         %li
           %a{:href => "##{div_id}-new-video", :title => "Post a Video", :id => "video_tab", :class => 'button'} Video
-        %li
-          %a{:href => "##{div_id}-new-suggested-action", :title => "Suggest an Action", :id => "suggested_action_tab", :class => 'button'} Suggest Action
-      
     %div{:id => "#{div_id}-new-comment" }
       %div.contribution-form-headline
         %span.contribution-form-cancel.float-right

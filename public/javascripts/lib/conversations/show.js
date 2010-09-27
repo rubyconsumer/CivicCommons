@@ -5,11 +5,11 @@ jQuery(function ($) {
           parentButton = el.parents('.top-level-contribution').find('.show-conversation-button');
           
       if( /^[^\d]+$/.test(parentButton.data('origText')) ){ // if origText does not contain a number (most likely says something like "Be the first to respond", but we'll be flexible)
-        parentButton.data('origText',"View conversation (0)");
+        parentButton.data('origText',"0 Response");
       }
       integers = parentButton.data('origText').match(/(\d+)/g);
       $.each(integers, function(){
-        incrementedText = parentButton.data('origText').replace(this,parseInt(this)+1);
+        incrementedText = parentButton.data('origText').replace(this,parseInt(this)+1).replace(/Response$/, 'Responses');
       });
       parentButton.data('origText', incrementedText);
       
@@ -40,9 +40,9 @@ jQuery(function ($) {
   	  .live("ajax:loading", function(){
   	    var href = $(this).attr("href");
   	    $(this).data('origText', $(this).text())
-  	    $(this).data('cancelText', href.match(/\/conversations\/node_conversation/) ? 'Hide conversation' : 'Cancel')
+  	    $(this).data('cancelText', href.match(/\/conversations\/node_conversation/) ? 'Hide responses' : 'Cancel')
   	    
-  	    var label = href.match(/\/conversations\/node_conversation/) ? "Getting conversation..." : "Loading...";
+  	    var label = href.match(/\/conversations\/node_conversation/) ? "Loading responses..." : "Loading...";
   	    $(this).text(label);
   	  })
   	  .live("ajax:complete", function(evt, xhr){

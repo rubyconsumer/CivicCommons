@@ -12,7 +12,7 @@
       - else
         %span.action asked a question to:
         %a.question_recipient(href="#" title="Frank Jackson's Profile")=contribution.askee.name             
-    %p.content= contribution.content
+    %p.content= auto_link(contribution.content)
     %div.action-bar
       - if person_signed_in?
         %a.rating.float-right(href="#" title="Rate this contribution")=format_rating(contribution)
