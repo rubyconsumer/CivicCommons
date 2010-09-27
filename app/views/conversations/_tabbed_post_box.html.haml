@@ -1,24 +1,27 @@
 %div{:id => div_id, :class => "tab-strip"}
-  %ul
-    %li.default-tab
-      %a{:href => "##{div_id}-options", :style => 'display: none;'}
-    %li
-      %a{:href => "##{div_id}-new-comment", :title => "Add Comment", :id => "comment_tab"} Comment
-    %li
-      %a{:href => "##{div_id}-new-question", :title => "Ask a Question", :id => "question_tab"} Question
-    %li
-      %a{:href => "##{div_id}-new-file", :title => "Upload a File", :id => "image_tab"} Image/File
-    %li
-      %a{:href => "##{div_id}-new-link", :title => "Post a Link", :id => "link_tab"} Link
-    %li
-      %a{:href => "##{div_id}-new-video", :title => "Post a Video", :id => "video_tab"} Video
-    %li
-      %a{:href => "##{div_id}-new-suggested-action", :title => "Suggest an Action", :id => "suggested_action_tab"} Suggest Action
-      
   .tab-area.input-with-options
-    %div{:id => "#{div_id}-options"}
+    %div{:id => "#{div_id}-options", :class => 'tab-strip-options'}
+      %ul
+        %li#default-tab
+          %a{:href => "##{div_id}-options", :style => 'display: none;'}
+        %li
+          %a{:href => "##{div_id}-new-comment", :title => "Add Comment", :id => "comment_tab", :class => 'button'} Comment
+        %li
+          %a{:href => "##{div_id}-new-question", :title => "Ask a Question", :id => "question_tab", :class => 'button'} Question
+        %li
+          %a{:href => "##{div_id}-new-file", :title => "Upload a File", :id => "image_tab", :class => 'button'} Image/File
+        %li
+          %a{:href => "##{div_id}-new-link", :title => "Post a Link", :id => "link_tab", :class => 'button'} Link
+        %li
+          %a{:href => "##{div_id}-new-video", :title => "Post a Video", :id => "video_tab", :class => 'button'} Video
+        %li
+          %a{:href => "##{div_id}-new-suggested-action", :title => "Suggest an Action", :id => "suggested_action_tab", :class => 'button'} Suggest Action
       
     %div{:id => "#{div_id}-new-comment" }
+      %div.contribution-form-headline
+        %span.contribution-form-cancel.float-right
+          %a{:href => "##{div_id}-options"} Cancel
+        %h3 Leave a Comment
       = form_for @contribution, :url => "create_node_contribution", :remote => true do |f|
         = f.hidden_field(:conversation_id, :value => conversation_id)
         - if defined?(contribution_id)
@@ -28,6 +31,10 @@
         %div.errors
         = f.submit("Submit")
     %div{:id => "#{div_id}-new-question" }
+      %div.contribution-form-headline
+        %span.contribution-form-cancel.float-right
+          %a{:href => "##{div_id}-options"} Cancel
+        %h3 Ask a Question
       = form_for @contribution, :url => "create_node_contribution", :remote => true do |f|
         = f.hidden_field(:conversation_id, :value => conversation_id)
         - if defined?(contribution_id)
@@ -42,6 +49,10 @@
         %div.errors
         = f.submit("Submit")
     %div{:id => "#{div_id}-new-file" }
+      %div.contribution-form-headline
+        %span.contribution-form-cancel.float-right
+          %a{:href => "##{div_id}-options"} Cancel
+        %h3 Upload a File or Image
       = form_for @contribution, :url => "create_node_contribution", :remote => true do |f|
         = f.hidden_field(:conversation_id, :value => conversation_id)
         - if defined?(contribution_id)
@@ -54,6 +65,10 @@
         %div.errors
         = f.submit("Submit")
     %div{:id => "#{div_id}-new-link" }
+      %div.contribution-form-headline
+        %span.contribution-form-cancel.float-right
+          %a{:href => "##{div_id}-options"} Cancel
+        %h3 Share a Link
       = form_for @contribution, :url => "create_node_contribution", :remote => true do |f|
         = f.hidden_field(:conversation_id, :value => conversation_id)
         - if defined?(contribution_id)
@@ -66,6 +81,10 @@
         %div.errors
         = f.submit("Submit")
     %div{:id => "#{div_id}-new-video" }
+      %div.contribution-form-headline
+        %span.contribution-form-cancel.float-right
+          %a{:href => "##{div_id}-options"} Cancel
+        %h3 Share a Video
       = form_for @contribution, :url => "create_node_contribution", :remote => true do |f|
         = f.hidden_field(:conversation_id, :value => conversation_id)
         - if defined?(contribution_id)
@@ -79,6 +98,10 @@
         %div.errors
         = f.submit("Submit")
     %div{:id => "#{div_id}-new-suggested-action" }
+      %div.contribution-form-headline
+        %span.contribution-form-cancel.float-right
+          %a{:href => "##{div_id}-options"} Cancel
+        %h3 Suggest an Action
       = form_for @contribution, :url => "create_node_contribution", :remote => true do |f|
         = f.hidden_field(:conversation_id, :value => conversation_id)
         - if defined?(contribution_id)

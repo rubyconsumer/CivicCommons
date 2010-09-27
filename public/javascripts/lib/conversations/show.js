@@ -52,7 +52,7 @@ jQuery(function ($) {
   	  .live("ajax:complete", function(evt, xhr){
   	    var clicked = this;
   	        target = this.getAttribute("data-target");
-  	        tabStrip = target+" > .tab-strip";
+  	        tabStrip = target+" .tab-strip";
   	        form = tabStrip+" form";
   	        errorDiv = form+" > .errors";
   	    
@@ -61,7 +61,7 @@ jQuery(function ($) {
   	    
   	    $(clicked).text($(clicked).data('cancelText'));
         $(target).hide().html(xhr.responseText).slideDown(); // insert content
-        $(tabStrip).easyTabs({tabActiveClass: 'tab-active', tabActivePanel: 'panel-active'});
+        $(tabStrip).easyTabs({tabActiveClass: 'tab-active', tabActivePanel: 'panel-active', tabs: '> .tab-area > .tab-strip-options > ul > li'});
         $(form)
           .bind("ajax:loading", function(){
             $(tabStrip).mask("Loading...");

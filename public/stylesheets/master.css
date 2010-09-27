@@ -183,6 +183,9 @@ p.topic-count {float: left;}
 p.topic-selection {float: right;}
 p.topic-selection a {margin-left: 1em;}
 
+.float-right{ float: right; }
+.float-left{ float: left; }
+
 /*-----------------------------------------------
 =Offset List Styles
 -----------------------------------------------*/
@@ -340,10 +343,12 @@ width: 340px;
 .link-title {  }
 .link-url { font-size: .8em; }
 .link-quote { font-style: italic; font-size: .9em; }
+/*
 .article ul {
 background: url(/images/event-icon.png) no-repeat;
 padding-left: 40px;
 }
+*/
 li.event-meta {
 font-weight: bold;
 text-transform: uppercase;
@@ -509,15 +514,29 @@ width: 100%;
 =Single Conversation Page Styles
 -----------------------------------------------*/
 
+.action-bar {
+  background: #666;
+  margin-left: 110px;
+  padding: 5px 10px;
+}
+.action-bar a {
+  color: #fff;
+}
+ul.thread-list {
+  margin-left: 110px;
+}
+
 /* Tabs */
+.tab-strip {
+  margin: 10px 0;
+}
 div.tab-strip ul {
 list-style-type: none;
-margin-bottom: 0;
-margin-left: 0;
+margin: 0;
 }
 div.tab-strip ul li {
 float: left;
-margin-bottom: -1px;
+margin: 0 5px 0 0;
 text-align: center;
 }
 div.tab-strip ul li a {
@@ -525,16 +544,21 @@ display: block;
 padding: 5px 9px;
 text-decoration: none;
 }
-div.tab-area, div.tab-strip ul li a.tab-active {
-background-color: #fff;
-border: 1px solid #ccc;
+.tab-area h3 {
+  margin: 0;
+  padding: 0;
+  border: none;
 }
-div.tab-strip ul li a.tab-active {border-bottom: none;}
-textarea.comment_text {
-width: 97%;
-margin-bottom: 8px;
-border: 0;
+.contribution-form-headline {
+  padding: 5px 5px 0 0;
+  margin: 0;
 }
+.tab-area textarea {
+  margin: 0;
+  padding: 9px;
+  width: 97%;
+}
+
 p.convo-meta {margin-bottom: 2em;}
 
 /* Conversation Divider */

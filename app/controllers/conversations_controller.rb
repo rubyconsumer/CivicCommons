@@ -32,8 +32,9 @@ class ConversationsController < ApplicationController
   end
   
   def node_conversation
-    @contribution = Contribution.includes({:children => :person}).find(params[:id])
-    @contribution.visit!((current_person.nil? ? nil : current_person.id))
+    @top_level_contribution = Contribution.includes({:children => :person}).find(params[:id])
+    @top_level_contribution.visit!((current_person.nil? ? nil : current_person.id))
+    @contribution = Contribution.new
     
     respond_to do |format|
       format.js { render :partial => "conversations/node_conversation", :layout => false}
