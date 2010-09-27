@@ -1,0 +1,3 @@
+module PeopleAggregator
+
+end

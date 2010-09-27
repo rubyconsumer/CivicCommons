@@ -9,7 +9,7 @@
   %tbody
     -@people.each do |person|
       %tr
-        %td=link_to person.full_name, admin_person_path(person)
+        %td=link_to person.name, admin_person_path(person)
         %td=person.validated?
         %td=person.admin?
         %td=person.proxy?

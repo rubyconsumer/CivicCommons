@@ -86,7 +86,7 @@ ohio_politics_issue = Issue.find_by_name("Ohio Politics")
 
 
 def ingest(conversation, ingest_text_file_name)
-  base_path = ENV['TRANSCRIPTS_PATH'] || File.expand_path("~/Dropbox/Civic Commons/db")
+  base_path = ENV['TRANSCRIPTS_PATH'] || File.expand_path("~/Dropbox/Civic Commons/data/transcripts")
   full_path = File.join(base_path, ingest_text_file_name)
   IngestPresenter.new(conversation, File.open(full_path)).save!
 end
@@ -102,6 +102,8 @@ conversation.issues << ohio_politics_issue
 
 ingest(conversation, "john_king.txt")
 
+
+
 lethal_convo = Conversation.create!(:moderator => admin_person,
                                     :title => "Conversation regarding Lethal Injection",
                                     :summary => "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin at velit lacus, vel lobortis quam. Duis eget odio lacus. Quisque ac.",
@@ -113,28 +115,31 @@ lethal_convo.issues << ohio_politics_issue
 ingest(lethal_convo, "lethal_injection.txt")
 
 
-oreilly_convo = Conversation.create!(:moderator => admin_person,
-                                     :title => "Oreilly Factor - Ohio Gubernatorial Race",
-                                     :summary => "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin at velit lacus, vel lobortis quam. Duis eget odio lacus. Quisque ac.",
-                                     :started_at => 3.days.ago,
-                                     :finished_at => 3.days.ago + 1.hours,
-                                     :zip_code => 44301)
-oreilly_convo.issues << Issue.find_by_name("Ohio Unemployment")
-oreilly_convo.issues << Issue.find_by_name("Ohio Gubernatorial Election")
-oreilly_convo.issues << ohio_politics_issue
-
-ingest(oreilly_convo, "oreilly_factor.txt")
-
-ed_show_convo = Conversation.create!(:moderator => admin_person,
-                                     :title => "Ed Show - Immigration Reform",
-                                     :summary => "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin at velit lacus, vel lobortis quam. Duis eget odio lacus. Quisque ac.",
-                                     :started_at => 3.days.ago,
-                                     :finished_at => 3.days.ago + 1.hours,
-                                     :zip_code => 44301)
-ed_show_convo.issues << Issue.find_by_name("Immigration Reform")
-ed_show_convo.issues << ohio_politics_issue
-
-ingest(ed_show_convo, "transcript.txt")
+# 
+# oreilly_convo = Conversation.create!(:moderator => admin_person,
+#                                      :title => "Oreilly Factor - Ohio Gubernatorial Race",
+#                                      :summary => "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin at velit lacus, vel lobortis quam. Duis eget odio lacus. Quisque ac.",
+#                                      :started_at => 3.days.ago,
+#                                      :finished_at => 3.days.ago + 1.hours,
+#                                      :zip_code => 44301)
+# oreilly_convo.issues << Issue.find_by_name("Ohio Unemployment")
+# oreilly_convo.issues << Issue.find_by_name("Ohio Gubernatorial Election")
+# oreilly_convo.issues << ohio_politics_issue
+# 
+# ingest(oreilly_convo, "oreilly_factor.txt")
+# 
+# 
+# 
+# ed_show_convo = Conversation.create!(:moderator => admin_person,
+#                                      :title => "Ed Show - Immigration Reform",
+#                                      :summary => "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin at velit lacus, vel lobortis quam. Duis eget odio lacus. Quisque ac.",
+#                                      :started_at => 3.days.ago,
+#                                      :finished_at => 3.days.ago + 1.hours,
+#                                      :zip_code => 44301)
+# ed_show_convo.issues << Issue.find_by_name("Immigration Reform")
+# ed_show_convo.issues << ohio_politics_issue
+# 
+# ingest(ed_show_convo, "transcript.txt")
 
 
 
@@ -171,7 +176,8 @@ Issue.all.each_with_index do |issue, index|
     contributions.times do
       TopLevelContribution.create!(:person => person,
                                    :issue => issue,
-                                   :content => lorems[rand(lorems.size)])
+                                   :content => lorems[rand(lorems.size)],
+                                   :conversation => Conversation.all.sort_by{ rand }.first)
     end
   end
 end

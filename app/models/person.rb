@@ -17,7 +17,6 @@ class Person < ActiveRecord::Base
   has_many :contributed_conversations, :through => :contributions, :source => :conversation
 
   validate :zip_code, :length => 10
-  validates_numericality_of :top, :allow_nil => true
 
 
   scope :participants_of_issue, lambda{ |issue|
@@ -35,13 +34,8 @@ class Person < ActiveRecord::Base
     self.first_name, self.last_name = self.class.parse_name(value)
   end
 
-
   def name
-    @name ||= "%s %s" % [self.first_name, self.last_name]
-  end
-  
-  def full_name
-    first_name.capitalize + " " + last_name.capitalize
+    @name ||= ("%s %s" % [self.first_name, self.last_name]).titlecase.strip
   end
 
   def self.find_all_by_name(name)
