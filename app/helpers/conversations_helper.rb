@@ -20,6 +20,7 @@ module ConversationsHelper
   #  so we don't want to poll the database for each subset when we've already loaded the entire set once.
   def display_direct_descendant_subset(root_contribution_and_descendants, this_contribution_id)
     out = ""
+    return out unless root_contribution_and_descendants
     root_contribution_and_descendants.descendants.select{ |c| c.parent_id == this_contribution_id }.sort_by{ |c| c.created_at }.each do |contribution|
       out += render(:partial => "conversations/contributions/#{contribution.type.underscore}", :locals => { :contribution => contribution })
     end

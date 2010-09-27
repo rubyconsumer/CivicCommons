@@ -23,7 +23,7 @@ class ConversationsController < ApplicationController
     @top_level_contributions = TopLevelContribution.where(:conversation_id => @conversation.id).includes([:person]).order('created_at ASC')
     # grab all direct contributions to conversation that aren't TLC
     @contributions = Contribution.not_top_level.without_parent.where(:conversation_id => @conversation.id).includes([:person]).order('created_at ASC')
-    @contribution = Contribution.new # for conversation comment form
+    @top_level_contribution = Contribution.new # for conversation comment form
 
     respond_to do |format|
       format.html # show.html.erb

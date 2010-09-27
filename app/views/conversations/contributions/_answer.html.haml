@@ -21,6 +21,6 @@
             %a.rating.float-right(href="#" title="Rate this contribution")=format_rating(contribution)
             = link_to("Respond", {:action => "new_node_contribution", :contribution_id => contribution.id, :id => contribution.conversation_id, :div_id => "contribution-#{contribution.id}"}, :class => "text conversation-action", :id => "action-link-#{contribution.id}", :title => "Leave a comment here", 'data-target' => "#action-div-#{contribution.id}", :remote => true)
         %div{:clear => 'both'}
-        %ul
+        %ul.thread-list
           .answer-contribution-action(id="action-div-#{contribution.id}")
-          = display_direct_descendant_subset(@contribution, contribution.id)
+          = display_direct_descendant_subset(@top_level_contribution, contribution.id)

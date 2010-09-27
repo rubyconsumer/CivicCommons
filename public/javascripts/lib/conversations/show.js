@@ -1,22 +1,18 @@
 jQuery(function ($) {
   $.fn.extend({
-    updateButtonText: function(){
+    updateConversationButtonText: function(){
       var el = this;
-      if(el.data('origText')!='Respond'){
-        if( /^[^\d]+$/.test(el.data('origText')) ){ // if origText does not contain a number (most likely says something like "Be the first to respond", but we'll be flexible)
-          el.data('origText',"View conversation (0)");
-        }
-        var integers = el.data('origText').match(/(\d+)/g);
-        $.each(integers, function(){
-          incrementedText = el.data('origText').replace(this,parseInt(this)+1);
-        });
-        el.data('origText', incrementedText);
+          parentButton = el.parents('.top-level-contribution').find('.show-conversation-button');
+          
+      if( /^[^\d]+$/.test(parentButton.data('origText')) ){ // if origText does not contain a number (most likely says something like "Be the first to respond", but we'll be flexible)
+        parentButton.data('origText',"View conversation (0)");
       }
-      if( /^[^\d]+$/.test(el.data('origText')) ){
-        el.text(el.data('origText'));
-      }else{
-        el.text('Respond');
-      }
+      integers = parentButton.data('origText').match(/(\d+)/g);
+      $.each(integers, function(){
+        incrementedText = parentButton.data('origText').replace(this,parseInt(this)+1);
+      });
+      parentButton.data('origText', incrementedText);
+      
       return el;
     },
     
@@ -70,10 +66,10 @@ jQuery(function ($) {
             $(tabStrip).unmask();
           })
           .bind("ajax:success", function(evt, data, status, xhr){
-            $(clicked).updateButtonText().unbind('click'); // only unbinds the click function that attaches the toggle, since all the other events are indirectly attached through .live()
-            $(target).empty();
-            var responseNode = $(xhr.responseText)
-            $(target).parent().append(responseNode);
+            $(clicked).updateConversationButtonText().filter(':not(.show-conversation-button)').unbind('click'); // only unbinds the click function that attaches the toggle, since all the other events are indirectly attached through .live()
+            var responseNode = $(xhr.responseText);
+            $(this).closest('ul.thread-list').append(responseNode);
+            $(this).parents('.tab-strip').parent().empty();
             responseNode.scrollTo();
           })
           .bind("ajax:failure", function(evt, xhr, status, error){

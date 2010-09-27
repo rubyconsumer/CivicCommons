@@ -278,7 +278,7 @@ display: inline-block;
 font-size: .857em;
 font-weight: bold;
 line-height: 1.4;
-margin-right: 10px;
+margin: 10px 10px 10px 0;
 padding: 4px 10px;
 text-align: center;
 text-decoration: none;
@@ -523,12 +523,12 @@ width: 100%;
   color: #fff;
 }
 ul.thread-list {
-  margin-left: 110px;
+  margin-left: 80px;
 }
 
 /* Tabs */
 .tab-strip {
-  margin: 10px 0;
+
 }
 div.tab-strip ul {
 list-style-type: none;
@@ -536,7 +536,6 @@ margin: 0;
 }
 div.tab-strip ul li {
 float: left;
-margin: 0 5px 0 0;
 text-align: center;
 }
 div.tab-strip ul li a {
