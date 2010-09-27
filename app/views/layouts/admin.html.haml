@@ -2,6 +2,7 @@
 %html
   %head
     =javascript_include_tag 'vendor/jquery-1.4.2.min'
+    =javascript_include_tag 'lib/rails'
     =javascript_include_tag 'lib/master'
     =javascript_include_tag 'lib/youtube'
     =stylesheet_link_tag 'admin.css'
@@ -11,9 +12,10 @@
       .wrapper
         %h1
           =link_to "Civic Commons Admin", admin_root_path
+        = csrf_meta_tag
     -if flash[:notice]
       .flash-notice
-        =flash[:notice]      
+        =flash[:notice]
     .wrapper
       .nav
         %ul
