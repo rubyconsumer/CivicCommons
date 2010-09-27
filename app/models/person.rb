@@ -17,7 +17,6 @@ class Person < ActiveRecord::Base
   has_many :contributed_conversations, :through => :contributions, :source => :conversation
 
   validate :zip_code, :length => 10
-  validates_numericality_of :top, :allow_nil => true
 
 
   scope :participants_of_issue, lambda{ |issue|

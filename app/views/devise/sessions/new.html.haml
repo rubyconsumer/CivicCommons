@@ -2,9 +2,9 @@
   .header
     %h1 Login
     %p
-      - surround "If you don’t have an account, you should ", " first." do
+      = surround "If you don’t have an account, you should ", " first." do
         = link_to "register", new_person_registration_path
-  - form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
+  = form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
     %fieldset.form-group
       .form-block
         = f.label :email, 'Email:'
