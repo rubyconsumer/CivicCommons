@@ -1,6 +1,18 @@
+require 'ostruct'
+
 unless defined?(Rails)
+  require 'active_support/concern'
   require 'people_aggregator'
+
   module PeopleAggregator::Connector
+    extend ActiveSupport::Concern
+
+    module ClassMethods
+      def base_uri(uri)
+      end
+      def log_people_aggregator_response(r)
+      end
+    end
   end
 
   require 'people_aggregator/person'
@@ -11,7 +23,9 @@ describe PeopleAggregator::Person do
 
 
   before do
-    Person.stub!(:post).and_return({"success"=>true, "login"=>"joe@test.com", "id"=>"user:14", "url"=>"http://civiccommons.digitalcitymechanics.com/user/14", "name"=>" ", "profile"=>{"basic"=>{"first_name"=>"Joe", "last_name"=>"Fiorini"}, "general"=>[], "personal"=>[], "professional"=>[]}})
+    response = OpenStruct.new(parsed_response: {"success"=>true, "login"=>"joe@test.com", "id"=>"user:14", "url"=>"http://civiccommons.digitalcitymechanics.com/user/14", "name"=>" ", "profile"=>{"basic"=>{"first_name"=>"Joe", "last_name"=>"Fiorini"}, "general"=>[], "personal"=>[], "professional"=>[]}}, code: 100)
+    Person.stub!(:post).and_return(response)
+    Person.stub!(:get).and_return(response)
   end
 
 
@@ -28,10 +42,12 @@ describe PeopleAggregator::Person do
 
 
   specify "can save a person instance to People Aggregator" do
-    Person.should_receive(:post).with(anything, firstName: "Joe",
+    Person.should_receive(:post).with(anything,
+                                      body: {
+                                      firstName: "Joe",
                                       lastName: "Test",
-                                      adminPassword: "default",
-                                      login: "joe@test.com")
+                                      adminPassword: "admin",
+                                      login: "joe@test.com"})
     Person.new(firstName: "Joe", lastName: "Test", login: "joe@test.com").
       save
   end
