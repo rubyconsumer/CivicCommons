@@ -15,6 +15,9 @@
       .form-block
         = f.label :zipcode, 'Zip Code:'
         = f.text_field :zip_code, :placeholder => '44101-9999', :class => "textbox ", :maxlength => 10
+      .form-block
+        = f.label :avatar, 'Upload an Image:'
+        = f.file_field :avatar, :class => "textbox"  
     %fieldset.form-group
       .form-block
         = f.label :password, 'Password:'
