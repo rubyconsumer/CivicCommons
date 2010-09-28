@@ -53,7 +53,7 @@
         %span.contribution-form-cancel.float-right
           %a{:href => "##{div_id}-options"} Cancel
         %h3 Upload a File or Image
-      = form_for @contribution, :url => "create_node_contribution", :remote => true do |f|
+      = form_for @contribution, :url => "create_node_contribution.js", :remote => true, :html => { :multipart => true } do |f|
         = f.hidden_field(:conversation_id, :value => conversation_id)
         - if defined?(contribution_id)
           = f.hidden_field(:parent_id, :value => contribution_id)
@@ -61,7 +61,7 @@
         = f.text_area(:content, :rows => "3", :placeholder => "Comment on file...")
         %label
           Upload a file:
-          = f.text_field(:attachment, :type => "file")
+          = f.file_field(:attachment)
         %div.errors
         = f.submit("Submit")
     %div{:id => "#{div_id}-new-link" }

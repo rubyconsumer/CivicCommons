@@ -129,6 +129,7 @@ GEM
       thor (~> 0.14.0)
     rake (0.8.7)
     rb-appscript (0.5.3)
+    remotipart (0.1.1)
     rest-client (1.6.1)
       mime-types (>= 1.16)
     rspec (2.0.0.beta.20)
@@ -194,6 +195,7 @@ DEPENDENCIES
   rails (= 3.0.0)
   rails3-generators
   rb-appscript
+  remotipart
   rspec-rails (>= 2.0.0.beta.10)
   ruby_parser
   safariwatir

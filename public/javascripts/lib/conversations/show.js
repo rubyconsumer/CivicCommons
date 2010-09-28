@@ -67,7 +67,8 @@ jQuery(function ($) {
           })
           .bind("ajax:success", function(evt, data, status, xhr){
             $(clicked).updateConversationButtonText().filter(':not(.show-conversation-button)').unbind('click'); // only unbinds the click function that attaches the toggle, since all the other events are indirectly attached through .live()
-            var responseNode = $(xhr.responseText);
+            //var responseNode = $(xhr.responseText);
+            var responseNode = $($("<div />").html(xhr.responseText).text()); // this is needed to properly unescape the HTML returned from doing the jquery.form plugin's ajaxSubmit for some reason
             $(this).closest('ul.thread-list').append(responseNode);
             $(this).parents('.tab-strip').parent().empty();
             responseNode.scrollTo();
