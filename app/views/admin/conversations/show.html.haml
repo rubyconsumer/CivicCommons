@@ -11,15 +11,21 @@
   %section 
     %header
       %h2 Top Node/Contributions:
-    - @conversation.top_level_contributions.each do |c|
+    -@conversation.top_level_contributions.each do |c|
       = c.person.name + ":"
       %br
       = c.content
       %hr
   %footer
     %p= "This conversation was started at: #{@conversation.created_at}"
+    %p
+      Related Issues:
+      %ul
+        - @conversation.issues.each do |issue|
+          %li= issue.name
     
-  
+    
+%br  
 =link_to "Back", admin_conversations_path
 |
 =link_to "Edit", edit_admin_conversation_path(@conversation)
