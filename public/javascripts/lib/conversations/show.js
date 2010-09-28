@@ -5,11 +5,11 @@ jQuery(function ($) {
           parentButton = el.parents('.top-level-contribution').find('.show-conversation-button');
           
       if( /^[^\d]+$/.test(parentButton.data('origText')) ){ // if origText does not contain a number (most likely says something like "Be the first to respond", but we'll be flexible)
-        parentButton.data('origText',"View conversation (0)");
+        parentButton.data('origText',"0 Response");
       }
       integers = parentButton.data('origText').match(/(\d+)/g);
       $.each(integers, function(){
-        incrementedText = parentButton.data('origText').replace(this,parseInt(this)+1);
+        incrementedText = parentButton.data('origText').replace(this,parseInt(this)+1).replace(/Response$/, 'Responses');
       });
       parentButton.data('origText', incrementedText);
       
@@ -17,7 +17,7 @@ jQuery(function ($) {
     },
     
     scrollTo: function(){
-      var top = this.offset().top - 100; // 100px top padding in viewport
+      var top = this.offset().top - 200; // 100px top padding in viewport
       $('html,body').animate({scrollTop: top}, 1000);
       return this;
     }
@@ -40,9 +40,9 @@ jQuery(function ($) {
   	  .live("ajax:loading", function(){
   	    var href = $(this).attr("href");
   	    $(this).data('origText', $(this).text())
-  	    $(this).data('cancelText', href.match(/\/conversations\/node_conversation/) ? 'Hide conversation' : 'Cancel')
+  	    $(this).data('cancelText', href.match(/\/conversations\/node_conversation/) ? 'Hide responses' : 'Cancel')
   	    
-  	    var label = href.match(/\/conversations\/node_conversation/) ? "Getting conversation..." : "Loading...";
+  	    var label = href.match(/\/conversations\/node_conversation/) ? "Loading responses..." : "Loading...";
   	    $(this).text(label);
   	  })
   	  .live("ajax:complete", function(evt, xhr){
@@ -50,14 +50,19 @@ jQuery(function ($) {
   	        target = this.getAttribute("data-target");
   	        tabStrip = target+" .tab-strip";
   	        form = tabStrip+" form";
-  	        errorDiv = form+" > .errors";
+  	        animationSpeed = 250;
   	    
   	    // turn button into a toggle to hide/show what gets loaded so that subsequent clicks to redo the ajax call
   	    $(clicked).click(actionToggle(clicked,target,$(clicked).data('cancelText')));
   	    
   	    $(clicked).text($(clicked).data('cancelText'));
         $(target).hide().html(xhr.responseText).slideDown(); // insert content
-        $(tabStrip).easyTabs({tabActiveClass: 'tab-active', tabActivePanel: 'panel-active', tabs: '> .tab-area > .tab-strip-options > ul > li'});
+        $(tabStrip).easyTabs({
+          tabActiveClass: 'tab-active',
+          tabActivePanel: 'panel-active',
+          tabs: '> .tab-area > .tab-strip-options > ul > li',
+          animationSpeed: animationSpeed
+        });
         $(form)
           .bind("ajax:loading", function(){
             $(tabStrip).mask("Loading...");
@@ -66,11 +71,32 @@ jQuery(function ($) {
             $(tabStrip).unmask();
           })
           .bind("ajax:success", function(evt, data, status, xhr){
-            $(clicked).updateConversationButtonText().filter(':not(.show-conversation-button)').unbind('click'); // only unbinds the click function that attaches the toggle, since all the other events are indirectly attached through .live()
-            var responseNode = $(xhr.responseText);
+            // apparently there is no way to inspect the HTTP status returned when submitting via iframe (which happens for AJAX file/image uploads)
+            //  so, if file/image uploads via this form will always trigger ajax:success even if action returned error status code.
+            //  But for this action, successes always return HTML and failures return JSON of the error messages, so we'll test if response is JSON and trigger failure if so
+            try{
+              $.parseJSON(data); // throws error if data is not JSON
+              return $(this).trigger('ajax:complete').trigger('ajax:failure', xhr, status, data); // only gets to here if JSON parsing was successful, meaning data is error messages
+            }catch(err){
+              // do nothing
+            }
+            $(clicked).updateConversationButtonText();
+            try{
+              var responseNode = $(xhr.responseText);
+            }catch(err){
+              var responseNode = $($("<div />").html(xhr.responseText).text()); // this is needed to properly unescape the HTML returned from doing the jquery.form plugin's ajaxSubmit for some reason
+            }
             $(this).closest('ul.thread-list').append(responseNode);
-            $(this).parents('.tab-strip').parent().empty();
-            responseNode.scrollTo();
+            
+            if($(clicked).hasClass('show-conversation-button')){
+              $(this).find('textarea,input[type="text"],input[type="file"]').val('');
+              $(this).find('.errors').html('');
+              window.location.hash = $(this).find('a.cancel').attr('href');
+            }else{
+              $(clicked).text($(clicked).data('origText')).unbind('click'); // only unbinds the click function that attaches the toggle, since all the other events are indirectly attached through .live()
+              $(this).parents('.tab-strip').parent().empty();
+            }
+            setTimeout(function(){ responseNode.scrollTo(); }, animationSpeed);
           })
           .bind("ajax:failure", function(evt, xhr, status, error){
             var errors = $.parseJSON(xhr.responseText);
@@ -78,7 +104,7 @@ jQuery(function ($) {
             for(error in errors){
               errorString += [error] + " " + errors[error] + "\n";
             }
-            $(errorDiv).html(errorString);
+            $(this).find(".errors").html(errorString);
           });
       });
   	

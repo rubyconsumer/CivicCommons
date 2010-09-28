@@ -16,7 +16,7 @@
           - tmp = format_time(contribution.datetime)
           %span.action shared a video at #{link_to(tmp, contribution_path(contribution))}
         %p.content
-          = contribution.content
+          = auto_link(contribution.content)
         %p.link-title
           = link_to(contribution.title, contribution.url)
           %br
