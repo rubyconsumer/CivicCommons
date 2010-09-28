@@ -93,7 +93,7 @@ jQuery(function ($) {
               $(this).find('.errors').html('');
               window.location.hash = $(this).find('a.cancel').attr('href');
             }else{
-              $(clicked).unbind('click'); // only unbinds the click function that attaches the toggle, since all the other events are indirectly attached through .live()
+              $(clicked).text($(clicked).data('origText')).unbind('click'); // only unbinds the click function that attaches the toggle, since all the other events are indirectly attached through .live()
               $(this).parents('.tab-strip').parent().empty();
             }
             setTimeout(function(){ responseNode.scrollTo(); }, animationSpeed);
