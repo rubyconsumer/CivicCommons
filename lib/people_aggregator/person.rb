@@ -12,10 +12,11 @@ class PeopleAggregator::Person
 
 
   def save
+    Rails.logger.info "We are starting: PeopleAggregator::Person.save."
     @attrs.merge!(adminPassword: "admin")
     r = self.class.post('/newUser', body: @attrs)
 
-    self.class.log_people_aggregator_response r
+      self.class.log_people_aggregator_response r
 
     case r.code
     when 412
@@ -25,6 +26,7 @@ class PeopleAggregator::Person
       login_name = r.parsed_response['msg'][/Login name (.*) is already taken/, 1]
       raise StandardError, 'The user with login "%s" already exists.' % login_name
     end
+    r
   end
 
 

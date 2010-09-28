@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100927195637) do
+ActiveRecord::Schema.define(:version => 20100928184028) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -163,6 +163,7 @@ ActiveRecord::Schema.define(:version => 20100927195637) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
+    t.integer  "people_aggregator_id"
   end
 
   add_index "people", ["email"], :name => "index_people_on_email", :unique => true
