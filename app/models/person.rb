@@ -1,5 +1,10 @@
 class Person < ActiveRecord::Base
 
+  # return an open File object that contains our Amazon S3 credentials.
+  filename = '/data/TheCivicCommons/shared/config/amazon_s3.yml' # the way it lands on EngineYard
+  filename = Rails.root + 'config/amazon_s3.yml' unless File.exist? filename
+  s3_credential_file = File.new(filename)
+
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable, :lockable and :timeoutable
   devise :database_authenticatable, :registerable,
@@ -7,7 +12,8 @@ class Person < ActiveRecord::Base
          :confirmable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :name, :first_name, :last_name, :email, :password, :password_confirmation, :top, :zip_code, :admin, :validated
+  attr_accessible :name, :first_name, :last_name, :email, :password, :password_confirmation, :top, :zip_code, :admin, :validated, 
+                  :avatar
 
   has_many :contributions, :foreign_key => 'owner'
   has_many :ratings
@@ -18,8 +24,13 @@ class Person < ActiveRecord::Base
 
   validate :zip_code, :length => 10
   
-  has_attached_file :avatar, :default => '/images/avatar_70.gif', :styles => {:standard => '70x70'}
-
+  has_attached_file :avatar,
+    :styles => {
+       :standard => "70x70>"},
+    :storage => :s3,
+    :s3_credentials => s3_credential_file,
+    :path => ":attachment/:id/:style/:filename"
+  
 
   scope :participants_of_issue, lambda{ |issue|
       joins(:conversations => :issues).where(['issue_id = ?',issue.id]).select('DISTINCT(people.id),people.*') if issue
