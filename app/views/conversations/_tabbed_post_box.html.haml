@@ -18,11 +18,11 @@
         %li
           %a{:href => "##{div_id}-new-video", :title => "Post a Video", :id => "video_tab", :class => 'button'} Video
     %div{:id => "#{div_id}-new-comment" }
-      %div.contribution-form-headline
-        %span.contribution-form-cancel.float-right
-          %a{:href => "##{div_id}-options"} Cancel
-        %h3 Leave a Comment
       = form_for @contribution, :url => "create_node_contribution", :remote => true do |f|
+        %div.contribution-form-headline
+          %span.contribution-form-cancel.float-right
+            %a{:href => "##{div_id}-options", :class => 'cancel'} Cancel
+          %h3 Leave a Comment
         = f.hidden_field(:conversation_id, :value => conversation_id)
         - if defined?(contribution_id)
           = f.hidden_field(:parent_id, :value => contribution_id)
@@ -31,11 +31,11 @@
         %div.errors
         = f.submit("Submit")
     %div{:id => "#{div_id}-new-question" }
-      %div.contribution-form-headline
-        %span.contribution-form-cancel.float-right
-          %a{:href => "##{div_id}-options"} Cancel
-        %h3 Ask a Question
       = form_for @contribution, :url => "create_node_contribution", :remote => true do |f|
+        %div.contribution-form-headline
+          %span.contribution-form-cancel.float-right
+            %a{:href => "##{div_id}-options", :class => 'cancel'} Cancel
+          %h3 Ask a Question
         = f.hidden_field(:conversation_id, :value => conversation_id)
         - if defined?(contribution_id)
           = f.hidden_field(:parent_id, :value => contribution_id)
@@ -49,11 +49,11 @@
         %div.errors
         = f.submit("Submit")
     %div{:id => "#{div_id}-new-file" }
-      %div.contribution-form-headline
-        %span.contribution-form-cancel.float-right
-          %a{:href => "##{div_id}-options"} Cancel
-        %h3 Upload a File or Image
       = form_for @contribution, :url => "create_node_contribution.js", :remote => true, :html => { :multipart => true } do |f|
+        %div.contribution-form-headline
+          %span.contribution-form-cancel.float-right
+            %a{:href => "##{div_id}-options", :class => 'cancel'} Cancel
+          %h3 Upload a File or Image
         = f.hidden_field(:conversation_id, :value => conversation_id)
         - if defined?(contribution_id)
           = f.hidden_field(:parent_id, :value => contribution_id)
@@ -65,11 +65,11 @@
         %div.errors
         = f.submit("Submit")
     %div{:id => "#{div_id}-new-link" }
-      %div.contribution-form-headline
-        %span.contribution-form-cancel.float-right
-          %a{:href => "##{div_id}-options"} Cancel
-        %h3 Share a Link
       = form_for @contribution, :url => "create_node_contribution", :remote => true do |f|
+        %div.contribution-form-headline
+          %span.contribution-form-cancel.float-right
+            %a{:href => "##{div_id}-options", :class => 'cancel'} Cancel
+          %h3 Share a Link
         = f.hidden_field(:conversation_id, :value => conversation_id)
         - if defined?(contribution_id)
           = f.hidden_field(:parent_id, :value => contribution_id)
@@ -81,11 +81,11 @@
         %div.errors
         = f.submit("Submit")
     %div{:id => "#{div_id}-new-video" }
-      %div.contribution-form-headline
-        %span.contribution-form-cancel.float-right
-          %a{:href => "##{div_id}-options"} Cancel
-        %h3 Share a Video
       = form_for @contribution, :url => "create_node_contribution", :remote => true do |f|
+        %div.contribution-form-headline
+          %span.contribution-form-cancel.float-right
+            %a{:href => "##{div_id}-options", :class => 'cancel'} Cancel
+          %h3 Share a Video
         = f.hidden_field(:conversation_id, :value => conversation_id)
         - if defined?(contribution_id)
           = f.hidden_field(:parent_id, :value => contribution_id)
@@ -98,11 +98,11 @@
         %div.errors
         = f.submit("Submit")
     %div{:id => "#{div_id}-new-suggested-action" }
-      %div.contribution-form-headline
-        %span.contribution-form-cancel.float-right
-          %a{:href => "##{div_id}-options"} Cancel
-        %h3 Suggest an Action
       = form_for @contribution, :url => "create_node_contribution", :remote => true do |f|
+        %div.contribution-form-headline
+          %span.contribution-form-cancel.float-right
+            %a{:href => "##{div_id}-options", :class => 'cancel'} Cancel
+          %h3 Suggest an Action
         = f.hidden_field(:conversation_id, :value => conversation_id)
         - if defined?(contribution_id)
           = f.hidden_field(:parent_id, :value => contribution_id)

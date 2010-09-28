@@ -10,7 +10,7 @@ class AttachedFile < Contribution
   has_attached_file :attachment,
     :storage => :s3,
     :s3_credentials => s3_credential_file,
-    :path => ":attachment/:id/:filename",
+    :path => ":attachment/:id/:style/:filename",
     :styles => {:thumb => "75x75>", :medium => "300x300>", :large => "800x800>"}
       
   validates_attachment_presence :attachment

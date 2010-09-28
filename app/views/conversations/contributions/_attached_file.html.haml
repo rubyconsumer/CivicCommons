@@ -17,7 +17,7 @@
           %span.action uploaded a file at #{link_to(tmp, contribution_path(contribution))}
         %p.content= auto_link(contribution.content)
         - if contribution.attachment_content_type =~ /^image/
-          %p.attached-file= image_tag(contribution.attachment.url(:medium))
+          %p.attached-file= link_to(image_tag(contribution.attachment.url(:medium)), contribution.attachment.url(:large), {'data-colorbox' => true})
         - else
           %p.attached-file= link_to("Download attached file", contribution.attachment.url, {:target => :blank})
         %div.action-bar
