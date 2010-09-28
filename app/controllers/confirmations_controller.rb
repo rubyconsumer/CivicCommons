@@ -20,15 +20,9 @@ class ConfirmationsController < Devise::ConfirmationsController
       body = JSON.parse(response.body)
       person = Person.where(:email => resource.email).first
       if person
-        person.people_aggregator_id = determine_pa_id(body["id"])
+        person.people_aggregator_id = body["id"]
         person.save!
       end
     end
-  end
-  
-  # PA currently returns a users id in the form of: "id"=>"user:84"
-  # In case this is fixed, we don't want to break, so we'll figure out what id is.
-  def determine_pa_id(id)
-    return id.split(":")[1] ? id.split(":")[1] : id
   end
 end
