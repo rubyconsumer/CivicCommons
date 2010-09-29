@@ -23,7 +23,7 @@ describe PeopleAggregator::Person do
 
 
   before do
-    response = OpenStruct.new(parsed_response: {"success"=>true, "login"=>"joe@test.com", "id"=>"user:14", "url"=>"http://civiccommons.digitalcitymechanics.com/user/14", "name"=>" ", "profile"=>{"basic"=>{"first_name"=>"Joe", "last_name"=>"Fiorini"}, "general"=>[], "personal"=>[], "professional"=>[]}}, code: 100)
+    response = OpenStruct.new(parsed_response: {"success"=>true, "login"=>"joe@test.com", "id"=>14, "url"=>"http://civiccommons.digitalcitymechanics.com/user/14", "name"=>" ", "profile"=>{"basic"=>{"first_name"=>"Joe", "last_name"=>"Fiorini"}, "general"=>[], "personal"=>[], "professional"=>[]}}, code: 200)
     Person.stub!(:post).and_return(response)
     Person.stub!(:get).and_return(response)
   end
@@ -48,8 +48,9 @@ describe PeopleAggregator::Person do
                                       lastName: "Test",
                                       adminPassword: "admin",
                                       login: "joe@test.com"})
-    Person.new(firstName: "Joe", lastName: "Test", login: "joe@test.com").
-      save
+    response = Person.new(firstName: "Joe", lastName: "Test", login: "joe@test.com").save
+    response.code.should == 200
+    response.parsed_response["id"].should == 14
   end
 
 
