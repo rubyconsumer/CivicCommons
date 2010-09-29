@@ -34,7 +34,7 @@ class Admin::ConversationsController < Admin::DashboardController
   
   #GET admin/conversations/:id/edit
   def edit
-    @conversation = Conversation.find(params[:id])
+    @conversation = Conversation.includes(:top_level_contributions).find(params[:id])
     @presenter = IngestPresenter.new(@conversation)
   end
   
