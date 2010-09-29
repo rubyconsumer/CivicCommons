@@ -31,7 +31,7 @@ class Conversation < ActiveRecord::Base
        :panel => "198x130" },
     :storage => :s3,
     :s3_credentials => s3_credential_file,
-    :path => ":attachment/:id/:style/:filename"
+    :path => CONVERSATION_ATTACHMENT_PATH
 
   search_methods :containing_issue, :containing_guide
   

@@ -11,17 +11,23 @@ Given /^a conversation:$/ do |table|
 
   attachment = File.join(attachments_path, conversation['Image'])
 
-  Factory.create(:conversation,
-                 title: conversation['Title'],
-                 image: attachment,
-                 summary: conversation['Summary'],
-                 moderator: admin_person,
-                 zip_code: conversation['Zip Code'])
+  @conversation =
+    Factory.create(:conversation,
+                   title: conversation['Title'],
+                   image: File.open(attachment),
+                   summary: conversation['Summary'],
+                   moderator: admin_person,
+                   zip_code: conversation['Zip Code'])
+
+  Factory.create(:top_level_contribution,
+                 conversation: @conversation)
 
 end
 
 
 Given /^I have a comment on the conversation$/ do
-  pending # express the regexp above with the code you wish you had
+  Factory.create(:comment,
+                 person: @current_person,
+                 conversation: @conversation)
 end
 
