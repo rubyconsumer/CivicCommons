@@ -28,7 +28,7 @@ describe LinksController do
     describe "logged in" do
 
       before(:each) do
-        Issue.stub(:all)        { :all_issues }
+        Issue.stub(:alphabetical)        { :all_issues }
         Conversation.stub(:all) { :all_conversations }
         @controller.stub(:current_person).and_return(Person.new)
         get :new, :link => "http://aol.com"

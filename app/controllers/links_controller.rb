@@ -2,7 +2,7 @@ class LinksController < ApplicationController
   before_filter :remember_url, :require_user 
 
   def new 
-    @issues = Issue.all
+    @issues = Issue.alphabetical
     @conversations = Conversation.all
     @link = Link.new
   end

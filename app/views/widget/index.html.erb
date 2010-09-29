@@ -1,11 +1,12 @@
 var widget = function() {
-  var domain = "<%=request.domain%>";
+  var domain = "<%=request.host_with_port%>";
+  
   var link;
 
   var self = {};
   self.init = function(){
     link = $("#CivicCommonsWidgit");
-    link.attr("href", "http://" + domain + "/widget/");
+    link.attr("href", "http://" + domain + "/links/new?link=" + window.location);
     var url = "http://" + domain + "/images/cc_thumb.jpg";
     url = "/images/cc_thumb.jpg";
     link.append($("<img>", {"src":url}));
