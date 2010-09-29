@@ -4,20 +4,8 @@ class ConversationsController < ApplicationController
   # GET /conversations
   # GET /conversations.xml
   def index
-    # Converting US date input to ISO because we don't trust the implicit string-to-date 
-    # conversion in Ruby.
-    unless params[:search].blank?
-      unless params[:search][:started_at_less_than].blank?
-        params[:search][:started_at_less_than] = convert_us_date_to_iso(params[:search][:started_at_less_than])
-      end
-      unless params[:search][:started_at_greater_than].blank?
-        params[:search][:started_at_greater_than] = convert_us_date_to_iso(params[:search][:started_at_greater_than])
-      end
-      logger.info "Search from " + params[:search][:started_at_greater_than] unless params[:search][:started_at_greater_than].blank?
-      logger.info "Search to " + params[:search][:started_at_less_than] unless params[:search][:started_at_less_than].blank?
-    end
-    @search = Conversation.search(params[:search])
-    @conversations = @search.all   # or @search.relation to lazy load in view
+    @conversations = Conversation.paginate(:page => params[:page], :per_page => 12)
+
     @main_article = Article.conversation_main_article.first
     @sub_articles = Article.conversation_sub_articles.limit(3)
 
@@ -32,8 +20,10 @@ class ConversationsController < ApplicationController
   def show    
     @conversation = Conversation.find(params[:id])
     @conversation.visit!((current_person.nil? ? nil : current_person.id))
-    @contributions = TopLevelContribution.where(:conversation_id => @conversation.id).includes([:person]).order('created_at ASC')
-    @contribution = Contribution.new # for conversation comment form
+    @top_level_contributions = TopLevelContribution.where(:conversation_id => @conversation.id).includes([:person]).order('created_at ASC')
+    # grab all direct contributions to conversation that aren't TLC
+    @contributions = Contribution.not_top_level.without_parent.where(:conversation_id => @conversation.id).includes([:person]).order('created_at ASC')
+    @top_level_contribution = Contribution.new # for conversation comment form
 
     respond_to do |format|
       format.html # show.html.erb
@@ -42,8 +32,9 @@ class ConversationsController < ApplicationController
   end
   
   def node_conversation
-    @contribution = Contribution.includes({:children => :person}).find(params[:id])
-    @contribution.visit!((current_person.nil? ? nil : current_person.id))
+    @top_level_contribution = Contribution.includes({:children => :person}).find(params[:id])
+    @top_level_contribution.visit!((current_person.nil? ? nil : current_person.id))
+    @contribution = Contribution.new
     
     respond_to do |format|
       format.js { render :partial => "conversations/node_conversation", :layout => false}
@@ -61,12 +52,11 @@ class ConversationsController < ApplicationController
   end
   
   def create_node_contribution
-    model = params[:contribution][:type].constantize
-    @contribution = model.create(:conversation_id => params[:contribution][:conversation_id], :parent_id => params[:contribution][:parent_id], :content => params[:contribution][:content], :person => current_person)
-    
+    @contribution = Contribution.create_node_level_contribution(params[:contribution], current_person)
+
     respond_to do |format|
       if @contribution.save
-        format.js   { render :partial => "conversations/contributions/#{@contribution.type.downcase}", :locals => {:contribution => @contribution}, :status => :created }
+        format.js   { render :partial => "conversations/contributions/#{@contribution.type.underscore}", :locals => {:contribution => @contribution}, :status => :created }
         format.html { redirect_to(@contribution, :notice => 'Contribution was successfully created.') }
         format.xml  { render :xml => @contribution, :status => :created, :location => @contribution }
       else
@@ -174,5 +164,4 @@ class ConversationsController < ApplicationController
     hour = sprintf("%02d",hour)
     input[6,4]+"-"+input[0,2]+"-"+input[3,2]+"T"+hour+":"+input[14,2]+":00"
   end
-
 end

@@ -2,6 +2,10 @@ $(document).ready(function(){
   if(typeof(Modernizr) != "undefined" && !Modernizr.input.placeholder) {
     $('[placeholder]').placeholder({className: 'placeholder'});
   }
+  $('a[data-colorbox]').live('click', function(e){
+    $.colorbox({ href: $(this).attr('href') });
+    e.preventDefault();
+  })
 });
 
 var civic = function() {

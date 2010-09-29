@@ -29,17 +29,9 @@
     =file_field_tag 'transcript_file'
     
   %p
-    =conversation.label :started_at
-    =conversation.date_select :started_at, :order => [:month, :day, :year]
-  
-  %p
-    =conversation.label :finished_at
-    =conversation.date_select :finished_at, :order => [:month, :day, :year]
-   
-  %p
     =conversation.label :moderator_id, "Moderator"
     %br
-    =conversation.collection_select :moderator_id, Person.all, :id, :full_name, :prompt => true
+    =conversation.collection_select :moderator_id, Person.all, :id, :name, :prompt => true
 
   %p
     =conversation.label :zip_code, "Enter Zip Code"

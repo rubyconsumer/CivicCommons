@@ -5,33 +5,20 @@
   %tr
     %th Title
     %th Author
-    %th Description
-    %th Link
-    %th Image
-    %th Video URL
     %th Current
     %th Main
-    %th Homepage Article?
-    %th Conversation Article?
-    %th Issue Article?
-    %th
+    %th Homepage Article
+    %th Conversation Article
+    %th Issue Article
     %th
     %th
   
   - @articles.each do |article|
     %tr
       %td
-        = article.title
+        = link_to article.title, admin_article_path(article)
       %td
         = article.author
-      %td
-        = article.description
-      %td
-        = article.link
-      %td
-        = image_tag article.image.url(:subfeature)
-      %td
-        = article.video_url
       %td
         = article.current
       %td
@@ -42,8 +29,6 @@
         = article.conversation_article
       %td
         = article.issue_article
-      %td
-        = link_to 'Show', admin_article_path(article)
       %td
         = link_to 'Edit', edit_admin_article_path(article)
       %td

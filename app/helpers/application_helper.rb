@@ -9,4 +9,13 @@ module ApplicationHelper
     "Showing %s of %s"%[collection.count,
                         pluralize(collection.total_entries, name_of_collection)]
   end
+
+  def avatar_tag(person, options={})
+    image_options = {
+      :width => 50,
+      :height => 50,
+      :alt => "avatar",
+      :title => person.name}.merge(options)
+    image_tag(person.avatar_url("small"), image_options)
+  end
 end

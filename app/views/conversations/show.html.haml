@@ -1,9 +1,6 @@
 - content_for :header do 
   = javascript_include_tag('lib/conversations/show')
 
-- content_for :document_ready do
-  $(".tab-strip").easyTabs({tabActiveClass: 'tab-active'});
-
 - content_for :main do
   #show_conversation
     %h1= @conversation.title
@@ -21,10 +18,16 @@
     %span (This is the conversation rating until we get a mockup for it)
     %hr
     %ul.thread-list
+      - @top_level_contributions.each do |contribution|
+        =render :partial => "conversations/contributions/#{contribution.type.underscore}", :locals => { :contribution => contribution }
+    
+    %hr
+    %h2 Join the Conversation
+    = link_to("Respond to Conversation", {:action => "new_node_contribution", :id => @conversation.id, :div_id => "conversation-#{@conversation.id}"}, :class => "text button conversation-action", :id => "conversation-action-link-#{@conversation.id}", :title => "Leave a comment here", 'data-target' => "#conversation-action-div-#{@conversation.id}", :remote => true)
+    %ul.thread-list
+      %div{:id => "conversation-action-div-#{@conversation.id}"}
       - @contributions.each do |contribution|
         =render :partial => "conversations/contributions/#{contribution.type.underscore}", :locals => { :contribution => contribution }
-    - if person_signed_in?
-      =render :partial => "tabbed_post_box", :locals => {:conversation_id => @conversation.id, :div_id => "conversation-#{@conversation.id}"}
 
 -content_for :sidebar do
   .aside.guides

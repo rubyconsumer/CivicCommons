@@ -1,5 +1,10 @@
 class Person < ActiveRecord::Base
 
+  # return an open File object that contains our Amazon S3 credentials.
+  filename = '/data/TheCivicCommons/shared/config/amazon_s3.yml' # the way it lands on EngineYard
+  filename = Rails.root + 'config/amazon_s3.yml' unless File.exist? filename
+  s3_credential_file = File.new(filename)
+
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable, :lockable and :timeoutable
   devise :database_authenticatable, :registerable,
@@ -7,24 +12,33 @@ class Person < ActiveRecord::Base
          :confirmable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :name, :first_name, :last_name, :email, :password, :password_confirmation, :top, :zip_code, :admin, :validated
+  attr_accessible :name, :first_name, :last_name, :email, :password, :password_confirmation, :top, :zip_code, :admin, :validated, 
+                  :avatar
 
   has_many :contributions, :foreign_key => 'owner'
   has_many :ratings
   has_and_belongs_to_many :conversations, :join_table => 'conversations_guides', :foreign_key => :guide_id
   has_and_belongs_to_many :events, :join_table => 'events_guides', :foreign_key => :guide_id
 
-  validate :zip_code, :length => 10
-  validates_numericality_of :top, :allow_nil => true
+  has_many :contributed_conversations, :through => :contributions, :source => :conversation
 
+  validate :zip_code, :length => 10
+  
+  has_attached_file :avatar,
+    :styles => {
+       :standard => "70x70>"},
+    :storage => :s3,
+    :s3_credentials => s3_credential_file,
+    :path => ":attachment/:id/:style/:filename"
+  
 
   scope :participants_of_issue, lambda{ |issue|
       joins(:conversations => :issues).where(['issue_id = ?',issue.id]).select('DISTINCT(people.id),people.*') if issue
     } 
 
   # Stubbed out. We will need ot distinguish between a person and an org
-  scope(:exclude_people)
-  scope(:exclude_organizations)
+  scope(:exclude_people, :conditions => {:organization => true})
+  scope(:exclude_organizations, :conditions => {:organization => false})
   
   scope :proxy_accounts, where(:proxy => true)
 
@@ -33,13 +47,8 @@ class Person < ActiveRecord::Base
     self.first_name, self.last_name = self.class.parse_name(value)
   end
 
-
   def name
-    @name ||= "%s %s" % [self.first_name, self.last_name]
-  end
-  
-  def full_name
-    first_name.capitalize + " " + last_name.capitalize
+    @name ||= ("%s %s" % [self.first_name, self.last_name]).titlecase.strip
   end
 
   def self.find_all_by_name(name)

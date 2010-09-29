@@ -1,70 +1,113 @@
 %div{:id => div_id, :class => "tab-strip"}
-  %ul
-    %li
-      %a{:href => "##{div_id}-new-comment", :title => "Add Comment", :id => "comment_tab"} Comment
-    %li
-      %a{:href => "##{div_id}-new-question", :title => "Ask a Question", :id => "question_tab"} Question
-    %li
-      %a{:href => "##{div_id}-new-file", :title => "Upload a File", :id => "image_tab"} Image/File
-    %li
-      %a{:href => "##{div_id}-new-link", :title => "Post a Link", :id => "link_tab"} Link
-    %li
-      %a{:href => "##{div_id}-new-video", :title => "Post a Video", :id => "video_tab"} Video
-    .tab-area.input-with-options
-      %div{:id => "#{div_id}-new-comment" }
-        = form_for @contribution, :url => "create_node_contribution", :remote => true do |f|
-          = f.hidden_field(:conversation_id, :value => conversation_id)
-          - if defined?(contribution_id)
-            = f.hidden_field(:parent_id, :value => contribution_id)
-          = f.hidden_field(:type, :value => "Comment")
-          = f.text_area(:content, :rows => "3", :placeholder => "Leave a Comment...")
-          %div.errors
-          = f.submit("Submit")
-      %div{:id => "#{div_id}-new-question" }
-        = form_for @contribution, :url => "create_node_contribution", :remote => true do |f|
-          = f.hidden_field(:conversation_id, :value => conversation_id)
-          - if defined?(contribution_id)
-            = f.hidden_field(:parent_id, :value => contribution_id)
-          = f.hidden_field(:type, :value => "Question")
-          = f.text_area(:content, :rows => "3", :placeholder => "Ask a Question...")
-          %label
-            Who can answer?
-            %select(id="contribution_askee")
-              %option Anyone
-              %option Moderator
-          %div.errors
-          = f.submit("Submit")
-      %div{:id => "#{div_id}-new-file" }
-        = form_for @contribution, :url => "create_node_contribution", :remote => true do |f|
-          = f.hidden_field(:conversation_id, :value => conversation_id)
-          - if defined?(contribution_id)
-            = f.hidden_field(:parent_id, :value => contribution_id)
-          = f.hidden_field(:type, :value => "AttachedFile")
-          %label
-            Upload a file:
-            = f.text_field(:attachment, :type => "file")
-          %div.errors
-          = f.submit("Submit")
-      %div{:id => "#{div_id}-new-link" }
-        = form_for @contribution, :url => "create_node_contribution", :remote => true do |f|
-          = f.hidden_field(:conversation_id, :value => conversation_id)
-          - if defined?(contribution_id)
-            = f.hidden_field(:parent_id, :value => contribution_id)
-          = f.text_field(:type, :type => "hidden", :value => "Link")
-          %label
-            URL:
-            = f.text_field(:content, :type => "text", :class => "textbox link", :placeholder => "http://www.youtube.com")
-          %div.errors
-          = f.submit("Submit")
-      %div{:id => "#{div_id}-new-video" }
-        = form_for @contribution, :url => "create_node_contribution", :remote => true do |f|
-          = f.hidden_field(:conversation_id, :value => conversation_id)
-          - if defined?(contribution_id)
-            = f.hidden_field(:parent_id, :value => contribution_id)
-          = f.hidden_field(:type, :value => "EmbeddedSnippet")
-          %label
-            Link:
-          =f.text_field(:content, :type => "text", :class => "textbox link youtube", :placeholder => "Copy/paste the video link here.")
+  .tab-area.input-with-options
+    %div{:id => "#{div_id}-options", :class => 'tab-strip-options'}
+      %a{:href => "#", :class => 'button blue float-right', :onclick => "javascript: alert(\"This isn\'t hooked up yet\"); return false;"} Write Contribution
+      %ul
+        %li#default-tab
+          %a{:href => "##{div_id}-options", :style => 'display: none;'}
+        %li
+          %a{:href => "##{div_id}-new-comment", :title => "Add Comment", :id => "comment_tab", :class => 'button'} Comment
+        %li
+          %a{:href => "##{div_id}-new-suggested-action", :title => "Suggest an Action", :id => "suggested_action_tab", :class => 'button'} Suggest Action
+        %li
+          %a{:href => "##{div_id}-new-question", :title => "Ask a Question", :id => "question_tab", :class => 'button'} Ask Question
+        %li
+          %a{:href => "##{div_id}-new-file", :title => "Upload a File", :id => "image_tab", :class => 'button'} Image/File
+        %li
+          %a{:href => "##{div_id}-new-link", :title => "Post a Link", :id => "link_tab", :class => 'button'} Link
+        %li
+          %a{:href => "##{div_id}-new-video", :title => "Post a Video", :id => "video_tab", :class => 'button'} Video
+    %div{:id => "#{div_id}-new-comment" }
+      = form_for @contribution, :url => "create_node_contribution", :remote => true do |f|
+        %div.contribution-form-headline
+          %span.contribution-form-cancel.float-right
+            %a{:href => "##{div_id}-options", :class => 'cancel'} Cancel
+          %h3 Leave a Comment
+        = f.hidden_field(:conversation_id, :value => conversation_id)
+        - if defined?(contribution_id)
+          = f.hidden_field(:parent_id, :value => contribution_id)
+        = f.hidden_field(:type, :value => "Comment")
+        = f.text_area(:content, :rows => "3", :placeholder => "Leave a Comment...")
+        %div.errors
+        = f.submit("Submit")
+    %div{:id => "#{div_id}-new-question" }
+      = form_for @contribution, :url => "create_node_contribution", :remote => true do |f|
+        %div.contribution-form-headline
+          %span.contribution-form-cancel.float-right
+            %a{:href => "##{div_id}-options", :class => 'cancel'} Cancel
+          %h3 Ask a Question
+        = f.hidden_field(:conversation_id, :value => conversation_id)
+        - if defined?(contribution_id)
+          = f.hidden_field(:parent_id, :value => contribution_id)
+        = f.hidden_field(:type, :value => "Question")
+        = f.text_area(:content, :rows => "3", :placeholder => "Ask a Question...")
+        %label
+          Who can answer?
+          %select(id="contribution_askee")
+            %option Anyone
+            %option Moderator
+        %div.errors
+        = f.submit("Submit")
+    %div{:id => "#{div_id}-new-file" }
+      = form_for @contribution, :url => "create_node_contribution.js", :remote => true, :html => { :multipart => true } do |f|
+        %div.contribution-form-headline
+          %span.contribution-form-cancel.float-right
+            %a{:href => "##{div_id}-options", :class => 'cancel'} Cancel
+          %h3 Upload a File or Image
+        = f.hidden_field(:conversation_id, :value => conversation_id)
+        - if defined?(contribution_id)
+          = f.hidden_field(:parent_id, :value => contribution_id)
+        = f.hidden_field(:type, :value => "AttachedFile")
+        = f.text_area(:content, :rows => "3", :placeholder => "Comment on file...")
+        %label
+          Upload a file:
+          = f.file_field(:attachment)
+        %div.errors
+        = f.submit("Submit")
+    %div{:id => "#{div_id}-new-link" }
+      = form_for @contribution, :url => "create_node_contribution", :remote => true do |f|
+        %div.contribution-form-headline
+          %span.contribution-form-cancel.float-right
+            %a{:href => "##{div_id}-options", :class => 'cancel'} Cancel
+          %h3 Share a Link
+        = f.hidden_field(:conversation_id, :value => conversation_id)
+        - if defined?(contribution_id)
+          = f.hidden_field(:parent_id, :value => contribution_id)
+        = f.text_field(:type, :type => "hidden", :value => "Link")
+        = f.text_area(:content, :rows => "3", :placeholder => "Comment on file..")
+        %label
+          URL:
+          = f.text_field(:url, :type => "text", :class => "textbox link", :placeholder => "http://www.youtube.com")
+        %div.errors
+        = f.submit("Submit")
+    %div{:id => "#{div_id}-new-video" }
+      = form_for @contribution, :url => "create_node_contribution", :remote => true do |f|
+        %div.contribution-form-headline
+          %span.contribution-form-cancel.float-right
+            %a{:href => "##{div_id}-options", :class => 'cancel'} Cancel
+          %h3 Share a Video
+        = f.hidden_field(:conversation_id, :value => conversation_id)
+        - if defined?(contribution_id)
+          = f.hidden_field(:parent_id, :value => contribution_id)
+        = f.hidden_field(:type, :value => "EmbeddedSnippet")
+        = f.text_area(:content, :rows => "3", :placeholder => "Comment on video...")
+        %label
+          YouTube Link:
+          = f.text_field(:url, :type => "text", :class => "textbox link youtube", :placeholder => "Copy/paste the video link here.")
           .youtube-thumbnail
-          %div.errors
-          = f.submit("Submit")
+        %div.errors
+        = f.submit("Submit")
+    %div{:id => "#{div_id}-new-suggested-action" }
+      = form_for @contribution, :url => "create_node_contribution", :remote => true do |f|
+        %div.contribution-form-headline
+          %span.contribution-form-cancel.float-right
+            %a{:href => "##{div_id}-options", :class => 'cancel'} Cancel
+          %h3 Suggest an Action
+        = f.hidden_field(:conversation_id, :value => conversation_id)
+        - if defined?(contribution_id)
+          = f.hidden_field(:parent_id, :value => contribution_id)
+        = f.hidden_field(:type, :value => "SuggestedAction")
+        = f.text_area(:content, :rows => "3", :placeholder => "Suggest an action...")
+        %div.errors
+        = f.submit("Submit")
+  

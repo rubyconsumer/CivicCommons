@@ -183,6 +183,9 @@ p.topic-count {float: left;}
 p.topic-selection {float: right;}
 p.topic-selection a {margin-left: 1em;}
 
+.float-right{ float: right; }
+.float-left{ float: left; }
+
 /*-----------------------------------------------
 =Offset List Styles
 -----------------------------------------------*/
@@ -275,7 +278,7 @@ display: inline-block;
 font-size: .857em;
 font-weight: bold;
 line-height: 1.4;
-margin-right: 10px;
+margin: 10px 10px 10px 0;
 padding: 4px 10px;
 text-align: center;
 text-decoration: none;
@@ -285,6 +288,15 @@ border-radius: 6px;
 -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
 -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
 box-shadow: 0 1px 2px rgba(0,0,0,.2);
+}
+.button.blue {
+  background-color: #4d748d;
+  color: #fff;  
+  border-color: #345163;
+}
+a.button.blue:hover {
+  background-color: #47677c;
+  color: #fff;
 }
 a.button.answer, .button.answer {
 padding-top: 4px;
@@ -328,7 +340,7 @@ padding-top: 15px;
 margin-bottom: 15px;
 }
 .full-width-content {width: 1060px;}
-.main-content {
+.main-content, #show_conversation {
 float: left;
 width: 700px;
 }
@@ -337,6 +349,15 @@ float: right;
 width: 340px;
 }
 .content {padding-left: 80px;}
+.link-title {  }
+.link-url { font-size: .8em; }
+.link-quote { font-style: italic; font-size: .9em; }
+/*
+.article ul {
+background: url(/images/event-icon.png) no-repeat;
+padding-left: 40px;
+}
+*/
 li.event-meta {
 font-weight: bold;
 text-transform: uppercase;
@@ -502,32 +523,57 @@ width: 100%;
 =Single Conversation Page Styles
 -----------------------------------------------*/
 
+.action-bar {
+  background: #666;
+  margin-left: 110px;
+  padding: 5px 10px;
+}
+.action-bar a {
+  color: #fff;
+}
+ul.thread-list {
+  margin: 10px 0 0 80px;
+  list-style: none;
+}
+
 /* Tabs */
+.tab-strip {
+margin-left: 30px;
+}
 div.tab-strip ul {
 list-style-type: none;
-margin-bottom: 0;
-margin-left: 0;
+margin: 0;
+float: left;
 }
 div.tab-strip ul li {
 float: left;
-margin-bottom: -1px;
 text-align: center;
 }
-div.tab-strip ul li a {
+div.tab-strip a.button {
 display: block;
-padding: 5px 9px;
+padding: 3px 5px;
+font-size: .7em;
 text-decoration: none;
+margin: 0 5px 5px 0;
 }
-div.tab-area, div.tab-strip ul li a.tab-active {
-background-color: #fff;
-border: 1px solid #ccc;
+div.tab-strip a.button.float-right {
+margin-right: 0;
 }
-div.tab-strip ul li a.tab-active {border-bottom: none;}
-textarea.comment_text {
-width: 97%;
-margin-bottom: 8px;
-border: 0;
+.tab-area h3 {
+  margin: 0;
+  padding: 0;
+  border: none;
 }
+.contribution-form-headline {
+  padding: 5px 5px 0 0;
+  margin: 0;
+}
+.tab-area textarea {
+  margin: 0;
+  padding: 9px;
+  width: 97%;
+}
+
 p.convo-meta {margin-bottom: 2em;}
 
 /* Conversation Divider */
@@ -659,7 +705,7 @@ border-color: rgba(0, 0, 0, 0.07);
 color: #fff;
 }
 .comment .meta a.positive {background-color: #53b848;}
-.comment img {float: left;}
+
 .issue {
 position: relative;
 padding: 0px;

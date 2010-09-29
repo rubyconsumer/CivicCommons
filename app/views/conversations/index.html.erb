@@ -11,64 +11,9 @@
               <a href="#">Most Active</a>
             </p>
           </div>
-          <div class="three-col-sm">
-                <div class="cols call-out">
-                  <img class="main-img" src="images/convo_img_mod.gif" alt="convo_img_mod" width="198" height="130" />
-                  <h4>The Conversation Title</h4>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                  <div class="photobank">
-                  <img src="images/avatar_42.gif" alt="avatar" width="42" height="42" />
-                  <img src="images/avatar_42.gif" alt="avatar" width="42" height="42" />
-                  <img src="images/avatar_42.gif" alt="avatar" width="42" height="42" />
-                  <img src="images/avatar_42.gif" alt="avatar" width="42" height="42" />
-                </div>
-                </div>
-                <div class="cols call-out">
-                  <img class="main-img" src="images/convo_img_mod.gif" alt="convo_img_mod" width="198" height="130" />
-                  <h4>The Conversation Title</h4>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                  <div class="photobank">
-                  <img src="images/avatar_42.gif" alt="avatar" width="42" height="42" />
-                  <img src="images/avatar_42.gif" alt="avatar" width="42" height="42" />
-                  <img src="images/avatar_42.gif" alt="avatar" width="42" height="42" />
-                  <img src="images/avatar_42.gif" alt="avatar" width="42" height="42" />
-                </div>
-                </div>
-                <div class="cols call-out">
-                  <img class="main-img" src="images/convo_img_mod.gif" alt="convo_img_mod" width="198" height="130" />
-                  <h4>The Conversation Title</h4>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                  <div class="photobank">
-                  <img src="images/avatar_42.gif" alt="avatar" width="42" height="42" />
-                  <img src="images/avatar_42.gif" alt="avatar" width="42" height="42" />
-                  <img src="images/avatar_42.gif" alt="avatar" width="42" height="42" />
-                  <img src="images/avatar_42.gif" alt="avatar" width="42" height="42" />
-                </div>
-                </div>
-              </div>
-          <div class="topic-header group">
-            <p class="topic-count">Showing 25 of 300 conversations</p>
-          </div>
-                <ol class='conversations'>
-                  <li class='offset-1'>
-                    <img class="callout" src="images/avatar_70.gif" alt="avatar_70" width="70" height="70" />
-                    <h4><a href='#' title='A Conversation Title'>A Conversation Title</a></h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec in tortor ut diam ultrices laoreet. In laoreet nunc et purus volutpat sit amet suscipit  est sagittis. Vestibulum in lorem dui. Aenean et magna nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra.</p>
-                  </li>
-                  <li class='offset-1'>
-                    <img class="callout" src="images/avatar_70.gif" alt="avatar_70" width="70" height="70" />
-                    <h4><a href='#' title='A Conversation Title'>A Conversation Title</a></h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec in tortor ut diam ultrices laoreet. In laoreet nunc et purus volutpat sit amet suscipit  est sagittis. Vestibulum in lorem dui. Aenean et magna nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra.</p>
-                  </li>
-                  <li class='offset-1'>
-                    <img class="callout" src="images/avatar_70.gif" alt="avatar_70" width="70" height="70" />
-                    <h4><a href='#' title='A Conversation Title'>A Conversation Title</a></h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec in tortor ut diam ultrices laoreet. In laoreet nunc et purus volutpat sit amet suscipit  est sagittis. Vestibulum in lorem dui. Aenean et magna nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra.</p>
-                  </li>
-                </ol>
-          <div class="pagination">
-            <p>Page <span class="current">1</span>, <a href="#">2</a>, <a href="#">3</a>, <a href="#">Next</a></p>
-          </div>
+
+        <%= render :partial => '/conversations/conversation_pager' %>
+
         </div><!-- /.main-content -->     
         <div class='aside supplementary'>
           <h3>Select a Region</h3>

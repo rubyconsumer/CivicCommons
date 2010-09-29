@@ -1,0 +1,3 @@
+class SuggestedAction < Contribution
+  
+end

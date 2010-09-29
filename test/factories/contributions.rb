@@ -3,6 +3,7 @@
 Factory.define :top_level_contribution do |f|
   f.datetime "2010-06-30 12:39:43"
   f.association :person, :factory => :normal_person
+  f.association :conversation, :factory => :conversation
   f.content "MyText"
   f.type "TopLevelContribution"
 end
@@ -10,6 +11,7 @@ end
 Factory.define :contribution do |f|
   f.datetime "2010-06-30 12:39:43"
   f.association :person, :factory => :normal_person
+  f.association :conversation, :factory => :conversation
   f.content "MyText"
   f.association :parent, :factory => :top_level_contribution
 end
@@ -17,6 +19,7 @@ end
 Factory.define :comment do |f|
   f.datetime "2010-06-30 12:39:43"
   f.association :person, :factory => :normal_person
+  f.association :conversation, :factory => :conversation
   f.content "MyText"
   f.association :parent, :factory => :top_level_contribution
 end
@@ -24,6 +27,7 @@ end
 Factory.define :question do |f|
   f.datetime "2010-06-30 12:39:43"
   f.association :person, :factory => :normal_person
+  f.association :conversation, :factory => :conversation
   f.content "MyText?"
   f.association :parent, :factory => :top_level_contribution
 end

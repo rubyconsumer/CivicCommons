@@ -26,16 +26,19 @@
     }
 
     selectTab = function(tabs,panels,clicked){
-      if(opts.animate){
-        panels.filter("." + opts.panelActiveClass).removeClass(opts.panelActiveClass).fadeOut(opts.animationSpeed, function(){
-          panels.filter("#" + $(clicked).attr("href").substr(1)).fadeIn(opts.animationSpeed, function(){ $(this).addClass(opts.panelActiveClass); });
-        });
-      }else{
-        panels.filter("." + opts.panelActiveClass).removeClass(opts.panelActiveClass).hide();
-        panels.filter("#" + $(clicked).attr("href").substr(1)).addClass(opts.panelActiveClass).show();
+      var targetDiv = $(clicked).attr("href");
+      if(window.location.hash == '' || tabs.find("a[href='" + window.location.hash + "']").size() > 0){
+        if(opts.animate){
+          panels.filter("." + opts.panelActiveClass).removeClass(opts.panelActiveClass).fadeOut(opts.animationSpeed, function(){
+            panels.filter(targetDiv).fadeIn(opts.animationSpeed, function(){ $(this).addClass(opts.panelActiveClass); });
+          });
+        }else{
+          panels.filter("." + opts.panelActiveClass).removeClass(opts.panelActiveClass).hide();
+          panels.filter(targetDiv).addClass(opts.panelActiveClass).show();
+        }
+        tabs.filter("." + opts.tabActiveClass).removeClass(opts.tabActiveClass).children().removeClass(opts.tabActiveClass);
+        clicked.parent().addClass(opts.tabActiveClass).children().addClass(opts.tabActiveClass);
       }
-      tabs.filter("." + opts.tabActiveClass).removeClass(opts.tabActiveClass).children().removeClass(opts.tabActiveClass);
-      clicked.parent().addClass(opts.tabActiveClass).children().addClass(opts.tabActiveClass);
     }
 
     cycleTabs = function(tabs,panels,tabNumber){
@@ -49,7 +52,7 @@
     return this.each(function() {
       var url = window.location;
       var container = $(this);
-      var tabs = $("#" + this.id + " " + (opts.tabs));
+      var tabs = container.find(opts.tabs);
       var panels = $();
       tabs.each(function(){
         panels = panels.add(container.find("div[id=" + $(this).children("a").attr("href").substr(1) + "]").hide());

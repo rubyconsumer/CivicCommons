@@ -1,7 +1,8 @@
+%p= link_to "Go to the perma link page", conversation_path(@conversation), :id => 'perma-link'
 %article
   %header
     %h1= @conversation.title
-    /%h2= "This Conversation is being moderated by: #{@conversation.moderator.full_name}"
+    /%h2= "This Conversation is being moderated by: #{@conversation.moderator.name}"
   %section
     %header 
       %h2 Summary:
@@ -10,17 +11,21 @@
   %section 
     %header
       %h2 Top Node/Contributions:
-    - @conversation.top_level_contributions.each do |c|
-      = c.person.full_name + ":"
+    -@conversation.top_level_contributions.each do |c|
+      = c.person.name + ":"
       %br
       = c.content
       %hr
   %footer
-    %p= "This conversation was started at: #{@conversation.started_at}"
-    -if @conversation.finished_at
-      %p= "This conversation was concluded at: #{@conversation.finished_at}"
-   
-  
+    %p= "This conversation was started at: #{@conversation.created_at}"
+    %p
+      Related Issues:
+      %ul
+        - @conversation.issues.each do |issue|
+          %li= issue.name
+    
+    
+%br  
 =link_to "Back", admin_conversations_path
 |
 =link_to "Edit", edit_admin_conversation_path(@conversation)

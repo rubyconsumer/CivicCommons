@@ -1,3 +1,0 @@
-class EmbeddedSnippet < Contribution
-  
-end

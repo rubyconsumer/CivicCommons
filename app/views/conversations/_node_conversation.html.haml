@@ -1,6 +1,5 @@
-%ul
-  = link_to("Respond", {:action => "new_node_contribution", :contribution_id => @contribution.id, :id => @contribution.conversation_id, :div_id => "contribution-#{@contribution.id}"}, :class => "text button conversation-action", :id => "action-link-#{@contribution.id}", :title => "Leave a comment here", 'data-target' => "#action-div-#{@contribution.id}-respond", :remote => true)
+%li
+  %div{:id => "action-div-#{@top_level_contribution.id}-respond"}
+    = render(:partial => "conversations/tabbed_post_box", :locals => {:conversation_id => @top_level_contribution.conversation_id, :contribution_id => @top_level_contribution.id, :div_id => params[:div_id]})
   
-  %div{:id => "action-div-#{@contribution.id}-respond"}
-
-  = display_direct_descendant_subset(@contribution, @contribution.id)
+= display_direct_descendant_subset(@top_level_contribution, @top_level_contribution.id)

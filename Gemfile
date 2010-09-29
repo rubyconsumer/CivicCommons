@@ -11,6 +11,8 @@ gem 'haml'
 gem 'date_validator'
 gem "will_paginate", "~> 3.0.pre2"
 
+gem 'httparty'
+
 group :development do
   gem "rails3-generators"
   gem "hpricot"
@@ -20,6 +22,7 @@ end
 
 group :test do
   gem 'cucumber'
+  gem 'capybara'
   gem 'cucumber-rails'
   gem 'rb-appscript'
   gem 'safariwatir'
@@ -34,3 +37,4 @@ gem 'meta_search'
 
 gem 'paperclip'
 gem 'aws-s3'
+gem 'nokogiri'
