@@ -13,20 +13,19 @@ class PeopleAggregator::Person
 
   def save
     @attrs.merge!(adminPassword: "admin")
-    response = self.class.post('/newUser', body: @attrs)
+    r = self.class.post('/newUser', body: @attrs)
 
-    response.tap do |r|
-      self.class.log_people_aggregator_response r
+    self.class.log_people_aggregator_response r
 
-      case r.code
-      when 412
-        missing_key = r.parsed_response['msg'][/key (.*) is required/, 1]
-        raise ArgumentError, 'The key "%s" is required.' % missing_key
-      when 409
-        login_name = r.parsed_response['msg'][/Login name (.*) is already taken/, 1]
-        raise StandardError, 'The user with login "%s" already exists.' % login_name
-      end
+    case r.code
+    when 412
+      missing_key = r.parsed_response['msg'][/key (.*) is required/, 1]
+      raise ArgumentError, 'The key "%s" is required.' % missing_key
+    when 409
+      login_name = r.parsed_response['msg'][/Login name (.*) is already taken/, 1]
+      raise StandardError, 'The user with login "%s" already exists.' % login_name
     end
+    r
   end
 
 
