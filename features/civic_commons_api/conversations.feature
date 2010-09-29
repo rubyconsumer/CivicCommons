@@ -1,4 +1,3 @@
-@wip
 Feature:
   As a People Aggregator developer
   I want to be able to retrieve conversations a user is participating in
