@@ -63,7 +63,8 @@ admin_person.confirm!
 
   Person.create!(:name => name,
                  :email => email,
-                 :password => "password")
+                 :password => "password",
+                 :proxy => true)
 end
 
 

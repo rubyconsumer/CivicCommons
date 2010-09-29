@@ -1,5 +1,5 @@
 %h2 Create a Proxy Account
--form_for [:admin, @person] do |person|
+-form_for [:admin, @person], :html => {:multipart => true} do |person|
   - all_errors = @person.errors.full_messages
   - if all_errors.any?
     #error_explanation
@@ -19,6 +19,11 @@
     %br
     =person.text_field :last_name
     
+  %p
+    =person.label :avatar, "Please upload an image for this person"
+    %br
+    =person.file_field :avatar
+  
   %p
     =person.submit
 %br

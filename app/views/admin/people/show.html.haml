@@ -1,5 +1,7 @@
 %h2= @person.name
 
+=image_tag @person.avatar.url(:standard)
+%br
 
 =link_to "Edit", edit_admin_person_path(@person)
 |
