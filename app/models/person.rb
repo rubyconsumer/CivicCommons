@@ -31,6 +31,7 @@ class Person < ActiveRecord::Base
        :standard => "70x70>"},
     :storage => :s3,
     :s3_credentials => s3_credential_file,
+    :default_url => '/images/avatar_70.gif',
     :path => ":attachment/:id/:style/:filename"
   
 
