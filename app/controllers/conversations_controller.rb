@@ -57,11 +57,11 @@ class ConversationsController < ApplicationController
     respond_to do |format|
       if @contribution.save
         format.js   { render :partial => "conversations/contributions/#{@contribution.type.underscore}", :locals => {:contribution => @contribution}, :status => :created }
-        format.html { redirect_to(@contribution, :notice => 'Contribution was successfully created.') }
+        format.html { redirect_to(@contribution.conversation, :notice => 'Contribution was successfully created.') }
         format.xml  { render :xml => @contribution, :status => :created, :location => @contribution }
       else
         format.js   { render :json => @contribution.errors, :status => :unprocessable_entity }
-        format.html { render :action => "new_node_contribution" }
+        format.html { render :text => @contribution.errors, :status => :unprocessable_entity }
         format.xml  { render :xml => @contribution.errors, :status => :unprocessable_entity }
       end
     end

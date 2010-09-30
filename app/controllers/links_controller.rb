@@ -4,19 +4,20 @@ class LinksController < ApplicationController
   def new 
     @issues = Issue.alphabetical
     @conversations = Conversation.all
-    @link = Link.new
-    @link.url = link
+    @contribution = Contribution.new
+    @contribution.url = link
+    @contribution.type = "Link"
   end
 
   def create
-    @link = Link.new params[:link]  
+    @link = Contribution.new params[:contribution]  
     @link.save
     redirect_to "/"
   end
 
   private
   def remember_url 
-    session[:link] = params[:link]
+    session[:link] = params[:link] unless params[:link].nil?
   end
 
   def link 

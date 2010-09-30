@@ -1,7 +1,7 @@
 var link = function() {
   var form = $("#link_form_wrapper").remove();
-  var issueIdField = $("#link_issue_id"); 
-  var conversationIdField = $("#link_conversation_id");
+  var issueIdField = $("#contribution_issue_id"); 
+  var conversationIdField = $("#contribution_conversation_id");
 
   var clearHiddenFields = function() {
     issueIdField.val('');
@@ -11,10 +11,13 @@ var link = function() {
   var handleLinkClick = function(type) {
     return function() {
       var issue = $(this).parent("." + type);
-      clearHiddenFields();
-      $("#link_" + type + "_id").val(issue.attr("data-" + type + "_id")); 
-      form.hide().fadeIn(240);
       issue.append(form);
+      form.show();
+      clearHiddenFields();
+      var idElement = $("#contribution_" + type + "_id");
+      idElement.val(issue.attr("data-" + type + "_id")); 
+      if (!idElement.val()) { console.log("couldn't attach " + type + " id");}
+      console.log(idElement.val());
     };
   };
 
