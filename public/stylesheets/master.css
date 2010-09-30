@@ -594,7 +594,13 @@ top: 17px;
 -moz-border-radius: 8px;
 border-radius: 8px;
 }
-
+/* Links */
+#link_form_wrapper {
+  display:none;
+}
+.conversation a:hover, .issue a:hover {
+  cursor:pointer;
+}
 /* Conversation Utility */
 div.convo-utility {
 border: 1px solid #6a6a6a;

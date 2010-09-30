@@ -1,0 +1,33 @@
+- content_for :main_body do
+  .tab-strip
+    %ul
+      %li
+        %a(href="#conversations" title="Conversations") Comment
+      %li
+        %a(href="#issues" title="Issues") Issues
+    .tab-area.input-with-options
+      #issues
+        %h1 Attach link to issue:
+        -@issues.each do |i|
+          .issue{:data => {:issue_id => i.id}}
+            = i.name
+            %a.attach
+              attach
+      #conversations
+        %h1 Attach link to conversation:
+        -@conversations.each do |c|
+          .conversation{:data => {:conversation_id => c.id}}
+            = c.title
+            %a.attach
+              attach
+  #link_form_wrapper
+    -form_for @link do |l|
+      =l.hidden_field(:issue_id)
+      =l.hidden_field(:conversation_id)
+      %p
+        =l.label :url
+        =l.text_field :url
+      %p
+        =l.label :description
+        =l.text_field :description
+  = javascript_include_tag 'lib/link-form'

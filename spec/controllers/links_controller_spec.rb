@@ -56,6 +56,7 @@ describe LinksController do
     end
 
     it "should redirect to the parent resource's path"
+    it "should clear out the sesssion link" #unless devise remembers the entire path and we don't use session
   end
 
 end

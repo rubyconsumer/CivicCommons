@@ -5,6 +5,7 @@ class LinksController < ApplicationController
     @issues = Issue.alphabetical
     @conversations = Conversation.all
     @link = Link.new
+    @link.url = link
   end
 
   def create
@@ -16,5 +17,9 @@ class LinksController < ApplicationController
   private
   def remember_url 
     session[:link] = params[:link]
+  end
+
+  def link 
+    session[:link] || params[:link]
   end
 end
