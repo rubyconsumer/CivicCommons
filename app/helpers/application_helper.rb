@@ -16,6 +16,6 @@ module ApplicationHelper
       :height => 50,
       :alt => "avatar",
       :title => person.name}.merge(options)
-    image_tag(person.avatar_url("small"), image_options)
+    image_tag(person.avatar.url("small"), image_options)
   end
 end
