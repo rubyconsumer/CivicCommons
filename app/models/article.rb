@@ -7,7 +7,7 @@ class Article < ActiveRecord::Base
   has_attached_file :image,
     :styles => {
        :subfeature => "70x70>",
-       :mainfeature => "340x225" },
+       :mainfeature => "340x225>" },
     :storage => :s3,
     :s3_credentials => s3_credential_file,
     :path => ":attachment/:id/:style/:filename"
