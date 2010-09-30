@@ -3,7 +3,7 @@
     .meta
       .comment-type.question{:class=>contribution.official ? "" : "unofficial"}
         - "Official" if contribution.official
-      %img{:alt=>" [#{contribution.person.name} image] ", :height => 25, :width => 25, :src=>"#{contribution.person.avatar_url(:small)}"}
+      %img{:alt=>" [#{contribution.person.name} image] ", :height => 25, :width => 25, :src=>"#{contribution.person.avatar.url(:small)}"}
     %p
       %a{:href=>person_path(contribution.person), :title=>"#{contribution.person.name}'s Profile"}
         %strong= contribution.person.name
