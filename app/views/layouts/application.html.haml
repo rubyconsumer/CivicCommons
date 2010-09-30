@@ -51,8 +51,7 @@
                 %h3
                   %a 
                     = current_person.name
-                %a
-                  = link_to "Logout", destroy_person_session_path
+                = link_to "Logout", destroy_person_session_path
               - else
                 = render :partial => 'layouts/single_column'
     #nav-wrapper
