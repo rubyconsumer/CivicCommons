@@ -16,5 +16,13 @@ class ApplicationController < ActionController::Base
     redirect_to new_person_session_url if current_person.nil?
   end
 
+  def after_sign_in_path_for(resource_or_scope)
+    if session[:link] 
+      new_link_path
+    else
+      super
+    end
+  end
+  
 end   
 

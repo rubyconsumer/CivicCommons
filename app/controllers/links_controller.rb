@@ -7,6 +7,7 @@ class LinksController < ApplicationController
     @contribution = Contribution.new
     @contribution.url = link
     @contribution.type = "Link"
+    forget_url
   end
 
   def create
@@ -18,6 +19,10 @@ class LinksController < ApplicationController
   private
   def remember_url 
     session[:link] = params[:link] unless params[:link].nil?
+  end
+
+  def forget_url
+    session[:link] = nil
   end
 
   def link 
