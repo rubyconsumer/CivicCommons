@@ -9,6 +9,8 @@ Given /^the user signs up with:$/ do |table|
   fill_in 'person[password]', with: values['Password']
   fill_in 'person[password_confirmation]', with: values['Password']
 
+  attach_file("person[avatar]", File.join(attachments_path, 'imageAttachment.png'))
+
   click 'Register'
 
   @current_person = Person.where(email: values['Email']).first
