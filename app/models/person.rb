@@ -28,7 +28,8 @@ class Person < ActiveRecord::Base
   
   has_attached_file :avatar,
     :styles => {
-       :standard => "70x70>"},
+      :small => "20x20>",
+      :standard => "70x70>"},
     :storage => :s3,
     :s3_credentials => s3_credential_file,
     :default_url => '/images/avatar_70.gif',
@@ -64,12 +65,6 @@ class Person < ActiveRecord::Base
     names = name.split(' ')
   end
 
-  # Until we get some way to input real avatars, everyone's gonna look like George.
-  def avatar_url(size)
-    size = "small"
-    return '/images/nemeth-avatar-small.png'
-  end
-  
   def create_proxy
     self.email = (first_name + last_name).gsub(/['\s]/,'').downcase + "@example.com"
     self.password = 'p4s$w0Rd'

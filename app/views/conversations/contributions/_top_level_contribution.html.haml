@@ -6,7 +6,7 @@
         .meta
           .comment-type{:class=>contribution.official ? "" : "unofficial"}
             - "Official" if contribution.official
-          %img{:alt=>" [#{contribution.person.name} image] ", :height => 25, :width => 25, :src=>"#{contribution.person.avatar_url(:small)}"}
+          = contribution_profile(contribution.person).html_safe
           %br
           %br
           = format_time_only(contribution.created_at)
