@@ -33,7 +33,7 @@ class Conversation < ActiveRecord::Base
     :storage => :s3,
     :s3_credentials => s3_credential_file,
     :path => CONVERSATION_ATTACHMENT_PATH,
-    :default_url => 'images/convo_img_:style.gif'
+    :default_url => '/images/convo_img_:style.gif'
 
   search_methods :containing_issue, :containing_guide
   
