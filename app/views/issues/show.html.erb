@@ -68,7 +68,7 @@
       <div class="three-col-sm">
         <% @latest_conversations.each do |conversation| %>
         <div class="cols call-out">
-          <img class="main-img" src="images/convo_img_mod.gif" alt="convo_img_mod" width="198" height="130" />
+          <img class="main-img" src="<%= conversation.image.url(:panel) %>" alt="<%= conversation.title %>" width="198" height="130" />
 	  <h4><%= conversation.title %></h4>
           <p><%= conversation.summary %></p>
 	  <div class="photobank">
@@ -95,12 +95,12 @@
       <h3>Suggest an Action</h3>
       <ol class='conversations divided'>
 	<li class='offset-1'>
-	  <img class="callout" src="images/avatar_70.gif" alt="avatar_70" width="70" height="70" />
+	  <img class="callout" src="images/avatar_70.gif" alt="TODO" width="70" height="70" />
 	  <p><strong><a href="#">Person's Name</a></strong> suggests:</p>
 	  <p>Aliquam erat volutpat. Mauris vel neque sit amet nunc gravida congue sed.</p>
 	</li>
 	<li class='offset-1'>
-	  <img class="callout" src="images/avatar_70.gif" alt="avatar_70" width="70" height="70" />
+	  <img class="callout" src="images/avatar_70.gif" alt="TODO" width="70" height="70" />
 	  <p><strong><a href="#">Person's Name</a></strong> suggests:</p>
 	  <p>Aliquam erat volutpat. Mauris vel neque sit amet nunc gravida congue sed.</p>
 	</li>

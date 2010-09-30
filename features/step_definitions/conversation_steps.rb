@@ -6,9 +6,6 @@ Given /^a conversation:$/ do |table|
                                 first_name: 'Test',
                                 last_name: 'Admin')
 
-  attachments_path = File.expand_path(
-                        File.dirname(__FILE__) + '/../support/attachments')
-
   attachment = File.join(attachments_path, conversation['Image'])
 
   @conversation =

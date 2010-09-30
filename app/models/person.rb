@@ -15,6 +15,8 @@ class Person < ActiveRecord::Base
   attr_accessible :name, :first_name, :last_name, :email, :password, :password_confirmation, :top, :zip_code, :admin, :validated, 
                   :avatar
 
+  attr_accessor :avatar_file_name
+
   has_many :contributions, :foreign_key => 'owner'
   has_many :ratings
   has_and_belongs_to_many :conversations, :join_table => 'conversations_guides', :foreign_key => :guide_id
@@ -26,9 +28,11 @@ class Person < ActiveRecord::Base
   
   has_attached_file :avatar,
     :styles => {
-       :standard => "70x70>"},
+      :small => "20x20>",
+      :standard => "70x70>"},
     :storage => :s3,
     :s3_credentials => s3_credential_file,
+    :default_url => '/images/avatar_70.gif',
     :path => ":attachment/:id/:style/:filename"
   
 
@@ -61,12 +65,6 @@ class Person < ActiveRecord::Base
     names = name.split(' ')
   end
 
-  # Until we get some way to input real avatars, everyone's gonna look like George.
-  def avatar_url(size)
-    size = "small"
-    return '/images/nemeth-avatar-small.png'
-  end
-  
   def create_proxy
     self.email = (first_name + last_name).gsub(/['\s]/,'').downcase + "@example.com"
     self.password = 'p4s$w0Rd'
