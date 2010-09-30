@@ -1,3 +1,42 @@
+<script type="text/javascript">
+$('form.contribution-form')
+    .live("ajax:success", function(evt, data, status, xhr){
+        var json = $.parseJSON(data); // throws error if data is not JSON
+        try {
+            if("errors" in json) {
+                return $(this).trigger('ajax:failure', xhr, status, data); // only gets to here if JSON parsing was successful and has error key
+            }
+        }catch(err){
+            // do nothing
+        } 
+        location.reload();
+    })
+    .live("ajax:failure", function(evt, xhr, status, error){
+        var errors = $.parseJSON(xhr.responseText)['errors'].join("<br/>")
+        $(this).find(".errors").html(errors);
+    });
+
+$(document).ready(function() {
+    $('a#comment-contribution').click(function() {
+        $('a#comment-contribution').hide();
+        $('form#new-comment-contribution').show('slow');
+        return false;
+    });
+    
+    $('p#resource-contributions > a.file-link').click(function() {
+        $('p#resource-contributions').hide();
+        $('form#new-file-contribution').show('slow');
+        return false;
+    });
+    
+    $('p#resource-contributions > a.video-link').click(function() {
+        $('p#resource-contributions').hide();
+        $('form#new-video-contribution').show('slow');
+        return false;
+    });
+});
+</script>
+
 <div id='wrapper'>
   <p class='notice'></p>
   <p class='alert'></p>
@@ -38,22 +77,26 @@
       </div>
     </div><!-- /.main-content -->
     <div class='aside supplementary'>
-      <div class="dnld document">
-	<p><strong><a href="#">Name of File to Download</a></strong></p>
-	<p>Brief description or caption of the file.</p>
-	<p><em>By: Person's Name</em></p>
-      </div>
-      <div class="dnld image">
-	<p><strong><a href="#">Name of an Image</a></strong></p>
-	<p>Brief description or caption of the file.</p>
-	<p><em>By: Person's Name</em></p>
-      </div>
+      <% @media_contributions.each do |contribution| %>
+        <% if contribution.respond_to?(:is_image?) %>
+          <div class="dnld <%= contribution.is_image? ? 'image' : 'document'%>">
+          <p><strong><%= link_to contribution.attachment_file_name, contribution.attachment.url %></strong></p>
+      <% else %>
       <div class="dnld video">
-	<p><strong><a href="#">A YouTube Video</a></strong></p>
-	<p>Brief description or caption of the file.</p>
-	<p><em>By: Person's Name</em></p>
+	<p><strong><%= link_to contribution.url, contribution.url %></strong></p>
+      <% end %>
+	<p><%= contribution.content %></p>
+	<p><em>By: <%= contribution.person.name %></em></p>
       </div>
-      <p>Add a <a href="#">File</a>/<a href="#">Image</a>/<a href="#">Video</a></p>
+      <% end %>
+      <% if person_signed_in? %>
+          <p id="resource-contributions">Add a <a href="#" class="file-link">File</a>/<a class="file-link" href="#">Image</a>/<a class="video-link" href="#">Video</a></p>
+          <%= render :partial => "new_file_contribution" %>
+          <%= render :partial => "new_link_contribution" %>
+     <% else %>
+        <p>You must <%= link_to "sign in", new_person_session_path %> or <%= link_to "sign up", new_person_registration_path %> to contribute a file or video</p>
+      <% end %>
+     
     </div><!-- /.aside -->
   </div><!-- /.content-container -->
   <div class="content-container">
@@ -83,7 +126,7 @@
     <div class="aside supplementary">
       <h3>Contributions</h3>
       <ol class='conversations divided'>
-        <% @contributions.each do |contribution| %>
+        <% @comments.each do |contribution| %>
 	<li class='offset-1'>
           <%= avatar_tag(contribution.person, :class => "callout", :width => 60, :height => 60) %>
 	  <h4><a href="#"><%= truncate(contribution.content) %> </a></h4>
@@ -91,26 +134,30 @@
 	</li>
         <% end %>
       </ol>
-      <p><a href="#">Write a contribution</a></p>
+      <% if person_signed_in? %>
+        <p><a href="" id="comment-contribution">Write a contribution</a></p>
+        <%= render :partial => "new_comment_contribution" %>
+        <% else %>
+        <p>You must <%= link_to "sign in", new_person_session_path %> or <%= link_to "sign up", new_person_registration_path %> to write a contribution</p>
+      <% end %>
+      <br/>
       <h3>Suggest an Action</h3>
       <ol class='conversations divided'>
+        <% @suggested_actions.each do |suggested_action| %>
 	<li class='offset-1'>
-	  <img class="callout" src="images/avatar_70.gif" alt="TODO" width="70" height="70" />
-	  <p><strong><a href="#">Person's Name</a></strong> suggests:</p>
-	  <p>Aliquam erat volutpat. Mauris vel neque sit amet nunc gravida congue sed.</p>
+          <%= avatar_tag(suggested_action.person, :class => "callout", :width => 70, :height => 70) %>
+	  <p><strong><%= link_to suggested_action.person.name, suggested_action.person %>></strong> suggests:</p>
+	  <p><%= suggested_action.content %></p>
 	</li>
-	<li class='offset-1'>
-	  <img class="callout" src="images/avatar_70.gif" alt="TODO" width="70" height="70" />
-	  <p><strong><a href="#">Person's Name</a></strong> suggests:</p>
-	  <p>Aliquam erat volutpat. Mauris vel neque sit amet nunc gravida congue sed.</p>
-	</li>
+       <% end %>
       </ol>
-      <form class="general-aside">
-	<div class='form-block'>
-	  <textarea id="sugest-action" name="suggest-action" placeholder="Suggested action"></textarea>
-	</div>
-	<input class="submit" type="submit" value="Submit" />
-      </form>
+      <% if person_signed_in? %>
+        <%= render :partial => "new_suggested_action_contribution" %>
+      <% else %>
+        <p>You must <%= link_to "sign in", new_person_session_path %> or <%= link_to "sign up", new_person_registration_path %> to suggest an action</p>
+      <% end %>
+
     </div><!-- /.aside -->
   </div><!-- /.content-container -->
 </div>
+

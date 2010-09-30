@@ -12,7 +12,9 @@ Civiccommons::Application.routes.draw do
 
   resources :answers
 
-  resources :issues
+  resources :issues do
+    post 'create_contribution', :on => :member
+  end
 
   resources :links
 

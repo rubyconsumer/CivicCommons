@@ -14,5 +14,9 @@ class AttachedFile < Contribution
     :styles => {:thumb => "75x75>", :medium => "300x300>", :large => "800x800>"}
       
   validates_attachment_presence :attachment
+
+  def is_image?
+    attachment_content_type =~ /^image/
+  end
   
 end

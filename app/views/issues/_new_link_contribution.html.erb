@@ -1,0 +1,12 @@
+<%= form_for Contribution.new, :url => create_contribution_issue_url(@issue),
+    :remote => true, :html => {:class => "general-aside contribution-form", :style => "display:none",
+                                :multipart => true,
+                                :id => "new-video-contribution"} do |f| %>
+<div class='form-block'> 
+  <%= f.text_area(:content, :rows => 2, :placeholder => "Comment on Video") %>
+  <%= f.text_area(:url, :rows => 1, :placeholder => "http://www.youtube.com") %>
+  <%= f.hidden_field(:type, :value => "Link") %>
+</div>
+<div class="errors"></div>
+<%= f.submit("Submit", :class => "submit") %>
+<% end %>

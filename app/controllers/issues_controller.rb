@@ -1,5 +1,6 @@
 class IssuesController < ApplicationController
   before_filter :verify_admin, :only=>[:new, :create, :edit, :update, :destroy]
+  before_filter :authenticate_person!, :only => [:create_contribution]
 
   # GET /issues
   # GET /issues.xml
@@ -24,7 +25,10 @@ class IssuesController < ApplicationController
     @latest_conversations = @issue.conversations.latest_updated.limit(3)
     @people = @issue.participants.exclude_organizations
     @organizations = @issue.participants.exclude_people
-    @contributions = @issue.contributions.most_recent.first(6)
+    @comments = @issue.comments.most_recent.first(6)
+    @suggested_actions = @issue.suggested_actions.most_recent.first(6)
+    @media_contributions = @issue.media_contributions.most_recent.first(3)
+    
     @issue.visit!((current_person.nil? ? nil : current_person.id))
 
     respond_to do |format|
@@ -65,6 +69,24 @@ class IssuesController < ApplicationController
       end
     end
   end
+
+  def create_contribution
+    @issue = Issue.find(params[:id])
+    contribution_params = params[:contribution].merge(:issue_id => @issue.id)
+    @contribution = Contribution.
+      create_node_level_contribution(contribution_params, current_person)
+
+    respond_to do |format|
+      format.js do
+        if @contribution.save
+          render :json => @contribution, :status => :created
+        else
+          render :json => {:errors => @contribution.errors.full_messages }, :status => :unprocessable_entity
+        end
+      end
+    end
+  end
+  
 
   # PUT /issues/1
   # PUT /issues/1.xml

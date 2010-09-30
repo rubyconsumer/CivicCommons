@@ -8,6 +8,12 @@ class Issue < ActiveRecord::Base
   has_and_belongs_to_many :conversations
   # Contributions directly related to this Issue
   has_many :contributions
+  has_many :comments
+  has_many :suggested_actions
+  has_many(:media_contributions, :class_name => "Contribution",
+           :conditions => "type = 'Link' or type = 'AttachedFile'")
+  
+  
   # Anyone who has contributed directly to the issue via a contribution
   has_many(:participants,
            :through => :contributions,

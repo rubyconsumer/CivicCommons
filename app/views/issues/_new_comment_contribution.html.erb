@@ -1,0 +1,9 @@
+<%= form_for Contribution.new, :url => create_contribution_issue_url(@issue), :remote => true,
+            :html => {:class => "general-aside contribution-form", :id => "new-comment-contribution", :style => "display:none"} do |f| %>
+<div class='form-block'> 
+  <%= f.text_area(:content, :rows => 3, :placeholder => "Write a contribution") %>
+  <%= f.hidden_field(:type, :value => "Comment") %>
+</div>
+<div class="errors"></div>
+<%= f.submit("Submit", :class => "submit") %>
+<% end %>

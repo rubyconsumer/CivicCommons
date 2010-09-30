@@ -48,4 +48,38 @@ describe Contribution do
       contribution.item.should == @issue
     end
   end
+  describe "validating a contribution" do
+    it "should require an issue or a contributiion" do
+      person = Factory.create(:normal_person)
+      contribution = Contribution.
+        create_node_level_contribution({:content => "Foo Bar",
+                                         :type => "Comment"},
+                                       person)
+      contribution.errors.count.should == 1
+    end
+  end
+
+  describe "validating a contribution for an issue" do
+    before(:each) do
+      @issue = Factory.create(:issue)
+      @person = Factory.create(:normal_person)
+    end
+
+    it "should be valid when creating a Comment" do
+      contribution = Contribution.
+        create_node_level_contribution({:issue_id => @issue.id,
+                                         :content => "Foo Bar",
+                                         :type => "Comment"},
+                                       @person)
+      contribution.valid?.should be_true
+    end
+
+    it "should not be valid without a person" do
+      contribution = Contribution.
+        create_node_level_contribution({:issue_id => @issue.id,
+                                         :content => "Foo Bar",
+                                         :type => "Comment"}, nil)
+      contribution.valid?.should be_false
+    end
+  end
 end
