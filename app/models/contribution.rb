@@ -11,7 +11,7 @@ class Contribution < ActiveRecord::Base
   belongs_to :issue
   
   validates_with ContributionValidator
-  validates :person, :conversation, :presence=>true 
+  validates :person, :item, :presence=>true 
   validates_associated :conversation, :parent, :person
   
   scope :most_recent, {:order => 'created_at DESC'}
@@ -25,5 +25,9 @@ class Contribution < ActiveRecord::Base
     params.merge!({:person => person})
     return model.create(params)
   end
-      
+     
+  def item
+    self.conversation || self.issue
+  end
+
 end

@@ -49,6 +49,7 @@ describe LinksController do
   describe "POST create" do 
 
     it "should assign link to story" do 
+      pending("might not be a real action")
       @controller.stub(:current_person).and_return(Person.new)
       Link.stub(:new).with({'these' => 'params'}) { mock_link(:save => true) }
       post :create, :link => { 'these' => "params"}

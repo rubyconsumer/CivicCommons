@@ -51,13 +51,14 @@ class ConversationsController < ApplicationController
     end
   end
   
+  #TODO: consider moving this to its own controller?
   def create_node_contribution
     @contribution = Contribution.create_node_level_contribution(params[:contribution], current_person)
 
     respond_to do |format|
       if @contribution.save
         format.js   { render :partial => "conversations/contributions/#{@contribution.type.underscore}", :locals => {:contribution => @contribution}, :status => :created }
-        format.html { redirect_to(@contribution.conversation, :notice => 'Contribution was successfully created.') }
+        format.html { redirect_to(@contribution.item, :notice => 'Contribution was successfully created.') }
         format.xml  { render :xml => @contribution, :status => :created, :location => @contribution }
       else
         format.js   { render :json => @contribution.errors, :status => :unprocessable_entity }

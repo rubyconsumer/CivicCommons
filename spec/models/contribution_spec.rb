@@ -32,6 +32,20 @@ describe Contribution do
         contribution = Contribution.create({:conversation=>@conversation, :person=>@mock_person, :content=>"Hello World"})
         contribution.person.should == @mock_person
       end    
+      it "should set the item to the conversation" do 
+        contribution = Contribution.create({:conversation=>@conversation, :person=>@mock_person, :content=>"Hello World"})
+        contribution.item.should == @conversation
+      end
+    end
+  end
+  describe "when creating a contribution for an issue" do
+    before(:each) do
+      @issue = Factory.create(:issue)
+      @mock_person = Factory.create(:normal_person)      
+    end
+    it "should set the item to the issue" do 
+      contribution = Contribution.create({:issue=>@issue, :person=>@mock_person, :content=>"Hello World"})
+      contribution.item.should == @issue
     end
   end
 end
