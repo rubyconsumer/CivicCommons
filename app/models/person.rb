@@ -15,8 +15,6 @@ class Person < ActiveRecord::Base
   attr_accessible :name, :first_name, :last_name, :email, :password, :password_confirmation, :top, :zip_code, :admin, :validated, 
                   :avatar
 
-  attr_accessor :avatar_file_name
-
   has_many :contributions, :foreign_key => 'owner'
   has_many :ratings
   has_and_belongs_to_many :conversations, :join_table => 'conversations_guides', :foreign_key => :guide_id
