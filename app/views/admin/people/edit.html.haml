@@ -1,5 +1,5 @@
 %h2 Edit Person Information
--form_for [:admin, @person] do |person|
+-form_for [:admin, @person], :html => {:multipart => true} do |person|
   - all_errors = @person.errors.full_messages
   - if all_errors.any?
     #error_explanation
@@ -23,6 +23,10 @@
     =person.label :email
     %br
     =person.text_field :email
+    
+  %p
+    =person.label :avatar, "Image"
+    =person.file_field :avatar
     
   %p
     =person.label :admin

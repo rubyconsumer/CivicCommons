@@ -5,6 +5,7 @@ class Conversation < ActiveRecord::Base
   
   has_many :contributions
   has_many :top_level_contributions
+  accepts_nested_attributes_for :top_level_contributions, :allow_destroy => true
 
   # any person that has made a contribution to the convo
   has_many(:participants, :through => :contributions, :source => :person,
@@ -31,7 +32,7 @@ class Conversation < ActiveRecord::Base
        :panel => "198x130" },
     :storage => :s3,
     :s3_credentials => s3_credential_file,
-    :path => ":attachment/:id/:style/:filename"
+    :path => CONVERSATION_ATTACHMENT_PATH
 
   search_methods :containing_issue, :containing_guide
   

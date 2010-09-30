@@ -1,6 +1,58 @@
 %h1 New Conversation
 
-=render :partial => 'form'
+-form_for [:admin, @conversation], :html =>{:multipart => true} do |conversation|
+  - all_errors = @conversation.errors.full_messages + @presenter.errors.full_messages
+  - if all_errors.any?
+    #error_explanation
+      %h2
+        = pluralize(all_errors.size, "error")
+        prohibited this conversation from being saved:
+      %ul
+        - all_errors.each do |msg|
+          %li= msg
+  %p
+    =conversation.label :title
+    %br
+    =conversation.text_field :title
+
+  %p
+    =conversation.label :image, "Attach an Image"
+    %br
+    =conversation.file_field :image
+
+  %p
+    =conversation.label :summary
+    %br
+    =conversation.text_area :summary
+    
+  %p
+    =label_tag 'Transcript'
+    %br
+    =file_field_tag 'transcript_file'
+    
+  %p
+    =conversation.label :moderator_id, "Moderator"
+    %br
+    =conversation.collection_select :moderator_id, Person.all, :id, :name, :prompt => true
+
+  %p
+    =conversation.label :zip_code, "Enter Zip Code"
+    %br
+    =conversation.text_field :zip_code
+
+  %p
+    =conversation.label :issues, "Select Issues"
+    %br
+    %table
+      - Issue.alphabetical.each_slice(2) do |slice|
+        %tr
+          -slice.each do |issue|
+            %td
+              =check_box_tag "conversation[issue_ids][]", issue.id
+              =issue.name
+
+  %p
+    =conversation.submit
 
 
 =link_to "Back", admin_conversations_path

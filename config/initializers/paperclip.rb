@@ -10,3 +10,9 @@ Paperclip.options[:command_path] = if File.exists?("/opt/local/bin/convert")
 
 Paperclip.options[:log_command] = true
 
+CONVERSATION_ATTACHMENT_PATH = if Rails.env == "test"
+  ":attachment/:style/:filename"
+else
+  ":attachment/:id/:style/:filename"
+end
+

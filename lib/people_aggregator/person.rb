@@ -12,11 +12,10 @@ class PeopleAggregator::Person
 
 
   def save
-    Rails.logger.info "We are starting: PeopleAggregator::Person.save."
     @attrs.merge!(adminPassword: "admin")
     r = self.class.post('/newUser', body: @attrs)
 
-      self.class.log_people_aggregator_response r
+    self.class.log_people_aggregator_response r
 
     case r.code
     when 412
@@ -68,6 +67,4 @@ class PeopleAggregator::Person
     attrs = r.parsed_response
     self.new(attrs)
   end
-
-
 end

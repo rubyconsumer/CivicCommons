@@ -33,6 +33,12 @@ Civiccommons::Application.routes.draw do
     root        :to => "dashboard#show"
   end
   
+
+  namespace "api" do
+    match "/:email/conversations", :to => "conversations#index", :via => [:get], :email => /.*@.*/
+  end
+
+
   resources :questions
   
   match '/top_items/newest', :to=>'top_items#newest', :as =>'newest_items'

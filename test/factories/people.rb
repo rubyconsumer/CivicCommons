@@ -10,7 +10,7 @@ Factory.define :people do |f|
   end
   Factory.define :admin_person, :class=>Person do |u|
     u.password 'password'
-    u.sequence(:email) {|n| "test.account#{n}@mysite.com" }
+    u.sequence(:email) {|n| "test.admin.account#{n}@mysite.com" }
     u.admin true
   end  
 end
