@@ -55,4 +55,13 @@ module AvatarHelper
     EOHTML
   end
   
+  def avatar_tag(person, options={})
+    image_options = {
+      :width => 50,
+      :height => 50,
+      :alt => "avatar",
+      :title => person.name}.merge(options)
+    image_tag(person.avatar.url("small"), image_options)
+  end
+
 end
