@@ -28,6 +28,7 @@ GEM
       activemodel (= 3.0.0)
       activesupport (= 3.0.0)
     activesupport (3.0.0)
+    archive-tar-minitar (0.5.2)
     arel (1.0.1)
       activesupport (~> 3.0.0)
     aws-s3 (0.6.2)
@@ -43,6 +44,7 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       selenium-webdriver (>= 0.0.3)
+    columnize (0.3.1)
     commonwatir (1.6.5)
       user-choices
     crack (0.1.8)
@@ -95,6 +97,8 @@ GEM
     i18n (0.4.1)
     json (1.4.6)
     json_pure (1.4.6)
+    linecache19 (0.5.11)
+      ruby_core_source (>= 0.1.4)
     mail (2.2.5)
       activesupport (>= 2.3.6)
       mime-types
@@ -144,7 +148,17 @@ GEM
     rspec-mocks (2.0.0.beta.20)
     rspec-rails (2.0.0.beta.20)
       rspec (= 2.0.0.beta.20)
+    ruby-debug-base19 (0.11.24)
+      columnize (>= 0.3.1)
+      linecache19 (>= 0.5.11)
+      ruby_core_source (>= 0.1.4)
+    ruby-debug19 (0.11.6)
+      columnize (>= 0.3.1)
+      linecache19 (>= 0.5.11)
+      ruby-debug-base19 (>= 0.11.19)
     ruby-termios (0.9.6)
+    ruby_core_source (0.1.4)
+      archive-tar-minitar (>= 0.5.2)
     ruby_parser (2.0.5)
       sexp_processor (~> 3.0)
     rubyforge (2.0.4)
@@ -198,6 +212,7 @@ DEPENDENCIES
   rails3-generators
   rb-appscript
   rspec-rails (>= 2.0.0.beta.10)
+  ruby-debug19
   ruby_parser
   safariwatir
   sqlite3-ruby

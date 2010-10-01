@@ -29,6 +29,7 @@ group :test do
   gem 'firewatir'
   gem 'rspec-rails', '>= 2.0.0.beta.10'
   gem "factory_girl_rails"
+  gem "ruby-debug19"
 end
 
 gem 'devise', '1.1.2'
