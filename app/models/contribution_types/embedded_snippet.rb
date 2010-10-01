@@ -1,7 +1,8 @@
 class EmbeddedSnippet < Contribution
   include EmbeddedLinkable
+  include YouTubeable
   
   #only accepts YouTube videos for now
-  validates :url, :format => EmbeddedLinkable::YOUTUBE_REGEX
+  validates :url, :format => YouTubeable::YOUTUBE_REGEX
   
 end

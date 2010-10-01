@@ -1,8 +1,16 @@
+require 'youtubeable'
+
 class Article < ActiveRecord::Base
+  include YouTubeable
+
   # return an open File object that contains our Amazon S3 credentials.
   filename = '/data/TheCivicCommons/shared/config/amazon_s3.yml' # the way it lands on EngineYard
   filename = Rails.root + 'config/amazon_s3.yml' unless File.exist? filename
   s3_credential_file = File.new(filename)
+
+  def url
+    self.video_url
+  end
 
   has_attached_file :image,
     :styles => {

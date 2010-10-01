@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100928184028) do
+ActiveRecord::Schema.define(:version => 20101001140749) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -19,17 +19,18 @@ ActiveRecord::Schema.define(:version => 20100928184028) do
     t.string   "link"
     t.string   "video_url"
     t.string   "percent"
-    t.boolean  "current",              :default => false
-    t.boolean  "main",                 :default => false
+    t.boolean  "current",                              :default => false
+    t.boolean  "main",                                 :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "image_file_name"
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
-    t.boolean  "homepage_article",     :default => false
-    t.boolean  "issue_article",        :default => false
-    t.boolean  "conversation_article", :default => false
+    t.boolean  "homepage_article",                     :default => false
+    t.boolean  "issue_article",                        :default => false
+    t.boolean  "conversation_article",                 :default => false
+    t.string   "embed_target",         :limit => 1000
   end
 
   create_table "contributions", :force => true do |t|
@@ -38,7 +39,7 @@ ActiveRecord::Schema.define(:version => 20100928184028) do
     t.text     "content"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "official",                :default => false
+    t.boolean  "official",                                :default => false
     t.integer  "conversation_id"
     t.integer  "parent_id"
     t.integer  "issue_id"
@@ -46,7 +47,7 @@ ActiveRecord::Schema.define(:version => 20100928184028) do
     t.string   "attachment_content_type"
     t.integer  "attachment_file_size"
     t.datetime "attachment_updated_at"
-    t.string   "type",                    :default => "Contribution"
+    t.string   "type",                                    :default => "Contribution"
     t.integer  "total_visits"
     t.integer  "recent_visits"
     t.integer  "total_rating"
@@ -59,7 +60,7 @@ ActiveRecord::Schema.define(:version => 20100928184028) do
     t.string   "url"
     t.string   "title"
     t.text     "description"
-    t.string   "embed_target"
+    t.string   "embed_target",            :limit => 1000
   end
 
   create_table "conversations", :force => true do |t|

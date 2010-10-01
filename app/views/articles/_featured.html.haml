@@ -5,7 +5,10 @@
   .main-content
     .feature
       .feat-callout
-        %img{:alt => "Featured Article - #{@main_article.title}", :height => "225", :src => @main_article.image.url(:mainfeature), :width => "340"}/
+        -if @main_article.youtube_link?
+          =raw @main_article.embed_target
+        -else
+          %img{:alt => "Featured Article - #{@main_article.title}", :height => "225", :src => @main_article.image.url(:mainfeature), :width => "340"}/
       .feat-content
         = @main_article.description.html_safe
         %p
