@@ -1,4 +1,4 @@
-When /^I ask for conversations with URL:$/ do |url|
+When /^I ask for \w+ with URL:$/ do |url|
   @url = url
 end
 
