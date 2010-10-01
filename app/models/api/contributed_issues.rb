@@ -11,7 +11,7 @@ class Api::ContributedIssues
 
     issues.map do |issue|
       {
-        title: issue.name,
+        name: issue.name,
         summary: issue.summary,
         participant_count: issue.participants.count,
         contribution_count: issue.contributions.where(owner: person).count

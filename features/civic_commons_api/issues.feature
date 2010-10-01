@@ -26,7 +26,7 @@ Feature:
     """
     [
       {
-        "title": "This is a test issue",
+        "name": "This is a test issue",
         "summary": "Test issue",
         "participant_count": 1,
         "contribution_count": 1
