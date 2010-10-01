@@ -1,4 +1,4 @@
-class API::ContributedConversations
+class Api::ContributedConversations
 
   def self.for_person(person)
     conversations = person.contributed_conversations
