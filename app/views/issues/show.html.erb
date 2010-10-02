@@ -109,6 +109,10 @@ $(document).ready(function() {
 	</p>
       </div>
       <div class="three-col-sm">
+        <!-- 
+          NOTE: There is a partial for this conversations/conversation_pager that should be used
+          instead of this.  The markup below is incorrect. Ask Josh W. if you have questions.
+        -->
         <% @latest_conversations.each do |conversation| %>
         <div class="cols call-out">
           <img class="main-img" src="<%= conversation.image.url(:panel) %>" alt="<%= conversation.title %>" width="198" height="130" />
@@ -116,7 +120,7 @@ $(document).ready(function() {
           <p><%= conversation.summary %></p>
 	  <div class="photobank">
             <% conversation.participants.each do |person| %>
-            <%= avatar_tag(person, :width => "42", :height => "42") %>
+            <%= avatar_tag(person, :width => "40", :height => "40") %>
             <% end %>
 	  </div>
 	</div>

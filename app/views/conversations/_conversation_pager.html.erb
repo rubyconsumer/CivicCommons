@@ -6,7 +6,7 @@
         <a href="<%= conversation_path(conversation)%>">
           <img class="main-img" src="<%= conversation.image.url(:panel) %>" alt="convo_img_mod" width="178" height="100" />
           <h4><%= conversation.title %></h4>
-          <p><%= conversation.summary %></p>
+          <p><%= truncate(conversation.summary, {:length => 130, :separator => ' '}) %></p>
         </a>
         <div class="photobank">
           <% conversation.participants[0...4].each do |participant| %>
