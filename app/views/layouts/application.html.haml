@@ -48,12 +48,16 @@
               = user_profile(current_person).html_safe
               
               - if current_person
-                %h3
+                %h4
                   %a 
                     = current_person.name
                 = link_to "Logout", destroy_person_session_path
               - else
                 = render :partial => 'layouts/single_column'
+          .important
+            %p
+              We need your help.
+              %a{:href => '#'} Suggest a Topic
     #nav-wrapper
       #nav
         %ul#main-nav
