@@ -12,10 +12,10 @@ module AvatarHelper
   def conversation_profile(person)
     if person && person.people_aggregator_id
       link_to_profile(person) do
-        profile_image(person, 42)
+        profile_image(person, 40)
       end
     else
-      profile_image(person, 42)
+      profile_image(person, 40)
     end
   end
   

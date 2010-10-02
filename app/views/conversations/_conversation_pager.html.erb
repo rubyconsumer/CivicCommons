@@ -9,7 +9,7 @@
           <p><%= conversation.summary %></p>
         </a>
         <div class="photobank">
-          <% conversation.participants.each do |participant| %>
+          <% conversation.participants[0...4].each do |participant| %>
             <%= conversation_profile(participant).html_safe %>
           <% end %>
         </div>
