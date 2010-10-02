@@ -15,7 +15,7 @@
     %ol.conversations
       - @sub_articles.each do |article|
         %li.offset-1
-          %img.callout{:alt => "#{article.title}", :height => "60", :src => article.image.url(:subfeature), :width => "60"}/
+          %img.callout{:alt => "#{article.title}", :height => "60", :src => article.image.url(:subfeature), :width => "90"}/
           %h4
             %a{:href => article.link}= article.title
           %p
