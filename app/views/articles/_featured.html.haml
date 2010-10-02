@@ -5,7 +5,7 @@
   .main-content
     .feature
       .feat-callout
-        %img{:alt => "Featured Article - #{@main_article.title}", :height => "225", :src => @main_article.image.url(:mainfeature), :width => "340"}/
+        %img{:alt => "Featured Article - #{@main_article.title}", :height => "200", :src => @main_article.image.url(:mainfeature), :width => "300"}/
       .feat-content
         = @main_article.description.html_safe
         %p
@@ -15,7 +15,7 @@
     %ol.conversations
       - @sub_articles.each do |article|
         %li.offset-1
-          %img.callout{:alt => "#{article.title}", :height => "70", :src => article.image.url(:subfeature), :width => "70"}/
+          %img.callout{:alt => "#{article.title}", :height => "60", :src => article.image.url(:subfeature), :width => "60"}/
           %h4
             %a{:href => article.link}= article.title
           %p

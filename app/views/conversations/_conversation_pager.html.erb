@@ -4,7 +4,7 @@
     <% conversation_mini_array.each do |conversation| %>
       <div class="cols call-out">
         <a href="<%= conversation_path(conversation)%>">
-          <img class="main-img" src="<%= conversation.image.url(:panel) %>" alt="convo_img_mod" width="198" height="130" />
+          <img class="main-img" src="<%= conversation.image.url(:panel) %>" alt="convo_img_mod" width="178" height="100" />
           <h4><%= conversation.title %></h4>
           <p><%= conversation.summary %></p>
         </a>
