@@ -377,7 +377,11 @@ margin-left: 20px;
 div.three-col-sm div.cols {margin-left: 10px;}
 div.three-col div.cols {width: 300px;}
 div.three-col-sm div.cols {width: 200px;}
-div.three-col-sm div.cols.call-out {width: 180px;}
+div.three-col-sm div.cols.call-out {
+padding-bottom: 40px;
+position: relative;
+width: 180px;
+}
 
 /* Header and Logo */
 #header-wrapper {background-color: #fff;}
@@ -832,11 +836,28 @@ a img {border: none;}
 div.call-out {
 background: #eee url(../images/simple_grad.gif) repeat-x top;
 border: 1px solid #9ba1ae;
-min-height: 305px;
+min-height: 280px;
 padding: 9px;
 -webkit-border-radius: 4px;
 -moz-border-radius: 4px;
 border-radius: 4px;
+-webkit-transition: all 0.2s ease-in-out;
+-moz-transition: all 0.2s ease-in-out;
+}
+div.call-out .photobank {
+bottom: 4px;
+position: absolute;
+width: 100%;
+}
+div.call-out a {
+color: #444;
+text-decoration: none;
+}
+div.call-out:hover {
+cursor: pointer;
+-webkit-box-shadow: 0px 1px 4px rgba(0,0,0,.5);
+-moz-box-shadow: 0px 1px 4px rgba(0,0,0,.5);
+box-shadow: 0px 1px 4px rgba(0,0,0,.5);
 }
 img.region-img {margin-bottom: 2em;}
 div.callout .time-stamp {
@@ -853,8 +874,8 @@ border-bottom: 1px solid #999;
 }
 .feature-mast img {
 -webkit-box-shadow: 0px 2px 4px rgba(0,0,0,.5);
--moz-box-shadow: 0px 2px 5px rgba(0,0,0,.5);
-box-shadow: 0px 2px 5px rgba(0,0,0,.5);
+-moz-box-shadow: 0px 2px 4px rgba(0,0,0,.5);
+box-shadow: 0px 2px 4px rgba(0,0,0,.5);
 }
 
 /* Aside Modual */
