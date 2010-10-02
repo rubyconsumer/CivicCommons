@@ -513,6 +513,7 @@ width: 62px;
 }
 
 /* Feature Area */
+.feature h1 {margin-bottom: 3px;}
 .feature {margin-bottom: 20px;}
 .feature .feat-callout {
 float: left;
