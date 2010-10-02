@@ -4,7 +4,7 @@
     <% conversation_mini_array.each do |conversation| %>
       <div class="cols call-out">
         <a href="<%= conversation_path(conversation)%>">
-          <img class="main-img" src="<%= conversation.image.url(:panel) %>" alt="convo_img_mod" width="178" height="100" />
+          <img class="main-img" src="<%= conversation.image.url(:panel) %>" alt="convo_img_mod" width="180" height="120" />
           <h4><%= conversation.title %></h4>
           <p><%= truncate(conversation.summary, {:length => 130, :separator => ' '}) %></p>
         </a>
