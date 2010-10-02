@@ -48,12 +48,16 @@
               = user_profile(current_person).html_safe
               
               - if current_person
-                %h3
+                %h4
                   %a 
                     = current_person.name
                 = link_to "Logout", destroy_person_session_path
               - else
                 = render :partial => 'layouts/single_column'
+          .important
+            %p
+              We need your help.
+              %a{:href => '#'} Suggest a Topic
     #nav-wrapper
       #nav
         %ul#main-nav
@@ -75,10 +79,7 @@
         %form#search{ :method=>"post" }
           %input.textbox#search{ :type=>"text", :name=>"search", :placeholder=>"Name, Keyword, Date..." }
           %input.submit{ :type=>"submit", :value=>"Search" }
-    #wrapper
-      %p.notice= notice
-      %p.alert= alert
-      = yield :main_body
+    = yield :main_body
     #footer.footer
       #footer-inner
         %ul.sub-nav
@@ -104,3 +105,12 @@
             %a{:href => '#', :title => 'About'}
               About
         %p The Civic Commons is Copyright 2010 by the Legal Entity.  Content is licensed under License.
+        %ul.social-media
+          %li
+            %a{ :href => 'http://www.facebook.com/pages/Civic-Commons/143930632284131', :id => 'facebook'} Facebook
+          %li
+            %a{ :href => 'http://twitter.com/civiccommons', :id => 'twitter'} Twitter
+          %li
+            %a{ :href => '#', :id => 'youtube'} YouTube
+          %li
+            %a{ :href => '#', :id => 'rss'} RSS
