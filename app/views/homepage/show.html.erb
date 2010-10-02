@@ -1,41 +1,47 @@
-  <div class="content-container">
-    <%= render :partial => '/articles/featured' %>
+<div class="feature-mast">
+  <div class="wrapper">
+    <div class="content-container">
+      <%= render :partial => '/articles/featured' %>
+    </div>
   </div>
+</div>
 
-<div class="content-container">
-  <div class="main-content">
-    <%= render :partial => '/conversations/conversation_pager' %>
-  </div><!-- /.main-content -->
-  <div class="aside supplementary">
-    <div class="mod">
-      <h3>Select a Region</h3>
+<div class="wrapper">
+  <div class="content-container">
+    <div class="main-content">
+      <%= render :partial => '/conversations/conversation_pager' %>
+    </div><!-- /.main-content -->
+    <div class="aside supplementary">
+      <div class="mod">
+        <h3>Select a Region</h3>
 
-      <div class="mod-content">
-        <ul class='link-list'>
-          <li><a href="#">Name of Region</a></li>
-          <li><a href="#">Name of Region</a></li>
-          <li><a href="#">Name of Region</a></li>
-          <li><a href="#">Name of Region</a></li>
-          <li><a href="#">Name of Region</a></li>
-          <li><a href="#">Name of Region</a></li>
-        </ul>
+        <div class="mod-content">
+          <ul class='link-list'>
+            <li><a href="#">Name of Region</a></li>
+            <li><a href="#">Name of Region</a></li>
+            <li><a href="#">Name of Region</a></li>
+            <li><a href="#">Name of Region</a></li>
+            <li><a href="#">Name of Region</a></li>
+            <li><a href="#">Name of Region</a></li>
+          </ul>
+        </div>
       </div>
-    </div>
-    <div class="mod">
-      <h3>Community Poll</h3>
-      <div class="mod-content">
-        <p>Of the three options below, which do you think is the most authoritative.</p>
-        <form class="general-aside">
-          <div class="form-block radio">
-            <label for="option-1"><input type="radio" name="option-1" /> Option 1</label>
-            <label for="option-2"><input type="radio" name="option-2" /> Option 2</label>
-            <label for="option-3"><input type="radio" name="option-3" /> Option 3</label>
-          </div>
-          <div class='form-block'>
-            <p><input class='submit' type='submit' value='Submit'></p>
-          </div>
-        </form>
+      <div class="mod">
+        <h3>Community Poll</h3>
+        <div class="mod-content">
+          <p>Of the three options below, which do you think is the most authoritative.</p>
+          <form class="general-aside">
+            <div class="form-block radio">
+              <label for="option-1"><input type="radio" name="option-1" /> Option 1</label>
+              <label for="option-2"><input type="radio" name="option-2" /> Option 2</label>
+              <label for="option-3"><input type="radio" name="option-3" /> Option 3</label>
+            </div>
+            <div class='form-block'>
+              <p><input class='submit' type='submit' value='Submit'></p>
+            </div>
+          </form>
+        </div>
       </div>
-    </div>
-  </div><!-- /.aside -->
-</div><!-- /.content-container -->
+    </div><!-- /.aside -->
+  </div><!-- /.content-container -->
+</div><!-- /.wrapper -->

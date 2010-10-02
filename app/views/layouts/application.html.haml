@@ -79,10 +79,7 @@
         %form#search{ :method=>"post" }
           %input.textbox#search{ :type=>"text", :name=>"search", :placeholder=>"Name, Keyword, Date..." }
           %input.submit{ :type=>"submit", :value=>"Search" }
-    #wrapper
-      %p.notice= notice
-      %p.alert= alert
-      = yield :main_body
+    = yield :main_body
     #footer.footer
       #footer-inner
         %ul.sub-nav
