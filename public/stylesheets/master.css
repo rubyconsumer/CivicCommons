@@ -264,6 +264,18 @@ padding-top: .5em;
 .data-table a {text-decoration: none;}
 .pagination .current {font-weight: bold;}
 
+/* Links */
+#link_form_wrapper { display:none; width:500px; padding:19px; border: 1px solid #555; background-color:#fefefe}
+#new_link { padding:20px; }
+#new_link #conversations, #new_link #issues { padding:20px;}
+#new_link .conversation, #new_link .issue { padding-top:10px;}
+#new_link .input-with-options label { padding: 4px }  
+#new_link input[type="text"] { padding-left:10px;width: 380px }  
+.conversation a:hover, .issue a:hover { cursor:pointer; }
+#new_link ul { float: right; padding-right: 30px; }
+#new_link ul li { float: right; padding:10px;}
+#new_link .name { float:left; width:400px; } 
+#new_link .next { clear:both}
 /*-----------------------------------------------
 =Button and Link Styles
 -----------------------------------------------*/
