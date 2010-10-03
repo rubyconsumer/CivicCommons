@@ -9,7 +9,7 @@ var widget = function() {
     link.attr("href", "http://" + domain + "/links/new?link=" + window.location);
     var url = "http://" + domain + "/images/cc_thumb.jpg";
     url = "/images/cc_thumb.jpg";
-    link.append($("<img>", {"src":url}));
+    link.append($("<img>", {"src":url, "border":"0"}));
   };
   return self;
 
