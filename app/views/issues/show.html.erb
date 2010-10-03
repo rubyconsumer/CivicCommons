@@ -39,16 +39,16 @@ $(document).ready(function() {
 
 <div class="wrapper">
   <div class="content-container">
-    <h1><%= @issue.name %></h1>
     <p class="convo-meta"><a class="button" href="#" title="Follow this conversation">Follow</a></p>
     <div class='main-content'>
       <div class='feature'>
-	<div class='feat-callout'>
-	  <img src="images/featured.gif" alt="featured" width="340" height="225" />
-	</div>
-	<div class="feat-content">
-	  <p><%= @issue.summary %></p>
-	  <p><strong>Created On:</strong> <%= @issue.created_at.strftime("%m/%d/%Y") %></p>
+        <div class='feat-callout'>
+          <img src="images/featured.gif" alt="featured" width="300" height="200" />
+        </div>
+        <div class="feat-content">
+          <h1><%= @issue.name %></h1>
+          <p><%= @issue.summary %></p>
+          <p><strong>Created On:</strong> <%= @issue.created_at.strftime("%m/%d/%Y") %></p>
           <!--
               # TODO - admin only? or remove?
 	  <p><a href="#">Edit summary</a></p>
