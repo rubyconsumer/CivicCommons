@@ -1,19 +1,19 @@
 - content_for :main_body do
   #new_link
-    .tab-strip
+    .tabs
       %ul
-        %li
-          %a(href="#conversations" title="Conversations") Conversations
-        %li
-          %a(href="#issues" title="Issues") Issues
-      .tab-area.input-with-options
-        #issues
+        %li{:data=>{:tab=>"conversations"}}
+          Conversations
+        %li{:data=>{:tab=>"issues"}}
+          Issues
+      .input-with-options
+        #issues.tab
           %h1 Attach link to issue:
           -@issues.each do |i|
             .issue{:data => {:issue_id => i.id}}
               =i.name
               %input.attach.submit{:type=>"submit", :value=>"Attach"}
-        #conversations
+        #conversations.tab
           %h1 Attach link to conversation:
           -@conversations.each do |c|
             .conversation{:data => {:conversation_id => c.id}}
@@ -29,7 +29,7 @@
           =l.text_field :url
         %p
           =l.label :description
-          =l.text_field :description
+          =l.text_area :description, :as => "text"
         %p
           =l.submit
     = javascript_include_tag 'lib/link-form'
