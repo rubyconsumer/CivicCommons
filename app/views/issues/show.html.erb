@@ -102,20 +102,24 @@ $(document).ready(function() {
       <h3>Conversations about this issue:</h3>
       <div class="three-col-sm">
         <!-- 
-          NOTE: There is a partial for this conversations/conversation_pager that should be used
-          instead of this.  The markup below is incorrect. Ask Josh W. if you have questions.
+          NOTE: There is a partial for this conversations/conversation_pager
+          but, I couldn't make it work in this context
         -->
         <% @latest_conversations.each do |conversation| %>
-        <div class="cols call-out">
-          <img class="main-img" src="<%= conversation.image.url(:panel) %>" alt="<%= conversation.title %>" width="198" height="130" />
-	  <h4><%= conversation.title %></h4>
-          <p><%= conversation.summary %></p>
-	  <div class="photobank">
-            <% conversation.participants.each do |person| %>
-            <%= avatar_tag(person, :width => "40", :height => "40") %>
-            <% end %>
-	  </div>
-	</div>
+          <div class="cols call-out">
+            <a href="<%= conversation_path(conversation)%>">
+              <img class="main-img" src="<%= conversation.image.url(:panel) %>" alt="<%= conversation.title %>" width="180" height="120" />
+              <h4><%= truncate(conversation.title, {:length => 45, :seperator => ' '}) %></h4>
+              <p><%= truncate(conversation.summary, {:length => 125, :separator => ' '}) %></p>
+            </a>
+
+            <div class="photobank">
+              <% conversation.participants[0...4].each do |person| %>
+                <%= avatar_tag(person, :width => "40", :height => "40") %>
+              <% end %>
+            </div>
+
+          </div>
         <% end %>
       </div>
     </div><!-- /.main-content -->
