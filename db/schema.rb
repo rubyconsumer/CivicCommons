@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101001140749) do
+ActiveRecord::Schema.define(:version => 20101001143352) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -182,6 +182,14 @@ ActiveRecord::Schema.define(:version => 20101001140749) do
 
   create_table "regions", :force => true do |t|
     t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "subscriptions", :force => true do |t|
+    t.integer  "person_id"
+    t.integer  "subscribable_id"
+    t.string   "subscribable_type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
