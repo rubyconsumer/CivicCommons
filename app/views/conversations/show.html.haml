@@ -2,13 +2,19 @@
   = javascript_include_tag('lib/conversations/show')
 
 - content_for :main do
+  .feature-mast
+    .wrapper
+      .content-container
+        %h1= @conversation.title
+        %p.convo-meta
+          %a.button{ :href => '#', :title => 'Follow this conversation'} Follow
+          %strong XX people
+          are engaged, last activity
+          %strong XX days ago
   .wrapper
-    .content-container
-      %h1= @conversation.title
     .content-container
       .main-content
         #show_conversation
-          %p.conversation_description= @conversation.summary
           %input{:type=>"hidden", :id=>"conversation_id", :value=>"#{@conversation.id}"}
           %input{:type=>"hidden", :id=>"post_model_type", :value=>"Comment"}
           %span(id="conversation_rating")
@@ -31,6 +37,19 @@
               =render :partial => "conversations/contributions/#{contribution.type.underscore}", :locals => { :contribution => contribution }
 
       .aside.supplementary
+        %p
+          %a{:class => 'button'} Post to this conversation
+        .mod
+          %h3 Summary
+          .mod-content
+            %p= @conversation.summary
+            .dnld.document
+              %p
+                %strong
+                  %a{:href => '#'} Name of File to Download
+              %p Brief description or caption of the file.
+              %p
+                %em By: Person's Name
         .mod
           %h3 Guides
           .mod-content
