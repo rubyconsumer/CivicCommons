@@ -20,13 +20,6 @@ class Issue < ActiveRecord::Base
            :source => :person,
            :uniq => true)
   
-  # paperclip bug: if you don't specify the path, you will get
-  # a stack overflow when trying to upload an image.
-  # return an open File object that contains our Amazon S3 credentials.
-  filename = '/data/TheCivicCommons/shared/config/amazon_s3.yml' # the way it lands on EngineYard
-  filename = Rails.root + 'config/amazon_s3.yml' unless File.exist? filename
-  s3_credential_file = File.new(filename)
-
   has_attached_file(:image,
                     :styles => {
                       :thumb => "100x100#",
@@ -34,7 +27,7 @@ class Issue < ActiveRecord::Base
                       :normal => "480x300>",
                       :panel => "198x130>" },
                     :storage => :s3,
-                    :s3_credentials => s3_credential_file,
+                    :s3_credentials => S3Config.credential_file, 
                     :path => ":attachment/:id/:style/:filename",
                     :default_url => '/images/issue_img_:style.gif')
 

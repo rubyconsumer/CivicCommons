@@ -18,13 +18,6 @@ class Conversation < ActiveRecord::Base
   
   belongs_to :moderator, :class_name => 'Person'
 
-  # paperclip bug: if you don't specify the path, you will get
-  # a stack overflow when trying to upload an image.
-  # return an open File object that contains our Amazon S3 credentials.
-  filename = '/data/TheCivicCommons/shared/config/amazon_s3.yml' # the way it lands on EngineYard
-  filename = Rails.root + 'config/amazon_s3.yml' unless File.exist? filename
-  s3_credential_file = File.new(filename)
-
   has_attached_file :image,
     :styles => {
        :thumb => "100x100#",
@@ -32,7 +25,7 @@ class Conversation < ActiveRecord::Base
        :normal => "480x300>",
        :panel => "198x130>" },
     :storage => :s3,
-    :s3_credentials => s3_credential_file,
+    :s3_credentials => S3Config.credential_file,
     :path => CONVERSATION_ATTACHMENT_PATH,
     :default_url => '/images/convo_img_:style.gif'
 
