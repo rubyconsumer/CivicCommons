@@ -55,13 +55,19 @@ module AvatarHelper
     EOHTML
   end
   
+  # Creates an image_tag for a particular person
+  # options includes options passed along to image_tag along with
+  # :style_name which is a directive for paperclip which determines the
+  # ':style' paperclip should use for the image. 
+  #
   def avatar_tag(person, options={})
+    style_name = options.delete(:style_name) || :small
     image_options = {
       :width => 50,
       :height => 50,
       :alt => "avatar",
       :title => person.name}.merge(options)
-    image_tag(person.avatar.url("small"), image_options)
+    image_tag(person.avatar.url(style_name), image_options)
   end
 
 end
