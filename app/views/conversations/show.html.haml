@@ -2,52 +2,73 @@
   = javascript_include_tag('lib/conversations/show')
 
 - content_for :main do
-  #show_conversation
-    %h1= @conversation.title
-    - if @conversation.image
-      %img{:src => @conversation.image.url(:normal), :alt => " [image for " + (@conversation.title || "conversation") + "] "}
-    %p.conversation_description= @conversation.summary
-    %input{:type=>"hidden", :id=>"conversation_id", :value=>"#{@conversation.id}"}
-    %input{:type=>"hidden", :id=>"post_model_type", :value=>"Comment"}
-    %span(id="conversation_rating")
-      - if person_signed_in?    
-        %a.rating{:class=>"rating_down hide toggle", :href=>"#", :title=>"Rate this comment -1", :onclick=>"RateConversation(#{@conversation.id}, -1);"} -1
-      %a.rating(href="#" title="Rate this comment" class="current_rating")=format_rating(@conversation)
-      - if person_signed_in?    
-        %a.rating{:class=>"rating_up hide toggle", :href=>"#", :title=>"Rate this comment +1", :onclick=>"RateConversation(#{@conversation.id}, +1);"} +1
-    %span (This is the conversation rating until we get a mockup for it)
-    %hr
-    %ul.thread-list
-      - @top_level_contributions.each do |contribution|
-        =render :partial => "conversations/contributions/#{contribution.type.underscore}", :locals => { :contribution => contribution }
-    
-    %hr
-    %h2 Join the Conversation
-    = link_to("Respond to Conversation", {:action => "new_node_contribution", :id => @conversation.id, :div_id => "conversation-#{@conversation.id}"}, :class => "text button conversation-action", :id => "conversation-action-link-#{@conversation.id}", :title => "Leave a comment here", 'data-target' => "#conversation-action-div-#{@conversation.id}", :remote => true)
-    %ul.thread-list
-      %div{:id => "conversation-action-div-#{@conversation.id}"}
-      - @contributions.each do |contribution|
-        =render :partial => "conversations/contributions/#{contribution.type.underscore}", :locals => { :contribution => contribution }
+  .feature-mast
+    .wrapper
+      .content-container
+        %h1= @conversation.title
+        %p.convo-meta
+          %a.button{ :href => '#', :title => 'Follow this conversation'} Follow
+          %strong XX people
+          are engaged, last activity
+          %strong XX days ago
+  .wrapper
+    .content-container
+      .main-content
+        #show_conversation
+          %input{:type=>"hidden", :id=>"conversation_id", :value=>"#{@conversation.id}"}
+          %input{:type=>"hidden", :id=>"post_model_type", :value=>"Comment"}
+          -#
+            %span(id="conversation_rating")
+              - if person_signed_in?    
+                %a.rating{:class=>"rating_down hide toggle", :href=>"#", :title=>"Rate this comment -1", :onclick=>"RateConversation(#{@conversation.id}, -1);"} -1
+              %a.rating(href="#" title="Rate this comment" class="current_rating")=format_rating(@conversation)
+              - if person_signed_in?    
+                %a.rating{:class=>"rating_up hide toggle", :href=>"#", :title=>"Rate this comment +1", :onclick=>"RateConversation(#{@conversation.id}, +1);"} +1
+            %span (This is the conversation rating until we get a mockup for it)
+          %ol.conversations.divided
+            - @top_level_contributions.each do |contribution|
+              =render :partial => "conversations/contributions/#{contribution.type.underscore}", :locals => { :contribution => contribution }
+          %ul.thread-list
+            %div{:id => "conversation-action-div-#{@conversation.id}"}
+            - @contributions.each do |contribution|
+              =render :partial => "conversations/contributions/#{contribution.type.underscore}", :locals => { :contribution => contribution }
 
--content_for :sidebar do
-  .aside.guides
-    %strong Guides
-    %ul
-      -@conversation.guides.each do |guide|
-        %li
-          %a{:href=>"#", :title=>"#{guide.name}"} guide.name
-          = delete_button_for(:guide_id => guide.id)       
-    %a(href="#" title="Add Guide" class="privileged") Add Guide
-  .aside.spotlight
-    %strong Spotlight
-    %ul
-      %li
-        %a(href="#" title="Frank Jackson") Frank Jackson
-        = delete_button_for(:spotlight_id => 3)
-      %li
-        %a(href="#" title="Jane Campbell") Jane Campbell
-        = delete_button_for(:spotlight_id => 4)
-      %li
-        %a(href="#" title="Michael White") Michael White
-        = delete_button_for(:spotlight_id => 5)
-    %a(href="#" title="Add Guide" class="privileged") Add to Spotlight
+      .aside.supplementary
+        %p
+          = link_to("Post to this Conversation", {:action => "new_node_contribution", :id => @conversation.id, :div_id => "conversation-#{@conversation.id}"}, :class => "text button conversation-action", :id => "conversation-action-link-#{@conversation.id}", :title => "Leave a comment here", 'data-target' => "#conversation-action-div-#{@conversation.id}", :remote => true)
+        .mod
+          %h3 Summary
+          .mod-content
+            %p= @conversation.summary
+            .dnld.document
+              %p
+                %strong
+                  %a{:href => '#'} Name of File to Download
+              %p Brief description or caption of the file.
+              %p
+                %em By: Person's Name
+        .mod
+          %h3 Guides
+          .mod-content
+            %ul.link-list
+              -@conversation.guides.each do |guide|
+                %li
+                  %a{:href=>"#", :title=>"#{guide.name}"} guide.name
+                  = delete_button_for(:guide_id => guide.id)       
+              %li 
+                %a(href="#" title="Add Guide" class="privileged") Add Guide
+        .mod
+          %h3 Leaders
+          .mod-content
+            %ul.link-list
+              %li
+                %a(href="#" title="Frank Jackson") Frank Jackson
+                = delete_button_for(:spotlight_id => 3)
+              %li
+                %a(href="#" title="Jane Campbell") Jane Campbell
+                = delete_button_for(:spotlight_id => 4)
+              %li
+                %a(href="#" title="Michael White") Michael White
+                = delete_button_for(:spotlight_id => 5)
+              %li
+                %a(href="#" title="Add Guide" class="privileged") Add to Spotlight

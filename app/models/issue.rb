@@ -20,8 +20,19 @@ class Issue < ActiveRecord::Base
            :source => :person,
            :uniq => true)
   
+  has_attached_file(:image,
+                    :styles => {
+                      :thumb => "100x100#",
+                      :small => "150x150>",
+                      :normal => "480x300>",
+                      :panel => "198x130>" },
+                    :storage => :s3,
+                    :s3_credentials => S3Config.credential_file, 
+                    :path => ":attachment/:id/:style/:filename",
+                    :default_url => '/images/issue_img_:style.gif')
+
+
   validates :name, :presence => true, :length => { :minimum => 5 }  
-  
   
   scope(:most_active, :select =>
         'count(1) as contribution_count, issues.*',

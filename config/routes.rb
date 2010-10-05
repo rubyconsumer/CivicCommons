@@ -38,7 +38,8 @@ Civiccommons::Application.routes.draw do
   
 
   namespace "api" do
-    match "/:email/conversations", :to => "conversations#index", :via => [:get], :email => /.*@.*/
+    match "/:email/conversations", :to => "conversations#index", :via => [:get], :email => /.*@.*/, :format => :json
+    match "/:email/issues", :to => "issues#index", :via => [:get], :email => /.*@.*/, :format => :json
   end
 
 

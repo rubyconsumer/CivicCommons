@@ -1,4 +1,10 @@
-class API::ContributedConversations
+class Api::ContributedConversations
+
+  def self.for_person_by_email(email)
+    person = Person.find_by_email(email)
+    for_person(person)
+  end
+
 
   def self.for_person(person)
     conversations = person.contributed_conversations

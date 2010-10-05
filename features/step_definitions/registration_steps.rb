@@ -15,7 +15,6 @@ Given /^the user signs up with:$/ do |table|
 
   @current_person = Person.where(email: values['Email']).first
 
-  $encrypted_passwords[@current_person.email] = @current_person.encrypted_password
 end
 
 

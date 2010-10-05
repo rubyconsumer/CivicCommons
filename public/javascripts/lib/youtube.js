@@ -17,13 +17,15 @@ var youtube = function() {
   };
 
   var display_thumbnail = function (element) {
+    var thumbnail = element.siblings(".youtube-thumbnail").html("");
+    if (!element.val()) return;
     thumbnail_fetch(element.val(), function (data, textSuccess, xhr) {
       // It appears as though the entry I'm looking for is always first in the
       // entry.link array that's returned, but this is to make sure that the
       // URL being grabbed by this function is always the right one.
       var url = ($.grep(data.entry.link, function (e, i) { return e.rel === 'alternate'; }))[0].href;
       
-      element.siblings(".youtube-thumbnail").html("").append(
+      thumbnail.append(
           $(document.createElement('a'))
           .attr({
             href: url,
@@ -46,17 +48,20 @@ var youtube = function() {
   var self = {};
   self.init = function() {
 
-  var updatePreview = function(element) { try {
-        display_thumbnail(element);
-      } catch(e) {
-        civic.error("Error showing YouTube preview.");
-      }
-  }
+    var updatePreview = function(element) { try {
+          display_thumbnail(element);
+        } catch(e) {
+          civic.error("Error showing YouTube preview.");
+        }
+    };
+
+    var updatePreviewWithDelay =  function() {var element = $(this); setTimeout(function() { updatePreview(element);}, 50);};
     // TODO: consider the value of the change event, since 
     // no one will probably type a youtube url
     //$(".youtube").change(updatePreview);
-    $(".youtube").bind("change", function() { var element = $(this); setTimeout(function() { updatePreview(element);}, 50);});
-    $(".youtube").bind("paste", function() { var element = $(this); setTimeout(function() { updatePreview(element);}, 50);});
+    $(".youtube").bind("change", updatePreviewWithDelay);
+    $(".youtube").bind("paste",  updatePreviewWithDelay)
+    $(".youtube").each(updatePreviewWithDelay);
   };
   return self;
 }();

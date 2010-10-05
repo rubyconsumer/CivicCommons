@@ -12,20 +12,20 @@ module AvatarHelper
   def conversation_profile(person)
     if person && person.people_aggregator_id
       link_to_profile(person) do
-        profile_image(person, 42)
+        profile_image(person, 40)
       end
     else
-      profile_image(person, 42)
+      profile_image(person, 40)
     end
   end
   
   def contribution_profile(person)
     if person && person.people_aggregator_id
       link_to_profile(person) do
-        profile_image(person, 20)
+        profile_image(person, 60)
       end
     else
-      profile_image(person, 20)
+      profile_image(person, 60)
     end
   end
   
@@ -55,13 +55,19 @@ module AvatarHelper
     EOHTML
   end
   
+  # Creates an image_tag for a particular person
+  # options includes options passed along to image_tag along with
+  # :style_name which is a directive for paperclip which determines the
+  # ':style' paperclip should use for the image. 
+  #
   def avatar_tag(person, options={})
+    style_name = options.delete(:style_name) || :small
     image_options = {
       :width => 50,
       :height => 50,
       :alt => "avatar",
       :title => person.name}.merge(options)
-    image_tag(person.avatar.url("small"), image_options)
+    image_tag(person.avatar.url(style_name), image_options)
   end
 
 end

@@ -4,12 +4,12 @@
     <% conversation_mini_array.each do |conversation| %>
       <div class="cols call-out">
         <a href="<%= conversation_path(conversation)%>">
-          <img class="main-img" src="<%= conversation.image.url(:panel) %>" alt="convo_img_mod" width="198" height="130" />
-          <h4><%= conversation.title %></h4>
-          <p><%= conversation.summary %></p>
+          <img class="main-img" src="<%= conversation.image.url(:panel) %>" alt="<%= conversation.title %>" width="180" height="120" />
+          <h4><%= truncate(conversation.title, {:length => 45, :seperator => ' '}) %></h4>
+          <p><%= truncate(conversation.summary, {:length => 125, :separator => ' '}) %></p>
         </a>
         <div class="photobank">
-          <% conversation.participants.each do |participant| %>
+          <% conversation.participants[0...4].each do |participant| %>
             <%= conversation_profile(participant).html_safe %>
           <% end %>
         </div>

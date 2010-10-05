@@ -11,16 +11,14 @@
           %h1 Attach link to issue:
           -@issues.each do |i|
             .issue{:data => {:issue_id => i.id}}
-              = i.name
-              %a.attach
-                attach
+              =i.name
+              %input.attach.submit{:type=>"submit", :value=>"Attach"}
         #conversations
           %h1 Attach link to conversation:
           -@conversations.each do |c|
             .conversation{:data => {:conversation_id => c.id}}
-              = c.title
-              %a.attach
-                attach
+              =c.title
+              %input.attach.submit{:type=>"submit", :value=>"Attach"}
     #link_form_wrapper
       -form_for @contribution, :url => "/conversations/create_node_contribution" do |l|
         =l.hidden_field(:type)

@@ -1,22 +1,13 @@
 class Api::ConversationsController < ActionController::Base
+  respond_to :json
 
 
   def index
-    person = Person.find_by_email(params[:email])
-    conversations = person.contributed_conversations
 
     contributed_conversations =
-      conversations.map do |conversation|
-        {
-          title: conversation.title,
-          image: conversation.image.url,
-          summary: conversation.summary,
-          participant_count: conversation.participants.count,
-          contribution_count: conversation.contributions.where(owner: person).count
-        }
-      end
+      Api::ContributedConversations.for_person_by_email(params[:email])
 
-    render :json => contributed_conversations
+    respond_with contributed_conversations
   end
 
 
