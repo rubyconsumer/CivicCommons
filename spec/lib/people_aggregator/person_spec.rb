@@ -15,6 +15,7 @@ unless defined?(Rails)
     end
   end
 
+  require 'people_aggregator/api_object'
   require 'people_aggregator/person'
 end
 
@@ -24,6 +25,7 @@ describe PeopleAggregator::Person do
 
   before do
     response = OpenStruct.new(parsed_response: {"success"=>true, "login"=>"joe@test.com", "id"=>14, "url"=>"http://civiccommons.digitalcitymechanics.com/user/14", "name"=>" ", "profile"=>{"basic"=>{"first_name"=>"Joe", "last_name"=>"Fiorini"}, "general"=>[], "personal"=>[], "professional"=>[]}}, code: 200)
+
     Person.stub!(:post).and_return(response)
     Person.stub!(:get).and_return(response)
   end

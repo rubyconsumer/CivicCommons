@@ -1,14 +1,13 @@
 class PeopleAggregator::Person
   include PeopleAggregator::Connector
+  include PeopleAggregator::ApiObject
 
   base_uri "http://civiccommons.digitalcitymechanics.com/api/json.php/peopleaggregator"
 
-  def initialize(attrs)
-    @attrs =  attrs.each do |k,v|
-                self.class.send(:attr_reader, k.to_sym)
-                self.instance_variable_set("@#{k}", v)
-              end
-  end
+
+  attr_allowable :login, :email, :id, :url,
+                 :name, :profile, :firstName,
+                 :lastName, :login
 
 
   def save
@@ -65,6 +64,17 @@ class PeopleAggregator::Person
     end
 
     attrs = r.parsed_response
+
+    cleanup_attrs!(attrs)
+
     self.new(attrs)
+  end
+
+
+  private
+
+  def self.cleanup_attrs!(attrs)
+    attrs.delete("success")
+    attrs.delete("name")
   end
 end
