@@ -112,27 +112,7 @@ jQuery(function ($) {
     
   });
   
-  //function RateConversation(conversation_id, rating) {
-  //	var data = "";
-  //	data = data + "conversation_id=" + $("#conversation_id").val();
-  //	data = data + "&rating="+rating;
-  //	
-  //	$.ajax({
-  //		url: "/conversations/rate",
-  //		type: "POST",
-  //		data: data,
-  //		success: function(response) {
-  //			var rating = parseInt(response);
-  //			if (rating == 0)
-  //				$("#conversation_rating a.current_rating").html(response)
-  //			else if (rating > 0)
-  //				$("#conversation_rating a.current_rating").html("+"+response)
-  //			else
-  //				$("#conversation_rating a.current_rating").html("-"+response)			
-  //			
-  //		},
-  //		error: function(xhr, status, error) {
-  //		}
-  //	})
-  //}
+  $('a.rating')
+    .live("ajax:loading", function(){
+  });
 });

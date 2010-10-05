@@ -19,8 +19,7 @@
           %span.action commented:
         %p.content= auto_link(contribution.content)
         %div.action-bar
-          %a.rating.float-right(href="#" title="Rate this contribution")=format_rating(contribution)
-          - if person_signed_in?
-            = link_to((contribution.children.size == 0 ? "Be the first to respond": pluralize(contribution.descendants_count,'Response')), {:action => "node_conversation", :id => contribution.id, :div_id => "contribution-#{contribution.id}"}, :class => "text conversation-action show-conversation-button", :id => "action-link-#{contribution.id}", :title => "View the conversation", 'data-target' => "#action-div-#{contribution.id}", :remote => true)
+          = link_to(format_rating(contribution), {:controller => 'contributions', :action => 'rate', :id => contribution.id, :remote => true}, :class => 'rating float-right')
+          = link_to((contribution.children.size == 0 ? "Be the first to respond": pluralize(contribution.descendants_count,'Response')), {:action => "node_conversation", :id => contribution.id, :div_id => "contribution-#{contribution.id}"}, :class => "text conversation-action show-conversation-button", :id => "action-link-#{contribution.id}", :title => "View the conversation", 'data-target' => "#action-div-#{contribution.id}", :remote => true)
         %div{:clear => 'both'}
         %ul.thread-list.top-level-contribution-action(id="action-div-#{contribution.id}")
