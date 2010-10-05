@@ -7,7 +7,7 @@ class PeopleAggregator::Person
 
   attr_allowable :login, :email, :id, :url,
                  :name, :profile, :firstName,
-                 :lastName, :login
+                 :lastName, :login, :password
 
 
   def save
@@ -52,7 +52,7 @@ class PeopleAggregator::Person
 
 
   def self.create(attrs)
-    self.new(attrs).save
+    self.new(attrs).tap { |p| p.save }
   end
 
   def self.find_by_email(email)
