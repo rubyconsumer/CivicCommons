@@ -128,6 +128,9 @@ jQuery(function ($) {
           }
           $(this).find(".errors").html(errorString);
         });
-    
+      
+      $(document).bind('cbox_closed', function(){
+        alert('And this is where we could reload this section of the conversation page!');
+      });
   });
 });

@@ -2,8 +2,17 @@ $(document).ready(function(){
   if(typeof(Modernizr) != "undefined" && !Modernizr.input.placeholder) {
     $('[placeholder]').placeholder({className: 'placeholder'});
   }
-  $('a[data-colorbox]').live('click', function(e){
+  $('a[data-colorbox]:not(a[data-colorbox-iframe])').live('click', function(e){
     $.colorbox({ href: $(this).attr('href') });
+    e.preventDefault();
+  });
+  $('a[data-colorbox-iframe]').live('click', function(e){
+    $.colorbox({ 
+      href: $(this).attr('href'), 
+      iframe: true, 
+      width: '75%', 
+      height: '75%'
+     });
     e.preventDefault();
   });
 });
