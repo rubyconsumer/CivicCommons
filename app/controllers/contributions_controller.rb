@@ -56,39 +56,44 @@ class ContributionsController < ApplicationController
 
   # PUT /contributions/1
   # PUT /contributions/1.xml
-  #def update
-  #  @contribution = Contribution.find(params[:id])
-  #
-  #  respond_to do |format|
-  #    if @contribution.update_attributes(params[:contribution])
-  #      format.html { redirect_to(@contribution, :notice => 'Contribution was successfully updated.') }
-  #      format.xml  { head :ok }
-  #    else
-  #      format.html { render :action => "edit" }
-  #      format.xml  { render :xml => @contribution.errors, :status => :unprocessable_entity }
-  #    end
-  #  end
-  #end
-
+  def update
+    @contribution = Contribution.find(params[:id])
+  
+    respond_to do |format|
+      if @contribution.update_attributes(params[:contribution])
+        format.html { redirect_to(@contribution, :notice => 'Contribution was successfully updated.') }
+        format.xml  { head :ok }
+      else
+        format.html { render :action => "edit" }
+        format.xml  { render :xml => @contribution.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
+  
   # DELETE /contributions/1
   # DELETE /contributions/1.xml
-  #def destroy
-  #  @contribution = Contribution.find(params[:id])
-  #  @contribution.destroy
-  #
-  #  respond_to do |format|
-  #    format.html { redirect_to(contributions_url) }
-  #    format.xml  { head :ok }
-  #  end
-  #end
+  def destroy
+    @contribution = Contribution.find(params[:id])
+    @contribution.destroy
+  
+    respond_to do |format|
+      format.html { redirect_to(contributions_url) }
+      format.xml  { head :ok }
+    end
+  end
   
   def rate
     return if current_person.nil?
     
-    @contribution = Contribution.find(params[:id])
+    @contribution = Contribution.find(params[:contribution][:id])
+    rating = params[:contribution][:rating]
     unless @contribution.nil?
-      @contribution.rate!(params[:rating].to_i, current_person) unless params[:rating].nil?
-      render :text=>@contribution.total_rating
+      @contribution.rate!(rating.to_i, current_person) unless rating.nil?
+      if rating.to_i > 0
+        render :text=>"You found this productive +#{@contribution.total_rating}"
+      else
+        render :text=>"You found this unproductive -#{@contribution.total_rating}"
+      end
     end
   end
 end

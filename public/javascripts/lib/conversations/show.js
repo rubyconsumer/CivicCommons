@@ -36,6 +36,7 @@ jQuery(function ($) {
     		}
     	);
     }
+    $('.rate-form-container').hide();
   	$('a.conversation-action')
   	  .live("ajax:loading", function(){
   	    var href = $(this).attr("href");
@@ -107,12 +108,26 @@ jQuery(function ($) {
             $(this).find(".errors").html(errorString);
           });
       });
-  	
-  //	$("#show_conversation #conversation_rating").hover(ShowRatingTools, HideRatingTools);
+      
+      $('.rate-form > form')
+        .bind("ajax:loading", function(){
+          //$(this).closest('.rate-form-container').mask("Loading...");
+        })
+        .bind("ajax:complete", function(){
+          //$(this).closest('.rate-form-container').unmask();
+        })
+        .bind("ajax:success", function(evt, data, status, xhr){
+          $(this).closest('.rate-form-container').siblings('p.rating').text(xhr.responseText);
+          $(this).closest('.rate-form-container').remove();
+        })
+        .bind("ajax:failure", function(evt, xhr, status, error){
+          var errors = $.parseJSON(xhr.responseText);
+          var errorString = "There were errors with the submission:\n";
+          for(error in errors){
+            errorString += errors[error] + "\n";
+          }
+          $(this).find(".errors").html(errorString);
+        });
     
-  });
-  
-  $('a.rating')
-    .live("ajax:loading", function(){
   });
 });

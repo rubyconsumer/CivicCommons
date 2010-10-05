@@ -19,5 +19,8 @@
           %p.respond-link
             = link_to((contribution.children.size == 0 ? "Be the first to respond": pluralize(contribution.descendants_count,'Response')), {:action => "node_conversation", :id => contribution.id, :div_id => "contribution-#{contribution.id}"}, :class => "text conversation-action show-conversation-button", :id => "action-link-#{contribution.id}", :title => "View the conversation", 'data-target' => "#action-div-#{contribution.id}", :remote => true)
           %p.rating
-            %a.rate-comment(href="#" title="Rate this contribution")=format_rating(contribution)
+            %a.rate-comment{:title => "Rate this contribution", :href => "#", :onclick => "$('#rate-form-#{contribution.id}').slideDown(); return false;"}
+              =format_rating(contribution)
+          .rate-form-container(id="rate-form-#{contribution.id}")
+            =render(:partial => 'conversations/rate_contribution_form', :locals => {:contribution => contribution})
         %ol.conversations.divided.thread-list.top-level-contribution-action(id="action-div-#{contribution.id}")
