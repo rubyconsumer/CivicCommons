@@ -86,7 +86,7 @@ jQuery(function ($) {
             }catch(err){
               var responseNode = $($("<div />").html(xhr.responseText).text()); // this is needed to properly unescape the HTML returned from doing the jquery.form plugin's ajaxSubmit for some reason
             }
-            $(this).closest('ul.thread-list').append(responseNode);
+            $(this).closest('ol.thread-list,ul.thread-list').append(responseNode);
             
             if($(clicked).hasClass('show-conversation-button')){
               $(this).find('textarea,input[type="text"],input[type="file"]').val('');
