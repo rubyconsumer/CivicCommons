@@ -6,6 +6,8 @@ class Contribution < ActiveRecord::Base
   include TopItemable
   acts_as_nested_set
   
+  ALL_TYPES = ["Answer","AttachedFile","Comment","EmbeddedSnippet","Link","Question","SuggestedAction"]
+  
   belongs_to :person, :foreign_key => "owner"
   belongs_to :conversation
   belongs_to :issue
@@ -21,7 +23,7 @@ class Contribution < ActiveRecord::Base
   def self.create_node_level_contribution(params, person)
     model = params.delete(:type).constantize
     # could probably do this much cleaner, but still need to sanitize this for now
-    raise(ArgumentError, "not a valid node-level Contribution type") unless [Answer,AttachedFile,Comment,EmbeddedSnippet,Link,Question,SuggestedAction].include?(model)
+    raise(ArgumentError, "not a valid node-level Contribution type") unless ALL_TYPES.include?(model.to_s)
     params.merge!({:person => person})
     return model.create(params)
   end
