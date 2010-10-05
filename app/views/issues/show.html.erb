@@ -43,7 +43,7 @@ $(document).ready(function() {
     <div class='main-content'>
       <div class='feature'>
         <div class='feat-callout'>
-          <img src="images/featured.gif" alt="featured" width="300" height="200" />
+          <%= image_tag @issue.image.url(:normal), :alt => @issue.name, :width => 300, :height => 200 %>
         </div>
         <div class="feat-content">
           <h1><%= @issue.name %></h1>
@@ -60,7 +60,7 @@ $(document).ready(function() {
 	  <h3>People active in this issue</h3>
 	  <div class="photobank">
             <% @people.each do |person| %>
-            <%= avatar_tag(person, :height => 50, :width => 50) %>
+            <%= avatar_tag(person, :style_name => :standard, :height => 50, :width => 50) %>
             <% end %>
 	  </div>
 	</div>
@@ -68,7 +68,7 @@ $(document).ready(function() {
 	  <h3>Organizations active in this issue</h3>
 	  <div class="photobank">
             <% @organizations.each do |org| %>
-            <%= avatar_tag(org, :height => 50, :width => 50) %>
+            <%= avatar_tag(org, :style_name => :standard, :height => 50, :width => 50) %>
             <% end %>
 	  </div>
 	</div>
@@ -115,7 +115,7 @@ $(document).ready(function() {
 
             <div class="photobank">
               <% conversation.participants[0...4].each do |person| %>
-                <%= avatar_tag(person, :width => "40", :height => "40") %>
+                <%= avatar_tag(person, :style_name => :standard, :width => "40", :height => "40") %>
               <% end %>
             </div>
 
@@ -128,7 +128,7 @@ $(document).ready(function() {
       <ol class='conversations divided'>
         <% @comments.each do |contribution| %>
 	<li class='offset-1'>
-          <%= avatar_tag(contribution.person, :class => "callout", :width => 60, :height => 60) %>
+          <%= avatar_tag(contribution.person, :style_name => :standard, :class => "callout", :width => 60, :height => 60) %>
 	  <h4><a href="#"><%= truncate(contribution.content) %> </a></h4>
 	  <p>By: <%= contribution.person.name %></p>
 	</li>
@@ -145,8 +145,8 @@ $(document).ready(function() {
       <ol class='conversations divided'>
         <% @suggested_actions.each do |suggested_action| %>
 	<li class='offset-1'>
-          <%= avatar_tag(suggested_action.person, :class => "callout", :width => 70, :height => 70) %>
-	  <p><strong><%= link_to suggested_action.person.name, suggested_action.person %>></strong> suggests:</p>
+          <%= avatar_tag(suggested_action.person, :style_name => :standard, :class => "callout", :width => 70, :height => 70) %>
+	  <p><strong><%= link_to suggested_action.person.name, suggested_action.person %></strong> suggests:</p>
 	  <p><%= suggested_action.content %></p>
 	</li>
        <% end %>

@@ -1,6 +1,10 @@
-%h2= @issue.summary
+%h2= @issue.name
 
-%p= @issue.name
+%p= @issue.summary
+
+%p= image_tag @issue.image.url(:normal) 
+
+
 
 =link_to "Edit", edit_admin_issue_path(@issue)
 |

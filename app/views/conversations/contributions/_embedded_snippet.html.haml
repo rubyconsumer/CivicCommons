@@ -27,9 +27,8 @@
         %p.content.link-quote
           = contribution.description
         %div.action-bar
-          - if person_signed_in?
-            %a.rating.float-right(href="#" title="Rate this contribution")=format_rating(contribution)
-            = link_to("Respond", {:action => "new_node_contribution", :contribution_id => contribution.id, :id => contribution.conversation_id, :div_id => "contribution-#{contribution.id}"}, :class => "text conversation-action", :id => "action-link-#{contribution.id}", :title => "Leave a comment here", 'data-target' => "#action-div-#{contribution.id}", :remote => true)
+          %a.rating.float-right(href="#" title="Rate this contribution")=format_rating(contribution)
+          = link_to("Respond", {:action => "new_node_contribution", :contribution_id => contribution.id, :id => contribution.conversation_id, :div_id => "contribution-#{contribution.id}"}, :class => "text conversation-action", :id => "action-link-#{contribution.id}", :title => "Leave a comment here", 'data-target' => "#action-div-#{contribution.id}", :remote => true)
         %div{:clear => 'both'}
         %ul.thread-list
           .comment-contribution-action(id="action-div-#{contribution.id}")

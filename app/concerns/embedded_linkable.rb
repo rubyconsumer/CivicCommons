@@ -4,7 +4,7 @@ require 'nokogiri'
 module EmbeddedLinkable
 
   def self.included(base)
-    base.before_create :get_link_information
+    base.before_create :get_link_information, :unless => :already_set_title_and_description?
     base.validates :url, :presence=>true, :embedded_link => true
   end
   
@@ -19,8 +19,12 @@ module EmbeddedLinkable
     else
       description = doc.search("//p[1]").first
     end
-    self.title = title.content.strip.gsub(/\s+/, ' ') if title
-    self.description = description.content.strip if description
+    self.title = title.content.strip.gsub(/\s+/, ' ') if title && self.title.blank?
+    self.description = description.content.strip if description && self.description.blank?
+  end
+  
+  def already_set_title_and_description?
+    self.title && self.description
   end
   
 end

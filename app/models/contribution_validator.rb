@@ -1,7 +1,8 @@
 class ContributionValidator < ActiveModel::Validator
   
   def validate(record)
-    record.errors[:content] << "cannot be blank" unless content_not_blank_or_link_or_embedded_snippet?(record)
+    record.errors[:person] << "You must be logged in" if record.person.blank?
+    record.errors[:content] << "Comment cannot be blank" unless content_not_blank_or_link_or_embedded_snippet?(record)
     # This is needed but currently screws up the rspec tests. Don't have time rewrite all the specs right now, so we'll disregard this validation.
     #record.errors[:conversation] << "does not match parent contribution's conversation" unless parent_contribution_belongs_to_conversation?(record)
   end

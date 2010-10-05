@@ -1,14 +1,13 @@
 class PeopleAggregator::Person
   include PeopleAggregator::Connector
+  include PeopleAggregator::ApiObject
 
   base_uri "http://civiccommons.digitalcitymechanics.com/api/json.php/peopleaggregator"
 
-  def initialize(attrs)
-    @attrs =  attrs.each do |k,v|
-                self.class.send(:attr_reader, k.to_sym)
-                self.instance_variable_set("@#{k}", v)
-              end
-  end
+
+  attr_allowable :login, :email, :id, :url,
+                 :name, :profile, :firstName,
+                 :lastName, :login, :password
 
 
   def save
@@ -25,15 +24,17 @@ class PeopleAggregator::Person
       login_name = r.parsed_response['msg'][/Login name (.*) is already taken/, 1]
       raise StandardError, 'The user with login "%s" already exists.' % login_name
     end
-    r
+
+    self.id = r.parsed_response["id"]
+
+    r.code == 200
   end
 
 
-  def destroy(password)
+  def destroy
     @attrs.merge!(adminPassword: "admin")
     r = self.class.post('/deleteUser', body: { adminPassword: @attrs[:adminPassword],
-                                               login: self.login,
-                                               password: password})
+                                               login: self.login})
 
     self.class.log_people_aggregator_response r
 
@@ -51,7 +52,7 @@ class PeopleAggregator::Person
 
 
   def self.create(attrs)
-    self.new(attrs).save
+    self.new(attrs).tap { |p| p.save }
   end
 
   def self.find_by_email(email)
@@ -65,6 +66,17 @@ class PeopleAggregator::Person
     end
 
     attrs = r.parsed_response
+
+    cleanup_attrs!(attrs)
+
     self.new(attrs)
+  end
+
+
+  private
+
+  def self.cleanup_attrs!(attrs)
+    attrs.delete("success")
+    attrs.delete("name")
   end
 end

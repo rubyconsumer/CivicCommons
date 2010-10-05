@@ -36,6 +36,7 @@ jQuery(function ($) {
     		}
     	);
     }
+    $('.rate-form-container').hide();
   	$('a.conversation-action')
   	  .live("ajax:loading", function(){
   	    var href = $(this).attr("href");
@@ -86,7 +87,7 @@ jQuery(function ($) {
             }catch(err){
               var responseNode = $($("<div />").html(xhr.responseText).text()); // this is needed to properly unescape the HTML returned from doing the jquery.form plugin's ajaxSubmit for some reason
             }
-            $(this).closest('ul.thread-list').append(responseNode);
+            $(this).closest('ol.thread-list,ul.thread-list').append(responseNode);
             
             if($(clicked).hasClass('show-conversation-button')){
               $(this).find('textarea,input[type="text"],input[type="file"]').val('');
@@ -102,37 +103,31 @@ jQuery(function ($) {
             var errors = $.parseJSON(xhr.responseText);
             var errorString = "There were errors with the submission:\n";
             for(error in errors){
-              errorString += [error] + " " + errors[error] + "\n";
+              errorString += errors[error] + "\n";
             }
             $(this).find(".errors").html(errorString);
           });
       });
-  	
-  //	$("#show_conversation #conversation_rating").hover(ShowRatingTools, HideRatingTools);
+      
+      $('.rate-form > form')
+        .bind("ajax:loading", function(){
+          //$(this).closest('.rate-form-container').mask("Loading...");
+        })
+        .bind("ajax:complete", function(){
+          //$(this).closest('.rate-form-container').unmask();
+        })
+        .bind("ajax:success", function(evt, data, status, xhr){
+          $(this).closest('.rate-form-container').siblings('p.rating').text(xhr.responseText);
+          $(this).closest('.rate-form-container').remove();
+        })
+        .bind("ajax:failure", function(evt, xhr, status, error){
+          var errors = $.parseJSON(xhr.responseText);
+          var errorString = "There were errors with the submission:\n";
+          for(error in errors){
+            errorString += errors[error] + "\n";
+          }
+          $(this).find(".errors").html(errorString);
+        });
     
   });
-  
-  //function RateConversation(conversation_id, rating) {
-  //	var data = "";
-  //	data = data + "conversation_id=" + $("#conversation_id").val();
-  //	data = data + "&rating="+rating;
-  //	
-  //	$.ajax({
-  //		url: "/conversations/rate",
-  //		type: "POST",
-  //		data: data,
-  //		success: function(response) {
-  //			var rating = parseInt(response);
-  //			if (rating == 0)
-  //				$("#conversation_rating a.current_rating").html(response)
-  //			else if (rating > 0)
-  //				$("#conversation_rating a.current_rating").html("+"+response)
-  //			else
-  //				$("#conversation_rating a.current_rating").html("-"+response)			
-  //			
-  //		},
-  //		error: function(xhr, status, error) {
-  //		}
-  //	})
-  //}
 });

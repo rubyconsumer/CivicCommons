@@ -2,6 +2,7 @@ require 'ostruct'
 
 unless defined?(Rails)
   require 'active_support/concern'
+  require 'active_support/hash_with_indifferent_access'
   require 'people_aggregator'
 
   module PeopleAggregator::Connector
@@ -15,6 +16,7 @@ unless defined?(Rails)
     end
   end
 
+  require 'people_aggregator/api_object'
   require 'people_aggregator/person'
 end
 
@@ -24,6 +26,7 @@ describe PeopleAggregator::Person do
 
   before do
     response = OpenStruct.new(parsed_response: {"success"=>true, "login"=>"joe@test.com", "id"=>14, "url"=>"http://civiccommons.digitalcitymechanics.com/user/14", "name"=>" ", "profile"=>{"basic"=>{"first_name"=>"Joe", "last_name"=>"Fiorini"}, "general"=>[], "personal"=>[], "professional"=>[]}}, code: 200)
+
     Person.stub!(:post).and_return(response)
     Person.stub!(:get).and_return(response)
   end
@@ -42,15 +45,11 @@ describe PeopleAggregator::Person do
 
 
   specify "can save a person instance to People Aggregator" do
-    Person.should_receive(:post).with(anything,
-                                      body: {
-                                      firstName: "Joe",
-                                      lastName: "Test",
-                                      adminPassword: "admin",
-                                      login: "joe@test.com"})
-    response = Person.new(firstName: "Joe", lastName: "Test", login: "joe@test.com").save
-    response.code.should == 200
-    response.parsed_response["id"].should == 14
+    person = Person.new(firstName: "Joe",
+                        lastName: "Test",
+                        login: "joe@test.com")
+    person.save
+    person.id.should == 14
   end
 
 

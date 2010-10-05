@@ -1,10 +1,5 @@
 class Person < ActiveRecord::Base
 
-  # return an open File object that contains our Amazon S3 credentials.
-  filename = '/data/TheCivicCommons/shared/config/amazon_s3.yml' # the way it lands on EngineYard
-  filename = Rails.root + 'config/amazon_s3.yml' unless File.exist? filename
-  s3_credential_file = File.new(filename)
-
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable, :lockable and :timeoutable
   devise :database_authenticatable, :registerable,
@@ -31,7 +26,7 @@ class Person < ActiveRecord::Base
       :small => "20x20>",
       :standard => "70x70>"},
     :storage => :s3,
-    :s3_credentials => s3_credential_file,
+    :s3_credentials => S3Config.credential_file,
     :default_url => '/images/avatar_70.gif',
     :path => ":attachment/:id/:style/:filename"
   

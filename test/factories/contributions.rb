@@ -24,10 +24,51 @@ Factory.define :comment do |f|
   f.association :parent, :factory => :top_level_contribution
 end
 
+Factory.define :suggested_action do |f|
+  f.datetime "2010-06-30 12:39:43"
+  f.association :person, :factory => :normal_person
+  f.association :conversation, :factory => :conversation
+  f.content "MyText"
+  f.association :parent, :factory => :top_level_contribution
+end
+
 Factory.define :question do |f|
   f.datetime "2010-06-30 12:39:43"
   f.association :person, :factory => :normal_person
   f.association :conversation, :factory => :conversation
   f.content "MyText?"
+  f.association :parent, :factory => :top_level_contribution
+end
+
+Factory.define :answer do |f|
+  f.datetime "2010-06-30 12:39:43"
+  f.association :person, :factory => :normal_person
+  f.association :conversation, :factory => :conversation
+  f.content "MyText"
+  f.association :parent, :factory => :question
+end
+
+Factory.define :attached_file do |f|
+  f.datetime "2010-06-30 12:39:43"
+  f.association :person, :factory => :normal_person
+  f.association :conversation, :factory => :conversation
+  f.content "MyText"
+  f.association :parent, :factory => :top_level_contribution
+  f.attachment File.new(Rails.root + 'test/fixtures/images/test_image.jpg')
+end
+
+Factory.define :link do |f|
+  f.datetime "2010-06-30 12:39:43"
+  f.association :person, :factory => :normal_person
+  f.association :conversation, :factory => :conversation
+  f.content "MyText"
+  f.association :parent, :factory => :top_level_contribution
+end
+
+Factory.define :embedded_snippet do |f|
+  f.datetime "2010-06-30 12:39:43"
+  f.association :person, :factory => :normal_person
+  f.association :conversation, :factory => :conversation
+  f.content "MyText"
   f.association :parent, :factory => :top_level_contribution
 end

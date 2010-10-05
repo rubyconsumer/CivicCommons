@@ -2,7 +2,7 @@ module YouTubeable
 
   def self.included(base)
     if base.respond_to?(:persisted?)
-      base.before_create :embed_youtube_video, :if => :youtube_link?
+      base.before_create :embed_youtube_video, :if => :youtube_link?, :unless => :already_has_embed_code?
     end
   end
 
@@ -10,6 +10,10 @@ module YouTubeable
 
   def youtube_link?
     YOUTUBE_REGEX.match(self.url)
+  end
+  
+  def already_has_embed_code?
+    self.embed_target
   end
   
   def embed_youtube_video
