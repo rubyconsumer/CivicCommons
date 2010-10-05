@@ -24,7 +24,10 @@ class PeopleAggregator::Person
       login_name = r.parsed_response['msg'][/Login name (.*) is already taken/, 1]
       raise StandardError, 'The user with login "%s" already exists.' % login_name
     end
-    r
+
+    self.id = r.parsed_response["id"]
+
+    r.code == 200
   end
 
 

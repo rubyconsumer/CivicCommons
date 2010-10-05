@@ -44,15 +44,11 @@ describe PeopleAggregator::Person do
 
 
   specify "can save a person instance to People Aggregator" do
-    Person.should_receive(:post).with(anything,
-                                      body: {
-                                      firstName: "Joe",
-                                      lastName: "Test",
-                                      adminPassword: "admin",
-                                      login: "joe@test.com"})
-    response = Person.new(firstName: "Joe", lastName: "Test", login: "joe@test.com").save
-    response.code.should == 200
-    response.parsed_response["id"].should == 14
+    person = Person.new(firstName: "Joe",
+                        lastName: "Test",
+                        login: "joe@test.com")
+    person.save
+    person.id.should == 14
   end
 
 
