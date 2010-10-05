@@ -1,18 +1,16 @@
-var widget = function() {
+var _widget = function() {
   var domain = "<%=request.host_with_port%>";
-  
   var link;
-
   var self = {};
   self.init = function(){
-    link = $("#CivicCommonsWidgit");
-    link.attr("href", "http://" + domain + "/links/new?link=" + window.location);
+    link = document.getElementById("CivicCommonsWidgit");
+    link.setAttribute("href", "http://" + domain + "/links/new?link=" + window.location);
     var url = "http://" + domain + "/images/cc_thumb.jpg";
-    url = "/images/cc_thumb.jpg";
-    link.append($("<img>", {"src":url, "border":"0"}));
+    var image = document.createElement('img');
+    image.setAttribute("src", url);
+    image.setAttribute("border", 0);
+    link.appendChild(image);
   };
   return self;
-
-}();
-$(widget.init);
+}().init();
 
