@@ -1,0 +1,14 @@
+Did you find this comment productive?
+.rate-form
+  = form_for contribution, :as => :contribution, :url => "/contributions/rate", :remote => true do |f|
+    = f.hidden_field(:id, :value => contribution.id)
+    = f.hidden_field(:rating, :value => 1)
+    %div.errors
+    = f.submit("Yes")
+.rate-form
+  = form_for contribution, :as => :contribution, :url => "/contributions/rate", :remote => true do |f|
+    = f.hidden_field(:id, :value => contribution.id)
+    = f.hidden_field(:rating, :value => -1)
+    %div.errors
+    = f.submit("No")
+%br.clear

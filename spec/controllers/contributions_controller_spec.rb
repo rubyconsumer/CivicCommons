@@ -80,56 +80,56 @@ describe ContributionsController do
 
   end
 
-  describe "PUT update" do
-
-    describe "with valid params" do
-      it "updates the requested contribution" do
-        Contribution.should_receive(:find).with("37") { mock_contribution }
-        mock_contribution.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, :id => "37", :contribution => {'these' => 'params'}
-      end
-
-      it "assigns the requested contribution as @contribution" do
-        Contribution.stub(:find) { mock_contribution(:update_attributes => true) }
-        put :update, :id => "1"
-        assigns(:contribution).should be(mock_contribution)
-      end
-
-      it "redirects to the contribution" do
-        Contribution.stub(:find) { mock_contribution(:update_attributes => true) }
-        put :update, :id => "1"
-        response.should redirect_to(contribution_url(mock_contribution))
-      end
-    end
-
-    describe "with invalid params" do
-      it "assigns the contribution as @contribution" do
-        Contribution.stub(:find) { mock_contribution(:update_attributes => false) }
-        put :update, :id => "1"
-        assigns(:contribution).should be(mock_contribution)
-      end
-
-      it "re-renders the 'edit' template" do
-        Contribution.stub(:find) { mock_contribution(:update_attributes => false) }
-        put :update, :id => "1"
-        response.should render_template("edit")
-      end
-    end
-
-  end
-
-  describe "DELETE destroy" do
-    it "destroys the requested contribution" do
-      Contribution.should_receive(:find).with("37") { mock_contribution }
-      mock_contribution.should_receive(:destroy)
-      delete :destroy, :id => "37"
-    end
-
-    it "redirects to the contributions list" do
-      Contribution.stub(:find) { mock_contribution }
-      delete :destroy, :id => "1"
-      response.should redirect_to(contributions_url)
-    end
-  end
+  #describe "PUT update" do
+  #
+  #  describe "with valid params" do
+  #    it "updates the requested contribution" do
+  #      Contribution.should_receive(:find).with("37") { mock_contribution }
+  #      mock_contribution.should_receive(:update_attributes).with({'these' => 'params'})
+  #      put :update, :id => "37", :contribution => {'these' => 'params'}
+  #    end
+  #
+  #    it "assigns the requested contribution as @contribution" do
+  #      Contribution.stub(:find) { mock_contribution(:update_attributes => true) }
+  #      put :update, :id => "1"
+  #      assigns(:contribution).should be(mock_contribution)
+  #    end
+  #
+  #    it "redirects to the contribution" do
+  #      Contribution.stub(:find) { mock_contribution(:update_attributes => true) }
+  #      put :update, :id => "1"
+  #      response.should redirect_to(contribution_url(mock_contribution))
+  #    end
+  #  end
+  #
+  #  describe "with invalid params" do
+  #    it "assigns the contribution as @contribution" do
+  #      Contribution.stub(:find) { mock_contribution(:update_attributes => false) }
+  #      put :update, :id => "1"
+  #      assigns(:contribution).should be(mock_contribution)
+  #    end
+  #
+  #    it "re-renders the 'edit' template" do
+  #      Contribution.stub(:find) { mock_contribution(:update_attributes => false) }
+  #      put :update, :id => "1"
+  #      response.should render_template("edit")
+  #    end
+  #  end
+  #
+  #end
+  #
+  #describe "DELETE destroy" do
+  #  it "destroys the requested contribution" do
+  #    Contribution.should_receive(:find).with("37") { mock_contribution }
+  #    mock_contribution.should_receive(:destroy)
+  #    delete :destroy, :id => "37"
+  #  end
+  #
+  #  it "redirects to the contributions list" do
+  #    Contribution.stub(:find) { mock_contribution }
+  #    delete :destroy, :id => "1"
+  #    response.should redirect_to(contributions_url)
+  #  end
+  #end
 
 end

@@ -8,6 +8,7 @@ Civiccommons::Application.routes.draw do
 
   resources :ratings
 
+  match '/contributions/rate', :to=>'contributions#rate'#, :via=>[:post]
   resources :contributions
 
   resources :answers

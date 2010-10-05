@@ -51,11 +51,6 @@ describe Issue do
       Issue.top_issues.should == [@issue2,@issue1]
     end  
   end
-  context "Featured Issues" do
-    it "are editorially set." do
-      pending
-    end
-  end
   context "counters" do
     it "should have the correct count of contributions" do
       given_an_issue_with_contributions_and_conversations_and_page_visits

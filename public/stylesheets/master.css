@@ -19,7 +19,7 @@ strong {font-weight: bold;}
 em {font-style: italic;}
 ul, ol {
 line-height: 1.7em;
-margin-bottom: 2em;
+margin-bottom: 1em;
 margin-left: 2em;
 }
 ul {list-style-type: disc;}
@@ -30,6 +30,10 @@ margin-left: 0;
 }
 .link-list {font-weight: bold;}
 .conversations li {margin-bottom: 2em;}
+.conversations li:last-child {
+border-bottom: none;
+padding-bottom: 0;
+}
 .conversations li .conversations {margin-top: 2em;}
 .divided li {
 border-bottom: 1px dashed #bbb;
@@ -94,7 +98,7 @@ padding-top: 8px;
 text-align: right;
 width: 140px;
 }
-input.textbox, textarea, input.textbox.small  {
+input.textbox, textarea, input.textbox.small {
 font-family: Helvetica, Arial, sans-serif;
 font-size: 1em;
 border: 1px solid #ccc;
@@ -105,6 +109,7 @@ width: 448px;
 .conversation-input-container input.textbox {width: 400px;}
 .aside label, div.call-out label {width: 70px;}
 .aside input.textbox, div.call-out input.textbox, .aside textarea, div.call-out textarea {width: 176px;}
+.mod input.textbox, .mod textarea {width: 156px;}
 input.submit {
 background: #bfd36c url(../images/glass_btn.png) repeat-x 0 50%;
 border: 1px solid #999;
@@ -175,6 +180,7 @@ margin-right: 0;
 text-align: left;
 width: 100%;
 }
+/* .general-aside {margin-bottom: 1em;} */
 
 /*-----------------------------------------------
 =Modular Element Styles
@@ -224,12 +230,12 @@ padding-left: 25px;
 =Photobank Styles
 -----------------------------------------------*/
 
-div.photobank {margin: 0 0 12px -12px;}
+div.photobank {margin: 0 0 0 -12px;}
 div.photobank img {
 float: left;
 margin: 0 0 12px 12px;
 }
-div.photobank-large {margin: 0 0 10px -20px;}
+div.photobank-large {margin: 0 0 0 -20px;}
 div.photobank-large img {
 float: left;
 margin: 0 0 20px 20px;
@@ -280,7 +286,6 @@ padding-top: .5em;
 #new_link .next { clear:both}
 .tabs ul li { cursor:pointer; color: #266f96; list-style-type:none;}
 
-  
 /*-----------------------------------------------
 =Button and Link Styles
 -----------------------------------------------*/
@@ -289,7 +294,7 @@ a:link, a:visited {
 color: #266f96;
 outline: none;
 }
-a:hover {color: #1398ea;}
+a:hover {color: #2c87b7;}
 a.button, .button {
 background: #bfd36c url(../images/glass_btn.png) repeat-x 0 50%;
 border: 1px solid #999;
@@ -368,7 +373,7 @@ width: 620px;
 float: right;
 width: 300px;
 }
-.content {padding-left: 80px;}
+/* .content {padding-left: 80px;} */
 li.event-meta {
 font-weight: bold;
 text-transform: uppercase;
@@ -383,10 +388,11 @@ margin-left: 20px;
 div.two-col div.cols {width: 300px;}
 
 /* Three Column Structure */
-div.three-col {margin: 0 0 20px -20px;}
-div.three-col-sm {margin: 0 0 20px -10px;}
+div.three-col {margin: 0 0 0 -20px;}
+div.three-col-sm {margin: 0 0 0 -10px;}
 div.three-col div.cols, div.three-col-sm div.cols {
 float: left;
+margin-bottom: 20px;
 margin-left: 20px;
 }
 div.three-col-sm div.cols {margin-left: 10px;}
@@ -491,7 +497,7 @@ padding-right: 16px;
 }
 #nav-wrapper li.drop ul {
 background: #7f8795;
-border: 2px solid #494949;
+border: 2px solid #ddd;
 display: none;
 left: 0;
 margin: 0;
@@ -505,6 +511,7 @@ border-radius: 4px;
 -moz-box-shadow: 0 2px 3px rgba(0,0,0,.2);
 box-shadow: 0 2px 3px rgba(0,0,0,.2);
 }
+html.rgba #nav-wrapper li.drop ul {background: rgba(75,85,96,.9);}
 #nav-wrapper li.drop:hover ul, #nav-wrapper li.drop.hover ul {display: block;}
 #nav-wrapper #main-nav li.drop ul li {
 float: none;
@@ -641,6 +648,16 @@ div.convo-utility p.rating span {
 font-weight: bold;
 margin-left: .5em;
 }
+.rate-form-container {
+padding: 2em 0 1em;
+}
+.rate-form {
+display: inline-block;
+padding: 0 0 0 10px;
+height: 1em;
+vertical-align: top;
+}
+
 html.js div.productive, html.js div.response-block {display: none;}
 div.productive {
 background: #fff;
@@ -657,78 +674,6 @@ margin-top: 1em;
 padding-left: .4em;
 }
 div.response-block .button {margin: 0 .2em .5em;}
-
-ul.event-details {
-margin-bottom: 15px;
-margin-left: 0;
-list-style-type: none;
-}
-ul.conversation-stream {
-margin-left: 0;
-list-style-type: none;
-}
-ul.conversation-stream li {margin-bottom: 30px;}
-.comment {margin-bottom: 20px;}
-.comment p {
-padding-left: 115px;
-margin-bottom: 8px;
-}
-.comment a.question_recipient {font-weight: normal;}
-.comment ol.replies {
-padding-left: 80px;
-margin-top: 30px;
-margin-left: 0;
-list-style-type: none;
-}
-div.conversation-input-container {margin-bottom: 25px;}
-.comment a strong {text-transform: uppercase;}
-.comment .meta {
-float: left;
-margin-right: 10px;
-width: 70px;
-}
-.comment-type {
-background-color: #c1c1c1;
-color: #fff;
-font-size: .857em;
-font-weight: bold;
-padding-top: 2px;
-padding-bottom: 2px;
-text-transform: uppercase;
-text-align: center;
-}
-.comment-type.reply {background-color: transparent;}
-.comment-type.answer {background-color: transparent;}
-.comment-type.unofficial {
-background: url(/images/comment-unofficial.png) no-repeat right;
-padding: 0;
-padding-left: 50px;
-width: 20px;
-height: 15px;
-}
-.comment-type.question {
-background: url(/images/comment-question.png) no-repeat right;
-padding: 0;
-padding-left: 58px;
-width: 12px;
-height: 16px;
-}
-.comment .meta a.rating {
-display: block;
-text-align: center;
-padding-left: 0;
-width: 20px;
-float: right;
-}
-.comment .meta a.rating:hover {text-decoration: none;}
-.comment .meta a.positive, .comment .meta a.negative {
-padding: 2px;
-margin: 4px -2px 4px 0px;
-border-color: rgba(0, 0, 0, 0.07);
-color: #fff;
-}
-.comment .meta a.positive {background-color: #53b848;}
-.comment img {float: left;}
 .issue {
 position: relative;
 padding: 0px;
@@ -792,16 +737,16 @@ border-top: 1px solid #999;
 border-bottom: 1px solid #999;
 clear: both;
 font-size: .75em;
-margin-bottom: 60px;
+margin-bottom: 40px;
 }
 #footer-inner {
-margin: auto auto 10px;
-padding: 10px 10px 0;
+margin: 0 auto;
+padding: 20px 10px 10px;
 width: 940px;
 }
 ul.sub-nav {
 margin-left: 0;
-margin-bottom: 1em;
+margin-bottom: .5em;
 }
 ul.sub-nav li {
 display: inline;
@@ -815,7 +760,7 @@ text-decoration: none;
 }
 ul.sub-nav li a:hover {color: #666;}
 ul.social-media {
-margin-bottom: 1em;
+margin-bottom: .5em;
 margin-left: 0;
 }
 ul.social-media li {
@@ -835,6 +780,119 @@ a#facebook {background: url(../images/facebook_16.png) no-repeat;}
 a#twitter {background: url(../images/twitter_16.png) no-repeat;}
 a#youtube {background: url(../images/youtube_16.png) no-repeat;}
 a#rss {background: url(../images/rss_16.png) no-repeat;}
+
+/*-----------------------------------------------
+=Thread List Styles (Steve's convo permalink page)
+-----------------------------------------------*/
+
+ul.thread-list {
+list-style-type: none;
+margin: 1em 0;
+}
+ul.thread-list li {
+border-bottom: 1px dashed #999;
+margin-bottom: 2em;
+padding-bottom: 2em;
+position: relative;
+}
+ul.thread-list div.article {padding-left: 70px;}
+ul.thread-list div.meta {
+left: 0;
+position: absolute;
+}
+div.action-bar {
+border: 1px solid #777;
+background: #e3e3e3;
+overflow: hidden;
+padding: 2px 8px;
+}
+div.action-bar a.rating {
+float: left;
+width: 48%;
+}
+div.action-bar a.show-conversation-button {
+float: right;
+text-align: right;
+width: 48%;
+}
+
+/* Legacy Styles */
+
+ul.event-details {
+margin-bottom: 15px;
+margin-left: 0;
+list-style-type: none;
+}
+ul.conversation-stream {
+margin-left: 0;
+list-style-type: none;
+}
+ul.conversation-stream li {margin-bottom: 30px;}
+/*
+.comment {margin-bottom: 20px;}
+.comment p {
+padding-left: 115px;
+margin-bottom: 8px;
+}
+*/
+.comment a.question_recipient {font-weight: normal;}
+.comment ol.replies {
+padding-left: 80px;
+margin-top: 30px;
+margin-left: 0;
+list-style-type: none;
+}
+div.conversation-input-container {margin-bottom: 25px;}
+/* .comment a strong {text-transform: uppercase;} */
+.comment .meta {width: 60px;}
+.comment .meta {
+color: #9b9b9b;
+font-size: .857em;
+font-weight: bold;
+text-align: center;
+}
+.comment-type {
+background-color: #c1c1c1;
+color: #fff;
+font-size: .857em;
+font-weight: bold;
+padding-top: 2px;
+padding-bottom: 2px;
+text-transform: uppercase;
+text-align: center;
+}
+.comment-type.reply {background-color: transparent;}
+.comment-type.answer {background-color: transparent;}
+.comment-type.unofficial {
+background: #f00 url(../images/comment-unofficial.png) no-repeat right;
+padding: 0;
+padding-left: 50px;
+/* width: 20px; */
+height: 15px;
+}
+.comment-type.question {
+background: url(../images/comment-question.png) no-repeat right;
+padding: 0;
+padding-left: 58px;
+width: 12px;
+height: 16px;
+}
+.comment .meta a.rating {
+display: block;
+text-align: center;
+padding-left: 0;
+width: 20px;
+float: right;
+}
+.comment .meta a.rating:hover {text-decoration: none;}
+.comment .meta a.positive, .comment .meta a.negative {
+padding: 2px;
+margin: 4px -2px 4px 0px;
+border-color: rgba(0, 0, 0, 0.07);
+color: #fff;
+}
+.comment .meta a.positive {background-color: #53b848;}
+/* .comment img {float: left;} */
 
 /*-----------------------------------------------
 =Miscellaneous
@@ -870,9 +928,9 @@ text-decoration: none;
 }
 div.call-out:hover {
 cursor: pointer;
--webkit-box-shadow: 0px 1px 4px rgba(0,0,0,.5);
--moz-box-shadow: 0px 1px 4px rgba(0,0,0,.5);
-box-shadow: 0px 1px 4px rgba(0,0,0,.5);
+-webkit-box-shadow: 0px 1px 3px rgba(0,0,0,.3);
+-moz-box-shadow: 0px 1px 3px rgba(0,0,0,.3);
+box-shadow: 0px 1px 3px rgba(0,0,0,.3);
 }
 img.region-img {margin-bottom: 2em;}
 div.callout .time-stamp {
@@ -888,9 +946,9 @@ background: #f1f1f1 url(../images/large_grad.gif) repeat-x top;
 border-bottom: 1px solid #999;
 }
 .feature-mast img {
--webkit-box-shadow: 0px 2px 4px rgba(0,0,0,.5);
--moz-box-shadow: 0px 2px 4px rgba(0,0,0,.5);
-box-shadow: 0px 2px 4px rgba(0,0,0,.5);
+-webkit-box-shadow: 0px 1px 3px rgba(0,0,0,.5);
+-moz-box-shadow: 0px 1px 3px rgba(0,0,0,.5);
+box-shadow: 0px 1px 3px rgba(0,0,0,.5);
 }
 
 /* Aside Modual */

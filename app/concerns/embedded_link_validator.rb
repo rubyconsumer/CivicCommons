@@ -1,8 +1,8 @@
 class EmbeddedLinkValidator < ActiveModel::EachValidator
   
   def validate_each(record, attribute, value)
-    record.errors[attribute] << "could not be found" unless live_url?(value)
-    record.errors[attribute] << "is not a valid URL" unless valid_url_format?(value)
+    record.errors[attribute] << "Link could not be found" unless live_url?(value)
+    record.errors[attribute] << "Link is not a valid URL" unless valid_url_format?(value)
   end
   
   def valid_url_format?(value)
