@@ -13,7 +13,7 @@ class Contribution < ActiveRecord::Base
   belongs_to :issue
   
   validates_with ContributionValidator
-  validates :person, :item, :presence=>true 
+  validates :item, :presence=>true 
   validates_associated :conversation, :parent, :person
   
   scope :most_recent, {:order => 'created_at DESC'}

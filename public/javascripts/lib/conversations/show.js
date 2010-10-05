@@ -102,7 +102,7 @@ jQuery(function ($) {
             var errors = $.parseJSON(xhr.responseText);
             var errorString = "There were errors with the submission:\n";
             for(error in errors){
-              errorString += [error] + " " + errors[error] + "\n";
+              errorString += errors[error] + "\n";
             }
             $(this).find(".errors").html(errorString);
           });
