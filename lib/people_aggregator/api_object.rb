@@ -10,19 +10,28 @@ module PeopleAggregator
 
     module InstanceMethods
 
-      def initialize(attrs)
+      def initialize(attrs={})
 
         attrs.symbolize_keys!
 
-        @attrs =
-          attrs.each do |k,v|
-            if self.class.allowed_keys.include?(k)
-              self.class.send(:attr_accessor, k.to_sym)
-              self.instance_variable_set("@#{k}", v)
-            else
-              raise ArgumentError, "Key #{k} is not defined as an allowed attribute."
-            end
-          end
+        allowed_keys.each do |k|
+          self.class.send(:attr_accessor, k)
+          self.instance_variable_set("@#{k}", attrs[k])
+        end
+
+        keys_not_allowed = attrs.keys - allowed_keys
+
+        unless keys_not_allowed.empty?
+          raise ArgumentError, "Keys #{keys_not_allowed.to_sentence} are not defined as an allowed attribute."
+        end
+
+        @attrs = attrs
+
+      end
+
+
+      def allowed_keys
+        self.class.allowed_keys
       end
 
     end

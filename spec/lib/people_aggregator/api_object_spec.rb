@@ -1,5 +1,6 @@
 require 'active_support/concern'
 require 'active_support/hash_with_indifferent_access'
+require 'active_support/core_ext/array/conversions'
 require 'people_aggregator/api_object'
 
 
@@ -47,5 +48,11 @@ describe ApiObject do
     ApiObjectDummy.attr_allowable :thud
 
     lambda { ApiObjectDummy.new("thud" => "wibble") }.should_not raise_error
+  end
+
+
+  it "allows setting attributes defined as allowable after initialization" do
+    ApiObjectDummy.attr_allowable :wobble
+    lambda { ApiObjectDummy.new.wobble = "wubble" }.should_not raise_error
   end
 end
