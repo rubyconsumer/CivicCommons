@@ -31,11 +31,10 @@ class PeopleAggregator::Person
   end
 
 
-  def destroy(password)
+  def destroy
     @attrs.merge!(adminPassword: "admin")
     r = self.class.post('/deleteUser', body: { adminPassword: @attrs[:adminPassword],
-                                               login: self.login,
-                                               password: password})
+                                               login: self.login})
 
     self.class.log_people_aggregator_response r
 

@@ -21,9 +21,9 @@ require 'ruby-debug'
 
 def cleanup_shadow_accounts
   person = PeopleAggregator::Person.find_by_email("joe@test.com")
-  person.destroy($encrypted_passwords['joe@test.com']) if person
+  person.destroy if person
   person = PeopleAggregator::Person.find_by_email("joe@duplicate.com")
-  person.destroy('abcd1234') if person
+  person.destroy if person
 end
 
 After("@api") do |s|
