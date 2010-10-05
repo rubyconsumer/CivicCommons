@@ -22,10 +22,10 @@ module AvatarHelper
   def contribution_profile(person)
     if person && person.people_aggregator_id
       link_to_profile(person) do
-        profile_image(person, 20)
+        profile_image(person, 60)
       end
     else
-      profile_image(person, 20)
+      profile_image(person, 60)
     end
   end
   
