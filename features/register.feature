@@ -16,6 +16,7 @@ Feature:
         | From    | admin@theciviccommons.com     |
         | To      | joe@test.com                  |
         | Subject | Confirmation instructions     |
+      And a People Aggregator shadow account should not be created
 
   @api
   Scenario: User clicks confirmation link in email

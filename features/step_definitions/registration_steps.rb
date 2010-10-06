@@ -62,6 +62,13 @@ Then /^a People Aggregator shadow account should be created$/ do
 end
 
 
+Then /^a People Aggregator shadow account should not be created$/ do
+  peep_agg_person = PeopleAggregator::Person.find_by_email(@current_person.email)
+
+  peep_agg_person.should be_nil
+end
+
+
 Given /^a registered user:$/ do |table|
   user = table.rows_hash
 
