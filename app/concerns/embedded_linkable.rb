@@ -3,13 +3,17 @@ require 'nokogiri'
 
 module EmbeddedLinkable
 
+  # override_target_doc used in specs so we don't need a network connection to get links when running specs
+  attr_accessor :target_doc, :override_target_doc, :override_url_exists
+  
   def self.included(base)
     base.before_create :get_link_information, :unless => :already_set_title_and_description?
     base.validates :url, :presence=>true, :embedded_link => true
   end
   
   def get_link_information
-    doc = Nokogiri::HTML(open(CGI::unescapeHTML(self.url))) do |config|
+    self.target_doc = self.override_target_doc ? File.open(self.override_target_doc) : open(CGI::unescapeHTML(self.url))
+    doc = Nokogiri::HTML(self.target_doc) do |config|
        config.noent.noblanks
     end
     title = doc.search("//title").first
