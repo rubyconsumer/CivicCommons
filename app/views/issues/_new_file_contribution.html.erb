@@ -3,7 +3,7 @@
                                 :multipart => true,
                                 :id => "new-file-contribution"} do |f| %>
 <div class='form-block'> 
-  <%= f.text_area(:content, :rows => 2, :value => "Description of File", :placeholder => "Description of File") %>
+  <%= f.text_area(:content, :rows => 2, :placeholder => "Description of File") %>
   <%= f.file_field(:attachment) %>
   <%= f.hidden_field(:type, :value => "AttachedFile") %>
 </div>

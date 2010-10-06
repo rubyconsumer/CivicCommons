@@ -1,5 +1,3 @@
-require 'youtubeable'
-
 class Article < ActiveRecord::Base
   include YouTubeable
 

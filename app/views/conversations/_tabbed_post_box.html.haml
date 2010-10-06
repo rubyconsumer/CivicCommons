@@ -17,7 +17,7 @@
         %li
           %a{:href => "##{div_id}-new-video", :title => "Video", :id => "video_tab", :class => 'button'} Video
         %li
-          %a{:href => "##{div_id}-write-contribution", :title => "Write Contribution", :class => 'button', :onclick => "javascript: alert(\"This isn\'t hooked up yet\"); return false;"} Write Contribution
+          %a{:href => "##{div_id}-write-contribution", :title => "Write Contribution", :class => 'button'} Write Contribution
     %div{:id => "#{div_id}-new-comment" }
       = form_for @contribution, :url => "create_node_contribution", :remote => true do |f|
         %div.contribution-form-headline
@@ -111,4 +111,13 @@
         = f.text_area(:content, :rows => "3", :placeholder => "Suggest an action...")
         %div.errors
         = f.submit("Submit")
-  
+    %div{:id => "#{div_id}-write-contribution" }
+      %div.contribution-form-headline
+        %span.contribution-form-cancel.float-right
+          %a{:href => "##{div_id}-options", :class => 'cancel'} Cancel
+        %h3 Write a Contribution
+      %p
+        You are going to be redirected to the Contribution page. Once you submit your contribution, you will be brought back here where it will appear in the conversation.
+      = link_to raw("Let's do this thing &raquo;"), "http://civiccommons.digitalcitymechanics.com/", {:class => 'button', 'data-colorbox-iframe' => true}
+    
+    

@@ -18,14 +18,13 @@ describe Contribution do
         end
         if contribution_type == "Link"
           @contribution.url = "http://www.alfajango.com/"
-          @contribution.title = "Some title"
-          @contribution.description = "Very good description"
+          @contribution.override_target_doc = "#{Rails.root}/test/fixtures/example_link.html"
+          @contribution.override_url_exists = true
         end
         if contribution_type == "EmbeddedSnippet"
           @contribution.url = "http://www.youtube.com/watch?v=djtNtt8jDW4"
-          @contribution.title = "Some title"
-          @contribution.description = "Very good description"
-          @contribution.embed_target = "<object width='320' height='192'><param name='movie' value='http://www.youtube.com/v/djtNtt8jDW4?fs=1&amp;hl=en_US'></param><param name='allowFullScreen' value='true'></param><param name='allowscriptaccess' value='always'></param><embed src='http://www.youtube.com/v/djtNtt8jDW4?fs=1&amp;hl=en_US' type='application/x-shockwave-flash' allowscriptaccess='always' allowfullscreen='true' width='320' height='192'></embed></object>"
+          @contribution.override_target_doc = "#{Rails.root}/test/fixtures/example_youtube.html"
+          @contribution.override_url_exists = true
         end
       end
       
@@ -40,9 +39,11 @@ describe Contribution do
           end
         end
       end
-      context "and the #{contribution_type} saves successfully" do
-        it "should add the #{contribution_type} to a conversation" do
+      describe "and the #{contribution_type} is saved successfully" do
+        before(:each) do
           @contribution.save!
+        end
+        it "should add the #{contribution_type} to a conversation" do
           @conversation.contributions.count.should == 2
           @conversation.contributions.should include @contribution
         end
@@ -54,6 +55,34 @@ describe Contribution do
         end    
         it "should set the item to the conversation" do 
           @contribution.item.should == @conversation
+        end
+      
+        if contribution_type == "Link"
+          it "finds the target document" do
+            @contribution.target_doc.should_not be_blank
+          end
+          it "grabs the correct title and description" do
+            @contribution.title.should_not be_blank
+            @contribution.description.should_not be_blank
+            @contribution.title.should match /Pure-CSS Emoticons WordPress Plugin Released - Alfa Jango Blog/
+            @contribution.description.should match /I'll keep this post short and sweet. My good friend, Anthony Montalbano, has released a WordPress plugin for our/
+          end
+        end
+        
+        if contribution_type == "EmbeddedSnippet"
+          it "finds the target document" do
+            @contribution.target_doc.should_not be_blank
+          end
+          it "grabs the correct title and description" do
+            @contribution.title.should_not be_blank
+            @contribution.description.should_not be_blank
+            @contribution.title.should match /YouTube - LeadNuke Demo Screencast/
+            @contribution.description.should match /Introduction to LeadNuke.com, featuring demonstration showing how RateMyStudentRental.com uses LeadNuke to increase sales./
+          end
+          it "creates the right embed code" do
+            @contribution.embed_target.should_not be_blank
+            @contribution.embed_target.should match /(djtNtt8jDW4)+/
+          end
         end
       end
     end

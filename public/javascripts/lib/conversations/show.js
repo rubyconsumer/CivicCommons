@@ -57,7 +57,7 @@ jQuery(function ($) {
   	    $(clicked).click(actionToggle(clicked,target,$(clicked).data('cancelText')));
   	    
   	    $(clicked).text($(clicked).data('cancelText'));
-        $(target).hide().html(xhr.responseText).slideDown(); // insert content
+        $(target).hide().html(xhr.responseText).slideDown().find('.rate-form-container').hide(); // insert content
         $(tabStrip).easyTabs({
           tabActiveClass: 'tab-active',
           tabActivePanel: 'panel-active',
@@ -87,7 +87,7 @@ jQuery(function ($) {
             }catch(err){
               var responseNode = $($("<div />").html(xhr.responseText).text()); // this is needed to properly unescape the HTML returned from doing the jquery.form plugin's ajaxSubmit for some reason
             }
-            $(this).closest('ol.thread-list,ul.thread-list').append(responseNode);
+            $(this).closest('ol.thread-list,ul.thread-list').append(responseNode).find('.rate-form-container').hide();
             
             if($(clicked).hasClass('show-conversation-button')){
               $(this).find('textarea,input[type="text"],input[type="file"]').val('');
@@ -128,6 +128,18 @@ jQuery(function ($) {
           }
           $(this).find(".errors").html(errorString);
         });
-    
+        
+        $('a[data-colorbox-iframe]').live('click', function(e){
+          $.colorbox({ 
+            href: $(this).attr('href'), 
+            iframe: true, 
+            width: '75%', 
+            height: '75%',
+            onClosed: function(){
+              alert('And this is where we could reload this section of the conversation page!');
+            }
+           });
+          e.preventDefault();
+        });
   });
 });

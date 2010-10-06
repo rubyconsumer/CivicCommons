@@ -2,6 +2,7 @@ class Issue < ActiveRecord::Base
   include Rateable
   include Visitable
   include TopItemable
+  include Subscribable
   
   belongs_to :person
 
@@ -12,6 +13,7 @@ class Issue < ActiveRecord::Base
   has_many :suggested_actions
   has_many(:media_contributions, :class_name => "Contribution",
            :conditions => "type = 'Link' or type = 'AttachedFile'")
+  has_many :subscriptions, :as => :subscribable
   
   
   # Anyone who has contributed directly to the issue via a contribution

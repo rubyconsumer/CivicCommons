@@ -18,7 +18,7 @@ class ConversationsController < ApplicationController
   # GET /conversations/1
   # GET /conversations/1.xml
   def show    
-    @conversation = Conversation.find(params[:id])
+    @conversation = Conversation.includes(:guides, :issues).find(params[:id])
     @conversation.visit!((current_person.nil? ? nil : current_person.id))
     @top_level_contributions = TopLevelContribution.where(:conversation_id => @conversation.id).includes([:person]).order('created_at ASC')
     # grab all direct contributions to conversation that aren't TLC
@@ -57,7 +57,7 @@ class ConversationsController < ApplicationController
 
     respond_to do |format|
       if @contribution.save
-        format.js   { render :partial => "conversations/contributions/#{@contribution.type.underscore}", :locals => {:contribution => @contribution}, :status => :created }
+        format.js   { render :partial => "conversations/contributions/threaded_contribution_template", :locals => {:contribution => @contribution}, :status => :created }
         format.html { redirect_to(@contribution.item, :notice => 'Contribution was successfully created.') }
         format.xml  { render :xml => @contribution, :status => :created, :location => @contribution }
       else

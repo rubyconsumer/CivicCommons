@@ -65,4 +65,8 @@ class Person < ActiveRecord::Base
     self.password = 'p4s$w0Rd'
     self.proxy = true
   end
+  
+  def subscriptions_include?(subscribable)
+    subscriptions.map(&:subscribable).include?(subscribable)
+  end
 end
