@@ -57,7 +57,7 @@ class ConversationsController < ApplicationController
 
     respond_to do |format|
       if @contribution.save
-        format.js   { render :partial => "conversations/contributions/#{@contribution.type.underscore}", :locals => {:contribution => @contribution}, :status => :created }
+        format.js   { render :partial => "conversations/contributions/threaded_contribution_template", :locals => {:contribution => @contribution}, :status => :created }
         format.html { redirect_to(@contribution.item, :notice => 'Contribution was successfully created.') }
         format.xml  { render :xml => @contribution, :status => :created, :location => @contribution }
       else
