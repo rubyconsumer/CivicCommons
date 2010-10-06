@@ -1,0 +1,7 @@
+<% if current_person && current_person.subscriptions.blank? && current_person.subscriptions_include?(subscribable).blank? %>
+  <%= render :partial => "subscriptions/notsubscribed.html", :locals => {:subscribable_type => subscribable.class, :subscribable_id => subscribable.id} %>
+<% elsif current_person %>
+  <%= render :partial => "subscriptions/subscribed.html", :locals => {:subscribable_type => subscribable.class, :subscribable_id => subscribable.id} %>
+<% else %>
+  <a class="off_button" href="/people/login" data-confirm="Please Log In">Follow</a>
+<% end %>

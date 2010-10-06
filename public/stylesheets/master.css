@@ -295,7 +295,7 @@ color: #266f96;
 outline: none;
 }
 a:hover {color: #2c87b7;}
-a.button, .button {
+a.off_button, a.button, .button {
 background: #bfd36c url(../images/glass_btn.png) repeat-x 0 50%;
 border: 1px solid #999;
 color: #444;
@@ -317,6 +317,9 @@ box-shadow: 0 1px 2px rgba(0,0,0,.2);
 -webkit-background-clip: padding-box;
 -moz-background-clip: padding-box;
 background-clip: padding-box;
+}
+a.off_button {
+color: #999;
 }
 .button.cta {
 background-color: #cbdbe4;
