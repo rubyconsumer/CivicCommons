@@ -25,11 +25,12 @@ Civiccommons::Application.routes.draw do
   match '/conversations/rate', :to=>'conversations#rate', :via=>[:post]
   
   resources :conversations
-  
+  resources :regions   
   namespace "admin" do
     resources   :articles
     resources   :conversations
     resources   :issues
+    resources   :regions
     resources   :people do
       get 'proxies', :on => :collection
     end
