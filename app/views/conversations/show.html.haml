@@ -1,5 +1,6 @@
 - content_for :header do 
   = javascript_include_tag('lib/conversations/show')
+  = javascript_include_tag('lib/subscriptions/show')
 
 - content_for :main do
   .feature-mast
@@ -7,7 +8,8 @@
       .content-container
         %h1= @conversation.title
         %p.convo-meta
-          %a.button{ :href => '#', :title => 'Follow this conversation'} Follow
+          %span#subscription
+            = render :partial => '/subscriptions/subscription', :locals => {:subscribable => @conversation}
           %strong XX people
           are engaged, last activity
           %strong XX days ago
