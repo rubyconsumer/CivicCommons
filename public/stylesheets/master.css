@@ -29,6 +29,7 @@ list-style: none;
 margin-left: 0;
 }
 .link-list {font-weight: bold;}
+.guide-list { display: inline-block; }
 .conversations li {margin-bottom: 2em;}
 .conversations li:last-child {
 border-bottom: none;
