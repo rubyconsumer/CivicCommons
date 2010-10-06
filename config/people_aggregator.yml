@@ -1,0 +1,11 @@
+development:
+  url:        "http://civiccommons.digitalcitymechanics.com"
+
+test:
+  url:        "http://civiccommons.digitalcitymechanics.com"
+
+staging:
+  url:        "http://socialstaging.theciviccommons.com"
+
+production:
+  url:        "http://social.theciviccommons.com"

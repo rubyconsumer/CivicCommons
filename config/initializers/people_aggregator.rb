@@ -1,9 +1,10 @@
 module Civiccommons
   class PeopleAggregator
-    URL = if Rails.env == "test" || Rails.env == "development" || Rails.env == "staging"
-      "http://civiccommons.digitalcitymechanics.com"
-    else
-      "http://social.theciviccommons.com"
-    end
+    PA_CONFIG = YAML.load_file(File.join(Rails.root, "config", "people_aggregator.yml"))
+    
+    cattr_accessor :URL
+    
+    @@URL ||= PA_CONFIG[Rails.env]['url']
+
   end
 end
