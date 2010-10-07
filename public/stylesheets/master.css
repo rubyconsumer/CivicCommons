@@ -643,6 +643,7 @@ div.convo-utility {
 border: 1px solid #777;
 background: #e3e3e3;
 padding: 2px 8px;
+position:relative;
 }
 div.convo-utility a {text-decoration: none;}
 div.convo-utility.response {background: #777;}
@@ -651,7 +652,7 @@ div.convo-utility.response a:hover {color: #f3f3f3;}
 div.convo-utility p {margin: 0;}
 div.convo-utility p.respond-link, div.productive p.prod-quest {
 float: left;
-width: 48%;
+width: 35%;
 }
 div.convo-utility p.respond-link, div.convo-utility.response p.respond-link {
 background: url(../images/chat-bubble-gray.png) no-repeat 0 50%;
@@ -661,7 +662,7 @@ div.convo-utility.response p.respond-link {background-image: url(../images/chat-
 div.convo-utility p.rating, div.productive p.rating-buttons {
 float: right;
 text-align: right;
-width: 48%;
+width: 35%;
 }
 div.convo-utility p.rating span {
 font-weight: bold;
