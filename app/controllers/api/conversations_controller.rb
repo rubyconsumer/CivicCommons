@@ -5,7 +5,7 @@ class Api::ConversationsController < ActionController::Base
   def index
 
     contributed_conversations =
-      Api::ContributedConversations.for_person_by_email(params[:email])
+      Api::ContributedConversations.for_person_by_email(params[:email], request)
 
     respond_with contributed_conversations
   end

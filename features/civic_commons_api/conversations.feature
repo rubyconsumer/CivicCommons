@@ -13,6 +13,7 @@ Feature:
 
   Scenario: Retrieve one conversation in which the user is participating
     Given a conversation:
+      | ID          | 2                           |
       | Title       | This is a test conversation |
       | Image       | imageAttachment.png         |
       | Summary     | Test conversation           |
@@ -30,7 +31,8 @@ Feature:
         "image": "http://s3.amazonaws.com/cc-dev/images/original/imageAttachment.png",
         "summary": "Test conversation",
         "participant_count": 2,
-        "contribution_count": 1
+        "contribution_count": 1,
+        "url": "http://www.example.com/conversations/2"
       }
     ]
     """
