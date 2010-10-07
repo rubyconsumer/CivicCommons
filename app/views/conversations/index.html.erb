@@ -1,28 +1,33 @@
 <% content_for :main do %>
+<div class="feature-mast">
 <div class="wrapper">
 <div class="content-container">
-  <h1>Conversations</h1>
   <%= render :partial => '/articles/featured' %>
+</div>
+</div>
+</div>
 
-      <div class="content-container">
-        <div class="main-content">
-          <h3>Most Recent Conversations</h3>
+<div class="wrapper">
+<div class="content-container">
+      <h1>Conversations</h1>
 
-        <%= render :partial => '/conversations/conversation_pager' %>
+      <div class="main-content">
+        <h3>Most Recent Conversations</h3>
 
-        </div><!-- /.main-content -->     
-        <div class='aside supplementary'>
-          <h3>Select a Region</h3>
-          <ul class='link-list'>
-            <li><a href="#">Name of Region</a></li>
-            <li><a href="#">Name of Region</a></li>
-            <li><a href="#">Name of Region</a></li>
-            <li><a href="#">Name of Region</a></li>
-            <li><a href="#">Name of Region</a></li>
-            <li><a href="#">Name of Region</a></li>
-          </ul>
-        </div><!-- /.aside -->      
-      </div><!-- /.content-container -->
+      <%= render :partial => '/conversations/conversation_pager' %>
+
+      </div><!-- /.main-content -->     
+      <div class='aside supplementary'>
+        <h3>Select a Region</h3>
+        <ul class='link-list'>
+          <li><a href="#">Name of Region</a></li>
+          <li><a href="#">Name of Region</a></li>
+          <li><a href="#">Name of Region</a></li>
+          <li><a href="#">Name of Region</a></li>
+          <li><a href="#">Name of Region</a></li>
+          <li><a href="#">Name of Region</a></li>
+        </ul>
+      </div><!-- /.aside -->      
   </div>
 </div>
      
