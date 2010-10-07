@@ -49,7 +49,7 @@ module AvatarHelper
   
   def link_to_profile(person)
     <<-EOHTML
-    <a href="#{Civiccommons::PeopleAggregator::URL}/user/#{person.people_aggregator_id}">
+    <a href="#{Civiccommons::PeopleAggregator.URL}/user/#{person.people_aggregator_id}">
       #{yield}
     </a>
     EOHTML

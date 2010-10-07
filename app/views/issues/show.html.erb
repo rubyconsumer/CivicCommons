@@ -1,3 +1,7 @@
+<% content_for :header do %>
+  <%= javascript_include_tag('lib/subscriptions/show') %>
+<% end %>
+
 <script type="text/javascript">
 $('form.contribution-form')
     .live("ajax:success", function(evt, data, status, xhr){
@@ -39,7 +43,11 @@ $(document).ready(function() {
 
 <div class="wrapper">
   <div class="content-container">
-    <p class="convo-meta"><a class="button" href="#" title="Follow this conversation">Follow</a></p>
+    <p class="convo-meta">
+      <div id="subscription">
+        <%= render :partial => 'subscriptions/subscription', :locals => {:subscribable => @issue} %>
+      </div>
+    </p>
     <div class='main-content'>
       <div class='feature'>
         <div class='feat-callout'>

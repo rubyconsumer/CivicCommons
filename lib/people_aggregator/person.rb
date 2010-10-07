@@ -2,7 +2,7 @@ class PeopleAggregator::Person
   include PeopleAggregator::Connector
   include PeopleAggregator::ApiObject
 
-  base_uri "http://civiccommons.digitalcitymechanics.com/api/json.php/peopleaggregator"
+  base_uri "#{Civiccommons::PeopleAggregator.URL}/api/json.php/peopleaggregator"
 
 
   attr_allowable :login, :email, :id, :url,

@@ -43,16 +43,17 @@
       #header
         %a#logo{:href=>'/', :title => "Civic Commons"} Civic Commons
         #header-utility
-          #login-status
-            .offset-2
-              = user_profile(current_person).html_safe
-              
-              - if current_person
+          - if current_person
+            #login-status
+              .offset-2
+                = user_profile(current_person).html_safe
                 %h4
                   %a 
                     = current_person.name
                 = link_to "Logout", destroy_person_session_path
-              - else
+          - else
+            #login-status.signed-out
+              .offset-2
                 = render :partial => 'layouts/single_column'
           .important
             %p
@@ -71,9 +72,9 @@
             = "Community"
             %ul
               %li
-                %a{:href =>'http://civiccommons.digitalcitymechanics.com/people', :title => "People"} People
+                %a{:href =>"#{Civiccommons::PeopleAggregator.URL}/people", :title => "People"} People
               %li
-                %a{:href =>'http://civiccommons.digitalcitymechanics.com/directory', :title => "Organizations"} Organizations
+                %a{:href =>"#{Civiccommons::PeopleAggregator.URL}/directory", :title => "Organizations"} Organizations
           %li
             %a{:href =>'http://theciviccommons.com/', :title => "About Us"} About Us
         %form#search{ :method=>"post" }
