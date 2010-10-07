@@ -7,7 +7,8 @@ class PeopleAggregator::Person
 
   attr_allowable :login, :email, :id, :url,
                  :name, :profile, :firstName,
-                 :lastName, :login, :password
+                 :lastName, :login, :password,
+                 :profilePictureURL
 
 
   def save
