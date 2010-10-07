@@ -1,0 +1,16 @@
+-form_for [:admin, @region] do |f|
+  %p
+    =f.label :name
+    %br
+    =f.text_field :name
+  .label
+    State
+  =f.text_field :state
+  .label
+    Counties
+  =f.text_area :county_string
+  %i
+    (Seperate by line breaks)
+  .actions
+    =f.submit
+

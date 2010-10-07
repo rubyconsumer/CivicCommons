@@ -39,52 +39,6 @@ describe Contribution do
           end
         end
       end
-      describe "and the #{contribution_type} is saved successfully" do
-        before(:each) do
-          @contribution.save!
-        end
-        it "should add the #{contribution_type} to a conversation" do
-          @conversation.contributions.count.should == 2
-          @conversation.contributions.should include @contribution
-        end
-        it "should return a #{contribution_type} with no errors" do
-          @contribution.errors.count.should == 0
-        end  
-        it "should set the passed in user as the owner" do
-          @contribution.person.should == @person
-        end    
-        it "should set the item to the conversation" do 
-          @contribution.item.should == @conversation
-        end
-      
-        if contribution_type == "Link"
-          it "finds the target document" do
-            @contribution.target_doc.should_not be_blank
-          end
-          it "grabs the correct title and description" do
-            @contribution.title.should_not be_blank
-            @contribution.description.should_not be_blank
-            @contribution.title.should match /Pure-CSS Emoticons WordPress Plugin Released - Alfa Jango Blog/
-            @contribution.description.should match /I'll keep this post short and sweet. My good friend, Anthony Montalbano, has released a WordPress plugin for our/
-          end
-        end
-        
-        if contribution_type == "EmbeddedSnippet"
-          it "finds the target document" do
-            @contribution.target_doc.should_not be_blank
-          end
-          it "grabs the correct title and description" do
-            @contribution.title.should_not be_blank
-            @contribution.description.should_not be_blank
-            @contribution.title.should match /YouTube - LeadNuke Demo Screencast/
-            @contribution.description.should match /Introduction to LeadNuke.com, featuring demonstration showing how RateMyStudentRental.com uses LeadNuke to increase sales./
-          end
-          it "creates the right embed code" do
-            @contribution.embed_target.should_not be_blank
-            @contribution.embed_target.should match /(djtNtt8jDW4)+/
-          end
-        end
-      end
     end
   end
   describe "when creating a contribution for an issue" do
