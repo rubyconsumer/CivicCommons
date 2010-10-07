@@ -5,7 +5,8 @@ tmp/*
 tmp/**/*
 rake/**/*
 config/amazon_s3.yml
+config/database.yml
+config/people_aggregator.yml
 .DS_Store
 **/.DS_Store
 .rvmrc
-config/database.yml
