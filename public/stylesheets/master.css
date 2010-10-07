@@ -29,7 +29,6 @@ list-style: none;
 margin-left: 0;
 }
 .link-list {font-weight: bold;}
-.guide-list { display: inline-block; }
 .conversations li {margin-bottom: 2em;}
 .conversations li:last-child {
 border-bottom: none;
@@ -273,20 +272,6 @@ padding-top: .5em;
 .data-table a {text-decoration: none;}
 .pagination .current {font-weight: bold;}
 
-/* Links */
-#link_form_wrapper { display:none; width:700px; padding:19px; margin:10px; border: 1px solid #555; background-color:#fefefe}
-#new_link { padding:20px; }
-#new_link #conversations, #new_link #issues { padding:20px;}
-#new_link .conversation, #new_link .issue { padding-top:10px;}
-#new_link .input-with-options label { padding: 4px; background:none; color: #000; }  
-#new_link input[type="text"], #new_link textarea  { padding:5px;width: 500px; border:1px solid #999; font-size:12px; }  
-.conversation a:hover, .issue a:hover { cursor:pointer; }
-#new_link ul { float: right; padding-right: 30px; }
-#new_link ul li { float: right; padding:10px;}
-#new_link .name { float:left; width:400px; } 
-#new_link .next { clear:both}
-.tabs ul li { cursor:pointer; color: #266f96; list-style-type:none;}
-
 /*-----------------------------------------------
 =Button and Link Styles
 -----------------------------------------------*/
@@ -296,7 +281,7 @@ color: #266f96;
 outline: none;
 }
 a:hover {color: #2c87b7;}
-a.off_button, a.button, .button {
+a.button, .button {
 background: #bfd36c url(../images/glass_btn.png) repeat-x 0 50%;
 border: 1px solid #999;
 color: #444;
@@ -318,9 +303,6 @@ box-shadow: 0 1px 2px rgba(0,0,0,.2);
 -webkit-background-clip: padding-box;
 -moz-background-clip: padding-box;
 background-clip: padding-box;
-}
-a.off_button {
-color: #999;
 }
 .button.cta {
 background-color: #cbdbe4;
@@ -444,11 +426,41 @@ border-bottom: 1px solid #ccc;
 border-bottom-left-radius: 6px;
 border-bottom-right-radius: 6px;
 }
+#header #header-utility div div:last-child {border-bottom: none;}
 #login-status, .important {
 background: #fff url(../images/simple_grad.gif) repeat-x bottom;
 border-left: 1px solid #ccc;
 border-right: 1px solid #ccc;
+padding: 10px 10px 5px;
+}
+div.signed-out div.offset-2 {
+padding-left: 0;
+text-align: center;
+}
+div.signed-out div.offset-2 p {margin-bottom: .5em;}
+p.login-link a {
+background: #fff;
+border: 1px solid #999;
+display: block;
 padding: 10px;
+text-decoration: none;
+-webkit-border-radius: 6px;
+-moz-border-radius: 6px;
+border-radius: 6px;
+-webkit-transition: all 0.2s ease-in-out;
+-moz-transition: all 0.2s ease-in-out;
+}
+p.login-link a:hover {
+background: #fcfcfc;
+-webkit-box-shadow: 0px 1px 3px rgba(0,0,0,.3);
+-moz-box-shadow: 0px 1px 3px rgba(0,0,0,.3);
+box-shadow: 0px 1px 3px rgba(0,0,0,.3);
+}
+p.login-link strong, p.createacct-link a {padding-left: 20px;}
+p.login-link strong {background: url(../images/lock.png) no-repeat 0 2px;}
+p.createacct-link a {
+background: url(../images/add.png) no-repeat 0 2px;
+text-decoration: none;
 }
 .important {
 background: #dbedf5;
@@ -604,7 +616,7 @@ width: 97%;
 margin-bottom: 8px;
 border: 0;
 }
-p.convo-meta {margin-bottom: 2em;}
+/* p.convo-meta {margin-bottom: 2em;} */
 
 /* Conversation Divider */
 div.convo-divider {
@@ -654,16 +666,6 @@ div.convo-utility p.rating span {
 font-weight: bold;
 margin-left: .5em;
 }
-.rate-form-container {
-padding: 2em 0 1em;
-}
-.rate-form {
-display: inline-block;
-padding: 0 0 0 10px;
-height: 1em;
-vertical-align: top;
-}
-
 html.js div.productive, html.js div.response-block {display: none;}
 div.productive {
 background: #fff;
