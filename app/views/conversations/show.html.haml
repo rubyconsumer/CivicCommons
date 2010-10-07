@@ -59,7 +59,7 @@
             %ul.link-list
               -@conversation.issues.each do |issue|
                 %li.issue-list
-                  =link_to(issue.name, issue_path)
+                  =link_to(issue.name, issue_path(issue))
         .mod
           %h3 Leaders
           .mod-content
