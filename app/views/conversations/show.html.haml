@@ -56,7 +56,6 @@
         .mod
           %h3 Participants
           .mod-content
-            %ul.link-list
-              -@conversation.guides.each do |guide|
-                %li.guide-list
-                  contribution_profile(guide)
+            .photobank
+              -@conversation.participants.each do |participant|
+                =conversation_profile(participant).html_safe
