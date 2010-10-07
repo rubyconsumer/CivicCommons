@@ -9,15 +9,20 @@ class Admin::RegionsController < Admin::DashboardController
   end
 
   def update
-
+    @region = Region.find params[:id]
+    if @region.update_attributes(params[:region])
+      redirect_to "/admin/regions", :notice => "Region updated"
+    else
+      render :edit
+    end
   end
 
   def create
     @region = Region.create params[:region]
     if @region.save
-      redirect_to "/admin", :notice => "Region created"
+      redirect_to "/admin/regions", :notice => "Region created"
     else
-      render :new
+      render :new, :notice => "oh no"
     end
   end
 

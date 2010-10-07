@@ -25,6 +25,7 @@ describe Region do
     region.counties.length.should == 2
     region.counties.first.state.should == "PA"
     region.counties.first.name.should == "Luzerne"
+    region.counties.last.name.should == "Columbia"
   end
 
 

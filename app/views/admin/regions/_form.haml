@@ -1,5 +1,6 @@
 -form_for [:admin, @region] do |f|
   %p
+    =show_errors @region
     =f.label :name
     %br
     =f.text_field :name

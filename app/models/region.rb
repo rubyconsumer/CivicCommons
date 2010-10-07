@@ -26,8 +26,9 @@ class Region < ActiveRecord::Base
   end
 
   def create_counties
+    self.counties.clear
     self.county_string.split("\n").each do |c|
-      self.counties << County.find_or_create_by_name_and_state(c, self.state)
+      self.counties << County.find_or_create_by_name_and_state(c.strip, self.state)
     end
   end
 end
