@@ -549,10 +549,12 @@ width: 62px;
 float: left;
 width: 300px;
 }
+.feature.feat-sm .feat-callout {width: 120px;}
 .feature .feat-content {
 float: right;
 width: 300px;
 }
+.feature.feat-sm .feat-content {width: 480px;}
 .feature ul.event-details {
 margin-top: 1.5em;
 margin-bottom: 32px;
@@ -810,8 +812,11 @@ background: #e3e3e3;
 overflow: hidden;
 padding: 2px 8px;
 }
+div.action-bar a {text-decoration: none;}
 div.action-bar a.rating {
+background: url(../images/chat-bubble-gray.png) no-repeat 0 50%;
 float: left;
+padding-left: 20px;
 width: 48%;
 }
 div.action-bar a.show-conversation-button {
@@ -963,7 +968,7 @@ border-bottom: none;
 color: #fff;
 padding: 5px 15px;
 margin-bottom: 0;
-text-shadow: 0 1px 1px rgba(0,0,0,.8);
+text-shadow: 0 1px 1px rgba(0,0,0,.5);
 -webkit-border-top-left-radius: 6px;
 -webkit-border-top-right-radius: 6px;
 -moz-border-radius-topleft: 6px;
