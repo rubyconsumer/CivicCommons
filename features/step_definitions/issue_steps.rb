@@ -4,6 +4,7 @@ Given /^an issue:$/ do |table|
 
   @issue =
     Factory.create(:issue,
+                   id:   issue['ID'],
                    name: issue['Name'],
                    summary: issue['Summary'],
                    zip_code: issue['Zip Code'])

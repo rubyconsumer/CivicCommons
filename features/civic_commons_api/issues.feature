@@ -14,6 +14,7 @@ Feature:
 
   Scenario: Retrieve one issue in which the user is participating
     Given an issue:
+      | ID          | 2                           |
       | Name        | This is a test issue        |
       | Summary     | Test issue                  |
       | Zip Code    | 44111                       |
@@ -26,10 +27,11 @@ Feature:
     """
     [
       {
-        "name": "This is a test issue",
-        "summary": "Test issue",
-        "participant_count": 1,
-        "contribution_count": 1
+        "name":               "This is a test issue",
+        "summary":            "Test issue",
+        "participant_count":  1,
+        "contribution_count": 1,
+        "url":                "http://www.example.com/issues/2"
       }
     ]
     """

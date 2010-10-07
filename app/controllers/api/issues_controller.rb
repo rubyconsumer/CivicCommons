@@ -5,7 +5,7 @@ class Api::IssuesController < ActionController::Base
   def index
 
     contributed_issues =
-      Api::ContributedIssues.for_person_by_email(params[:email])
+      Api::ContributedIssues.for_person_by_email(params[:email], request)
 
     respond_with contributed_issues
   end
