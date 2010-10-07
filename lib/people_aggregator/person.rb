@@ -12,7 +12,7 @@ class PeopleAggregator::Person
 
 
   def save
-    @attrs.merge!(adminPassword: "admin")
+    @attrs.merge!(adminPassword: Civiccommons::PeopleAggregator.admin_password)
     r = self.class.post('/newUser', body: @attrs)
 
     self.class.log_people_aggregator_response r
