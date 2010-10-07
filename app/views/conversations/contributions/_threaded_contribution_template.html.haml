@@ -18,11 +18,8 @@
         %div.convo-utility.no-response
           %p.respond-link
             = link_to("Respond", {:action => "new_node_contribution", :contribution_id => contribution.id, :id => contribution.conversation_id, :div_id => "contribution-#{contribution.id}"}, :class => "text conversation-action", :id => "action-link-#{contribution.id}", :title => "Leave a comment here", 'data-target' => "#action-div-#{contribution.id}", :remote => true)
-          %p.rating
-            %a.rate-comment{:title => "Rate this contribution", :href => "#", :onclick => "$('#rate-form-#{contribution.id}').slideDown(); return false;"}
-              =format_rating(contribution)
-          .rate-form-container(id="rate-form-#{contribution.id}")
-            =render(:partial => 'conversations/rate_contribution_form', :locals => {:contribution => contribution})
+          .rating-container
+            =render(:partial => 'conversations/contributions/rating', :locals => {:contribution => contribution})
         %ol.conversations.divided.thread-list
           .comment-contribution-action(id="action-div-#{contribution.id}")
-          = display_direct_descendant_subset(@top_level_contribution, contribution.id)
+          = display_direct_descendant_subset(@contributions, contribution.id)

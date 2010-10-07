@@ -1,0 +1,7 @@
+-content_for :main_body do 
+  %h1
+    =@region.name
+  %h2 Counties:
+  -@region.counties.each do |c|
+    .county 
+      ="#{c.name}, #{c.state}"

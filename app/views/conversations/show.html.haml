@@ -6,13 +6,19 @@
   .feature-mast
     .wrapper
       .content-container
-        %h1= @conversation.title
-        %p.convo-meta
-          %span#subscription
-            = render :partial => '/subscriptions/subscription', :locals => {:subscribable => @conversation}
-          %strong XX people
-          are engaged, last activity
-          %strong XX days ago
+        .main-content
+          %img.featured{ :class => "main-img", :src => @conversation.image.url(:panel), :alt => @conversation.title, :width => "120", :height => "80" }
+          %h1= @conversation.title
+          %p.convo-meta
+            %strong XX people
+            are engaged, last activity
+            %strong XX days ago
+        .aside.supplementary
+          %p
+            %span#subscription
+              = render :partial => '/subscriptions/subscription', :locals => {:subscribable => @conversation}
+          %p
+            = link_to("Post to this Conversation", {:action => "new_node_contribution", :id => @conversation.id, :div_id => "conversation-#{@conversation.id}"}, :class => "text button conversation-action", :id => "conversation-action-link-#{@conversation.id}", :title => "Leave a comment here", 'data-target' => "#conversation-action-div-#{@conversation.id}", :remote => true)
   .wrapper
     .content-container
       .main-content
@@ -36,8 +42,6 @@
               =render :partial => "conversations/contributions/threaded_contribution_template", :locals => { :contribution => contribution }
 
       .aside.supplementary
-        %p
-          = link_to("Post to this Conversation", {:action => "new_node_contribution", :id => @conversation.id, :div_id => "conversation-#{@conversation.id}"}, :class => "text button conversation-action", :id => "conversation-action-link-#{@conversation.id}", :title => "Leave a comment here", 'data-target' => "#conversation-action-div-#{@conversation.id}", :remote => true)
         .mod
           %h3 Summary
           .mod-content

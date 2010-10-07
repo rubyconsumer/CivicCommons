@@ -82,18 +82,4 @@ class ContributionsController < ApplicationController
     end
   end
   
-  def rate
-    return if current_person.nil?
-    
-    @contribution = Contribution.find(params[:contribution][:id])
-    rating = params[:contribution][:rating]
-    unless @contribution.nil?
-      @contribution.rate!(rating.to_i, current_person) unless rating.nil?
-      if rating.to_i > 0
-        render :text=>"You found this productive +#{@contribution.total_rating}"
-      else
-        render :text=>"You found this unproductive -#{@contribution.total_rating}"
-      end
-    end
-  end
 end

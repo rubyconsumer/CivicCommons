@@ -1,13 +1,14 @@
 module Rateable
   
   module ClassMethods
+    
     def get_top_rated(limit = 10)
       self.where("last_rating_date >= '#{(Time.now - 30.days)}'").order("recent_rating DESC").limit(limit)
     end
   end
     
   def self.included(base)
-    base.has_many :ratings, :as => :rateable    
+    base.has_many :ratings, :as => :rateable
     base.extend(ClassMethods)
   end
     
@@ -27,6 +28,7 @@ module Rateable
   def rate!(value, user)
     self.rate(value, user)
     self.save
+    self.user_rating = value if self.respond_to?(:user_rating)
   end
     
   def calculate_recent_rating

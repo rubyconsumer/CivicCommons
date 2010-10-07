@@ -21,8 +21,10 @@ class ConversationsController < ApplicationController
     @conversation = Conversation.includes(:guides, :issues).find(params[:id])
     @conversation.visit!((current_person.nil? ? nil : current_person.id))
     @top_level_contributions = TopLevelContribution.where(:conversation_id => @conversation.id).includes([:person]).order('created_at ASC')
+    @top_level_contributions = @top_level_contributions.with_user_rating(current_person) if current_person
     # grab all direct contributions to conversation that aren't TLC
     @contributions = Contribution.not_top_level.without_parent.where(:conversation_id => @conversation.id).includes([:person]).order('created_at ASC')
+    @contributions = @contributions.with_user_rating(current_person) if current_person
     @top_level_contribution = Contribution.new # for conversation comment form
 
     respond_to do |format|
@@ -32,7 +34,9 @@ class ConversationsController < ApplicationController
   end
   
   def node_conversation
-    @top_level_contribution = Contribution.includes({:children => :person}).find(params[:id])
+    @top_level_contribution = Contribution.find(params[:id])
+    @contributions = Contribution.children_of(@top_level_contribution).includes(:person)
+    @contributions = @contributions.with_user_rating(current_person) if current_person
     @top_level_contribution.visit!((current_person.nil? ? nil : current_person.id))
     @contribution = Contribution.new
     
@@ -134,6 +138,19 @@ class ConversationsController < ApplicationController
     unless @conversation.nil?
       @conversation.rate!(params[:rating].to_i, current_person) unless params[:rating].nil?
       render :text=>@conversation.total_rating
+    end
+  end
+  
+  def rate_contribution
+    return if current_person.nil?
+    
+    @contribution = Contribution.with_user_rating(current_person).find(params[:contribution][:id])
+    rating = params[:contribution][:rating]
+    unless @contribution.nil?
+      @contribution.rate!(rating.to_i, current_person) unless rating.nil?
+      respond_to do |format|
+        format.js { render(:partial => 'conversations/contributions/rating', :locals => {:contribution => @contribution}, :layout => false, :status => :created) }
+      end
     end
   end
 

@@ -41,20 +41,31 @@ $(document).ready(function() {
 });
 </script>
 
+<div class="feature-mast">
+  <div class="wrapper">
+    <div class="content-container">
+      <div class="main-content">
+        <h1><%= @issue.name %></h1>
+      </div>
+      <div class="aside supplementary">
+        <div id="subscription">
+          <p>
+            <%= render :partial => 'subscriptions/subscription', :locals => {:subscribable => @issue} %>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="wrapper">
   <div class="content-container">
-    <p class="convo-meta">
-      <div id="subscription">
-        <%= render :partial => 'subscriptions/subscription', :locals => {:subscribable => @issue} %>
-      </div>
-    </p>
     <div class='main-content'>
       <div class='feature'>
         <div class='feat-callout'>
           <%= image_tag @issue.image.url(:normal), :alt => @issue.name, :width => 300, :height => 200 %>
         </div>
         <div class="feat-content">
-          <h1><%= @issue.name %></h1>
           <p><%= @issue.summary %></p>
           <p><strong>Created On:</strong> <%= @issue.created_at.strftime("%m/%d/%Y") %></p>
           <!--
@@ -84,21 +95,16 @@ $(document).ready(function() {
     </div><!-- /.main-content -->
     <div class='aside supplementary'>
       <% @media_contributions.each do |contribution| %>
-        <% if contribution.respond_to?(:is_image?) %>
-          <div class="dnld <%= contribution.is_image? ? 'image' : 'document'%>">
-          <p><strong><%= link_to contribution.attachment_file_name, contribution.attachment.url %></strong></p>
-      <% else %>
-      <div class="dnld video">
-	<p><strong><%= link_to contribution.url, contribution.url %></strong></p>
-      <% end %>
-	<p><%= contribution.content %></p>
+      <div class="dnld <%= media_style(contribution) %>">
+        <p><strong><%= media_link_info(contribution) %></strong></p>
+	<p><%= contribution.title %></p>
 	<p><em>By: <%= contribution.person.name %></em></p>
       </div>
       <% end %>
       <% if person_signed_in? %>
           <p id="resource-contributions">Add a <a href="#" class="file-link">File</a>/<a class="file-link" href="#">Image</a>/<a class="video-link" href="#">Video</a></p>
           <%= render :partial => "new_file_contribution" %>
-          <%= render :partial => "new_link_contribution" %>
+          <%= render :partial => "new_embedded_snippet_contribution" %>
      <% else %>
         <p>You must <%= link_to "sign in", new_person_session_path %> or <%= link_to "sign up", new_person_registration_path %> to contribute a file or video</p>
       <% end %>
@@ -134,10 +140,10 @@ $(document).ready(function() {
     <div class="aside supplementary">
       <h3>Contributions</h3>
       <ol class='conversations divided'>
-        <% @comments.each do |contribution| %>
+        <% @links.each do |contribution| %>
 	<li class='offset-1'>
           <%= avatar_tag(contribution.person, :style_name => :standard, :class => "callout", :width => 60, :height => 60) %>
-	  <h4><a href="#"><%= truncate(contribution.content) %> </a></h4>
+	  <h4><%= link_to truncate(contribution.content), contribution.url %></h4>
 	  <p>By: <%= contribution.person.name %></p>
 	</li>
         <% end %>
