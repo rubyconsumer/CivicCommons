@@ -17,8 +17,6 @@ class Conversation < ActiveRecord::Base
   has_and_belongs_to_many :issues
   has_and_belongs_to_many :events
   
-  belongs_to :moderator, :class_name => 'Person'
-
   has_attached_file :image,
     :styles => {
        :thumb => "100x100#",
