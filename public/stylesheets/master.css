@@ -281,7 +281,7 @@ color: #266f96;
 outline: none;
 }
 a:hover {color: #2c87b7;}
-a.button, .button {
+a.button, .button, a.off_button, .off_button{
 background: #bfd36c url(../images/glass_btn.png) repeat-x 0 50%;
 border: 1px solid #999;
 color: #444;
@@ -316,7 +316,7 @@ vertical-align: middle;
 line-height: 15px;
 text-transform: uppercase;
 }
-a.button:hover, input.submit:hover {
+a.button:hover, a.off_button:hover, input.submit:hover {
 cursor: pointer;
 background-color: #b0c166;
 color: #333;
