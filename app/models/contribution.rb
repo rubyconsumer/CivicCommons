@@ -37,4 +37,10 @@ class Contribution < ActiveRecord::Base
     self.conversation || self.issue
   end
 
+  # Is this contribution an Image? Default to false, override in
+  # subclasses
+  def is_image?
+    false
+  end
+
 end

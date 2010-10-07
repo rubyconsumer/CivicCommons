@@ -25,7 +25,7 @@ class IssuesController < ApplicationController
     @latest_conversations = @issue.conversations.latest_updated.limit(3)
     @people = @issue.participants.exclude_organizations
     @organizations = @issue.participants.exclude_people
-    @comments = @issue.comments.most_recent.first(6)
+    @links = @issue.links.most_recent.first(6) 
     @suggested_actions = @issue.suggested_actions.most_recent.first(6)
     @media_contributions = @issue.media_contributions.most_recent.first(3)
     
