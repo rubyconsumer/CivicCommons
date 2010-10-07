@@ -666,6 +666,19 @@ div.convo-utility p.rating span {
 font-weight: bold;
 margin-left: .5em;
 }
+.rate-form-container {
+padding: 2em 0 1em;
+}
+.rate-form {
+float: right;
+height: 1em;
+}
+.rate-form form {
+display: inline-block;
+}
+.rate-form form .button {
+margin: 0;
+}
 html.js div.productive, html.js div.response-block {display: none;}
 div.productive {
 background: #fff;

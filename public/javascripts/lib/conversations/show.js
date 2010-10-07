@@ -110,17 +110,17 @@ jQuery(function ($) {
       });
       
       $('.rate-form > form')
-        .bind("ajax:loading", function(){
-          //$(this).closest('.rate-form-container').mask("Loading...");
+        .live("ajax:loading", function(){
+          $(this).closest('.convo-utility').mask("Loading...");
         })
-        .bind("ajax:complete", function(){
-          //$(this).closest('.rate-form-container').unmask();
+        .live("ajax:complete", function(){
+          $(this).closest('.convo-utility').unmask();
         })
-        .bind("ajax:success", function(evt, data, status, xhr){
-          $(this).closest('.rate-form-container').siblings('p.rating').text(xhr.responseText);
-          $(this).closest('.rate-form-container').remove();
+        .live("ajax:success", function(evt, data, status, xhr){
+          $(this).closest('.convo-utility').unmask(); // for some reason this doesn't happen from ajax:complete before ajax:success executes
+          $(this).closest('.rating-container').html(xhr.responseText);
         })
-        .bind("ajax:failure", function(evt, xhr, status, error){
+        .live("ajax:failure", function(evt, xhr, status, error){
           var errors = $.parseJSON(xhr.responseText);
           var errorString = "There were errors with the submission:\n";
           for(error in errors){
