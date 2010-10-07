@@ -18,7 +18,7 @@ Feature:
         | Subject | Confirmation instructions     |
       And a People Aggregator shadow account should not be created
 
-  @api
+  @api @wip
   Scenario: User clicks confirmation link in email
 
     Given the user signs up with:
