@@ -139,12 +139,12 @@ $(document).ready(function() {
     </div><!-- /.main-content -->
     <div class="aside supplementary">
       <h3>Contributions</h3>
-      <ol class='conversations divided'>
+      <ol class='contributions divided'>
         <% @links.each do |contribution| %>
 	<li class='offset-1'>
-          <%= avatar_tag(contribution.person, :style_name => :standard, :class => "callout", :width => 60, :height => 60) %>
+          <img class="callout" src="#contribution-image-goes-here" alt="contribution image goes here" width="90" height="60" />
 	  <h4><%= link_to truncate(contribution.content), contribution.url %></h4>
-	  <p>By: <%= contribution.person.name %></p>
+    <p>By: <a href="#link-to-PA-profile"><%= contribution.person.name %></a></p>
 	</li>
         <% end %>
       </ol>

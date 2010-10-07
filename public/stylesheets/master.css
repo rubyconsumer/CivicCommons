@@ -24,10 +24,11 @@ margin-left: 2em;
 }
 ul {list-style-type: disc;}
 ol {list-style-type: decimal;}
-.link-list, .conversations {
+.link-list, .conversations, .contributions {
 list-style: none;
 margin-left: 0;
 }
+.contributions li.offset-1 { padding-left:100px; }
 .link-list {font-weight: bold;}
 .conversations li {margin-bottom: 2em;}
 .conversations li:last-child {
