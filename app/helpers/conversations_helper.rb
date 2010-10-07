@@ -12,7 +12,7 @@ module ConversationsHelper
   end
   
   def format_time_only(t)
-    return t.localtime.strftime("%r") unless t.nil?
+    return t.localtime.strftime("%l:%M %p") unless t.nil?
   end
   
   def contribution_action_past_tense(contribution_type)
