@@ -13,6 +13,8 @@ gem "will_paginate", "~> 3.0.pre2"
 
 gem 'httparty'
 
+gem 'geokit'
+
 group :development do
   gem "rails3-generators"
   gem "hpricot"

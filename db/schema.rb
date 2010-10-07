@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101004124807) do
+ActiveRecord::Schema.define(:version => 20101006133018) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -98,6 +98,16 @@ ActiveRecord::Schema.define(:version => 20101004124807) do
     t.integer "conversation_id"
     t.integer "issue_id"
   end
+
+  create_table "counties", :force => true do |t|
+    t.string   "name"
+    t.string   "state",      :limit => 2
+    t.integer  "region_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "counties", ["region_id"], :name => "index_counties_on_region_id"
 
   create_table "events", :force => true do |t|
     t.string   "title"

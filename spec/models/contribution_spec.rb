@@ -85,6 +85,7 @@ describe Contribution do
           end
         end
       end
+      
     end
   end
   describe "when creating a contribution for an issue" do
