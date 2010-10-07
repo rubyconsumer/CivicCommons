@@ -50,7 +50,7 @@ admin_person.confirm!
   "Rahm Emanuel",
   "Goria Borger",
   "Unknown Announcer",
-  "Mary Jo Kilroy",
+  "Mary Kilroy",
   "Steve Stivers",
   "John Boccieri",
   "Jim Renacci",
