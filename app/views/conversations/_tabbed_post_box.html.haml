@@ -75,7 +75,7 @@
         - if defined?(contribution_id)
           = f.hidden_field(:parent_id, :value => contribution_id)
         = f.text_field(:type, :type => "hidden", :value => "Link")
-        = f.text_area(:content, :rows => "3", :placeholder => "Comment on file..")
+        = f.text_area(:content, :rows => "3", :placeholder => "Comment on link..")
         %label
           URL:
           = f.text_field(:url, :type => "text", :class => "textbox link", :placeholder => "http://www.youtube.com")
