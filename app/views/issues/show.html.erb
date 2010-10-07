@@ -41,17 +41,31 @@ $(document).ready(function() {
 });
 </script>
 
+<div class="feature-mast">
+  <div class="wrapper">
+    <div class="content-container">
+      <div class="main-content">
+        <h1><%= @issue.name %></h1>
+      </div>
+      <div class="aside supplementary">
+        <div id="subscription">
+          <p>
+            <%= render :partial => 'subscriptions/subscription', :locals => {:subscribable => @issue} %>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="wrapper">
   <div class="content-container">
-    <p class="convo-meta">
-    </p>
     <div class='main-content'>
       <div class='feature'>
         <div class='feat-callout'>
           <%= image_tag @issue.image.url(:normal), :alt => @issue.name, :width => 300, :height => 200 %>
         </div>
         <div class="feat-content">
-          <h1><%= @issue.name %></h1>
           <p><%= @issue.summary %></p>
           <p><strong>Created On:</strong> <%= @issue.created_at.strftime("%m/%d/%Y") %></p>
           <!--
@@ -80,11 +94,6 @@ $(document).ready(function() {
       </div>
     </div><!-- /.main-content -->
     <div class='aside supplementary'>
-      <div id="subscription">
-        <p>
-          <%= render :partial => 'subscriptions/subscription', :locals => {:subscribable => @issue} %>
-        </p>
-      </div>
       <% @media_contributions.each do |contribution| %>
       <div class="dnld <%= media_style(contribution) %>">
         <p><strong><%= media_link_info(contribution) %></strong></p>
