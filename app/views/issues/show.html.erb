@@ -44,9 +44,6 @@ $(document).ready(function() {
 <div class="wrapper">
   <div class="content-container">
     <p class="convo-meta">
-      <div id="subscription">
-        <%= render :partial => 'subscriptions/subscription', :locals => {:subscribable => @issue} %>
-      </div>
     </p>
     <div class='main-content'>
       <div class='feature'>
@@ -83,6 +80,11 @@ $(document).ready(function() {
       </div>
     </div><!-- /.main-content -->
     <div class='aside supplementary'>
+      <div id="subscription">
+        <p>
+          <%= render :partial => 'subscriptions/subscription', :locals => {:subscribable => @issue} %>
+        </p>
+      </div>
       <% @media_contributions.each do |contribution| %>
         <% if contribution.respond_to?(:is_image?) %>
           <div class="dnld <%= contribution.is_image? ? 'image' : 'document'%>">
