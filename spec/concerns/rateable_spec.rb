@@ -49,6 +49,31 @@ require 'spec_helper'
             new_item.total_rating.should == 1         
           end
        end
+       context "when NOT using the `with_user_rating(user)` scope to load the record" do
+         it "returns nil for user_rating" do
+           # this scenario, for example is when a view calls user_rating and the user isn't logged in
+           # (and so the with_user_rating(current_person) scope was never added to the chain)
+           scoped_item = model_type.find(@item.id)
+           scoped_item.user_rating.should be_nil
+         end
+       end
+       context "when using the `with_user_rating(user)` scope to load the record" do
+         it "returns nil if the user has not rated it" do
+           scoped_item = model_type.with_user_rating(@person).first
+           scoped_item.user_rating.should be_nil
+         end
+         it "returns the user's rating if the user has rated it" do
+           @item.rate!(1,@person)
+           scoped_item = model_type.with_user_rating(@person).find(@item)
+           scoped_item.user_rating.should == "1"
+         end
+         it "loads all records, even ones the user has not rated (ensures proper joins type used in scope)" do
+           item_2 = Factory.create(model_type.to_s.underscore)
+           scoped_items = model_type.with_user_rating(@person).all
+           scoped_items.include?(@item).should == true
+           scoped_items.include?(item_2).should == true
+         end
+       end
     end
     context "and calculating the recent rating" do
       it "should sum all ratings in the last 30 days" do
@@ -83,4 +108,16 @@ require 'spec_helper'
       end      
     end
   end
+  
+  describe model_type.to_s, "When calling user_rating method for a new (unsaved) record" do
+    before(:each) do
+      @person = Factory.create(:normal_person)
+      @item = model_type.new
+    end
+    it "should return nil" do
+      @item.new_record?.should be_true
+      @item.user_rating.should be_nil
+    end
+  end
+  
 end

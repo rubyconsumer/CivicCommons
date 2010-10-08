@@ -85,44 +85,6 @@ describe Contribution do
           end
         end
       end
-
-      describe "and accessing the current user's rating for a new (unsaved) record" do
-        it "should return nil for user_rating method" do
-          @contribution.new_record?.should be_true
-          @contribution.user_rating.should be_nil
-        end
-      end
-      describe "and accessing the current user's rating for a record loaded from ActiveRecord" do
-        before(:each) do
-          @contribution.save!
-          @contributions = Contribution.scoped
-        end
-        context "when NOT using the `with_user_rating(user)` scope to load the record" do
-          it "should return nil for user_rating" do
-            scoped_contribution = @contributions.first
-            scoped_contribution.user_rating.should be_nil
-          end
-        end
-        context "when using the `with_user_rating(user)` scope to load the record" do
-          it "should return nil if the user has not rated it" do
-            scoped_contribution = @contributions.with_user_rating(@person).first
-            scoped_contribution.user_rating.should be_nil
-          end
-          it "should return the user's rating if the user has rated it" do
-            @contribution.rate!(-1,@person)
-            @contribution.user_rating.should_not be_nil
-            scoped_contribution = @contributions.with_user_rating(@person).find(@contribution)
-            scoped_contribution.id.should == @contribution.id
-            scoped_contribution.user_rating.should == "-1"
-          end
-          it "should load all records, even ones the user has not rated (ensures proper joins type used in scope)" do
-            contribution_2 = Factory.create(contribution_type.underscore.to_sym)
-            scoped_contributions = @contributions.with_user_rating(@person).all
-            scoped_contributions.include?(@contribution).should == true
-            scoped_contributions.include?(contribution_2).should == true
-          end
-        end
-      end
     end
   end
   

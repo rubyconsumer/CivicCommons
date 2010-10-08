@@ -12,8 +12,6 @@ class Contribution < ActiveRecord::Base
   belongs_to :conversation
   belongs_to :issue
   
-  attr_writer :user_rating
-  
   validates_with ContributionValidator
   validates :item, :presence=>true 
   validates :person, :must_be_logged_in => true
@@ -22,11 +20,6 @@ class Contribution < ActiveRecord::Base
   scope :most_recent, {:order => 'created_at DESC'}
   scope :not_top_level, where("type != 'TopLevelContribution'")
   scope :without_parent, where(:parent_id => nil)
-  
-  scope :with_user_rating, lambda { |user|
-    select("contributions.*, user_rating.rating as user_rating").
-    joins("LEFT OUTER JOIN ratings AS user_rating ON user_rating.rateable_id = contributions.id AND user_rating.rateable_type = 'Contribution' AND user_rating.person_id = #{user.id}")
-  }
     
   def self.create_node_level_contribution(params, person)
     model = params.delete(:type).constantize
@@ -38,16 +31,6 @@ class Contribution < ActiveRecord::Base
      
   def item
     self.conversation || self.issue
-  end
-  
-  def user_rating
-    # for some reason defined?(super) won't return true when it's defined!
-    #defined?(super) ? super : nil
-    begin
-      @user_rating || super
-    rescue NoMethodError
-      nil
-    end
   end
 
   # Is this contribution an Image? Default to false, override in
