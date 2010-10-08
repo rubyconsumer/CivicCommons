@@ -29,11 +29,6 @@
     =file_field_tag 'transcript_file'
     
   %p
-    =conversation.label :moderator_id, "Moderator"
-    %br
-    =conversation.collection_select :moderator_id, Person.all, :id, :name, :prompt => true
-
-  %p
     =conversation.label :zip_code, "Enter Zip Code"
     %br
     =conversation.text_field :zip_code
