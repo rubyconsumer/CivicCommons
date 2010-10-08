@@ -58,7 +58,7 @@
           .important
             %p
               We need your help.
-              %a{:href => '#'} Suggest a Topic
+              %a{:href => "#{Civiccommons::PeopleAggregator.URL}/post_content.php?blog_type=Suggestion#{pa_authtoken('&')}"} Suggest a Topic
     #nav-wrapper
       #nav
         %ul#main-nav
