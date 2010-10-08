@@ -85,6 +85,11 @@ font-weight: bold;
 font-size: 1.3em;
 margin: -15px 0 0 0;
 }
+.contribution-form-headline h3 {
+border-bottom: none;
+margin: .5em 0 .2em;
+text-transform: none;
+}
 
 /*-----------------------------------------------
 =Form Styles
@@ -111,7 +116,7 @@ width: 448px;
 .aside label, div.call-out label {width: 70px;}
 .aside input.textbox, div.call-out input.textbox, .aside textarea, div.call-out textarea {width: 176px;}
 .mod input.textbox, .mod textarea {width: 156px;}
-input.submit {
+input.submit, input#contribution_submit {
 background: #bfd36c url(../images/glass_btn.png) repeat-x 0 50%;
 border: 1px solid #999;
 color: #444;
@@ -130,9 +135,15 @@ border-radius: 6px;
 -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
 box-shadow: 0 1px 2px rgba(0,0,0,.2);
 }
+input#contribution_submit {
+margin-left: 0;
+margin-right: 0;
+}
 .attach-issue input.submit,
-.attach-conversation input.submit 
-{ margin-left:0; width:150px; }
+.attach-conversation input.submit {
+margin-left:0;
+width:150px;
+}
 .aside input.submit, div.call-out input.submit {margin-left: 90px;}
 div.checkbox label {
 float: left;
@@ -320,7 +331,7 @@ vertical-align: middle;
 line-height: 15px;
 text-transform: uppercase;
 }
-a.button:hover, a.off_button:hover, input.submit:hover {
+a.button:hover, a.off_button:hover, input.submit:hover, input#contribution_submit:hover {
 cursor: pointer;
 background-color: #b0c166;
 color: #333;
@@ -456,9 +467,9 @@ border-radius: 6px;
 }
 p.login-link a:hover {
 background: #fcfcfc;
--webkit-box-shadow: 0px 1px 3px rgba(0,0,0,.3);
--moz-box-shadow: 0px 1px 3px rgba(0,0,0,.3);
-box-shadow: 0px 1px 3px rgba(0,0,0,.3);
+-webkit-box-shadow: 0px 0 3px rgba(0,0,0,.3);
+-moz-box-shadow: 0px 0 3px rgba(0,0,0,.3);
+box-shadow: 0px 0 3px rgba(0,0,0,.3);
 }
 p.login-link strong, p.createacct-link a {padding-left: 20px;}
 p.login-link strong {background: url(../images/lock.png) no-repeat 0 2px;}
@@ -606,15 +617,18 @@ float: left;
 margin-bottom: -1px;
 text-align: center;
 }
+.divided div.tab-strip ul li {border-bottom: none;}
 div.tab-strip ul li a {
 display: block;
 padding: 5px 9px;
 text-decoration: none;
 }
+/*
 div.tab-area, div.tab-strip ul li a.tab-active {
 background-color: #fff;
 border: 1px solid #ccc;
 }
+*/
 div.tab-strip ul li a.tab-active {border-bottom: none;}
 textarea.comment_text {
 width: 97%;
