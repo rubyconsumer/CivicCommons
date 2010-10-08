@@ -3,29 +3,26 @@ require 'spec_helper'
 
 describe Region do
 
-  it "joins county names into a country string" do
-    county1 = County.new :name=>"fred", :state=>"PA"
-    county2 = County.new :name=>"wilma", :state=>"PA"
+  it "joins zip_codes into a zip_code string" do
+    zip_code = ZipCode.new :zip_code=>"11111"
+    zip_code2 = ZipCode.new :zip_code=>"12345"
     region = Region.new
     region.name = "jake"
-    region.counties = [county1, county2]
-    region.county_string = "fred\nwilma"
+    region.zip_codes = [zip_code, zip_code2]
+    region.zip_code_string = "11111\n12345"
   end
 
-  it "returns empty strings when there are no counties" do 
+  it "returns empty strings when there are no zip_codes" do 
     region = Region.new
-    region.county_string.should == ""
-    region.state.should == ""
+    region.zip_code_string.should == ""
   end
 
-  it "creates counties based upon the county string" do
+  it "creates zip_codes based upon the zip_code string" do
     region = Region.new 
-    region.state = "PA"
-    region.county_string="Luzerne\nColumbia"
-    region.counties.length.should == 2
-    region.counties.first.state.should == "PA"
-    region.counties.first.name.should == "Luzerne"
-    region.counties.last.name.should == "Columbia"
+    region.zip_code_string="12345\n11111"
+    region.zip_codes.length.should == 2
+    region.zip_codes.first.zip_code.should == "12345"
+    region.zip_codes.last.zip_code.should == "11111"
   end
 
 

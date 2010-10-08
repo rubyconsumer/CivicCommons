@@ -1,34 +1,20 @@
 class Region < ActiveRecord::Base
   has_many :zip_codes
-  has_many :counties
   accepts_nested_attributes_for :zip_codes
 
-  def state
-    if self.counties.length > 0 && !self.counties.first.nil? 
-      @state ||= self.counties.first.state 
-    else
-      @state ||= ""
-    end
-    @state
-  end
-
-  def state=(val)
-    @state=val
-  end
-
-  def county_string
-    @county_string ||= self.counties.collect{|c| c.name}.join("\n")
+  def zip_code_string
+    @zip_code_string ||= self.zip_codes.collect{|c| c.zip_code}.join("\n")
   end
   
-  def county_string=(val)
-    @county_string = val  
-    create_counties 
+  def zip_code_string=(val)
+    @zip_code_string = val  
+    create_zip_codes 
   end
 
-  def create_counties
-    self.counties.clear
-    self.county_string.split("\n").each do |c|
-      self.counties << County.find_or_create_by_name_and_state(c.strip, self.state)
+  def create_zip_codes
+    self.zip_codes.clear
+    self.zip_code_string.split("\n").each do |c|
+      self.zip_codes << ZipCode.find_or_create_by_zip_code(c.strip)
     end
   end
 end

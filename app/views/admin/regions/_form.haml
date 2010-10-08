@@ -5,13 +5,10 @@
     %br
     =f.text_field :name
   .label
-    State
-  =f.text_field :state
-  .label
-    Counties
-  =f.text_area :county_string
-  %i
+    ZipCodes
+  =f.text_area :zip_code_string
+  %br
     (Seperate by line breaks)
+  %p
   .actions
     =f.submit
-

@@ -3,7 +3,8 @@ class Issue < ActiveRecord::Base
   include Visitable
   include TopItemable
   include Subscribable
-  
+  include Regionable 
+
   belongs_to :person
 
   has_and_belongs_to_many :conversations
