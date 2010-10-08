@@ -25,21 +25,12 @@
         #show_conversation
           %input{:type=>"hidden", :id=>"conversation_id", :value=>"#{@conversation.id}"}
           %input{:type=>"hidden", :id=>"post_model_type", :value=>"Comment"}
-          -#
-            %span(id="conversation_rating")
-              - if person_signed_in?    
-                %a.rating{:class=>"rating_down hide toggle", :href=>"#", :title=>"Rate this comment -1", :onclick=>"RateConversation(#{@conversation.id}, -1);"} -1
-              %a.rating(href="#" title="Rate this comment" class="current_rating")=format_rating(@conversation)
-              - if person_signed_in?    
-                %a.rating{:class=>"rating_up hide toggle", :href=>"#", :title=>"Rate this comment +1", :onclick=>"RateConversation(#{@conversation.id}, +1);"} +1
-            %span (This is the conversation rating until we get a mockup for it)
           %ol.conversations.divided
             - @top_level_contributions.each do |contribution|
               =render :partial => "conversations/contributions/#{contribution.type.underscore}", :locals => { :contribution => contribution }
           %ol.conversations.divided.thread-list
             %div{:id => "conversation-action-div-#{@conversation.id}"}
-            - @contributions.each do |contribution|
-              =render :partial => "conversations/contributions/threaded_contribution_template", :locals => { :contribution => contribution }
+            =render :partial => "conversations/contributions/threaded_contribution_template", :collection => @contributions, :as => :contribution
 
       .aside.supplementary
         .mod
@@ -56,6 +47,12 @@
         .mod
           %h3 Participants
           .mod-content
-            .photobank
-              -@conversation.participants.each do |participant|
-                =conversation_profile(participant).html_safe
+            .guides
+              .photobank
+                -@conversation.participants.select{ |p| @tlc_participants.include?(p.id) }.each do |participant|
+                  =conversation_profile(participant).html_safe
+              %br.clear
+            .other-participants
+              .photobank
+                -@conversation.participants.select{ |p| !@tlc_participants.include?(p.id) }.each do |participant|
+                  =conversation_profile(participant).html_safe

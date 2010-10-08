@@ -26,6 +26,8 @@ class ConversationsController < ApplicationController
     @contributions = Contribution.not_top_level.without_parent.where(:conversation_id => @conversation.id).includes([:person]).order('created_at ASC')
     @contributions = @contributions.with_user_rating(current_person) if current_person
     @top_level_contribution = Contribution.new # for conversation comment form
+    
+    @tlc_participants = @top_level_contributions.collect{ |tlc| tlc.owner }
 
     respond_to do |format|
       format.html # show.html.erb

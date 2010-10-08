@@ -1,4 +1,8 @@
 %div{:id => div_id, :class => "tab-strip"}
+  - unless current_person
+    =link_to("You must login to contribution", new_person_session_path)
+    %br
+    %br
   .tab-area.input-with-options
     %div{:id => "#{div_id}-options", :class => 'tab-strip-options'}
       %ul
@@ -117,7 +121,7 @@
           %a{:href => "##{div_id}-options", :class => 'cancel'} Cancel
         %h3 Write a Contribution
       %p
-        You are going to be redirected to the Contribution page. Once you submit your contribution, you will be brought back here where it will appear in the conversation.
-      = link_to raw("Let's do this thing &raquo;"), Civiccommons::PeopleAggregator.URL, {:class => 'button', 'data-colorbox-iframe' => true}
+        You will be redirected to the Contribution page. Once you submit your contribution, you will be brought back here where it will appear in the conversation.
+      = link_to raw("OK, take me there &raquo;"), Civiccommons::PeopleAggregator.URL, {:class => 'button'}
     
     

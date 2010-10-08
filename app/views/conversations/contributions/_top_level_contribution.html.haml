@@ -17,7 +17,7 @@
         %p.content= auto_link(contribution.content)
         %div.convo-utility.no-response
           %p.respond-link
-            = link_to((contribution.children.size == 0 ? "Be the first to respond": pluralize(contribution.descendants_count,'Response')), {:action => "node_conversation", :id => contribution.id, :div_id => "contribution-#{contribution.id}"}, :class => "text conversation-action show-conversation-button", :id => "action-link-#{contribution.id}", :title => "View the conversation", 'data-target' => "#action-div-#{contribution.id}", :remote => true)
+            = link_to((contribution.descendants_count == 0 ? "Be the first to respond": pluralize(contribution.descendants_count,'Response')), {:action => "node_conversation", :id => contribution.id, :div_id => "contribution-#{contribution.id}"}, :class => "text conversation-action show-conversation-button", :id => "action-link-#{contribution.id}", :title => "View the conversation", 'data-target' => "#action-div-#{contribution.id}", :remote => true)
           .rating-container
             =render(:partial => 'conversations/contributions/rating', :locals => {:contribution => contribution})
         %ol.conversations.divided.thread-list.top-level-contribution-action(id="action-div-#{contribution.id}")

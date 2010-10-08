@@ -666,7 +666,7 @@ div.convo-utility.response p.respond-link {background-image: url(../images/chat-
 div.convo-utility p.rating, div.productive p.rating-buttons {
 float: right;
 text-align: right;
-width: 35%;
+width: 40%;
 }
 div.convo-utility p.rating span {
 font-weight: bold;
@@ -1018,6 +1018,11 @@ border-bottom-right-radius: 6px;
 -webkit-background-clip: padding-box;
 -moz-background-clip: padding-box;
 background-clip: padding-box;
+}
+.other-participants {
+border-top: solid 1px #ddd;
+padding-top: 15px;
+margin-top: -10px;
 }
 
 /*-----------------------------------------------

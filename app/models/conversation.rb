@@ -11,7 +11,7 @@ class Conversation < ActiveRecord::Base
 
   # any person that has made a contribution to the convo
   has_many(:participants, :through => :contributions, :source => :person,
-           :uniq => true, :order => "last_name")
+           :uniq => true, :order => "contributions.created_at ASC")
 
   has_and_belongs_to_many :guides, :class_name => 'Person', :join_table => 'conversations_guides', :association_foreign_key => :guide_id
   has_and_belongs_to_many :issues

@@ -64,6 +64,7 @@ jQuery(function ($) {
           tabs: '> .tab-area > .tab-strip-options > ul > li',
           animationSpeed: animationSpeed
         });
+        $(form).find('[placeholder]').placeholder({className: 'placeholder'});
         $(form)
           .bind("ajax:loading", function(){
             $(tabStrip).mask("Loading...");
