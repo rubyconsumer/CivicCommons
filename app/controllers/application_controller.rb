@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
 
   def after_sign_in_path_for(resource_or_scope)
     pa_session = PeopleAggregator::Login.login(current_person.email, current_person.encrypted_password)
-    cookies[:pa_auth_token] = pa_session.authToken
+    cookies[:pa_auth_token] = pa_session.authToken if pa_session.respond_to?(:authToken)
     
     if session[:link] 
       new_link_path
