@@ -29,9 +29,19 @@ module AvatarHelper
     end
   end
   
+  def contribution_profile_text(person)
+    if person && person.people_aggregator_id
+      link_to_profile(person) do
+        person.name
+      end
+    else
+      person.name
+    end
+  end
+  
   def profile_image(person, size=20)
     <<-EOHTML
-    <img src="#{person.avatar.url}" alt="#{person.name}" height="#{size}" width="#{size}"/>
+    <img src="#{person.avatar.url}" alt="#{person.name}" height="#{size}" width="#{size}" title="#{person.name}"/>
     EOHTML
   end
   
@@ -49,7 +59,7 @@ module AvatarHelper
   
   def link_to_profile(person)
     <<-EOHTML
-    <a href="#{Civiccommons::PeopleAggregator.URL}/user/#{person.people_aggregator_id}">
+    <a href="#{Civiccommons::PeopleAggregator.URL}/user/#{person.people_aggregator_id}" title="#{person.name}">
       #{yield}
     </a>
     EOHTML

@@ -9,8 +9,7 @@
         %p
           -if contribution.person
             %strong
-              %a{:href=>person_path(contribution), :title=>"#{contribution.person.name}'s Profile"}
-                = contribution.person.name
+              = contribution_profile_text(contribution.person).html_safe
           -else
             %strong= 'An unknown person'
           commented:
