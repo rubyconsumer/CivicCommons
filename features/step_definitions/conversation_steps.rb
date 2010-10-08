@@ -13,7 +13,6 @@ Given /^a conversation:$/ do |table|
                    title: conversation['Title'],
                    image: File.open(attachment),
                    summary: conversation['Summary'],
-                   moderator: admin_person,
                    zip_code: conversation['Zip Code'])
 
   Factory.create(:top_level_contribution,

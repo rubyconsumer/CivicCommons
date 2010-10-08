@@ -1,0 +1,6 @@
+-content_for :main_body do 
+  %h2
+    Regions
+  -@regions.each do |r|
+    .link
+      =link_to r.name, r

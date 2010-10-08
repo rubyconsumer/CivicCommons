@@ -85,6 +85,7 @@ describe Contribution do
           end
         end
       end
+
       describe "and accessing the current user's rating for a new (unsaved) record" do
         it "should return nil for user_rating method" do
           @contribution.new_record?.should be_true

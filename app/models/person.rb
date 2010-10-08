@@ -55,9 +55,16 @@ class Person < ActiveRecord::Base
     where(:first_name => first, :last_name => last)
   end
 
-  # FIXME: name parsing code is simplistic--won't handle "van Buren" and the like. Drops middle names.
+  # Takes a full name and return an array of first and last name
+  # Examples
+  #  "Wendy" => ["Wendy", ""]
+  #  "Wendy Smith" => ["Wendy", "Smith"]
+  #  "Wendy van Buren" => ["Wendy", "van Buren"]
+  #
   def self.parse_name(name)
-    names = name.split(' ')
+    first, *last = name.split(' ')
+    last = last.try(:join, " ") || ""
+    return first, last
   end
 
   def create_proxy

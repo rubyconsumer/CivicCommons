@@ -7,6 +7,7 @@
     .wrapper
       .content-container
         .main-content
+          %img.featured{ :class => "main-img", :src => @conversation.image.url(:panel), :alt => @conversation.title, :width => "120", :height => "80" }
           %h1= @conversation.title
           %p.convo-meta
             %strong XX people
@@ -45,24 +46,16 @@
           %h3 Summary
           .mod-content
             %p= @conversation.summary
-            .dnld.document
-              %p
-                %strong
-                  %a{:href => '#'} Name of File to Download
-              %p Brief description or caption of the file.
-              %p
-                %em By: Person's Name
         .mod
           %h3 Issues
           .mod-content
             %ul.link-list
               -@conversation.issues.each do |issue|
                 %li.issue-list
-                  =link_to(issue.name, issue_path)
+                  =link_to(issue.name, issue_path(issue))
         .mod
-          %h3 Leaders
+          %h3 Participants
           .mod-content
-            %ul.link-list
-              -@conversation.guides.each do |guide|
-                %li.guide-list
-                  contribution_profile(guide)
+            .photobank
+              -@conversation.participants.each do |participant|
+                =conversation_profile(participant).html_safe

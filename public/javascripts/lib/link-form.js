@@ -9,11 +9,12 @@ var link = function() {
 
   var handleLinkClick = function(type) {
     return function() {
-      var issue = $(this).parents("." + type);
+      var issue = $(this).parents("li");
       issue.append(form);
       form.show();
       clearHiddenFields();
       var idElement = $("#contribution_" + type + "_id");
+      console.log(idElement);
       idElement.val(issue.attr("data-" + type + "_id")); 
     };
   };
@@ -30,24 +31,10 @@ var link = function() {
   
   self.init = function() {
     setupClosures();
-    $(".issue .attach").click(handleLinkClick("issue"));
-    $(".conversation .attach").click(handleLinkClick("conversation"));
-    $(".tab-strip").easyTabs();
+    $("li.attach-issue input.submit").click(handleLinkClick("issue"));
+    $("li.attach-conversation input.submit").click(handleLinkClick("conversation"));
   };
   return self;
 }();
 
-var tabs = function() {
-  var self = {};
-  self.init = function() {
-    $(".tab").hide();
-    $(".tabs ul li").live("click", function() {
-      $(".tab").hide();
-      $("#" + $(this).attr("data-tab")).fadeIn(140);
-    });
-    $(".tabs ul li:first").click();
-  };
-  return self;
-}();
-$(tabs.init);
 $(link.init);

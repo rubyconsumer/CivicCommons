@@ -1,4 +1,17 @@
 module ApplicationHelper
+  def show_errors(model)
+    rv = ""
+    all_errors = model.errors.full_messages
+    if all_errors.any?
+      rv = "<div id=\"error_explanation\"><h2>#{pluralize(all_errors.size, "error")} prohibited this #{model.class.to_s.downcase} from being saved:</h2><ul>"
+      all_errors.each do |msg|
+        rv = rv +"<li>#{msg}</li>"
+      end
+      rv = rv + "</ul></div"
+    end
+    rv.html_safe
+  end
+
   def can_edit?(owner)
     return false if current_person.nil?
     

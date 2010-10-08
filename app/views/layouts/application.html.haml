@@ -85,26 +85,17 @@
       #footer-inner
         %ul.sub-nav
           %li 
-            %a{:href => '#', :title => 'Home'}
-              Home
+            = link_to 'Home', root_path, :title => 'Home'
           %li 
-            %a{:href => '#', :title => 'Conversations'}
-              Conversations
+            = link_to 'Conversations', conversations_path, :title => 'Conversations'
           %li 
-            %a{:href => '#', :title => 'Issues'}
-              Issues
+            = link_to 'Issues', issues_path, :title => 'Issues'
           %li 
-            %a{:href => '#', :title => 'Events'}
-              Events
+            %a{:href =>"#{Civiccommons::PeopleAggregator.URL}/people", :title => "People"} People
           %li 
-            %a{:href => '#', :title => 'People'}
-              People
+            %a{:href =>"#{Civiccommons::PeopleAggregator.URL}/directory", :title => "Organizations"} Organizations
           %li 
-            %a{:href => '#', :title => 'Organizations'}
-              Organizations
-          %li 
-            %a{:href => '#', :title => 'About'}
-              About
+            %a{:href =>'http://theciviccommons.com/', :title => "About Us"} About Us
         %p The Civic Commons is Copyright 2010 by the Legal Entity.  Content is licensed under License.
         %ul.social-media
           %li

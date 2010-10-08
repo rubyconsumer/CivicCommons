@@ -49,4 +49,10 @@ class Contribution < ActiveRecord::Base
     end
   end
 
+  # Is this contribution an Image? Default to false, override in
+  # subclasses
+  def is_image?
+    false
+  end
+
 end
