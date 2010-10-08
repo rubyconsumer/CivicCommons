@@ -1,17 +1,17 @@
 require 'spec_helper'
 
 
-describe model_type.to_s, "#load_region" do
+describe Regionable, "#load_region" do
   let (:issue) { Factory.create(:issue) }
 
   before(:each) do 
     issue.zip_code = "11111"
   end
 
-  context "a region exists for its zipcode" do
+  context "when a region exists for its zipcode" do
 
     before(:each) do
-      Region.expects(:find_by_zip_code).and_returns(:region)   
+      Region.should_receive(:find_by_zip_code).with("11111").and_return(:region)   
     end
 
     it "finds the correct region from its zipcode" do
@@ -20,5 +20,14 @@ describe model_type.to_s, "#load_region" do
 
   end
 
+  context "when no region exists for its zipcode" do
+    before(:each) do
+      Region.should_receive(:find_by_zip_code).with("11111").and_return(nil)   
+    end
+
+    it "returns a default region" do
+      issue.region.should 
+    end
+  end
 end
 

@@ -3,6 +3,10 @@ require 'spec_helper'
 
 describe Region do
 
+  it "has a default name of national" do 
+    Region.default.name.should == "National"
+  end
+
   it "joins zip_codes into a zip_code string" do
     zip_code = ZipCode.new :zip_code=>"11111"
     zip_code2 = ZipCode.new :zip_code=>"12345"

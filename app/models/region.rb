@@ -1,4 +1,13 @@
 class Region < ActiveRecord::Base
+
+  class << self
+    DEFAULT_NAME = "National"
+
+    def default 
+      new(:name=>DEFAULT_NAME)
+    end
+  end
+
   has_many :zip_codes
   accepts_nested_attributes_for :zip_codes
 
