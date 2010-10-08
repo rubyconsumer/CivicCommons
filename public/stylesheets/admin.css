@@ -49,6 +49,9 @@ table {
   border-spacing: 0;
   vertical-align: middle; }
 
+tr:nth-child(even) {
+  background-color: #CFECEC}
+
 caption, th, td {
   text-align: left;
   font-weight: normal;
