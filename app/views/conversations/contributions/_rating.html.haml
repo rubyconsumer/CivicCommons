@@ -4,7 +4,7 @@
     =format_rating(contribution)
 - else
   %p.rating
-    %a.rate-comment{:title => "Rate this contribution", :href => "#", :onclick => "$('#rate-form-#{contribution.id}').slideDown(); return false;"}
+    %a.rate-comment{:title => "Rate this contribution", :href => "#", 'data-target' => "#rate-form-#{contribution.id}" }
       Rate this contribution
     =format_rating(contribution)
   .rate-form-container(id="rate-form-#{contribution.id}")

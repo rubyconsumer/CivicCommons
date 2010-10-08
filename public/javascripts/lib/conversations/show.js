@@ -36,7 +36,7 @@ jQuery(function ($) {
     		}
     	);
     }
-    $('.rate-form-container').hide();
+    
   	$('a.conversation-action')
   	  .live("ajax:loading", function(){
   	    var href = $(this).attr("href");
@@ -113,6 +113,13 @@ jQuery(function ($) {
             $(this).find(".validation-error").html(errorString);
           });
       });
+      
+      $('.rate-form-container').hide();
+      $('.rate-comment')
+        .live("click", function(e){
+          $(this.getAttribute("data-target")).toggle();
+          e.preventDefault();
+        });
       
       $('.rate-form > form')
         .live("ajax:loading", function(){

@@ -42,6 +42,7 @@ class Contribution < ActiveRecord::Base
   
   def user_rating
     # for some reason defined?(super) won't return true when it's defined!
+    #defined?(super) ? super : nil
     begin
       @user_rating || super
     rescue NoMethodError

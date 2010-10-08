@@ -35,7 +35,7 @@ class ConversationsController < ApplicationController
   
   def node_conversation
     @top_level_contribution = Contribution.find(params[:id])
-    @contributions = Contribution.children_of(@top_level_contribution).includes(:person)
+    @contributions = @top_level_contribution.descendants.includes(:person)
     @contributions = @contributions.with_user_rating(current_person) if current_person
     @top_level_contribution.visit!((current_person.nil? ? nil : current_person.id))
     @contribution = Contribution.new
