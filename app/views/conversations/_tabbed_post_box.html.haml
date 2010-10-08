@@ -29,7 +29,7 @@
           = f.hidden_field(:parent_id, :value => contribution_id)
         = f.hidden_field(:type, :value => "Comment")
         = f.text_area(:content, :rows => "3", :placeholder => "Leave a Comment...")
-        %div.errors
+        %div.validation-error
         = f.submit("Submit")
     %div{:id => "#{div_id}-new-question" }
       = form_for @contribution, :url => "create_node_contribution", :remote => true do |f|
@@ -47,7 +47,7 @@
           %select(id="contribution_askee")
             %option Anyone
             %option Moderator
-        %div.errors
+        %div.validation-error
         = f.submit("Submit")
     %div{:id => "#{div_id}-new-file" }
       = form_for @contribution, :url => "create_node_contribution.js", :remote => true, :html => { :multipart => true } do |f|
@@ -63,7 +63,7 @@
         %label
           Upload a file:
           = f.file_field(:attachment)
-        %div.errors
+        %div.validation-error
         = f.submit("Submit")
     %div{:id => "#{div_id}-new-link" }
       = form_for @contribution, :url => "create_node_contribution", :remote => true do |f|
@@ -79,7 +79,7 @@
         %label
           URL:
           = f.text_field(:url, :type => "text", :class => "textbox link", :placeholder => "http://www.youtube.com")
-        %div.errors
+        %div.validation-error
         = f.submit("Submit")
     %div{:id => "#{div_id}-new-video" }
       = form_for @contribution, :url => "create_node_contribution", :remote => true do |f|
@@ -96,7 +96,7 @@
           YouTube Link:
           = f.text_field(:url, :type => "text", :class => "textbox link youtube", :placeholder => "Copy/paste the video link here.")
           .youtube-thumbnail
-        %div.errors
+        %div.validation-error
         = f.submit("Submit")
     %div{:id => "#{div_id}-new-suggested-action" }
       = form_for @contribution, :url => "create_node_contribution", :remote => true do |f|
@@ -109,7 +109,7 @@
           = f.hidden_field(:parent_id, :value => contribution_id)
         = f.hidden_field(:type, :value => "SuggestedAction")
         = f.text_area(:content, :rows => "3", :placeholder => "Suggest an action...")
-        %div.errors
+        %div.validation-error
         = f.submit("Submit")
     %div{:id => "#{div_id}-write-contribution" }
       %div.contribution-form-headline

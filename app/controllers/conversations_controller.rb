@@ -129,28 +129,15 @@ class ConversationsController < ApplicationController
     end
   end
   
-  # POST /conversations/rate
-  # POST /conversations/rate.xml
-  def rate
-    return if current_person.nil?
-    
-    @conversation = Conversation.find(params[:conversation_id])
-    unless @conversation.nil?
-      @conversation.rate!(params[:rating].to_i, current_person) unless params[:rating].nil?
-      render :text=>@conversation.total_rating
-    end
-  end
-  
   def rate_contribution
-    return if current_person.nil?
-    
-    @contribution = Contribution.with_user_rating(current_person).find(params[:contribution][:id])
+    @contribution = Contribution.find(params[:contribution][:id])
     rating = params[:contribution][:rating]
-    unless @contribution.nil?
-      @contribution.rate!(rating.to_i, current_person) unless rating.nil?
-      respond_to do |format|
+    
+    respond_to do |format|
+      if @contribution.rate!(rating.to_i, current_person)
         format.js { render(:partial => 'conversations/contributions/rating', :locals => {:contribution => @contribution}, :layout => false, :status => :created) }
       end
+        format.js { render :json => @contribution.errors[:rating].first, :status => :unprocessable_entity }
     end
   end
 
