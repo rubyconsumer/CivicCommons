@@ -91,7 +91,7 @@ jQuery(function ($) {
             
             if($(clicked).hasClass('show-conversation-button')){
               $(this).find('textarea,input[type="text"],input[type="file"]').val('');
-              $(this).find('.errors').html('');
+              $(this).find('.validation-error').html('');
               window.location.hash = $(this).find('a.cancel').attr('href');
             }else{
               $(clicked).text($(clicked).data('origText')).unbind('click'); // only unbinds the click function that attaches the toggle, since all the other events are indirectly attached through .live()
@@ -100,12 +100,17 @@ jQuery(function ($) {
             setTimeout(function(){ responseNode.scrollTo(); }, animationSpeed);
           })
           .bind("ajax:failure", function(evt, xhr, status, error){
-            var errors = $.parseJSON(xhr.responseText);
-            var errorString = "There were errors with the submission:\n";
-            for(error in errors){
-              errorString += errors[error] + "\n";
+            try{
+              var errors = $.parseJSON(xhr.responseText);
+            }catch(err){
+              var errors = {msg: "Please reload the page and try again"};
             }
-            $(this).find(".errors").html(errorString);
+            var errorString = "There were errors with the submission:\n<ul>";
+            for(error in errors){
+              errorString += "<li>" + errors[error] + "</li>";
+            }
+            errorString += "</ul>"
+            $(this).find(".validation-error").html(errorString);
           });
       });
       
@@ -121,12 +126,17 @@ jQuery(function ($) {
           $(this).closest('.rating-container').html(xhr.responseText);
         })
         .live("ajax:failure", function(evt, xhr, status, error){
-          var errors = $.parseJSON(xhr.responseText);
-          var errorString = "There were errors with the submission:\n";
-          for(error in errors){
-            errorString += errors[error] + "\n";
+          try{
+            var errors = $.parseJSON(xhr.responseText);
+          }catch(err){
+            var errors = {msg: "Please reload the page and try again"};
           }
-          $(this).find(".errors").html(errorString);
+          var errorString = "There were errors with the rating:\n<ul>";
+          for(error in errors){
+            errorString += "<li>" + errors[error] + "</li>";
+          }
+          errorString += "</ul>"
+          $(this).closest(".rate-form").siblings(".validation-error").html(errorString);
         });
         
         $('a[data-colorbox-iframe]').live('click', function(e){

@@ -12,8 +12,11 @@ class Contribution < ActiveRecord::Base
   belongs_to :conversation
   belongs_to :issue
   
+  attr_writer :user_rating
+  
   validates_with ContributionValidator
   validates :item, :presence=>true 
+  validates :person, :must_be_logged_in => true
   validates_associated :conversation, :parent, :person
   
   scope :most_recent, {:order => 'created_at DESC'}
@@ -35,6 +38,15 @@ class Contribution < ActiveRecord::Base
      
   def item
     self.conversation || self.issue
+  end
+  
+  def user_rating
+    # for some reason defined?(super) won't return true when it's defined!
+    begin
+      @user_rating || super
+    rescue NoMethodError
+      nil
+    end
   end
 
   # Is this contribution an Image? Default to false, override in

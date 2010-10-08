@@ -13,10 +13,10 @@ module Rateable
   end
     
   def rate(value, user)    
-    rating = Rating.new({:rating=>value})    
-    rating.person = user
+    @rating = Rating.new({:rating=>value})    
+    @rating.person = user
     
-    self.ratings << rating    
+    self.ratings << @rating
     
     self.total_rating ||= 0
     
@@ -27,8 +27,13 @@ module Rateable
   
   def rate!(value, user)
     self.rate(value, user)
-    self.save
-    self.user_rating = value if self.respond_to?(:user_rating)
+    if self.save
+      self.user_rating = value if self.respond_to?(:user_rating)
+      return true
+    else
+      self.errors[:rating] = @rating.errors if @rating.invalid?
+      return false
+    end
   end
     
   def calculate_recent_rating
