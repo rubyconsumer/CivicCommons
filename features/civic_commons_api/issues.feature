@@ -12,7 +12,6 @@ Feature:
       | Password   | abcd1234      |
 
 
-  @wip
   Scenario: Retrieve one issue in which the user is participating
     Given an issue:
       | ID          | 2                           |
