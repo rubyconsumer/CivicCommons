@@ -2,9 +2,11 @@ require 'spec_helper'
 
 
 describe Region do
-
-  it "has a default name of national" do 
-    Region.default.name.should == "National"
+  
+  describe "default" do 
+    it "has a name of national" do 
+      Region.default.name.should == "National"
+    end
   end
 
   it "joins zip_codes into a zip_code string" do

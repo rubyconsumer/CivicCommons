@@ -1,8 +1,8 @@
 class Region < ActiveRecord::Base
 
+  before_save :create_zip_codes
   class << self
     DEFAULT_NAME = "National"
-
     def default 
       new(:name=>DEFAULT_NAME)
     end
@@ -12,7 +12,7 @@ class Region < ActiveRecord::Base
   accepts_nested_attributes_for :zip_codes
 
   def zip_code_string
-    @zip_code_string ||= self.zip_codes.collect{|c| c.zip_code}.join("\n")
+    self.zip_codes.collect{|c| c.zip_code}.join("\n")
   end
   
   def zip_code_string=(val)
@@ -22,8 +22,10 @@ class Region < ActiveRecord::Base
 
   def create_zip_codes
     self.zip_codes.clear
-    self.zip_code_string.split("\n").each do |c|
+    @zip_code_string.split("\n").each do |c|
       self.zip_codes << ZipCode.find_or_create_by_zip_code(c.strip)
+      puts "added #{c}"
     end
+    puts "done adding zipcodes #{self.zip_code_string}"
   end
 end

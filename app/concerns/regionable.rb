@@ -1,7 +1,17 @@
 module Regionable
   
   def region 
-    Region.find_by_zip_code(self.zip_code)
+    region = Region.find_by_zip_code(self.zip_code)
+    region ||= Region.default
   end
 
+  def self.included(base)
+    new_method = base.to_s.downcase.pluralize
+    Region.class_eval <<-ruby_eval, __FILE__, __LINE__ + 1
+      def #{new_method}
+        where_clause = "zip_code IN (" + zip_code_string.gsub(/\n/,",") + ")"
+        #{base.to_s}.where(where_clause)
+      end
+    ruby_eval
+  end
 end
