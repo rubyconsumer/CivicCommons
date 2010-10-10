@@ -5,11 +5,12 @@ Feature:
 
   Background:
     Given a registered user:
-      | First Name | Joe           |
-      | Last Name  | Test          |
-      | Email      | joe@test.com  |
-      | Zip        | 44444         |
-      | Password   | abcd1234      |
+      | First Name           | Joe           |
+      | Last Name            | Test          |
+      | Email                | joe@test.com  |
+      | Zip                  | 44444         |
+      | Password             | abcd1234      |
+      | People Aggregator ID | 12            |
 
   Scenario: Retrieve one conversation in which the user is participating
     Given a conversation:
@@ -21,7 +22,7 @@ Feature:
     And I have a comment on the conversation
     When I ask for conversations with URL:
     """
-    /api/joe@test.com/conversations
+    /api/12/conversations
     """
     Then I should receive a response:
     """

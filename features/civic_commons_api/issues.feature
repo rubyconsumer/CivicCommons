@@ -5,11 +5,12 @@ Feature:
 
   Background:
     Given a registered user:
-      | First Name | Joe           |
-      | Last Name  | Test          |
-      | Email      | joe@test.com  |
-      | Zip        | 44444         |
-      | Password   | abcd1234      |
+      | First Name           | Joe           |
+      | Last Name            | Test          |
+      | Email                | joe@test.com  |
+      | Zip                  | 44444         |
+      | Password             | abcd1234      |
+      | People Aggregator ID | 12            |
 
 
   Scenario: Retrieve one issue in which the user is participating
@@ -22,7 +23,7 @@ Feature:
     And I have a contribution on the issue
     When I ask for issues with URL:
     """
-    /api/joe@test.com/issues
+    /api/12/issues
     """
     Then I should receive a response:
     """
