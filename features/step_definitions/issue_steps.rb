@@ -13,7 +13,7 @@ Given /^an issue:$/ do |table|
                    zip_code: issue['Zip Code'])
 
   Factory.create(:top_level_contribution,
-                 issue: @conversation)
+                 issue: @issue)
 
 end
 
