@@ -1,3 +1,4 @@
+require 'issue'
 
 class RegionsController < ApplicationController
 

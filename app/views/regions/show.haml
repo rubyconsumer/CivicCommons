@@ -6,6 +6,11 @@
     -@region.zip_codes.each do |c|
       %br
       =c
-  %h2 Issues
-  -@region.issues.each do |i|
-    =link_to i.name, i
+  - if @region.conversations.count > 0
+    %h2 Conversations
+    -@region.conversations.each do |c|
+      =link_to c.title, c
+  - if @region.issues.count > 0
+    %h2 Issues
+    -@region.issues.each do |i|
+      =link_to i.name, i
