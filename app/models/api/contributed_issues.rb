@@ -14,6 +14,9 @@ class Api::ContributedIssues
       {
         name: issue.name,
         summary: issue.summary,
+        image: issue.image.url(:thumb),
+        image_width: issue.geometry_for_style(:thumb).width.to_i,
+        image_height: issue.geometry_for_style(:thumb).height.to_i,
         participant_count: issue.participants.count,
         contribution_count: issue.contributions.where(owner: person).count,
         url: issue.url

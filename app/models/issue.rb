@@ -3,6 +3,8 @@ class Issue < ActiveRecord::Base
   include Visitable
   include TopItemable
   include Subscribable
+
+  include GeometryForStyle
   
   belongs_to :person
 
@@ -30,7 +32,7 @@ class Issue < ActiveRecord::Base
                       :panel => "198x130>" },
                     :storage => :s3,
                     :s3_credentials => S3Config.credential_file, 
-                    :path => ":attachment/:id/:style/:filename",
+                    :path => IMAGE_ATTACHMENT_PATH,
                     :default_url => '/images/issue_img_:style.gif')
 
 

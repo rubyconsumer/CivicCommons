@@ -12,10 +12,12 @@ Feature:
       | Password   | abcd1234      |
 
 
+  @wip
   Scenario: Retrieve one issue in which the user is participating
     Given an issue:
       | ID          | 2                           |
       | Name        | This is a test issue        |
+      | Image       | imageAttachment.png         |
       | Summary     | Test issue                  |
       | Zip Code    | 44111                       |
     And I have a contribution on the issue
@@ -29,6 +31,9 @@ Feature:
       {
         "name":               "This is a test issue",
         "summary":            "Test issue",
+        "image":              "http://s3.amazonaws.com/cc-dev/images/thumb/imageAttachment.png",
+        "image_width":        100,
+        "image_height":       100,
         "participant_count":  1,
         "contribution_count": 1,
         "url":                "http://www.example.com/issues/2"

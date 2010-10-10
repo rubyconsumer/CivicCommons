@@ -27,7 +27,7 @@ class Conversation < ActiveRecord::Base
        :panel => "198x130>" },
     :storage => :s3,
     :s3_credentials => S3Config.credential_file,
-    :path => CONVERSATION_ATTACHMENT_PATH,
+    :path => IMAGE_ATTACHMENT_PATH,
     :default_url => '/images/convo_img_:style.gif'
 
   search_methods :containing_issue, :containing_guide
@@ -52,6 +52,7 @@ class Conversation < ActiveRecord::Base
       "No issues yet"
     end
   end
+
 
   # Original plan: single Moderator per Conversation.
   # New plan: Zero or more Guides per Conversation.
