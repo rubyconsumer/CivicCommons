@@ -1,7 +1,11 @@
 -content_for :main_body do 
   %h1
     =@region.name
-  %h2 Zip Codes:
-  -@region.zip_codes.each do |c|
-    %br
-    =c
+  -unless @region.default?
+    %h2 Zip Codes:
+    -@region.zip_codes.each do |c|
+      %br
+      =c
+  %h2 Issues
+  -@region.issues.each do |i|
+    =link_to i.name, i

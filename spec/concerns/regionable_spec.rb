@@ -25,7 +25,7 @@ describe Regionable, "#load_region" do
     end
 
     it "returns a default region" do
-      issue.region.name.should == Region.default.name
+      issue.region.default?.should == true
     end
 
   end

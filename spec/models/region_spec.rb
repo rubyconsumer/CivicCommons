@@ -7,6 +7,18 @@ describe Region do
     it "has a name of national" do 
       Region.default.name.should == "National"
     end
+    it "has an id of 0" do
+      Region.default.id.should == 0
+    end
+
+    it "default? is true" do
+      Region.default.default?.should == true  
+    end
+
+  end
+
+  it "default is false" do 
+    Region.new.default? == false
   end
 
   it "joins zip_codes into a zip_code string" do
@@ -31,5 +43,9 @@ describe Region do
     region.zip_codes.last.zip_code.should == "11111"
   end
 
-
+  describe "all" do 
+    it "returns the default region" do 
+      Region.all.any?{|r| r.default?}.should == true
+    end
+  end
 end
