@@ -6,6 +6,7 @@ module Regionable
   end
 
   def self.included(base)
+    # if regionable is included in Issue, then it will create a method to return all issues for a region
     new_method = base.to_s.downcase.pluralize
     Region.class_eval <<-ruby_eval, __FILE__, __LINE__ + 1
       def #{new_method}
