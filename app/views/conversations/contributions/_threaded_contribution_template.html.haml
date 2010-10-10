@@ -1,4 +1,4 @@
-%li
+%li.offset-1
   %div
     - if contribution
       .callout
@@ -9,17 +9,17 @@
         %p
           -if contribution.person
             %strong
-              %a{:href=>person_path(contribution), :title=>"#{contribution.person.name}'s Profile"}
-                = contribution.person.name
+              = contribution_profile_text(contribution.person).html_safe
           -else
             %strong= 'An unknown person'
           = contribution_action_past_tense(contribution.type)
         = render(:partial => "conversations/contributions/#{contribution.type.underscore}", :locals => {:contribution => contribution})
-        %div.convo-utility.no-response
-          %p.respond-link
-            = link_to("Respond", {:action => "new_node_contribution", :contribution_id => contribution.id, :id => contribution.conversation_id, :div_id => "contribution-#{contribution.id}"}, :class => "text conversation-action", :id => "action-link-#{contribution.id}", :title => "Leave a comment here", 'data-target' => "#action-div-#{contribution.id}", :remote => true)
-          .rating-container
-            =render(:partial => 'conversations/contributions/rating', :locals => {:contribution => contribution})
-        %ol.conversations.divided.thread-list
-          .comment-contribution-action(id="action-div-#{contribution.id}")
-          = display_direct_descendant_subset(@contributions, contribution.id)
+        - unless contribution.new_record? # if new_record? then this partial just showing a preview
+          %div.convo-utility.no-response
+            %p.respond-link
+              = link_to("Respond", {:action => "new_node_contribution", :contribution_id => contribution.id, :id => contribution.conversation_id, :div_id => "contribution-#{contribution.id}"}, :class => "text conversation-action", :id => "action-link-#{contribution.id}", :title => "Leave a comment here", 'data-target' => "#action-div-#{contribution.id}", :remote => true)
+            .rating-container
+              =render(:partial => 'conversations/contributions/rating', :locals => {:contribution => contribution})
+          %ol.conversations.divided.thread-list
+            .comment-contribution-action(id="action-div-#{contribution.id}")
+            = display_direct_descendant_subset(@contributions, contribution.id)

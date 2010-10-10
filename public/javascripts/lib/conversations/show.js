@@ -9,7 +9,9 @@ jQuery(function ($) {
       }
       integers = parentButton.data('origText').match(/(\d+)/g);
       $.each(integers, function(){
-        incrementedText = parentButton.data('origText').replace(this,parseInt(this)+1).replace(/Response$/, 'Responses');
+        incrementedText = parentButton.data('origText').replace(this,parseInt(this)+1)
+        // if this == 0, then incremented == 1, so no pluralization
+        if(this != 0){ incrementedText = incrementedText.replace(/Response$/, 'Responses'); }
       });
       parentButton.data('origText', incrementedText);
       
@@ -20,7 +22,83 @@ jQuery(function ($) {
       var top = this.offset().top - 200; // 100px top padding in viewport
       $('html,body').animate({scrollTop: top}, 1000);
       return this;
-    }
+    },
+    
+    bindContributionFormEvents: function(clicked,tabStrip){
+      var form = this;
+      form
+        .bind("ajax:loading", function(){
+          $(tabStrip).mask("Loading...");
+        })
+        .bind("ajax:complete", function(){
+          $(tabStrip).unmask();
+        })
+        .bind("ajax:success", function(evt, data, status, xhr){
+          // apparently there is no way to inspect the HTTP status returned when submitting via iframe (which happens for AJAX file/image uploads)
+          //  so, if file/image uploads via this form will always trigger ajax:success even if action returned error status code.
+          //  But for this action, successes always return HTML and failures return JSON of the error messages, so we'll test if response is JSON and trigger failure if so
+          try{
+            $.parseJSON(data); // throws error if data is not JSON
+            return $(this).trigger('ajax:complete').trigger('ajax:failure', xhr, status, data); // only gets to here if JSON parsing was successful, meaning data is error messages
+          }catch(err){
+            // do nothing
+          }
+          var preview = this.getAttribute('data-preview');
+          // console.log(preview);
+              
+          try{
+            var responseNode = $(xhr.responseText);
+          }catch(err){
+            var responseNode = $($("<div />").html(xhr.responseText).text()); // this is needed to properly unescape the HTML returned from doing the jquery.form plugin's ajaxSubmit for some reason
+          }
+          
+          if(preview == "true") {
+            // populate the preview div with a preview and a filled-in form with data-preview = false so it can be submitted again
+            // also, hide the form, so that it is not visible
+            previewPane = $(this).closest('div').siblings('.contribution-preview');
+            previewPane.html(responseNode);
+            previewForm = previewPane.children('form');
+            previewSubmit = previewPane.children('button.submit');
+            previewForm
+              .bindContributionFormEvents(clicked,tabStrip)
+              .hide();
+            previewSubmit.click( function(){
+              previewForm.submit();
+            });
+            window.location.hash = $(this).closest('.tab-area').find('li.preview-tab > a').attr('href');
+          } else {
+            $(clicked).updateConversationButtonText();
+            $(this).closest('ol.thread-list,ul.thread-list').append(responseNode).find('.rate-form-container').hide();
+            
+            if($(clicked).hasClass('show-conversation-button')){
+              $(tabStrip).find('textarea,input[type="text"],input[type="file"]').val('');
+              $(tabStrip).find('.contribution-preview').empty();
+              $(this).find('.validation-error').html('');
+              window.location.hash = $(this).find('a.cancel').attr('href');
+            }else{
+              $(clicked).text($(clicked).data('origText')).unbind('click'); // only unbinds the click function that attaches the toggle, since all the other events are indirectly attached through .live()
+              $(this).parents('.tab-strip').parent().empty();
+            }
+            setTimeout(function(){ responseNode.scrollTo(); }, animationSpeed);
+            $(tabStrip).unmask(); // doesn't always unmask on ajax:complete for some reason
+          }
+        })
+        .bind("ajax:failure", function(evt, xhr, status, error){
+          try{
+            var errors = $.parseJSON(xhr.responseText);
+          }catch(err){
+            var errors = {msg: "Please reload the page and try again"};
+          }
+          var errorString = "There were errors with the submission:\n<ul>";
+          for(error in errors){
+            errorString += "<li>" + errors[error] + "</li>";
+          }
+          errorString += "</ul>"
+          $(this).find(".validation-error").html(errorString);
+        })
+        .find('[placeholder]').placeholder({className: 'placeholder'});
+        return this
+      }
   });
   
   $(document).ready(function() {
@@ -36,7 +114,7 @@ jQuery(function ($) {
     		}
     	);
     }
-    $('.rate-form-container').hide();
+    
   	$('a.conversation-action')
   	  .live("ajax:loading", function(){
   	    var href = $(this).attr("href");
@@ -64,50 +142,16 @@ jQuery(function ($) {
           tabs: '> .tab-area > .tab-strip-options > ul > li',
           animationSpeed: animationSpeed
         });
-        $(form)
-          .bind("ajax:loading", function(){
-            $(tabStrip).mask("Loading...");
-          })
-          .bind("ajax:complete", function(){
-            $(tabStrip).unmask();
-          })
-          .bind("ajax:success", function(evt, data, status, xhr){
-            // apparently there is no way to inspect the HTTP status returned when submitting via iframe (which happens for AJAX file/image uploads)
-            //  so, if file/image uploads via this form will always trigger ajax:success even if action returned error status code.
-            //  But for this action, successes always return HTML and failures return JSON of the error messages, so we'll test if response is JSON and trigger failure if so
-            try{
-              $.parseJSON(data); // throws error if data is not JSON
-              return $(this).trigger('ajax:complete').trigger('ajax:failure', xhr, status, data); // only gets to here if JSON parsing was successful, meaning data is error messages
-            }catch(err){
-              // do nothing
-            }
-            $(clicked).updateConversationButtonText();
-            try{
-              var responseNode = $(xhr.responseText);
-            }catch(err){
-              var responseNode = $($("<div />").html(xhr.responseText).text()); // this is needed to properly unescape the HTML returned from doing the jquery.form plugin's ajaxSubmit for some reason
-            }
-            $(this).closest('ol.thread-list,ul.thread-list').append(responseNode).find('.rate-form-container').hide();
-            
-            if($(clicked).hasClass('show-conversation-button')){
-              $(this).find('textarea,input[type="text"],input[type="file"]').val('');
-              $(this).find('.errors').html('');
-              window.location.hash = $(this).find('a.cancel').attr('href');
-            }else{
-              $(clicked).text($(clicked).data('origText')).unbind('click'); // only unbinds the click function that attaches the toggle, since all the other events are indirectly attached through .live()
-              $(this).parents('.tab-strip').parent().empty();
-            }
-            setTimeout(function(){ responseNode.scrollTo(); }, animationSpeed);
-          })
-          .bind("ajax:failure", function(evt, xhr, status, error){
-            var errors = $.parseJSON(xhr.responseText);
-            var errorString = "There were errors with the submission:\n";
-            for(error in errors){
-              errorString += errors[error] + "\n";
-            }
-            $(this).find(".errors").html(errorString);
-          });
+
+        $(form).bindContributionFormEvents(clicked,tabStrip)
       });
+      
+      $('.rate-form-container').hide();
+      $('.rate-comment')
+        .live("click", function(e){
+          $(this.getAttribute("data-target")).toggle();
+          e.preventDefault();
+        });
       
       $('.rate-form > form')
         .live("ajax:loading", function(){
@@ -121,12 +165,17 @@ jQuery(function ($) {
           $(this).closest('.rating-container').html(xhr.responseText);
         })
         .live("ajax:failure", function(evt, xhr, status, error){
-          var errors = $.parseJSON(xhr.responseText);
-          var errorString = "There were errors with the submission:\n";
-          for(error in errors){
-            errorString += errors[error] + "\n";
+          try{
+            var errors = $.parseJSON(xhr.responseText);
+          }catch(err){
+            var errors = {msg: "Please reload the page and try again"};
           }
-          $(this).find(".errors").html(errorString);
+          var errorString = "There were errors with the rating:\n<ul>";
+          for(error in errors){
+            errorString += "<li>" + errors[error] + "</li>";
+          }
+          errorString += "</ul>"
+          $(this).closest(".rate-form").siblings(".validation-error").html(errorString);
         });
         
         $('a[data-colorbox-iframe]').live('click', function(e){

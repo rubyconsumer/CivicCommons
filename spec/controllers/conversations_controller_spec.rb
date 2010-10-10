@@ -112,20 +112,21 @@ describe ConversationsController do
     end
   end
   
-  describe "POST rate" do
-    before(:each) do
-      @person = Factory.create(:normal_person)
-      @controller.stub(:current_person).and_return(@person)
-    end    
-    it "should return the new conversation rating" do
-      Conversation.stub(:find).with(1) { mock_conversation }
-      mock_conversation.stub(:rate!)
-      mock_conversation.stub(:total_rating).and_return(5)
-      post :rate, {:conversation_id=>1, :rating=>1}
-      response.should be_success
-      response.body.should == "5"
-    end    
-  end
+  # Not sure why this is here, there is not suppose to be explicit conversation rating, only aggregate from contributions
+  #describe "POST rate" do
+  #  before(:each) do
+  #    @person = Factory.create(:normal_person)
+  #    @controller.stub(:current_person).and_return(@person)
+  #  end    
+  #  it "should return the new conversation rating" do
+  #    Conversation.stub(:find).with(1) { mock_conversation }
+  #    mock_conversation.stub(:rate!)
+  #    mock_conversation.stub(:total_rating).and_return(5)
+  #    post :rate, {:conversation_id=>1, :rating=>1}
+  #    response.should be_success
+  #    response.body.should == "5"
+  #  end    
+  #end
 
   describe "PUT update" do
     before(:each) do

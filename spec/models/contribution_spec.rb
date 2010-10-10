@@ -85,9 +85,9 @@ describe Contribution do
           end
         end
       end
-      
     end
   end
+  
   describe "when creating a contribution for an issue" do
     before(:each) do
       @issue = Factory.create(:issue)

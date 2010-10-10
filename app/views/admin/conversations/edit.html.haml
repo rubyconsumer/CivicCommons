@@ -31,10 +31,6 @@
       %br
       =top_level_contribution.text_area :content
       %br
-  %p
-    =conversation.label :moderator_id, "Moderator"
-    %br
-    =conversation.collection_select :moderator_id, Person.all, :id, :name, :prompt => true
 
   %p
     =conversation.label :zip_code, "Enter Zip Code"

@@ -10,10 +10,10 @@ Given /^a conversation:$/ do |table|
 
   @conversation =
     Factory.create(:conversation,
+                   id:    conversation['ID'],
                    title: conversation['Title'],
                    image: File.open(attachment),
                    summary: conversation['Summary'],
-                   moderator: admin_person,
                    zip_code: conversation['Zip Code'])
 
   Factory.create(:top_level_contribution,

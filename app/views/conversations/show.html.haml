@@ -7,6 +7,7 @@
     .wrapper
       .content-container
         .main-content
+          %img.featured{ :class => "main-img", :src => @conversation.image.url(:panel), :alt => @conversation.title, :width => "120", :height => "80" }
           %h1= @conversation.title
           %p.convo-meta
             %strong XX people
@@ -24,45 +25,34 @@
         #show_conversation
           %input{:type=>"hidden", :id=>"conversation_id", :value=>"#{@conversation.id}"}
           %input{:type=>"hidden", :id=>"post_model_type", :value=>"Comment"}
-          -#
-            %span(id="conversation_rating")
-              - if person_signed_in?    
-                %a.rating{:class=>"rating_down hide toggle", :href=>"#", :title=>"Rate this comment -1", :onclick=>"RateConversation(#{@conversation.id}, -1);"} -1
-              %a.rating(href="#" title="Rate this comment" class="current_rating")=format_rating(@conversation)
-              - if person_signed_in?    
-                %a.rating{:class=>"rating_up hide toggle", :href=>"#", :title=>"Rate this comment +1", :onclick=>"RateConversation(#{@conversation.id}, +1);"} +1
-            %span (This is the conversation rating until we get a mockup for it)
           %ol.conversations.divided
             - @top_level_contributions.each do |contribution|
               =render :partial => "conversations/contributions/#{contribution.type.underscore}", :locals => { :contribution => contribution }
           %ol.conversations.divided.thread-list
             %div{:id => "conversation-action-div-#{@conversation.id}"}
-            - @contributions.each do |contribution|
-              =render :partial => "conversations/contributions/threaded_contribution_template", :locals => { :contribution => contribution }
+            =render :partial => "conversations/contributions/threaded_contribution_template", :collection => @contributions, :as => :contribution
 
       .aside.supplementary
         .mod
           %h3 Summary
           .mod-content
-            %p= @conversation.summary
-            .dnld.document
-              %p
-                %strong
-                  %a{:href => '#'} Name of File to Download
-              %p Brief description or caption of the file.
-              %p
-                %em By: Person's Name
+            %p= raw @conversation.summary
         .mod
           %h3 Issues
           .mod-content
             %ul.link-list
               -@conversation.issues.each do |issue|
                 %li.issue-list
-                  =link_to(issue.name, issue_path)
+                  =link_to(issue.name, issue_path(issue))
         .mod
-          %h3 Leaders
+          %h3 Participants
           .mod-content
-            %ul.link-list
-              -@conversation.guides.each do |guide|
-                %li.guide-list
-                  contribution_profile(guide)
+            .guides
+              .photobank
+                -@conversation.participants.select{ |p| @tlc_participants.include?(p.id) }.each do |participant|
+                  =conversation_profile(participant).html_safe
+              %br.clear
+            .other-participants
+              .photobank
+                -@conversation.participants.select{ |p| !@tlc_participants.include?(p.id) }.each do |participant|
+                  =conversation_profile(participant).html_safe

@@ -12,6 +12,11 @@
     =person.text_field :last_name
     
   %p
+    =person.label :zip_code
+    %br
+    =person.text_field :zip_code  
+    
+  %p
     =person.label :avatar, "Please upload an image for this person"
     %br
     =person.file_field :avatar

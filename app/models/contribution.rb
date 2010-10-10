@@ -14,27 +14,41 @@ class Contribution < ActiveRecord::Base
   
   validates_with ContributionValidator
   validates :item, :presence=>true 
+  validates :person, :must_be_logged_in => true
   validates_associated :conversation, :parent, :person
   
   scope :most_recent, {:order => 'created_at DESC'}
   scope :not_top_level, where("type != 'TopLevelContribution'")
   scope :without_parent, where(:parent_id => nil)
-  
-  scope :with_user_rating, lambda { |user|
-    select("contributions.*, user_rating.rating as user_rating").
-    joins("LEFT OUTER JOIN ratings AS user_rating ON user_rating.rateable_id = contributions.id AND user_rating.rateable_type = 'Contribution' AND user_rating.person_id = #{user.id}")
-  }
     
+  def self.new_node_level_contribution(params, person)
+    model, params = setup_node_level_contribution(params,person)
+    model.new(params)
+  end
+  
   def self.create_node_level_contribution(params, person)
-    model = params.delete(:type).constantize
-    # could probably do this much cleaner, but still need to sanitize this for now
-    raise(ArgumentError, "not a valid node-level Contribution type") unless ALL_TYPES.include?(model.to_s)
-    params.merge!({:person => person})
-    return model.create(params)
+    model, params = setup_node_level_contribution(params,person)
+    model.create(params)
   end
      
   def item
     self.conversation || self.issue
+  end
+
+  # Is this contribution an Image? Default to false, override in
+  # subclasses
+  def is_image?
+    false
+  end
+  
+  protected
+  
+  def self.setup_node_level_contribution(params,person)
+    model = params.delete(:type).constantize
+    # could probably do this much cleaner, but still need to sanitize this for now
+    raise(ArgumentError, "not a valid node-level Contribution type") unless ALL_TYPES.include?(model.to_s)
+    params.merge!({:person => person})
+    return model,params
   end
 
 end

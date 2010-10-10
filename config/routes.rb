@@ -21,6 +21,7 @@ Civiccommons::Application.routes.draw do
   match '/conversations/node_conversation', :to=>'conversations#node_conversation', :via=>[:get]
   match '/conversations/create_node_contribution', :to=>'conversations#create_node_contribution', :via=>[:post]  
   match '/conversations/new_node_contribution', :to=>'conversations#new_node_contribution', :via=>[:get]
+  match '/conversations/preview_node_contribution', :to=>'conversations#preview_node_contribution', :via=>[:post]
   match '/conversations/rate_contribution', :to=>'conversations#rate_contribution'#, :via=>[:post]
   match '/conversations/rate', :to=>'conversations#rate', :via=>[:post]
   match '/subscriptions/subscribe', :to=>'subscriptions#subscribe', :via=>[:post]

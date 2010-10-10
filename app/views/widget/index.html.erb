@@ -4,7 +4,7 @@ var _widget = function() {
   var self = {};
   self.init = function(){
     link = document.getElementById("CivicCommonsWidgit");
-    link.setAttribute("href", "http://" + domain + "/links/new?link=" + window.location);
+    link.setAttribute("href", "http://" + domain + "/links/new?link=" + window.location + '&title=' + document.title);
     var url = "http://" + domain + "/images/cc_thumb.jpg";
     var image = document.createElement('img');
     image.setAttribute("src", url);

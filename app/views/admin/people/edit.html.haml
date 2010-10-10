@@ -17,6 +17,11 @@
     =person.text_field :email
     
   %p
+    =person.label :zip_code
+    %br
+    =person.text_field :zip_code
+    
+  %p
     =person.label :avatar, "Image"
     =person.file_field :avatar
     
@@ -24,11 +29,7 @@
     =person.label :admin
     =person.check_box :admin
     
-  %p
-    =person.label :validated, "Valid"
-    =person.check_box :validated
-  
-  %p
+    %p
     =person.label :proxy
     =person.check_box :proxy
     

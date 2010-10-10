@@ -1,35 +1,23 @@
 - content_for :main_body do
-  #new_link
-    .tabs
-      %ul
-        %li{:data=>{:tab=>"conversations"}}
-          Conversations
-        %li{:data=>{:tab=>"issues"}}
-          Issues
-      .input-with-options
-        #issues.tab
-          %h1 Attach link to issue:
-          -@issues.each do |i|
-            .issue{:data => {:issue_id => i.id}}
-              =i.name
-              %input.attach.submit{:type=>"submit", :value=>"Attach"}
-        #conversations.tab
-          %h1 Attach link to conversation:
-          -@conversations.each do |c|
-            .conversation{:data => {:conversation_id => c.id}}
-              =c.title
-              %input.attach.submit{:type=>"submit", :value=>"Attach"}
+  .wrapper
+    %h1= @pageTitle
     #link_form_wrapper
       -form_for @contribution, :url => "/conversations/create_node_contribution" do |l|
         =l.hidden_field(:type)
         =l.hidden_field(:issue_id)
         =l.hidden_field(:conversation_id)
+        =l.hidden_field(:url)
         %p
-          =l.label :url
-          =l.text_field :url
+          =l.text_area :description, :as => "text", :rows => 3, :placeholder => "Leave a comment"
         %p
-          =l.label :description
-          =l.text_area :description, :as => "text"
-        %p
-          =l.submit
+          =l.submit "Continue"
+    %ul.attach-to.link-list
+      -@issues.each do |i|
+        %li.attach-issue{:data => {:issue_id => i.id}}
+          %input.submit{:type=>"submit", :value=>"Attach to Issue"}
+          =i.name
+      -@conversations.each do |c|
+        %li.attach-conversation{:data => {:conversation_id => c.id}}
+          %input.submit{:type=>"submit", :value=>"Attach to Conversation"}
+          =c.title
     = javascript_include_tag 'lib/link-form'

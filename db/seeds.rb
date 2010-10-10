@@ -50,7 +50,7 @@ admin_person.confirm!
   "Rahm Emanuel",
   "Goria Borger",
   "Unknown Announcer",
-  "Mary Jo Kilroy",
+  "Mary Kilroy",
   "Steve Stivers",
   "John Boccieri",
   "Jim Renacci",
@@ -77,7 +77,7 @@ end
  "Bike path on the inner belt bridge",
  "Ohio Unemployment",
  "Ohio Gubernatorial Election",
- "Ohio Lethal Injection",
+ "International Business Rules Forum",
  "Ohio Politics",
  "Immigration Reform",
  "Water"].each do |issue|
@@ -92,8 +92,7 @@ def ingest(conversation, ingest_text_file_name)
   IngestPresenter.new(conversation, File.open(full_path)).save!
 end
 
-conversation = Conversation.create!(:moderator => admin_person,
-                                    :title => "Conversation regarding Ohio Unemployment",
+conversation = Conversation.create!(:title => "Conversation regarding Ohio Unemployment",
                                     :summary => "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin at velit lacus, vel lobortis quam. Duis eget odio lacus. Quisque ac.",
                                     :started_at => 2.hours.ago,
                                     :finished_at => Time.now,
@@ -101,19 +100,18 @@ conversation = Conversation.create!(:moderator => admin_person,
 conversation.issues << Issue.find_by_name("Ohio Unemployment")
 conversation.issues << ohio_politics_issue
 
-ingest(conversation, "john_king.txt")
+ingest(conversation, "transcript.txt")
 
 
 
-lethal_convo = Conversation.create!(:moderator => admin_person,
-                                    :title => "Conversation regarding Lethal Injection",
+lethal_convo = Conversation.create!(:title => "Conversation regarding Lethal Injection",
                                     :summary => "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin at velit lacus, vel lobortis quam. Duis eget odio lacus. Quisque ac.",
                                     :started_at => 3.days.ago,
                                     :finished_at => 3.days.ago + 1.hours,
                                     :zip_code => 44301)
-lethal_convo.issues << Issue.find_by_name("Ohio Lethal Injection")
+lethal_convo.issues << Issue.find_by_name("International Business Rules Forum")
 lethal_convo.issues << ohio_politics_issue
-ingest(lethal_convo, "lethal_injection.txt")
+ingest(lethal_convo, "internationalbusinessrulesforum.txt")
 
 
 # 

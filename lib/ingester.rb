@@ -93,6 +93,7 @@ class Ingester
   class DSL < BasicObject
     # 
     def self.build(string)
+      string = string.gsub("\r\n", "\r").gsub("\r", "\n")
       builder = new
       builder.instance_eval(string, "IngesterTranscript", 1)
       if builder.current_dialog.partial_dialog?

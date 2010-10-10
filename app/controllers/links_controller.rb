@@ -7,6 +7,7 @@ class LinksController < ApplicationController
     @contribution = Contribution.new
     @contribution.url = link
     @contribution.type = "Link"
+    @pageTitle = params[:title]
     forget_url
   end
 

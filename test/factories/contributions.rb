@@ -63,6 +63,9 @@ Factory.define :link do |f|
   f.association :conversation, :factory => :conversation
   f.content "MyText"
   f.association :parent, :factory => :top_level_contribution
+  f.url "http://www.alfajango.com/"
+  f.override_target_doc "#{Rails.root}/test/fixtures/example_link.html"
+  f.override_url_exists true
 end
 
 Factory.define :embedded_snippet do |f|
@@ -71,4 +74,7 @@ Factory.define :embedded_snippet do |f|
   f.association :conversation, :factory => :conversation
   f.content "MyText"
   f.association :parent, :factory => :top_level_contribution
+  f.url "http://www.youtube.com/watch?v=djtNtt8jDW4"
+  f.override_target_doc "#{Rails.root}/test/fixtures/example_youtube.html"
+  f.override_url_exists true
 end

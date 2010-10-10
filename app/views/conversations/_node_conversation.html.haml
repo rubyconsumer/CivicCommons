@@ -1,5 +1,5 @@
 %li
   %div{:id => "action-div-#{@top_level_contribution.id}-respond"}
-    = render(:partial => "conversations/tabbed_post_box", :locals => {:conversation_id => @top_level_contribution.conversation_id, :contribution_id => @top_level_contribution.id, :div_id => params[:div_id]})
+    = render(:partial => "conversations/tabbed_post_box", :locals => {:div_id => params[:div_id]})
   
 = display_direct_descendant_subset(@contributions, @top_level_contribution.id)

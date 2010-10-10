@@ -3,6 +3,8 @@ class Conversation < ActiveRecord::Base
   include Visitable
   include TopItemable
   include Subscribable
+
+  include GeometryForStyle
   
   has_many :contributions
   has_many :top_level_contributions
@@ -11,14 +13,12 @@ class Conversation < ActiveRecord::Base
 
   # any person that has made a contribution to the convo
   has_many(:participants, :through => :contributions, :source => :person,
-           :uniq => true, :order => "last_name")
+           :uniq => true, :order => "contributions.created_at ASC")
 
   has_and_belongs_to_many :guides, :class_name => 'Person', :join_table => 'conversations_guides', :association_foreign_key => :guide_id
   has_and_belongs_to_many :issues
   has_and_belongs_to_many :events
   
-  belongs_to :moderator, :class_name => 'Person'
-
   has_attached_file :image,
     :styles => {
        :thumb => "100x100#",
@@ -27,7 +27,7 @@ class Conversation < ActiveRecord::Base
        :panel => "198x130>" },
     :storage => :s3,
     :s3_credentials => S3Config.credential_file,
-    :path => CONVERSATION_ATTACHMENT_PATH,
+    :path => IMAGE_ATTACHMENT_PATH,
     :default_url => '/images/convo_img_:style.gif'
 
   search_methods :containing_issue, :containing_guide
@@ -52,6 +52,7 @@ class Conversation < ActiveRecord::Base
       "No issues yet"
     end
   end
+
 
   # Original plan: single Moderator per Conversation.
   # New plan: Zero or more Guides per Conversation.

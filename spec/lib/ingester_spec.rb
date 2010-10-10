@@ -33,6 +33,12 @@ describe Ingester do
     dialog.content.should == "Hello World"
   end
 
+  it "escapes slash r correctly (converts dos files to unix)" do
+    script = %Q{speaker "John Foo"\rdialog "Hello World"\r}
+    dialogs = Ingester.ingest(script)
+    dialogs.size.should == 1
+  end
+
   it "handles full transcript" do
     script = <<-endscript
 speaker "Chris Hayes"

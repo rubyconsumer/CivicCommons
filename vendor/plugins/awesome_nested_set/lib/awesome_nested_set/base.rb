@@ -100,9 +100,6 @@ module CollectiveIdea #:nodoc:
                 order(quoted_left_column_name) 
               }
               scope :with_depth, proc {|level| where(:depth => level).order("lft") }
-              scope :children_of, lambda { |parent|
-                where("(#{quoted_table_name}.#{quoted_left_column_name} >= ? AND #{quoted_table_name}.#{quoted_right_column_name} <= ?) AND (#{quoted_table_name}.#{parent.class.primary_key} != ?)", parent.left, parent.right, parent)
-              }
 
               define_callbacks :move, :terminator => "result == false"
             end
