@@ -1,7 +1,7 @@
 class Api::ContributedConversations
 
-  def self.for_person_by_email(email, request)
-    person = Person.find_by_email(email)
+  def self.for_person_by_people_aggregator_id(people_aggregator_id, request)
+    person = Person.find_by_people_aggregator_id(people_aggregator_id)
     for_person(person, request)
   end
 
