@@ -2,9 +2,12 @@ class Region < ActiveRecord::Base
 
   before_save :create_zip_codes
   class << self
-    DEFAULT_NAME = "National"
+    def default_name
+      "National"
+    end
+
     def default 
-      new(:name=>DEFAULT_NAME)
+      new(:name=>self.default_name)
     end
   end
 
@@ -24,8 +27,6 @@ class Region < ActiveRecord::Base
     self.zip_codes.clear
     @zip_code_string.split("\n").each do |c|
       self.zip_codes << ZipCode.find_or_create_by_zip_code(c.strip)
-      puts "added #{c}"
     end
-    puts "done adding zipcodes #{self.zip_code_string}"
   end
 end

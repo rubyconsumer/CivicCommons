@@ -45,6 +45,20 @@ describe Regionable, "#load_region" do
       @region.issues.first.id.should == issue.id
     end
 
+    context "default region" do 
+
+      before(:each) do 
+        issue = Factory.create(:issue)
+        issue.zip_code = "99889"
+        issue.save
+      end
+
+      it "should return non-matching things of its type" do 
+        Region.default.issues.any?{|i| i.zip_code == "99889"}.should == true
+      end
+
+    end
+
   end
 end
 
