@@ -3,6 +3,8 @@ class Conversation < ActiveRecord::Base
   include Visitable
   include TopItemable
   include Subscribable
+
+  include GeometryForStyle
   
   has_many :contributions
   has_many :top_level_contributions

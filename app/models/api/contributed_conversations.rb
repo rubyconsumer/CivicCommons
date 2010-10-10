@@ -13,7 +13,9 @@ class Api::ContributedConversations
       conversation = ConversationPresenter.new(conversation, request)
       {
         title: conversation.title,
-        image: conversation.image.url,
+        image: conversation.image.url(:thumb),
+        image_width: conversation.geometry_for_style(:thumb).width,
+        image_height: conversation.geometry_for_style(:thumb).height,
         summary: conversation.summary,
         participant_count: conversation.participants.count,
         contribution_count: conversation.contributions.where(owner: person).count,
