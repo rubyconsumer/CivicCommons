@@ -21,12 +21,14 @@ class Contribution < ActiveRecord::Base
   scope :not_top_level, where("type != 'TopLevelContribution'")
   scope :without_parent, where(:parent_id => nil)
     
+  def self.new_node_level_contribution(params, person)
+    model, params = setup_node_level_contribution(params,person)
+    model.new(params)
+  end
+  
   def self.create_node_level_contribution(params, person)
-    model = params.delete(:type).constantize
-    # could probably do this much cleaner, but still need to sanitize this for now
-    raise(ArgumentError, "not a valid node-level Contribution type") unless ALL_TYPES.include?(model.to_s)
-    params.merge!({:person => person})
-    return model.create(params)
+    model, params = setup_node_level_contribution(params,person)
+    model.create(params)
   end
      
   def item
@@ -37,6 +39,16 @@ class Contribution < ActiveRecord::Base
   # subclasses
   def is_image?
     false
+  end
+  
+  protected
+  
+  def self.setup_node_level_contribution(params,person)
+    model = params.delete(:type).constantize
+    # could probably do this much cleaner, but still need to sanitize this for now
+    raise(ArgumentError, "not a valid node-level Contribution type") unless ALL_TYPES.include?(model.to_s)
+    params.merge!({:person => person})
+    return model,params
   end
 
 end

@@ -40,7 +40,7 @@ class ConversationsController < ApplicationController
     @contributions = @top_level_contribution.descendants.includes(:person)
     @contributions = @contributions.with_user_rating(current_person) if current_person
     @top_level_contribution.visit!((current_person.nil? ? nil : current_person.id))
-    @contribution = Contribution.new
+    @contribution = Contribution.new(:parent_id => @top_level_contribution.id, :conversation_id => @top_level_contribution.conversation_id)
     
     respond_to do |format|
       format.js { render :partial => "conversations/node_conversation", :layout => false}
@@ -50,20 +50,33 @@ class ConversationsController < ApplicationController
   end
   
   def new_node_contribution
-    @contribution = Contribution.new
+    @contribution = Contribution.new(:conversation_id => params[:id], :parent_id => params[:contribution_id])
     respond_to do |format|
-      format.js { render(:partial => "conversations/tabbed_post_box", :locals => {:conversation_id => params[:id], :contribution_id => params[:contribution_id], :div_id => params[:div_id], :layout => false}) }
-      format.html { render(:partial => "conversations/tabbed_post_box", :locals => {:conversation_id => params[:id], :contribution_id => params[:contribution_id], :div_id => params[:div_id], :layout => 'application'}) }
+      format.js { render(:partial => "conversations/tabbed_post_box", :locals => {:div_id => params[:div_id], :layout => false}) }
+      format.html { render(:partial => "conversations/tabbed_post_box", :locals => {:div_id => params[:div_id], :layout => 'application'}) }
+    end
+  end
+  
+  def preview_node_contribution
+    @contribution = Contribution.new_node_level_contribution(params[:contribution], current_person)
+    respond_to do |format|
+      if @contribution.valid?
+        format.js { render(:partial => "conversations/new_contribution_preview", :locals => {:div_id => params[:div_id], :layout => false}) }
+        format.html { render(:partial => "conversations/new_contribution_preview", :locals => {:div_id => params[:div_id], :layout => 'application'}) }
+      else
+        format.js   { render :json => @contribution.errors, :status => :unprocessable_entity }
+        format.html { render :text => @contribution.errors, :status => :unprocessable_entity }
+      end
     end
   end
   
   #TODO: consider moving this to its own controller?
   def create_node_contribution
-    @contribution = Contribution.create_node_level_contribution(params[:contribution], current_person)
+    @contribution = Contribution.new_node_level_contribution(params[:contribution], current_person)
 
     respond_to do |format|
       if @contribution.save
-        format.js   { render :partial => "conversations/contributions/threaded_contribution_template", :locals => {:contribution => @contribution}, :status => :created }
+        format.js   { render :partial => "conversations/contributions/threaded_contribution_template", :locals => {:contribution => @contribution}, :status => (params[:preview] ? :accepted : :created) }
         format.html { redirect_to(@contribution.item, :notice => 'Contribution was successfully created.') }
         format.xml  { render :xml => @contribution, :status => :created, :location => @contribution }
       else

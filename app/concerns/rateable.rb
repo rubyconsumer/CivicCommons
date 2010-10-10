@@ -31,7 +31,7 @@ module Rateable
       nil
     end
   end
-    
+  
   def rate(value, user)    
     @rating = Rating.new({:rating=>value})    
     @rating.person = user
