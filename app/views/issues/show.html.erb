@@ -73,7 +73,7 @@ $(document).ready(function() {
 	  <h3>People active in this issue</h3>
 	  <div class="photobank">
             <% @people.each do |person| %>
-            <%= avatar_tag(person, :style_name => :standard, :height => 50, :width => 50) %>
+            <%= featured_profile(person).html_safe %>
             <% end %>
 	  </div>
 	</div>
@@ -81,7 +81,7 @@ $(document).ready(function() {
 	  <h3>Organizations active in this issue</h3>
 	  <div class="photobank">
             <% @organizations.each do |org| %>
-            <%= avatar_tag(org, :style_name => :standard, :height => 50, :width => 50) %>
+            <%= featured_profile(org).html_safe %>
             <% end %>
 	  </div>
 	</div>

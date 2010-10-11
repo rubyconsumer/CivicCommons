@@ -29,6 +29,16 @@ module AvatarHelper
     end
   end
   
+  def featured_profile(person)
+    if person && person.people_aggregator_id
+      link_to_profile(person) do
+        profile_image(person, 50)
+      end
+    else
+      profile_image(person, 50)
+    end
+  end
+  
   def contribution_profile_text(person)
     if person && person.people_aggregator_id
       link_to_profile(person) do
@@ -59,7 +69,7 @@ module AvatarHelper
   
   def link_to_profile(person)
     <<-EOHTML
-    <a href="#{Civiccommons::PeopleAggregator.URL}/user/#{person.people_aggregator_id}" title="#{person.name}">
+    <a href="#{pa_link("user/#{person.people_aggregator_id}")}" title="#{person.name}">
       #{yield}
     </a>
     EOHTML
