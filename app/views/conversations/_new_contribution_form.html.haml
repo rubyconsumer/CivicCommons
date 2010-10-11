@@ -39,3 +39,5 @@
 / and hook it up to submit the form in show.js where the form is hidden
 - if params[:preview] 
   %button.button.submit Submit
+  or
+  %a{:href => "##{div_id}-new-#{type.to_s}"} Cancel
