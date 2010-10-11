@@ -24,7 +24,7 @@ describe Person do
   describe "when finding all by name" do
 
     def given_a_person_with_name(name)
-      person = Person.create(:normal_person)
+      person = Factory.create(:normal_person)
       person.name = name
       person.password = "password"
       person.email = "wendy@example.com"
