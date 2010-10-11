@@ -1,0 +1,13 @@
+<%= form_for Contribution.new, :url => create_contribution_issue_url(@issue),
+    :remote => true, :html => {:class => "general-aside contribution-form", :style => "display:none",
+                                :multipart => true,
+                                :id => "new-url-contribution"} do |f| %>
+<div class='form-block'> 
+  <%= f.text_field(:title, :placeholder => "Title of URL") %>
+  <%= f.text_field(:url, :placeholder => "URL ex: http://www.theciviccommons.com") %>
+  <%= f.text_area(:content, :rows => 2, :placeholder => "Description of URL") %>
+  <%= f.hidden_field(:type, :value => "Link") %>
+</div>
+<div class="errors"></div>
+<%= f.submit("Submit", :class => "submit") %>
+<% end %>

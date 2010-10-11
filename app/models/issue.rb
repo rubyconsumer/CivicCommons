@@ -14,7 +14,7 @@ class Issue < ActiveRecord::Base
   has_many :suggested_actions
   has_many :links
   has_many(:media_contributions, :class_name => "Contribution",
-           :conditions => "type = 'EmbeddedSnippet' or type = 'AttachedFile'")
+           :conditions => "type = 'EmbeddedSnippet' or type = 'AttachedFile' or type = 'Link'")
 
   has_many(:written_contributions, :class_name => "Contribution",
            :conditions => "type = 'PAContribution' or type = 'EmbeddedSnippet'")
