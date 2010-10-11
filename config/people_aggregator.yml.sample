@@ -1,11 +1,15 @@
 development:
-  url:        "http://civiccommons.digitalcitymechanics.com"
+  url:                  "http://civiccommons.digitalcitymechanics.com"
+  admin_password:       admin
 
 test:
-  url:        "http://civiccommons.digitalcitymechanics.com"
+  url:                  "http://civiccommons.digitalcitymechanics.com"
+  admin_password:       admin
 
 staging:
-  url:        "http://socialstaging.theciviccommons.com"
+  url:                  "http://socialstaging.theciviccommons.com"
+  admin_password:       admin
 
 production:
-  url:        "http://social.theciviccommons.com"
+  url:                  "http://social.theciviccommons.com"
+  admin_password:       admin
