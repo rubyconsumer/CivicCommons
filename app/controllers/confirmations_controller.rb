@@ -11,7 +11,7 @@ class ConfirmationsController < Devise::ConfirmationsController
                                     login:     resource.email,
                                     password:  resource.encrypted_password,
                                     email:     resource.email,
-                                    profilePictureURL: resource.avatar.url(:standard))
+                                    profilePictureURL: resource.avatar.url(:standard).gsub(/\?\d+$/, ''))
     save_pa_identifier(pa_person)
   end
 
