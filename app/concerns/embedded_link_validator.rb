@@ -23,6 +23,11 @@ class EmbeddedLinkValidator < ActiveModel::EachValidator
   end
   
   def live_url?(value, record)
+    self.class.live_url?(value, record)
+  end
+
+  # Allows easy mocking/stubbing out in specs
+  def self.live_url?(value, record)
     if record.override_target_doc
       if record.override_url_exists.nil?
         record.errors[:base] << "You specified override_target_doc, but forgot to specify override_url_exists (since you're not testing the actual link, you gotta specify if it should be treated as valid)."

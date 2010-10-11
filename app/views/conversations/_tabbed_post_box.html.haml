@@ -45,6 +45,6 @@
         %h3 Write a Contribution
       %p
         You will be redirected to the Contribution page. Once you submit your contribution, you will be brought back here where it will appear in the conversation.
-      = link_to raw("OK, take me there &raquo;"), Civiccommons::PeopleAggregator.URL, {:class => 'button'}
+      = link_to raw("OK, take me there &raquo;"), pa_new_conversation_contribution_url(current_person, @contribution.conversation_id, @contribution.parent_id), {:class => 'button'}
     
     

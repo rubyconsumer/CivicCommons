@@ -6,7 +6,8 @@ class Contribution < ActiveRecord::Base
   include TopItemable
   acts_as_nested_set
   
-  ALL_TYPES = ["Answer","AttachedFile","Comment","EmbeddedSnippet","Link","Question","SuggestedAction"]
+  ALL_TYPES = ["Answer","AttachedFile","Comment","EmbeddedSnippet","Link",
+               "Question","SuggestedAction", "PAContribution"]
   
   belongs_to :person, :foreign_key => "owner"
   belongs_to :conversation
@@ -30,7 +31,15 @@ class Contribution < ActiveRecord::Base
     model, params = setup_node_level_contribution(params,person)
     model.create(params)
   end
-     
+
+  def item=(item)
+    if item.is_a?(Conversation)
+      self.conversation = item
+    elsif item.is_a?(Issue)
+      self.issue = item
+    end
+  end
+ 
   def item
     self.conversation || self.issue
   end
