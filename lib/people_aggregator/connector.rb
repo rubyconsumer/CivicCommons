@@ -4,6 +4,9 @@ module PeopleAggregator::Connector
 
   included do
     self.send(:include, HTTParty)
+    self.send(:base_uri,
+              "#{Civiccommons::PeopleAggregator.URL}/api/json.php/peopleaggregator")
+
   end
 
 

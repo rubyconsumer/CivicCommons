@@ -74,10 +74,11 @@ Given /^a registered user:$/ do |table|
 
   @current_person =
     Factory.create(:registered_user,
-                   first_name:  user['First Name'],
-                   last_name:   user['Last Name'],
-                   email:       user['Email'],
-                   zip_code:    user['Zip'],
-                   password:    user['Password'])
+                   first_name:           user['First Name'],
+                   last_name:            user['Last Name'],
+                   email:                user['Email'],
+                   zip_code:             user['Zip'],
+                   people_aggregator_id: user['People Aggregator ID'],
+                   password:             user['Password'])
 end
 

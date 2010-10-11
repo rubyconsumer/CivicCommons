@@ -1,0 +1,41 @@
+/ if params[:preview] is set, then contribution was just submitted for preview, and this form is now the final.
+/ otherwise, set this form to submit for preview.
+= form_for @contribution, :as => :contribution, :url => (params[:preview] ? "create_node_contribution" : "preview_node_contribution"), :remote => true, :html => {:multipart => (type == :attached_file ? true : false), 'data-preview' => (params[:preview] ? false : true)} do |f|
+  %div.contribution-form-headline
+    %span.contribution-form-cancel.float-right
+      %a{:href => "##{div_id}-options", :class => 'cancel'} Cancel
+    %h3
+      = contribution_form_headline_for(type)
+  = f.hidden_field(:conversation_id)
+  = f.hidden_field(:parent_id)
+  = f.hidden_field(:type, :value => type.to_s.camelcase)
+  = f.text_area(:content, :rows => "3", :placeholder => contribution_form_placeholder_text_for(type))
+  - if type == :question
+    %label
+      Who can answer?
+      %select(id="contribution_askee")
+        %option Anyone
+        %option Moderator
+  - elsif type == :attached_file
+    %label
+      Upload a file:
+      = f.file_field(:attachment)
+  - elsif type == :link
+    %label
+      URL:
+      = f.text_field(:url, :type => "text", :class => "textbox link", :placeholder => "http://www.youtube.com")
+  - elsif type == :embedded_snippet
+    %label
+      YouTube Link:
+      = f.text_field(:url, :type => "text", :class => "textbox link youtube", :placeholder => "Copy/paste the video link here.")
+      .youtube-thumbnail
+  %div.validation-error
+  - unless params[:preview]
+    = hidden_field_tag(:preview, true)
+  = hidden_field_tag(:div_id, div_id)
+  = f.submit("Preview", :class => 'button')
+
+/ if preview is true, the form will be hidden via show.js, so we need to add a button outside of the form
+/ and hook it up to submit the form in show.js where the form is hidden
+- if params[:preview] 
+  %button.button.submit Submit

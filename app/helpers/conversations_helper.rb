@@ -46,6 +46,48 @@ module ConversationsHelper
     end
   end
   
+  def contribution_form_headline_for(type)
+    case type
+    when :comment
+      "Leave a Comment"
+    when :question
+      "Ask a Question"
+    when :answer
+      
+    when :attached_file
+      "Upload a File or Image"
+    when :embedded_snippet
+      "Share a Video"
+    when :link
+      "Share a Link"
+    when :suggested_action
+      "Suggest an Action"
+    else
+      ""
+    end
+  end
+  
+  def contribution_form_placeholder_text_for(type)
+    case type
+    when :comment
+      "Leave a Comment..."
+    when :question
+      "Ask a Question..."
+    when :answer
+      
+    when :attached_file
+      "Comment on file..."
+    when :embedded_snippet
+      "Comment on video..."
+    when :link
+      "Comment on link..."
+    when :suggested_action
+      "Suggest an action..."
+    else
+      ""
+    end
+  end
+  
   # This method allows you to get the subset of direct descendents of this_contribution_id from the complete thread of root_contribution_and_descendents
   #  root_contribution in this case is a TopLevelContribution node, and the whole thing has already been loaded by the controller,
   #  so we don't want to poll the database for each subset when we've already loaded the entire set once.

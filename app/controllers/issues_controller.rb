@@ -8,6 +8,7 @@ class IssuesController < ApplicationController
     @search = Issue.sort(params[:sort]).search(params[:search])
     @issues = @search.paginate(:page => params[:page], :per_page => 20)
     
+    @regions = Region.all
     @main_article = Article.issue_main_article.first
     @sub_articles = Article.issue_sub_articles.limit(3)
     
@@ -25,7 +26,7 @@ class IssuesController < ApplicationController
     @latest_conversations = @issue.conversations.latest_updated.limit(3)
     @people = @issue.participants.exclude_organizations
     @organizations = @issue.participants.exclude_people
-    @links = @issue.links.most_recent.first(6) 
+    @written_contributions = @issue.written_contributions
     @suggested_actions = @issue.suggested_actions.most_recent.first(6)
     @media_contributions = @issue.media_contributions.most_recent.first(3)
     

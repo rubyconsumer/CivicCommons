@@ -7,5 +7,6 @@ class HomepageController < ApplicationController
     
     @main_article = Article.homepage_main_article.first
     @sub_articles = Article.homepage_sub_articles.limit(3)
+    @regions = Region.all
   end
 end

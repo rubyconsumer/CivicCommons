@@ -8,7 +8,11 @@ Civiccommons::Application.routes.draw do
 
   resources :ratings
 
-  resources :contributions
+  resources :contributions do
+    # This is a GET for now since PA will redirect back with the required bits to create a PA
+    # contribution. 
+    get "create_from_pa", :on => :collection
+  end
 
   resources :answers
 
@@ -21,6 +25,7 @@ Civiccommons::Application.routes.draw do
   match '/conversations/node_conversation', :to=>'conversations#node_conversation', :via=>[:get]
   match '/conversations/create_node_contribution', :to=>'conversations#create_node_contribution', :via=>[:post]  
   match '/conversations/new_node_contribution', :to=>'conversations#new_node_contribution', :via=>[:get]
+  match '/conversations/preview_node_contribution', :to=>'conversations#preview_node_contribution', :via=>[:post]
   match '/conversations/rate_contribution', :to=>'conversations#rate_contribution'#, :via=>[:post]
   match '/conversations/rate', :to=>'conversations#rate', :via=>[:post]
   match '/subscriptions/subscribe', :to=>'subscriptions#subscribe', :via=>[:post]
@@ -41,8 +46,9 @@ Civiccommons::Application.routes.draw do
   
 
   namespace "api" do
-    match "/:email/conversations", :to => "conversations#index", :via => [:get], :email => /.*@.*/, :format => :json
-    match "/:email/issues", :to => "issues#index", :via => [:get], :email => /.*@.*/, :format => :json
+    match "/:id/conversations", :to => "conversations#index", :via => [:get], :format => :json
+    match "/:id/issues", :to => "issues#index", :via => [:get], :format => :json
+    match "/:id/contributions", :to => "contributions#index", :via => [:get], :format => :json
   end
 
 
