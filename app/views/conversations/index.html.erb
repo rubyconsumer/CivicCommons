@@ -20,12 +20,13 @@
       <div class='aside supplementary'>
         <h3>Select a Region</h3>
         <ul class='link-list'>
-          <li><a href="#">Name of Region</a></li>
-          <li><a href="#">Name of Region</a></li>
-          <li><a href="#">Name of Region</a></li>
-          <li><a href="#">Name of Region</a></li>
-          <li><a href="#">Name of Region</a></li>
-          <li><a href="#">Name of Region</a></li>
+          <% @regions.each do |r| %>
+            <% if r.default? %>
+              <li><%=link_to r.name, "/regions/default"%></li>
+            <% else %>
+              <li><%=link_to r.name, r%></li>
+            <%end%>
+          <%end%>
         </ul>
       </div><!-- /.aside -->      
   </div>

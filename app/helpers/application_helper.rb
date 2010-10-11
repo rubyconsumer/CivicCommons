@@ -22,4 +22,5 @@ module ApplicationHelper
     "Showing %s of %s"%[collection.count,
                         pluralize(collection.total_entries, name_of_collection)]
   end
+
 end

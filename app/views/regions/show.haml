@@ -1,16 +1,33 @@
 -content_for :main_body do 
-  %h1
-    =@region.name
-  -unless @region.default?
-    %h2 Zip Codes:
-    -@region.zip_codes.each do |c|
-      %br
-      =c
-  - if @region.conversations.count > 0
-    %h2 Conversations
-    -@region.conversations.each do |c|
-      =link_to c.title, c
-  - if @region.issues.count > 0
-    %h2 Issues
-    -@region.issues.each do |i|
-      =link_to i.name, i
+  .feature-mast
+    .wrapper
+      %h1
+        =@region.name
+  .wrapper
+    .aside
+      .mod
+        %h3 SELECT A REGION
+        .mod-content
+          %ul.link-list
+            -@regions.each do |r|
+              %li
+                -link = r.default? ? "/regions/default" : r
+                =link_to r.name, link
+      - if @region.issues.count > 0
+        .mod
+          %h3 ISSUES
+          %ul.link-list
+            .mod-content
+              -@region.issues.each do |i|
+                %li
+                  =link_to i.name, i
+    .content-container
+      .content-container
+        .feature
+          - if @region.people.count > 0
+            %h2 People
+            -@region.people.each do |p|
+              =p.name
+          -if @conversations.length >0
+            %h2 Conversations in this Region
+            =render :partial => "conversations/conversation_pager"

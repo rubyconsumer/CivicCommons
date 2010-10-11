@@ -3,7 +3,6 @@ class Api::IssuesController < ActionController::Base
 
 
   def index
-
     Rails.logger.debug params.inspect
 
     contributed_issues =
