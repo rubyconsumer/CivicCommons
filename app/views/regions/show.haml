@@ -13,6 +13,12 @@
               %li
                 -link = r.default? ? "/regions/default" : r
                 =link_to r.name, link
+      - if @region.people.count > 0
+        .mod
+          %h3 PEOPLE
+          .mod-content
+            -@region.people.each do |p|
+              =conversation_profile(p).html_safe
       - if @region.issues.count > 0
         .mod
           %h3 ISSUES
@@ -26,10 +32,6 @@
         -if @region.image?
           %img.featured{ :class => "main-img", :src => @region.image.url(:normal), :alt => @region.name}
         .feature
-          - if @region.people.count > 0
-            %h2 People
-            -@region.people.each do |p|
-              =p.name
           -if @conversations.length >0
             %h2 Conversations in this Region
             =render :partial => "conversations/conversation_pager"
