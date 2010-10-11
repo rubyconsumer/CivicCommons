@@ -26,6 +26,11 @@ describe Contribution do
           @contribution.override_target_doc = "#{Rails.root}/test/fixtures/example_youtube.html"
           @contribution.override_url_exists = true
         end
+        if contribution_type == "PAContribution"
+          @contribution.url = "http://civiccommons.digitalcitymechanics.com/content/cid=5"
+          @contribution.override_target_doc = "#{Rails.root}/test/fixtures/example_pa.html"
+          @contribution.override_url_exists = true
+        end
       end
       
       context "and there is a validation error with the #{contribution_type}" do

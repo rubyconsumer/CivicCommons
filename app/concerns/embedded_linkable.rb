@@ -12,8 +12,12 @@ module EmbeddedLinkable
   end
   
   def get_link_information
-    self.target_doc = self.override_target_doc ? File.open(self.override_target_doc) : open(CGI::unescapeHTML(self.url))
-    doc = Nokogiri::HTML(self.target_doc) do |config|
+    EmbeddedLinkable.get_link_information(self)
+  end
+
+  def self.get_link_information(instance)
+    instance.target_doc = instance.override_target_doc ? File.open(instance.override_target_doc) : open(CGI::unescapeHTML(instance.url))
+    doc = Nokogiri::HTML(instance.target_doc) do |config|
        config.noent.noblanks
     end
     title = doc.search("//title").first
@@ -23,8 +27,8 @@ module EmbeddedLinkable
     else
       description = doc.search("//p[1]").first
     end
-    self.title = title.content.strip.gsub(/\s+/, ' ') if title && self.title.blank?
-    self.description = description.content.strip if description && self.description.blank?
+    instance.title = title.content.strip.gsub(/\s+/, ' ') if title && instance.title.blank?
+    instance.description = description.content.strip if description && instance.description.blank?
   end
   
   def already_set_title_and_description?

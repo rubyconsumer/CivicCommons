@@ -21,12 +21,6 @@ $('form.contribution-form')
     });
 
 $(document).ready(function() {
-    $('a#comment-contribution').click(function() {
-        $('a#comment-contribution').hide();
-        $('form#new-comment-contribution').show('slow');
-        return false;
-    });
-    
     $('p#resource-contributions > a.file-link').click(function() {
         $('p#resource-contributions').hide();
         $('form#new-file-contribution').show('slow');
@@ -140,17 +134,16 @@ $(document).ready(function() {
     <div class="aside supplementary">
       <h3>Contributions</h3>
       <ol class='contributions divided'>
-        <% @links.each do |contribution| %>
+        <% @written_contributions.each do |contribution| %>
 	<li class='offset-1'>
           <img class="callout" src="#contribution-image-goes-here" alt="contribution image goes here" width="90" height="60" />
-	  <h4><%= link_to truncate(contribution.content), contribution.url %></h4>
+	  <h4><%= link_to truncate(contribution.title), contribution.url %></h4>
     <p>By: <a href="#link-to-PA-profile"><%= contribution.person.name %></a></p>
 	</li>
         <% end %>
       </ol>
       <% if person_signed_in? %>
-        <p><a href="" id="comment-contribution">Write a contribution</a></p>
-        <%= render :partial => "new_comment_contribution" %>
+        <p><%= link_to("Write a contribution", pa_new_issue_contribution_url(current_person, @issue)) %> </p>
         <% else %>
         <p>You must <%= link_to "sign in", new_person_session_path %> or <%= link_to "sign up", new_person_registration_path %> to write a contribution</p>
       <% end %>
