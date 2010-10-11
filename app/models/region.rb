@@ -2,7 +2,6 @@ class Region < ActiveRecord::Base
 
   before_save :create_zip_codes
   class << self
-
     def default_name
       "National"
     end
@@ -16,7 +15,6 @@ class Region < ActiveRecord::Base
     def all
       [Region.default] + self.order(:name) 
     end
-
   end
 
   [Issue, Conversation, Person].each do |klass|
@@ -39,8 +37,15 @@ class Region < ActiveRecord::Base
     ruby_eval
   end
 
+
   has_many :zip_codes
   accepts_nested_attributes_for :zip_codes
+
+  has_attached_file :image, 
+    :styles => {:normal => "500x300>"},
+      :storage => :s3,
+      :s3_credentials => S3Config.credential_file,
+      :path => ":attachment/region/:id/:style/:filename"
 
   def default?
     self.name == Region.default_name

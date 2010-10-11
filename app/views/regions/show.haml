@@ -23,6 +23,8 @@
                   =link_to i.name, i
     .content-container
       .content-container
+        -if @region.image?
+          %img.featured{ :class => "main-img", :src => @region.image.url(:normal), :alt => @region.name}
         .feature
           - if @region.people.count > 0
             %h2 People
