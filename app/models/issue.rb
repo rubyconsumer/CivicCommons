@@ -17,7 +17,7 @@ class Issue < ActiveRecord::Base
            :conditions => "type = 'EmbeddedSnippet' or type = 'AttachedFile' or type = 'Link'")
 
   has_many(:written_contributions, :class_name => "Contribution",
-           :conditions => "type = 'PAContribution' or type = 'EmbeddedSnippet'")
+           :conditions => "type = 'PplAggContribution' or type = 'EmbeddedSnippet'")
   has_many :subscriptions, :as => :subscribable
   
   

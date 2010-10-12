@@ -11,7 +11,7 @@ class ContributionValidator < ActiveModel::Validator
   end
   
   def content_not_blank_or_link_or_embedded_snippet?(record)
-    !record.content.blank? || [Link, EmbeddedSnippet, PAContribution].include?(record.class)
+    !record.content.blank? || [Link, EmbeddedSnippet, PplAggContribution].include?(record.class)
   end
   
   def parent_contribution_belongs_to_conversation?(record)

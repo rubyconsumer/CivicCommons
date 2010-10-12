@@ -10,7 +10,7 @@ describe Contribution do
     end
   end
   Contribution::ALL_TYPES.each do |contribution_type|
-    describe "when creating a #{contribution_type} for a conversation" do
+    describe contribution_type, "when creating for a conversation" do
       before(:each) do
         @conversation = Factory.create(:conversation)
         @person = Factory.create(:normal_person)
@@ -34,14 +34,14 @@ describe Contribution do
           @contribution.override_target_doc = "#{Rails.root}/test/fixtures/example_youtube.html"
           @contribution.override_url_exists = true
         end
-        if contribution_type == "PAContribution"
+        if contribution_type == "PplAggContribution"
           @contribution.url = "http://civiccommons.digitalcitymechanics.com/content/cid=5"
           @contribution.override_target_doc = "#{Rails.root}/test/fixtures/example_pa.html"
           @contribution.override_url_exists = true
         end
       end
       
-      context "and there is a validation error with the #{contribution_type}" do
+      context "and there is a validation error" do
         it "should return a contribution with an error" do
           @contribution.content = nil
           @contribution.url = nil
@@ -52,7 +52,7 @@ describe Contribution do
           end
         end
       end
-      describe "when the #{contribution_type} is saved for preview" do
+      describe "when it is saved for preview" do
         before(:each) do
           @contribution.save!
         end
@@ -115,7 +115,7 @@ describe Contribution do
           end
         end
       end
-      describe "and the #{contribution_type} is saved successfully" do
+      describe "and it is saved successfully" do
         before(:each) do
           @contribution.override_confirmed = true
           @contribution.save!
@@ -132,34 +132,6 @@ describe Contribution do
         end    
         it "should set the item to the conversation" do 
           @contribution.item.should == @conversation
-        end
-      
-        if contribution_type == "Link"
-          it "finds the target document" do
-            @contribution.target_doc.should_not be_blank
-          end
-          it "grabs the correct title and description" do
-            @contribution.title.should_not be_blank
-            @contribution.description.should_not be_blank
-            @contribution.title.should match /Pure-CSS Emoticons WordPress Plugin Released - Alfa Jango Blog/
-            @contribution.description.should match /I'll keep this post short and sweet. My good friend, Anthony Montalbano, has released a WordPress plugin for our/
-          end
-        end
-        
-        if contribution_type == "EmbeddedSnippet"
-          it "finds the target document" do
-            @contribution.target_doc.should_not be_blank
-          end
-          it "grabs the correct title and description" do
-            @contribution.title.should_not be_blank
-            @contribution.description.should_not be_blank
-            @contribution.title.should match /YouTube - LeadNuke Demo Screencast/
-            @contribution.description.should match /Introduction to LeadNuke.com, featuring demonstration showing how RateMyStudentRental.com uses LeadNuke to increase sales./
-          end
-          it "creates the right embed code" do
-            @contribution.embed_target.should_not be_blank
-            @contribution.embed_target.should match /(djtNtt8jDW4)+/
-          end
         end
       end
     end

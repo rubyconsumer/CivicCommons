@@ -7,7 +7,7 @@ class Contribution < ActiveRecord::Base
   acts_as_nested_set
   
   ALL_TYPES = ["Answer","AttachedFile","Comment","EmbeddedSnippet","Link",
-               "Question","SuggestedAction", "PAContribution"]
+               "Question","SuggestedAction", "PplAggContribution"]
   
   belongs_to :person, :foreign_key => "owner"
   belongs_to :conversation

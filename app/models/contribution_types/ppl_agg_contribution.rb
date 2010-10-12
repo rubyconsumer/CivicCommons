@@ -1,4 +1,4 @@
-class PAContribution < Contribution
+class PplAggContribution < Contribution
   include EmbeddedLinkable
   
   CONTRIBUTION_URL = /^#{Civiccommons::PeopleAggregator.URL}\/content\/cid=[\d\w]+/
