@@ -35,7 +35,7 @@ module ConversationsHelper
       "shared a video:"
     when "Link"
       "shared a link:"
-    when "PAContribution"
+    when "PplAggContribution"
       "wrote a contribution:"
     when "Question"
       "asked a question:"

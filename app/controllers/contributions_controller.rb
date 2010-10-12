@@ -47,7 +47,7 @@ class ContributionsController < ApplicationController
       parent = item.contributions.find(params[:parent_contribution_id])
     end
     contribution = Contribution.
-      create_node_level_contribution({:type => "PAContribution",
+      create_node_level_contribution({:type => "PplAggContribution",
                                        :url => params[:link],
                                        :title => params[:title],
                                        :item => item,
