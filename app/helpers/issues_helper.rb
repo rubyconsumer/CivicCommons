@@ -25,4 +25,12 @@ module IssuesHelper
      raw contribution.embed_target
     end
   end
+
+  def source_url(issue)
+    if issue.url.match(/^http:/)
+      issue.url
+    else
+      "http://" + issue.url
+    end
+  end
 end
