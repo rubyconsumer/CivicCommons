@@ -27,7 +27,7 @@ class Contribution < ActiveRecord::Base
   
   attr_accessor :override_confirmed
   
-  def self.find_or_create_node_level_contribution(params,person)
+  def self.update_or_create_node_level_contribution(params,person)
     if contribution = Contribution.unconfirmed.where(:type => params[:type], :parent_id => params[:parent_id], :owner => person.id).first
       contribution.update_attributes(params)
     else 

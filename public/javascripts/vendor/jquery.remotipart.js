@@ -12,6 +12,7 @@ jQuery(function ($) {
 	        } else {
 	            if (el.triggerAndReturn('ajax:before')) {
 					if(url.substr(-3) != '.js') url += '.js'; //force rails to respond to respond to the request with :format = js
+	                el.data('jquery-form-submitted',true);
 	                el.ajaxSubmit({
 	                    url: url,
 	                    dataType: 'script',

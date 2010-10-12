@@ -1,6 +1,6 @@
 / if params[:preview] is set, then contribution was just submitted for preview, and this form is now the final.
 / otherwise, set this form to submit for preview.
-= form_for @contribution, :as => :contribution, :url => (params[:preview] ? "create_node_contribution" : "preview_node_contribution"), :remote => true, :html => {:multipart => (type == :attached_file ? true : false), 'data-preview' => (params[:preview] ? false : true)} do |f|
+= form_for @contribution, :as => :contribution, :url => "preview_node_contribution", :remote => true, :html => {:multipart => (type == :attached_file ? true : false), 'data-preview' => true} do |f|
   %div.contribution-form-headline
     %span.contribution-form-cancel.float-right
       %a{:href => "##{div_id}-options", :class => 'cancel'} Cancel
@@ -30,14 +30,6 @@
       = f.text_field(:url, :type => "text", :class => "textbox link youtube", :placeholder => "Copy/paste the video link here.")
       .youtube-thumbnail
   %div.validation-error
-  - unless params[:preview]
-    = hidden_field_tag(:preview, true)
+  = hidden_field_tag(:preview, true)
   = hidden_field_tag(:div_id, div_id)
   = f.submit("Preview", :class => 'button')
-
-/ if preview is true, the form will be hidden via show.js, so we need to add a button outside of the form
-/ and hook it up to submit the form in show.js where the form is hidden
-- if params[:preview] 
-  %button.button.submit Submit
-  or
-  %a{:href => "##{div_id}-new-#{type.to_s}"} Cancel

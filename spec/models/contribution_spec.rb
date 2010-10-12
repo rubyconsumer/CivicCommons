@@ -99,13 +99,13 @@ describe Contribution do
           it "finds and returns unconfirmed contribution for user/parent combination, if it exists, but with new content" do
             new_comment = "This is a different comment"
             attributes = @attributes.merge(:content => new_comment)
-            new_contribution = Contribution.find_or_create_node_level_contribution(attributes, @person)
+            new_contribution = Contribution.update_or_create_node_level_contribution(attributes, @person)
             new_contribution.id.should == @contribution.id
             new_contribution.content.should == new_comment
           end
           it "creates and returns a new contribution if no unconfirmed contribution exists for user/parent combination" do
             attributes = @attributes.merge(:parent_id => (@contribution.parent_id + 1))
-            new_contribution = Contribution.find_or_create_node_level_contribution(attributes, @person)
+            new_contribution = Contribution.update_or_create_node_level_contribution(attributes, @person)
             new_contribution.id.should_not == @contribution.id
           end
         end

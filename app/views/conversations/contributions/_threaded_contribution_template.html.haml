@@ -14,7 +14,7 @@
             %strong= 'An unknown person'
           = contribution_action_past_tense(contribution.type)
         = render(:partial => "conversations/contributions/#{contribution.type.underscore}", :locals => {:contribution => contribution})
-        - unless contribution.new_record? # if new_record? then this partial just showing a preview
+        - if contribution.confirmed # if not confirmed, this is just a preview
           %div.convo-utility.no-response
             %p.respond-link
               = link_to("Respond", {:action => "new_node_contribution", :contribution_id => contribution.id, :id => contribution.conversation_id, :div_id => "contribution-#{contribution.id}"}, :class => "text conversation-action", :id => "action-link-#{contribution.id}", :title => "Leave a comment here", 'data-target' => "#action-div-#{contribution.id}", :remote => true)

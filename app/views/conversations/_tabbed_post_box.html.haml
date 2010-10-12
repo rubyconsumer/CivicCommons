@@ -25,7 +25,7 @@
         %li
           %a{:href => "##{div_id}-write-contribution", :title => "Write Contribution", :class => 'button'} Write Contribution
     %div{:id => "#{div_id}-preview", :class => "contribution-preview"}
-    
+      %a{:href => "##{div_id}-options", :class => 'button'} Respond
     %div{:id => "#{div_id}-new-comment" }
       = render :partial => 'conversations/new_contribution_form', :locals => {:div_id => div_id, :type => :comment}
     %div{:id => "#{div_id}-new-question" }

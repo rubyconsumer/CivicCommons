@@ -44,41 +44,41 @@ jQuery(function ($) {
             // do nothing
           }
           var preview = this.getAttribute('data-preview');
-          // console.log(preview);
+              divId = $(tabStrip).attr('id');
               
-          try{
-            var responseNode = $(xhr.responseText);
-          }catch(err){
+          if( $(this).data('jquery-form-submitted') == true ) {
             var responseNode = $($("<div />").html(xhr.responseText).text()); // this is needed to properly unescape the HTML returned from doing the jquery.form plugin's ajaxSubmit for some reason
+          } else {
+            var responseNode = $(xhr.responseText);            
           }
           
           if(preview == "true") {
+            var previewTab = '#' + divId + '-preview'
             // populate the preview div with a preview and a filled-in form with data-preview = false so it can be submitted again
-            // also, hide the form, so that it is not visible
             previewPane = $(this).closest('div').siblings('.contribution-preview');
-            previewPane.html(responseNode);
-            previewForm = previewPane.children('form');
-            previewSubmit = previewPane.children('button.submit');
-            previewForm
-              .bindContributionFormEvents(clicked,tabStrip)
-              .hide();
-            previewSubmit.click( function(){
-              previewForm.submit();
-            });
-            window.location.hash = $(this).closest('.tab-area').find('li.preview-tab > a').attr('href');
+            
+            // bind these ajax handlers to preview form, also add reference to this form on the new preview form
+            previewPane.html(responseNode).children('form').bindContributionFormEvents(clicked,tabStrip).data('origForm',$(this));
+            
+            $(this).find('.validation-error').html(''); // clear any previous errors from form
+            window.location.hash = previewTab;
           } else {
+            var optionsTab = '#' + divId + '-options';
+                origForm = $(this).data('origForm');
+            
             $(clicked).updateConversationButtonText();
-            $(this).closest('ol.thread-list,ul.thread-list').append(responseNode).find('.rate-form-container').hide();
+            $(this).closest('ol.thread-list,ul.thread-list').append(responseNode).find('.rate-form-container').hide();            
             
             if($(clicked).hasClass('show-conversation-button')){
-              $(tabStrip).find('textarea,input[type="text"],input[type="file"]').val('');
-              $(tabStrip).find('.contribution-preview').empty();
+              origForm.find('textarea,input[type="text"],input[type="file"]').val('');
+              origForm.find('[placeholder]').placeholder({className: 'placeholder'});
+              $(tabStrip).find('.contribution-preview').html('<a href="#' + divId + '-options" class="button">Respond</a>');
               $(this).find('.validation-error').html('');
-              window.location.hash = $(this).find('a.cancel').attr('href');
             }else{
               $(clicked).text($(clicked).data('origText')).unbind('click'); // only unbinds the click function that attaches the toggle, since all the other events are indirectly attached through .live()
-              $(this).parents('.tab-strip').parent().empty();
+              $(tabStrip).parent().empty();
             }
+            window.location.hash = optionsTab;
             setTimeout(function(){ responseNode.scrollTo(); }, animationSpeed);
             $(tabStrip).unmask(); // doesn't always unmask on ajax:complete for some reason
           }

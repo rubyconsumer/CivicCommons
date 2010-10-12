@@ -61,7 +61,7 @@ ActiveRecord::Schema.define(:version => 20101011005020) do
     t.string   "title"
     t.text     "description"
     t.string   "embed_target",            :limit => 1000
-    t.boolean  "confirmed",                               :default => false
+    t.boolean  "confirmed",                               :default => true
   end
 
   create_table "conversations", :force => true do |t|
