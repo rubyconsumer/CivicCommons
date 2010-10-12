@@ -8,7 +8,7 @@ class RegionsController < ApplicationController
   def show
     @region = params[:id] == "default" ? Region.default : Region.find(params[:id])
     @regions = Region.all
-    @conversations = @region.conversations
+    @conversations = @region.conversations(params[:page])
   end
 
 end
