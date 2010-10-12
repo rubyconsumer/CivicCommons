@@ -19,6 +19,7 @@ class Region < ActiveRecord::Base
 
   [Issue, Conversation, Person].each do |klass|
     new_method = klass.name.to_s.downcase.pluralize
+    paginate = ".paginate(:page=>page, :per_page=>6)" if klass == Conversation
     Region.class_eval <<-ruby_eval, __FILE__, __LINE__ + 1
 
       def #{new_method}
@@ -31,7 +32,7 @@ class Region < ActiveRecord::Base
           where_clause = "zip_code IN (" + zip_code_string.gsub(/\n/,",") + ")" 
           where_clause = "zip_code = 'NOT A ZIPCODE'" unless zip_code_string.length > 0
         end
-        return #{klass.name.to_s}.where(where_clause).paginate(:page=>1, :per_page =>3)
+        return #{klass.name.to_s}.where(where_clause)#{paginate}
       end
 
     ruby_eval
