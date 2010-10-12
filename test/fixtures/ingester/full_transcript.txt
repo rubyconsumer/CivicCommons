@@ -1,0 +1,11 @@
+speaker "Chris Hayes"
+time "03:15"
+dialog <<-enddialog
+blah blah blah - lots of blah blah blah 
+enddialog
+
+speaker "Debbie Stabenow  "
+dialog <<-enddialog
+even more blah blah blah - tons of blah 
+more blah
+enddialog

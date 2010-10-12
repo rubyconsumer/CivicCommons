@@ -1,0 +1,4 @@
+speaker "John Foo"
+time "04:42"
+dialog "Hello World"
+
