@@ -14,17 +14,19 @@ module IngesterExampleHelperMethods
     line_number.nil? ? "Error ingesting transcript; #{explanation}" :
       "Error ingesting transcript around line #{line_number}; #{explanation}"
   end
+
+  def read_fixture(filename)
+    File.read(File.join(Rails.root, "test", "fixtures", "ingester", filename))
+  end
+
 end
 
 describe Ingester do
   include IngesterExampleHelperMethods
   
   it "handles simple transcript" do
-    script = %Q{
-       speaker "John Foo"
-       time "04:42"
-       dialog "Hello World"
-    }
+    script = read_fixture("simple.txt")
+
     dialogs = Ingester.ingest(script)
     dialogs.size.should == 1
     dialog = dialogs.first
@@ -34,25 +36,24 @@ describe Ingester do
   end
 
   it "escapes slash r correctly (converts dos files to unix)" do
-    script = %Q{speaker "John Foo"\rdialog "Hello World"\r}
-    dialogs = Ingester.ingest(script)
-    dialogs.size.should == 1
+    script = read_fixture("carriage_returns.txt")
+    lambda{
+      dialogs = Ingester.ingest(script)
+    }.should_not raise_error
+  end
+
+  it "replaces left and right double quotes with simple quotes" do
+    script = read_fixture("smart_quotes.txt")
+    
+    lambda {
+      Ingester.ingest(script)
+    }.should_not raise_error
+
   end
 
   it "handles full transcript" do
-    script = <<-endscript
-speaker "Chris Hayes"
-time "03:15"
-dialog <<-enddialog
-blah blah blah - lots of blah blah blah 
-enddialog
+    script = read_fixture("full_transcript.txt")
 
-speaker "Debbie Stabenow  "
-dialog <<-enddialog
-even more blah blah blah - tons of blah 
-more blah
-enddialog
-endscript
     dialogs = Ingester.ingest(script)
     dialogs.size.should == 2
     chris_dialog = dialogs.first

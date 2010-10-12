@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # Ingester is a tool for ingesting the transcript of a Conversation
 #
 # Ingester.build takes in a transcript text in a mini DSL which is 
@@ -47,6 +49,7 @@ class Ingester
   #
   def self.ingest(string)
     begin
+      string = munge(string)
       DSL.build(string)
     rescue => e
       friendly_exception_info = parse_exception(e)
@@ -55,6 +58,24 @@ class Ingester
   end
 
   protected
+
+  # Handles problems from Copying and Pasting from Microsoft Word into plain
+  # text editors
+  #
+  def self.munge(string)
+    # Replace all ISO-8859-1 or CP1252 characters by their UTF-8 equivalent
+    # resulting in a valid UTF-8 string
+    chars = ActiveSupport::Multibyte::Chars.new(string).tidy_bytes
+    
+    # Replace \r and \r\n with \n
+    chars = chars.gsub("\r\n", "\r").gsub("\r", "\n")
+
+    # Replace “smart quotes” with "normal quotes"
+    chars = chars.gsub(/[”“]/, '"')
+
+    # Convert back to a string
+    chars.to_s
+  end
 
   # Helper method that takes an exception and makes a friendlier
   # error containing the approximate line number in the string of
@@ -93,7 +114,6 @@ class Ingester
   class DSL < BasicObject
     # 
     def self.build(string)
-      string = string.gsub("\r\n", "\r").gsub("\r", "\n")
       builder = new
       builder.instance_eval(string, "IngesterTranscript", 1)
       if builder.current_dialog.partial_dialog?

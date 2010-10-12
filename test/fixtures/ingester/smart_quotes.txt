@@ -1,0 +1,105 @@
+speaker “NEAL CONAN”
+dialog <<-enddialog
+This is TALK OF THE NATION. Im Neal Conan in Washington.
+The president tries to close the enthusiasm gap, Castle may write in, Lazio steps out, and wannabe govs square off in California and Illinois. It's Wednesday and time for a debatable edition of the Political Junkie.
+enddialog
+
+speaker “RONALD REAGAN”
+dialog <<-enddialog
+There you go again.
+enddialog
+
+speaker “WALTER MONDALE”
+dialog <<-enddialog
+When I hear your new ideas, I'm reminded of that ad. Wheres the beef?
+enddialog
+
+speaker “BARRY GOLDWATER”
+dialog <<-enddialog
+Extremism in the defense of liberty is no vice.
+enddialog
+
+speaker “LLOYD BENTSEN” 
+dialog <<-enddialog
+Senator, you're no Jack Kennedy.
+enddialog
+
+speaker “RICHARD NIXON”
+dialog <<-enddialog
+You don't have Nixon to kick around anymore.
+enddialog
+
+speaker “SARAH PALIN”
+dialog <<-enddialog
+Lipstick.
+enddialog
+
+speaker “GEORGE W. BUSH”
+dialog <<-enddialog
+But Im the decider.
+enddialog
+
+speaker “CONAN”
+dialog <<-enddialog
+Every Wednesday, NPR political editor Ken Rudin joins us to talk about the week in politics, and this week President Obama declares his faith in Jesus; the chief of staff at the White House wants to run for mayor, but is Chicago still home? And Republicans demand ethics trials for two Democrats before Election Day.
+In a bit we're going to focus on the good, bad and ugly ads of these midterms. Later in the program, an argument that conservatism does not equate to racism. But first, Political Junkie Ken Rudin joins us, as he does every week, here in Studio 3A. As usual, we start off with a trivia question.
+enddialog
+
+speaker “KEN RUDIN”
+dialog <<-enddialog
+Hi, Neal. Okay, well, we're going to talk later in the show about the New York governor's race, and as you know, the Democratic candidate is Andrew Cuomo, and of course his father served as governor.
+enddialog
+
+speaker “CONAN”
+dialog <<-enddialog
+Hamlet of the Hudson.
+enddialog
+
+speaker “RUDIN”
+dialog <<-enddialog
+And since we did not have a T-shirt winner last week from the beautiful studios of New York, so we have two T-shirts to be given away today. Who was the last Democrat and the last Republican okay, so who let me start again.
+Who were the last Democrat and Republican governors whose fathers also served as governor?
+enddialog
+
+speaker “CONAN”
+dialog <<-enddialog
+Of a state.
+enddialog
+
+speaker “RUDIN”
+dialog <<-enddialog
+Of a state.
+enddialog
+
+speaker “CONAN”
+dialog <<-enddialog
+Okay. So if you think you know the answer to the question, the last Democrat and the last Republican governors whose fathers were also governors, one of each, you only get to pick one at a time because we're giving away two T-shirts, you can't win two, 800-989-8255. Email us, talk@npr.org.
+And before we get to people who think they know the answer to that, Ken, well, Jimmy Carter, the former president of the United States, entered the hospital yesterday with stomach pains. Apparently he's doing okay.
+enddialog
+
+speaker “RUDIN”
+dialog <<-enddialog
+ Yes. He was on a flight from Atlanta to Cleveland. He was giving another book tour. He had stomach pains. The rumor is that he blamed Ted Kennedy for his stomach pains. That's not true, but he's blaming Ted Kennedy for everything else.
+But he is in good spirits. He's in good health, perhaps better health than many of the Democrats who are up for election on November 2nd. But Jimmy Carter's doing fine.
+enddialog
+
+speaker “RUDIN”
+dialog <<-enddialog
+Jimmy Carter, of course, well-known for talking a lot about his faith in office. Yesterday, curiously, President Obama seemed to go out of his way to discuss the same thing. This was at the event - he was in Wisconsin and New Mexico yesterday. This was a backyard event in New Mexico. He was asked why he was a Christian and spoke extensively about his faith and why Christianity is central to his life.
+enddialog
+
+speaker “BARACK OBAMA”
+dialog <<-enddialog
+Jesus Christ dying for my sins spoke to the humility we all have to have as human beings, that we're sinful and we're flawed and we make mistakes and that, you know, we, we achieve salvation through the grace of, of God.
+enddialog
+
+speaker “CONAN”
+dialog <<-enddialog
+And this is, of course, amidst, well, poll numbers that show a significant number of Americans believe he's a Muslim.
+enddialog
+
+speaker “RUDIN”
+dialog <<-enddialog
+Right. There was a Pew poll that came out not too long ago that said that 20 percent of Americans still think that he's a Muslim. And part of it is also the fact that a lot of people feel that President Obama has been very professorial and above the fray and not emotional about his own personal faith and things like that.
+enddialog
+
