@@ -9,6 +9,29 @@ describe Contribution do
       @top_level_contribution.confirmed.should be_true
     end
   end
+  describe "when deleting old unconfirmed contributions" do
+    before(:each) do
+      @old_unconfirmed_contribution = Factory.create(:comment, {:created_at => Time.now - 3.days, :confirmed => false})
+      @new_unconfirmed_contribution = Factory.create(:comment, {:created_at => Time.now, :confirmed => false})
+      @old_confirmed_contribution = Factory.create(:comment, {:created_at => Time.now - 3.days, :override_confirmed => true})
+      @new_confirmed_contribution = Factory.create(:comment, {:created_at => Time.now, :override_confirmed => true})
+      @count = Contribution.delete_old_unconfirmed_contributions
+      @remaining_contributions = Contribution.all
+    end
+    it "returns correct number of deleted contributions" do
+      @count.should == 1
+    end
+    it "deletes old unconfirmed contributions" do
+      @remaining_contributions.should_not include @old_unconfirmed_contribution
+    end
+    it "does not delete unconfirmed contributions newer than 1 day" do
+      @remaining_contributions.should include @new_unconfirmed_contribution
+    end
+    it "does not delete confirmed contributions" do
+      @remaining_contributions.should include @old_confirmed_contribution
+      @remaining_contributions.should include @new_confirmed_contribution
+    end
+  end
   Contribution::ALL_TYPES.each do |contribution_type|
     describe contribution_type, "when creating for a conversation" do
       before(:each) do

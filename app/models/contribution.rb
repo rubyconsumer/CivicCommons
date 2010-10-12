@@ -46,6 +46,12 @@ class Contribution < ActiveRecord::Base
     model, params = setup_node_level_contribution(params,person)
     contribution = model.create(params)
   end
+  
+  def self.delete_old_unconfirmed_contributions
+    count = self.unconfirmed.where(["created_at < ?", 1.day.ago]).count
+    self.unconfirmed.destroy_all(["created_at < ?", 1.day.ago])
+    return count
+  end
 
   def item=(item)
     if item.is_a?(Conversation)
