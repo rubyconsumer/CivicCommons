@@ -19,7 +19,7 @@ class Region < ActiveRecord::Base
 
   [Issue, Conversation, Person].each do |klass|
     new_method = klass.name.to_s.downcase.pluralize
-    paginate = ".paginate(:page=>page, :per_page=>6)" if klass == Conversation
+    paginate = ".paginate(:page=>1, :per_page=>6)" if klass == Conversation
     Region.class_eval <<-ruby_eval, __FILE__, __LINE__ + 1
 
       def #{new_method}
