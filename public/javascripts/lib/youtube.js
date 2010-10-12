@@ -17,9 +17,10 @@ var youtube = function() {
   };
 
   var display_thumbnail = function (element) {
-    var thumbnail = element.siblings(".youtube-thumbnail").html("");
+    var thumbnail = element.siblings(".youtube-thumbnail");
     if (!element.val()) return;
     thumbnail_fetch(element.val(), function (data, textSuccess, xhr) {
+      thumbnail.html("");
       // It appears as though the entry I'm looking for is always first in the
       // entry.link array that's returned, but this is to make sure that the
       // URL being grabbed by this function is always the right one.
@@ -60,7 +61,7 @@ var youtube = function() {
     // no one will probably type a youtube url
     //$(".youtube").change(updatePreview);
     $(".youtube").bind("change", updatePreviewWithDelay);
-    $(".youtube").bind("paste",  updatePreviewWithDelay)
+    $(".youtube").bind("paste",  updatePreviewWithDelay);
     $(".youtube").each(updatePreviewWithDelay);
   };
   return self;
