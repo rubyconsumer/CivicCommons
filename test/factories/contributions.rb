@@ -14,6 +14,7 @@ Factory.define :contribution do |f|
   f.association :conversation, :factory => :conversation
   f.content "MyText"
   f.association :parent, :factory => :top_level_contribution
+  f.override_confirmed true
 end
 
 Factory.define :comment do |f|
@@ -45,7 +46,7 @@ Factory.define :answer do |f|
   f.association :person, :factory => :normal_person
   f.association :conversation, :factory => :conversation
   f.content "MyText"
-  f.association :parent, :factory => :question
+  f.association :parent, :factory => :question, :override_confirmed => true
 end
 
 Factory.define :attached_file do |f|

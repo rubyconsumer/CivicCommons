@@ -11,7 +11,7 @@ class Article < ActiveRecord::Base
        :mainfeature => "340x225>" },
     :storage => :s3,
     :s3_credentials => S3Config.credential_file,
-    :path => ":attachment/:id/:style/:filename"
+    :path => "articles/:attachment/:id/:style/:filename"
   
   ['homepage', 'conversation', 'issue'].each do |type|
     scope :"#{type}_main_article", where(:current => true, :main => true, :"#{type}_article" => true)

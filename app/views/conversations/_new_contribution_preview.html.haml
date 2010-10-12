@@ -1,2 +1,2 @@
 = render :partial => 'conversations/contributions/threaded_contribution_template', :locals => {:contribution => @contribution}
-= render :partial => 'conversations/new_contribution_form', :locals => {:div_id => params[:div_id], :type => @contribution.type.underscore.to_sym}
+= render :partial => 'conversations/preview_contribution_form', :locals => {:div_id => params[:div_id], :type => @contribution.type.underscore.to_sym}

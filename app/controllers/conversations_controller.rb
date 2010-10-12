@@ -23,7 +23,7 @@ class ConversationsController < ApplicationController
     @top_level_contributions = TopLevelContribution.where(:conversation_id => @conversation.id).includes([:person]).order('created_at ASC')
     @top_level_contributions = @top_level_contributions.with_user_rating(current_person) if current_person
     # grab all direct contributions to conversation that aren't TLC
-    @contributions = Contribution.not_top_level.without_parent.where(:conversation_id => @conversation.id).includes([:person]).order('created_at ASC')
+    @contributions = Contribution.not_top_level.confirmed.without_parent.where(:conversation_id => @conversation.id).includes([:person]).order('created_at ASC')
     @contributions = @contributions.with_user_rating(current_person) if current_person
     @top_level_contribution = Contribution.new # for conversation comment form
     
@@ -37,7 +37,7 @@ class ConversationsController < ApplicationController
   
   def node_conversation
     @top_level_contribution = Contribution.find(params[:id])
-    @contributions = @top_level_contribution.descendants.includes(:person)
+    @contributions = @top_level_contribution.descendants.confirmed.includes(:person)
     @contributions = @contributions.with_user_rating(current_person) if current_person
     @top_level_contribution.visit!((current_person.nil? ? nil : current_person.id))
     @contribution = Contribution.new(:parent_id => @top_level_contribution.id, :conversation_id => @top_level_contribution.conversation_id)
@@ -58,7 +58,7 @@ class ConversationsController < ApplicationController
   end
   
   def preview_node_contribution
-    @contribution = Contribution.new_node_level_contribution(params[:contribution], current_person)
+    @contribution = Contribution.update_or_create_node_level_contribution(params[:contribution], current_person)
     respond_to do |format|
       if @contribution.valid?
         format.js { render(:partial => "conversations/new_contribution_preview", :locals => {:div_id => params[:div_id], :layout => false}) }
@@ -72,10 +72,10 @@ class ConversationsController < ApplicationController
   
   #TODO: consider moving this to its own controller?
   def create_node_contribution
-    @contribution = Contribution.new_node_level_contribution(params[:contribution], current_person)
+    @contribution = Contribution.unconfirmed.find_by_id_and_owner(params[:contribution][:id], current_person.id)
 
     respond_to do |format|
-      if @contribution.save
+      if @contribution.confirm!
         format.js   { render :partial => "conversations/contributions/threaded_contribution_template", :locals => {:contribution => @contribution}, :status => (params[:preview] ? :accepted : :created) }
         format.html { redirect_to(@contribution.item, :notice => 'Contribution was successfully created.') }
         format.xml  { render :xml => @contribution, :status => :created, :location => @contribution }

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101012020445) do
+ActiveRecord::Schema.define(:version => 20101012133958) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(:version => 20101012020445) do
     t.string   "title"
     t.text     "description"
     t.string   "embed_target",            :limit => 1000
+    t.boolean  "confirmed",                               :default => true
   end
 
   create_table "conversations", :force => true do |t|
