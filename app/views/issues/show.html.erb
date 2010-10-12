@@ -27,6 +27,12 @@ $(document).ready(function() {
         return false;
     });
     
+    $('p#resource-contributions > a.url-link').click(function() {
+        $('p#resource-contributions').hide();
+        $('form#new-url-contribution').show('slow');
+        return false;
+    });
+    
     $('p#resource-contributions > a.video-link').click(function() {
         $('p#resource-contributions').hide();
         $('form#new-video-contribution').show('slow');
@@ -61,6 +67,7 @@ $(document).ready(function() {
         </div>
         <div class="feat-content">
           <p><%= @issue.summary %></p>
+          <p><%= link_to "Official Source", @issue.url, :class => 'button'%></p>
           <p><strong>Created On:</strong> <%= @issue.created_at.strftime("%m/%d/%Y") %></p>
           <!--
               # TODO - admin only? or remove?
@@ -91,13 +98,14 @@ $(document).ready(function() {
       <% @media_contributions.each do |contribution| %>
       <div class="dnld <%= media_style(contribution) %>">
         <p><strong><%= media_link_info(contribution) %></strong></p>
-	<p><%= contribution.title %></p>
+	<p><%= contribution.title unless contribution.is_a?(Link) %></p>
 	<p><em>By: <%= contribution.person.name %></em></p>
       </div>
       <% end %>
       <% if person_signed_in? %>
-          <p id="resource-contributions">Add a <a href="#" class="file-link">File</a>/<a class="file-link" href="#">Image</a>/<a class="video-link" href="#">Video</a></p>
+          <p id="resource-contributions">Add a <a href="#" class="file-link">File</a>/<a class="file-link" href="#">Image</a>/<a class="video-link" href="#">Video</a>/<a class="url-link" href="#">Link</a></p>
           <%= render :partial => "new_file_contribution" %>
+          <%= render :partial => "new_url_contribution" %>
           <%= render :partial => "new_embedded_snippet_contribution" %>
      <% else %>
         <p>You must <%= link_to "sign in", new_person_session_path %> or <%= link_to "sign up", new_person_registration_path %> to contribute a file or video</p>
