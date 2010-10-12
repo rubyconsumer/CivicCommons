@@ -1,4 +1,5 @@
 module ApplicationHelper
+  
   def show_errors(model)
     rv = ""
     all_errors = model.errors.full_messages
@@ -22,4 +23,5 @@ module ApplicationHelper
     "Showing %s of %s"%[collection.count,
                         pluralize(collection.total_entries, name_of_collection)]
   end
+
 end

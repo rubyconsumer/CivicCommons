@@ -4,6 +4,8 @@ module IssuesHelper
       "image"
     elsif contribution.is_a?(AttachedFile)
       "document"
+    elsif contribution.is_a?(Link)
+      "link"
     else
       "video"
     end
@@ -17,6 +19,8 @@ module IssuesHelper
       link_to(image, contribution.attachment.url)
     elsif contribution.is_a?(AttachedFile)
       link_to(contribution.attachment_file_name, contribution.attachment.url)
+    elsif contribution.is_a?(Link)
+      link_to(contribution.title, contribution.url)
     else 
      raw contribution.embed_target
     end

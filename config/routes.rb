@@ -8,7 +8,11 @@ Civiccommons::Application.routes.draw do
 
   resources :ratings
 
-  resources :contributions
+  resources :contributions do
+    # This is a GET for now since PA will redirect back with the required bits to create a PA
+    # contribution. 
+    get "create_from_pa", :on => :collection
+  end
 
   resources :answers
 
@@ -42,8 +46,9 @@ Civiccommons::Application.routes.draw do
   
 
   namespace "api" do
-    match "/:email/conversations", :to => "conversations#index", :via => [:get], :email => /.*@.*/, :format => :json
-    match "/:email/issues", :to => "issues#index", :via => [:get], :email => /.*@.*/, :format => :json
+    match "/:id/conversations", :to => "conversations#index", :via => [:get], :format => :json
+    match "/:id/issues", :to => "issues#index", :via => [:get], :format => :json
+    match "/:id/contributions", :to => "contributions#index", :via => [:get], :format => :json
   end
 
 

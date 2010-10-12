@@ -21,15 +21,15 @@ $('form.contribution-form')
     });
 
 $(document).ready(function() {
-    $('a#comment-contribution').click(function() {
-        $('a#comment-contribution').hide();
-        $('form#new-comment-contribution').show('slow');
-        return false;
-    });
-    
     $('p#resource-contributions > a.file-link').click(function() {
         $('p#resource-contributions').hide();
         $('form#new-file-contribution').show('slow');
+        return false;
+    });
+    
+    $('p#resource-contributions > a.url-link').click(function() {
+        $('p#resource-contributions').hide();
+        $('form#new-url-contribution').show('slow');
         return false;
     });
     
@@ -67,6 +67,7 @@ $(document).ready(function() {
         </div>
         <div class="feat-content">
           <p><%= @issue.summary %></p>
+          <p><%= link_to "Official Source", @issue.url, :class => 'button'%></p>
           <p><strong>Created On:</strong> <%= @issue.created_at.strftime("%m/%d/%Y") %></p>
           <!--
               # TODO - admin only? or remove?
@@ -79,7 +80,7 @@ $(document).ready(function() {
 	  <h3>People active in this issue</h3>
 	  <div class="photobank">
             <% @people.each do |person| %>
-            <%= avatar_tag(person, :style_name => :standard, :height => 50, :width => 50) %>
+            <%= featured_profile(person).html_safe %>
             <% end %>
 	  </div>
 	</div>
@@ -87,7 +88,7 @@ $(document).ready(function() {
 	  <h3>Organizations active in this issue</h3>
 	  <div class="photobank">
             <% @organizations.each do |org| %>
-            <%= avatar_tag(org, :style_name => :standard, :height => 50, :width => 50) %>
+            <%= featured_profile(org).html_safe %>
             <% end %>
 	  </div>
 	</div>
@@ -97,13 +98,14 @@ $(document).ready(function() {
       <% @media_contributions.each do |contribution| %>
       <div class="dnld <%= media_style(contribution) %>">
         <p><strong><%= media_link_info(contribution) %></strong></p>
-	<p><%= contribution.title %></p>
+	<p><%= contribution.title unless contribution.is_a?(Link) %></p>
 	<p><em>By: <%= contribution.person.name %></em></p>
       </div>
       <% end %>
       <% if person_signed_in? %>
-          <p id="resource-contributions">Add a <a href="#" class="file-link">File</a>/<a class="file-link" href="#">Image</a>/<a class="video-link" href="#">Video</a></p>
+          <p id="resource-contributions">Add a <a href="#" class="file-link">File</a>/<a class="file-link" href="#">Image</a>/<a class="video-link" href="#">Video</a>/<a class="url-link" href="#">Link</a></p>
           <%= render :partial => "new_file_contribution" %>
+          <%= render :partial => "new_url_contribution" %>
           <%= render :partial => "new_embedded_snippet_contribution" %>
      <% else %>
         <p>You must <%= link_to "sign in", new_person_session_path %> or <%= link_to "sign up", new_person_registration_path %> to contribute a file or video</p>
@@ -140,17 +142,16 @@ $(document).ready(function() {
     <div class="aside supplementary">
       <h3>Contributions</h3>
       <ol class='contributions divided'>
-        <% @links.each do |contribution| %>
+        <% @written_contributions.each do |contribution| %>
 	<li class='offset-1'>
           <img class="callout" src="#contribution-image-goes-here" alt="contribution image goes here" width="90" height="60" />
-	  <h4><%= link_to truncate(contribution.content), contribution.url %></h4>
+	  <h4><%= link_to truncate(contribution.title), contribution.url %></h4>
     <p>By: <a href="#link-to-PA-profile"><%= contribution.person.name %></a></p>
 	</li>
         <% end %>
       </ol>
       <% if person_signed_in? %>
-        <p><a href="" id="comment-contribution">Write a contribution</a></p>
-        <%= render :partial => "new_comment_contribution" %>
+        <p><%= link_to("Write a contribution", pa_new_issue_contribution_url(current_person, @issue)) %> </p>
         <% else %>
         <p>You must <%= link_to "sign in", new_person_session_path %> or <%= link_to "sign up", new_person_registration_path %> to write a contribution</p>
       <% end %>

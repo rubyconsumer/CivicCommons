@@ -8,7 +8,7 @@ class ConversationsController < ApplicationController
 
     @main_article = Article.conversation_main_article.first
     @sub_articles = Article.conversation_sub_articles.limit(3)
-
+    @regions = Region.all
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @conversations }

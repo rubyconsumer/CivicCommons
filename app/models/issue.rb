@@ -3,6 +3,8 @@ class Issue < ActiveRecord::Base
   include Visitable
   include TopItemable
   include Subscribable
+  include Regionable 
+  include GeometryForStyle
   
   belongs_to :person
 
@@ -12,7 +14,10 @@ class Issue < ActiveRecord::Base
   has_many :suggested_actions
   has_many :links
   has_many(:media_contributions, :class_name => "Contribution",
-           :conditions => "type = 'EmbeddedSnippet' or type = 'AttachedFile'")
+           :conditions => "type = 'EmbeddedSnippet' or type = 'AttachedFile' or type = 'Link'")
+
+  has_many(:written_contributions, :class_name => "Contribution",
+           :conditions => "type = 'PAContribution' or type = 'EmbeddedSnippet'")
   has_many :subscriptions, :as => :subscribable
   
   
@@ -30,7 +35,7 @@ class Issue < ActiveRecord::Base
                       :panel => "198x130>" },
                     :storage => :s3,
                     :s3_credentials => S3Config.credential_file, 
-                    :path => ":attachment/:id/:style/:filename",
+                    :path => IMAGE_ATTACHMENT_PATH,
                     :default_url => '/images/issue_img_:style.gif')
 
 

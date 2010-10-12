@@ -72,9 +72,9 @@
             = "Community"
             %ul
               %li
-                %a{:href =>"#{Civiccommons::PeopleAggregator.URL}/people#{pa_authtoken('?')}", :title => "People"} People
+                %a{:href =>"#{pa_link(:people)}", :title => "People"} People
               %li
-                %a{:href =>"#{Civiccommons::PeopleAggregator.URL}/directory#{pa_authtoken('?')}", :title => "Organizations"} Organizations
+                %a{:href =>"#{pa_link(:directory)}", :title => "Organizations"} Organizations
           %li
             %a{:href =>'http://theciviccommons.com/', :title => "About Us"} About Us
         %form#search{ :method=>"post" }
@@ -91,9 +91,9 @@
           %li 
             = link_to 'Issues', issues_path, :title => 'Issues'
           %li 
-            %a{:href =>"#{Civiccommons::PeopleAggregator.URL}/people#{pa_authtoken('?')}", :title => "People"} People
+            %a{:href =>"#{pa_link(:people)}", :title => "People"} People
           %li 
-            %a{:href =>"#{Civiccommons::PeopleAggregator.URL}/directory#{pa_authtoken('?')}", :title => "Organizations"} Organizations
+            %a{:href =>"#{pa_link(:directory)}", :title => "Organizations"} Organizations
           %li 
             %a{:href =>'http://theciviccommons.com/', :title => "About Us"} About Us
         %p The Civic Commons is Copyright 2010 by the Legal Entity.  Content is licensed under License.

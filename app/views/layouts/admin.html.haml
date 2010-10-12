@@ -6,9 +6,11 @@
     =javascript_include_tag 'lib/master'
     =javascript_include_tag 'lib/youtube'
     =stylesheet_link_tag 'admin.css'
+    =javascript_include_tag 'vendor/jquery.tablesorter.min'
+    =javascript_include_tag 'lib/admin/sort_table'
     %title CivicCommons Admin
   %body
-    .header
+    .admin-header
       .wrapper
         %h1
           =link_to "Civic Commons Admin", admin_root_path

@@ -1,7 +1,37 @@
 -content_for :main_body do 
-  %h1
-    =@region.name
-  %h2 Counties:
-  -@region.counties.each do |c|
-    .county 
-      ="#{c.name}, #{c.state}"
+  .feature-mast
+    .wrapper
+      %h1
+        =@region.name
+  .wrapper
+    .aside
+      .mod
+        %h3 SELECT A REGION
+        .mod-content
+          %ul.link-list
+            -@regions.each do |r|
+              %li
+                -link = r.default? ? "/regions/default" : r
+                =link_to r.name, link
+      - if @region.people.count > 0
+        .mod
+          %h3 PEOPLE
+          .mod-content
+            -@region.people.each do |p|
+              =conversation_profile(p).html_safe
+      - if @region.issues.count > 0
+        .mod
+          %h3 ISSUES
+          %ul.link-list
+            .mod-content
+              -@region.issues.each do |i|
+                %li
+                  =link_to i.name, i
+    .content-container
+      .content-container
+        -if @region.image?
+          %img.featured{ :class => "main-img", :src => @region.image.url(:normal), :alt => @region.name}
+        .feature
+          -if @conversations.length >0
+            %h2 Conversations in this Region
+            =render :partial => "conversations/conversation_pager"

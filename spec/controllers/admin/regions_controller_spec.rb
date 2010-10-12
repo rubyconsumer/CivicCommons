@@ -17,11 +17,8 @@ describe Admin::RegionsController do
   describe "GET edit" do
   
     before(:each) do
-      county1 = County.new :name=>"fred", :state=>"PA"
-      county2 = County.new :name=>"wilma", :state=>"PA"
       @region = Region.new
       @region.name = "jake"
-      @region.counties = [county1, county2]
       Region.stub(:find).with(1).and_return(@region)
       get :edit, :id=>1
     end
@@ -43,9 +40,9 @@ describe Admin::RegionsController do
   describe "POST create" do
     context "with valid params" do 
       it "should create counties based on the params" do
-        post :create, :region => {:name=>"john", :state=>"pa", :county_string=>"a\nb"}
-        assigns(:region).counties.length.should == 2
-        assigns(:region).counties.first.state.should == "pa"
+        post :create, :region => {:name=>"john", :zip_code_string=>"18621\n11111"}
+        assigns(:region).zip_codes.length.should == 2
+        assigns(:region).zip_codes.first.to_s.should == "18621"
       end
     end
   end

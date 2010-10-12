@@ -1,17 +1,18 @@
--form_for [:admin, @region] do |f|
+-form_for [:admin, @region], :html =>{:multipart => true}  do |f|
   %p
     =show_errors @region
     =f.label :name
     %br
     =f.text_field :name
+  %p
+    =f.label :image, "Attach an Image (Looks best at 3:2 ratio)"
+    %br
+    =f.file_field :image
   .label
-    State
-  =f.text_field :state
-  .label
-    Counties
-  =f.text_area :county_string
-  %i
+    ZipCodes
+  =f.text_area :zip_code_string
+  %br
     (Seperate by line breaks)
+  %p
   .actions
     =f.submit
-

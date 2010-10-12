@@ -145,6 +145,7 @@ ActiveRecord::Schema.define(:version => 20101011005020) do
     t.string   "image_file_name"
     t.string   "image_content_type"
     t.integer  "image_file_size"
+    t.string   "url"
   end
 
   create_table "people", :force => true do |t|
@@ -196,6 +197,9 @@ ActiveRecord::Schema.define(:version => 20101011005020) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
   end
 
   create_table "subscriptions", :force => true do |t|

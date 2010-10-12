@@ -10,6 +10,7 @@ Given /^a conversation:$/ do |table|
 
   @conversation =
     Factory.create(:conversation,
+                   id:    conversation['ID'],
                    title: conversation['Title'],
                    image: File.open(attachment),
                    summary: conversation['Summary'],

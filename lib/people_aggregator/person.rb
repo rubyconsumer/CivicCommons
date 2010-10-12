@@ -2,16 +2,15 @@ class PeopleAggregator::Person
   include PeopleAggregator::Connector
   include PeopleAggregator::ApiObject
 
-  base_uri "#{Civiccommons::PeopleAggregator.URL}/api/json.php/peopleaggregator"
-
 
   attr_allowable :login, :email, :id, :url,
                  :name, :profile, :firstName,
-                 :lastName, :login, :password
+                 :lastName, :login, :password,
+                 :profilePictureURL
 
 
   def save
-    @attrs.merge!(adminPassword: "admin")
+    @attrs.merge!(adminPassword: Civiccommons::PeopleAggregator.admin_password)
     r = self.class.post('/newUser', body: @attrs)
 
     self.class.log_people_aggregator_response r

@@ -43,7 +43,7 @@
         %tr
           -slice.each do |issue|
             %td
-              =check_box_tag "conversation[issue_ids][]", issue.id
+              =check_box_tag "conversation[issue_ids][]", issue.id, @conversation.issues.include?(issue)
               =issue.name
 
   %p
