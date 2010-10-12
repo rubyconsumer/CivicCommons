@@ -1,9 +1,10 @@
 module YouTubeable
 
   def self.included(base)
-    base.before_save :embed_youtube_video, :if => :youtube_link? && :url_changed?
+    base.before_save :embed_youtube_video, :if => :youtube_link? 
   end
 
+  
   YOUTUBE_REGEX = /^http:\/\/www.youtube.com\/watch\?.*v=([\d\w]+)/
 
   def youtube_link?
