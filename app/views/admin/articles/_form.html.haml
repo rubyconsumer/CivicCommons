@@ -58,6 +58,7 @@
 
   -if @article.image.exists? 
     .field
+      %p= "Current Image is Located at: #{@article.image.url(:mainfeature)}"
       = f.label "Image Url (looks best at 3:2 ratio)" 
       = image_tag @article.image.url(:mainfeature)
   
