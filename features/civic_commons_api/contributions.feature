@@ -13,7 +13,6 @@ Feature:
       | People Aggregator ID | 12            |
 
 
-  @wip
   Scenario: Retrieve two contributions on an issue and a conversation
     Given a conversation:
       | ID          | 2                           |
