@@ -8,6 +8,8 @@ class Person < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable,
          :confirmable
 
+  attr_accessor :skip_shadow_account
+
   # Setup accessible (or protected) attributes for your model
   attr_accessible :name, :first_name, :last_name, :email, :password, :password_confirmation, :top, :zip_code, :admin, :validated, 
                   :avatar
@@ -43,6 +45,29 @@ class Person < ActiveRecord::Base
   
   scope :proxy_accounts, where(:proxy => true)
 
+
+  before_create :create_shadow_account, :unless => :skip_shadow_account
+
+
+  def create_shadow_account
+    Rails.logger.info("Creating shadow account for user with email #{email}")
+    begin
+      pa_person = PeopleAggregator::Person.create(firstName: first_name,
+                                                  lastName:  last_name,
+                                                  login:     email,
+                                                  password:  encrypted_password,
+                                                  email:     email,
+                                                  profilePictureURL: avatar_url_without_timestamp)
+    rescue PeopleAggregator::Error => e
+      errors.add(:person, e.message)
+      raise ActiveRecord::RecordNotSaved
+    end
+
+
+    save_pa_identifier(pa_person)
+  end
+
+
   def name=(value)
     @name = value
     self.first_name, self.last_name = self.class.parse_name(value)
@@ -77,5 +102,18 @@ class Person < ActiveRecord::Base
   
   def subscriptions_include?(subscribable)
     subscriptions.map(&:subscribable).include?(subscribable)
+  end
+
+
+  def avatar_url_without_timestamp
+    self.avatar.url(:standard).gsub(/\?\d+$/, '')
+  end
+
+
+  private
+
+  def save_pa_identifier(pa_person)
+    Rails.logger.info("Success.  Person created.  Updating Person with People Agg ID...")
+    self.people_aggregator_id = pa_person.id
   end
 end

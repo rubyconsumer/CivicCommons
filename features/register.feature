@@ -4,6 +4,7 @@ Feature:
   So that I can interact with the Civic Commons community
 
 
+  @api
   Scenario: User signs up for account with email address, name, zip code, username and password
 
       Given the user signs up with:
@@ -16,9 +17,8 @@ Feature:
         | From    | admin@theciviccommons.com     |
         | To      | joe@test.com                  |
         | Subject | Confirmation instructions     |
-      And a People Aggregator shadow account should not be created
+      And a People Aggregator shadow account should be created
 
-  @api
   Scenario: User clicks confirmation link in email
 
     Given the user signs up with:
@@ -29,5 +29,4 @@ Feature:
     When the user confirms his account
     Then the user should be confirmed
     And the user should be logged in
-    And a People Aggregator shadow account should be created
 

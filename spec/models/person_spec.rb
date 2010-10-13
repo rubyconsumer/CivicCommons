@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe Person do
+
   describe "when parsing the name" do
     it "should parse simple name" do
       first, last = Person.parse_name("John Doe")
@@ -79,4 +80,27 @@ describe Person do
       person.name.should == "Ektor"
     end
   end
+
+
+  it "creates a shadow account after saving" do
+    person = Person.new(Factory.attributes_for(:person_with_shadow_account))
+    PeopleAggregator::Person.stub!(:create).and_return(OpenStruct.new(id: 42))
+    person.save
+    person.people_aggregator_id.should == 42
+  end
+
+
+  it "doesn't create a shadow account when there are errors" do
+    person = Person.new(Factory.attributes_for(:person_with_shadow_account))
+
+    PeopleAggregator::Person.stub(:create) do
+      raise PeopleAggregator::Error.new("There was an error saving this person.")
+    end
+
+    lambda { person.save }.should raise_error(ActiveRecord::RecordNotSaved)
+    person.errors[:person].should include("There was an error saving this person.")
+
+  end
+
+
 end
