@@ -32,6 +32,7 @@ group :test do
   gem 'rspec-rails', '>= 2.0.0.beta.10'
   gem "factory_girl_rails"
   gem "ruby-debug19"
+  gem 'webmock'
 end
 
 gem 'devise', '1.1.2'
@@ -41,5 +42,3 @@ gem 'meta_search'
 gem 'paperclip'
 gem 'aws-s3'
 gem 'nokogiri'
-
-gem 'webmock'
