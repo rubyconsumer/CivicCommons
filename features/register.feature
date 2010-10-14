@@ -30,3 +30,13 @@ Feature:
     Then the user should be confirmed
     And the user should be logged in
 
+
+  Scenario: Deleting a user should destroy the user's shadow account
+
+    Given the user signs up with:
+        | Name      | Joe Test      |
+        | Email     | joe@test.com  |
+        | Zip       | 44444         |
+        | Password  | abcd1234      |
+    When I delete the user
+    Then the user's People Aggregator shadow account should no longer exist

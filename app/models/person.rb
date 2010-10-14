@@ -47,6 +47,7 @@ class Person < ActiveRecord::Base
 
 
   before_create :create_shadow_account, :unless => :skip_shadow_account
+  after_destroy :delete_shadow_account, :unless => :skip_shadow_account
 
 
   def create_shadow_account
@@ -65,6 +66,15 @@ class Person < ActiveRecord::Base
 
 
     save_pa_identifier(pa_person)
+  end
+
+
+  def delete_shadow_account
+    Rails.logger.info("Deleting shadow account for user with email #{email}")
+
+    pa_person = PeopleAggregator::Person.find_by_email(self.email)
+    pa_person.destroy
+
   end
 
 
