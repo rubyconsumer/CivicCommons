@@ -85,17 +85,7 @@
       #footer-inner
         %ul.sub-nav
           %li 
-            = link_to 'Home', root_path, :title => 'Home'
-          %li 
-            = link_to 'Conversations', conversations_path, :title => 'Conversations'
-          %li 
-            = link_to 'Issues', issues_path, :title => 'Issues'
-          %li 
-            %a{:href =>"#{pa_link(:people)}", :title => "People"} People
-          %li 
-            %a{:href =>"#{pa_link(:directory)}", :title => "Organizations"} Organizations
-          %li 
-            %a{:href =>'http://theciviccommons.com/', :title => "About Us"} About Us
+            = link_to 'About', '/about'
         %p The Civic Commons is Copyright 2010 by the Legal Entity.  Content is licensed under License.
         %ul.social-media
           %li
