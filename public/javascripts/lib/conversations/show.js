@@ -66,20 +66,25 @@ jQuery(function ($) {
             var optionsTab = '#' + divId + '-options';
                 origForm = $(this).data('origForm');
             
-            $(clicked).updateConversationButtonText();
-            $(this).closest('ol.thread-list,ul.thread-list').append(responseNode).find('.rate-form-container').hide();            
-            
-            if($(clicked).hasClass('show-conversation-button')){
-              origForm.find('textarea,input[type="text"],input[type="file"]').val('');
-              origForm.find('[placeholder]').placeholder({className: 'placeholder'});
-              $(tabStrip).find('.contribution-preview').html('<a href="#' + divId + '-options" class="button">Respond</a>');
-              $(this).find('.validation-error').html('');
-            }else{
-              $(clicked).text($(clicked).data('origText')).unbind('click'); // only unbinds the click function that attaches the toggle, since all the other events are indirectly attached through .live()
-              $(tabStrip).parent().empty();
+            if ( $(clicked).hasClass('top-node-conversation-action') ) {
+              $.fn.colorbox.close();
+              $('ol#conversation-thread-list').append(responseNode).find('.rate-form-container').hide();
+            } else {
+              $(clicked).updateConversationButtonText();
+              $(this).closest('ol.thread-list,ul.thread-list').append(responseNode).find('.rate-form-container').hide();            
+              
+              if ( $(clicked).hasClass('show-conversation-button') ) {
+                origForm.find('textarea,input[type="text"],input[type="file"]').val('');
+                origForm.find('[placeholder]').placeholder({className: 'placeholder'});
+                $(tabStrip).find('.contribution-preview').html('<a href="#' + divId + '-options" class="button">Respond</a>');
+                $(this).find('.validation-error').html('');
+              } else {
+                $(clicked).text($(clicked).data('origText')).unbind('click'); // only unbinds the click function that attaches the toggle, since all the other events are indirectly attached through .live()
+                $(tabStrip).parent().empty();
+              }
             }
             window.location.hash = optionsTab;
-            setTimeout(function(){ responseNode.scrollTo(); }, animationSpeed);
+            setTimeout(function(){ responseNode.scrollTo(); }, 250);
             $(tabStrip).unmask(); // doesn't always unmask on ajax:complete for some reason
           }
         })
@@ -98,6 +103,15 @@ jQuery(function ($) {
         })
         .find('[placeholder]').placeholder({className: 'placeholder'});
         return this
+      },
+      
+      applyEasyTabsToTabStrip: function() {
+        this.easyTabs({
+          tabActiveClass: 'tab-active',
+          tabActivePanel: 'panel-active',
+          tabs: '> .tab-area > .tab-strip-options > ul > li',
+          animationSpeed: 250
+        });
       }
   });
   
@@ -129,21 +143,29 @@ jQuery(function ($) {
   	        target = this.getAttribute("data-target");
   	        tabStrip = target+" .tab-strip";
   	        form = tabStrip+" form";
-  	        animationSpeed = 250;
   	    
   	    // turn button into a toggle to hide/show what gets loaded so that subsequent clicks to redo the ajax call
   	    $(clicked).click(actionToggle(clicked,target,$(clicked).data('cancelText')));
   	    
   	    $(clicked).text($(clicked).data('cancelText'));
         $(target).hide().html(xhr.responseText).slideDown().find('.rate-form-container').hide(); // insert content
-        $(tabStrip).easyTabs({
-          tabActiveClass: 'tab-active',
-          tabActivePanel: 'panel-active',
-          tabs: '> .tab-area > .tab-strip-options > ul > li',
-          animationSpeed: animationSpeed
-        });
+        $(tabStrip).applyEasyTabsToTabStrip();
 
         $(form).bindContributionFormEvents(clicked,tabStrip)
+      });
+      
+      $('.top-node-conversation-action').colorbox({ 
+        href: $(this).attr('href'),
+        width: '500px',
+        height: '300px',
+        onComplete: function(){
+          var clicked = '#' + $(this).attr('id');
+              convoId = clicked.match(/(\d+)/)[0];
+              tabStrip = '.tab-strip#conversation-' + convoId;
+              form = tabStrip + ' form';
+          $(tabStrip).applyEasyTabsToTabStrip();
+          $(form).bindContributionFormEvents(clicked,tabStrip);
+        }
       });
       
       $('.rate-form-container').hide();
