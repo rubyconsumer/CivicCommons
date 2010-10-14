@@ -5,8 +5,8 @@
       <div class="cols call-out">
         <a href="<%= conversation_path(conversation)%>">
           <img class="main-img" src="<%= conversation.image.url(:panel) %>" alt="<%= conversation.title %>" width="180" height="120" />
-          <h4><%= truncate(conversation.title, {:length => 45, :seperator => ' '}) %></h4>
-          <p><%= raw(truncate(conversation.summary, {:length => 125, :separator => ' '})) %></p>
+          <h4><%= truncate(conversation.title, {:length => 45 }) %></h4>
+          <p><%= raw(truncate(conversation.summary, {:length => 125})) %></p>
         </a>
         <div class="photobank">
           <% conversation.participants[0...4].each do |participant| %>
