@@ -67,7 +67,7 @@ $(document).ready(function() {
         </div>
         <div class="feat-content">
           <p><%= @issue.summary %></p>
-          <p><%= link_to "Official Source", source_url(@issue), :class => 'button'%></p>
+          <p><%= link_to "Official Source", source_url(@issue), :class => 'button', :title => @issue.url_title %></p>
           <p><strong>Created On:</strong> <%= @issue.created_at.strftime("%m/%d/%Y") %></p>
           <!--
               # TODO - admin only? or remove?
