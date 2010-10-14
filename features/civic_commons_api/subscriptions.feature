@@ -26,17 +26,11 @@ Feature:
       | Image       | imageAttachment.png         |
       | Summary     | Test issue                  |
       | Zip Code    | 44111                       |
-    And I have a comment on the conversation:
+    And I am following the conversation
+    And I am following the issue
+    When I ask for subscriptions with URL:
     """
-    This is my example comment on the conversation
-    """
-    And I have a comment on the issue:
-    """
-    This is my example comment on the issue
-    """
-    When I ask for contributions with URL:
-    """
-    /api/12/contributions
+    /api/12/subscriptions
     """
     Then I should receive a response:
     """
@@ -46,9 +40,8 @@ Feature:
         "parent_image": "http://s3.amazonaws.com/cc-dev/images/thumb/imageAttachment.png",
         "parent_image_width": 100,
         "parent_image_height": 100,
-        "comment": "This is my example comment on the conversation",
-        "participant_count": 2,
-        "contribution_count": 1,
+        "participant_count": 1,
+        "contribution_count": 0,
         "parent_url": "http://www.example.com/conversations/2"
         },
         {
@@ -56,12 +49,12 @@ Feature:
           "parent_image":       "http://s3.amazonaws.com/cc-dev/images/thumb/imageAttachment.png",
           "parent_image_width":        100,
           "parent_image_height":       100,
-          "comment":                   "This is my example comment on the issue",
-          "participant_count":  2,
-          "contribution_count": 1,
+          "participant_count":  1,
+          "contribution_count": 0,
           "parent_url":                "http://www.example.com/issues/2"
         }
     ]
     """
+
 
 

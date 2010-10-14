@@ -14,10 +14,10 @@
     %ul.attach-to.link-list
       -@issues.each do |i|
         %li.attach-issue{:data => {:issue_id => i.id}}
-          %input.submit{:type=>"submit", :value=>"Attach to Issue"}
+          %input.submit{:type=>"submit", :value=>"Attach to Issue", :method=>:put}
           =i.name
       -@conversations.each do |c|
         %li.attach-conversation{:data => {:conversation_id => c.id}}
-          %input.submit{:type=>"submit", :value=>"Attach to Conversation"}
+          %input.submit{:type=>"submit", :value=>"Attach to Conversation", :method=>:put}
           =c.title
     = javascript_include_tag 'lib/link-form'

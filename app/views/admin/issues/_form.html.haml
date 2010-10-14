@@ -5,6 +5,9 @@
     %br
     =f.text_field :name
 
+  -if @issue.image.url
+    %p= "The Current Image is Located at: #{@issue.image.url}"
+
   %p
     =f.label :image, "Attach an Image (looks best at 3:2 ratio)"
     %br
