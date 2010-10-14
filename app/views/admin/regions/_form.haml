@@ -4,7 +4,10 @@
     =f.label :name
     %br
     =f.text_field :name
-  %p
+    %br
+    -if @region.image.exists?
+      %p= "The Current Image is Located at: #{@region.image.url(:normal)}"
+
     =f.label :image, "Attach an Image (Looks best at 3:2 ratio)"
     %br
     =f.file_field :image
