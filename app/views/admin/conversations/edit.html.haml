@@ -15,8 +15,8 @@
     %br
     =conversation.text_field :title
 
-  -if @conversation.image.url
-    %p="The Current Image is Located at: #{@conversation.image.url}"
+  -if @conversation.image.exists?
+    =image_tag @conversation.image.(:normal)
   
   %p
     =conversation.label :image, "Attach an Image"

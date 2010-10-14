@@ -10,7 +10,7 @@
     =f.text_area :description
     %br
     -if @region.image.exists?
-      %p= "The Current Image is Located at: #{@region.image.url(:normal)}"
+      =image_tag @region.image.url(:normal)
 
     =f.label :image, "Attach an Image (Looks best at 3:2 ratio)"
     %br
