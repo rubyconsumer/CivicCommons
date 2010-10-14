@@ -1,19 +1,23 @@
 -content_for :main_body do 
   .feature-mast
     .wrapper
-      %h1
-        =@region.name
+      .content-containter
+        %h1
+          =@region.name
   .wrapper
     .content-container
       .main-content
-        %h3 Region Summary:
-        %p= raw(@region.description)
-        -if @region.image?
-          %img.featured{ :class => "main-img", :src => @region.image.url(:normal), :alt => @region.name}
-        .feature
-          -if @conversations.length >0
-            %h2 Conversations in this Region
-            =render :partial => "conversations/conversation_pager"
+        .two-col
+          .cols
+            -if @region.image?
+              %img.featured{ :class => "main-img", :src => @region.image.url(:normal), :alt => @region.name, :class => 'main-img'}
+            .feature
+              -if @conversations.length >0
+                %h2 Conversations in this Region
+                =render :partial => "conversations/conversation_pager"
+
+          .cols
+            %p= raw(@region.description)
       .aside.supplementary
         .mod
           %h3 SELECT A REGION
