@@ -5,6 +5,10 @@
     %br
     =f.text_field :name
     %br
+    =f.label :description
+    %br
+    =f.text_area :description
+    %br
     -if @region.image.exists?
       %p= "The Current Image is Located at: #{@region.image.url(:normal)}"
 
@@ -12,10 +16,9 @@
     %br
     =f.file_field :image
   .label
-    ZipCodes
+    ZipCodes (Separate by line breaks)
   =f.text_area :zip_code_string
   %br
-    (Seperate by line breaks)
   %p
   .actions
     =f.submit

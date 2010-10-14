@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101012214941) do
+ActiveRecord::Schema.define(:version => 20101014161104) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -200,6 +200,7 @@ ActiveRecord::Schema.define(:version => 20101012214941) do
     t.string   "image_file_name"
     t.string   "image_content_type"
     t.integer  "image_file_size"
+    t.text     "description"
   end
 
   create_table "subscriptions", :force => true do |t|
