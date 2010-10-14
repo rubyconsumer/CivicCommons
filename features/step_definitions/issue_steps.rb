@@ -24,4 +24,7 @@ Given /^I have a contribution on the issue$/ do
                  issue: @issue)
 end
 
+Given /^I am following the issue$/ do
+  @issue.subscriptions.create(person: @current_person)
+end
 

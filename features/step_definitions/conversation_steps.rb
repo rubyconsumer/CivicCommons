@@ -28,3 +28,7 @@ Given /^I have a comment on the conversation$/ do
                  conversation: @conversation)
 end
 
+Given /^I am following the conversation$/ do
+  @conversation.subscriptions.create(person: @current_person)
+end
+
