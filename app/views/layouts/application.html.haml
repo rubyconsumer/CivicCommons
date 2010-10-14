@@ -5,6 +5,7 @@
     = javascript_include_tag 'vendor/jquery-1.4.2.min'
     = javascript_include_tag 'vendor/jquery-ui-1.8.2.custom.min'
     = javascript_include_tag 'vendor/jquery-ui-timepicker-addon-0.5.min'
+    = javascript_include_tag 'vendor/jquery-xdomainajax.js'
     = javascript_include_tag 'vendor/placeholder-1.0.1.min'
     = javascript_include_tag 'vendor/modernizr-1.5.min'
     = javascript_include_tag 'lib/rails'
@@ -85,17 +86,19 @@
       #footer-inner
         %ul.sub-nav
           %li 
-            = link_to 'Home', root_path, :title => 'Home'
+            %a{:href =>"#{pa_link(:home)}", :title => "Blog"} Blog
           %li 
-            = link_to 'Conversations', conversations_path, :title => 'Conversations'
+            = link_to 'Help', '/help'
           %li 
-            = link_to 'Issues', issues_path, :title => 'Issues'
-          %li 
-            %a{:href =>"#{pa_link(:people)}", :title => "People"} People
-          %li 
-            %a{:href =>"#{pa_link(:directory)}", :title => "Organizations"} Organizations
-          %li 
-            %a{:href =>'http://theciviccommons.com/', :title => "About Us"} About Us
+            = link_to 'FAQ', '/faq'
+          %li
+            = link_to 'Mission & Principles', '/principles'
+          %li
+            = link_to 'Team', '/team'
+          %li
+            = link_to 'Partners', '/partners'
+          %li
+            = link_to 'In The News', '/press'
         %p The Civic Commons is Copyright 2010 by the Legal Entity.  Content is licensed under License.
         %ul.social-media
           %li
@@ -103,6 +106,6 @@
           %li
             %a{ :href => 'http://twitter.com/civiccommons', :id => 'twitter'} Twitter
           %li
-            %a{ :href => '#', :id => 'youtube'} YouTube
+            %a{ :href => 'http://www.youtube.com/user/neociviccommons', :id => 'youtube'} YouTube
           %li
             %a{ :href => '#', :id => 'rss'} RSS
