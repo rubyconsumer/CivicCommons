@@ -12,6 +12,7 @@
         %td=person.admin?
         %td=person.proxy?
         %td=link_to "Edit", edit_admin_person_path(person)
+        %td=link_to "Delete", admin_person_path(person), :confirm => "Are you sure?", :method => :delete
         
 %br
 =link_to "Add Proxy", new_admin_person_path
