@@ -1,6 +1,20 @@
 require 'spec_helper'
 
 [Event, Contribution, Issue, Conversation].each do |model_type|
+  describe model_type, "Should have the required columns for Rateable" do
+    it "has total_visits" do
+      model_type.column_names.should include 'total_rating'
+      model_type.columns.find{|c| c.name == 'total_rating'}.type.should == :integer
+    end
+    it "has last_visit_date" do
+      model_type.column_names.should include 'last_rating_date'
+      model_type.columns.find{|c| c.name == 'last_rating_date'}.type.should == :datetime
+    end
+    it "has_recent_visits" do
+      model_type.column_names.should include 'recent_rating'
+      model_type.columns.find{|c| c.name == 'recent_rating'}.type.should == :integer
+    end
+  end
   describe model_type.to_s, "When working with ratings" do
     before(:each) do
       @person = Factory.create(:normal_person)
