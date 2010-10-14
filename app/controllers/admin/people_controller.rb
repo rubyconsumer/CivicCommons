@@ -53,7 +53,11 @@ class Admin::PeopleController < Admin::DashboardController
   def destroy
     @person = Person.find(params[:id])
     @person.destroy
-    redirect_to admin_people_path
+    respond_to do |format|
+      format.html { redirect_to(admin_people_path) }
+      format.json { redirect_to (admin_people_path)}
+      format.xml  { head :ok }
+    end
   end
 
 end

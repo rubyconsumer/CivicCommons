@@ -82,3 +82,13 @@ Given /^a registered user:$/ do |table|
                    password:             user['Password'])
 end
 
+When /^I delete the user$/ do
+  @deleted_person_email = @current_person.email
+  @current_person.destroy
+end
+
+Then /^the user's People Aggregator shadow account should no longer exist$/ do
+  PeopleAggregator::Person.find_by_email(@deleted_person_email).should be_nil
+end
+
+

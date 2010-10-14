@@ -19,6 +19,10 @@ require 'cucumber/rails/capybara_javascript_emulation' # Lets you click links wi
 
 require 'ruby-debug'
 
+
+WebMock.allow_net_connect!
+
+
 def cleanup_shadow_accounts
   person = PeopleAggregator::Person.find_by_email("joe@test.com")
   person.destroy if person

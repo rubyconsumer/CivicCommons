@@ -29,6 +29,8 @@
                   =link_to i.name, i
     .content-container
       .content-container
+        %h3 Region Summary:
+        %p= raw(@region.description)
         -if @region.image?
           %img.featured{ :class => "main-img", :src => @region.image.url(:normal), :alt => @region.name}
         .feature
