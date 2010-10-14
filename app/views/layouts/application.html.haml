@@ -85,9 +85,19 @@
       #footer-inner
         %ul.sub-nav
           %li 
-            = link_to 'About', '/about'
+            %a{:href =>"#{pa_link(:home)}", :title => "Blog"} Blog
+          %li 
+            = link_to 'Help', '/help'
           %li 
             = link_to 'FAQ', '/faq'
+          %li
+            = link_to 'Mission & Principles', '/principles'
+          %li
+            = link_to 'Team', '/team'
+          %li
+            = link_to 'Partners', '/partners'
+          %li
+            = link_to 'In The News', '/press'
         %p The Civic Commons is Copyright 2010 by the Legal Entity.  Content is licensed under License.
         %ul.social-media
           %li
