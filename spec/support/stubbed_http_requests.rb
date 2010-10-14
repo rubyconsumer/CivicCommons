@@ -6,6 +6,6 @@ module StubbedHttpRequests
     stub_request(:get, "http://civiccommons.digitalcitymechanics.com/content/cid=5").to_return(:body => File.open("#{Rails.root}/test/fixtures/example_pa.html"), :status => 200)
   end
   def stub_amazon_s3_request
-    stub_request(:any, /http:\/\/s3\.amazonaws\.com\/civiccommons\/attachments/)
+    stub_request(:any, /http:\/\/s3\.amazonaws\.com\/cc-dev\/attachments/)
   end
 end
