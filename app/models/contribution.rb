@@ -47,6 +47,11 @@ class Contribution < ActiveRecord::Base
     contribution = model.create(params)
   end
   
+  def self.create_confirmed_node_level_contribution(params, person)
+    params.merge!(:override_confirmed => true)
+    create_node_level_contribution(params, person)
+  end
+  
   def self.delete_old_unconfirmed_contributions
     count = self.unconfirmed.where(["created_at < ?", 1.day.ago]).count
     self.unconfirmed.destroy_all(["created_at < ?", 1.day.ago])

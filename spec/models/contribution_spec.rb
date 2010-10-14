@@ -112,6 +112,16 @@ describe Contribution do
             contribution = Contribution.create_node_level_contribution(@attributes, @person)
             contribution.class.to_s.should == contribution_type.to_s
             contribution.valid?.should be_true
+            contribution.confirmed.should be_false
+            contribution.new_record?.should be_false
+          end
+        end
+        context "when using Contribution.create_confirmed_node_level_contribution" do
+          it "sets up and creates a valid confirmed #{contribution_type} saved to the db" do
+            contribution = Contribution.create_confirmed_node_level_contribution(@attributes, @person)
+            contribution.class.to_s.should == contribution_type.to_s
+            contribution.valid?.should be_true
+            contribution.confirmed.should be_true
             contribution.new_record?.should be_false
           end
         end
@@ -163,7 +173,7 @@ describe Contribution do
       person = Factory.create(:normal_person)
       contribution = Contribution.
         create_node_level_contribution({:content => "Foo Bar",
-                                         :type => "Comment"},
+                                        :type => "Comment"},
                                        person)
       contribution.errors.count.should == 1
     end

@@ -22,6 +22,7 @@ Civiccommons::Application.routes.draw do
 
   resources :links
 
+  match '/contributions/create_confirmed_contribution', :to=>'contributions#create_confirmed_contribution', :via=>[:post]
   match '/conversations/node_conversation', :to=>'conversations#node_conversation', :via=>[:get]
   match '/conversations/create_node_contribution', :to=>'conversations#create_node_contribution', :via=>[:put]  
   match '/conversations/new_node_contribution', :to=>'conversations#new_node_contribution', :via=>[:get]

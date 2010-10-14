@@ -1,4 +1,6 @@
 class ContributionsController < ApplicationController
+  include ContributionsHelper
+  
   # GET /contributions
   # GET /contributions.xml
   def index
@@ -102,4 +104,11 @@ class ContributionsController < ApplicationController
     end
   end
   
+  def create_confirmed_contribution
+    @contribution = Contribution.create_confirmed_node_level_contribution(params[:contribution], current_person)
+    
+    respond_to do |format|
+      format.html { redirect_to(contribution_parent_page(@contribution), :notice => 'Contribution was successfully created.') }
+    end
+  end
 end

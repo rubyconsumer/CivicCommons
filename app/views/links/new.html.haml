@@ -2,7 +2,7 @@
   .wrapper
     %h1= @pageTitle
     #link_form_wrapper
-      -form_for @contribution, :url => "/conversations/create_node_contribution" do |l|
+      -form_for @contribution, :url => "/contributions/create_confirmed_contribution" do |l|
         =l.hidden_field(:type)
         =l.hidden_field(:issue_id)
         =l.hidden_field(:conversation_id)
