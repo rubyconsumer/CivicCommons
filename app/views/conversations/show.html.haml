@@ -18,7 +18,7 @@
             %span#subscription
               = render :partial => '/subscriptions/subscription', :locals => {:subscribable => @conversation}
           %p
-            = link_to("Post to this Conversation", {:action => "new_node_contribution", :id => @conversation.id, :div_id => "conversation-#{@conversation.id}"}, :class => "text button conversation-action", :id => "conversation-action-link-#{@conversation.id}", :title => "Leave a comment here", 'data-target' => "#conversation-action-div-#{@conversation.id}", :remote => true)
+            = link_to("Post to this Conversation", {:action => "new_node_contribution", :id => @conversation.id, :div_id => "conversation-#{@conversation.id}"}, :class => "text button top-node-conversation-action", :id => "conversation-action-link-#{@conversation.id}", :title => "Leave a comment here", 'data-target' => "#conversation-action-div-#{@conversation.id}")
   .wrapper
     .content-container
       .main-content
@@ -28,7 +28,7 @@
           %ol.conversations.divided
             - @top_level_contributions.each do |contribution|
               =render :partial => "conversations/contributions/#{contribution.type.underscore}", :locals => { :contribution => contribution }
-          %ol.conversations.divided.thread-list
+          %ol#conversation-thread-list.conversations.divided.thread-list
             %div{:id => "conversation-action-div-#{@conversation.id}"}
             =render :partial => "conversations/contributions/threaded_contribution_template", :collection => @contributions, :as => :contribution
 
