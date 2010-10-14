@@ -1,7 +1,21 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 [Event, Contribution, Issue, Conversation].each do |model_type|
-  describe model_type.to_s, "When working with visits" do
+  describe model_type, "Should have the required columns for Visitable" do
+    it "has total_visits" do
+      model_type.column_names.should include 'total_visits'
+      model_type.columns.find{|c| c.name == 'total_visits'}.type.should == :integer
+    end
+    it "has last_visit_date" do
+      model_type.column_names.should include 'last_visit_date'
+      model_type.columns.find{|c| c.name == 'last_visit_date'}.type.should == :datetime
+    end
+    it "has_recent_visits" do
+      model_type.column_names.should include 'recent_visits'
+      model_type.columns.find{|c| c.name == 'recent_visits'}.type.should == :integer
+    end
+  end
+  describe model_type, "When working with visits" do
     before(:each) do
       @person = Factory.create(:normal_person)
       @item = Factory.create(model_type.to_s.downcase, {:total_visits=>0, :recent_visits=>0, :last_visit_date=>nil})

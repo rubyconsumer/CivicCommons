@@ -28,8 +28,9 @@ class Person < ActiveRecord::Base
   
   has_attached_file :avatar,
     :styles => {
-      :small => "20x20>",
-      :standard => "70x70>"},
+      :small => "20x20#",
+      :standard => "70x70#",
+      :large => "185x185#"},
     :storage => :s3,
     :s3_credentials => S3Config.credential_file,
     :default_url => '/images/avatar_70.gif',
