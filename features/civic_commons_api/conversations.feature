@@ -40,7 +40,6 @@ Feature:
     ]
     """
 
-  @wip
   Scenario: Multiple contributions to one conversation should only appear once
     Given a conversation:
       | ID          | 2                           |
