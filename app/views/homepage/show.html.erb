@@ -1,3 +1,11 @@
+<% content_for(:header) do %>
+  <script type="text/javascript">
+    $(document).ready(function(){
+        $("#poll_module").load("<%= Civiccommons::PeopleAggregator.URL %>/poll_module.php");
+    });
+  </script>
+<% end %>
+
 <div class="feature-mast">
   <div class="wrapper">
     <div class="content-container">
@@ -30,18 +38,7 @@
       </div>
       <div class="mod">
         <h3>Community Poll</h3>
-        <div class="mod-content">
-          <p>Of the three options below, which do you think is the most authoritative.</p>
-          <form class="general-aside">
-            <div class="form-block radio">
-              <label for="option-1"><input type="radio" name="option-1" /> Option 1</label>
-              <label for="option-2"><input type="radio" name="option-2" /> Option 2</label>
-              <label for="option-3"><input type="radio" name="option-3" /> Option 3</label>
-            </div>
-            <div class='form-block'>
-              <p><input class='submit' type='submit' value='Submit'></p>
-            </div>
-          </form>
+        <div id="poll_module" class="mod-content">
         </div>
       </div>
     </div><!-- /.aside -->
