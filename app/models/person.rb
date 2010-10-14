@@ -24,6 +24,7 @@ class Person < ActiveRecord::Base
   has_many :contributed_issues, :through => :contributions, :source => :issue
 
   validate :zip_code, :length => 10
+  validates_attachment_presence :avatar
   
   has_attached_file :avatar,
     :styles => {
