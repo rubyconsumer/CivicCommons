@@ -12,12 +12,10 @@ require 'spec_helper'
       end
       it "throws an error for an invlid URL format" do
         @model.url = "an invalid url format"
-        @model.valid?
         @model.should have_validation_error(:url, /Link is not a valid URL/)
       end
-      pending "throws an error for a URL that doesn't exist", :wip => true do
+      it "throws an error for a URL that doesn't exist", :wip => true do
         @model.url = "http://www.example.com/this-page-does-not-exist"
-        @model.valid?
         @model.should have_validation_error(:url, /Link could not be found/)
       end
     end

@@ -35,4 +35,8 @@ module EmbeddedLinkable
     self.title && self.description
   end
   
+  def embedded_linkable?
+    true
+  end
+  
 end
