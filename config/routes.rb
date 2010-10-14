@@ -30,6 +30,10 @@ Civiccommons::Application.routes.draw do
   match '/conversations/rate', :to=>'conversations#rate', :via=>[:post]
   match '/subscriptions/subscribe', :to=>'subscriptions#subscribe', :via=>[:post]
   match '/subscriptions/unsubscribe', :to=>'subscriptions#unsubscribe', :via=>[:post]
+
+  # Static pages
+  match '/about', :to=>'static_pages#about', :via=>[:get]
+  match '/faq', :to=>'static_pages#faq', :via=>[:get]
   
   resources :conversations
   resources :regions   
