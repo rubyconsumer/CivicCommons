@@ -28,6 +28,7 @@ GEM
       activemodel (= 3.0.0)
       activesupport (= 3.0.0)
     activesupport (3.0.0)
+    addressable (2.2.2)
     archive-tar-minitar (0.5.2)
     arel (1.0.1)
       activesupport (~> 3.0.0)
@@ -186,6 +187,9 @@ GEM
       xml-simple (>= 1.0.11)
     warden (0.10.7)
       rack (>= 1.0.0)
+    webmock (1.4.0)
+      addressable (>= 2.2.2)
+      crack (>= 0.1.7)
     will_paginate (3.0.pre2)
     xml-simple (1.0.12)
 
@@ -218,4 +222,5 @@ DEPENDENCIES
   ruby_parser
   safariwatir
   sqlite3-ruby
+  webmock
   will_paginate (~> 3.0.pre2)
