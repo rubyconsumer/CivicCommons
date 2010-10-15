@@ -1,8 +1,11 @@
+- content_for :header do
+  = javascript_include_tag 'lib/link-form'
+
 - content_for :main_body do
   .wrapper
     %h1= @pageTitle
     #link_form_wrapper
-      -form_for @contribution, :url => "/contributions/create_confirmed_contribution" do |l|
+      =form_for @contribution, :url => "/contributions/create_confirmed_contribution" do |l|
         =l.hidden_field(:type)
         =l.hidden_field(:issue_id)
         =l.hidden_field(:conversation_id)
@@ -20,4 +23,3 @@
         %li.attach-conversation{:data => {:conversation_id => c.id}}
           %input.submit{:type=>"submit", :value=>"Attach to Conversation", :method=>:put}
           =c.title
-    = javascript_include_tag 'lib/link-form'
