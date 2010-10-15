@@ -1,7 +1,7 @@
 module YouTubeable
 
   def self.included(base)
-    base.before_save :embed_youtube_video, :if => [:youtube_link?, :url_changed?]
+    base.before_save :embed_youtube_video, :if => [:youtube_link?]
     base.validates :url, :you_tubeable => true
   end
   
