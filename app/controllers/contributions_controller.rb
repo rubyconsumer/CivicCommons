@@ -35,12 +35,6 @@ class ContributionsController < ApplicationController
     end
   end
 
-  # GET /contributions/1/edit
-  def edit
-    @contribution = Contribution.find(params[:id])
-  end
-
-
   def create_from_pa
     if params.has_key?(:issue_id)
       item = Issue.find(params[:issue_id])
@@ -75,6 +69,11 @@ class ContributionsController < ApplicationController
       end
     end
   end
+  
+  # GET /contributions/1/edit
+  def edit
+    @contribution = Contribution.find(params[:id])
+  end
 
   # PUT /contributions/1
   # PUT /contributions/1.xml
@@ -82,10 +81,12 @@ class ContributionsController < ApplicationController
     @contribution = Contribution.find(params[:id])
   
     respond_to do |format|
-      if @contribution.update_attributes(params[:contribution])
+      if @contribution.update_attributes_by_user(params[:contribution], current_person)
+        format.js   { render :status => :ok }
         format.html { redirect_to(@contribution, :notice => 'Contribution was successfully updated.') }
         format.xml  { head :ok }
       else
+        format.js   { render :json => @contribution.errors, :status => :unprocessable_entity }
         format.html { render :action => "edit" }
         format.xml  { render :xml => @contribution.errors, :status => :unprocessable_entity }
       end
@@ -96,11 +97,13 @@ class ContributionsController < ApplicationController
   # DELETE /contributions/1.xml
   def destroy
     @contribution = Contribution.find(params[:id])
-    @contribution.destroy
   
     respond_to do |format|
-      format.html { redirect_to(contributions_url) }
-      format.xml  { head :ok }
+      if @contribution.destroy_by_user(current_person)
+        format.js   { render :nothing => true, :status => :ok }
+      else
+        format.js   { render :json => @contribution.errors, :status => :unprocessable_entity }
+      end
     end
   end
   

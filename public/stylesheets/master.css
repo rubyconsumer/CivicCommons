@@ -679,6 +679,12 @@ border-radius: 8px;
 }
 
 /* Conversation Utility */
+.edit-contribution {
+float: right;
+}
+.edit-contribution a {
+margin-left: 15px;
+}
 div.convo-utility {
 border: 1px solid #777;
 background: #e3e3e3;

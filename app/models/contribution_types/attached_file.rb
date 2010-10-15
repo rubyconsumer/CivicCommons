@@ -1,5 +1,8 @@
 class AttachedFile < Contribution
   
+  # supported files:
+  # xls, ppt, pdf, doc, txt, xlsx, docx, pptx, rtf, jpg, png
+  
   has_attached_file :attachment,
     :storage => :s3,
     :s3_credentials => S3Config.credential_file,

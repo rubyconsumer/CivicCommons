@@ -132,8 +132,8 @@ jQuery(function ($) {
   	$('a.conversation-action')
   	  .live("ajax:loading", function(){
   	    var href = $(this).attr("href");
-  	    $(this).data('origText', $(this).text())
-  	    $(this).data('cancelText', href.match(/\/conversations\/node_conversation/) ? 'Hide responses' : 'Cancel')
+  	    $(this).data('origText', $(this).text());
+  	    $(this).data('cancelText', href.match(/\/conversations\/node_conversation/) ? 'Hide responses' : 'Cancel');
   	    
   	    var label = href.match(/\/conversations\/node_conversation/) ? "Loading responses..." : "Loading...";
   	    $(this).text(label);
@@ -153,6 +153,30 @@ jQuery(function ($) {
 
         $(form).bindContributionFormEvents(clicked,tabStrip)
       });
+      
+      $('.delete-conversation-action')
+        .live("ajax:loading", function(){
+          $(this).data('origText', $(this).text());
+          $(this).text("Deleting")
+        })
+        .live("ajax:complete", function(evt, xhr){
+          $(this).text($(this).data('origText'));
+        })
+        .live("ajax:success", function(evt, data, status, xhr){
+          $(this).closest('li.offset-1').hide('puff', 1000);
+        })
+        .live("ajax:failure", function(evt, xhr, status, error){
+          try{
+            var errors = $.parseJSON(xhr.responseText);
+          }catch(err){
+            var errors = {msg: "Please reload the page and try again"};
+          }
+          var errorString = "There were errors deleting this response:\n\n";
+          for(error in errors){
+            errorString += errors[error] + "\n";
+          }
+          alert(errorString);
+        });
       
       $('.top-node-conversation-action').colorbox({ 
         href: $(this).attr('href'),

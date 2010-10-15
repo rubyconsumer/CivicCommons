@@ -80,20 +80,22 @@ class Contribution < ActiveRecord::Base
     self.update_attribute(:confirmed, true)
   end
   
-  def delete_by_user(user)
+  def destroy_by_user(user)
     if self.editable_by?(user)
       self.destroy
     else
       self.errors[:base] << "Contributions cannot be deleted if they are older than 30 minutes or have any responses."
+      return false
     end
   end
   
-  def update_by_user(params, user)
+  def update_attributes_by_user(params, user)
     params = params.select{ |k,v| [:content, :url].include?(k) }
     if self.editable_by?(user)
       self.update_attributes(params)
     else
       self.errors[:base] << "Contributions cannot be edited if they are older than 30 minutes or have any responses."
+      return false
     end
   end
   
