@@ -16,7 +16,7 @@
     =conversation.text_field :title
 
   -if @conversation.image.exists?
-    =image_tag @conversation.image.(:normal)
+    =image_tag @conversation.image.url(:normal)
   
   %p
     =conversation.label :image, "Attach an Image"
