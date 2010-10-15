@@ -5,8 +5,7 @@ Factory.define :article do |f|
   f.author "MyString"
   f.description "MyText"
   f.link "MyString"
-  f.image_url "MyString"
-  f.video_url "MyString"
+  f.video_url ""
   f.percent "MyString"
   f.current false
 end

@@ -5,7 +5,7 @@ class YouTubeableValidator < ActiveModel::EachValidator
   end
   
   def valid_youtube_url_format?(url)
-    url =~ YouTubeable::YOUTUBE_REGEX
+    url =~ YouTubeable::YOUTUBE_REGEX || url.blank?
   end
   
 end
