@@ -26,6 +26,12 @@
         .form-block
           = f.label :password_confirmation, "Password Again:"
           = f.password_field :password_confirmation, :class => "textbox small"
+        .form-block
+          = label_tag 'organization', 'Is this an organization?'
+          = check_box_tag 'organization'
+        .form-block
+          = label_tag 'organization_name', 'Organization Name'
+          = text_field_tag 'organization_name', nil, :class => "organization textbox"
       %fieldset.footer
         = succeed 'or' do
           = f.submit 'Register', :class => "submit"
