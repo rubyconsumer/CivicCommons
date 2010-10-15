@@ -187,6 +187,12 @@ a.cancel {font-weight: normal;}
 .form-group .related {margin-left: 80px;}
 .form-group .related input.textbox {width: 400px;}
 .validation-error {color: #ae1111;}
+div.validation-error > ul > li { 
+float: none; 
+margin: 0; 
+padding: 0;
+text-align: left;
+}
 .field-with-error input.textbox {background-color: #fff8f8;}
 div.issue-selection p {
 float: left;

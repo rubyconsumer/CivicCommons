@@ -16,7 +16,7 @@ class Contribution < ActiveRecord::Base
   validates_with ContributionValidator
   validates :item, :presence=>true 
   validates :person, :must_be_logged_in => true
-  validates_associated :conversation, :parent, :person
+  # validates_associated :conversation, :parent, :person # <= these probably aren't really needed here
   
   scope :most_recent, {:order => 'created_at DESC'}
   scope :not_top_level, where("type != 'TopLevelContribution'")

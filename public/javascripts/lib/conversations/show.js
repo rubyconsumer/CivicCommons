@@ -96,7 +96,7 @@ jQuery(function ($) {
           }
           var errorString = "There were errors with the submission:\n<ul>";
           for(error in errors){
-            errorString += "<li>" + errors[error] + "</li>";
+            errorString += "<li>" + error + ' ' + errors[error] + "</li> ";
           }
           errorString += "</ul>"
           $(this).find(".validation-error").html(errorString);
@@ -194,7 +194,7 @@ jQuery(function ($) {
           }
           var errorString = "There were errors with the rating:\n<ul>";
           for(error in errors){
-            errorString += "<li>" + errors[error] + "</li>";
+            errorString += "<li>" + error + ' ' + errors[error] + "</li> ";
           }
           errorString += "</ul>"
           $(this).closest(".rate-form").siblings(".validation-error").html(errorString);
