@@ -11,11 +11,23 @@ Given /^the user signs up with:$/ do |table|
 
   attach_file("person[avatar]", File.join(attachments_path, 'imageAttachment.png'))
 
+  if values['Organization']
+    check 'organization'
+    fill_in 'organization_name', with: values['Organization']
+  end
+
   click 'Register'
 
   @current_person = Person.where(email: values['Email']).first
 
 end
+
+
+Then /^a PA Organization should be created with organization name "([^"]*)"$/ do |name|
+  PeopleAggregator::Organization.
+    find_by_admin_email(@current_person.email).name.should == name
+end
+
 
 
 Then /^a user should be created with email "([^"]*)"$/ do |email|

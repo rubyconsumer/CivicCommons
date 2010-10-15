@@ -11,7 +11,10 @@ class PeopleAggregator::Person
 
   def save
     @attrs.merge!(adminPassword: Civiccommons::PeopleAggregator.admin_password)
-    r = self.class.post('/newUser', body: @attrs)
+
+    self.class.log_people_aggregator_request('/peopleaggregator/newUser', body: @attrs)
+
+    r = self.class.post('/peopleaggregator/newUser', body: @attrs)
 
     self.class.log_people_aggregator_response r
 
@@ -32,7 +35,7 @@ class PeopleAggregator::Person
 
   def destroy
     @attrs.merge!(adminPassword: "admin")
-    r = self.class.post('/deleteUser', body: { adminPassword: @attrs[:adminPassword],
+    r = self.class.post('/peopleaggregator/deleteUser', body: { adminPassword: @attrs[:adminPassword],
                                                login: self.login})
 
     self.class.log_people_aggregator_response r
@@ -55,7 +58,7 @@ class PeopleAggregator::Person
   end
 
   def self.find_by_email(email)
-    r = get('/getUserProfile?login=%s' % email)
+    r = get('/peopleaggregator/getUserProfile?login=%s' % email)
 
     log_people_aggregator_response r
 

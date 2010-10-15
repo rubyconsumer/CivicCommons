@@ -30,8 +30,8 @@
           = label_tag 'organization', 'Is this an organization?'
           = check_box_tag 'organization'
         .form-block
-          = label_tag 'organization_name', 'Organization Name'
-          = text_field_tag 'organization_name', nil, :class => "organization textbox"
+          = label_tag :organization_name, 'Organization Name'
+          = f.text_field :organization_name, :class => "organization textbox"
       %fieldset.footer
         = succeed 'or' do
           = f.submit 'Register', :class => "submit"

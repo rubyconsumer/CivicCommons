@@ -8,11 +8,11 @@ class Person < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable,
          :confirmable
 
-  attr_accessor :skip_shadow_account
+  attr_accessor :skip_shadow_account, :organization_name
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :name, :first_name, :last_name, :email, :password, :password_confirmation, :top, :zip_code, :admin, :validated, 
-                  :avatar
+                  :avatar, :organization_name
 
   has_many :contributions, :foreign_key => 'owner', :uniq => true
   has_many :ratings
@@ -53,14 +53,26 @@ class Person < ActiveRecord::Base
 
 
   def create_shadow_account
-    Rails.logger.info("Creating shadow account for user with email #{email}")
     begin
-      pa_person = PeopleAggregator::Person.create(firstName: first_name,
-                                                  lastName:  last_name,
-                                                  login:     email,
-                                                  password:  encrypted_password,
-                                                  email:     email,
-                                                  profilePictureURL: avatar_url_without_timestamp)
+      Rails.logger.info("Creating shadow account for user with email #{email}")
+      if self.organization_name.blank?
+        pa_person = PeopleAggregator::Person.create(firstName: first_name,
+                                                    lastName:  last_name,
+                                                    login:     email,
+                                                    password:  encrypted_password,
+                                                    email:     email,
+                                                    profilePictureURL: avatar_url_without_timestamp)
+      else
+        Rails.logger.info("Creating group named #{organization_name} for shadow account #{email}")
+        pa_person = PeopleAggregator::Organization.create(firstName: first_name,
+                                                          lastName:  last_name,
+                                                          login:     email,
+                                                          password:  encrypted_password,
+                                                          email:     email,
+                                                          profilePictureURL: avatar_url_without_timestamp,
+                                                          groupName: organization_name)
+
+      end
     rescue PeopleAggregator::Error => e
       errors.add(:person, e.message)
       raise ActiveRecord::RecordNotSaved
