@@ -151,13 +151,13 @@ jQuery(function ($) {
         $(target).hide().html(xhr.responseText).slideDown().find('.rate-form-container').hide(); // insert content
         $(tabStrip).applyEasyTabsToTabStrip();
 
-        $(form).bindContributionFormEvents(clicked,tabStrip)
+        $(form).bindContributionFormEvents(clicked,tabStrip);
       });
       
       $('.delete-conversation-action')
         .live("ajax:loading", function(){
           $(this).data('origText', $(this).text());
-          $(this).text("Deleting")
+          $(this).text("Deleting");
         })
         .live("ajax:complete", function(evt, xhr){
           $(this).text($(this).data('origText'));
