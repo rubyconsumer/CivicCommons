@@ -29,6 +29,62 @@ describe Contribution do
       contribution.confirmed.should be_true
     end
   end
+  describe "when editing and deleting confirmed contributions" do
+    before(:each) do
+      @person = Factory.create(:normal_person)
+      @other_person = Factory.create(:normal_person)
+      @admin_person = Factory.create(:admin_person)
+      @old_contribution = Factory.create(:contribution, {:created_at => Time.now - 35.minutes, :person => @person})
+      @new_contribution = Factory.create(:contribution, {:created_at => Time.now - 25.minutes, :person => @person})
+      @new_params = { :content => "Some new comment", :url => "http://www.example.com/some-other-link" }
+      @non_updateable_params = {:parent_id => @new_contribution.id + 1}
+    end
+    it "allows deletion by the user within 30 minutes of creation" do
+      @new_contribution.should_receive(:destroy)
+      @new_contribution.delete_by_user(@person)
+    end
+    it "disallows deletion by the user if older than 30 minutes" do
+      @old_contribution.should_not_receive(:destroy)
+      @old_contribution.delete_by_user(@person)
+      @old_contribution.should have_generic_error(:base, /Contributions cannot be deleted if they are older than 30 minutes or have any responses./)
+    end
+    it "disallows deletion by another user" do
+      @new_contribution.should_not_receive(:destroy)
+      @new_contribution.delete_by_user(@other_person)
+      @new_contribution.should have_generic_error(:base, /Contributions cannot be deleted if they are older than 30 minutes or have any responses./)
+    end
+    it "allows deletion by an admin at any time" do
+      @old_contribution.should_receive(:destroy)
+      @old_contribution.delete_by_user(@admin_person)
+    end
+    it "allows editing by the user within 30 minutes of creation" do
+      @new_contribution.should_receive(:update)
+      @new_contribution.update_by_user(@new_params, @person)
+    end
+    it "disallows editing by the user if older than 30 minutes" do
+      @old_contribution.should_not_receive(:update)
+      @old_contribution.update_by_user(@new_params, @person)
+      @old_contribution.should have_generic_error(:base, /Contributions cannot be edited if they are older than 30 minutes or have any responses./)
+    end
+    it "disallows editing by another user" do
+      @new_contribution.should_not_receive(:update)
+      @new_contribution.update_by_user(@new_params, @other_person)
+      @new_contribution.should have_generic_error(:base, /Contributions cannot be edited if they are older than 30 minutes or have any responses./)
+    end
+    it "allows editing by an admin at any time" do
+      @old_contribution.should_receive(:update)
+      @old_contribution.update_by_user(@new_params, @admin_person)
+    end
+    it "only updates updateable parameters" do
+      @new_contribution.update_by_user(@new_params.merge(@non_updateable_params), @person)
+      @new_params.each do |key, value|
+        @new_contribution[key].should == value
+      end
+      @non_updateable_params.each do |key, value|
+        @new_contribution[key].should_not == value
+      end
+    end
+  end
   describe "when deleting old unconfirmed contributions" do
     before(:each) do
       @old_unconfirmed_contribution = Factory.create(:comment, {:created_at => Time.now - 3.days, :confirmed => false})

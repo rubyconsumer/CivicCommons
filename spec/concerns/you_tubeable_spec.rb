@@ -5,7 +5,6 @@ require 'spec_helper'
     before(:each) do
       @model = Factory.build(model.to_s.underscore.to_sym)
     end
-    
     context "and submitting a URL" do
       [ "http://www.example.com/this-is-not-a-valid-youtube-url" ].each do |invalid_youtube_url|
         invalid_youtube_url =~ /(http:\/\/www\.youtube\.com)?(.*)/
@@ -23,7 +22,6 @@ require 'spec_helper'
         
         it "saves successfully if URL is a valid YouTube URL with the format #{valid_youtube_url_format}" do
           @model.url = valid_youtube_url
-          p @model.errors unless @model.valid?
           @model.valid?.should be_true
         end
       end
