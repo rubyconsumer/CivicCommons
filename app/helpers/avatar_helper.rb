@@ -51,7 +51,7 @@ module AvatarHelper
   
   def profile_image(person, size=20)
     <<-EOHTML
-    <img src="#{person.avatar.url}" alt="#{person.name}" height="#{size}" width="#{size}" title="#{person.name}"/>
+    <img src="#{person.avatar.url(:standard)}" alt="#{person.name}" height="#{size}" width="#{size}" title="#{person.name}"/>
     EOHTML
   end
   
