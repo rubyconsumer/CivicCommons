@@ -157,7 +157,7 @@ jQuery(function ($) {
       $('.delete-conversation-action')
         .live("ajax:loading", function(){
           $(this).data('origText', $(this).text());
-          $(this).text("Deleting");
+          $(this).text("Deleting...");
         })
         .live("ajax:complete", function(evt, xhr){
           $(this).text($(this).data('origText'));
@@ -172,6 +172,30 @@ jQuery(function ($) {
             var errors = {msg: "Please reload the page and try again"};
           }
           var errorString = "There were errors deleting this response:\n\n";
+          for(error in errors){
+            errorString += errors[error] + "\n";
+          }
+          alert(errorString);
+        });
+      
+      $('.edit-conversation-action')
+        .live("ajax:loading", function(){
+          $(this).data('origText', $(this).text());
+          $(this).text("Loading...");
+        })
+        .live("ajax:complete", function(evt, xhr){
+          $(this).text($(this).data('origText'));
+        })
+        .live("ajax:success", function(evt, data, status, xhr){
+          $(this).closest('li.offset-1').replace(xhr.responseText);
+        })
+        .live("ajax:failure", function(evt, xhr, status, error){
+          try{
+            var errors = $.parseJSON(xhr.responseText);
+          }catch(err){
+            var errors = {msg: "Please reload the page and try again"};
+          }
+          var errorString = "There were errors loading the edit form:\n\n";
           for(error in errors){
             errorString += errors[error] + "\n";
           }
