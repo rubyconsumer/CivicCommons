@@ -43,9 +43,4 @@ describe Region do
     region.zip_codes.last.zip_code.should == "11111"
   end
 
-  describe "all" do 
-    it "returns the default region" do 
-      Region.all.any?{|r| r.default?}.should == true
-    end
-  end
 end

@@ -3,5 +3,4 @@
     Regions
   -@regions.each do |r|
     .link
-      -link = r.default? ? "/regions/default" : r
-      =link_to r.name, link
+      =link_to r.name, r

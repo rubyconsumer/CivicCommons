@@ -25,8 +25,7 @@
             %ul.link-list
               -@regions.each do |r|
                 %li
-                  -link = r.default? ? "/regions/default" : r
-                  =link_to r.name, link
+                  =link_to r.name, r
         - if @region.people.count > 0
           .mod
             %h3 PEOPLE

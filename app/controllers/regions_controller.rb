@@ -1,4 +1,3 @@
-
 class RegionsController < ApplicationController
 
   def index

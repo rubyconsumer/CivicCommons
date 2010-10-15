@@ -12,9 +12,6 @@ class Region < ActiveRecord::Base
       rv
     end
 
-    def all
-      [Region.default] + self.order(:name) 
-    end
   end
 
   [Issue, Conversation, Person].each do |klass|
