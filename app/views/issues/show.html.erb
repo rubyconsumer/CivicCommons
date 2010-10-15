@@ -66,7 +66,7 @@ $(document).ready(function() {
           <%= image_tag @issue.image.url(:normal), :alt => @issue.name, :width => 300, :height => 200 %>
         </div>
         <div class="feat-content">
-          <p><%= @issue.summary %></p>
+          <p><%= raw (@issue.summary) %></p>
           <p><strong><%= link_to 'This is the title of the page with a really long url to see how it wraps across lines.', source_url(@issue) %></strong></p>
           <p><strong>Created On:</strong> <%= @issue.created_at.strftime("%m/%d/%Y") %></p>
           <!--
@@ -126,7 +126,7 @@ $(document).ready(function() {
             <a href="<%= conversation_path(conversation)%>">
               <img class="main-img" src="<%= conversation.image.url(:panel) %>" alt="<%= conversation.title %>" width="180" height="120" />
               <h4><%= truncate(conversation.title, {:length => 45, :seperator => ' '}) %></h4>
-              <p><%= truncate(conversation.summary, {:length => 125, :separator => ' '}) %></p>
+              <p><%= raw(truncate(conversation.summary, {:length => 125, :separator => ' '})) %></p>
             </a>
 
             <div class="photobank">
