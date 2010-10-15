@@ -67,7 +67,7 @@ $(document).ready(function() {
         </div>
         <div class="feat-content">
           <p><%= @issue.summary %></p>
-          <p><%= link_to "Official Source", source_url(@issue), :class => 'button'%></p>
+          <p><strong><%= link_to 'This is the title of the page with a really long url to see how it wraps across lines.', source_url(@issue) %></strong></p>
           <p><strong>Created On:</strong> <%= @issue.created_at.strftime("%m/%d/%Y") %></p>
           <!--
               # TODO - admin only? or remove?
@@ -108,7 +108,7 @@ $(document).ready(function() {
           <%= render :partial => "new_url_contribution" %>
           <%= render :partial => "new_embedded_snippet_contribution" %>
      <% else %>
-        <p>You must <%= link_to "sign in", new_person_session_path %> or <%= link_to "sign up", new_person_registration_path %> to contribute a file or video</p>
+        <p>You must <%= link_to "log in", new_person_session_path %> or <%= link_to "sign up", new_person_registration_path %> to contribute a file or video</p>
       <% end %>
      
     </div><!-- /.aside -->
@@ -153,7 +153,7 @@ $(document).ready(function() {
       <% if person_signed_in? %>
         <p><%= link_to("Write a contribution", pa_new_issue_contribution_url(current_person, @issue)) %> </p>
         <% else %>
-        <p>You must <%= link_to "sign in", new_person_session_path %> or <%= link_to "sign up", new_person_registration_path %> to write a contribution</p>
+        <p>You must <%= link_to "log in", new_person_session_path %> or <%= link_to "sign up", new_person_registration_path %> to write a contribution</p>
       <% end %>
       <br/>
       <h3>Suggest an Action</h3>
@@ -169,7 +169,7 @@ $(document).ready(function() {
       <% if person_signed_in? %>
         <%= render :partial => "new_suggested_action_contribution" %>
       <% else %>
-        <p>You must <%= link_to "sign in", new_person_session_path %> or <%= link_to "sign up", new_person_registration_path %> to suggest an action</p>
+        <p>You must <%= link_to "log in", new_person_session_path %> or <%= link_to "sign up", new_person_registration_path %> to suggest an action</p>
       <% end %>
 
     </div><!-- /.aside -->

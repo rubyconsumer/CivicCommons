@@ -1,33 +1,40 @@
-.main.section
-  .header
-    %h1 Register
-    %p
-      To contribute in the conversations taking place on the Civic Commons, |
-      you will need to register for an account.
-  = form_for(form_presenter, :as => resource_name, :url => registration_path(resource_name), :html => { :multipart => 'true', :class => "register" }) do |f|
-    %fieldset.form-group
-      .form-block
-        = f.label :name, 'Your name:'
-        = f.text_field :name, :placeholder => 'Johnny Appleseed', :class => "textbox"
-      .form-block
-        = f.label :email, 'Email Address:'
-        = f.text_field :email, :placeholder => 'me@johnnyappleseed.com', :class => "textbox "
-      .form-block
-        = f.label :zipcode, 'Zip Code:'
-        = f.text_field :zip_code, :placeholder => '44101-9999', :class => "textbox ", :maxlength => 10
-      .form-block
-        = f.label :avatar, 'Upload an Image:'
-        = f.file_field :avatar, :class => "textbox"  
-    %fieldset.form-group
-      .form-block
-        = f.label :password, 'Password:'
-        = f.password_field :password, :class => "textbox small"
-      .form-block
-        = f.label :password_confirmation, "Password Again:"
-        = f.password_field :password_confirmation, :class => "textbox small"
-    %fieldset.footer
-      = succeed 'or' do
-        = f.submit 'Register', :class => "submit"
-      %a.cancel(href="#" title="Cancel Registration") cancel
+.wrapper
+  .main.section
+    .header
+      %h1 Register
+      %p
+        To contribute in the conversations taking place on the Civic Commons, |
+        you will need to register for an account.
+    = form_for(form_presenter, :as => resource_name, :url => registration_path(resource_name), :html => { :multipart => 'true', :class => "register" }) do |f|
+      %fieldset.form-group
+        .form-block
+          = f.label :name, 'Your name:'
+          = f.text_field :name, :placeholder => 'Johnny Appleseed', :class => "textbox"
+        .form-block
+          = f.label :email, 'Email Address:'
+          = f.text_field :email, :placeholder => 'me@johnnyappleseed.com', :class => "textbox "
+        .form-block
+          = f.label :zipcode, 'Zip Code:'
+          = f.text_field :zip_code, :placeholder => '44101-9999', :class => "textbox ", :maxlength => 10
+        .form-block
+          = f.label :avatar, 'Upload an Image:'
+          = f.file_field :avatar, :class => "textbox"  
+      %fieldset.form-group
+        .form-block
+          = f.label :password, 'Password:'
+          = f.password_field :password, :class => "textbox small"
+        .form-block
+          = f.label :password_confirmation, "Password Again:"
+          = f.password_field :password_confirmation, :class => "textbox small"
+        .form-block
+          = label_tag 'organization', 'Is this an organization?'
+          = check_box_tag 'organization'
+        .form-block
+          = label_tag 'organization_name', 'Organization Name'
+          = text_field_tag 'organization_name', nil, :class => "organization textbox"
+      %fieldset.footer
+        = succeed 'or' do
+          = f.submit 'Register', :class => "submit"
+        %a.cancel(href="#" title="Cancel Registration") cancel
 
 

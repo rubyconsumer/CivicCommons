@@ -21,6 +21,10 @@
     %br
     =person.text_field :zip_code
     
+
+  -if @person.avatar.exists?
+    =image_tag @person.avatar.url(:standard)
+
   %p
     =person.label :avatar, "Image"
     =person.file_field :avatar

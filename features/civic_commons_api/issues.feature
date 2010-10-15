@@ -31,9 +31,9 @@ Feature:
       {
         "name":               "This is a test issue",
         "summary":            "Test issue",
-        "image":              "http://s3.amazonaws.com/cc-dev/images/thumb/imageAttachment.png",
-        "image_width":        100,
-        "image_height":       100,
+        "image":              "http://s3.amazonaws.com/cc-dev/images/panel/imageAttachment.png",
+        "image_width":        198,
+        "image_height":       130,
         "participant_count":  2,
         "contribution_count": 1,
         "url":                "http://www.example.com/issues/2"

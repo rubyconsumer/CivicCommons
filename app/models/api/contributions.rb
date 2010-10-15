@@ -13,9 +13,9 @@ class Api::Contributions
       contribution = ContributionPresenter.new(contribution, request)
       {
         parent_title: contribution.parent_title,
-        parent_image: contribution.parent_image.url(:thumb),
-        parent_image_width: contribution.parent.geometry_for_style(:thumb).width.to_i,
-        parent_image_height: contribution.parent.geometry_for_style(:thumb).height.to_i,
+        parent_image: contribution.parent_image.url(:panel),
+        parent_image_width: contribution.parent.geometry_for_style(:panel).width.to_i,
+        parent_image_height: contribution.parent.geometry_for_style(:panel).height.to_i,
         comment: contribution.content,
         participant_count: contribution.parent.participants.count,
         contribution_count: contribution.parent.contributions.where(owner: person).count,

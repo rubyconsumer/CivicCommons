@@ -1,50 +1,44 @@
 %div{:id => div_id, :class => "tab-strip"}
-  - unless current_person
-    =link_to("You must login to contribution", new_person_session_path)
+  - if current_person.nil?
+    =link_to("You must login to respond", new_person_session_path)
     %br
     %br
-  .tab-area.input-with-options
-    %div{:id => "#{div_id}-options", :class => 'tab-strip-options'}
-      %ul
-        %li.default-tab
-          %a{:href => "##{div_id}-options", :style => 'display: none;'}
-        %li.preview-tab
-          %a{:href => "##{div_id}-preview", :style => 'display: none;' }
-        %li
-          %a{:href => "##{div_id}-new-comment", :title => "Comment", :id => "comment_tab", :class => 'button'} Comment
-        %li
-          %a{:href => "##{div_id}-new-suggested_action", :title => "Suggest Action", :id => "suggested_action_tab", :class => 'button'} Suggest Action
-        %li
-          %a{:href => "##{div_id}-new-question", :title => "Question", :id => "question_tab", :class => 'button'} Question
-        %li
-          %a{:href => "##{div_id}-new-attached_file", :title => "Attach", :id => "image_tab", :class => 'button'} Attach
-        %li
-          %a{:href => "##{div_id}-new-link", :title => "Link", :id => "link_tab", :class => 'button'} Link
-        %li
-          %a{:href => "##{div_id}-new-embedded_snippet", :title => "Video", :id => "video_tab", :class => 'button'} Video
-        %li
-          %a{:href => "##{div_id}-write-contribution", :title => "Write Contribution", :class => 'button'} Write Contribution
-    %div{:id => "#{div_id}-preview", :class => "contribution-preview"}
-      %a{:href => "##{div_id}-options", :class => 'button'} Respond
-    %div{:id => "#{div_id}-new-comment" }
-      = render :partial => 'conversations/new_contribution_form', :locals => {:div_id => div_id, :type => :comment}
-    %div{:id => "#{div_id}-new-question" }
-      = render :partial => 'conversations/new_contribution_form', :locals => {:div_id => div_id, :type => :question}
-    %div{:id => "#{div_id}-new-attached_file" }
-      = render :partial => 'conversations/new_contribution_form', :locals => {:div_id => div_id, :type => :attached_file}
-    %div{:id => "#{div_id}-new-link" }
-      = render :partial => 'conversations/new_contribution_form', :locals => {:div_id => div_id, :type => :link}
-    %div{:id => "#{div_id}-new-embedded_snippet" }
-      = render :partial => 'conversations/new_contribution_form', :locals => {:div_id => div_id, :type => :embedded_snippet}
-    %div{:id => "#{div_id}-new-suggested_action" }
-      = render :partial => 'conversations/new_contribution_form', :locals => {:div_id => div_id, :type => :suggested_action}
-    %div{:id => "#{div_id}-write-contribution" }
-      %div.contribution-form-headline
-        %span.contribution-form-cancel.float-right
-          %a{:href => "##{div_id}-options", :class => 'cancel'} Cancel
-        %h3 Write a Contribution
-      %p
-        You will be redirected to the Contribution page. Once you submit your contribution, you will be brought back here where it will appear in the conversation.
-      = link_to raw("OK, take me there &raquo;"), pa_new_conversation_contribution_url(current_person, @contribution.conversation_id, @contribution.parent_id), {:class => 'button'}
+  - else
+    .tab-area.input-with-options
+      %div{:id => "#{div_id}-options", :class => 'tab-strip-options'}
+        %ul
+          %li.default-tab
+            %a{:href => "##{div_id}-options", :style => 'display: none;'}
+          %li.preview-tab
+            %a{:href => "##{div_id}-preview", :style => 'display: none;' }
+          %li
+            %a{:href => "##{div_id}-new-comment", :title => "Comment", :id => "comment_tab", :class => 'button'} Comment
+          %li
+            %a{:href => "##{div_id}-new-suggested_action", :title => "Suggest Action", :id => "suggested_action_tab", :class => 'button'} Suggest Action
+          %li
+            %a{:href => "##{div_id}-new-question", :title => "Question", :id => "question_tab", :class => 'button'} Question
+          %li
+            %a{:href => "##{div_id}-new-attached_file", :title => "Attach", :id => "image_tab", :class => 'button'} Attach
+          %li
+            %a{:href => "##{div_id}-new-link", :title => "Link", :id => "link_tab", :class => 'button'} Link
+          %li
+            %a{:href => "##{div_id}-new-embedded_snippet", :title => "Video", :id => "video_tab", :class => 'button'} Video
+        = link_to("Write Contribution", pa_new_conversation_contribution_url(current_person, @contribution.conversation_id, @contribution.parent_id), :title => "Write Contribution", :class => "button")
+      %div{:id => "#{div_id}-preview", :class => "contribution-preview"}
+        %a{:href => "##{div_id}-options", :class => 'button'} Respond
+      %div{:id => "#{div_id}-new-comment" }
+        = render :partial => 'conversations/new_contribution_form', :locals => {:div_id => div_id, :type => :comment}
+      %div{:id => "#{div_id}-new-question" }
+        = render :partial => 'conversations/new_contribution_form', :locals => {:div_id => div_id, :type => :question}
+      %div{:id => "#{div_id}-new-attached_file" }
+        = render :partial => 'conversations/new_contribution_form', :locals => {:div_id => div_id, :type => :attached_file}
+      %div{:id => "#{div_id}-new-link" }
+        = render :partial => 'conversations/new_contribution_form', :locals => {:div_id => div_id, :type => :link}
+      %div{:id => "#{div_id}-new-embedded_snippet" }
+        = render :partial => 'conversations/new_contribution_form', :locals => {:div_id => div_id, :type => :embedded_snippet}
+      %div{:id => "#{div_id}-new-suggested_action" }
+        = render :partial => 'conversations/new_contribution_form', :locals => {:div_id => div_id, :type => :suggested_action}
+
+
     
     

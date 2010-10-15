@@ -38,7 +38,7 @@ class Region < ActiveRecord::Base
   accepts_nested_attributes_for :zip_codes
 
   has_attached_file :image, 
-    :styles => {:normal => "500x300>"},
+    :styles => {:normal => "300x200>"},
       :storage => :s3,
       :s3_credentials => S3Config.credential_file,
       :path => ":attachment/region/:id/:style/:filename"

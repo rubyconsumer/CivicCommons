@@ -13,9 +13,9 @@ class Api::SubscribedItems
       subscription = SubscriptionPresenter.new(subscription, request)
       {
         parent_title: subscription.parent_title,
-        parent_image: subscription.parent_image.url(:thumb),
-        parent_image_width: subscription.parent.geometry_for_style(:thumb).width.to_i,
-        parent_image_height: subscription.parent.geometry_for_style(:thumb).height.to_i,
+        parent_image: subscription.parent_image.url(:panel),
+        parent_image_width: subscription.parent.geometry_for_style(:panel).width.to_i,
+        parent_image_height: subscription.parent.geometry_for_style(:panel).height.to_i,
         participant_count: subscription.parent.participants.count,
         contribution_count: subscription.parent.contributions.where(owner: person).count,
         parent_url: subscription.parent_url
