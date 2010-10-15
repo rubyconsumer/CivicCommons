@@ -37,18 +37,18 @@ Feature:
     [
       {
         "parent_title": "This is a test conversation",
-        "parent_image": "http://s3.amazonaws.com/cc-dev/images/thumb/imageAttachment.png",
-        "parent_image_width": 100,
-        "parent_image_height": 100,
+        "parent_image": "http://s3.amazonaws.com/cc-dev/images/panel/imageAttachment.png",
+        "parent_image_width": 198,
+        "parent_image_height": 130,
         "participant_count": 1,
         "contribution_count": 0,
         "parent_url": "http://www.example.com/conversations/2"
         },
         {
           "parent_title":       "This is a test issue",
-          "parent_image":       "http://s3.amazonaws.com/cc-dev/images/thumb/imageAttachment.png",
-          "parent_image_width":        100,
-          "parent_image_height":       100,
+          "parent_image":       "http://s3.amazonaws.com/cc-dev/images/panel/imageAttachment.png",
+          "parent_image_width":        198,
+          "parent_image_height":       130,
           "participant_count":  1,
           "contribution_count": 0,
           "parent_url":                "http://www.example.com/issues/2"
