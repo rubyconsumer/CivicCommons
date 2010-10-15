@@ -3,7 +3,7 @@
 -----------------------------------------------*/
 
 body {
-background: #f9f9f9 url(../images/body_bg.gif) repeat;
+background: #f9f9f9 url(images/body_bg.gif) repeat;
 color: #444;
 font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
 font-size: 100%;
@@ -15,6 +15,9 @@ p {
 line-height: 1.4em;
 margin-bottom: .8em;
 }
+p.fineprint {
+font-size:0.85em;
+}
 strong {font-weight: bold;}
 em {font-style: italic;}
 ul, ol {
@@ -24,12 +27,12 @@ margin-left: 2em;
 }
 ul {list-style-type: disc;}
 ol {list-style-type: decimal;}
-.link-list, .conversations, .contributions {
+.link-list, .conversations, .contributions, .module_actions ul {
 list-style: none;
 margin-left: 0;
 }
 .contributions li.offset-1 { padding-left:100px; }
-.link-list {font-weight: bold;}
+.link-list, .module_actions ul {font-weight: bold;}
 .conversations li {margin-bottom: 2em;}
 .conversations li:last-child {
 border-bottom: none;
@@ -45,7 +48,7 @@ padding-bottom: 1.2em;
 border-bottom: none;
 padding-bottom: 0;
 }
-ul.link-list a, ol.link-list a {text-decoration: none;}
+ul.link-list a, ol.link-list a, .module_actions ul a {text-decoration: none;}
 ul li, ol li, dl dd {
 line-height: 1.4em;
 margin-bottom: .5em;
@@ -132,7 +135,7 @@ width: 448px;
 .aside input.textbox, div.call-out input.textbox, .aside textarea, div.call-out textarea {width: 176px;}
 .mod input.textbox, .mod textarea {width: 156px;}
 input.submit, input#contribution_submit {
-background: #bfd36c url(../images/glass_btn.png) repeat-x 0 50%;
+background: #bfd36c url(images/glass_btn.png) repeat-x 0 50%;
 border: 1px solid #999;
 color: #444;
 font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
@@ -256,10 +259,10 @@ position: relative;
 margin-bottom: 1em;
 padding-left: 25px;
 }
-.dnld.video {background: url(../images/video.png) no-repeat 0 3px;}
-.dnld.document {background: url(../images/document.png) no-repeat 0 3px;}
-.dnld.link {background: url(../images/link.png) no-repeat 0 3px;}
-.dnld.image {background: url(../images/image.png) no-repeat 0 3px;}
+.dnld.video {background: url(images/video.png) no-repeat 0 3px;}
+.dnld.document {background: url(images/document.png) no-repeat 0 3px;}
+.dnld.link {background: url(images/link.png) no-repeat 0 3px;}
+.dnld.image {background: url(images/image.png) no-repeat 0 3px;}
 .dnld strong {display: block;}
 .dnld p {margin-bottom: .2em;}
 
@@ -319,7 +322,7 @@ outline: none;
 }
 a:hover {color: #2c87b7;}
 a.button, .button, a.off_button, .off_button{
-background: #bfd36c url(../images/glass_btn.png) repeat-x 0 50%;
+background: #bfd36c url(images/glass_btn.png) repeat-x 0 50%;
 border: 1px solid #999;
 color: #444;
 display: inline-block;
@@ -437,7 +440,7 @@ text-align: left;
 width: 940px;
 }
 a#logo {
-background: url(../images/cc_logo_2.png) no-repeat;
+background: url(images/cc_logo_2.png) no-repeat;
 display: block;
 float: left;
 height: 80px;
@@ -465,7 +468,7 @@ border-bottom-right-radius: 6px;
 }
 #header #header-utility div div:last-child {border-bottom: none;}
 #login-status, .important {
-background: #fff url(../images/simple_grad.gif) repeat-x bottom;
+background: #fff url(images/simple_grad.gif) repeat-x bottom;
 border-left: 1px solid #ccc;
 border-right: 1px solid #ccc;
 padding: 10px 10px 5px;
@@ -494,9 +497,9 @@ background: #fcfcfc;
 box-shadow: 0px 0 3px rgba(0,0,0,.3);
 }
 p.login-link strong, p.createacct-link a {padding-left: 20px;}
-p.login-link strong {background: url(../images/lock.png) no-repeat 0 2px;}
+p.login-link strong {background: url(images/lock.png) no-repeat 0 2px;}
 p.createacct-link a {
-background: url(../images/add.png) no-repeat 0 2px;
+background: url(images/add.png) no-repeat 0 2px;
 text-decoration: none;
 }
 .important {
@@ -515,7 +518,7 @@ padding: 5px 10px;
 
 /* Main Navigation */
 #nav-wrapper {
-background: #4f5561 url(../images/nav_wrapper_bg.gif) repeat-x top;
+background: #4f5561 url(images/nav_wrapper_bg.gif) repeat-x top;
 border-bottom: solid 1px #aaa;
 }
 #nav-wrapper #nav {
@@ -544,7 +547,7 @@ text-shadow: 0 1px 1px rgba(0,0,0,.8);
 }
 #nav-wrapper #main-nav li a:hover, #nav-wrapper li.drop:hover {color: #ddd;}
 #nav-wrapper li.drop {
-background: url(../images/dd_arrow.png) no-repeat 100% 51%;
+background: url(images/dd_arrow.png) no-repeat 100% 51%;
 cursor: pointer;
 padding-right: 16px;
 }
@@ -701,10 +704,10 @@ float: left;
 width: 35%;
 }
 div.convo-utility p.respond-link, div.convo-utility.response p.respond-link {
-background: url(../images/chat-bubble-gray.png) no-repeat 0 50%;
+background: url(images/chat-bubble-gray.png) no-repeat 0 50%;
 padding-left: 20px;
 }
-div.convo-utility.response p.respond-link {background-image: url(../images/chat-bubble-light.png);}
+div.convo-utility.response p.respond-link {background-image: url(images/chat-bubble-light.png);}
 div.convo-utility p.rating, div.productive p.rating-buttons {
 float: right;
 text-align: right;
@@ -801,7 +804,7 @@ ul.event-details li a {font-weight: bold;}
 
 /* Footer Styles */
 div#footer {
-background: #f2f2f2 url(../images/large_grad.gif) repeat-x;
+background: #f2f2f2 url(images/large_grad.gif) repeat-x;
 border-top: 1px solid #999;
 border-bottom: 1px solid #999;
 clear: both;
@@ -845,10 +848,10 @@ text-indent: -9999px;
 width: 16px;
 }
 ul.social-media li a:hover {opacity: 1;}
-a#facebook {background: url(../images/facebook_16.png) no-repeat;}
-a#twitter {background: url(../images/twitter_16.png) no-repeat;}
-a#youtube {background: url(../images/youtube_16.png) no-repeat;}
-a#rss {background: url(../images/rss_16.png) no-repeat;}
+a#facebook {background: url(images/facebook_16.png) no-repeat;}
+a#twitter {background: url(images/twitter_16.png) no-repeat;}
+a#youtube {background: url(images/youtube_16.png) no-repeat;}
+a#rss {background: url(images/rss_16.png) no-repeat;}
 
 /*-----------------------------------------------
 =Thread List Styles (Steve's convo permalink page)
@@ -877,7 +880,7 @@ padding: 2px 8px;
 }
 div.action-bar a {text-decoration: none;}
 div.action-bar a.rating {
-background: url(../images/chat-bubble-gray.png) no-repeat 0 50%;
+background: url(images/chat-bubble-gray.png) no-repeat 0 50%;
 float: left;
 padding-left: 20px;
 width: 48%;
@@ -936,14 +939,14 @@ text-align: center;
 .comment-type.reply {background-color: transparent;}
 .comment-type.answer {background-color: transparent;}
 .comment-type.unofficial {
-background: #f00 url(../images/comment-unofficial.png) no-repeat right;
+background: #f00 url(images/comment-unofficial.png) no-repeat right;
 padding: 0;
 padding-left: 50px;
 /* width: 20px; */
 height: 15px;
 }
 .comment-type.question {
-background: url(../images/comment-question.png) no-repeat right;
+background: url(images/comment-question.png) no-repeat right;
 padding: 0;
 padding-left: 58px;
 width: 12px;
@@ -979,7 +982,7 @@ margin-bottom: 20px;
 hr, .hide {display: none;}
 a img {border: none;}
 div.call-out {
-background: #eee url(../images/simple_grad.gif) repeat-x top;
+background: #eee url(images/simple_grad.gif) repeat-x top;
 border: 1px solid #9ba1ae;
 min-height: 280px;
 padding: 9px;
@@ -1013,7 +1016,7 @@ text-align: center;
 div.callout {width: 60px;}
 img.main-img {margin-bottom: .5em;}
 .feature-mast {
-background: #f1f1f1 url(../images/large_grad.gif) repeat-x top;
+background: #f1f1f1 url(images/large_grad.gif) repeat-x top;
 border-bottom: 1px solid #999;
 }
 .feature-mast img, .main-content img.main-img {
@@ -1029,7 +1032,7 @@ margin-right:15px;
 /* Aside Modual */
 .aside .mod {margin-bottom: 20px;}
 .aside .mod h3 {
-background: #778091 url(../images/mod_header_bg.gif) repeat-x top;
+background: #778091 url(images/mod_header_bg.gif) repeat-x top;
 border-bottom: none;
 color: #fff;
 padding: 5px 15px;
@@ -1046,7 +1049,7 @@ border-top-right-radius: 6px;
 background-clip: padding-box;
 }
 .aside .mod .mod-content {
-background: #fff url(../images/mod_bg.gif) repeat-x top;
+background: #fff url(images/mod_bg.gif) repeat-x top;
 border: 1px solid #ccc;
 border-top: none;
 padding: 15px 15px 0;
@@ -1096,3 +1099,4 @@ visibility: hidden;
 *:first-child+html #wrapper, *:first-child+html #header, *:first-child+html .feature, *:first-child+html div.tab-strip ul, *:first-child+html div.tab-area, *:first-child+html #nav, #header-wrapper, *:first-child+html .section, *:first-child+html .content-container, *:first-child+html .photobank, *:first-child+html div.three-col, *:first-child+html div.three-col-sm, *:first-child+html .form-block, *:first-child+html .offset-1, *:first-child+html .offset-2, *:first-child+html form, *:first-child+html .convo-utility, *:first-child+html ul.social-media {zoom: 1;}
 
 *:first-child+html .group {zoom: 1;}
+
