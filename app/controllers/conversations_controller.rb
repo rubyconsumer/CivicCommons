@@ -52,7 +52,7 @@ class ConversationsController < ApplicationController
   def edit_node_contribution
     @contribution = Contribution.find(params[:contribution_id])
     respond_to do |format|
-      format.js{ render(:partial => "conversations/tabbed_post_box", :locals => {:div_id => params[:div_id], :layout => false}) }
+      format.js{ render(:partial => "conversations/edit_contribution_form", :locals => {:div_id => params[:div_id], :layout => false}) }
     end
   end
   

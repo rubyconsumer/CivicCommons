@@ -110,6 +110,7 @@ jQuery(function ($) {
           tabActiveClass: 'tab-active',
           tabActivePanel: 'panel-active',
           tabs: '> .tab-area > .tab-strip-options > ul > li',
+          defaultTab: '.default-tab',
           animationSpeed: 250
         });
       }
@@ -163,7 +164,9 @@ jQuery(function ($) {
           $(this).text($(this).data('origText'));
         })
         .live("ajax:success", function(evt, data, status, xhr){
-          $(this).closest('li.offset-1').hide('puff', 1000);
+          var clicked = this;
+    	        target = this.getAttribute("data-target");
+          $(target).hide('puff', 1000);
         })
         .live("ajax:failure", function(evt, xhr, status, error){
           try{
@@ -187,7 +190,15 @@ jQuery(function ($) {
           $(this).text($(this).data('origText'));
         })
         .live("ajax:success", function(evt, data, status, xhr){
-          $(this).closest('li.offset-1').replace(xhr.responseText);
+          var clicked = this;
+    	        target = this.getAttribute("data-target");
+    	        tabStrip = target+".tab-strip";
+    	        form = tabStrip+" form";
+    	        divId = $(tabStrip).attr('id');
+          $(target).replaceWith(xhr.responseText);
+          $(tabStrip).applyEasyTabsToTabStrip();
+          $(form).bindContributionFormEvents(clicked,tabStrip);
+          window.location.hash = optionsTab;
         })
         .live("ajax:failure", function(evt, xhr, status, error){
           try{
