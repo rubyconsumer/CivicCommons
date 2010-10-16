@@ -17,7 +17,7 @@
       %div{:id => "#{div_id}-preview", :class => "contribution-preview"}
         %a{:href => "##{div_id}-options", :class => 'button'} Edit
       %div{:id => "#{div_id}-edit-contribution" }
-        = render :partial => 'conversations/new_contribution_form', :locals => {:div_id => div_id, :type => @contribution.type.underscore.to_sym}
+        = render 
 
     
     

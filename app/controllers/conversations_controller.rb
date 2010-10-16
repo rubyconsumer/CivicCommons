@@ -52,7 +52,18 @@ class ConversationsController < ApplicationController
   def edit_node_contribution
     @contribution = Contribution.find(params[:contribution_id])
     respond_to do |format|
-      format.js{ render(:partial => "conversations/edit_contribution_form", :locals => {:div_id => params[:div_id], :layout => false}) }
+      format.js{ render(:partial => 'conversations/new_contribution_form', :locals => {:div_id => params[:div_id], :type => @contribution.type.underscore.to_sym}, :layout => false) }
+    end
+  end
+  
+  def update_node_contribution
+    @contribution = Contribution.with_user_rating(current_person).find(params[:contribution][:id])
+    respond_to do |format|
+      if @contribution.update_attributes_by_user(params[:contribution], current_person)
+        format.js{ render(:partial => "conversations/contributions/threaded_contribution_template", :locals => {:contribution => @contribution, :div_id => params[:div_id]}, :layout => false, :status => :ok) }
+      else
+        format.js   { render :json => @contribution.errors, :status => :unprocessable_entity }
+      end
     end
   end
   
@@ -78,7 +89,7 @@ class ConversationsController < ApplicationController
   end
   
   #TODO: consider moving this to its own controller?
-  def create_node_contribution
+  def confirm_node_contribution
     @contribution = Contribution.unconfirmed.find_by_id_and_owner(params[:contribution][:id], current_person.id)
 
     respond_to do |format|

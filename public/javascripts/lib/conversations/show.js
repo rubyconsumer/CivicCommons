@@ -27,12 +27,7 @@ jQuery(function ($) {
     bindContributionFormEvents: function(clicked,tabStrip){
       var form = this;
       form
-        .bind("ajax:loading", function(){
-          $(tabStrip).mask("Loading...");
-        })
-        .bind("ajax:complete", function(){
-          $(tabStrip).unmask();
-        })
+        .maskOnSubmit(tabStrip)
         .bind("ajax:success", function(evt, data, status, xhr){
           // apparently there is no way to inspect the HTTP status returned when submitting via iframe (which happens for AJAX file/image uploads)
           //  so, if file/image uploads via this form will always trigger ajax:success even if action returned error status code.
@@ -88,19 +83,7 @@ jQuery(function ($) {
             $(tabStrip).unmask(); // doesn't always unmask on ajax:complete for some reason
           }
         })
-        .bind("ajax:failure", function(evt, xhr, status, error){
-          try{
-            var errors = $.parseJSON(xhr.responseText);
-          }catch(err){
-            var errors = {msg: "Please reload the page and try again"};
-          }
-          var errorString = "There were errors with the submission:\n<ul>";
-          for(error in errors){
-            errorString += "<li>" + error + ' ' + errors[error] + "</li> ";
-          }
-          errorString += "</ul>"
-          $(this).find(".validation-error").html(errorString);
-        })
+        .bindValidationErrorOnAjaxFailure()
         .find('[placeholder]').placeholder({className: 'placeholder'});
         return this
       },
@@ -113,6 +96,64 @@ jQuery(function ($) {
           defaultTab: '.default-tab',
           animationSpeed: 250
         });
+      },
+      
+      bindValidationErrorOnAjaxFailure: function() {
+        this.bind("ajax:failure", function(evt, xhr, status, error){
+          try{
+            var errors = $.parseJSON(xhr.responseText);
+          }catch(err){
+            var errors = {msg: "Please reload the page and try again"};
+          }
+          var errorString = "There were errors with the submission:\n<ul>";
+          for(error in errors){
+            errorString += "<li>" + error + ' ' + errors[error] + "</li> ";
+          }
+          errorString += "</ul>"
+          this.find(".validation-error").html(errorString);
+        });
+        return this;
+      },
+      
+      liveAlertOnAjaxFailure: function() {
+        this.live("ajax:failure", function(evt, xhr, status, error){
+          try{
+            var errors = $.parseJSON(xhr.responseText);
+          }catch(err){
+            var errors = {msg: "Please reload the page and try again"};
+          }
+          var errorString = "There were errors loading the edit form:\n\n";
+          for(error in errors){
+            errorString += errors[error] + "\n";
+          }
+          alert(errorString);
+        });
+        return this;
+      },
+      
+      maskOnSubmit: function(container) {
+        if(container == undefined) { container = this; }
+        this
+          .bind("ajax:loading", function(){
+            $(container).mask("Loading...");
+          })
+          .bind("ajax:complete", function(){
+            $(container).unmask();
+          });
+        return this;
+      },
+      
+      changeTextOnLoading: function(loadText) {
+        if(loadText == undefined) { loadText = "Loading..."; }
+        this
+          .live("ajax:loading", function(){
+            $(this).data('origText', $(this).text());
+            $(this).text(loadText);
+          })
+          .live("ajax:complete", function(evt, xhr){
+            $(this).text($(this).data('origText'));
+          });
+        return this;
       }
   });
   
@@ -139,7 +180,7 @@ jQuery(function ($) {
   	    var label = href.match(/\/conversations\/node_conversation/) ? "Loading responses..." : "Loading...";
   	    $(this).text(label);
   	  })
-  	  .live("ajax:complete", function(evt, xhr){
+  	  .live("ajax:success", function(evt, xhr){
   	    var clicked = this;
   	        target = this.getAttribute("data-target");
   	        tabStrip = target+" .tab-strip";
@@ -153,65 +194,34 @@ jQuery(function ($) {
         $(tabStrip).applyEasyTabsToTabStrip();
 
         $(form).bindContributionFormEvents(clicked,tabStrip);
-      });
+      })
+      .liveAlertOnAjaxFailure();
       
       $('.delete-conversation-action')
-        .live("ajax:loading", function(){
-          $(this).data('origText', $(this).text());
-          $(this).text("Deleting...");
-        })
-        .live("ajax:complete", function(evt, xhr){
-          $(this).text($(this).data('origText'));
-        })
+        .changeTextOnLoading("Deleting...")
         .live("ajax:success", function(evt, data, status, xhr){
           var clicked = this;
     	        target = this.getAttribute("data-target");
           $(target).hide('puff', 1000);
         })
-        .live("ajax:failure", function(evt, xhr, status, error){
-          try{
-            var errors = $.parseJSON(xhr.responseText);
-          }catch(err){
-            var errors = {msg: "Please reload the page and try again"};
-          }
-          var errorString = "There were errors deleting this response:\n\n";
-          for(error in errors){
-            errorString += errors[error] + "\n";
-          }
-          alert(errorString);
-        });
+        .liveAlertOnAjaxFailure();
       
       $('.edit-conversation-action')
-        .live("ajax:loading", function(){
-          $(this).data('origText', $(this).text());
-          $(this).text("Loading...");
-        })
-        .live("ajax:complete", function(evt, xhr){
-          $(this).text($(this).data('origText'));
-        })
+        .changeTextOnLoading()
         .live("ajax:success", function(evt, data, status, xhr){
           var clicked = this;
     	        target = this.getAttribute("data-target");
-    	        tabStrip = target+".tab-strip";
-    	        form = tabStrip+" form";
-    	        divId = $(tabStrip).attr('id');
-          $(target).replaceWith(xhr.responseText);
-          $(tabStrip).applyEasyTabsToTabStrip();
-          $(form).bindContributionFormEvents(clicked,tabStrip);
-          window.location.hash = optionsTab;
+    	        form = target + ' form';
+          $(target).html(xhr.responseText);
+          $(form)
+            .maskOnSubmit()
+            .bind("ajax:success", function(evt, data, status, xhr){
+              contributionContent = $(xhr.responseText).html();
+              $(target).html(contributionContent).find('.rate-form-container').hide();
+            })
+            .bindValidationErrorOnAjaxFailure();
         })
-        .live("ajax:failure", function(evt, xhr, status, error){
-          try{
-            var errors = $.parseJSON(xhr.responseText);
-          }catch(err){
-            var errors = {msg: "Please reload the page and try again"};
-          }
-          var errorString = "There were errors loading the edit form:\n\n";
-          for(error in errors){
-            errorString += errors[error] + "\n";
-          }
-          alert(errorString);
-        });
+        .liveAlertOnAjaxFailure();
       
       $('.top-node-conversation-action').colorbox({ 
         href: $(this).attr('href'),
@@ -242,7 +252,7 @@ jQuery(function ($) {
           $(this).closest('.convo-utility').unmask();
         })
         .live("ajax:success", function(evt, data, status, xhr){
-          $(this).closest('.convo-utility').unmask(); // for some reason this doesn't happen from ajax:complete before ajax:success executes
+          $(this).closest('.convo-utility').unmask();
           $(this).closest('.rating-container').html(xhr.responseText);
         })
         .live("ajax:failure", function(evt, xhr, status, error){

@@ -1,6 +1,6 @@
 / if params[:preview] is set, then contribution was just submitted for preview, and this form is now the final.
 / otherwise, set this form to submit for preview.
-= form_for @contribution, :as => :contribution, :url => "preview_node_contribution", :remote => true, :html => {:multipart => (type == :attached_file ? true : false), 'data-preview' => true} do |f|
+= form_for @contribution, :as => :contribution, :url => (@contribution.new_record? ? "preview_node_contribution" : "update_node_contribution"), :remote => true, :html => {:multipart => (type == :attached_file ? true : false), 'data-preview' => true} do |f|
   %div.contribution-form-headline
     %span.contribution-form-cancel.float-right
       %a{:href => "##{div_id}-options", :class => 'cancel'} Cancel
@@ -9,6 +9,8 @@
   = f.hidden_field(:conversation_id)
   = f.hidden_field(:parent_id)
   = f.hidden_field(:type, :value => type.to_s.camelcase)
+  - unless @contribution.new_record?
+    = f.hidden_field(:id)
   = f.text_area(:content, :rows => "3", :placeholder => contribution_form_placeholder_text_for(type))
   - if type == :question
     %label
@@ -32,4 +34,4 @@
   %div.validation-error
   = hidden_field_tag(:preview, true)
   = hidden_field_tag(:div_id, div_id)
-  = f.submit("Preview", :class => 'button')
+  = f.submit((@contribution.new_record? ? "Preview" : "Update"), :class => 'button')
