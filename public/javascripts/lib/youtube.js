@@ -16,10 +16,10 @@ var youtube = function() {
     });
   };
 
-  var display_thumbnail = function (element) {
-    var thumbnail = element.siblings(".youtube-thumbnail");
-    if (!element.val()) return;
-    thumbnail_fetch(element.val(), function (data, textSuccess, xhr) {
+  var display_thumbnail = function (thumbnail, youtube_url) {
+    console.log("displaying ", thumbnail);
+    console.log("displaying ", youtube_url);
+    thumbnail_fetch(youtube_url, function (data, textSuccess, xhr) {
       thumbnail.html("");
       // It appears as though the entry I'm looking for is always first in the
       // entry.link array that's returned, but this is to make sure that the
@@ -48,14 +48,17 @@ var youtube = function() {
 
   var self = {};
   self.init = function() {
-
     var updatePreview = function(element) { try {
-          display_thumbnail(element);
+          if (!element.val()) return;
+          url = element.val(); 
+          var thumbnail = element.siblings(".youtube-thumbnail");
+          display_thumbnail(thumbnail, url);
         } catch(e) {
           civic.error("Error showing YouTube preview.");
         }
     };
 
+    $(".video-preview").each(function() { display_thumbnail($(this), $(this).attr("data-url")); });
     var updatePreviewWithDelay =  function() {var element = $(this); setTimeout(function() { updatePreview(element);}, 50);};
     // TODO: consider the value of the change event, since 
     // no one will probably type a youtube url
