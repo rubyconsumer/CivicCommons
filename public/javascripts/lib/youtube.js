@@ -17,8 +17,6 @@ var youtube = function() {
   };
 
   var display_thumbnail = function (thumbnail, youtube_url) {
-    console.log("displaying ", thumbnail);
-    console.log("displaying ", youtube_url);
     thumbnail_fetch(youtube_url, function (data, textSuccess, xhr) {
       thumbnail.html("");
       // It appears as though the entry I'm looking for is always first in the
