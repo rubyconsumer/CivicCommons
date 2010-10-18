@@ -31,5 +31,9 @@ Civiccommons::Application.configure do
   # For devise gem
   config.action_mailer.default_url_options = { :host => 'staging.theciviccommons.com' }
 
-
+  # For ExceptionNotifier
+  config.middleware.use ExceptionNotifier,
+      :email_prefix => "[Staging Error] ",
+      :sender_address => %{"Staging Notifier" <staging.notifier@theciviccommons.com>},
+      :exception_recipients => %w{winston.tsang@radberry.com}
 end
