@@ -103,9 +103,6 @@ module CollectiveIdea #:nodoc:
               scope :with_descendants, lambda {
                 joins("LEFT OUTER JOIN #{quoted_table_name} AS descendants ON `descendants`.#{quoted_left_column_name} >= #{quoted_table_name}.#{quoted_left_column_name} AND `descendants`.#{quoted_right_column_name} <= #{quoted_table_name}.#{quoted_right_column_name}")
               }
-              scope :descendants_of, lambda { |parents| 
-                where(parent_column_name => parents.collect{ |p| p[primary_key] }).order(quoted_left_column_name)
-              }
 
               define_callbacks :move, :terminator => "result == false"
             end
@@ -113,7 +110,16 @@ module CollectiveIdea #:nodoc:
         end
 
         module ClassMethods
-
+          
+          def descendants_of(parents)
+            where_sql = returning [] do |sql|
+              parents.each do |parent|
+                sql << "(#{quoted_table_name}.#{quoted_left_column_name} >= #{parent.left} AND #{quoted_table_name}.#{quoted_right_column_name} <= #{parent.right})"
+              end
+            end
+            scoped.where(where_sql.join(" OR "))
+          end
+          
           # Returns the first root
           def root
             roots.first
