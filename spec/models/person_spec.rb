@@ -15,10 +15,16 @@ describe Person do
       last.should == ""
     end
     
-    it "should handle complex names" do
+    it "should handle complex last name" do
       first, last = Person.parse_name("John van Buren")
       first.should == "John"
       last.should == "van Buren"
+    end
+
+    it "should handle multi names" do
+      first, last = Person.parse_name("Gladys s.w. Lum")
+      first.should == "Gladys"
+      last.should == "s.w. Lum"
     end
   end
 
