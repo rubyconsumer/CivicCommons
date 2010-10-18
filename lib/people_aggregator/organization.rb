@@ -7,7 +7,7 @@ class PeopleAggregator::Organization
                  :name, :profile, :firstName,
                  :lastName, :login, :password,
                  :profilePictureURL, :groupName,
-                 :image
+                 :image, :profileAvatarURL, :profileAvatarSmallURL
 
 
   def save
@@ -20,7 +20,13 @@ class PeopleAggregator::Organization
                   accessType: "public",
                   registrationType: "moderated",
                   image: "",
-                  moderationType: "direct")
+                  moderationType: "direct",
+                  profilePictureWidth: 100,
+                  profilePictureHeight: 100,
+                  profileAvatarWidth: 70,
+                  profileAvatarHeight: 70,
+                  profileAvatarSmallWidth: 40,
+                  profileAvatarSmallHeight: 40)
 
     self.class.log_people_aggregator_request('/civiccommons/newOrg', body: @attrs)
 

@@ -29,6 +29,7 @@ class Person < ActiveRecord::Base
   has_attached_file :avatar,
     :styles => {
       :small => "20x20#",
+      :medium => "40x40#",
       :standard => "70x70#",
       :large => "185x185#"},
     :storage => :s3,
@@ -70,6 +71,8 @@ class Person < ActiveRecord::Base
                                                           password:  encrypted_password,
                                                           email:     email,
                                                           profilePictureURL: avatar_url_without_timestamp,
+                                                          profileAvatarURL: avatar_url_without_timestamp(:standard),
+                                                          profileAvatarSmallURL: avatar_url_without_timestamp(:medium),
                                                           groupName: organization_name)
 
       end
@@ -129,8 +132,8 @@ class Person < ActiveRecord::Base
   end
 
 
-  def avatar_url_without_timestamp
-    self.avatar.url(:standard).gsub(/\?\d+$/, '')
+  def avatar_url_without_timestamp(style='')
+    self.avatar.url(style).gsub(/\?\d+$/, '')
   end
 
 

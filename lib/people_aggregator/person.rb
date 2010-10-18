@@ -6,11 +6,14 @@ class PeopleAggregator::Person
   attr_allowable :login, :email, :id, :url,
                  :name, :profile, :firstName,
                  :lastName, :login, :password,
-                 :profilePictureURL
+                 :profilePictureURL, :profileAvatarURL, :profileAvatarSmallURL
 
 
   def save
-    @attrs.merge!(adminPassword: Civiccommons::PeopleAggregator.admin_password)
+    @attrs.merge!(adminPassword: Civiccommons::PeopleAggregator.admin_password,
+                  profilePictureWidth: 100, profilePictureHeight: 100, 
+                  profileAvatarWidth: 70, profileAvatarHeight: 70,
+                  profileAvatarSmallWidth: 40, profileAvatarSmallHeight: 40)
 
     self.class.log_people_aggregator_request('/peopleaggregator/newUser', body: @attrs)
 
