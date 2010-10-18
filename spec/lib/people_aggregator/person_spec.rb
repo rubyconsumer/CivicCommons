@@ -17,6 +17,8 @@ module PeopleAggregator::Connector
     end
     def log_people_aggregator_response(r)
     end
+    def log_people_aggregator_request(model, params)
+    end
   end
 end
 

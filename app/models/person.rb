@@ -49,7 +49,7 @@ class Person < ActiveRecord::Base
   scope :proxy_accounts, where(:proxy => true)
 
 
-  before_create :create_shadow_account, :unless => :skip_shadow_account
+  after_create :create_shadow_account, :unless => :skip_shadow_account
   after_destroy :delete_shadow_account, :unless => :skip_shadow_account
 
 
@@ -142,5 +142,6 @@ class Person < ActiveRecord::Base
   def save_pa_identifier(pa_person)
     Rails.logger.info("Success.  Person created.  Updating Person with People Agg ID...")
     self.people_aggregator_id = pa_person.id
+    self.save
   end
 end
