@@ -217,7 +217,12 @@ jQuery(function ($) {
           $(form)
             .maskOnSubmit()
             .bind("ajax:success", function(evt, data, status, xhr){
-              contributionContent = $(xhr.responseText).html();
+              if( $(this).data('jquery-form-submitted') == true ) {
+                var responseNode = $($("<div />").html(xhr.responseText).text()); // this is needed to properly unescape the HTML returned from doing the jquery.form plugin's ajaxSubmit for some reason
+              } else {
+                var responseNode = $(xhr.responseText);            
+              }
+              contributionContent = $(responseNode).html();
               $(target).html(contributionContent).find('.rate-form-container').hide();
             })
             .bindValidationErrorOnAjaxFailure();
