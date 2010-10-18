@@ -36,7 +36,7 @@ describe Contribution do
       @admin_person = Factory.create(:admin_person)
       @old_contribution = Factory.create(:contribution, {:created_at => Time.now - 35.minutes, :person => @person})
       @new_contribution = Factory.create(:contribution, {:created_at => Time.now - 25.minutes, :person => @person})
-      @new_params = { :content => "Some new comment", :url => "http://www.example.com/some-other-link" }
+      @new_params = { 'content' => "Some new comment", 'url' => "http://www.example.com/some-other-link" }
       @non_updateable_params = {:parent_id => @new_contribution.id + 1}
     end
     it "allows deletion by the user within 30 minutes of creation" do
@@ -83,6 +83,39 @@ describe Contribution do
       @non_updateable_params.each do |key, value|
         @new_contribution[key].should_not == value
       end
+    end
+  end
+  describe "when updating AttachedFile" do
+    before(:each) do
+      @person = Factory.create(:normal_person)
+      @attached_file = Factory.create(:attached_file, {:person => @person, :override_confirmed => true})
+    end
+    it "does nothing to the file attachment if left blank" do
+      #@attached_file.should_not_receive(:save_attached_files) # apparently #save_attached_files gets called on every save whether the attachment is updated or not
+      old_attachment_name = @attached_file.attachment_file_name
+      @attached_file.update_attributes_by_user({:attachment => ''}, @person)
+      @attached_file.attachment_file_name.should == old_attachment_name
+    end
+    it "updates the attached file if file is specified" do
+      @attached_file.should_receive(:save_attached_files)
+      @attached_file.update_attributes_by_user({:attachment => File.new(Rails.root + 'test/fixtures/images/test_image2.jpg')}, @person)
+      @attached_file.attachment_file_name.should == "test_image2.jpg"
+    end
+  end
+  describe "when updating a Link" do
+    before(:each) do
+      @person = Factory.create(:normal_person)
+      @link = Factory.create(:link, {:person => @person, :override_confirmed => true})
+    end
+    it "does nothing to the URL if left blank" do
+      old_url = @link.url
+      @link.update_attributes_by_user({:url => ''}, @person)
+      @link.url.should == old_url
+    end
+    it "updates the URL if new URL is specified" do
+      new_url = 'http://www.example.com/some-other-link'
+      @link.update_attributes_by_user({:url => new_url}, @person)
+      @link.url.should == new_url
     end
   end
   describe "when deleting old unconfirmed contributions" do

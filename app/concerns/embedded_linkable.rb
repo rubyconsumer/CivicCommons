@@ -7,7 +7,7 @@ module EmbeddedLinkable
   attr_accessor :target_doc, :override_target_doc, :override_url_exists
   
   def self.included(base)
-    base.before_create :get_link_information, :unless => :already_set_title_and_description?
+    base.before_save :get_link_information, :if => :new_record_or_url_changed?
     base.validates :url, :presence=>true, :embedded_link => true
   end
   
@@ -31,8 +31,8 @@ module EmbeddedLinkable
     instance.description = description.content.strip if description && instance.description.blank?
   end
   
-  def already_set_title_and_description?
-    self.title && self.description
+  def new_record_or_url_changed?
+    self.new_record? || self.url_changed?
   end
   
   def embedded_linkable?

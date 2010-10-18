@@ -19,7 +19,7 @@ class Contribution < ActiveRecord::Base
   # validates_associated :conversation, :parent, :person # <= these probably aren't really needed here
   
   scope :most_recent, {:order => 'created_at DESC'}
-  scope :not_top_level, where("type != 'TopLevelContribution'")
+  scope :not_top_level, where("#{quoted_table_name}.type != 'TopLevelContribution'")
   scope :without_parent, where(:parent_id => nil)
   scope :confirmed, where(:confirmed => true)
   scope :unconfirmed, where(:confirmed => false)
@@ -90,7 +90,7 @@ class Contribution < ActiveRecord::Base
   end
   
   def update_attributes_by_user(params, user)
-    params = params.select{ |k,v| ['content', 'url'].include?(k.to_s) }
+    params = params.select{ |k,v| ['content', 'url', 'attachment'].include?(k.to_s) && !v.blank? }
     if self.editable_by?(user)
       self.update_attributes(params)
     else
