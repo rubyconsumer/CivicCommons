@@ -57,26 +57,26 @@ class Person < ActiveRecord::Base
     begin
       Rails.logger.info("Creating shadow account for user with email #{email}")
       if self.organization_name.blank?
-        pa_person = PeopleAggregator::Person.create(firstName: first_name,
-                                                    lastName:  last_name,
-                                                    login:     email,
-                                                    password:  encrypted_password,
-                                                    email:     email,
-                                                    profilePictureURL: avatar_url_without_timestamp(:large),
-                                                    profileAvatarURL: avatar_url_without_timestamp(:standard),
-                                                    profileAvatarSmallURL: avatar_url_without_timestamp(:medium))                                                          )
+        pa_person = PeopleAggregator::Person.create(firstName:             first_name,
+                                                    lastName:              last_name,
+                                                    login:                 email,
+                                                    password:              encrypted_password,
+                                                    email:                 email,
+                                                    profilePictureURL:     avatar_url_without_timestamp(:large),
+                                                    profileAvatarURL:      avatar_url_without_timestamp(:standard),
+                                                    profileAvatarSmallURL: avatar_url_without_timestamp(:medium))
 
       else
         Rails.logger.info("Creating group named #{organization_name} for shadow account #{email}")
-        pa_person = PeopleAggregator::Organization.create(firstName: first_name,
-                                                          lastName:  last_name,
-                                                          login:     email,
-                                                          password:  encrypted_password,
-                                                          email:     email,
-                                                          profilePictureURL: avatar_url_without_timestamp(:large),
-                                                          profileAvatarURL: avatar_url_without_timestamp(:standard),
-                                                          profileAvatarSmallURL: avatar_url_without_timestamp(:medium),
-                                                          groupName: organization_name)
+        pa_person = PeopleAggregator::Organization.create(firstName:              first_name,
+                                                          lastName:               last_name,
+                                                          login:                  email,
+                                                          password:               encrypted_password,
+                                                          email:                  email,
+                                                          profilePictureURL:      avatar_url_without_timestamp(:large),
+                                                          profileAvatarURL:       avatar_url_without_timestamp(:standard),
+                                                          profileAvatarSmallURL:  avatar_url_without_timestamp(:medium),
+                                                          groupName:              organization_name)
 
       end
     rescue PeopleAggregator::Error => e
