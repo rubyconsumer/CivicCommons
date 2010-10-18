@@ -1,8 +1,9 @@
 require 'uri'
+require 'CGI'
 
 module PeopleAggregatorHelper
   def pa_authtoken(prepend = nil)
-    "#{prepend}authToken=#{cookies[:pa_auth_token]}" unless cookies[:pa_auth_token].blank?
+    "#{prepend}authToken=#{CGI.escape(cookies[:pa_auth_token])}" unless cookies[:pa_auth_token].blank?
   end
   
   def append_pa_authtoken(url)
