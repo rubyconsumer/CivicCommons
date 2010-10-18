@@ -1,5 +1,4 @@
 require 'uri'
-require 'CGI'
 
 module PeopleAggregatorHelper
   def pa_authtoken(prepend = nil)
