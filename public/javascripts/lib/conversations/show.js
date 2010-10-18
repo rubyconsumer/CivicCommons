@@ -180,7 +180,7 @@ jQuery(function ($) {
   	    var label = href.match(/\/conversations\/node_conversation/) ? "Loading responses..." : "Loading...";
   	    $(this).text(label);
   	  })
-  	  .live("ajax:success", function(evt, xhr){
+  	  .live("ajax:success", function(evt, data, status, xhr){
   	    var clicked = this;
   	        target = this.getAttribute("data-target");
   	        tabStrip = target+" .tab-strip";
@@ -188,7 +188,6 @@ jQuery(function ($) {
   	    
   	    // turn button into a toggle to hide/show what gets loaded so that subsequent clicks to redo the ajax call
   	    $(clicked).click(actionToggle(clicked,target,$(clicked).data('cancelText')));
-  	    
   	    $(clicked).text($(clicked).data('cancelText'));
         $(target).hide().html(xhr.responseText).slideDown().find('.rate-form-container').hide(); // insert content
         $(tabStrip).applyEasyTabsToTabStrip();

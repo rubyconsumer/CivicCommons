@@ -90,7 +90,7 @@ class Contribution < ActiveRecord::Base
   end
   
   def update_attributes_by_user(params, user)
-    params = params.select{ |k,v| [:content, :url].include?(k) }
+    params = params.select{ |k,v| ['content', 'url'].include?(k.to_s) }
     if self.editable_by?(user)
       self.update_attributes(params)
     else
