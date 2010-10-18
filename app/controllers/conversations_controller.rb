@@ -23,10 +23,11 @@ class ConversationsController < ApplicationController
     @top_level_contributions = TopLevelContribution.where(:conversation_id => @conversation.id).includes([:person]).order('created_at ASC')
     @top_level_contributions = @top_level_contributions.with_user_rating(current_person) if current_person
     # grab all direct contributions to conversation that aren't TLC
-    @contributions = Contribution.not_top_level.confirmed.without_parent.where(:conversation_id => @conversation.id).includes([:person]).order('created_at ASC')
-    @contributions = @contributions.with_user_rating(current_person) if current_person
-    @top_level_contribution = Contribution.new # for conversation comment form
+    @conversation_contributions = Contribution.not_top_level.confirmed.without_parent.where(:conversation_id => @conversation.id).includes([:person]).order('created_at ASC')
+    @conversation_contributions = @conversation_contributions.with_user_rating(current_person) if current_person
+    @contributions = Contribution.confirmed.with_user_rating(current_person).descendants_of(@conversation_contributions).includes([:person])
     
+    @top_level_contribution = Contribution.new # for conversation comment form
     @tlc_participants = @top_level_contributions.collect{ |tlc| tlc.owner }
 
     respond_to do |format|
