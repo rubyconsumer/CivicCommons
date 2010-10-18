@@ -3,6 +3,8 @@ jQuery(function ($) {
     updateConversationButtonText: function(){
       var el = this;
           parentButton = el.parents('.top-level-contribution').find('.show-conversation-button');
+      
+      if(parentButton.size() == 0) { return el; } // there is no parent button if responding to convo-level responses at bottom of convo perma page
           
       if( /^[^\d]+$/.test(parentButton.data('origText')) ){ // if origText does not contain a number (most likely says something like "Be the first to respond", but we'll be flexible)
         parentButton.data('origText',"0 Response");
