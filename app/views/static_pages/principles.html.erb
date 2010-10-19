@@ -2,6 +2,12 @@
   <div class="wrapper">
     <div class="content-container">
       <div class="main-content">
+        <p class="validation-error">
+          <% flash.each do |_, msg| %>
+          <%= msg %><br/>
+          <% end %>
+        </p>
+
         <h1>Mission & Principles</h1>
 
         <p><strong>
