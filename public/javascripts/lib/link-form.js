@@ -14,7 +14,6 @@ var link = function() {
       form.show();
       clearHiddenFields();
       var idElement = $("#contribution_" + type + "_id");
-      console.log(idElement);
       idElement.val(issue.attr("data-" + type + "_id")); 
     };
   };
@@ -33,6 +32,11 @@ var link = function() {
     setupClosures();
     $("li.attach-issue input.submit").click(handleLinkClick("issue"));
     $("li.attach-conversation input.submit").click(handleLinkClick("conversation"));
+
+    // TODO: this should not be here.
+    $(".placeholder").live("click", function() {
+      $(this).val("").removeClass("placeholder");
+    });
   };
   return self;
 }();

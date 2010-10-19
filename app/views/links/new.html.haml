@@ -3,12 +3,13 @@
 
 - content_for :main_body do
   .wrapper
-    %h1= @pageTitle
+    %h1= @contribution.title
     #link_form_wrapper
       =form_for @contribution, :url => "/contributions/create_confirmed_contribution" do |l|
         =l.hidden_field(:type)
         =l.hidden_field(:issue_id)
         =l.hidden_field(:conversation_id)
+        =l.hidden_field(:title)
         =l.hidden_field(:url)
         %p
           =l.text_area :description, :as => "text", :rows => 3, :placeholder => "Leave a comment"

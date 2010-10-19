@@ -6,8 +6,8 @@ class LinksController < ApplicationController
     @conversations = Conversation.all
     @contribution = Contribution.new
     @contribution.url = link
+    @contribution.title = title
     @contribution.type = "Link"
-    @pageTitle = params[:title]
     forget_url
   end
 
@@ -18,12 +18,19 @@ class LinksController < ApplicationController
   end
 
   private
+
   def remember_url 
-    session[:link] = params[:link] unless params[:link].nil?
+    return if params[:link].nil?
+    session[:link] = params[:link] 
+    session[:title] = params[:title] 
   end
 
   def forget_url
     session[:link] = nil
+  end
+
+  def title
+    session[:title] || params[:title]
   end
 
   def link 
