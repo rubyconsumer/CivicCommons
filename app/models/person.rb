@@ -24,7 +24,7 @@ class Person < ActiveRecord::Base
   has_many :contributed_issues, :through => :contributions, :source => :issue, :uniq => true
 
   validate :zip_code, :length => 10
-  validates_attachment_presence :avatar
+  validates_attachment_presence :avatar, :message => "can't be blank"
   
   has_attached_file :avatar,
     :styles => {
