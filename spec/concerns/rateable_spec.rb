@@ -72,6 +72,10 @@ require 'spec_helper'
          end
        end
        context "when using the `with_user_rating(user)` scope to load the record" do
+         it "returns nil if no user is passed in" do
+           scoped_item = model_type.with_user_rating(nil).first
+           scoped_item.user_rating.should be_nil
+         end
          it "returns nil if the user has not rated it" do
            scoped_item = model_type.with_user_rating(@person).first
            scoped_item.user_rating.should be_nil

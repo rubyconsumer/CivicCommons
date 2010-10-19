@@ -100,6 +100,7 @@ class Contribution < ActiveRecord::Base
   end
   
   def editable_by?(user)
+    return false if user.nil?
     (user.admin? || (self.owner == user.id && self.created_at > 30.minutes.ago)) && self.descendants.count == 0 && self.confirmed
   end
   

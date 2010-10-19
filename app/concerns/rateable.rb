@@ -5,7 +5,7 @@ module Rateable
       has_many :ratings, :as => :rateable
       scope :with_user_rating, lambda { |user|
         select("#{quoted_table_name}.*, user_rating.rating as user_rating").
-        joins("LEFT OUTER JOIN ratings AS user_rating ON user_rating.rateable_id = #{quoted_table_name}.id AND user_rating.rateable_type = '#{base}' AND user_rating.person_id = #{user.id}")
+        joins("LEFT OUTER JOIN ratings AS user_rating ON user_rating.rateable_id = #{quoted_table_name}.id AND user_rating.rateable_type = '#{base}' AND user_rating.person_id = #{user.nil? ? "NULL" : user.id}")
       }
     end
     

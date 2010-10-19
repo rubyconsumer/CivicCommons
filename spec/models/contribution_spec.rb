@@ -84,6 +84,9 @@ describe Contribution do
         @new_contribution[key].should_not == value
       end
     end
+    it "#editable_by?(user) returns false for a logged-out user" do
+      @new_contribution.editable_by?(nil).should be_false
+    end
   end
   describe "when updating AttachedFile" do
     before(:each) do
