@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101014222538) do
+ActiveRecord::Schema.define(:version => 20101020195746) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -182,6 +182,7 @@ ActiveRecord::Schema.define(:version => 20101014222538) do
   end
 
   add_index "people", ["email"], :name => "index_people_on_email", :unique => true
+  add_index "people", ["people_aggregator_id"], :name => "pa_id_index", :unique => true
   add_index "people", ["reset_password_token"], :name => "index_people_on_reset_password_token", :unique => true
 
   create_table "ratings", :force => true do |t|
