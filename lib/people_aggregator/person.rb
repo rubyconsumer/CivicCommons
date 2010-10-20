@@ -6,8 +6,10 @@ class PeopleAggregator::Person
   attr_allowable :login, :email, :id, :url,
                  :name, :profile, :firstName,
                  :lastName, :login, :password,
-                 :profilePictureURL, :profileAvatarURL, :profileAvatarSmallURL
-
+                 :profilePictureURL, :profileAvatarURL, :profileAvatarSmallURL,
+                 :profilePictureWidth, :profilePictureHeight, 
+                 :profileAvatarWidth, :profileAvatarHeight,
+                 :profileAvatarSmallWidth, :profileAvatarSmallHeight
 
   def save
     @attrs.merge!(adminPassword: Civiccommons::PeopleAggregator.admin_password,
