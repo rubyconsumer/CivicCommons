@@ -10,3 +10,4 @@ config/people_aggregator.yml
 .DS_Store
 **/.DS_Store
 .rvmrc
+.*.sw?
