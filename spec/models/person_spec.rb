@@ -64,6 +64,20 @@ describe Person do
     end
   end
   
+  context "when setting the email address" do
+    it "should not allow emails that are too short" do
+      person = Factory.build(:normal_person, :email => "a@b.c")
+      person.valid?.should be_false
+      person.should have_validation_error(:email, /please use a longer email address/)
+    end
+    
+    it "should not allow emails that are too short" do
+      person = Factory.build(:normal_person, :email => "1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890@1234567890b.c")
+      person.valid?.should be_false
+      person.should have_validation_error(:email, /please use a shorter email address/)
+    end
+  end
+  
   describe "when displaying a name" do
     it "should properly capitalize a persons name" do
       person = Factory.create(:normal_person)

@@ -12,7 +12,7 @@
           = f.text_field :name, :placeholder => 'Johnny Appleseed', :class => "textbox"
         .form-block
           = f.label :email, 'Email Address:'
-          = f.text_field :email, :placeholder => 'me@johnnyappleseed.com', :class => "textbox "
+          = f.text_field :email, :placeholder => 'me@johnnyappleseed.com', :class => "textbox ", :maxlength => 255
         .form-block
           = f.label :zipcode, 'Zip Code:'
           = f.text_field :zip_code, :placeholder => '44101-9999', :class => "textbox ", :maxlength => 10
