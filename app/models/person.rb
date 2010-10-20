@@ -58,38 +58,38 @@ class Person < ActiveRecord::Base
     begin
       Rails.logger.info("Creating shadow account for user with email #{email}")
       if self.organization_name.blank?
-        pa_person = PeopleAggregator::Person.create(firstName:             first_name,
-                                                    lastName:              last_name,
-                                                    login:                 email,
-                                                    password:              encrypted_password,
-                                                    email:                 email,
-                                                    profilePictureURL:     avatar_url_without_timestamp(:large),
-                                                    profilePictureWidth:   avatar_width_for_style(:large),
-                                                    profilePictureHeight:  avatar_height_for_style(:large),
-                                                    profileAvatarWidth:    avatar_width_for_style(:standard),
-                                                    profileAvatarHeight:   avatar_height_for_style(:standard),
-                                                    profileAvatarURL:      avatar_url_without_timestamp(:standard),
-                                                    profileAvatarSmallWidth:    avatar_width_for_style(:medium),
-                                                    profileAvatarSmallHeight:    avatar_width_for_style(:medium),
-                                                    profileAvatarSmallURL: avatar_url_without_timestamp(:medium))
+        pa_person = PeopleAggregator::Person.create(firstName:                 first_name,
+                                                    lastName:                  last_name,
+                                                    login:                     email,
+                                                    password:                  encrypted_password,
+                                                    email:                     email,
+                                                    profilePictureWidth:       avatar_width_for_style(:large),
+                                                    profilePictureHeight:      avatar_height_for_style(:large),
+                                                    profilePictureURL:         avatar_url_without_timestamp(:large),
+                                                    profileAvatarWidth:        avatar_width_for_style(:standard),
+                                                    profileAvatarHeight:       avatar_height_for_style(:standard),
+                                                    profileAvatarURL:          avatar_url_without_timestamp(:standard),
+                                                    profileAvatarSmallWidth:   avatar_width_for_style(:medium),
+                                                    profileAvatarSmallHeight:  avatar_width_for_style(:medium),
+                                                    profileAvatarSmallURL:     avatar_url_without_timestamp(:medium))
 
       else
         Rails.logger.info("Creating group named #{organization_name} for shadow account #{email}")
-        pa_person = PeopleAggregator::Organization.create(firstName:              first_name,
-                                                          lastName:               last_name,
-                                                          login:                  email,
-                                                          password:               encrypted_password,
-                                                          email:                  email,
-                                                          profilePictureWidth:   avatar_width_for_style(:large),
-                                                          profilePictureHeight:  avatar_height_for_style(:large),
-                                                          profileAvatarWidth:    avatar_width_for_style(:standard),
-                                                          profileAvatarHeight:   avatar_height_for_style(:standard),
-                                                          profilePictureURL:      avatar_url_without_timestamp(:large),
-                                                          profileAvatarURL:       avatar_url_without_timestamp(:standard),
-                                                          profileAvatarSmallURL:  avatar_url_without_timestamp(:medium),
-                                                          profileAvatarSmallWidth:    avatar_width_for_style(:medium),
-                                                          profileAvatarSmallHeight:    avatar_width_for_style(:medium),
-                                                          groupName:              organization_name)
+        pa_person = PeopleAggregator::Organization.create(firstName:                 first_name,
+                                                          lastName:                  last_name,
+                                                          login:                     email,
+                                                          password:                  encrypted_password,
+                                                          email:                     email,
+                                                          profilePictureWidth:       avatar_width_for_style(:large),
+                                                          profilePictureHeight:      avatar_height_for_style(:large),
+                                                          profilePictureURL:         avatar_url_without_timestamp(:large),
+                                                          profileAvatarWidth:        avatar_width_for_style(:standard),
+                                                          profileAvatarHeight:       avatar_height_for_style(:standard),
+                                                          profileAvatarURL:          avatar_url_without_timestamp(:standard),
+                                                          profileAvatarSmallWidth:   avatar_width_for_style(:medium),
+                                                          profileAvatarSmallHeight:  avatar_width_for_style(:medium),
+                                                          profileAvatarSmallURL:     avatar_url_without_timestamp(:medium),
+                                                          groupName:                 organization_name)
 
       end
     rescue PeopleAggregator::Error => e
