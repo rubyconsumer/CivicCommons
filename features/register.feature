@@ -4,7 +4,7 @@ Feature:
   So that I can interact with the Civic Commons community
 
 
-  @api
+  @api @wip
   Scenario: User signs up for account with email address, name, zip code, username and password
 
       Given the user signs up with:
@@ -31,6 +31,7 @@ Feature:
     And the user should be logged in
 
 
+  @wip
   Scenario: Deleting a user should destroy the user's shadow account
 
     Given the user signs up with:
