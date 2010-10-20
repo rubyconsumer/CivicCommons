@@ -10,9 +10,9 @@
           %img.featured{ :class => "main-img", :src => @conversation.image.url(:panel), :alt => @conversation.title, :width => "120", :height => "80" }
           %h1= @conversation.title
           %p.convo-meta
-            %strong XX people
+            %strong= pluralize(@conversation.participants.size, "person") 
             are engaged, last activity
-            %strong XX days ago
+            %strong= time_ago_in_words(@latest_contribution.created_at) + " ago"
         .aside.supplementary
           - if current_person
             %p

@@ -30,6 +30,8 @@ class ConversationsController < ApplicationController
     @top_level_contribution = Contribution.new # for conversation comment form
     @tlc_participants = @top_level_contributions.collect{ |tlc| tlc.owner }
 
+    @latest_contribution = @conversation.confirmed_contributions.most_recent.first
+    
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @conversation }
