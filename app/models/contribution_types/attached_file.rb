@@ -10,9 +10,15 @@ class AttachedFile < Contribution
     :styles => {:thumb => "75x75>", :medium => "300x300>", :large => "800x800>"}
       
   validates_attachment_presence :attachment
+  
+  before_attachment_post_process :is_image?
 
+  # Return true if attachment is an image
+  # Returns false if it is not an image
+  # Does not return nil since before_attachment_post_process relies requires
+  # true or false
   def is_image?
-    attachment_content_type =~ /^image/
+    !(attachment_content_type =~ /^image.*/).nil?
   end
   
 end
