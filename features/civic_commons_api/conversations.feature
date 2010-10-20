@@ -33,7 +33,7 @@ Feature:
         "image_width": 198,
         "image_height": 130,
         "summary": "Test conversation",
-        "participant_count": 2,
+        "participant_count": 1,
         "contribution_count": 1,
         "url": "http://www.example.com/conversations/2"
       }
@@ -62,7 +62,7 @@ Feature:
         "image_width": 198,
         "image_height": 130,
         "summary": "Test conversation",
-        "participant_count": 2,
+        "participant_count": 1,
         "contribution_count": 2,
         "url": "http://www.example.com/conversations/2"
       }
