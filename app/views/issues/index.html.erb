@@ -22,10 +22,10 @@
             <%= link_to issue.name, issue %>
           </th>
 	  <td>
-            <%= link_to pluralize(issue.contributions.size, "Contributions"), issue %>
+            <%= pluralize(issue.contributions.size, "Contribution") %>
           </td>
 	  <td>
-            <%= link_to pluralize(issue.conversations.size, "Conversations"), issue %>
+            <%= pluralize(issue.conversations.size, "Conversation") %>
           </td>
 	</tr>
         <% end %>
