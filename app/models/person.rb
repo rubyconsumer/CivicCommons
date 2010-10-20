@@ -1,6 +1,7 @@
 class Person < ActiveRecord::Base
 
   include Regionable
+  include GeometryForStyle
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable, :lockable and :timeoutable
@@ -63,7 +64,13 @@ class Person < ActiveRecord::Base
                                                     password:              encrypted_password,
                                                     email:                 email,
                                                     profilePictureURL:     avatar_url_without_timestamp(:large),
+                                                    profilePictureWidth:   avatar_width_for_style(:large),
+                                                    profilePictureHeight:  avatar_height_for_style(:large),
+                                                    profileAvatarWidth:    avatar_width_for_style(:standard),
+                                                    profileAvatarHeight:   avatar_height_for_style(:standard),
                                                     profileAvatarURL:      avatar_url_without_timestamp(:standard),
+                                                    profileAvatarSmallWidth:    avatar_width_for_style(:medium),
+                                                    profileAvatarSmallHeight:    avatar_width_for_style(:medium),
                                                     profileAvatarSmallURL: avatar_url_without_timestamp(:medium))
 
       else
@@ -73,9 +80,15 @@ class Person < ActiveRecord::Base
                                                           login:                  email,
                                                           password:               encrypted_password,
                                                           email:                  email,
+                                                          profilePictureWidth:   avatar_width_for_style(:large),
+                                                          profilePictureHeight:  avatar_height_for_style(:large),
+                                                          profileAvatarWidth:    avatar_width_for_style(:standard),
+                                                          profileAvatarHeight:   avatar_height_for_style(:standard),
                                                           profilePictureURL:      avatar_url_without_timestamp(:large),
                                                           profileAvatarURL:       avatar_url_without_timestamp(:standard),
                                                           profileAvatarSmallURL:  avatar_url_without_timestamp(:medium),
+                                                          profileAvatarSmallWidth:    avatar_width_for_style(:medium),
+                                                          profileAvatarSmallHeight:    avatar_width_for_style(:medium),
                                                           groupName:              organization_name)
 
       end
@@ -86,6 +99,15 @@ class Person < ActiveRecord::Base
 
 
     save_pa_identifier(pa_person)
+  end
+
+
+  def avatar_width_for_style(style)
+    geometry_for_style(style, :avatar).width.to_i
+  end
+
+  def avatar_height_for_style(style)
+    geometry_for_style(style, :avatar).height.to_i
   end
 
 
