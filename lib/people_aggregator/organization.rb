@@ -7,12 +7,14 @@ class PeopleAggregator::Organization
                  :name, :profile, :firstName,
                  :lastName, :login, :password,
                  :profilePictureURL, :groupName,
-                 :image, :profileAvatarURL, :profileAvatarSmallURL
-
+                 :image, :profileAvatarURL, :profileAvatarSmallURL,
+                 :profilePictureWidth, :profilePictureHeight,
+                 :profileAvatarWidth, :profileAvatarHeight,
+                 :profileAvatarSmallWidth, :profileAvatarSmallHeight
 
   def save
 
-    @attrs.merge!(adminPassword: "admin",
+    @attrs.merge!(adminPassword: Civiccommons::PeopleAggregator.admin_password,
                   groupType: "store",
                   category: "cat:1",
                   tags: "tmp",
