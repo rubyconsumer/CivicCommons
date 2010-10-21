@@ -36,16 +36,18 @@
     </div>
   </div><!-- /.main-content -->			
   <div class='aside supplementary'>
-    <h3>Select a Region</h3>
-    <ul class='link-list'>
-      <% @regions.each do |r| %>
-        <% if r.default? %>
-          <li><%=link_to r.name, "/regions/default"%></li>
-        <% else %>
-          <li><%=link_to r.name, r%></li>
+    <div class='mod'>
+      <h3>Select a Region</h3>
+      <ul class='link-list'>
+        <% @regions.each do |r| %>
+          <% if r.default? %>
+            <li><%=link_to r.name, "/regions/default"%></li>
+          <% else %>
+            <li><%=link_to r.name, r%></li>
+          <%end%>
         <%end%>
-      <%end%>
-    </ul>
+      </ul>
+    </div>
   </div><!-- /.aside -->			
 </div><!-- /.content-container -->
 </div>

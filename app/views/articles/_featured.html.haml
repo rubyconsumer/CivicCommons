@@ -10,7 +10,8 @@
       .feat-content
         %h1= @main_article.title
         %p= "By: #{@main_article.author}"
-        = @main_article.description.html_safe
+        %p
+          = @main_article.description.html_safe
         %p
           %a{:href => @main_article.link} Read The Article
 -unless @sub_articles.blank?
