@@ -18,7 +18,7 @@ class PeopleAggregator::Organization
                   tags: "tmp",
                   description: "tmp",
                   accessType: "public",
-                  registrationType: "moderated",
+                  registrationType: "open",
                   image: "",
                   moderationType: "direct",
                   profilePictureWidth: 100,
