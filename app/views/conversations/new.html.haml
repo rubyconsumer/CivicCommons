@@ -5,7 +5,7 @@
 - @chosenguides = []
 - content_for :main do
   %h1 Create a New Conversation
-  - form_for :conversation, :url => {:controller => "conversations", :action => "create" }, :html => {:multipart => true} do
+  = form_for :conversation, :url => {:controller => "conversations", :action => "create" }, :html => {:multipart => true} do
     - all_errors = @conversation.errors.full_messages + @presenter.errors.full_messages
     - if all_errors.any?
       #error_explanation

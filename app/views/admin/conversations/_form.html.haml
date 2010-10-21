@@ -1,4 +1,4 @@
--form_for [:admin, @conversation], :html =>{:multipart => true} do |conversation|
+=form_for [:admin, @conversation], :html =>{:multipart => true} do |conversation|
   - all_errors = @conversation.errors.full_messages + @presenter.errors.full_messages
   - if all_errors.any?
     #error_explanation
