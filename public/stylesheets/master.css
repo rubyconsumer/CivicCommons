@@ -38,7 +38,18 @@ margin-left: 0;
 border-bottom: none;
 padding-bottom: 0;
 }
-.conversations li .conversations {margin-top: 1em;}
+.conversations {margin: 0;}
+/* .conversations li .conversations {margin-top: 1em;} */
+.conversations.divided li {
+margin-bottom: 0;
+margin-top: 0;
+padding-bottom: 15px;
+padding-top: 15px;
+}
+/* .conversations.divided li:first-child {padding-top: 0;} */
+.conversations.divided .input-with-options li {padding: 0;}
+.conversations.divided .input-with-options li a.button {margin: 5px 10px 5px 0;}
+div#show_conversation {margin-top: -15px;}
 .divided li {
 border-bottom: 1px dashed #bbb;
 margin-bottom: 1em;
@@ -53,21 +64,13 @@ ul li, ol li, dl dd {
 line-height: 1.4em;
 margin-bottom: .5em;
 }
-
-dl{
-  margin-bottom:1em;
+dl {margin-bottom:1em;}
+dl dt {
+font-weight:bold;
+margin-bottom:0.5em;
+font-size:1.2em;
 }
-dl dt{
-  font-weight:bold;
-  margin-bottom:0.5em;
-  font-size:1.2em;
-}
-dl dd{
-  margin-bottom:1em;
-}
-
-
-
+dl dd {margin-bottom:1em;}
 h1, h2, h3, h4, h5, h6 {font-weight: bold;}
 h1 {
 color: #555;
@@ -172,7 +175,7 @@ width: 448px;
 div.checkbox input {width: auto;}
 input.file {padding: 7px 0;}
 input.placeholder, textarea.placeholder {color: #ccc;}
-.input-with-options {margin-bottom: 20px;}
+/* .input-with-options {margin-bottom: 8px;} */
 .input-with-options label {
 background-color: #4d748d;
 color: #d3e7f4;
@@ -979,6 +982,9 @@ color: #fff;
 =Miscellaneous
 -----------------------------------------------*/
 
+/* Temporary fix - Testing */
+
+p.article {margin: 0;}
 hr {
 display: block;
 border: 0;
