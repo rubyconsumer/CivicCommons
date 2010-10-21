@@ -38,6 +38,22 @@ class ConversationsController < ApplicationController
     end
   end
   
+  def dialog
+    @conversation = Conversation.includes(:guides, :issues).find(params[:id])
+    @conversation.visit!((current_person.nil? ? nil : current_person.id))
+    @conversation_contributions = Contribution.confirmed.not_top_level.without_parent.with_user_rating(current_person).where(:conversation_id => @conversation.id).includes([:person]).order('created_at ASC')
+    @contributions = Contribution.confirmed.with_user_rating(current_person).descendants_of(@conversation_contributions).includes([:person])
+    
+    @contribution = Contribution.new # for conversation comment form
+    
+    @latest_contribution = @conversation.confirmed_contributions.most_recent.first
+    
+    respond_to do |format|
+      format.html # show.html.erb
+      format.xml  { render :xml => @conversation }
+    end
+  end
+  
   def node_conversation
     @top_level_contribution = Contribution.find(params[:id])
     @contributions = @top_level_contribution.descendants.confirmed.includes(:person)
