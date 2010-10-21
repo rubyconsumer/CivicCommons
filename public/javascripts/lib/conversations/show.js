@@ -98,11 +98,8 @@ jQuery(function ($) {
           defaultTab: '.default-tab',
           animationSpeed: 250
         })  
-          .live("easytabs:beforeChange", function(){
-            alert("it's changing!");
-          })
           .live("easytabs:afterChange", function(){
-            alert("it changed!");
+            $.colorbox.resize();
           });
       },
       
@@ -246,7 +243,9 @@ jQuery(function ($) {
               form = tabStrip + ' form';
           $(tabStrip).applyEasyTabsToTabStrip();
           $(form).bindContributionFormEvents(clicked,tabStrip);
-        }
+          $.colorbox.resize();
+        },
+        scrolling: false
       });
       
       $('.rate-form-container').hide();

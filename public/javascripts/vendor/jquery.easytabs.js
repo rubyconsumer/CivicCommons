@@ -25,12 +25,13 @@
       return defaultTab;
     }
 
-    selectTab = function(tabs,panels,clicked){
+    selectTab = function(container,tabs,panels,clicked){
       var targetDiv = $(clicked).attr("href");
-      if(window.location.hash == '' || tabs.find("a[href='" + window.location.hash + "']").size() > 0){
+      if(window.location.hash == '' || tabs.find("a[href='" + window.location.hash + "']").size() > 0 && !$(clicked).hasClass(opts.tabActiveClass)){
+        container.trigger("easytabs:beforeChange");
         if(opts.animate){
           panels.filter("." + opts.panelActiveClass).removeClass(opts.panelActiveClass).fadeOut(opts.animationSpeed, function(){
-            panels.filter(targetDiv).fadeIn(opts.animationSpeed, function(){ $(this).addClass(opts.panelActiveClass); });
+            panels.filter(targetDiv).fadeIn(opts.animationSpeed, function(){ $(this).addClass(opts.panelActiveClass); container.trigger("easytabs:afterChange"); });
           });
         }else{
           panels.filter("." + opts.panelActiveClass).removeClass(opts.panelActiveClass).hide();
@@ -38,14 +39,15 @@
         }
         tabs.filter("." + opts.tabActiveClass).removeClass(opts.tabActiveClass).children().removeClass(opts.tabActiveClass);
         clicked.parent().addClass(opts.tabActiveClass).children().addClass(opts.tabActiveClass);
+        if(!opts.animate){ container.trigger("easytabs:afterChange"); } // this is triggered after the animation delay if opts.animate
       }
     }
 
-    cycleTabs = function(tabs,panels,tabNumber){
+    cycleTabs = function(container,tabs,panels,tabNumber){
       if(opts.cycle){
         tabNumber = tabNumber % tabs.size();
-        selectTab(tabs,panels,$(tabs[tabNumber]).children("a"));
-        setTimeout(function(){cycleTabs(tabs,panels,(tabNumber + 1));}, opts.cycle);
+        selectTab(container,tabs,panels,$(tabs[tabNumber]).children("a"));
+        setTimeout(function(){cycleTabs(container,tabs,panels,(tabNumber + 1));}, opts.cycle);
       }
     }
 
@@ -72,12 +74,10 @@
         opts.cycle = false;
         var clicked = $($(this));
         if(clicked.hasClass(opts.tabActiveClass)){ return false; }
-        container.trigger("easytabs:beforeChange");
-        selectTab(tabs,panels,clicked);
+        selectTab(container,tabs,panels,clicked);
         if(opts.updateHash){
           window.location = url.toString().replace((url.pathname + url.hash), (url.pathname + clicked.attr("href")));
         }
-        container.trigger("easytabs:afterChange");
         return false;
       });
 
@@ -85,15 +85,15 @@
       // http://benalman.com/projects/jquery-hashchange-plugin/
       if(typeof $(window).hashchange == 'function'){
         $(window).hashchange( function(){
-          selectTab(tabs,panels,selectDefaultTab(tabs).children("a"));
+          selectTab(container,tabs,panels,selectDefaultTab(tabs).children("a"));
         }) 
       }else if($.address && typeof $.address.change == 'function'){ // back-button with jquery.address plugin http://www.asual.com/jquery/address/docs/
         $.address.change( function(){
-          selectTab(tabs,panels,selectDefaultTab(tabs).children("a"));
+          selectTab(container,tabs,panels,selectDefaultTab(tabs).children("a"));
         })
       }
 
-      cycleTabs(tabs,panels,0);
+      cycleTabs(container,tabs,panels,0);
 
     });
 
