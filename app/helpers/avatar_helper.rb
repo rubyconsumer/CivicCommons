@@ -68,8 +68,13 @@ module AvatarHelper
   end
   
   def link_to_profile(person)
+    if current_person == person
+      profile_link = "/me"
+    else
+      profile_link = "user/#{person.people_aggregator_id}"
+    end
     <<-EOHTML
-    <a href="#{pa_link("user/#{person.people_aggregator_id}")}" title="#{person.name}">
+    <a href="#{pa_link(profile_link)}" title="#{person.name}">
       #{yield}
     </a>
     EOHTML
