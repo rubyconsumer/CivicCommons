@@ -55,7 +55,12 @@
       var tabs = container.find(opts.tabs);
       var panels = $();
       tabs.each(function(){
-        panels = panels.add(container.find("div[id=" + $(this).children("a").attr("href").substr(1) + "]").hide());
+        matchingPanel = container.find("div[id=" + $(this).children("a").attr("href").substr(1) + "]");
+        if ( matchingPanel.size() > 0 ) {
+          panels = panels.add(container.find("div[id=" + $(this).children("a").attr("href").substr(1) + "]").hide());
+        } else {
+          tabs = tabs.not(this);
+        }
       });
       $('a.anchor').remove().prependTo('body');
       var defaultTab = selectDefaultTab(tabs);

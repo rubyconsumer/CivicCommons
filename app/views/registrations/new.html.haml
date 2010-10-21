@@ -1,3 +1,20 @@
+:javascript
+  $(document).ready(function(){
+    var terms = $('#terms');
+    var person_form = $('#person_new');
+    var submit = person_form.find("input.submit");
+    submit.click(function(){
+      $('div.main > div.header > p').hide()
+      person_form.hide();
+      terms.show();
+      return false;
+    });
+
+    terms.find("input.submit").click(function(){
+      person_form.submit();
+    });
+    
+  });
 .wrapper
   .main.section
     .header
@@ -45,7 +62,14 @@
           = f.text_field :organization_name, :class => "organization textbox"
       %fieldset.footer
         = succeed 'or' do
-          = f.submit 'Register', :class => "submit"
-        %a.cancel(href="#" title="Cancel Registration") cancel
-
-
+          = f.submit 'Next', :class => "submit"
+        %a.cancel(href="/" title="Cancel Registration") cancel
+    %div#terms(style="display: none;")
+      %p.validation-error
+        Hey, just so you know, the Commons runs by these principles. Take a |
+        look, click below, and we’ll send you a confirmation email. (by the |
+        way, if you don't get that email, check your spam folder)
+      = render :partial => "static_pages/principles_list"
+      = succeed 'or' do
+        = submit_tag "Totally on Board", :class => "submit"
+      %a.cancel(href="/" title="Cancel Registration") I Don't Like Civility
