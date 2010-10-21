@@ -5,7 +5,7 @@
         - unless contributed.person.nil?
           = contribution_profile(contribution.person).html_safe
           %p.time-stamp= format_time_only(contribution.created_at)
-      %p.article.comment
+      %div.article.comment
         %a{:name=>"#post#{contribution.id}"}
         %p
           - if contribution.editable_by?(current_person)

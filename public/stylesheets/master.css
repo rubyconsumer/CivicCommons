@@ -984,7 +984,7 @@ color: #fff;
 
 /* Temporary fix - Testing */
 
-p.article {margin: 0;}
+.article {margin: 0;}
 hr {
 display: block;
 border: 0;
