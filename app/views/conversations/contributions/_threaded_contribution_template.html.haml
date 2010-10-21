@@ -2,7 +2,7 @@
   %div
     - if contribution
       .callout
-        - unless contributed.person.nil?
+        - unless contribution.person.nil?
           = contribution_profile(contribution.person).html_safe
           %p.time-stamp= format_time_only(contribution.created_at)
       %div.article.comment
