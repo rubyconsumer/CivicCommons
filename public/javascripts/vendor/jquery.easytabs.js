@@ -72,10 +72,12 @@
         opts.cycle = false;
         var clicked = $($(this));
         if(clicked.hasClass(opts.tabActiveClass)){ return false; }
+        container.trigger("easytabs:beforeChange");
         selectTab(tabs,panels,clicked);
         if(opts.updateHash){
           window.location = url.toString().replace((url.pathname + url.hash), (url.pathname + clicked.attr("href")));
         }
+        container.trigger("easytabs:afterChange");
         return false;
       });
 

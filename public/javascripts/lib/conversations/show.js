@@ -97,7 +97,13 @@ jQuery(function ($) {
           tabs: '> .tab-area > .tab-strip-options > ul > li',
           defaultTab: '.default-tab',
           animationSpeed: 250
-        });
+        })  
+          .live("easytabs:beforeChange", function(){
+            alert("it's changing!");
+          })
+          .live("easytabs:afterChange", function(){
+            alert("it changed!");
+          });
       },
       
       bindValidationErrorOnAjaxFailure: function() {
