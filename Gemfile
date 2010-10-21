@@ -15,6 +15,8 @@ gem 'httparty'
 
 gem 'geokit'
 
+gem 'hoptoad_notifier'
+
 group :development do
   gem "rails3-generators"
   gem "hpricot"

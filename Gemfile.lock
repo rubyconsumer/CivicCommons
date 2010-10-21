@@ -93,6 +93,9 @@ GEM
     hoe (2.6.2)
       rake (>= 0.8.7)
       rubyforge (>= 2.0.4)
+    hoptoad_notifier (2.3.10)
+      activesupport
+      builder
     hpricot (0.8.2)
     httparty (0.6.1)
       crack (= 0.1.8)
@@ -208,6 +211,7 @@ DEPENDENCIES
   firewatir
   geokit
   haml
+  hoptoad_notifier
   hpricot
   httparty
   meta_search
