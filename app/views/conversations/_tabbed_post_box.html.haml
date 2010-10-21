@@ -23,8 +23,7 @@
             %a{:href => "##{div_id}-new-link", :title => "Link", :id => "link_tab", :class => 'button'} Link
           %li
             %a{:href => "##{div_id}-new-embedded_snippet", :title => "Video", :id => "video_tab", :class => 'button'} Video
-          %li
-            = link_to("Write Contribution", pa_new_conversation_contribution_url(current_person, @contribution.conversation_id, @contribution.parent_id), :title => "Write Contribution", :class => "button")
+        = link_to("Write Contribution", pa_new_conversation_contribution_url(current_person, @contribution.conversation_id, @contribution.parent_id), :title => "Write Contribution", :class => "button")
       %div{:id => "#{div_id}-preview", :class => "contribution-preview"}
         %a{:href => "##{div_id}-options", :class => 'button'} Respond
       %div{:id => "#{div_id}-new-comment" }
