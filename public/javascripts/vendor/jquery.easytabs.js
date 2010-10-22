@@ -11,90 +11,135 @@
  */
 (function($) {
   $.fn.easyTabs = function(options) {
-
+    
+    var args = arguments;
     var opts = $.extend({}, $.fn.easyTabs.defaults, options);
-
-    selectDefaultTab = function(tabs){
-      selectedTab = tabs.find("a[href='" + window.location.hash + "']").parent();
-      if(selectedTab.size() == 1){
-        defaultTab = selectedTab;
-        opts.cycle = false;
-      }else{
-        defaultTab = $(tabs.parent().find(opts.defaultTab));
-      }
-      return defaultTab;
-    }
-
-    selectTab = function(container,tabs,panels,clicked){
-      var targetDiv = $(clicked).attr("href");
-      if(window.location.hash == '' || tabs.find("a[href='" + window.location.hash + "']").size() > 0 && !$(clicked).hasClass(opts.tabActiveClass)){
-        container.trigger("easytabs:beforeChange");
-        if(opts.animate){
-          panels.filter("." + opts.panelActiveClass).removeClass(opts.panelActiveClass).fadeOut(opts.animationSpeed, function(){
-            panels.filter(targetDiv).fadeIn(opts.animationSpeed, function(){ $(this).addClass(opts.panelActiveClass); container.trigger("easytabs:afterChange"); });
-          });
+    var methods = {
+      selectDefaultTab: function(){
+        tabs = this;
+        var selectedTab = tabs.find("a[href='" + window.location.hash + "']").parent();
+        if(selectedTab.size() == 1){
+          defaultTab = selectedTab;
+          opts.cycle = false;
         }else{
-          panels.filter("." + opts.panelActiveClass).removeClass(opts.panelActiveClass).hide();
-          panels.filter(targetDiv).addClass(opts.panelActiveClass).show();
+          defaultTab = $(tabs.parent().find(opts.defaultTab));
         }
-        tabs.filter("." + opts.tabActiveClass).removeClass(opts.tabActiveClass).children().removeClass(opts.tabActiveClass);
-        clicked.parent().addClass(opts.tabActiveClass).children().addClass(opts.tabActiveClass);
-        if(!opts.animate){ container.trigger("easytabs:afterChange"); } // this is triggered after the animation delay if opts.animate
+        return defaultTab;
+      },
+      selectTab: function(container,tabs,panels,callback){
+        var clicked = this;
+            targetDiv = clicked.attr("href");
+        if( (window.location.hash == '' || tabs.find("a[href='" + window.location.hash + "']").size() > 0) && !clicked.hasClass(opts.tabActiveClass) ){
+          container.trigger("easytabs:beforeChange");
+          if(opts.animate){
+            panels.filter("." + opts.panelActiveClass).removeClass(opts.panelActiveClass).fadeOut(opts.animationSpeed, function(){
+              panels.filter(targetDiv).fadeIn(opts.animationSpeed, function(){ $(this).addClass(opts.panelActiveClass); container.trigger("easytabs:afterChange"); });
+            });
+          }else{
+            panels.filter("." + opts.panelActiveClass).removeClass(opts.panelActiveClass).hide();
+            panels.filter(targetDiv).addClass(opts.panelActiveClass).show();
+          }
+          tabs.filter("." + opts.tabActiveClass).removeClass(opts.tabActiveClass).children().removeClass(opts.tabActiveClass);
+          clicked.parent().addClass(opts.tabActiveClass).children().addClass(opts.tabActiveClass);
+          if(!opts.animate){ container.trigger("easytabs:afterChange"); } // this is triggered after the animation delay if opts.animate
+          if(typeof callback == 'function'){
+            callback();
+          }
+        }
+      },
+      selectTabWithHashChange: function(container,tabs,panels){
+        var clicked = this;
+            url = window.location;
+        methods.selectTab.apply( clicked, [container,tabs,panels,function(){
+          if(opts.updateHash){
+            window.location = url.toString().replace((url.pathname + url.hash), (url.pathname + clicked.attr("href")));
+          }
+        }] );
+      },
+      cycleTabs: function(tabs,panels,tabNumber){
+        var container = this;
+        if(opts.cycle){
+          tabNumber = tabNumber % tabs.size();
+          tab = $(tabs[tabNumber]).children("a");
+          methods.selectTab.apply(tab,[container,tabs,panels]);
+          setTimeout(function(){methods.cycleTabs.apply(container,[tabs,panels,(tabNumber + 1)]);}, opts.cycle);
+        }
       }
     }
-
-    cycleTabs = function(container,tabs,panels,tabNumber){
-      if(opts.cycle){
-        tabNumber = tabNumber % tabs.size();
-        selectTab(container,tabs,panels,$(tabs[tabNumber]).children("a"));
-        setTimeout(function(){cycleTabs(container,tabs,panels,(tabNumber + 1));}, opts.cycle);
+    var publicMethods = {
+      select: function(tabSelector){
+        var container = $(this);
+            data = container.data("easytabs");
+            tabs = data.tabs;
+            panels = data.panels;
+            opts = data.opts;
+            tab = tabs.filter(tabSelector);
+        if ( tab.size() == 0 ) {
+          $.error('Tab \'' + tabSelector + '\' does not exist in tab set');
+        }
+        methods.selectTabWithHashChange.apply(tab.children("a"),[container,tabs,panels]);
       }
     }
 
     return this.each(function() {
-      var url = window.location;
       var container = $(this);
-      var tabs = container.find(opts.tabs);
-      var panels = $();
-      tabs.each(function(){
-        matchingPanel = container.find("div[id=" + $(this).children("a").attr("href").substr(1) + "]");
-        if ( matchingPanel.size() > 0 ) {
-          panels = panels.add(container.find("div[id=" + $(this).children("a").attr("href").substr(1) + "]").hide());
-        } else {
-          tabs = tabs.not(this);
+          data = container.data("easytabs");
+          
+      if( publicMethods[options] && ! data ) {
+        $.error( 'You attempted to call ' +  method + ' on' + container + ' without first initializing with $(el).easytabs();' );
+      }else if( publicMethods[options] ){
+        return publicMethods[ options ].apply( this, Array.prototype.slice.call( args, 1 ));
+      }else if( ! data ) {
+        var url = window.location;
+            tabs = container.find(opts.tabs);
+            panels = $();
+
+        tabs.each(function(){
+          matchingPanel = container.find("div[id=" + $(this).children("a").attr("href").substr(1) + "]");
+          if ( matchingPanel.size() > 0 ) {
+            panels = panels.add(container.find("div[id=" + $(this).children("a").attr("href").substr(1) + "]").hide());
+          } else {
+            tabs = tabs.not(this); // excludes tabs from set that don't have a target div
+          }
+        });
+        $('a.anchor').remove().prependTo('body');
+        var defaultTab = methods.selectDefaultTab.apply(tabs);
+            defaultTabLink = defaultTab.children("a").first();
+        $(panels.filter("#" + defaultTabLink.attr("href").substr(1))).show().addClass(opts.panelActiveClass);
+
+        defaultTab.addClass(opts.tabActiveClass).children().addClass(opts.tabActiveClass);
+
+        tabs.children("a").bind("click.easytabs", function() {
+          opts.cycle = false;
+          var clicked = $(this);
+          if(clicked.hasClass(opts.tabActiveClass)){ return false; }
+          methods.selectTabWithHashChange.apply(clicked,[container,tabs,panels]);
+          return false;
+        });
+
+        // enabling back-button with jquery.hashchange plugin
+        // http://benalman.com/projects/jquery-hashchange-plugin/
+        if(typeof $(window).hashchange == 'function'){
+          $(window).hashchange( function(){
+            var tab = methods.selectDefaultTab.apply(tabs).children("a").first();
+            methods.selectTab.apply(tab,[container,tabs,panels]);
+          }) 
+        }else if($.address && typeof $.address.change == 'function'){ // back-button with jquery.address plugin http://www.asual.com/jquery/address/docs/
+          $.address.change( function(){
+            var tab = methods.selectDefaultTab.apply(tabs).children("a").first();
+            methods.selectTab.apply(tab,[container,tabs,panels]);
+          })
         }
-      });
-      $('a.anchor').remove().prependTo('body');
-      var defaultTab = selectDefaultTab(tabs);
-      $(panels.filter("#" + defaultTab.children("a").attr("href").substr(1))).show().addClass(opts.panelActiveClass);
 
-      defaultTab.addClass(opts.tabActiveClass).children().addClass(opts.tabActiveClass);
-
-      tabs.children("a").click(function() {
-        opts.cycle = false;
-        var clicked = $($(this));
-        if(clicked.hasClass(opts.tabActiveClass)){ return false; }
-        selectTab(container,tabs,panels,clicked);
-        if(opts.updateHash){
-          window.location = url.toString().replace((url.pathname + url.hash), (url.pathname + clicked.attr("href")));
-        }
-        return false;
-      });
-
-      // enabling back-button with jquery.hashchange plugin
-      // http://benalman.com/projects/jquery-hashchange-plugin/
-      if(typeof $(window).hashchange == 'function'){
-        $(window).hashchange( function(){
-          selectTab(container,tabs,panels,selectDefaultTab(tabs).children("a"));
-        }) 
-      }else if($.address && typeof $.address.change == 'function'){ // back-button with jquery.address plugin http://www.asual.com/jquery/address/docs/
-        $.address.change( function(){
-          selectTab(container,tabs,panels,selectDefaultTab(tabs).children("a"));
+        methods.cycleTabs.apply(container,[tabs,panels,0]);
+        
+        container.data("easytabs", {
+          tabs: tabs,
+          panels: panels,
+          opts: opts
         })
       }
-
-      cycleTabs(container,tabs,panels,0);
-
+      
     });
 
   }
