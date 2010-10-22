@@ -49,6 +49,7 @@ Civiccommons::Application.routes.draw do
   namespace "admin" do
     resources   :articles
     resources   :conversations
+    resources   :simple_conversations
     resources   :issues
     resources   :regions
     resources   :people do
