@@ -97,7 +97,10 @@ jQuery(function ($) {
           tabs: '> .tab-area > .tab-strip-options > ul > li',
           defaultTab: '.default-tab',
           animationSpeed: 250
-        });
+        })  
+          .live("easytabs:afterChange", function(){
+            $.colorbox.resize();
+          });
       },
       
       bindValidationErrorOnAjaxFailure: function() {
@@ -240,7 +243,9 @@ jQuery(function ($) {
               form = tabStrip + ' form';
           $(tabStrip).applyEasyTabsToTabStrip();
           $(form).bindContributionFormEvents(clicked,tabStrip);
-        }
+          $.colorbox.resize();
+        },
+        scrolling: false
       });
       
       $('.rate-form-container').hide();
