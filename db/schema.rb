@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101020195746) do
+ActiveRecord::Schema.define(:version => 20101022201346) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -76,12 +76,17 @@ ActiveRecord::Schema.define(:version => 20101020195746) do
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.string   "zip_code"
-    t.integer  "total_visits",       :default => 0
-    t.integer  "recent_visits",      :default => 0
+    t.integer  "total_visits",            :default => 0
+    t.integer  "recent_visits",           :default => 0
     t.datetime "last_visit_date"
     t.integer  "total_rating"
     t.integer  "recent_rating"
     t.datetime "last_rating_date"
+    t.string   "video_url"
+    t.string   "audio_clip_file_name"
+    t.string   "audio_clip_content_type"
+    t.integer  "audio_clip_file_size"
+    t.datetime "audio_clip_updated_at"
   end
 
   create_table "conversations_events", :id => false, :force => true do |t|
