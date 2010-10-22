@@ -2,7 +2,7 @@ class Admin::SimpleConversationsController < Admin::DashboardController
   # GET /simple_conversations
   # GET /simple_conversations.xml
   def index
-    @simple_conversations = SimpleConversation.all
+    @simple_conversations = Conversation.all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -13,7 +13,7 @@ class Admin::SimpleConversationsController < Admin::DashboardController
   # GET /simple_conversations/1
   # GET /simple_conversations/1.xml
   def show
-    @simple_conversation = SimpleConversation.find(params[:id])
+    @simple_conversation = Conversation.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -24,7 +24,7 @@ class Admin::SimpleConversationsController < Admin::DashboardController
   # GET /simple_conversations/new
   # GET /simple_conversations/new.xml
   def new
-    @simple_conversation = SimpleConversation.new
+    @simple_conversation = Conversation.new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -34,13 +34,13 @@ class Admin::SimpleConversationsController < Admin::DashboardController
 
   # GET /simple_conversations/1/edit
   def edit
-    @simple_conversation = SimpleConversation.find(params[:id])
+    @simple_conversation = Conversation.find(params[:id])
   end
 
   # POST /simple_conversations
   # POST /simple_conversations.xml
   def create
-    @simple_conversation = SimpleConversation.new(params[:simple_conversation])
+    @simple_conversation = Conversation.new(params[:simple_conversation])
 
     respond_to do |format|
       if @simple_conversation.save
@@ -56,7 +56,7 @@ class Admin::SimpleConversationsController < Admin::DashboardController
   # PUT /simple_conversations/1
   # PUT /simple_conversations/1.xml
   def update
-    @simple_conversation = SimpleConversation.find(params[:id])
+    @simple_conversation = Conversation.find(params[:id])
 
     respond_to do |format|
       if @simple_conversation.update_attributes(params[:simple_conversation])
@@ -72,7 +72,7 @@ class Admin::SimpleConversationsController < Admin::DashboardController
   # DELETE /simple_conversations/1
   # DELETE /simple_conversations/1.xml
   def destroy
-    @simple_conversation = SimpleConversation.find(params[:id])
+    @simple_conversation = Conversation.find(params[:id])
     @simple_conversation.destroy
 
     respond_to do |format|
