@@ -2,7 +2,13 @@ class Api::Contributions
 
   def self.for_person_by_people_aggregator_id(people_aggregator_id, request)
     person = Person.find_by_people_aggregator_id(people_aggregator_id)
-    for_person(person, request)
+
+    if person
+      for_person(person, request)
+    else
+      Rails.logger.warn("Person not found by PA ID in Api::Contributions.for_person_by_people_aggregator_id for:#{people_aggregator_id}.  Called with Request:#{request}")
+      nil
+    end
   end
 
 
