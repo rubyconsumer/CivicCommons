@@ -29,6 +29,14 @@
       selectTab: function(container,tabs,panels,callback){
         var clicked = this;
             targetDiv = clicked.attr("href");
+        // This needs to be changed, as it will cause the tabs to not work if the user has the hash-updating disabled,
+        //   but the window hash is not blank due to other anchors on the page.
+        // Think about removing these criteria, and simply making it so that if the hash is blank, and hash-updating is
+        //   enabled, meaning the user is on the default tab, make it quickly set the hash to the default-tab's id explicitly
+        //   and set a .data('skip-hashchange', true) before the next tab is activated, 
+        //   then make the hashchange event only act if the window hash is blank.
+        //   Then we can just update if the hash matches a tab explicitly, and not worry about switching to the default tab
+        //   when the window hash is blank.
         if( (window.location.hash == '' || tabs.find("a[href='" + window.location.hash + "']").size() > 0) && !clicked.hasClass(opts.tabActiveClass) ){
           container.trigger("easytabs:beforeChange");
           if(opts.animate){
