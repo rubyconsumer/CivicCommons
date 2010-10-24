@@ -123,7 +123,7 @@ $(document).ready(function() {
           <div class="dnld <%= media_style(contribution) %>">
             <p><strong><%= media_link_info(contribution) %></strong></p>
             <p><%= contribution.title unless contribution.is_a?(Link) %></p>
-            <p><em>By: <%= contribution.person.name %></em></p>
+            <p><em>Submitted by: <%= contribution.person.name %></em></p>
           </div>
         <% end %>
         <% if person_signed_in? %>
@@ -139,9 +139,12 @@ $(document).ready(function() {
         <ol class='contributions divided'>
           <% @written_contributions.each do |contribution| %>
             <li class='offset-1'>
-            <img class="callout" src="#contribution-image-goes-here" alt="contribution image goes here" width="90" height="60" />
+            <% if contribution.is_image? %>
+              <%= image_tag contribution.attachment(:thumb), :alt => contribution.title, :class => 'callout', :width => 90, :height => 60 %>
+              <img class="callout" src="#contribution-image-goes-here" alt="contribution image goes here" width="90" height="60" />
+            <% end %>
             <h4><%= link_to truncate(contribution.title), contribution.url %></h4>
-            <p>By: <a href="#link-to-PA-profile"><%= contribution.person.name %></a></p>
+            <p>Submitted by: <a href="#link-to-PA-profile"><%= contribution.person.name %></a></p>
             </li>
           <% end %>
         </ol>
