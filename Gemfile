@@ -28,20 +28,14 @@ group :test do
   gem 'cucumber'
   gem 'capybara'
   gem 'cucumber-rails'
-  gem 'safariwatir'               
+  gem 'safariwatir'
+  gem 'rb-appscript'
   gem 'firewatir'
   gem 'rspec-rails', '>= 2.0.0.beta.10'
   gem "factory_girl_rails"
   gem "ruby-debug19"
   gem 'webmock'
 end
-
-
-# On non OSX Environments run bundle --without osx_test
-group :osx_test do   
-  gem 'rb-appscript'
-end   
-
 
 gem 'devise', '1.1.2'
 
