@@ -28,8 +28,10 @@ group :test do
   gem 'cucumber'
   gem 'capybara'
   gem 'cucumber-rails'
-  gem 'rb-appscript'
-  gem 'safariwatir'
+  if RUBY_PLATFORM =~ /darwin/
+    gem 'rb-appscript'
+    gem 'safariwatir'
+  end                 
   gem 'firewatir'
   gem 'rspec-rails', '>= 2.0.0.beta.10'
   gem "factory_girl_rails"
