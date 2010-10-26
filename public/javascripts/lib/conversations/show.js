@@ -50,15 +50,18 @@ jQuery(function ($) {
           }
           
           if(preview == "true") {
-            var previewTab = '#' + divId + '-preview'
-            // populate the preview div with a preview and a filled-in form with data-preview = false so it can be submitted again
-            previewPane = $(this).closest('div').siblings('.contribution-preview');
+            var previewTab = '#' + divId + '-preview',
+                // populate the preview div with a preview and a filled-in form with data-preview = false so it can be submitted again
+                previewPane = $(this).closest('div').siblings('.contribution-preview');
             
             // bind these ajax handlers to preview form, also add reference to this form on the new preview form
             previewPane.html(responseNode).children('form').bindContributionFormEvents(clicked,tabStrip).data('origForm',$(this));
             
             $(this).find('.validation-error').html(''); // clear any previous errors from form
-            window.location.hash = previewTab;
+            $(tabStrip).easytabs('select','li.preview-tab').find(".contribution-preview").find("a.cancel").click(function(e){
+              $(tabStrip).easytabs('select', $(this).attr("href"));
+              e.preventDefault();
+            });
           } else {
             var optionsTab = '#' + divId + '-options';
                 origForm = $(this).data('origForm');
@@ -91,15 +94,21 @@ jQuery(function ($) {
       },
       
       applyEasyTabsToTabStrip: function() {
-        this.easyTabs({
+        var $container = this;
+        $container.easytabs({
           tabActiveClass: 'tab-active',
           tabActivePanel: 'panel-active',
           tabs: '> .tab-area > .tab-strip-options > ul > li',
           defaultTab: '.default-tab',
-          animationSpeed: 250
+          animationSpeed: 250,
+          updateHash: false
         })  
-          .live("easytabs:afterChange", function(){
+          .live("easytabs:after", function(){
             $.colorbox.resize();
+          })
+          .find("a.cancel").click(function(e){
+            $container.easytabs('select', 'li.default-tab');
+            e.preventDefault();
           });
       },
       
@@ -115,7 +124,8 @@ jQuery(function ($) {
             errorString += "<li>" + error + ' ' + errors[error] + "</li> ";
           }
           errorString += "</ul>"
-          this.find(".validation-error").html(errorString);
+          $(this).find(".validation-error").html(errorString);
+          $.colorbox.resize();
         });
         return this;
       },

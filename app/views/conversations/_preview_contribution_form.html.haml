@@ -6,4 +6,4 @@
   %div.validation-error
   = f.submit("Submit", :class => 'button')
   or
-  %a{:href => "##{div_id}-new-#{@contribution.type.to_s.underscore}"} Cancel
+  %a{:href => "##{div_id}-new-#{@contribution.type.to_s.underscore}", :class => "cancel"} Cancel
