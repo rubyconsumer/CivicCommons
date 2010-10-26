@@ -6,14 +6,12 @@
         -if @main_article.youtube_link?
           =raw @main_article.embed_target
         -else
-          %img{:alt => "Featured Article - #{@main_article.title}", :height => "200", :src => @main_article.image.url(:mainfeature), :width => "300"}/
+          %div=link_to image_tag(@main_article.image.url(:mainfeature), :alt => @main_article.title, :size => "300x200"), @main_article.link
       .feat-content
-        %h1= @main_article.title
+        %h1= link_to @main_article.title, @main_article.link
         %p= "By: #{@main_article.author}"
-        %p
-          = @main_article.description.html_safe
-        %p
-          %a{:href => @main_article.link} Read The Article
+        %p= @main_article.description.html_safe
+
 -unless @sub_articles.blank?
   .aside.supplementary
     %ol.conversations
