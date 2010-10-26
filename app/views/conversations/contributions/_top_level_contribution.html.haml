@@ -9,7 +9,7 @@
         %p
           -if contribution.person
             %strong
-              = contribution_profile_text(contribution.person).html_safe
+              = text_profile(contribution.person).html_safe
           -else
             %strong= 'An unknown person'
           commented:
