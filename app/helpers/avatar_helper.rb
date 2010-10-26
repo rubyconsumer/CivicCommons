@@ -11,7 +11,7 @@ module AvatarHelper
   end
   
   def text_profile(person)
-    if person
+    if person && person.people_aggregator_id
       link_to_profile(person) do
         person.name
       end

@@ -6,6 +6,8 @@ describe AvatarHelper do
     @me.id = 1
     @registered_user = Factory.build(:registered_user, :first_name => "Someone", :last_name => "Else", :people_aggregator_id => 13)
     @registered_user.id = 13
+    @invalid_registered_user = Factory.build(:registered_user, :first_name => "Someone", :last_name => "Bad")
+    @invalid_registered_user.id = 4
   end
   
   context "link to profile" do
@@ -33,6 +35,27 @@ EOHTML
       blah
     </a>
 EOHTML
+    end
+  end
+  
+  context "text profile" do
+    it "should display a users name with a link" do
+      helper.stub(:current_person).and_return(@me)
+      helper.should_receive(:pa_link).with("user/#{@registered_user.people_aggregator_id}").and_return("http://pa.com/user/#{@registered_user.people_aggregator_id}?pa_token=sometoken")
+      
+      @registered_user.avatar.url(:standard).gsub(/\?\d*/, '').should == "http://s3.amazonaws.com/cc-dev/avatars/13/standard/test_image.jpg"
+      @registered_user.avatar.stub(:url).and_return("http://avatar_url")
+      
+      helper.text_profile(@registered_user).should == <<-EOHTML
+    <a href="http://pa.com/user/13?pa_token=sometoken" title="Someone Else">
+      Someone Else
+    </a>
+EOHTML
+    end
+
+    it "should display a users name when they don't have a valid PA ID" do
+      @invalid_registered_user.avatar.stub(:url).and_return("http://avatar_url")
+      helper.text_profile(@invalid_registered_user).should == "Someone Bad"
     end
   end
   
@@ -85,6 +108,14 @@ EOHTML
           <img src="http://avatar_url" alt="Someone Else" height="80" width="80" title="Someone Else"/>
 
     </a>
+EOHTML
+      end
+      
+      it "and no link when there is an invalid PA ID" do
+        helper.stub(:current_person).and_return(@me)
+        @invalid_registered_user.avatar.stub(:url).and_return("http://avatar_url")
+        helper.avatar_profile(@invalid_registered_user, 80).should ==  <<-EOHTML
+    <img src=\"http://avatar_url\" alt=\"Someone Bad\" height=\"80\" width=\"80\" title=\"Someone Bad\"/>
 EOHTML
       end
     end
