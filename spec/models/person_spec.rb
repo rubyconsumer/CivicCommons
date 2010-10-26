@@ -26,6 +26,11 @@ describe Person do
       first.should == "Gladys"
       last.should == "s.w. Lum"
     end
+
+    it "should strip extra whitespace between name parts" do
+      first, last = Person.parse_name("  The Grand       Duchess of Windsor  ")
+      [first, last].join(" ").should == "The Grand Duchess of Windsor"
+    end
   end
 
   describe "when finding all by name" do

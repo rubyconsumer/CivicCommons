@@ -2,14 +2,9 @@
 =form_for [:admin, @person], :html => {:multipart => true} do |person|
   = show_errors @person
   %p
-    =person.label :first_name
+    =person.label :name
     %br
-    =person.text_field :first_name
-    
-  %p
-    =person.label :last_name
-    %br
-    =person.text_field :last_name
+    =person.text_field :name
     
   %p
     =person.label :zip_code
