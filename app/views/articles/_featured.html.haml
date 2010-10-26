@@ -18,11 +18,9 @@
       - @sub_articles.each do |article|
         %li.offset-1
           -if article.image?
-            %img.callout{:alt => "#{article.title}", :height => "60", :src => article.image.url(:subfeature), :width => "90"}/
+            =image_tag article.image.url(:subfeature), :class => 'callout', :size => '90x60', :alt => article.title
           -if article.video_url?
             .video-preview{:data => {:url => article.url}}
-          %h4
-            %a{:href => article.link}= article.title
-          %p
-            By: #{article.author}
+          %h4=link_to article.title, article.link
+          %p= "By: #{article.author}"
 
