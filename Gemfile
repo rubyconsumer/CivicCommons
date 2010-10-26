@@ -28,9 +28,6 @@ group :test do
   gem 'cucumber'
   gem 'capybara'
   gem 'cucumber-rails'
-  gem 'safariwatir'
-  gem 'rb-appscript'
-  gem 'firewatir'
   gem 'rspec-rails', '>= 2.0.0.beta.10'
   gem "factory_girl_rails"
   gem "ruby-debug19"
