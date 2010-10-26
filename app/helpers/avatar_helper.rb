@@ -1,4 +1,5 @@
 module AvatarHelper
+  # Create Avatar and Link for a Users Profile
   def user_profile(person)
     if person && person.people_aggregator_id
       link_to_profile(person) do
@@ -9,37 +10,7 @@ module AvatarHelper
     end
   end
   
-  def conversation_profile(person)
-    if person && person.people_aggregator_id
-      link_to_profile(person) do
-        profile_image(person, 40)
-      end
-    else
-      profile_image(person, 40)
-    end
-  end
-  
-  def contribution_profile(person)
-    if person && person.people_aggregator_id
-      link_to_profile(person) do
-        profile_image(person, 60)
-      end
-    else
-      profile_image(person, 60)
-    end
-  end
-  
-  def featured_profile(person)
-    if person && person.people_aggregator_id
-      link_to_profile(person) do
-        profile_image(person, 50)
-      end
-    else
-      profile_image(person, 50)
-    end
-  end
-  
-  def contribution_profile_text(person)
+  def text_profile(person)
     if person && person.people_aggregator_id
       link_to_profile(person) do
         person.name
@@ -47,6 +18,18 @@ module AvatarHelper
     else
       person.name
     end
+  end
+  
+  def conversation_profile(person)
+    avatar_profile(person, 40)
+  end
+  
+  def contribution_profile(person)
+    avatar_profile(person, 60)
+  end
+  
+  def featured_profile(person)
+    avatar_profile(person, 50)
   end
   
   def profile_image(person, size=20)
@@ -65,6 +48,16 @@ module AvatarHelper
     <<-EOHTML
     <img src='/images/avatar_#{size}.gif' alt='default avatar' class='callout' height='#{size}' width='#{size}'> 
     EOHTML
+  end
+  
+  def avatar_profile(person, size=20)
+    if person && person.people_aggregator_id
+      link_to_profile(person) do
+        profile_image(person, size)
+      end
+    else
+      profile_image(person, size)
+    end
   end
   
   def link_to_profile(person)

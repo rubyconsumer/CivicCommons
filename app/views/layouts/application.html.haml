@@ -50,7 +50,7 @@
                 = user_profile(current_person).html_safe
                 %h4
                   %a 
-                    = current_person.name
+                    = text_profile(current_person.name).html_safe
                 = link_to "Logout", destroy_person_session_path
           - else
             #login-status.signed-out
