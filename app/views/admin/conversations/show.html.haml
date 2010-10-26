@@ -14,7 +14,7 @@
     -@conversation.top_level_contributions.each do |c|
       = c.person.name + ":"
       %br
-      = c.content
+      = raw c.content
       %hr
   %footer
     %p= "This conversation was started at: #{@conversation.created_at}"

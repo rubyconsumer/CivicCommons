@@ -1,7 +1,7 @@
 module AvatarHelper
   # Create Avatar and Link for a Users Profile
   def user_profile(person)
-    if person && person.people_aggregator_id
+    if person
       link_to_profile(person) do
         loggedin_image(person)
       end
@@ -11,7 +11,7 @@ module AvatarHelper
   end
   
   def text_profile(person)
-    if person && person.people_aggregator_id
+    if person
       link_to_profile(person) do
         person.name
       end
