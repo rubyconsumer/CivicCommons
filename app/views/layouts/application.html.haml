@@ -77,8 +77,9 @@
                 %a{:href =>"#{pa_link(:directory)}", :title => "Organizations"} Organizations
           %li
             %a{:href =>'http://theciviccommons.com/', :title => "About Us"} About Us
-        %form#search{ :method=>"post" }
-          %input.textbox#search{ :type=>"text", :name=>"search", :placeholder=>"Name, Keyword, Date..." }
+        %div#search
+          %form{ :method=>"post" }
+            %input.textbox#search{ :type=>"text", :id=>"search", :name=>"search", :placeholder=>"Name, Keyword, Date..." }
           %input.submit{ :type=>"submit", :value=>"Search" }
     = yield :main_body
     #footer.footer
