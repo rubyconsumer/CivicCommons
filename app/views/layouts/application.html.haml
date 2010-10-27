@@ -75,8 +75,25 @@
                 %a{:href =>"#{pa_link(:people)}", :title => "People"} People
               %li
                 %a{:href =>"#{pa_link(:directory)}", :title => "Organizations"} Organizations
-          %li
-            %a{:href =>'http://theciviccommons.com/', :title => "About Us"} About Us
+          %li.drop
+            = "About Us"
+            %ul
+              %li
+                %a{:href =>'http://theciviccommons.com/', :title => "About Us"} About Us
+              %li 
+                %a{:href =>"#{pa_link(:home)}", :title => "Blog"} Blog
+              %li 
+                = link_to 'Help', '/help'
+              %li 
+                = link_to 'FAQ', '/faq'
+              %li
+                = link_to 'Mission & Principles', '/principles'
+              %li
+                = link_to 'Team', '/team'
+              %li
+                = link_to 'Partners', '/partners'
+              %li
+                = link_to 'In The News', '/press'
         %div#search
           %form{ :method=>"post" }
             %input.textbox#search{ :type=>"text", :id=>"search", :name=>"search", :placeholder=>"Name, Keyword, Date..." }
