@@ -1,13 +1,5 @@
+require 'spec_helper'
 require 'ostruct'
-
-unless defined?(Rails)
-  require 'active_support/concern'
-  require 'active_support/hash_with_indifferent_access'
-  require 'people_aggregator'
-
-  require 'people_aggregator/api_object'
-  require 'people_aggregator/person'
-end
 
 module PeopleAggregator::Connector
   extend ActiveSupport::Concern
