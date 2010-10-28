@@ -30,7 +30,7 @@ list-style: none;
 margin-left: 0;
 }
 .contributions li.offset-1 { padding-left:100px; }
-.link-list, .module_actions ul {font-weight: bold;}
+/* .link-list, .module_actions ul {font-weight: bold;} */
 .conversations li {margin-bottom: 2em;}
 .conversations li:last-child {
 border-bottom: none;
@@ -49,7 +49,7 @@ padding-top: 15px;
 .conversations.divided .input-with-options li a.button {margin: 5px 10px 5px 0;}
 div#show_conversation {margin-top: -15px;}
 .divided li {
-border-bottom: 1px dashed #bbb;
+border-bottom: 1px solid #b1b3b6;
 margin-bottom: 1em;
 padding-bottom: 1.2em;
 }
@@ -257,6 +257,7 @@ p.topic-selection a {margin-left: 1em;}
 padding-left: 70px;
 position: relative;
 }
+.conversations .offset-1 {padding-left: 50px;}
 .offset-1 .callout, .offset-2 .callout {
 left: 0;
 position: absolute;
@@ -528,6 +529,11 @@ p.createacct-link a {
 background: url(/images/add.png) no-repeat 0 2px;
 text-decoration: none;
 }
+div.login-actions p {
+font-size: .75em;
+margin-bottom: .2em;
+text-transform: uppercase;
+}
 .important {
 background: #dbedf5;
 border-left: 1px solid #d9dade;
@@ -593,6 +599,7 @@ padding: 0 10px 10px;
 position: absolute;
 top: 35px;
 white-space: nowrap;
+z-index: 1;
 -webkit-border-radius: 0 0 8px 8px;
 -moz-border-radius: 0 0 8px 8px;
 border-radius: 0 0 8px 8px;
@@ -744,30 +751,31 @@ border-radius: 8px;
 }
 
 /* Conversation Utility */
-.edit-contribution {
-float: right;
-}
-.edit-contribution a {
-margin-left: 15px;
-}
+.edit-contribution {float: right;}
+.edit-contribution a {margin-left: 15px;}
 div.convo-utility {
-border: 1px solid #777;
-background: #e3e3e3;
-padding: 2px 8px;
+padding: 3px 0 2px;
 position:relative;
 }
-div.convo-utility a {text-decoration: none;}
-div.convo-utility.response {background: #777;}
-div.convo-utility.response p, div.convo-utility.response a {color: #fff;}
-div.convo-utility.response a:hover {color: #f3f3f3;}
-div.convo-utility p {margin: 0;}
+div.convo-utility.response {
+background: #e6e6e6 url(../images/response_bar_bg.gif) repeat-x top;
+border: 1px solid #ced1d6;
+padding: 3px 6px 2px;
+-webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+-moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+div.convo-utility p {
+line-height: 2.1em;
+margin: 0;
+}
 div.convo-utility p.respond-link, div.productive p.prod-quest {
 float: left;
 width: 35%;
 }
 div.convo-utility p.respond-link, div.convo-utility.response p.respond-link {
 background: url(/images/chat-bubble-gray.png) no-repeat 0 50%;
-padding-left: 20px;
+padding-left: 30px;
 }
 div.convo-utility.response p.respond-link {background-image: url(/images/chat-bubble-light.png);}
 div.convo-utility p.rating, div.productive p.rating-buttons {
@@ -779,27 +787,22 @@ div.convo-utility p.rating span {
 font-weight: bold;
 margin-left: .5em;
 }
-.rate-form-container {
-padding: 2em 0 1em;
-}
+.rate-form-container {padding: 2em 0 1em;}
 .rate-form {
 float: right;
 height: 1em;
 }
-.rate-form form {
-display: inline-block;
-}
-.rate-form form .button {
-margin: 0;
-}
+.rate-form form {display: inline-block;}
+.rate-form form .button {margin: 0;}
 html.js div.productive, html.js div.response-block {display: none;}
 div.productive {
-background: #fff;
-border: 1px solid #777;
-border-top: none;
+background: #d6d6d6 url(../images/productivity_bg.gif) repeat-x top;
 clear: both;
 overflow: hidden;
 padding: 10px;
+-webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+-moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 div.productive p {margin: 0;}
 div.productive a.button {margin-right: 0;}
@@ -1224,3 +1227,4 @@ visibility: hidden;
 *:first-child+html #wrapper, *:first-child+html #header, *:first-child+html .feature, *:first-child+html div.tab-strip ul, *:first-child+html div.tab-area, *:first-child+html #nav, #header-wrapper, *:first-child+html .section, *:first-child+html .content-container, *:first-child+html .photobank, *:first-child+html div.three-col, *:first-child+html div.three-col-sm, *:first-child+html .form-block, *:first-child+html .offset-1, *:first-child+html .offset-2, *:first-child+html form, *:first-child+html .convo-utility, *:first-child+html ul.social-media, *:first-child+html div.two-col, *:first-child+html div.two-col-sm, *:first-child+html .conversations, *:first-child+html div.convo-popup {zoom: 1;}
 
 *:first-child+html .group {zoom: 1;}
+
