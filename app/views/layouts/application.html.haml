@@ -100,6 +100,8 @@
           %li 
             %a{:href =>"#{pa_link(:home)}", :title => "Blog"} Blog
           %li 
+            = link_to 'About Us', '/about'
+          %li 
             = link_to 'Help', '/help'
           %li 
             = link_to 'FAQ', '/faq'
@@ -111,7 +113,9 @@
             = link_to 'Partners', '/partners'
           %li
             = link_to 'In The News', '/press'
-        %p The Civic Commons is Copyright 2010 by the Legal Entity.  Content is licensed under License.
+        %p 
+          The Civic Commons is Copyright 2010 by the Legal Entity.  Content is licensed under License.
+          %a{ :href => '/terms'} Terms of Use
         %ul.social-media
           %li
             %a{ :href => 'http://www.facebook.com/pages/Civic-Commons/143930632284131', :id => 'facebook'} Facebook

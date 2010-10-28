@@ -42,7 +42,7 @@ Civiccommons::Application.routes.draw do
   match '/principles', :to=>'static_pages#principles', :via=>[:get]
   match '/team', :to=>'static_pages#team', :via=>[:get]
   match '/partners', :to=>'static_pages#partners', :via=>[:get]
-  match '/press', :to=>'static_pages#press', :via=>[:get]
+  match '/terms', :to=>'static_pages#terms', :via=>[:get]
   
   resources :conversations
   resources :regions   
