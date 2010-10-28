@@ -27,10 +27,14 @@ class ApplicationController < ActionController::Base
     end
   end
   
+  
+  # Override Devise Sign Out Behavior
+  # * Delete the pa_auth_token cookie
+  # * Redirect to the PA logout page
   def after_sign_out_path_for(resource_or_scope)
     cookies.delete :pa_auth_token
     
-    super
+    "#{Civiccommons::PeopleAggregator.URL}/logout.php?redirect=http://#{request.host}#{request.port == "80" ? nil : ":#{request.port}"}"
   end
   
 end
