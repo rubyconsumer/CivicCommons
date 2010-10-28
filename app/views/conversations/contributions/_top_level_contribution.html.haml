@@ -3,7 +3,6 @@
     - if contribution
       .callout
         = contribution_profile(contribution.person).html_safe
-        %p.time-stamp= format_time_only(contribution.created_at)
       %div.article.comment.top-level-contribution
         %a{:name=>"#post#{contribution.id}"}
         %p

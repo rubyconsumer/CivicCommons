@@ -25,7 +25,7 @@ module AvatarHelper
   end
   
   def contribution_profile(person)
-    avatar_profile(person, 60)
+    avatar_profile(person, 40)
   end
   
   def featured_profile(person)
