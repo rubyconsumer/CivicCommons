@@ -1,15 +1,12 @@
 require 'spec_helper'
 
-include PeopleAggregator
-
 class ApiObjectDummy
-  include ApiObject
+  include PeopleAggregator::ApiObject
 
 
 end
 
-describe ApiObject do
-
+describe PeopleAggregator::ApiObject do
 
   it "enables defining allowed attributes" do
     ApiObjectDummy.attr_allowable :foo
