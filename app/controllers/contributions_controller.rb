@@ -1,36 +1,30 @@
 class ContributionsController < ApplicationController
   include ContributionsHelper
-  
-  # GET /contributions
-  # GET /contributions.xml
+
   def index
     @contributions = Contribution.all
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html
       format.xml  { render :xml => @contributions }
     end
   end
 
-  # GET /contributions/1
-  # GET /contributions/1.xml
   def show
     @contribution = Contribution.find(params[:id])
     @contribution.visit!((current_person.nil? ? nil : current_person.id))
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html
       format.xml  { render :xml => @contribution }
     end
   end
 
-  # GET /contributions/new
-  # GET /contributions/new.xml
   def new
     @contribution = Contribution.new
 
     respond_to do |format|
-      format.html # new.html.erb
+      format.html
       format.xml  { render :xml => @contribution }
     end
   end
@@ -52,11 +46,9 @@ class ContributionsController < ApplicationController
                                      Person.find(params[:person_id]))
     contribution.save!
     redirect_to polymorphic_url(item)
-                                                
+
   end
 
-  # POST /contributions
-  # POST /contributions.xml
   def create
     @contribution = Contribution.new(params[:contribution])
 
@@ -70,17 +62,14 @@ class ContributionsController < ApplicationController
       end
     end
   end
-  
-  # GET /contributions/1/edit
+
   def edit
     @contribution = Contribution.find(params[:id])
   end
 
-  # PUT /contributions/1
-  # PUT /contributions/1.xml
   def update
     @contribution = Contribution.find(params[:id])
-  
+
     respond_to do |format|
       if @contribution.update_attributes_by_user(params[:contribution], current_person)
         format.js   { render :status => :ok }
@@ -93,12 +82,9 @@ class ContributionsController < ApplicationController
       end
     end
   end
-  
-  # DELETE /contributions/1
-  # DELETE /contributions/1.xml
+
   def destroy
     @contribution = Contribution.find(params[:id])
-  
     respond_to do |format|
       if @contribution.destroy_by_user(current_person)
         format.js   { render :nothing => true, :status => :ok }
@@ -107,12 +93,10 @@ class ContributionsController < ApplicationController
       end
     end
   end
-  
+
   def create_confirmed_contribution
     @contribution = Contribution.create_confirmed_node_level_contribution(params[:contribution], current_person)
-    
-    respond_to do |format|
-      format.html { redirect_to(contribution_parent_page(@contribution), :notice => 'Contribution was successfully created.') }
-    end
+    redirect_to("#{contribution_parent_page(@contribution)}#contribution#{@contribution.id}",
+                    :notice => 'Contribution was successfully created.')
   end
 end

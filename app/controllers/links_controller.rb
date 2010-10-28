@@ -1,7 +1,7 @@
-class LinksController < ApplicationController 
-  before_filter :remember_url, :require_user 
+class LinksController < ApplicationController
+  before_filter :remember_url, :require_user
 
-  def new 
+  def new
     @issues = Issue.alphabetical
     @conversations = Conversation.all
     @contribution = Contribution.new
@@ -12,17 +12,17 @@ class LinksController < ApplicationController
   end
 
   def create
-    @link = Contribution.new params[:contribution]  
+    @link = Contribution.new params[:contribution]
     @link.save
     redirect_to "/"
   end
 
   private
 
-  def remember_url 
+  def remember_url
     return if params[:link].nil?
-    session[:link] = params[:link] 
-    session[:title] = params[:title] 
+    session[:link] = params[:link]
+    session[:title] = params[:title]
   end
 
   def forget_url
@@ -33,7 +33,7 @@ class LinksController < ApplicationController
     session[:title] || params[:title]
   end
 
-  def link 
+  def link
     session[:link] || params[:link]
   end
 end
