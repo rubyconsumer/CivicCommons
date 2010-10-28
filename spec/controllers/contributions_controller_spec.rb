@@ -15,10 +15,10 @@ describe ContributionsController do
   end
 
   describe "GET show" do
-    before(:each) do 
+    before(:each) do
       @person = Factory.create(:normal_person)
-      @controller.stub(:current_person).and_return(@person)      
-    end            
+      @controller.stub(:current_person).and_return(@person)
+    end
     it "assigns the requested contribution as @contribution" do
       Contribution.stub(:find).with("37") { mock_contribution }
       get :show, :id => "37"
@@ -26,10 +26,10 @@ describe ContributionsController do
     end
     it "records a visit to the issue passing the current user" do
       Contribution.stub(:find).with("37") { mock_contribution }
-      mock_contribution.should_receive(:visit!).with(@person.id)      
+      mock_contribution.should_receive(:visit!).with(@person.id)
       get :show, :id => "37"
-    end        
-    
+    end
+
   end
 
   describe "GET new" do
@@ -52,7 +52,7 @@ describe ContributionsController do
     it "creates a new pa contribution for issue" do
       EmbeddedLinkValidator.stub!(:live_url?).and_return(true)
       EmbeddedLinkable.stub!(:get_link_information)
-      
+
       person = Factory.create(:normal_person)
       issue = Factory.create(:issue)
 
@@ -60,14 +60,14 @@ describe ContributionsController do
         :issue_id => issue.id,
         :link => "#{Civiccommons::PeopleAggregator.URL}/content/cid=42",
         :title => "Test Contribution Title"}
-      
+
       response.should redirect_to(issue_url(issue))
     end
-    
+
     it "creates a new pa contribution from issue" do
       EmbeddedLinkValidator.stub!(:live_url?).and_return(true)
       EmbeddedLinkable.stub!(:get_link_information)
-      
+
       person = Factory.create(:normal_person)
       contribution = Factory.create(:top_level_contribution)
       contribution.save!
