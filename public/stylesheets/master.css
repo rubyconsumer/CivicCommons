@@ -622,6 +622,14 @@ text-shadow: 0 1px 1px rgba(255,255,255,.8);
 background: none;
 color: #555;
 }
+/* Selected Nav States */
+
+body#home li#home-nav, 
+body#conversations li#conversations-nav, 
+body#issues li#issue-nav, 
+body#community li#community-nav, 
+body#about li#about-nav, 
+#nav-wrapper #main-nav li.active a {background: #bac872 url(../images/nav_hover.gif) repeat-x top;}
 
 /* Search Form Styles */
 div#search {
