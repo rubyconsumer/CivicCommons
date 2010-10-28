@@ -4,6 +4,7 @@
 - content_for :main_body do
   .wrapper
     %h1= @contribution.title
+    %p This article will be added to the bottom of the conversation or issue that you select.
     #link_form_wrapper
       =form_for @contribution, :url => "/contributions/create_confirmed_contribution" do |l|
         =l.hidden_field(:type)
