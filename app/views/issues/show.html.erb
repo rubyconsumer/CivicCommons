@@ -75,24 +75,25 @@ $(document).ready(function() {
             -->
           </div>
         </div>
-        <div class="two-col">
-          <div class="cols">
-            <h3>People active in this issue</h3>
-            <div class="photobank">
-              <% @people.each do |person| %>
-                <%= featured_profile(person).html_safe %>
-              <% end %>
-            </div>
-          </div>
-          <div class="cols">
-            <h3>Organizations active in this issue</h3>
-            <div class="photobank">
-              <% @organizations.each do |org| %>
-                <%= featured_profile(org).html_safe %>
-              <% end %>
-            </div>
-          </div>
-        </div>
+
+        <h3>Contributions</h3>
+        <ol class='contributions divided'>
+          <% @written_contributions.each do |contribution| %>
+            <li class='offset-1'>
+            <% if contribution.is_image? %>
+              <%= image_tag contribution.attachment(:thumb), :alt => contribution.title, :class => 'callout', :width => 90, :height => 60 %>
+              <img class="callout" src="#contribution-image-goes-here" alt="contribution image goes here" width="90" height="60" />
+            <% end %>
+            <h4><%= link_to truncate(contribution.title), contribution.url %></h4>
+            <p>Submitted by: <a href="#link-to-PA-profile"><%= contribution.person.name %></a></p>
+            </li>
+          <% end %>
+        </ol>
+        <% if person_signed_in? %>
+          <p><%= link_to("Write a contribution", pa_new_issue_contribution_url(current_person, @issue)) %> </p>
+        <% else %>
+          <p>You must <%= link_to "log in", new_person_session_path %> or <%= link_to "sign up", new_person_registration_path %> to write a contribution</p>
+        <% end %>
 
         <h3>Conversations about this issue:</h3>
         <div class="three-col-sm">
@@ -135,25 +136,13 @@ $(document).ready(function() {
           <p>You must <%= link_to "log in", new_person_session_path %> or <%= link_to "sign up", new_person_registration_path %> to contribute a file or video</p>
         <% end %>
 
-        <h3>Contributions</h3>
-        <ol class='contributions divided'>
-          <% @written_contributions.each do |contribution| %>
-            <li class='offset-1'>
-            <% if contribution.is_image? %>
-              <%= image_tag contribution.attachment(:thumb), :alt => contribution.title, :class => 'callout', :width => 90, :height => 60 %>
-              <img class="callout" src="#contribution-image-goes-here" alt="contribution image goes here" width="90" height="60" />
-            <% end %>
-            <h4><%= link_to truncate(contribution.title), contribution.url %></h4>
-            <p>Submitted by: <a href="#link-to-PA-profile"><%= contribution.person.name %></a></p>
-            </li>
+        <h3>People active in this issue</h3>
+        <div class="photobank">
+          <% @people.each do |person| %>
+            <%= featured_profile(person).html_safe %>
           <% end %>
-        </ol>
-        <% if person_signed_in? %>
-          <p><%= link_to("Write a contribution", pa_new_issue_contribution_url(current_person, @issue)) %> </p>
-        <% else %>
-          <p>You must <%= link_to "log in", new_person_session_path %> or <%= link_to "sign up", new_person_registration_path %> to write a contribution</p>
-        <% end %>
-        <br/>
+        </div>
+
         <h3>Suggest an Action</h3>
         <ol class='conversations divided'>
           <% @suggested_actions.each do |suggested_action| %>
