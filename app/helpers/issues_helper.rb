@@ -13,16 +13,13 @@ module IssuesHelper
 
   def media_link_info(contribution)
     if contribution.is_image?
-      image = image_tag(contribution.attachment.url(:thumb),
-                        :alt => contribution.attachment_file_name,
-                        :title => contribution.attachment_file_name)
-      link_to(image, contribution.attachment.url)
+      link_to(contribution.attachment_file_name, contribution.attachment.url)
     elsif contribution.is_a?(AttachedFile)
       link_to(contribution.attachment_file_name, contribution.attachment.url)
     elsif contribution.is_a?(Link)
       link_to(contribution.title, contribution.url)
     else 
-     raw contribution.embed_target
+      link_to(contribution.title, contribution.url)
     end
   end
 

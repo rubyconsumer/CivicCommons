@@ -123,7 +123,6 @@ $(document).ready(function() {
           <a name="contribution<%= contribution.id %>"></a>
           <div class="dnld <%= media_style(contribution) %>">
             <p><strong><%= media_link_info(contribution) %></strong></p>
-            <p><%= contribution.title unless contribution.is_a?(Link) %></p>
             <p><em>Submitted by: <%= contribution.person.name %></em></p>
           </div>
         <% end %>
