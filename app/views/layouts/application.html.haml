@@ -68,13 +68,8 @@
             = link_to 'Conversations', conversations_path, :title => 'Conversations'
           %li
             = link_to 'Issues', issues_path, :title => 'Issues'
-          %li.drop 
-            = "Community"
-            %ul
-              %li
-                %a{:href =>"#{pa_link(:people)}", :title => "People"} People
-              %li
-                %a{:href =>"#{pa_link(:directory)}", :title => "Organizations"} Organizations
+          %li
+            %a{:href =>"#{pa_link(:people)}", :title => "Community"} Community
           %li.drop
             = "About Us"
             %ul
