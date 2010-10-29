@@ -1,0 +1,8 @@
+<table width="600px" border="0" cellspacing="0" cellpadding="0"><tr>
+  <td style="padding:20px 0 0 0;">
+    <h1 style="margin-top:0; color:#555; font-size:26px; letter-spacing:-1px;"><%= headers.subject %></h1>
+    <p style="line-height:1.4em;">Your account has been locked due to an excessive amount of unsuccessful sign in attempts.</p>
+    <p style="line-height:1.4em;">Click the link below to unlock your account:</p>
+    <p style="line-height:1.4em;"><%= link_to 'Unlock my account', unlock_url(@resource, :unlock_token => @resource.unlock_token) %></p>
+  </td>
+</tr></table>

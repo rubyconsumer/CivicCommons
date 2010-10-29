@@ -7,6 +7,8 @@ Devise.setup do |config|
 
   # Configure the class responsible to send e-mails.
   # config.mailer = "Devise::Mailer"
+  
+  config.mailer = 'Notifier' # FYI: Notifier is a subclass of Devise::Mailer
 
   # ==> ORM configuration
   # Load and configure the ORM. Supports :active_record (default), :mongoid
