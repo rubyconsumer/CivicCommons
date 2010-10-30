@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'ostruct'
+require 'spec_helper'
 
 module PeopleAggregator::Connector
   extend ActiveSupport::Concern
@@ -37,6 +38,20 @@ describe PeopleAggregator::Person do
     Person.new(email: "joe@test.com").email.should == "joe@test.com"
   end
 
+
+  context "when response is nil" do
+
+    before do
+      response = OpenStruct.new(parsed_response: nil)
+      PeopleAggregator::Person.stub!(:get).and_return(response)
+      PeopleAggregator::Person.stub!(:log_people_aggregator_response)
+    end
+
+    it "returns a nil person" do
+      PeopleAggregator::Person.find_by_email("joe@test.com").should be_nil
+    end
+
+  end
 
   specify "can save a person instance to People Aggregator" do
     person = PeopleAggregator::Person.new(firstName: "Joe",

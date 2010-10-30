@@ -74,6 +74,8 @@ class PeopleAggregator::Person
 
     attrs = r.parsed_response
 
+    return nil unless r.parsed_response
+
     cleanup_attrs!(attrs)
 
     self.new(attrs)
