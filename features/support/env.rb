@@ -19,6 +19,8 @@ require 'cucumber/rails/capybara_javascript_emulation' # Lets you click links wi
 
 require 'ruby-debug'
 
+require File.dirname(__FILE__) + '/words_to_num'
+
 
 WebMock.allow_net_connect!
 
@@ -73,6 +75,7 @@ end
 
 
 World(Config)
+World(WordsToNum)
 
 # How to clean your database when transactions are turned off. See
 # http://github.com/bmabey/database_cleaner for more info.

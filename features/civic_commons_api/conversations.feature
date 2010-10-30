@@ -40,6 +40,7 @@ Feature:
     ]
     """
 
+  @wip
   Scenario: Multiple contributions to one conversation should only appear once
     Given a conversation:
       | ID          | 2                           |
@@ -47,8 +48,7 @@ Feature:
       | Image       | imageAttachment.png         |
       | Summary     | Test conversation           |
       | Zip Code    | 44111                       |
-    And I have a comment on the conversation
-    And I have another comment on the conversation
+    And I have two comments on the conversation
     When I ask for conversations with URL:
     """
     /api/12/conversations

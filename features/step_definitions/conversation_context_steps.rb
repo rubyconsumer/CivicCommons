@@ -22,13 +22,18 @@ Given /^a conversation:$/ do |table|
 end
 
 
-Given /^I have a comment on the conversation$/ do
-  Factory.create(:comment,
-                 person: @current_person,
-                 conversation: @conversation)
+Given /^I have [a\s]?(\d*|\w*)\s?comments? on the conversation$/ do |number|
+  number = words_to_num(number) unless number =~ /\d+/
+
+  number.times do
+    Factory.create(:comment,
+                   person: @current_person,
+                   conversation: @conversation)
+  end
+
 end
 
-Given /^I have a comment on the conversation:$/ do |comment|
+Given /^I have comment on the conversation:$/ do |comment|
   Factory.create(:contribution,
                  person: @current_person,
                  content: comment,
@@ -36,10 +41,3 @@ Given /^I have a comment on the conversation:$/ do |comment|
                  conversation: @conversation)
 end
 
-
-#TODO: Change to "I have two comments on the conversation"
-Given /^I have another comment on the conversation$/ do
-  Factory.create(:comment,
-                 person: @current_person,
-                 conversation: @conversation)
-end

@@ -96,6 +96,7 @@ GEM
     json_pure (1.4.6)
     linecache19 (0.5.11)
       ruby_core_source (>= 0.1.4)
+    linguistics (1.0.8)
     mail (2.2.5)
       activesupport (>= 2.3.6)
       mime-types
@@ -197,6 +198,7 @@ DEPENDENCIES
   hoptoad_notifier
   hpricot
   httparty
+  linguistics
   meta_search
   mysql (= 2.8.1)
   nokogiri

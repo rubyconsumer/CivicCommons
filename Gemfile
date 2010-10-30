@@ -32,6 +32,7 @@ group :test do
   gem "factory_girl_rails"
   gem "ruby-debug19"
   gem 'webmock'
+  gem 'linguistics'
 end
 
 gem 'devise', '1.1.2'
