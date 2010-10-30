@@ -4,7 +4,7 @@ Feature:
   So that I can interact with the Civic Commons community
 
 
-  @api @wip
+  @api
   Scenario: User signs up for account with email address, name, zip code, username and password
 
       Given the user signs up with:
@@ -19,19 +19,8 @@ Feature:
         | Subject | Confirmation instructions     |
       And a People Aggregator shadow account should be created
 
-  Scenario: User clicks confirmation link in email
 
-    Given the user signs up with:
-      | Name      | Joe Test      |
-      | Email     | joe@test.com  |
-      | Zip       | 44444         |
-      | Password  | abcd1234      |
-    When the user confirms his account
-    Then the user should be confirmed
-    And the user should be logged in
-
-
-  @wip
+  @api
   Scenario: Deleting a user should destroy the user's shadow account
 
     Given the user signs up with:

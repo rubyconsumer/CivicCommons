@@ -3,6 +3,7 @@ Feature:
   I want to understand responses from the API
   so that I can quickly debug problems
 
+  @api
   Scenario: Missing a required key
     When I try to create the user without a login:
       | First     | Joe           |

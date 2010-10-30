@@ -4,7 +4,7 @@ Feature:  Creating an Organization
   So that I can interact with the Civic Commons community
 
 
-  @api @wip
+  @api
   Scenario: User signs up for account with email address, name, zip code, username, password, organization name
 
       Given the user signs up with:
