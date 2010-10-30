@@ -1,3 +1,11 @@
+Given /^I have a comment on the issue:$/ do |comment|
+  Factory.create(:contribution,
+                 person: @current_person,
+                 content: comment,
+                 conversation: nil,
+                 issue: @issue)
+end
+
 Given /^an issue:$/ do |table|
 
   issue = table.rows_hash
@@ -22,9 +30,5 @@ Given /^I have a contribution on the issue$/ do
   Factory.create(:comment,
                  person: @current_person,
                  issue: @issue)
-end
-
-Given /^I am following the issue$/ do
-  @issue.subscriptions.create(person: @current_person)
 end
 

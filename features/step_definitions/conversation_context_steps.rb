@@ -28,13 +28,18 @@ Given /^I have a comment on the conversation$/ do
                  conversation: @conversation)
 end
 
+Given /^I have a comment on the conversation:$/ do |comment|
+  Factory.create(:contribution,
+                 person: @current_person,
+                 content: comment,
+                 issue: nil,
+                 conversation: @conversation)
+end
+
+
+#TODO: Change to "I have two comments on the conversation"
 Given /^I have another comment on the conversation$/ do
   Factory.create(:comment,
                  person: @current_person,
                  conversation: @conversation)
 end
-
-Given /^I am following the conversation$/ do
-  @conversation.subscriptions.create(person: @current_person)
-end
-

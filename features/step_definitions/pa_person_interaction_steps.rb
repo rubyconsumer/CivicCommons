@@ -24,3 +24,4 @@ When /^I try to create a duplicate user with login "([^"]*)"$/ do |login|
   }
 end
 
+

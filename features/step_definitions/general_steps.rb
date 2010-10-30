@@ -1,7 +1,4 @@
-require 'cucumber/rspec/doubles'
-
-Given /^I am logged in as an admin$/ do
-  @current_user = mock(Person)
-  @current_user.stub!(:admin?).and_return(true)
+Then /^I should receive an? "([^"]*)" with the message:$/ do |error, string|
+  @code_to_run.should raise_error(error.constantize, string)
 end
 
