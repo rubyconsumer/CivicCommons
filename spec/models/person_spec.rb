@@ -127,5 +127,27 @@ describe Person do
 
   end
 
-
+  describe "upon creation" do
+    it "should send a confirmation email" do
+      person = Person.new(Factory.attributes_for(:person_with_shadow_account))
+      PeopleAggregator::Person.stub!(:create).and_return(OpenStruct.new(id: 42))
+      person.save
+      
+      mailing = ActionMailer::Base.deliveries.first
+      mailing.from.should == ["admin@theciviccommons.com"]
+      mailing.to.should == ["test.account1@mysite.com"]
+      mailing.subject.should == "Confirmation instructions"
+    end
+    
+    it "should send a welcome email" do
+      person = Person.new(Factory.attributes_for(:person_with_shadow_account))
+      PeopleAggregator::Person.stub!(:create).and_return(OpenStruct.new(id: 42))
+      person.save
+      
+      mailing = ActionMailer::Base.deliveries.second
+      mailing.from.should == ["admin@theciviccommons.com"]
+      mailing.to.should == ["test.account1@mysite.com"]
+      mailing.subject.should == "Welcome to The Civic Commons"
+    end
+  end
 end

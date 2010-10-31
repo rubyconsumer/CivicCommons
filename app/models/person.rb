@@ -53,6 +53,7 @@ class Person < ActiveRecord::Base
 
 
   after_create :create_shadow_account, :unless => :skip_shadow_account
+  after_create :send_welcome_email
   after_destroy :delete_shadow_account, :unless => :skip_shadow_account
 
 
@@ -131,6 +132,10 @@ class Person < ActiveRecord::Base
 
   def name
     @name ||= ("%s %s" % [self.first_name, self.last_name]).titlecase.strip
+  end
+
+  def send_welcome_email
+    Notifier.welcome(self).deliver
   end
 
   def self.find_all_by_name(name)

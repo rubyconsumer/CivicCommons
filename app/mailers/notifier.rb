@@ -2,7 +2,11 @@ class Notifier < Devise::Mailer
   layout 'mailer'
   
   def welcome(record)
-    setup_mail(record, :welcome)
+    @account = record
+    mail(:subject => "Welcome to The Civic Commons",
+         :from => Devise.mailer_sender,
+         :to => record.email)
+
   end
   
 end
