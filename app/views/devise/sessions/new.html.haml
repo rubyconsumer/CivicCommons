@@ -16,6 +16,9 @@
           .form-block
             = f.label :password, 'Password:'
             = f.password_field :password, :class => 'textbox small'
+          .form-block
+            = f.label :remember_me, 'Remember Me:'
+            = f.check_box :remember_me
         %fieldset.footer
           = f.submit 'Login', :class => 'submit'
           %a.cancel{ :href => new_password_path(resource_name),
