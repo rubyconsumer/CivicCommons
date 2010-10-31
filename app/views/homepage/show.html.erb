@@ -1,7 +1,7 @@
 <% content_for(:header) do %>
   <script type="text/javascript">
     $(document).ready(function(){
-        $("#poll_module").load("<%= Civiccommons::PeopleAggregator.URL %>/poll_module.php");
+        $("#poll_module").load("<%= pa_link('poll_module.php', :silent => true) %>");
     });
   </script>
 <% end %>
