@@ -26,7 +26,6 @@ class Person < ActiveRecord::Base
 
   validates_length_of :email, :within => 6..255, :too_long => "please use a shorter email address", :too_short => "please use a longer email address"
   validate :zip_code, :length => 10
-  validates_attachment_presence :avatar, :message => "can't be blank"
   validates_attachment_content_type :avatar, :content_type => %w(image/jpeg image/gif image/png image/jpg image/x-png image/pjpeg)
 
   has_attached_file :avatar,
