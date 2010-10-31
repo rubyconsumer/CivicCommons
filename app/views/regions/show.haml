@@ -10,7 +10,7 @@
         .two-col
           .cols
             -if @region.image?
-              %img.featured{ :class => "main-img", :src => @region.image.url(:normal), :alt => @region.name, :class => 'main-img'}
+              =image_tag @region.image.url, :alt => @region.name, :class => 'featured main-img'
             .feature
               -if @conversations.length >0
                 %h2 Conversations in this Region

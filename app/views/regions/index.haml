@@ -1,6 +1,5 @@
 -content_for :main_body do 
-  %h2
-    Regions
-  -@regions.each do |r|
+  %h2 Regions
+  -@regions.each do |region|
     .link
-      =link_to r.name, r
+      =link_to region.name, region
