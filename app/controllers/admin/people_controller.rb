@@ -56,7 +56,6 @@ class Admin::PeopleController < Admin::DashboardController
     respond_to do |format|
       format.html { redirect_to(admin_people_path) }
       format.json { redirect_to (admin_people_path)}
-      format.xml  { head :ok }
     end
   end
 
