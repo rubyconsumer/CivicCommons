@@ -1,7 +1,7 @@
 <% content_for(:header) do %>
   <script type="text/javascript">
     $(document).ready(function(){
-        $("#poll_module").load("<%= pa_link('poll_module.php', :silent => true) %>");
+        $("#poll_module").load("<%= pa_link('poll_module.php', :silent => true).html_safe %>");
     });
   </script>
 <% end %>
