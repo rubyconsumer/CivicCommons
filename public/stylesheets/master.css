@@ -48,7 +48,7 @@ padding-top: 15px;
 .conversations.divided .input-with-options li {padding: 0;}
 .conversations.divided .input-with-options li a.button {margin: 5px 10px 5px 0;}
 div#show_conversation {margin-top: -15px;}
-.divided li, .divided div {
+.divided li, div.divided div {
 border-bottom: 1px solid #b1b3b6;
 margin-bottom: 1em;
 padding-bottom: 1.2em;
