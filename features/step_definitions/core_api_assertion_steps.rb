@@ -1,4 +1,4 @@
-Then /^I should receive a response:$/ do |expected|
+Then /^I should receive the response:$/ do |expected|
   visit(@url)
   actual = page.body
 

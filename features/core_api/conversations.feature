@@ -11,61 +11,36 @@ Feature:
       | Zip                  | 44444         |
       | Password             | abcd1234      |
       | People Aggregator ID | 12            |
-
-  Scenario: Retrieve one conversation in which the user is participating
-    Given a conversation:
+    And a conversation:
       | ID          | 2                           |
-      | Title       | This is a test conversation |
-      | Image       | imageAttachment.png         |
-      | Summary     | Test conversation           |
-      | Zip Code    | 44111                       |
-    And I have a comment on the conversation
-    When I ask for conversations with URL:
-    """
-    /api/12/conversations
-    """
-    Then I should receive a response:
-    """
-    [
-      {
-        "title": "This is a test conversation",
-        "image": "http://s3.amazonaws.com/cc-dev/images/panel/imageAttachment.png",
-        "image_width": 198,
-        "image_height": 130,
-        "summary": "Test conversation",
-        "participant_count": 1,
-        "contribution_count": 1,
-        "url": "http://www.example.com/conversations/2"
-      }
-    ]
-    """
+      | Title       | Understanding The Latest Health Care Changes |
+
 
   @wip
-  Scenario: Multiple contributions to one conversation should only appear once
-    Given a conversation:
-      | ID          | 2                           |
-      | Title       | This is a test conversation |
-      | Image       | imageAttachment.png         |
-      | Summary     | Test conversation           |
-      | Zip Code    | 44111                       |
-    And I have two comments on the conversation
-    When I ask for conversations with URL:
-    """
-    /api/12/conversations
-    """
-    Then I should receive a response:
-    """
-    [
-      {
-        "title": "This is a test conversation",
-        "image": "http://s3.amazonaws.com/cc-dev/images/panel/imageAttachment.png",
-        "image_width": 198,
-        "image_height": 130,
-        "summary": "Test conversation",
-        "participant_count": 1,
-        "contribution_count": 2,
-        "url": "http://www.example.com/conversations/2"
-      }
-    ]
-    """
+  Scenario: Retrieve a contribution with a comment
+    Given I have contributed a comment:
+      """
+        This goes to the same problem that there would be in the adult market. This is why there is this individual mandate for adults. This is why the pre-existing conditions for adults ban doesn't take effect until that mandate kicks in.
+      """
+    When I ask for contributions with URL:
+      """
+      /api/people-aggregator/person/12/contributions
+      """
+    Then I should receive the response:
+      """
+      [
+        {
+            parent_title: "Understanding The Latest Health Care Changes",
+            parent_type: "conversation",
+            parent_url: "http://.../conversations/2",
+            created_at: "10/10/2010",
+            content: "This goes to the same problem that there would be in the adult market. This is why there is this individual mandate for adults. This is why the pre-existing conditions for adults ban doesn't take effect until that mandate kicks in.",
+            attachment_url: "",
+            embed_code: "",
+            type: "comment",
+            link_text: "",
+            link_url: ""
+        }
 
+      ]
+      """
