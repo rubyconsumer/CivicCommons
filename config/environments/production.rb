@@ -5,8 +5,12 @@ Civiccommons::Application.configure do
   # Code is not reloaded between requests
   config.cache_classes = true
 
+  # Log error messages when you accidentally call methods on nil.
+  config.whiny_nils = true
+
   # Full error reports are disabled and caching is turned on
   config.consider_all_requests_local       = false
+  config.action_view.debug_rjs             = false
   config.action_controller.perform_caching = true
 
   # Specifies the header that your server uses for sending files
@@ -36,6 +40,22 @@ Civiccommons::Application.configure do
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
+  # DO care if the mailer can't send
+  config.action_mailer.raise_delivery_errors = true
+
+  ActionMailer::Base.smtp_settings = {
+    :address              => "smtp.sendgrid.net",
+    :domain               => "theciviccommons.com",
+    :user_name            => "joe@joefiorini.com",
+    :password             => "digitalcity",
+    :authentication       => "plain",
+    :enable_starttls_auto => true
+  }
+
+  config.active_support.deprecation = :log
+
+  # For devise gem
+  config.action_mailer.default_url_options = { :host => 'production.theciviccommons.com' }
 
   # Enable threaded mode
   # config.threadsafe!
