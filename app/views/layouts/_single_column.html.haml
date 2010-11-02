@@ -5,9 +5,7 @@
     = precede "Not you? " do
       = link_to "Sign out", destroy_person_session_path
   - else
-    %p.login-link
-      %a{:href => new_person_session_path}
-        %strong
-          Login to your account
-    %p.createacct-link
-      = link_to "Create an account", new_person_registration_path
+    %p
+      %a{:href => new_person_session_path, :class => 'button login-link' }
+        Login to your account
+    = link_to "Create an account", new_person_registration_path, :class => 'createacct-link'
