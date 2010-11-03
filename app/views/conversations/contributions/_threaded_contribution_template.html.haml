@@ -5,7 +5,6 @@
       .callout
         - unless contribution.person.nil?
           = contribution_profile(contribution.person).html_safe
-          %p.time-stamp= format_time_only(contribution.created_at)
       %div.article.comment
         %a{:name=>"#post#{contribution.id}"}
         %p
@@ -23,9 +22,11 @@
         - if contribution.confirmed # if not confirmed, this is just a preview
           %div.convo-utility.no-response
             %p.respond-link
-              = link_to("Respond", {:action => "new_node_contribution", :contribution_id => contribution.id, :id => contribution.conversation_id, :div_id => "contribution-#{contribution.id}"}, :class => "text conversation-action", :id => "action-link-#{contribution.id}", :title => "Leave a comment here", 'data-target' => "#action-div-#{contribution.id}", :remote => true)
-            .rating-container
-              =render(:partial => 'conversations/contributions/rating', :locals => {:contribution => contribution})
+              = link_to("No Responses", {:action => "new_node_contribution", :contribution_id => contribution.id, :id => contribution.conversation_id, :div_id => "contribution-#{contribution.id}"}, :class => "text conversation-action", :id => "action-link-#{contribution.id}", :title => "Leave a comment here", 'data-target' => "#action-div-#{contribution.id}", :remote => true)
+            .respond-container
+              /=render(:partial => 'conversations/contributions/rating', :locals => {:contribution => contribution})
+              %p.respond
+                %a{ :href=>'#' } Respond
           %ol.conversations.divided.thread-list
             .comment-contribution-action(id="action-div-#{contribution.id}")
             = display_direct_descendant_subset(@contributions, contribution.id)

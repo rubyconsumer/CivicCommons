@@ -32,7 +32,7 @@
       </tbody>
     </table>
     <div class="pagination">
-      <%= will_paginate(@issues) %>
+      <%= will_paginate @issues, :previous_label => "Previous", :next_label => "Next" %>
     </div>
   </div><!-- /.main-content -->			
   <div class='aside supplementary'>

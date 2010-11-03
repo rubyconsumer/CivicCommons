@@ -12,7 +12,7 @@
           %p.convo-meta
             %strong= pluralize(@conversation.participants.size, "person") 
             are engaged, last activity
-            %strong= time_ago_in_words(@latest_contribution.created_at) + " ago"
+            %strong= time_ago_in_words(@latest_contribution ? @latest_contribution.created_at : @conversation.created_at ) + " ago"
         .aside.supplementary
           - if current_person
             %p
