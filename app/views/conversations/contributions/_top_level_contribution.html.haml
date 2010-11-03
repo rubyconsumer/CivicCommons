@@ -26,9 +26,11 @@
         - else
           %div.convo-utility.response
             %p.respond-link
-              = link_to(pluralize(contribution.descendants_count,'Response'), {:action => "node_conversation", :id => contribution.id, :div_id => "contribution-#{contribution.id}"}, :class => "text conversation-action show-conversation-button", :id => "action-link-#{contribution.id}", :title => "View the conversation", 'data-target' => "#action-div-#{contribution.id}", :remote => true)
+              = link_to(pluralize(contribution.descendants_count,'Response'), {:action => "node_conversation", :id => contribution.id, :div_id => "contribution-#{contribution.id}"}, :class => "text conversation-action show-conversation-button", :id => "action-link-#{contribution.id}", :title => "View the conversation", 'data-target' => "#thread-div-#{contribution.id}", :remote => true)
             .respond-container
               /=render(:partial => 'conversations/contributions/rating', :locals => {:contribution => contribution})
               %p.respond
-                %a{ :href=>'#' } Respond
-        %ol.conversations.divided.thread-list.top-level-contribution-action(id="action-div-#{contribution.id}")
+                = link_to("Respond", {:action => "new_node_contribution", :contribution_id => contribution.id, :id => contribution.conversation_id, :div_id => "contribution-#{contribution.id}"}, :class => "text conversation-action top-level-contribution-action-button", :id => "action-link-#{contribution.id}", :title => "Leave a comment here", 'data-target' => "#action-div-#{contribution.id}", :remote => true)
+        %ol.conversations.divided.thread-list
+          .top-level-contribution-action(id="action-div-#{contribution.id}")
+          .contribution-thread-div(id="thread-div-#{contribution.id}")

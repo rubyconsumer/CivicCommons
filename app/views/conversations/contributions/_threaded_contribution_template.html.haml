@@ -21,12 +21,11 @@
         = render(:partial => "conversations/contributions/#{contribution.type.underscore}", :locals => {:contribution => contribution})
         - if contribution.confirmed # if not confirmed, this is just a preview
           %div.convo-utility.no-response
-            %p.respond-link
-              = link_to("No Responses", {:action => "new_node_contribution", :contribution_id => contribution.id, :id => contribution.conversation_id, :div_id => "contribution-#{contribution.id}"}, :class => "text conversation-action", :id => "action-link-#{contribution.id}", :title => "Leave a comment here", 'data-target' => "#action-div-#{contribution.id}", :remote => true)
             .respond-container
               /=render(:partial => 'conversations/contributions/rating', :locals => {:contribution => contribution})
               %p.respond
-                %a{ :href=>'#' } Respond
+                = link_to("Respond", {:action => "new_node_contribution", :contribution_id => contribution.id, :id => contribution.conversation_id, :div_id => "contribution-#{contribution.id}"}, :class => "text conversation-action", :id => "action-link-#{contribution.id}", :title => "Leave a comment here", 'data-target' => "#action-div-#{contribution.id}", :remote => true)
           %ol.conversations.divided.thread-list
             .comment-contribution-action(id="action-div-#{contribution.id}")
-            = display_direct_descendant_subset(@contributions, contribution.id)
+            .contribution-thread-div(id="thread-div-#{contribution.id}")
+              = display_direct_descendant_subset(@contributions, contribution.id)
