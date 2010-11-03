@@ -346,18 +346,27 @@ padding: 8px 12px;
 text-decoration: none;
 }
 .pagination span {color: #999;}
-.pagination .prev {
+.pagination .previous_page {
 border-left: 1px solid #ccc;
 -webkit-border-radius: 8px 0 0 8px;
 -moz-border-radius: 8px 0 0 8px;
 border-radius: 8px 0 0 8px;
 }
-.pagination .next {
+.pagination .next_page {
 -webkit-border-radius: 0 8px 8px 0;
 -moz-border-radius: 0 8px 8px 0;
 border-radius: 0 8px 8px 0;
 }
-.pagination .current {background: #fff;}
+.pagination em {background: #fff;
+  border-bottom: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  border-top: 1px solid #ccc;
+  display: block;
+  float: left;
+  font-weight: bold;
+  padding: 8px 12px;
+  text-decoration: none;
+}
 
 /*-----------------------------------------------
 =Button and Link Styles
