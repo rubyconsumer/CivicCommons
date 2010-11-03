@@ -559,7 +559,7 @@ float: left;
 margin: 0;
 position: relative;
 }
-#nav-wrapper #main-nav li a, #nav-wrapper li.drop {
+#nav-wrapper #main-nav li a, #nav-wrapper li.drop a {
 color: #fff;
 display: block;
 /* font-weight: bold; */
@@ -573,11 +573,13 @@ background: #bac872 url(../images/nav_hover.gif) repeat-x top;
 color: #444;
 text-shadow: 0 1px 1px rgba(255,255,255,.8);
 }
+#nav-wrapper #main-nav li.drop:hover a {
+color: #444;
+text-shadow: 0 1px 1px rgba(255,255,255,.8);
+}
 #nav-wrapper li.drop {
-/* background: url(/images/dd_arrow.png) no-repeat 100% 51%; */
 cursor: pointer;
 margin: 0;
-/* padding-right: 16px; */
 }
 #nav-wrapper li.drop ul {
 background: #BAC675;
