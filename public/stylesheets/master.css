@@ -1230,7 +1230,7 @@ width: 375px;
 div.convo-entry a.button {
 float: right;
 }
-
+.moderate {float: right}
 /*-----------------------------------------------
 =Self Clearing Floats
 -----------------------------------------------*/

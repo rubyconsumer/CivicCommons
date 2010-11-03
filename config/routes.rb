@@ -13,6 +13,7 @@ Civiccommons::Application.routes.draw do
     # contribution. 
     get "create_from_pa", :on => :collection
   end
+  match '/contributions/moderate/:id', :to => 'contributions#moderate_contribution', :as => 'moderate_contribution', :via => [:delete]
 
   resources :answers
 
