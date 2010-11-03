@@ -83,8 +83,8 @@ jQuery(function ($) {
                 $(tabStrip).parent().empty();
               }
             }
-            window.location.hash = optionsTab;
             setTimeout(function(){ responseNode.scrollTo(); }, 250);
+            $(tabStrip).easytabs('select', optionsTab);
             $(tabStrip).unmask(); // doesn't always unmask on ajax:complete for some reason
           }
         })

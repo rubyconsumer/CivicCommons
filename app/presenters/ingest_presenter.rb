@@ -9,24 +9,22 @@ class IngestPresenter
   end
 
   def save!
-    if @file.nil?
-      @errors.add(:base,"You must provide a transcript file")
-      raise ActiveRecord::RecordInvalid.new(self)
-    end
+    if @file
     
-    dialogs = Ingester.ingest(@file.read)
-
-    # before creating top level contributions, validate that all
-    # speakers have a unique Person
-    validate_speakers(dialogs)
-    
-    dialogs.each do |dialog|
-      speaker = Person.find_all_by_name(dialog.speaker).first
-      contribution = TopLevelContribution.create!(:conversation => @conversation,
-                                                  :content => dialog.content,
-                                                  :person => speaker)
+      dialogs = Ingester.ingest(@file.read)
       
-      @conversation.contributions << contribution
+      # before creating top level contributions, validate that all
+      # speakers have a unique Person
+      validate_speakers(dialogs)
+      
+      dialogs.each do |dialog|
+        speaker = Person.find_all_by_name(dialog.speaker).first
+        contribution = TopLevelContribution.create!(:conversation => @conversation,
+                                                    :content => dialog.content,
+                                                    :person => speaker)
+        
+        @conversation.contributions << contribution
+      end
     end
   rescue Ingester::Error => e
     @errors.add_to_base(e.message)
