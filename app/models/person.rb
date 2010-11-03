@@ -9,7 +9,7 @@ class Person < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable,
          :confirmable
 
-  attr_accessor :skip_shadow_account, :organization_name
+  attr_accessor :skip_shadow_account, :organization_name, :confirmed
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :name, :first_name, :last_name, :email, :password, :password_confirmation, :top, :zip_code, :admin, :validated, 
@@ -52,10 +52,18 @@ class Person < ActiveRecord::Base
 
 
   after_create :create_shadow_account, :unless => :skip_shadow_account
-  after_create :send_welcome_email
   after_create :notify_civic_commons
+  before_save :set_confimed
+  after_save :send_welcome_email, :if => :confirmed?
   after_destroy :delete_shadow_account, :unless => :skip_shadow_account
-
+  
+  def set_confimed
+    @confirmed = true if confirmed_at_changed? && confirmed_at_was.blank? && !confirmed_at.blank?
+  end
+  
+  def confirmed?
+    !!@confirmed
+  end
 
   def create_shadow_account
     begin

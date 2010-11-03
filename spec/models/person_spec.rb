@@ -128,35 +128,55 @@ describe Person do
   end
 
   describe "upon creation" do
+    before(:each) do
+      ActionMailer::Base.deliveries = []
+    end
     def given_a_new_user_registered
-      person = Factory.create(:normal_person)
-      person.first_name = 'John'
-      person.last_name = 'Doe'
-      person.save
+      @person = Factory.create(:normal_person)
+      @person.first_name = 'John'
+      @person.last_name = 'Doe'
+      @person.save
     end
     it "should send a confirmation email" do
       given_a_new_user_registered
       mailing = ActionMailer::Base.deliveries.first
       mailing.from.should == ["admin@theciviccommons.com"]
-      mailing.to.should == ["test.account1@mysite.com"]
+      mailing.to.should == [@person.email]
       mailing.subject.should == "Confirmation instructions"
     end
     
-    it "should send a welcome email" do
+    it "should not send a welcome email" do
       given_a_new_user_registered
-      mailing = ActionMailer::Base.deliveries.second
-      mailing.from.should == ["admin@theciviccommons.com"]
-      mailing.to.should == ["test.account1@mysite.com"]
-      mailing.subject.should == "Welcome to The Civic Commons"
+      mailing = ActionMailer::Base.deliveries.last
+      mailing.subject.should_not == "Welcome to The Civic Commons"
     end
     
     it "should send a notification email to register@civiccommons.com" do
       given_a_new_user_registered
-      mailing = ActionMailer::Base.deliveries.third
+      mailing = ActionMailer::Base.deliveries.last
       mailing.from.should == ["admin@theciviccommons.com"]
       mailing.to.should == ["register@theciviccommons.com"]
       mailing.subject.should == "New User Registered"
-      mailing.body.include?("test.account1@mysite.com").should be_true
+      mailing.body.include?(@person.email).should be_true
+    end
+  end
+  describe "after confirmation of email" do
+    it "should send a welcome email" do
+      ActionMailer::Base.deliveries = []
+      person = Factory.create(:normal_person)
+      
+      mailing = ActionMailer::Base.deliveries.last
+      mailing.subject.should_not == "Welcome to The Civic Commons"
+      
+      person.confirmed_at = Time.now
+      person.save
+      
+      person.confirmed_at.should_not be_blank
+      
+      mailing = ActionMailer::Base.deliveries.last
+      mailing.from.should == ["admin@theciviccommons.com"]
+      mailing.to.should == [person.email]
+      mailing.subject.should == "Welcome to The Civic Commons"
     end
   end
 end
