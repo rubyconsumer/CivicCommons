@@ -1037,11 +1037,6 @@ color: #fff;
 
 /* Temporary fix - Testing */
 
-p.description {
-height: 70px;
-overflow: hidden;
-text-overflow: ellipsis;
-}
 p.article {margin: 0;}
 hr {
 display: block;
