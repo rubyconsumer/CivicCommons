@@ -544,6 +544,7 @@ z-index: 1;
 #nav-wrapper {background: #4f5561 url(/images/nav_wrapper_bg.gif) repeat-x top;}
 #nav-wrapper #nav {
 margin: auto;
+padding: 0 10px;
 width: 940px;
 }
 #main-nav {
