@@ -182,4 +182,54 @@ describe Person do
       ActionMailer::Base.deliveries.length.should == 3
     end
   end
+
+  describe "upon api update" do
+    it "can update name" do
+      person = Factory.create(:normal_person)
+      person.api_update(:name => "John Foo")
+      person.name.should == "John Foo"
+    end
+
+    it "skips encrypted password when missing" do
+      person = Factory.create(:normal_person)
+      encrypted_before = person.encrypted_password
+
+      person.api_update({})
+
+      person.encrypted_password.should == encrypted_before
+    end
+
+    it "should have errors when missing avatar file size" do
+      person = Factory.create(:normal_person)
+
+      person.api_update(:avatar => {:file_name => "test.jpg",
+                          :content_type => "image/jpg"})
+
+      person.errors.should_not be_empty
+      
+      person.save.should be_false
+    end
+
+    it "should have errors when missing avatar file name" do
+      person = Factory.create(:normal_person)
+
+      person.api_update(:avatar => {:file_size => 100,
+                          :content_type => "image/jpg"})
+
+      person.errors.should_not be_empty
+      
+      person.save.should be_false
+    end
+
+    it "should have errors when missing avatar content_type" do
+      person = Factory.create(:normal_person)
+
+      person.api_update(:avatar => {:file_name => "test.jpg",
+                          :file_size => 100})
+
+      person.errors.should_not be_empty
+      
+      person.save.should be_false
+    end
+  end
 end

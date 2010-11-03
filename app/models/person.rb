@@ -28,6 +28,8 @@ class Person < ActiveRecord::Base
   validate :zip_code, :length => 10
   validates_attachment_content_type :avatar, :content_type => %w(image/jpeg image/gif image/png image/jpg image/x-png image/pjpeg)
 
+  validates_presence_of :avatar_file_name, :avatar_content_type, :avatar_file_size
+
   has_attached_file :avatar,
     :styles => {
       :small => "20x20#",
@@ -110,7 +112,47 @@ class Person < ActiveRecord::Base
     save_pa_identifier(pa_person)
   end
 
+  # Handles updating only certain fields exposed via the api
+  # example hash of params would be
+  # { :name => "John Foo",
+  #   :email => "johnfoo@example.com",
+  #   :zip_code => "60600",
+  #   :avatar => {
+  #     :content_type => "image/jpeg",
+  #     :file_name => "test.jpeg",
+  #     :file_size => 1000,
+  #     :url => "http://some_amazon_s3_url"
+  #   },
+  #   :encrypted_password => "XXXXXXXXXXXX",
+  # }
+  # 
+  def api_update(params)
+    params ||= {}
 
+    # encrypted password is a protected attribute, explicitly update it if
+    # it was changed
+    if _encrypted_password = params.delete(:encrypted_password)
+      self.encrypted_password = _encrypted_password
+    end
+
+    # Handle updating the avatar
+    if (avatar_params = params[:avatar]) && avatar_params.any?
+      if url = avatar_params[:url]
+        Rails.logger.info("New avatar url for Person #{self.id}\n #{url}")
+      end
+      
+      # loop through all the attributes required by paperclip to circumvent
+      # requesting the file from AWS. Slight hack around the way paper clip works
+      required_attrs = [:file_name, :content_type, :file_size]
+      required_attrs.each do |attr|
+        self.send("avatar_#{attr}=", avatar_params[attr])
+      end
+      self.avatar_updated_at = Time.now
+    end
+
+    update_attributes(params)
+  end
+  
   def avatar_width_for_style(style)
     geometry_for_style(style, :avatar).width.to_i
   end
