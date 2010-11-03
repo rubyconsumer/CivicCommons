@@ -776,14 +776,10 @@ background: url(/images/chat-bubble-gray.png) no-repeat 0 50%;
 padding-left: 30px;
 }
 div.convo-utility.response p.respond-link {background-image: url(/images/chat-bubble-light.png);}
-div.convo-utility p.rating, div.productive p.rating-buttons {
+div.convo-utility p.respond, div.productive p.rating-buttons {
 float: right;
 text-align: right;
 width: 40%;
-}
-div.convo-utility p.rating span {
-font-weight: bold;
-margin-left: .5em;
 }
 .rate-form-container {padding: 2em 0 1em;}
 .rate-form {
