@@ -533,6 +533,7 @@ padding: 20px 10px 15px;
 position: relative;
 z-index: 1;
 }
+.important a {font-weight: bold;}
 #login-status h4, .important p {margin-bottom: .1em;}
 #header #header-utility #login-status div.offset-2 {border: none;}
 /*
@@ -637,8 +638,9 @@ background-color: #fff;
 border: 1px solid #333;
 border-left: none;
 border-right: none;
-float: left;
 height: 24px;
+position: relative;
+width: 242px;
 }
 div#search form input.textbox {
 border: none;
@@ -651,11 +653,13 @@ div#search input.submit {
 background: transparent url(../images/search-submit.png) no-repeat 0 0;
 border: none;
 display: block;
-float: left;
 height: 26px;
 margin: 0;
+position: absolute;
+right: -24px;
 vertical-align: middle;
 text-indent: -9999px;
+top: -1px;
 width: 24px;
 -webkit-border-radius: 0;
 -moz-border-radius: 0;
