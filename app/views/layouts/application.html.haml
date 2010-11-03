@@ -89,7 +89,7 @@
                 = link_to 'In The News', '/press'
         %div#search
           %form{ :method=>"post" }
-            %input.textbox#search{ :type=>"text", :id=>"search", :name=>"search", :placeholder=>"Name, Keyword, Date..." }
+            %input.textbox#search{ :type=>"text", :id=>"search", :name=>"search", :placeholder=>"Search" }
             %input.submit{ :type=>"submit", :value=>"Search" }
     = yield :main_body
     #footer.footer
