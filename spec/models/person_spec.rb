@@ -177,6 +177,9 @@ describe Person do
       mailing.from.should == ["admin@theciviccommons.com"]
       mailing.to.should == [person.email]
       mailing.subject.should == "Welcome to The Civic Commons"
+      ActionMailer::Base.deliveries.length.should == 3
+      person.save
+      ActionMailer::Base.deliveries.length.should == 3
     end
   end
 end

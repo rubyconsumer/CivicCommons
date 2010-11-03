@@ -9,7 +9,7 @@ class Person < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable,
          :confirmable
 
-  attr_accessor :skip_shadow_account, :organization_name, :confirmed
+  attr_accessor :skip_shadow_account, :organization_name, :send_welcome
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :name, :first_name, :last_name, :email, :password, :password_confirmation, :top, :zip_code, :admin, :validated, 
@@ -53,16 +53,12 @@ class Person < ActiveRecord::Base
 
   after_create :create_shadow_account, :unless => :skip_shadow_account
   after_create :notify_civic_commons
-  before_save :set_confimed
-  after_save :send_welcome_email, :if => :confirmed?
+  before_save :check_to_send_welcome_email
+  after_save :send_welcome_email, :if => :send_welcome?
   after_destroy :delete_shadow_account, :unless => :skip_shadow_account
   
-  def set_confimed
-    @confirmed = true if confirmed_at_changed? && confirmed_at_was.blank? && !confirmed_at.blank?
-  end
-  
-  def confirmed?
-    !!@confirmed
+  def check_to_send_welcome_email
+    @send_welcome = true if confirmed_at_changed? && confirmed_at_was.blank? && !confirmed_at.blank?
   end
 
   def create_shadow_account
@@ -145,9 +141,14 @@ class Person < ActiveRecord::Base
   def notify_civic_commons
     Notifier.new_registration_notification(self).deliver
   end
+  
+  def send_welcome?
+    @send_welcome
+  end
 
   def send_welcome_email
     Notifier.welcome(self).deliver
+    @send_welcome = false
   end
 
   def self.find_all_by_name(name)
