@@ -65,32 +65,30 @@ Feature:
       }]
       """
 
-  @backlog
+  @wip
   Scenario: Retrieve a contribution with a suggestion
     Given I have contributed a suggestion:
       """
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum dignissim magna quis tortor dignissim non fringilla purus placerat. Maecenas eleifend arcu a metus viverra mattis. Maecenas sit amet nunc nisl. Quisque felis leo, pharetra at adipiscing sit amet, fringilla eget arcu. Nunc a magna mi, sit amet semper velit. Suspendisse ipsum sem, sollicitudin vel dapibus sit amet, pretium sed elit. Duis luctus, enim ac laoreet bibendum, arcu mi dapibus dolor, vel consectetur nulla libero at erat. Nulla facilisi. Donec elementum dignissim odio auctor vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vitae leo risus, quis tempor velit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc luctus tellus libero. Vivamus ut augue non sem volutpat ornare non eget augue. Maecenas dolor libero, consectetur ut dictum nec, imperdiet sed ante.
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum dignissim magna quis tortor dignissim non fringilla purus placerat. Maecenas eleifend arcu a metus viverra mattis. Maecenas sit amet nunc nisl. Quisque felis leo, pharetra at adipiscing sit amet, fringilla eget arcu. Nunc a magna mi, sit amet semper velit. Suspendisse ipsum sem, sollicitudin vel dapibus sit amet, pretium sed elit. Duis luctus, enim ac laoreet bibendum, arcu mi dapibus dolor, vel consectetur nulla libero at erat. Nulla facilisi. Donec elementum dignissim odio auctor vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vitae leo risus, quis tempor velit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc luctus tellus libero. Vivamus ut augue non sem volutpat ornare non eget augue. Maecenas dolor libero, consectetur ut dictum nec, imperdiet sed ante.
       """
     When I ask for contributions with URL:
       """
-        /api/people-aggregator/person/12/contributions
+      /api/people-aggregator/person/12/contributions
       """
     Then I should receive the response:
       """
-        [
-          {
-            parent_title: "Understanding The Latest Health Care Changes",
-            parent_type: "conversation",
-            parent_url: "http://.../conversations/2",
-            created_at: "10/10/2010",
-            content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum dignissim magna quis tortor dignissim non fringilla purus placerat. Maecenas eleifend arcu a metus viverra mattis. Maecenas sit amet nunc nisl. Quisque felis leo, pharetra at adipiscing sit amet, fringilla eget arcu. Nunc a magna mi, sit amet semper velit. Suspendisse ipsum sem, sollicitudin vel dapibus sit amet, pretium sed elit. Duis luctus, enim ac laoreet bibendum, arcu mi dapibus dolor, vel consectetur nulla libero at erat. Nulla facilisi. Donec elementum dignissim odio auctor vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vitae leo risus, quis tempor velit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc luctus tellus libero. Vivamus ut augue non sem volutpat ornare non eget augue. Maecenas dolor libero, consectetur ut dictum nec, imperdiet sed ante."
-            attachment_url: "",
-            embed_code: "",
-            type: "suggestion",
-            link_text: "",
-            link_url: ""
-          }
-        ]
+      [{
+        "parent_title": "Understanding The Latest Health Care Changes",
+        "parent_type": "conversation",
+        "parent_url": "http://.../conversations/2",
+        "created_at": "10/10/2010",
+        "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum dignissim magna quis tortor dignissim non fringilla purus placerat. Maecenas eleifend arcu a metus viverra mattis. Maecenas sit amet nunc nisl. Quisque felis leo, pharetra at adipiscing sit amet, fringilla eget arcu. Nunc a magna mi, sit amet semper velit. Suspendisse ipsum sem, sollicitudin vel dapibus sit amet, pretium sed elit. Duis luctus, enim ac laoreet bibendum, arcu mi dapibus dolor, vel consectetur nulla libero at erat. Nulla facilisi. Donec elementum dignissim odio auctor vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vitae leo risus, quis tempor velit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc luctus tellus libero. Vivamus ut augue non sem volutpat ornare non eget augue. Maecenas dolor libero, consectetur ut dictum nec, imperdiet sed ante.",
+        "attachment_url": "",
+        "embed_code": "",
+        "type": "suggestion",
+        "link_text": "",
+        "link_url": ""
+      }]
       """
 
   @backlog
