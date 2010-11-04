@@ -7,35 +7,34 @@
     .tab-area.input-with-options
       %div{:id => "#{div_id}-options", :class => 'tab-strip-options'}
         %ul
-          %li.default-tab
-            %a{:href => "##{div_id}-options", :style => 'display: none;'}
           %li.preview-tab
             %a{:href => "##{div_id}-preview", :style => 'display: none;' }
+          %li.default-tab
+            %a{:href => "##{div_id}-new-comment",          :title => "Comment",        :id => "comment_tab" } Comment
           %li
-            %a{:href => "##{div_id}-new-comment",          :title => "Comment",        :id => "comment_tab",           :class => 'button'} Comment
+            %a{:href => "##{div_id}-new-suggested_action", :title => "Suggest Action", :id => "suggested_action_tab" } Suggest Action
           %li
-            %a{:href => "##{div_id}-new-suggested_action", :title => "Suggest Action", :id => "suggested_action_tab",  :class => 'button'} Suggest Action
+            %a{:href => "##{div_id}-new-question",         :title => "Question",       :id => "question_tab" } Question
           %li
-            %a{:href => "##{div_id}-new-question",         :title => "Question",       :id => "question_tab",          :class => 'button'} Question
+            %a{:href => "##{div_id}-new-attached_file",    :title => "Attach",         :id => "image_tab" } Attach
           %li
-            %a{:href => "##{div_id}-new-attached_file",    :title => "Attach",         :id => "image_tab",             :class => 'button'} Attach
+            %a{:href => "##{div_id}-new-link",             :title => "Link",           :id => "link_tab" } Link
           %li
-            %a{:href => "##{div_id}-new-link",             :title => "Link",           :id => "link_tab",              :class => 'button'} Link
+            %a{:href => "##{div_id}-new-embedded_snippet", :title => "Video",          :id => "video_tab" } Video
           %li
-            %a{:href => "##{div_id}-new-embedded_snippet", :title => "Video",          :id => "video_tab",             :class => 'button'} Video
-          %li
-            = link_to("Write Contribution", pa_new_conversation_contribution_url(current_person, @contribution.conversation_id, @contribution.parent_id), :title => "Write Contribution", :class => "button")
-      %div{:id => "#{div_id}-preview", :class => "contribution-preview"}
-        %a{:href => "##{div_id}-options", :class => 'button'} Respond
-      %div{:id => "#{div_id}-new-comment" }
-        = render :partial => 'conversations/new_contribution_form', :locals => {:div_id => div_id, :type => :comment}
-      %div{:id => "#{div_id}-new-question" }
-        = render :partial => 'conversations/new_contribution_form', :locals => {:div_id => div_id, :type => :question}
-      %div{:id => "#{div_id}-new-attached_file" }
-        = render :partial => 'conversations/new_contribution_form', :locals => {:div_id => div_id, :type => :attached_file}
-      %div{:id => "#{div_id}-new-link" }
-        = render :partial => 'conversations/new_contribution_form', :locals => {:div_id => div_id, :type => :link}
-      %div{:id => "#{div_id}-new-embedded_snippet" }
-        = render :partial => 'conversations/new_contribution_form', :locals => {:div_id => div_id, :type => :embedded_snippet}
-      %div{:id => "#{div_id}-new-suggested_action" }
-        = render :partial => 'conversations/new_contribution_form', :locals => {:div_id => div_id, :type => :suggested_action}
+            = link_to( "Write Contribution", pa_new_conversation_contribution_url(current_person, @contribution.conversation_id, @contribution.parent_id), :title => "Write Contribution" )
+      %div.panels
+        %div{:id => "#{div_id}-preview", :class => "contribution-preview"}
+          %a{:href => "##{div_id}-options", :class => 'button'} Respond
+        %div{:id => "#{div_id}-new-comment" }
+          = render :partial => 'conversations/new_contribution_form', :locals => {:div_id => div_id, :type => :comment}
+        %div{:id => "#{div_id}-new-question" }
+          = render :partial => 'conversations/new_contribution_form', :locals => {:div_id => div_id, :type => :question}
+        %div{:id => "#{div_id}-new-attached_file" }
+          = render :partial => 'conversations/new_contribution_form', :locals => {:div_id => div_id, :type => :attached_file}
+        %div{:id => "#{div_id}-new-link" }
+          = render :partial => 'conversations/new_contribution_form', :locals => {:div_id => div_id, :type => :link}
+        %div{:id => "#{div_id}-new-embedded_snippet" }
+          = render :partial => 'conversations/new_contribution_form', :locals => {:div_id => div_id, :type => :embedded_snippet}
+        %div{:id => "#{div_id}-new-suggested_action" }
+          = render :partial => 'conversations/new_contribution_form', :locals => {:div_id => div_id, :type => :suggested_action}

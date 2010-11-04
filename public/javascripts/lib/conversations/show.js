@@ -111,7 +111,32 @@ jQuery(function ($) {
       },
       
       applyEasyTabsToTabStrip: function() {
-        var $container = this;
+        var $container = this,
+            $tabs = $container.find('.tab-strip-options'),
+            $inputs = $container.find('label,textarea'),
+            $textareas = $inputs.filter('textarea');
+            
+        $inputs.each(function() {
+          var $this = $(this),
+              horizontalPadding = parseFloat($this.css('paddingLeft')) + parseFloat($this.css('paddingRight')),
+              horizontalBorder = $this.outerWidth() - $this.innerWidth();
+
+          $this.width( $container.innerWidth() - $tabs.outerWidth() - horizontalPadding - horizontalBorder - 2 );
+        });
+        $textareas.each(function() {
+          var $this = $(this),
+            verticalPadding = parseFloat($this.css('paddingTop')) + parseFloat($this.css('paddingBottom')),
+            verticalBorder = $this.outerWidth() - $this.innerWidth(),
+            $sibling = $(this).siblings('label').first(),
+            extraVerticalSpace = 0;
+          
+          if ( $sibling.size() > 0 ) {
+            extraVerticalSpace = $sibling.outerHeight();
+          }
+            
+          $this.height( $tabs.outerHeight() - verticalPadding - verticalBorder - extraVerticalSpace );
+        });
+        
         $container.easytabs({
           tabActiveClass: 'tab-active',
           tabActivePanel: 'panel-active',
@@ -122,10 +147,6 @@ jQuery(function ($) {
         })  
           .live("easytabs:after", function(){
             $.colorbox.resize();
-          })
-          .find("a.cancel").click(function(e){
-            $container.easytabs('select', 'li.default-tab');
-            e.preventDefault();
           });
       },
       

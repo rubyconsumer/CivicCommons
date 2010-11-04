@@ -733,33 +733,39 @@ width: 100%;
 -----------------------------------------------*/
 
 /* Tabs */
+div.tab-strip-options {
+float: left;
+
+}
 div.tab-strip ul {
 list-style-type: none;
 margin-bottom: 0;
 margin-left: 0;
+border-bottom: solid 1px #ccc;
 }
 div.tab-strip ul li {
-float: left;
-margin-bottom: -1px;
-text-align: center;
 }
-.divided div.tab-strip ul li {border-bottom: none;}
+.divided div.tab-strip ul li {
+border-bottom: none;
+}
 div.tab-strip ul li a {
 display: block;
 padding: 5px 9px;
 text-decoration: none;
+background: #ddd;
+border: solid 1px #ccc;
+border-bottom: none;
 }
-/*
-div.tab-area, div.tab-strip ul li a.tab-active {
-background-color: #fff;
-border: 1px solid #ccc;
+div.tab-strip ul li a.tab-active {
+border-bottom: none;
+background: #fff;
 }
-*/
-div.tab-strip ul li a.tab-active {border-bottom: none;}
-textarea.comment_text {
-width: 97%;
-margin-bottom: 8px;
-border: 0;
+div.tab-strip textarea {
+width: 97%; /* This gets modified in the show.js easytabs:after binding, so it doesn't matter for now */
+margin: 0;
+}
+div.tab-strip label {
+margin: 0;
 }
 /* p.convo-meta {margin-bottom: 2em;} */
 
