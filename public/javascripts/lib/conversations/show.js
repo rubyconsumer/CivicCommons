@@ -1,22 +1,27 @@
 jQuery(function ($) {
   $.fn.extend({
     updateConversationButtonText: function(){
-      var el = this;
-          parentButton = el.parents('.top-level-contribution').find('.show-conversation-button');
+      var el = this,
+          parentButton = el.parents('.top-level-contribution').find('.conversation-responses').first(),
+          incrementedText;
       
       if(parentButton.size() == 0) { return el; } // there is no parent button if responding to convo-level responses at bottom of convo perma page
-          
+      
+      if ( parentButton.data('origText') == null ) { parentButton.data('origText', parentButton.text()); }
+
       if( /^[^\d]+$/.test(parentButton.data('origText')) ){ // if origText does not contain a number (most likely says something like "Be the first to respond", but we'll be flexible)
         parentButton.data('origText',"0 Response");
       }
       integers = parentButton.data('origText').match(/(\d+)/g);
+
       $.each(integers, function(){
-        incrementedText = parentButton.data('origText').replace(this,parseInt(this)+1)
+        incrementedText = parentButton.data('origText').replace(this,parseInt(this)+1);
         // if this == 0, then incremented == 1, so no pluralization
         if(this != 0){ incrementedText = incrementedText.replace(/Response$/, 'Responses'); }
       });
-      parentButton.data('origText', incrementedText);
-      
+      parentButton
+        .data('origText', incrementedText)
+        .text(incrementedText);
       return el;
     },
     
@@ -67,28 +72,28 @@ jQuery(function ($) {
             var optionsTab = '#' + divId + '-options',
                 origForm = $(this).data('origForm');
             
-            if ( $(clicked).hasClass('top-node-conversation-action') ) {
-              $.fn.colorbox.close();
-              $('ol#conversation-thread-list').append(responseNode).find('.rate-form-container').hide();
-            } else {
+            if ( ! $(clicked).data('colorbox') ) { // unless element has colorbox applied, then clean up the overridden toggle action
+              $(clicked).unbind('click'); // only unbinds the click function that attaches the toggle, since all the other events are indirectly attached through .live()
+            }
+            if ( ! $(clicked).hasClass('top-node-conversation-action') ) {
               $(clicked).updateConversationButtonText();
-              $(clicked)
-                .text($(clicked).data('origText'))
-                .unbind('click'); // only unbinds the click function that attaches the toggle, since all the other events are indirectly attached through .live()
-              
+
               if ( $(clicked).hasClass('top-level-contribution-action-button') ) {
-                var $showResponsesButton = $(clicked).closest('.response').find('.show-conversation-button');
+                var $showResponsesButton = $(clicked).closest('.response').find('.conversation-responses');
                 if ( ! $showResponsesButton.data('expanded') ) {
-                  $showResponsesButton.click(); // expands
+                  $showResponsesButton.bind('ajax:success', function(){
+                    var $target = $(this).closest('.contribution-container').find('ol.thread-list,ul.thread-list').first(),
+                        responseId = responseNode.filter('li').first().attr('id');
+
+                    setTimeout(function(){ $target.find('#' + responseId).scrollTo(); }, 250);
+                  }).trigger('click'); // expands
                 }
               }
-              
-              $(this).appendContributionToThread(responseNode);
-              $(tabStrip).parent().empty();
             }
-            setTimeout(function(){ responseNode.scrollTo(); }, 250);
-            $(tabStrip).easytabs('select', optionsTab);
-            $(tabStrip).unmask(); // doesn't always unmask on ajax:complete for some reason
+            
+            $(clicked).appendContributionToThread(responseNode);
+            $.fn.colorbox.close();
+            //setTimeout(function(){ responseNode.scrollTo(); }, 250);
           }
         })
         .bindValidationErrorOnAjaxFailure()
@@ -97,11 +102,13 @@ jQuery(function ($) {
       },
       
       appendContributionToThread: function(responseNode) {
-        var $target = this.closest('ol.thread-list,ul.thread-list').find('.contribution-thread-div').first(),
+        var $target = this.closest('.contribution-container').find('ol.thread-list,ul.thread-list').first().find('.contribution-thread-div').first(),
             contribution = responseNode.children('li').attr('id'),
             $contributionOnPage = $target.find('li#' + contribution);
-            
-        if ( $contributionOnPage.size > 0 ){
+        
+        if ( this.hasClass('top-node-conversation-action') ) {
+          $contributionOnPage = $('ol#conversation-thread-list').append(responseNode);
+        } else if ( $contributionOnPage.size > 0 ){
           $contributionOnPage = $contributionOnPage.replaceWith(responseNode);
         } else {
           $contributionOnPage = $target.append(responseNode);
@@ -146,7 +153,7 @@ jQuery(function ($) {
           updateHash: false
         })  
           .live("easytabs:after", function(){
-            $.colorbox.resize();
+            //$.colorbox.resize();
           });
       },
       
@@ -226,7 +233,7 @@ jQuery(function ($) {
     	);
     }
     
-  	$('a.conversation-action')
+  	$('a.conversation-responses')
   	  .live("ajax:loading", function(){
   	    var href = $(this).attr("href"),
   	        label = href.match(/\/conversations\/node_conversation/) ? "Loading responses..." : "Loading...";
@@ -283,20 +290,25 @@ jQuery(function ($) {
         })
         .liveAlertOnAjaxFailure();
       
-      $('.top-node-conversation-action').colorbox({ 
-        href: $(this).attr('href'),
-        width: '500px',
-        height: '300px',
-        onComplete: function(){
-          var clicked = '#' + $(this).attr('id');
-              convoId = clicked.match(/(\d+)/)[0];
-              tabStrip = '.tab-strip#conversation-' + convoId;
-              form = tabStrip + ' form';
-          $(tabStrip).applyEasyTabsToTabStrip();
-          $(form).bindContributionFormEvents(clicked,tabStrip);
-          $.colorbox.resize();
-        },
-        scrolling: false
+      $('.top-node-conversation-action,.conversation-action').live('click', function(e){
+        var $this = $(this);
+        $.colorbox({
+          href: $this.attr('href'),
+          width: '600px',
+          height: '350px',
+          onComplete: function(){
+            var clicked = $this,
+                divId = $(clicked).attr('href').match(/div_id=([^&]+)/)[1],
+                tabStrip = '.tab-strip#' + divId,
+                form = tabStrip + ' form';
+            
+            $(tabStrip).applyEasyTabsToTabStrip();
+            $(form).bindContributionFormEvents(clicked,tabStrip);
+            //$.colorbox.resize();
+          }
+          //scrolling: false
+        });
+        e.preventDefault();
       });
       
       $('.rate-form-container').hide();

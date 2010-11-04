@@ -1,6 +1,6 @@
 %li.offset-1{:id => "show-contribution-#{contribution.id}"}
   %a{:name=>"contribution#{contribution.id}"}
-  %div
+  %div.contribution-container
     - if contribution
       .callout
         - unless contribution.person.nil?
@@ -20,7 +20,7 @@
             .respond-container
               /=render(:partial => 'conversations/contributions/rating', :locals => {:contribution => contribution})
               %p.respond
-                = link_to("Respond", {:action => "new_node_contribution", :contribution_id => contribution.id, :id => contribution.conversation_id, :div_id => "contribution-#{contribution.id}"}, :class => "text conversation-action", :id => "action-link-#{contribution.id}", :title => "Leave a comment here", 'data-target' => "#action-div-#{contribution.id}", :remote => true)
+                = link_to("Respond", {:action => "new_node_contribution", :contribution_id => contribution.id, :id => contribution.conversation_id, :div_id => "contribution-#{contribution.id}"}, :class => "text conversation-action", :id => "action-link-#{contribution.id}", :title => "Leave a comment here", 'data-target' => "#action-div-#{contribution.id}")
           %ol.conversations.divided.thread-list
             .comment-contribution-action(id="action-div-#{contribution.id}")
             .contribution-thread-div(id="thread-div-#{contribution.id}")

@@ -743,6 +743,7 @@ margin-left: 0;
 border-bottom: solid 1px #ccc;
 }
 div.tab-strip ul li {
+margin: 0;
 }
 .divided div.tab-strip ul li {
 border-bottom: none;
@@ -1175,10 +1176,6 @@ border-top: solid 1px #ddd;
 padding-top: 15px;
 margin-top: -10px;
 }
-
-/* Buttons for Colorbox Modal Window */
-div#colorbox div.tab-area {padding: 10px;}
-div#colorbox div.tab-area li {margin-bottom: 10px;}
 
 /*-----------------------------------------------
 =Styles for Convo Modal Popup
