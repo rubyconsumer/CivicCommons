@@ -5,14 +5,10 @@
         = contribution_profile(contribution.person).html_safe
       %div.article.comment.top-level-contribution
         %a{:name=>"#post#{contribution.id}"}
-        %p
-          -if contribution.person
-            %strong
-              = text_profile(contribution.person).html_safe
-          -else
-            %strong= 'An unknown person'
-          commented:
-        %p.content= auto_link(contribution.content)
+        %p.content
+          %strong= person_display_name(contribution.person)
+          &nbsp;-&nbsp;
+          =auto_link(contribution.content)
         %div{:class => "convo-utility #{contribution.descendants_count > 0 ? 'response' : 'no-response'}"}
           %p.respond-link
             - if contribution.descendants_count > 0

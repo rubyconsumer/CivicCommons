@@ -6,4 +6,13 @@ module ContributionsHelper
       issue_path(contribution.issue)
     end
   end
+
+  def person_display_name(person)
+    if person
+      # This should render a link to the PA profile
+      text_profile(person).html_safe
+    else
+      'An unknown person'
+    end
+  end
 end
