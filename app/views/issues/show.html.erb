@@ -96,28 +96,7 @@ $(document).ready(function() {
         <% end %>
 
         <h3>Conversations about this issue:</h3>
-        <div class="three-col-sm">
-          <!-- 
-          NOTE: There is a partial for this conversations/conversation_pager
-          but, I couldn't make it work in this context
-          -->
-          <% @latest_conversations.each do |conversation| %>
-            <div class="cols call-out">
-              <a href="<%= conversation_path(conversation)%>">
-                <img class="main-img" src="<%= conversation.image.url(:panel) %>" alt="<%= conversation.title %>" width="180" height="120" />
-                <h4><%= truncate(conversation.title, {:length => 45, :seperator => ' '}) %></h4>
-                <p><%= raw(truncate(conversation.summary, {:length => 125, :separator => ' '})) %></p>
-              </a>
-
-              <div class="photobank">
-                <% conversation.participants[0...4].each do |person| %>
-                  <%= avatar_tag(person, :style_name => :standard, :width => "40", :height => "40") %>
-                <% end %>
-              </div>
-
-            </div>
-          <% end %>
-        </div>
+        <%= render :partial => '/conversations/conversation_pager' %>
       </div><!-- /.main-content -->
       <div class='aside supplementary'>
         <% @media_contributions.each do |contribution| %>
