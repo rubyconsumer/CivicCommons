@@ -19,4 +19,7 @@ class StaticPagesController < ApplicationController
 
   def terms
   end
+
+  def build_the_commons
+  end
 end
