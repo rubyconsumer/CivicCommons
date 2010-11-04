@@ -9,10 +9,8 @@
   = f.text_area(:content, :rows => "3", :placeholder => contribution_form_placeholder_text_for(type))
   - if type == :question
     %label
-      Who can answer?
-      %select(id="contribution_askee")
-        %option Anyone
-        %option Moderator
+      /Who can answer?
+      = f.select(:askee, [ [ "This question may be answered by Anyone", "Anyone" ], [ "This question may ONLY be answered by a Moderator", "Moderator" ] ])
   - elsif type == :attached_file
     %label
       Upload a file:
@@ -24,7 +22,7 @@
   - elsif type == :embedded_snippet
     %label
       /YouTube Link:
-      = f.text_field(:url, :type => "text", :class => "textbox link youtube", :placeholder => "Copy/paste the YouTube link here.")
+      = f.text_field(:url, :type => "text", :class => "textbox link youtube", :placeholder => "www.youtube.com/watch?v=123456")
       .youtube-thumbnail
   %div.validation-error
   = hidden_field_tag(:preview, true)

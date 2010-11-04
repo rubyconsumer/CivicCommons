@@ -13,24 +13,16 @@
             %strong= 'An unknown person'
           commented:
         %p.content= auto_link(contribution.content)
-        - if contribution.descendants_count == 0
-          %div.convo-utility.no-response
-            %p.respond-link
-              /= link_to("Be the first to respond", {:action => "node_conversation", :id => contribution.id, :div_id => "contribution-#{contribution.id}"}, :class => "text conversation-action show-conversation-button", :id => "action-link-#{contribution.id}", :title => "View the conversation", 'data-target' => "#action-div-#{contribution.id}", :remote => true)
-              No Responses
-            .respond-container
-              /=render(:partial => 'conversations/contributions/rating', :locals => {:contribution => contribution})
-              / We're not rending ratings here anymore, instead use respond link
-              %p.respond
-                %a{ :href=>'#' } Respond
-        - else
-          %div.convo-utility.response
-            %p.respond-link
+        %div{:class => "convo-utility #{contribution.descendants_count > 0 ? 'response' : 'no-response'}"}
+          %p.respond-link
+            - if contribution.descendants_count > 0
               = link_to(pluralize(contribution.descendants_count,'Response'), {:action => "node_conversation", :id => contribution.id, :div_id => "contribution-#{contribution.id}"}, :class => "text conversation-action show-conversation-button", :id => "action-link-#{contribution.id}", :title => "View the conversation", 'data-target' => "#thread-div-#{contribution.id}", :remote => true)
-            .respond-container
-              /=render(:partial => 'conversations/contributions/rating', :locals => {:contribution => contribution})
-              %p.respond
-                = link_to("Respond", {:action => "new_node_contribution", :contribution_id => contribution.id, :id => contribution.conversation_id, :div_id => "contribution-#{contribution.id}"}, :class => "text conversation-action top-level-contribution-action-button", :id => "action-link-#{contribution.id}", :title => "Leave a comment here", 'data-target' => "#action-div-#{contribution.id}", :remote => true)
+            - else
+              No Responses
+          .respond-container
+            /=render(:partial => 'conversations/contributions/rating', :locals => {:contribution => contribution})
+            %p.respond
+              = link_to( (contribution.descendants_count > 0 ? "Respond" : "Be the first to respond" ), {:action => "new_node_contribution", :contribution_id => contribution.id, :id => contribution.conversation_id, :div_id => "contribution-#{contribution.id}"}, :class => "text conversation-action top-level-contribution-action-button", :id => "action-link-#{contribution.id}", :title => "Leave a comment here", 'data-target' => "#action-div-#{contribution.id}", :remote => true)
         %ol.conversations.divided.thread-list
           .top-level-contribution-action(id="action-div-#{contribution.id}")
           .contribution-thread-div(id="thread-div-#{contribution.id}")

@@ -19,7 +19,7 @@
               %span#subscription
                 = render :partial => '/subscriptions/subscription', :locals => {:subscribable => @conversation}
             %p
-              = link_to("Post to Overall Conversation", {:action => "new_node_contribution", :id => @conversation.id, :div_id => "conversation-#{@conversation.id}"}, :class => "text button top-node-conversation-action", :id => "conversation-action-link-#{@conversation.id}", :title => "", 'data-target' => "#conversation-action-div-#{@conversation.id}")
+              = link_to("Post to this Conversation", {:action => "new_node_contribution", :id => @conversation.id, :div_id => "conversation-#{@conversation.id}"}, :class => "text button top-node-conversation-action", :id => "conversation-action-link-#{@conversation.id}", :title => "", 'data-target' => "#conversation-action-div-#{@conversation.id}")
           - else 
             %p
               = link_to("Login to Post to Overall Conversation", new_person_session_path, :class => "text button top-node-conversation-action")
