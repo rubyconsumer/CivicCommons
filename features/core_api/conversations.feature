@@ -75,11 +75,11 @@ Feature:
           }
         ]
       """
-  
-  Scenario: Retrieve a contribution with a suggestion 
+
+  Scenario: Retrieve a contribution with a suggestion
     Given I have contributed a suggestion:
       """
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum dignissim magna quis tortor dignissim non fringilla purus placerat. Maecenas eleifend arcu a metus viverra mattis. Maecenas sit amet nunc nisl. Quisque felis leo, pharetra at adipiscing sit amet, fringilla eget arcu. Nunc a magna mi, sit amet semper velit. Suspendisse ipsum sem, sollicitudin vel dapibus sit amet, pretium sed elit. Duis luctus, enim ac laoreet bibendum, arcu mi dapibus dolor, vel consectetur nulla libero at erat. Nulla facilisi. Donec elementum dignissim odio auctor vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vitae leo risus, quis tempor velit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc luctus tellus libero. Vivamus ut augue non sem volutpat ornare non eget augue. Maecenas dolor libero, consectetur ut dictum nec, imperdiet sed ante. 
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum dignissim magna quis tortor dignissim non fringilla purus placerat. Maecenas eleifend arcu a metus viverra mattis. Maecenas sit amet nunc nisl. Quisque felis leo, pharetra at adipiscing sit amet, fringilla eget arcu. Nunc a magna mi, sit amet semper velit. Suspendisse ipsum sem, sollicitudin vel dapibus sit amet, pretium sed elit. Duis luctus, enim ac laoreet bibendum, arcu mi dapibus dolor, vel consectetur nulla libero at erat. Nulla facilisi. Donec elementum dignissim odio auctor vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vitae leo risus, quis tempor velit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc luctus tellus libero. Vivamus ut augue non sem volutpat ornare non eget augue. Maecenas dolor libero, consectetur ut dictum nec, imperdiet sed ante.
       """
     When I ask for contributions with URL:
       """
@@ -102,7 +102,7 @@ Feature:
           }
         ]
       """
-  
+
   Scenario: Retrieve a contribution with a question
     Given I have contributed a question:
       """
@@ -157,7 +157,7 @@ Feature:
           }
         ]
       """
-  
+
   Scenario: Retrieve a contribution with an image
     Given I have contributed an image "picture.png"
     And I have commented:
@@ -185,7 +185,7 @@ Feature:
           }
         ]
       """
-  
+
   Scenario: Retrieve a contribution with a link
     Given I have contributed a link "http://www.cbsnews.com" with the text "Here's My Link"
     And I have commented:
