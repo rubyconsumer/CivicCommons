@@ -19,13 +19,15 @@ class Api::Contributions
       contribution = ContributionPresenter.new(contribution, request)
       {
         parent_title: contribution.parent_title,
-        parent_image: contribution.parent_image.url(:panel),
-        parent_image_width: contribution.parent.geometry_for_style(:panel).width.to_i,
-        parent_image_height: contribution.parent.geometry_for_style(:panel).height.to_i,
-        comment: contribution.content,
-        participant_count: contribution.parent.participants.count,
-        contribution_count: contribution.parent.contributions.where(owner: person).count,
-        parent_url: contribution.parent_url
+        parent_type: 'conversation',
+        parent_url: contribution.parent_url,
+        created_at: contribution.created_at,
+        content: contribution.content,
+        attachment_url: '',
+        embed_code: '',
+        type: 'comment',
+        link_text: '',
+        link_url: ''
       }
     end
   end
