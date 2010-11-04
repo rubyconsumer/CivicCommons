@@ -16,11 +16,10 @@ Feature:
       | Title       | Understanding The Latest Health Care Changes |
 
 
-  @wip
   Scenario: Retrieve a contribution with a comment
     Given I have contributed a comment:
       """
-        This goes to the same problem that there would be in the adult market. This is why there is this individual mandate for adults. This is why the pre-existing conditions for adults ban doesn't take effect until that mandate kicks in.
+      This goes to the same problem that there would be in the adult market. This is why there is this individual mandate for adults. This is why the pre-existing conditions for adults ban doesn't take effect until that mandate kicks in.
       """
     When I ask for contributions with URL:
       """
@@ -28,21 +27,18 @@ Feature:
       """
     Then I should receive the response:
       """
-      [
-        {
-            parent_title: "Understanding The Latest Health Care Changes",
-            parent_type: "conversation",
-            parent_url: "http://.../conversations/2",
-            created_at: "10/10/2010",
-            content: "This goes to the same problem that there would be in the adult market. This is why there is this individual mandate for adults. This is why the pre-existing conditions for adults ban doesn't take effect until that mandate kicks in.",
-            attachment_url: "",
-            embed_code: "",
-            type: "comment",
-            link_text: "",
-            link_url: ""
-        }
-
-      ]
+      [{
+        "parent_title": "Understanding The Latest Health Care Changes",
+        "parent_type": "conversation",
+        "parent_url": "http://www.example.com/conversations/2",
+        "created_at": "2010-10-10T04:00:00Z",
+        "content": "This goes to the same problem that there would be in the adult market. This is why there is this individual mandate for adults. This is why the pre-existing conditions for adults ban doesn't take effect until that mandate kicks in.",
+        "attachment_url": "",
+        "embed_code": "",
+        "type": "comment",
+        "link_text": "",
+        "link_url": ""
+      }]
       """
 
   @backlog
