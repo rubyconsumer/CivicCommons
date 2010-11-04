@@ -31,3 +31,11 @@ Given /^I have contributed a video:$/ do |contribution|
 
 end
 
+Given /^I have contributed a suggestion:$/ do |content|
+  Factory.create(:suggested_action,
+                 content: content,
+                 person: @current_person,
+                 conversation: @conversation,
+                 created_at: Date.parse("2010/10/10"))
+end
+

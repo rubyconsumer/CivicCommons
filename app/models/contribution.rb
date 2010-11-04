@@ -143,7 +143,7 @@ class Contribution < ActiveRecord::Base
     if self.you_tubeable?
       :video
     else
-      :comment
+      self.type.underscore
     end
   end
 
