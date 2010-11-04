@@ -45,7 +45,7 @@ Feature:
       ]
       """
 
-  @wip
+  @backlog
   Scenario: Retrieve a contribution with an embeded video
     Given I have contributed a video url:
       """
@@ -77,7 +77,7 @@ Feature:
         ]
       """
 
-  @wip
+  @backlog
   Scenario: Retrieve a contribution with a suggestion
     Given I have contributed a suggestion:
       """
@@ -105,7 +105,7 @@ Feature:
         ]
       """
 
-  @wip
+  @backlog
   Scenario: Retrieve a contribution with a question
     Given I have contributed a question:
       """
@@ -133,7 +133,7 @@ Feature:
         ]
       """
 
-  @wip
+  @backlog
   Scenario: Retrieve a contribution with an attachment
     Given I have contributed an attachment "citation.pdf"
     And I have commented:
@@ -162,7 +162,7 @@ Feature:
         ]
       """
 
-  @wip
+  @backlog
   Scenario: Retrieve a contribution with an image
     Given I have contributed an image "picture.png"
     And I have commented:
@@ -191,7 +191,7 @@ Feature:
         ]
       """
 
-  @wip
+  @backlog
   Scenario: Retrieve a contribution with a link
     Given I have contributed a link "http://www.cbsnews.com" with the text "Here's My Link"
     And I have commented:
