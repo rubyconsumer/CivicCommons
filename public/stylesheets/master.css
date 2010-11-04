@@ -733,9 +733,8 @@ width: 100%;
 -----------------------------------------------*/
 
 /* Tabs */
-div.tab-strip-options {
+div.tab-strip-options, div.tab-strip div.panels {
 float: left;
-
 }
 div.tab-strip ul {
 list-style-type: none;
@@ -764,9 +763,10 @@ div.tab-strip textarea {
 width: 97%; /* This gets modified in the show.js easytabs:after binding, so it doesn't matter for now */
 margin: 0;
 }
-div.tab-strip label {
-margin: 0;
+div.tab-strip input[type=text] {
+width: 97%;
 }
+
 /* p.convo-meta {margin-bottom: 2em;} */
 
 /* Conversation Divider */

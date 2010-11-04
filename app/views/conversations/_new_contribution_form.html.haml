@@ -19,12 +19,12 @@
       = f.file_field(:attachment)
   - elsif type == :link
     %label
-      URL:
-      = f.text_field(:url, :type => "text", :class => "textbox link", :placeholder => "http://www.youtube.com")
+      /URL:
+      = f.text_field(:url, :type => "text", :class => "textbox link", :placeholder => "http://www.example.com")
   - elsif type == :embedded_snippet
     %label
-      YouTube Link:
-      = f.text_field(:url, :type => "text", :class => "textbox link youtube", :placeholder => "Copy/paste the video link here.")
+      /YouTube Link:
+      = f.text_field(:url, :type => "text", :class => "textbox link youtube", :placeholder => "Copy/paste the YouTube link here.")
       .youtube-thumbnail
   %div.validation-error
   = hidden_field_tag(:preview, true)

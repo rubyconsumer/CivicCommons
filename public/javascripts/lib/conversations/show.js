@@ -113,17 +113,17 @@ jQuery(function ($) {
       applyEasyTabsToTabStrip: function() {
         var $container = this,
             $tabs = $container.find('.tab-strip-options'),
-            $inputs = $container.find('label,textarea'),
-            $textareas = $inputs.filter('textarea');
+            $horizontalAdjust = $container.find('div.panels,label,textarea'),
+            $verticalAdjust = $container.find('textarea');
             
-        $inputs.each(function() {
+        $horizontalAdjust.each(function() {
           var $this = $(this),
               horizontalPadding = parseFloat($this.css('paddingLeft')) + parseFloat($this.css('paddingRight')),
               horizontalBorder = $this.outerWidth() - $this.innerWidth();
 
           $this.width( $container.innerWidth() - $tabs.outerWidth() - horizontalPadding - horizontalBorder - 2 );
         });
-        $textareas.each(function() {
+        $verticalAdjust.each(function() {
           var $this = $(this),
             verticalPadding = parseFloat($this.css('paddingTop')) + parseFloat($this.css('paddingBottom')),
             verticalBorder = $this.outerWidth() - $this.innerWidth(),
