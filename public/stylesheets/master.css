@@ -334,7 +334,7 @@ padding: 6px 0;
 -----------------------------------------------*/
 
 .pagination p {padding-top: 1em;}
-.pagination span, .pagination a {
+.pagination span, .pagination a, .pagination em {
 background: #eee;
 border-bottom: 1px solid #ccc;
 border-right: 1px solid #ccc;
@@ -357,15 +357,9 @@ border-radius: 8px 0 0 8px;
 -moz-border-radius: 0 8px 8px 0;
 border-radius: 0 8px 8px 0;
 }
-.pagination em {background: #fff;
-  border-bottom: 1px solid #ccc;
-  border-right: 1px solid #ccc;
-  border-top: 1px solid #ccc;
-  display: block;
-  float: left;
-  font-weight: bold;
-  padding: 8px 12px;
-  text-decoration: none;
+.pagination em {
+background: #fff;
+font-style: normal;
 }
 
 /*-----------------------------------------------
@@ -1231,6 +1225,7 @@ div.convo-entry a.button {
 float: right;
 }
 .moderate {float: right}
+
 /*-----------------------------------------------
 =Self Clearing Floats
 -----------------------------------------------*/
