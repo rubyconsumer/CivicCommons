@@ -6,13 +6,15 @@ Given /^a conversation:$/ do |table|
                                 first_name: 'Test',
                                 last_name: 'Admin')
 
-  attachment = File.join(attachments_path, conversation['Image'])
+  attachment =  if conversation['Image']
+                  File.open(File.join(attachments_path, conversation['Image']))
+                end
 
   @conversation =
     Factory.create(:conversation,
                    id:    conversation['ID'],
                    title: conversation['Title'],
-                   image: File.open(attachment),
+                   image: attachment,
                    summary: conversation['Summary'],
                    zip_code: conversation['Zip Code'])
 
