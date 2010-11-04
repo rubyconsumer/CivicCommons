@@ -305,7 +305,8 @@ jQuery(function ($) {
             $(tabStrip).applyEasyTabsToTabStrip();
             $(form).bindContributionFormEvents(clicked,tabStrip);
             //$.colorbox.resize();
-          }
+          },
+          opacity: 0.6
           //scrolling: false
         });
         e.preventDefault();
