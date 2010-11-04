@@ -65,6 +65,7 @@ Civiccommons::Application.routes.draw do
     match "/:id/issues",        :to => "issues#index",        :via => [:get], :format => :json
     match "/:id/contributions", :to => "contributions#index", :via => [:get], :format => :json
     match "/:id/subscriptions", :to => "subscriptions#index", :via => [:get], :format => :json
+    get '/people-aggregator/person/:id/contributions', to: 'contributions#index', format: :json
   end
 
 
