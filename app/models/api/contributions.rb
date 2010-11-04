@@ -24,10 +24,10 @@ class Api::Contributions
         created_at: contribution.created_at,
         content: contribution.content,
         attachment_url: '',
-        embed_code: '',
-        type: 'comment',
+        embed_code: contribution.embed_target.to_s,
+        type: contribution.contribution_type,
         link_text: '',
-        link_url: ''
+        link_url: contribution.url.to_s
       }
     end
   end

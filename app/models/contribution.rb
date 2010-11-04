@@ -134,4 +134,17 @@ class Contribution < ActiveRecord::Base
     # RAILS BUG - ActiveRecord::RecordNotSaved if set to false, but works for true, 1, and 0
   end
 
+  def you_tubeable?
+    false
+  end
+
+
+  def contribution_type
+    if self.you_tubeable?
+      :video
+    else
+      :comment
+    end
+  end
+
 end
