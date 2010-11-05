@@ -6,8 +6,7 @@
       %div.article.comment.top-level-contribution
         %a{:name=>"#post#{contribution.id}"}
         %p.content
-          %strong= person_display_name(contribution.person)
-          &nbsp;-&nbsp;
+          %span.contribution-person-name= person_display_name(contribution.person)
           =auto_link(contribution.content)
         %div{:class => "convo-utility #{contribution.descendants_count > 0 ? 'response' : 'no-response'}"}
           %p.respond-link

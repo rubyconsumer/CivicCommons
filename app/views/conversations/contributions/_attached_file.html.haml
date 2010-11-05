@@ -1,6 +1,5 @@
 %p.content
-  %strong= person_display_name(contribution.person)
-  &nbsp;-&nbsp;
+  %span.contribution-person-name= person_display_name(contribution.person)
   = auto_link(contribution.content)
 - if contribution.attachment_content_type =~ /^image/
   %p.attached-file
