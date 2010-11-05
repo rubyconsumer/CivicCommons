@@ -1,14 +1,28 @@
-var youtube = function() { 
-  var thumbnail_fetch = function (url, callback) {
+var youtube = function() {
+
+  var parseShortUrl = function(url) {
+    return url.match(/youtu\.be\/(.*)[\?]?/)[1];
+  };
+
+  var parseQueryStringUrl = function(url) {
     var query_string = url.split(/\?/)[1];
     var query_pairs = {};
     $.each(query_string.split(/&/), function (i, e) {
       var pair = e.split(/=/);
       query_pairs[pair[0]] = pair[1];
     });
-    var vid_id = query_pairs['v'];
+    return query_pairs['v'];
+  };
+
+  var self = {};
+  self.getYoutubeId = function(url) {
+    if(url.match(/youtu\.be/)) return parseShortUrl(url.split("?")[0]);
+    return parseQueryStringUrl(url);
+  };
+
+  var thumbnail_fetch = function (url, callback) {
     $.ajax({
-      url: 'http://gdata.youtube.com/feeds/api/videos/' + vid_id,
+      url: 'http://gdata.youtube.com/feeds/api/videos/' + self.getYoutubeId(url),
       dataType: 'json',
       data: {'alt':'json'},
       success: callback,
@@ -23,7 +37,7 @@ var youtube = function() {
       // entry.link array that's returned, but this is to make sure that the
       // URL being grabbed by this function is always the right one.
       var url = ($.grep(data.entry.link, function (e, i) { return e.rel === 'alternate'; }))[0].href;
-      
+
       thumbnail.append(
           $(document.createElement('a'))
           .attr({
@@ -42,13 +56,11 @@ var youtube = function() {
           )
         );
     });
-  }; 
-
-  var self = {};
+  };
   self.init = function() {
     var updatePreview = function(element) { try {
           if (!element.val()) return;
-          url = element.val(); 
+          url = element.val();
           var thumbnail = element.siblings(".youtube-thumbnail");
           display_thumbnail(thumbnail, url);
         } catch(e) {
@@ -58,7 +70,7 @@ var youtube = function() {
 
     $(".video-preview").each(function() { display_thumbnail($(this), $(this).attr("data-url")); });
     var updatePreviewWithDelay =  function() {var element = $(this); setTimeout(function() { updatePreview(element);}, 50);};
-    // TODO: consider the value of the change event, since 
+    // TODO: consider the value of the change event, since
     // no one will probably type a youtube url
     //$(".youtube").change(updatePreview);
     $(".youtube").bind("change", updatePreviewWithDelay);

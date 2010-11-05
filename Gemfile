@@ -1,6 +1,5 @@
 source 'http://rubygems.org'
 
-
 gem 'mysql', '2.8.1'
 
 gem 'rails', "3.0.0"
@@ -25,6 +24,7 @@ group :development do
 end
 
 group :test do
+  gem 'jasmine', :path => 'vendor/gems/jasmine'
   gem 'cucumber'
   gem 'capybara'
   gem 'cucumber-rails'
