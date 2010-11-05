@@ -46,27 +46,6 @@ module ConversationsHelper
     end
   end
   
-  def contribution_form_headline_for(type)
-    case type
-    when :comment
-      "Leave a Comment"
-    when :question
-      "Ask a Question"
-    when :answer
-      
-    when :attached_file
-      "Upload a File or Image"
-    when :embedded_snippet
-      "Share a Video"
-    when :link
-      "Share a Link"
-    when :suggested_action
-      "Suggest an Action"
-    else
-      ""
-    end
-  end
-  
   def contribution_form_placeholder_text_for(type)
     case type
     when :comment
