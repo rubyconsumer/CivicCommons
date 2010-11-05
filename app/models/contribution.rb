@@ -101,7 +101,7 @@ class Contribution < ActiveRecord::Base
   
   def editable_by?(user)
     return false if user.nil?
-    (user.admin? || (self.owner == user.id && self.created_at > 30.minutes.ago)) && self.descendants.count == 0 && self.confirmed
+    (user.admin? || (self.owner == user.id && self.created_at > 30.minutes.ago)) && self.descendants_count == 0 && self.confirmed
   end
 
   def moderate_contribution
