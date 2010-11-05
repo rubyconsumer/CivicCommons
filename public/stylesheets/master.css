@@ -135,6 +135,10 @@ background: #fff;
 padding: 5px;
 width: 448px;
 }
+input[type="file"] {
+background: none;
+border: none;
+}
 .conversation-input-container input.textbox {width: 400px;}
 .aside label, div.call-out label {width: 70px;}
 .aside input.textbox, div.call-out input.textbox, .aside textarea, div.call-out textarea {width: 176px;}
@@ -441,10 +445,7 @@ margin: auto auto 10px;
 padding: 10px 10px 0;
 width: 940px;
 }
-.content-container {
-background: url(../images/content_bg.gif) repeat-y 72.18% 0;
-margin: 15px 0;
-}
+.content-container {margin: 15px 0;}
 .content-container.no-bg {background: none;}
 .full-width-content {width: 940px;}
 .main-content {
@@ -1224,9 +1225,7 @@ div.convo-entry input.textbox, div.convo-entry p.help-text {
 float: left;
 width: 375px;
 }
-div.convo-entry a.button {
-float: right;
-}
+div.convo-entry a.button {float: right;}
 .moderate {float: right}
 
 /*-----------------------------------------------
