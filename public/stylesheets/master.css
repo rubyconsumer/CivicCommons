@@ -1227,6 +1227,8 @@ width: 375px;
 }
 div.convo-entry a.button {float: right;}
 .moderate {float: right}
+a.button.moderate, input.submit.moderate {background-color: #e74d4d;}
+a.button.moderate:hover, input.submit.moderate:hover {background-color: #d83535;}
 
 /*-----------------------------------------------
 =Self Clearing Floats
