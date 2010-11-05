@@ -57,7 +57,8 @@
                 -@conversation.participants.select{ |p| @tlc_participants.include?(p.id) }.each do |participant|
                   =conversation_profile(participant).html_safe
               %br.clear
-            .other-participants
-              .photobank
-                -@conversation.participants.select{ |p| !@tlc_participants.include?(p.id) }.each do |participant|
-                  =conversation_profile(participant).html_safe
+            - if @conversation.participants.select{ |p| !@tlc_participants.include?(p.id) }.size > 0
+              .other-participants
+                .photobank
+                  -@conversation.participants.select{ |p| !@tlc_participants.include?(p.id) }.each do |participant|
+                    =conversation_profile(participant).html_safe
