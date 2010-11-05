@@ -41,13 +41,14 @@
           %h3 Summary
           .mod-content
             %p= raw @conversation.summary
-        .mod
-          %h3 Issues
-          .mod-content
-            %ul.link-list
-              -@conversation.issues.each do |issue|
-                %li.issue-list
-                  =link_to(issue.name, issue_path(issue))
+        - if @conversation.issues.size > 0
+          .mod
+            %h3 Issues
+            .mod-content
+              %ul.link-list
+                -@conversation.issues.each do |issue|
+                  %li.issue-list
+                    =link_to(issue.name, issue_path(issue))
         .mod
           %h3 Participants
           .mod-content
