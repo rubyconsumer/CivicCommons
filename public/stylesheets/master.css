@@ -191,6 +191,10 @@ padding: 10px;
 text-align: left;
 width: 97%;
 }
+.input-with-options label a {
+color: #fff;
+font-size: 12px;
+}
 .input-with-options label input.link {padding: 3px;}
 .input-with-options textarea {height: 100px;}
 a.cancel {font-weight: normal;}

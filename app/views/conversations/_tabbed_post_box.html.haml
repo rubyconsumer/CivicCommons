@@ -21,8 +21,7 @@
             %a{:href => "##{div_id}-new-link",             :title => "Link",           :id => "link_tab" } Link
           %li
             %a{:href => "##{div_id}-new-embedded_snippet", :title => "Video",          :id => "video_tab" } Video
-          %li
-            = link_to( "Write Contribution", pa_new_conversation_contribution_url(current_person, @contribution.conversation_id, @contribution.parent_id), :title => "Write Contribution" )
+          
       %div.panels
         %div{:id => "#{div_id}-preview", :class => "contribution-preview"}
           %a{:href => "##{div_id}-options", :class => 'button'} Respond
