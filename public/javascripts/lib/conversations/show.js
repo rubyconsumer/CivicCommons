@@ -302,7 +302,7 @@ jQuery(function ($) {
         $.colorbox({
           href: $this.attr('href'),
           width: '600px',
-          height: '350px',
+          height: '320px',
           onComplete: function(){
             var clicked = $this,
                 divId = $(clicked).attr('href').match(/div_id=([^&]+)/)[1],
