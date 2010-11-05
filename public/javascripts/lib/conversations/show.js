@@ -20,8 +20,7 @@ jQuery(function ($) {
         if(this != 0){ incrementedText = incrementedText.replace(/Response$/, 'Responses'); }
       });
       parentButton
-        .data('origText', incrementedText)
-        .text(incrementedText);
+        .data('origText', incrementedText);
       return el;
     },
     
@@ -210,25 +209,32 @@ jQuery(function ($) {
         return this;
       },
       
-      changeTextOnLoading: function(loadText) {
-        if(loadText == undefined) { loadText = "Loading..."; }
+      changeTextOnLoading: function(options) {
+        var opts = $.extend({}, {
+          loadText: "Loading...",
+          completeText: function(){
+            $(this).data('origText');
+          }
+        }, options);
+
         this
           .live("ajax:loading", function(){
-            $(this).data('origText', $(this).text());
-            $(this).text(loadText);
+            var $this = $(this);
+            if ( $this.data('origText') == null ) { $this.data('origText', $this.text()); }
+            $this.text(opts.loadText);
           })
           .live("ajax:complete", function(evt, xhr){
-            $(this).text($(this).data('origText'));
+            $(this).text(opts.completeText);
           });
         return this;
       }
   });
   
   $(document).ready(function() {
-    actionToggle = function(clicked,target,clickedCancelText){
+    actionToggle = function(clicked,target,altText){
       $(clicked).toggle(
     		function(){
-    			$(this).text(clickedCancelText);
+    			$(this).text(altText);
     			$(this).data('expanded', true);
     			$(target).slideDown();
     		}, 
@@ -241,15 +247,10 @@ jQuery(function ($) {
     }
     
   	$('a.conversation-responses')
-  	  .live("ajax:loading", function(){
-  	    var href = $(this).attr("href"),
-  	        label = href.match(/\/conversations\/node_conversation/) ? "Loading responses..." : "Loading...";
-  	        
-  	    $(this).data('origText', $(this).text());
-  	    $(this).data('cancelText', href.match(/\/conversations\/node_conversation/) ? 'Hide responses' : 'Cancel');
-  	    
-  	    $(this).text(label);
-  	  })
+  	  .changeTextOnLoading({
+        loadText: "Loading responses...",
+        completeText: "Hide responses"
+      })
   	  .live("ajax:success", function(evt, data, status, xhr){
   	    var clicked = this,
   	        target = this.getAttribute("data-target"),
@@ -257,8 +258,7 @@ jQuery(function ($) {
   	        form = tabStrip+" form";
   	    
   	    // turn button into a toggle to hide/show what gets loaded so that subsequent clicks to redo the ajax call
-  	    $(clicked).click(actionToggle(clicked,target,$(clicked).data('cancelText')));
-  	    $(clicked).text($(clicked).data('cancelText'));
+  	    $(clicked).click(actionToggle(clicked,target,"Hide responses"));
         $(target).hide().html(xhr.responseText).slideDown().find('.rate-form-container').hide(); // insert content
         $(tabStrip).applyEasyTabsToTabStrip();
 
@@ -267,7 +267,9 @@ jQuery(function ($) {
       .liveAlertOnAjaxFailure();
       
       $('.delete-conversation-action')
-        .changeTextOnLoading("Deleting...")
+        .changeTextOnLoading({
+          loadText: "Deleting..."
+        })
         .live("ajax:success", function(evt, data, status, xhr){
           var clicked = this,
     	        target = this.getAttribute("data-target");
