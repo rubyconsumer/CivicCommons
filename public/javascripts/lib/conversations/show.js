@@ -118,6 +118,24 @@ jQuery(function ($) {
       },
       
       applyEasyTabsToTabStrip: function() {
+        var $container = this;
+        
+        $container
+          .resizeResponseInputs()
+          .easytabs({
+            tabActiveClass: 'tab-active',
+            tabActivePanel: 'panel-active',
+            tabs: '> .tab-area > .tab-strip-options > ul > li',
+            defaultTab: '.default-tab',
+            animationSpeed: 250,
+            updateHash: false
+          })  
+          .live("easytabs:after", function(){
+            //$.colorbox.resize();
+          });
+      },
+      
+      resizeResponseInputs: function() {
         var $container = this,
             $tabs = $container.find('.tab-strip-options'),
             $horizontalAdjust = $container.find('div.panels,label,textarea'),
@@ -143,18 +161,7 @@ jQuery(function ($) {
             
           $this.height( $tabs.outerHeight() - verticalPadding - verticalBorder - extraVerticalSpace );
         });
-        
-        $container.easytabs({
-          tabActiveClass: 'tab-active',
-          tabActivePanel: 'panel-active',
-          tabs: '> .tab-area > .tab-strip-options > ul > li',
-          defaultTab: '.default-tab',
-          animationSpeed: 250,
-          updateHash: false
-        })  
-          .live("easytabs:after", function(){
-            //$.colorbox.resize();
-          });
+        return $container;
       },
       
       bindValidationErrorOnAjaxFailure: function() {
