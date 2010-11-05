@@ -28,9 +28,9 @@ class IssuesController < ApplicationController
     @conversations = all_conversations_on_issue.paginate(:page => params[:page], :per_page => 6)
     @people = @issue.participants.exclude_organizations
     @organizations = @issue.participants.exclude_people
-    @written_contributions = @issue.written_contributions.most_recent.first(6)
-    @suggested_actions = @issue.suggested_actions.most_recent.first(6)
-    @media_contributions = @issue.media_contributions.most_recent.first(3)
+    @written_contributions = @issue.written_contributions.most_recent
+    @suggested_actions = @issue.suggested_actions.most_recent
+    @media_contributions = @issue.media_contributions.most_recent
     
     @issue.visit!((current_person.nil? ? nil : current_person.id))
 
