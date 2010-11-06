@@ -44,6 +44,7 @@ Civiccommons::Application.routes.draw do
   match '/partners', :to=>'static_pages#partners', :via=>[:get]
   match '/terms', :to=>'static_pages#terms', :via=>[:get]
   match '/build-the-commons', :to=>'static_pages#build_the_commons', :via=>[:get]
+  match '/contact-us', :to=>'static_pages#contact', :via=>[:get]
   
   resources :conversations
   resources :regions   

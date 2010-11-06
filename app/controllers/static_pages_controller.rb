@@ -19,4 +19,7 @@ class StaticPagesController < ApplicationController
 
   def build_the_commons
   end
+
+  def contact
+  end
 end
