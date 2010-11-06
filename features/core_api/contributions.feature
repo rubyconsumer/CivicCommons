@@ -68,7 +68,7 @@ Feature:
   Scenario: Retrieve a contribution with a suggestion
     Given I have contributed a suggestion:
       """
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum dignissim magna quis tortor dignissim non fringilla purus placerat. Maecenas eleifend arcu a metus viverra mattis. Maecenas sit amet nunc nisl. Quisque felis leo, pharetra at adipiscing sit amet, fringilla eget arcu. Nunc a magna mi, sit amet semper velit. Suspendisse ipsum sem, sollicitudin vel dapibus sit amet, pretium sed elit. Duis luctus, enim ac laoreet bibendum, arcu mi dapibus dolor, vel consectetur nulla libero at erat. Nulla facilisi. Donec elementum dignissim odio auctor vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vitae leo risus, quis tempor velit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc luctus tellus libero. Vivamus ut augue non sem volutpat ornare non eget augue. Maecenas dolor libero, consectetur ut dictum nec, imperdiet sed ante.
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum dignissim magna quis tortor dignissim non fringilla purus placerat.
       """
     When I ask for contributions with URL:
       """
@@ -81,7 +81,7 @@ Feature:
         "parent_type": "conversation",
         "parent_url": "http://www.example.com/conversations/2",
         "created_at": "2010-10-10T04:00:00Z",
-        "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum dignissim magna quis tortor dignissim non fringilla purus placerat. Maecenas eleifend arcu a metus viverra mattis. Maecenas sit amet nunc nisl. Quisque felis leo, pharetra at adipiscing sit amet, fringilla eget arcu. Nunc a magna mi, sit amet semper velit. Suspendisse ipsum sem, sollicitudin vel dapibus sit amet, pretium sed elit. Duis luctus, enim ac laoreet bibendum, arcu mi dapibus dolor, vel consectetur nulla libero at erat. Nulla facilisi. Donec elementum dignissim odio auctor vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vitae leo risus, quis tempor velit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc luctus tellus libero. Vivamus ut augue non sem volutpat ornare non eget augue. Maecenas dolor libero, consectetur ut dictum nec, imperdiet sed ante.",
+        "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum dignissim magna quis tortor dignissim non fringilla purus placerat.",
         "attachment_url": "",
         "embed_code": "",
         "type": "suggested_action",
@@ -90,32 +90,29 @@ Feature:
       }]
       """
 
-  @backlog
   Scenario: Retrieve a contribution with a question
     Given I have contributed a question:
       """
-        I was wanting to know if you could clarify the points you made in your comment?  How will this effect...?
+      I was wanting to know if you could clarify the points you made in your comment?  How will this effect...?
       """
     When I ask for contributions with URL:
       """
-        /api/people-aggregator/person/12/contributions
+      /api/people-aggregator/person/12/contributions
       """
     Then I should receive the response:
       """
-        [
-          {
-            parent_title: "Understanding The Latest Health Care Changes",
-            parent_type: "conversation",
-            parent_url: "http://.../conversations/2",
-            created_at: "10/10/2010",
-            content: "I was wanting to know if you could clarify the points you made in your comment?  How will this effect...?"
-            attachment_url: "",
-            embed_code: "",
-            type: "question",
-            link_text: "",
-            link_url: ""
-          }
-        ]
+      [{
+        "parent_title": "Understanding The Latest Health Care Changes",
+        "parent_type": "conversation",
+        "parent_url": "http://www.example.com/conversations/2",
+        "created_at": "2010-10-10T04:00:00Z",
+        "content": "I was wanting to know if you could clarify the points you made in your comment?  How will this effect...?",
+        "attachment_url": "",
+        "embed_code": "",
+        "type": "question",
+        "link_text": "",
+        "link_url": ""
+      }]
       """
 
   @backlog
@@ -204,3 +201,11 @@ Feature:
           }
         ]
       """
+
+  @backlog
+  Scenario: Requesting for a PA user that does not exist
+    When I ask for contributions with URL:
+    """
+    /api/people-aggregator/person/10002323/contributions
+    """
+    Then I should receive a "404 Not Found" response

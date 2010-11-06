@@ -39,3 +39,11 @@ Given /^I have contributed a suggestion:$/ do |content|
                  created_at: Date.parse("2010/10/10"))
 end
 
+Given /^I have contributed a question:$/ do |question|
+  Factory.create(:question,
+                 content: question,
+                 person: @current_person,
+                 conversation: @conversation,
+                 created_at: Date.parse("2010/10/10"))
+end
+
