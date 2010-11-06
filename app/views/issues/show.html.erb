@@ -90,9 +90,7 @@ $(document).ready(function() {
           <% end %>
         </ol>
         <% if person_signed_in? %>
-          <p><%= link_to("Write a contribution", pa_new_issue_contribution_url(current_person, @issue)) %> </p>
-        <% else %>
-          <p>You must <%= link_to "log in", new_person_session_path %> or <%= link_to "sign up", new_person_registration_path %> to write a contribution</p>
+          <p><%= link_to("Write a contribution", pa_new_issue_contribution_url(current_person, @issue), :class => 'button') %> </p>
         <% end %>
 
         <h3>Conversations about this issue:</h3>
@@ -107,12 +105,10 @@ $(document).ready(function() {
           </div>
         <% end %>
         <% if person_signed_in? %>
-          <p id="resource-contributions">Add a <a href="#" class="file-link">File</a>/<a class="file-link" href="#">Image</a>/<a class="video-link" href="#">Video</a>/<a class="url-link" href="#">Link</a></p>
+          <p id="resource-contributions"><a href="#" class="file-link button">File</a><a class="file-link button" href="#">Image</a><a class="video-link button" href="#">Video</a><a class="url-link button" href="#">Link</a></p>
           <%= render :partial => "new_file_contribution" %>
           <%= render :partial => "new_url_contribution" %>
           <%= render :partial => "new_embedded_snippet_contribution" %>
-        <% else %>
-          <p>You must <%= link_to "log in", new_person_session_path %> or <%= link_to "sign up", new_person_registration_path %> to contribute a file or video</p>
         <% end %>
 
         <div class="mod">

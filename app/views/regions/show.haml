@@ -11,13 +11,12 @@
           .cols
             -if @region.image?
               =image_tag @region.image.url, :alt => @region.name, :class => 'featured main-img'
-            .feature
-              -if @conversations.length >0
-                %h2 Conversations in this Region
-                =render :partial => "conversations/conversation_pager"
-
           .cols
             %p= raw(@region.description)
+        -if @conversations.length >0
+          %h2 Conversations in this Region
+          =render :partial => "conversations/conversation_pager"
+
       .aside.supplementary
         .mod
           %h3 SELECT A REGION
