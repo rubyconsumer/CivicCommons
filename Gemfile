@@ -24,8 +24,7 @@ group :development do
 end
 
 group :test do
-#  TODO: fix later
-#  gem 'jasmine', :path => 'vendor/gems/jasmine'
+  gem 'jasmine', :path => 'vendor/gems/jasmine'
   gem 'cucumber'
   gem 'capybara'
   gem 'cucumber-rails'

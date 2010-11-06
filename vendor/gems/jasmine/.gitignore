@@ -1,0 +1,12 @@
+.idea
+pkg
+vendor
+bin
+!bin/jasmine
+.bundle
+.DS_Store
+jasmine-example/
+.rvmrc
+.pairs
+*.swp
+Gemfile.lock
