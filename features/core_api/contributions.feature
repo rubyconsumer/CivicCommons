@@ -16,104 +16,37 @@ Feature:
       | Title       | Understanding The Latest Health Care Changes |
 
 
-  Scenario: Retrieve a contribution with a comment
-    Given I have contributed a comment:
+  @wip
+  Scenario Outline: Retrieve a contribution
+    Given I have contributed a <type>:
       """
-      This goes to the same problem that there would be in the adult market. This is why there is this individual mandate for adults. This is why the pre-existing conditions for adults ban doesn't take effect until that mandate kicks in.
+      <comment>
       """
-    When I ask for contributions with URL:
-      """
-      /api/people-aggregator/person/12/contributions
-      """
+    When I ask for contributions for the person with People Aggregator ID 12
     Then I should receive the response:
-      """
-      [{
-        "parent_title": "Understanding The Latest Health Care Changes",
-        "parent_type": "conversation",
-        "parent_url": "http://www.example.com/conversations/2",
-        "created_at": "2010-10-10T04:00:00Z",
-        "content": "This goes to the same problem that there would be in the adult market. This is why there is this individual mandate for adults. This is why the pre-existing conditions for adults ban doesn't take effect until that mandate kicks in.",
-        "attachment_url": "",
-        "embed_code": "",
-        "type": "comment",
-        "link_text": "",
-        "link_url": ""
-      }]
-      """
+    """
+    [{
+      "parent_title": "Understanding The Latest Health Care Changes",
+      "parent_type": "conversation",
+      "parent_url": "http://www.example.com/conversations/2",
+      "created_at": "2010-10-10T04:00:00Z",
+      "content": "<comment>",
+      "attachment_url": "<attachment_url>",
+      "embed_code": "<embed_code>",
+      "type": "<type>",
+      "link_text": "<link_text>",
+      "link_url": "<link_url>"
+    }]
+    """
 
-  Scenario: Retrieve a contribution with an embeded video
-    Given I have contributed a video:
-      | URL     | http://www.youtube.com/watch?v=qq7nkbvn1Ic  |
-      | Comment | Check out this sweet goal.                  |
-    When I ask for contributions with URL:
-      """
-      /api/people-aggregator/person/12/contributions
-      """
-    Then I should receive the response:
-      """
-      [{
-        "parent_title": "Understanding The Latest Health Care Changes",
-        "parent_type": "conversation",
-        "parent_url": "http://www.example.com/conversations/2",
-        "created_at": "2010-10-10T04:00:00Z",
-        "content": "Check out this sweet goal.",
-        "attachment_url": "",
-        "embed_code": "<test_embed src='http://www.youtube.com/v/qq7nkbvn1Ic?fs=1&amp;hl=en_US'></test_embed>",
-        "type": "video",
-        "link_text": "",
-        "link_url": "http://www.youtube.com/watch?v=qq7nkbvn1Ic"
-      }]
-      """
+  Examples:
+    | type       | comment                                                                | attachment_url | embed_code                                                                             | link_text | link_url                                   |
+    | comment    | This goes to the same problem that there would be in the adult market. |                |                                                                                        |           |                                            |
+    | video      | Check out this sweet goal.                                             |                | <test_embed src='http://www.youtube.com/v/qq7nkbvn1Ic?fs=1&amp;hl=en_US'></test_embed> |           | http://www.youtube.com/watch?v=qq7nkbvn1Ic |
+    | suggestion | Lorem ipsum dolor sit amet, consectetur adipiscing elit.               |                |                                                                                        |           |                                            |
+    | question   | I was wanting to know if you could clariyf the points in your comment? |                |                                                                                        |           |                                            |
 
-  Scenario: Retrieve a contribution with a suggestion
-    Given I have contributed a suggestion:
-      """
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum dignissim magna quis tortor dignissim non fringilla purus placerat.
-      """
-    When I ask for contributions with URL:
-      """
-      /api/people-aggregator/person/12/contributions
-      """
-    Then I should receive the response:
-      """
-      [{
-        "parent_title": "Understanding The Latest Health Care Changes",
-        "parent_type": "conversation",
-        "parent_url": "http://www.example.com/conversations/2",
-        "created_at": "2010-10-10T04:00:00Z",
-        "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum dignissim magna quis tortor dignissim non fringilla purus placerat.",
-        "attachment_url": "",
-        "embed_code": "",
-        "type": "suggested_action",
-        "link_text": "",
-        "link_url": ""
-      }]
-      """
 
-  Scenario: Retrieve a contribution with a question
-    Given I have contributed a question:
-      """
-      I was wanting to know if you could clarify the points you made in your comment?  How will this effect...?
-      """
-    When I ask for contributions with URL:
-      """
-      /api/people-aggregator/person/12/contributions
-      """
-    Then I should receive the response:
-      """
-      [{
-        "parent_title": "Understanding The Latest Health Care Changes",
-        "parent_type": "conversation",
-        "parent_url": "http://www.example.com/conversations/2",
-        "created_at": "2010-10-10T04:00:00Z",
-        "content": "I was wanting to know if you could clarify the points you made in your comment?  How will this effect...?",
-        "attachment_url": "",
-        "embed_code": "",
-        "type": "question",
-        "link_text": "",
-        "link_url": ""
-      }]
-      """
 
   @backlog
   Scenario: Retrieve a contribution with an attachment
@@ -122,10 +55,7 @@ Feature:
       """
         In this pdf, the author illustrates the results of changing ...
       """
-    When I ask for contributions with URL:
-      """
-        /api/people-aggregator/person/12/contributions
-      """
+    When I ask for contributions for the person with People Aggregator ID 12
     Then I should receive the response:
       """
         [
@@ -151,10 +81,7 @@ Feature:
       """
         Look at this.
       """
-    When I ask for contributions with URL:
-      """
-        /api/people-aggregator/person/12/contributions
-      """
+    When I ask for contributions for the person with People Aggregator ID 12
     Then I should receive the response:
       """
         [
@@ -180,10 +107,7 @@ Feature:
       """
         Checkout the article on ...
       """
-    When I ask for contributions with URL:
-      """
-        /api/people-aggregator/person/12/contributions
-      """
+    When I ask for contributions for the person with People Aggregator ID 12
     Then I should receive the response:
       """
         [
@@ -204,8 +128,5 @@ Feature:
 
   @backlog
   Scenario: Requesting for a PA user that does not exist
-    When I ask for contributions with URL:
-    """
-    /api/people-aggregator/person/10002323/contributions
-    """
+    When I ask for contributions for the person with People Aggregator ID 1000321
     Then I should receive a "404 Not Found" response

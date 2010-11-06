@@ -75,6 +75,10 @@ class Contribution < ActiveRecord::Base
   def is_image?
     false
   end
+
+  def suggestion?
+    false
+  end
   
   def confirm!
     self.update_attribute(:confirmed, true)
@@ -142,6 +146,8 @@ class Contribution < ActiveRecord::Base
   def contribution_type
     if self.you_tubeable?
       :video
+    elsif self.suggestion?
+      :suggestion
     else
       self.type.underscore
     end

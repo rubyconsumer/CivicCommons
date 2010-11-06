@@ -12,14 +12,12 @@ end
 
 Given /^I have contributed a video:$/ do |contribution|
 
-  contribution = contribution.rows_hash
-
   @contribution = Factory.build(:embedded_snippet,
                                 person: @current_person,
                                 conversation: @conversation,
                                 created_at: Date.parse("2010/10/10"),
-                                url: contribution['URL'],
-                                content: contribution['Comment'])
+                                url: "http://www.youtube.com/watch?v=qq7nkbvn1Ic",
+                                content: contribution)
 
 
   @contribution.stub(:embed_code_for_video) do |video_id|
