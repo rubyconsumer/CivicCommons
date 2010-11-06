@@ -143,6 +143,8 @@ input[type="file"] {
 background: none;
 border: none;
 }
+input.checkbox { margin-left:160px; }
+label.checkbox { float:none; display:inline; width:auto; }
 .conversation-input-container input.textbox {width: 400px;}
 .aside label, div.call-out label {width: 70px;}
 .aside input.textbox, div.call-out input.textbox, .aside textarea, div.call-out textarea {width: 176px;}
