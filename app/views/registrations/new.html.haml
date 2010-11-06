@@ -15,13 +15,15 @@
     });
     
   });
-.wrapper
-  .main.section
-    .header
+.feature-mast
+  .wrapper
+    .content-containter
       %h1 Register
       %p
         To contribute in the conversations taking place on the Civic Commons, |
         you will need to register for an account.
+.wrapper
+  .main.section
     = form_for(form_presenter, :as => resource_name, :url => registration_path(resource_name), :html => { :multipart => 'true', :class => "register" }) do |f|
       %fieldset.form-group
         .form-block
@@ -54,15 +56,9 @@
         .form-block
           = f.label :password_confirmation, "Password Again:"
           = f.password_field :password_confirmation, :class => "textbox small"
-        .form-block
-          = label_tag 'organization', 'Is this an organization?'
-          = check_box_tag 'organization'
-        .form-block
-          = label_tag :organization_name, 'Organization Name'
-          = f.text_field :organization_name, :class => "organization textbox"
       %fieldset.footer
         = succeed 'or' do
-          = f.submit 'Next', :class => "submit"
+          = f.submit 'Continue', :class => "submit"
         %a.cancel(href="/" title="Cancel Registration") cancel
     %div#terms(style="display: none;")
       %p.validation-error
