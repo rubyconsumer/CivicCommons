@@ -51,7 +51,8 @@
                 %h4
                   %a 
                     = text_profile(current_person).html_safe
-                = link_to "Logout", destroy_person_session_path
+                %p
+                  = link_to "Logout", destroy_person_session_path
           - else
             #login-status.signed-out
               .offset-2
