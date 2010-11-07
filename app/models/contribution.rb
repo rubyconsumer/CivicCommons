@@ -63,9 +63,9 @@ class Contribution < ActiveRecord::Base
     create_node_level_contribution(params, person)
   end
   
-  def self.delete_old_unconfirmed_contributions
-    count = self.unconfirmed.where(["created_at < ?", 1.day.ago]).count
-    self.unconfirmed.destroy_all(["created_at < ?", 1.day.ago])
+  def self.delete_old_unconfirmed_contributions(age=30.minutes)
+    count = self.unconfirmed.where(["created_at < ?", (Time.now - age)]).count
+    self.unconfirmed.destroy_all(["created_at < ?", (Time.now - age)])
     return count
   end
 
