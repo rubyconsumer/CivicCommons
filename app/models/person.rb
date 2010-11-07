@@ -9,12 +9,15 @@ class Person < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable,
          :confirmable
 
-  attr_accessor :skip_shadow_account, :organization_name, :send_welcome
+  attr_accessor :skip_shadow_account, :organization_name, :send_welcome, :skip_invite
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :name, :first_name, :last_name, :email, :password, :password_confirmation, :top, :zip_code, :admin, :validated, 
-                  :avatar, :organization_name
+                  :avatar, :organization_name, :invite, :invite_attributes
 
+  has_one :invite
+  accepts_nested_attributes_for :invite
+  
   has_many :contributions, :foreign_key => 'owner', :uniq => true
   has_many :ratings
   has_many :subscriptions
@@ -29,7 +32,6 @@ class Person < ActiveRecord::Base
 
   # Ensure format of salt
   validates_with PasswordSaltValidator
-
 
   has_attached_file :avatar,
     :styles => {
@@ -54,6 +56,7 @@ class Person < ActiveRecord::Base
   scope :proxy_accounts, where(:proxy => true)
 
 
+  before_create :check_and_populate_invite, :unless => :skip_invite
   after_create :create_shadow_account, :unless => :skip_shadow_account
   after_create :notify_civic_commons
   before_save :check_to_send_welcome_email
@@ -63,6 +66,19 @@ class Person < ActiveRecord::Base
   
   def check_to_send_welcome_email
     @send_welcome = true if confirmed_at_changed? && confirmed_at_was.blank? && !confirmed_at.blank?
+  end
+
+  def check_and_populate_invite
+    if validate_invite_token(invite.invitation_token)
+      invite.email = self.email
+      invite.valid_invite = true
+    else
+      raise ActiveRecord::RecordNotSaved
+    end
+  end
+  
+  def validate_invite_token(token)
+    token =~ /([a-zA-Z]{2})([0-9]{4})/i
   end
 
   def create_shadow_account

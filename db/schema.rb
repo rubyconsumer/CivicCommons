@@ -135,6 +135,16 @@ ActiveRecord::Schema.define(:version => 20101109011449) do
     t.integer "guide_id"
   end
 
+  create_table "invites", :force => true do |t|
+    t.integer  "person_id"
+    t.string   "invitation_token",   :limit => 40
+    t.datetime "invitation_sent_at"
+    t.boolean  "valid_invite"
+    t.string   "email"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "issues", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
