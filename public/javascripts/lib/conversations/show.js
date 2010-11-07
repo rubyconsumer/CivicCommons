@@ -4,27 +4,39 @@ jQuery(function ($) {
       var el = this;
       
       return el.parents('.contribution-container').each(function(){
-        var parentButton = $(this).find('.conversation-responses').first(),
+        var $this = $(this),
+            $convoUtility = $this.find('.convo-utility').first(),
+            $responsesButton = $this.find('.conversation-responses').first(),
+            $actionButton = $this.find('.conversation-action').first(),
             incrementedText;
-
-        if(parentButton.size() == 0) { return; } // there is no parent button if responding to convo-level responses at bottom of convo perma page
-
-        if ( parentButton.data('origText') == null ) { parentButton.data('origText', parentButton.text()); }
-
-        if( /^[^\d]+$/.test(parentButton.data('origText')) ){ // if origText does not contain a number (most likely says something like "Be the first to respond", but we'll be flexible)
-          parentButton.data('origText',"0 Response");
+        
+        if ( $convoUtility.size() > 0 ) {
+          $convoUtility.addClass('response').removeClass('no-response');
         }
-        integers = parentButton.data('origText').match(/(\d+)/g);
-
-        $.each(integers, function(){
-          incrementedText = parentButton.data('origText').replace(this,parseInt(this)+1);
-          // if this == 0, then incremented == 1, so no pluralization
-          if(this != 0){ incrementedText = incrementedText.replace(/Response$/, 'Responses'); }
-        });
-        parentButton
-          .data('origText', incrementedText);
+        
+        if ( $actionButton.size() > 0 ) {
+          $actionButton.text("Respond");
+        }
+        
+        // there is no parent button if responding to convo-level responses at bottom of convo perma page
+        if ( $responsesButton.size() > 0 ) { 
+          if ( $responsesButton.data('origText') == null ) { $responsesButton.data('origText', $responsesButton.text()); }
           
-        if( parentButton.is('span') ) { parentButton.text(incrementedText); }
+          if( /^[^\d]+$/.test($responsesButton.data('origText')) ){ // if origText does not contain a number (most likely says something like "Be the first to respond", but we'll be flexible)
+            $responsesButton.data('origText',"0 Response");
+          }
+          integers = $responsesButton.data('origText').match(/(\d+)/g);
+          
+          $.each(integers, function(){
+            incrementedText = $responsesButton.data('origText').replace(this,parseInt(this)+1);
+            // if this == 0, then incremented == 1, so no pluralization
+            if(this != 0){ incrementedText = incrementedText.replace(/Response$/, 'Responses'); }
+          });
+          $responsesButton
+            .data('origText', incrementedText);
+            
+          if( $responsesButton.is('span') ) { $responsesButton.text(incrementedText); }
+        }
       });
     },
     
