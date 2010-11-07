@@ -5,6 +5,7 @@ class Contribution < ActiveRecord::Base
   include Visitable
   include TopItemable
   acts_as_nested_set
+  profanity_filter :content, :method => 'hollow'
   
   ALL_TYPES = ["Answer","AttachedFile","Comment","EmbeddedSnippet","Link",
                "Question","SuggestedAction", "PplAggContribution"]
