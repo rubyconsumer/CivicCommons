@@ -1,11 +1,11 @@
 #user
   - if person_signed_in?
-    = surround "Signed in as ", "." do
+    = surround "Logged in as ", "." do
       = current_person.email
     = precede "Not you? " do
-      = link_to "Sign out", destroy_person_session_path
+      = link_to "Logout", destroy_person_session_path
   - else
     %p
       %a{:href => new_person_session_path, :class => 'button login-link' }
-        Login to your account
+        Log in to your account
     = link_to "Create an account", new_person_registration_path, :class => 'createacct-link'
