@@ -23,7 +23,7 @@ class Api::Contributions
         parent_url: contribution.parent_url,
         created_at: contribution.created_at,
         content: contribution.content,
-        attachment_url: '',
+        attachment_url: contribution.attachment_url,
         embed_code: contribution.embed_target.to_s,
         type: contribution.contribution_type,
         link_text: '',

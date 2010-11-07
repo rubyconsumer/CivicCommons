@@ -126,6 +126,14 @@ class Contribution < ActiveRecord::Base
     self.destroy
     true
   end
+
+  def attachment_url(style='')
+    if self.attachment_file_name
+      attachment.url.gsub(/\?\d+$/, '')
+    else
+      ''
+    end
+  end
   
   protected
   
