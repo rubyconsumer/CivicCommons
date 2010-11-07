@@ -84,14 +84,14 @@
               %li
                 = link_to 'Partners', '/partners'
               %li
-                = link_to 'In The News', '/press'
+                %a{:href =>"#{pa_link()}in-the-news", :title => "In the news"} In The News
               %li
                 = link_to 'Contact us', '/contact-us'
     = yield :main_body
     #footer.footer
       #footer-inner
         %ul.sub-nav
-          %li 
+          %li
             %a{:href =>"#{pa_link(:home)}", :title => "Blog"} Blog
           %li 
             = link_to 'About Us', '/about'
@@ -104,7 +104,7 @@
           %li
             = link_to 'Partners', '/partners'
           %li
-            = link_to 'In The News', '/press'
+            %a{:href =>"#{pa_link()}in-the-news", :title => "In the news"} In The News
           %li
             = link_to 'Contact us', '/contact-us'
         %p 
