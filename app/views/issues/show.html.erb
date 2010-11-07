@@ -1,4 +1,5 @@
 <% content_for :header do %>
+  <%= javascript_include_tag('lib/issues/show') %>
   <%= javascript_include_tag('lib/subscriptions/show') %>
 <% end %>
 
@@ -86,6 +87,7 @@ $(document).ready(function() {
             <% end %>
             <h4><%= link_to truncate(contribution.title), contribution.url %></h4>
             <p>Submitted by: <a href="#link-to-PA-profile"><%= contribution.person.name %></a></p>
+            <p><%= link_to 'Delete', contribution_path(contribution), :class => 'delete button' if contribution.editable_by?(current_person) %></p>
             </li>
           <% end %>
         </ol>
@@ -102,6 +104,7 @@ $(document).ready(function() {
           <div class="dnld <%= media_style(contribution) %>">
             <p><strong><%= media_link_info(contribution) %></strong></p>
             <p><em>Submitted by: <%= contribution.person.name %></em></p>
+            <p><%= link_to 'Delete', contribution_path(contribution), :class => 'delete button' if contribution.editable_by?(current_person) %></p>
           </div>
         <% end %>
         <% if person_signed_in? %>
