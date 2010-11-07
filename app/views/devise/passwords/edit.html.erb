@@ -2,6 +2,8 @@
 
 <h2>Change your password</h2>
 
+<p>Change your password: Please choose a new password, but here's the challenge — it must be at least six characters and start with the letter Q. (Just kidding, it doesn't have to start with the letter Q.)</p>
+
 <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :put }) do |f| %>
   <%= devise_error_messages! %>
   <%= f.hidden_field :reset_password_token %>

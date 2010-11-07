@@ -1,26 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>We're sorry, but something went wrong (500)</title>
+  <title>An Error Occurred</title>
   <style type="text/css">
-    body { background-color: #fff; color: #666; text-align: center; font-family: arial, sans-serif; }
+    body { background:#f9f9f9 url(/images/body_bg.gif); color: #666; text-align: center; font-size:67.5%;font-family: helvetica, arial, sans-serif; }
     div.dialog {
-      width: 25em;
-      padding: 0 4em;
-      margin: 4em auto 0 auto;
+      text-align:left;
+      background:#fff;
+      width: 400px;
+      padding: 0;
+      margin: 6em auto 0 auto;
       border: 1px solid #ccc;
-      border-right-color: #999;
-      border-bottom-color: #999;
     }
-    h1 { font-size: 100%; color: #f00; line-height: 1.5em; }
+    h1 { background:#CBE27C; padding:10px 15px; font-size:2em; margin-top:0; color: #000; line-height: 1.5em; }
+    p { padding:0 15px; font-size:1.2em; margin-top:0;}
+    a { color:#2C87B7; font-weight:bold; font-size:1.4em; }
   </style>
 </head>
 
 <body>
   <!-- This file lives in public/500.html -->
   <div class="dialog">
-    <h1>We're sorry, but something went wrong.</h1>
-    <p>We've been notified about this issue and we'll take a look at it shortly.</p>
+    <h1>An error occurred</h1>
+    <p>Whoa! We're not sure what just happened, but if you tell us what you were doing, we can probably fix it so it won't happen again.</p>
+    <p><a href="/build-the-commons">Report a bug</a></p>
   </div>
 </body>
 </html>

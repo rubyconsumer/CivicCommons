@@ -71,12 +71,10 @@
           %li
             %a{:href =>"#{pa_link(:people)}", :title => "Community"} Community
           %li.drop
-            %a{:href =>'http://theciviccommons.com/', :title => "About Us"} About Us
+            %a{:href =>'/about', :title => "About Us"} About Us
             %ul
               %li 
                 %a{:href =>"#{pa_link(:home)}", :title => "Blog"} Blog
-              %li 
-                = link_to 'Help', '/help'
               %li 
                 = link_to 'FAQ', '/faq'
               %li
@@ -87,6 +85,8 @@
                 = link_to 'Partners', '/partners'
               %li
                 = link_to 'In The News', '/press'
+              %li
+                = link_to 'Contact us', '/contact-us'
     = yield :main_body
     #footer.footer
       #footer-inner
@@ -108,7 +108,6 @@
           %li
             = link_to 'Contact us', '/contact-us'
         %p 
-          The Civic Commons is Copyright 2010 by the Legal Entity.  Content is licensed under License.
           %a{ :href => '/terms'} Terms of Use
         %ul.social-media
           %li
