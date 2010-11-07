@@ -26,7 +26,7 @@ class Api::Contributions
         attachment_url: contribution.attachment_url,
         embed_code: contribution.embed_target.to_s,
         type: contribution.contribution_type,
-        link_text: '',
+        link_text: contribution.url_title,
         link_url: contribution.url.to_s
       }
     end

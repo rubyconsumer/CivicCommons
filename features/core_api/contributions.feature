@@ -47,6 +47,7 @@ Feature:
     | question      | I was wanting to know if you could clariyf the points in your comment? |                                                     |                                                                                        |                                                             |                                            |
     | attached_file | In this pdf, you can see...                                            | http://s3.amazonaws.com/civiccommons/test_pdf.pdf   |                                                                                        |                                                             |                                            |
     | image         | This image illustrates...                                              | http://s3.amazonaws.com/civiccommons/test_image.png |                                                                                        |                                                             |                                            |
+    | link          | This site is amazing                                                   |                                                     |                                                                                        | Yahoo!                                                      | http://www.yahoo.com                       |
 
 
   @backlog

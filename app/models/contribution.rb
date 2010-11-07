@@ -175,4 +175,11 @@ class Contribution < ActiveRecord::Base
     end
   end
 
+  def url_title
+    if self.url
+      self.title
+    else
+      ''
+    end
+  end
 end

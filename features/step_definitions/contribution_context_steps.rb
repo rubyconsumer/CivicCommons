@@ -63,3 +63,13 @@ Given /^I have contributed a image:$/ do |image_comment|
                  created_at: Date.parse("2010/10/10"))
 end
 
+Given /^I have contributed a link:$/ do |link_comment|
+  Factory.create(:link,
+                 content: link_comment,
+                 person: @current_person,
+                 conversation: @conversation,
+                 created_at: Date.parse("2010/10/10"),
+                 url: "http://www.yahoo.com")
+end
+
+
