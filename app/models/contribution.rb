@@ -23,10 +23,21 @@ class Contribution < ActiveRecord::Base
   scope :without_parent, where(:parent_id => nil)
   scope :confirmed, where(:confirmed => true)
   scope :unconfirmed, where(:confirmed => false)
+  # Scope for contributions that are still editable, i.e. no descendants and less than 30 minutes old
+  scope :editable, where(["(#{quoted_table_name}.#{quoted_right_column_name} - #{quoted_table_name}.#{quoted_left_column_name} - 1) > 0 AND #{quoted_table_name}.created_at >= DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 30 MINUTE)"])
   
   before_create :set_confirmed
   
   attr_accessor :override_confirmed
+  
+  def self.find_or_new_unconfirmed(params,person)
+    attrs = {
+      :conversation_id => params[:id],
+      :parent_id => params[:contribution_id],
+      :owner => person.id
+    }
+    return Contribution.unconfirmed.editable.where(attrs).first || Contribution.new(attrs)
+  end
   
   def self.update_or_create_node_level_contribution(params,person)
     if contribution = Contribution.unconfirmed.where(:type => params[:type], :parent_id => params[:parent_id], :owner => person.id).first

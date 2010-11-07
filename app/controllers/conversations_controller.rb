@@ -25,7 +25,7 @@ class ConversationsController < ApplicationController
     # grab all direct contributions to conversation that aren't TLC
     @conversation_contributions = Contribution.not_top_level.confirmed.without_parent.where(:conversation_id => @conversation.id).includes([:person]).order('created_at ASC')
     @conversation_contributions = @conversation_contributions.with_user_rating(current_person) if current_person
-    @contributions = Contribution.confirmed.with_user_rating(current_person).descendants_of(@conversation_contributions).includes([:person])
+    #@contributions = Contribution.confirmed.with_user_rating(current_person).descendants_of(@conversation_contributions).includes([:person])
     
     @top_level_contribution = Contribution.new # for conversation comment form
     @tlc_participants = @top_level_contributions.collect{ |tlc| tlc.owner }
@@ -56,7 +56,7 @@ class ConversationsController < ApplicationController
   
   def node_conversation
     @top_level_contribution = Contribution.find(params[:id])
-    @contributions = @top_level_contribution.descendants.confirmed.includes(:person)
+    @contributions = @top_level_contribution.children.confirmed.includes(:person)
     @contributions = @contributions.with_user_rating(current_person) if current_person
     @top_level_contribution.visit!((current_person.nil? ? nil : current_person.id))
     @contribution = Contribution.new(:parent_id => @top_level_contribution.id, :conversation_id => @top_level_contribution.conversation_id)
@@ -87,7 +87,7 @@ class ConversationsController < ApplicationController
   end
   
   def new_node_contribution
-    @contribution = Contribution.new(:conversation_id => params[:id], :parent_id => params[:contribution_id])
+    @contribution = Contribution.find_or_new_unconfirmed(params, current_person)
     respond_to do |format|
       format.js { render(:partial => "conversations/tabbed_post_box", :locals => {:div_id => params[:div_id], :layout => false}) }
       format.html { render(:partial => "conversations/tabbed_post_box", :locals => {:div_id => params[:div_id], :layout => 'application'}) }

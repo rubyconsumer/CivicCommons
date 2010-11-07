@@ -1,27 +1,31 @@
 jQuery(function ($) {
   $.fn.extend({
     updateConversationButtonText: function(){
-      var el = this,
-          parentButton = el.parents('.top-level-contribution').find('.conversation-responses').first(),
-          incrementedText;
+      var el = this;
       
-      if(parentButton.size() == 0) { return el; } // there is no parent button if responding to convo-level responses at bottom of convo perma page
-      
-      if ( parentButton.data('origText') == null ) { parentButton.data('origText', parentButton.text()); }
+      return el.parents('.contribution-container').each(function(){
+        var parentButton = $(this).find('.conversation-responses').first(),
+            incrementedText;
 
-      if( /^[^\d]+$/.test(parentButton.data('origText')) ){ // if origText does not contain a number (most likely says something like "Be the first to respond", but we'll be flexible)
-        parentButton.data('origText',"0 Response");
-      }
-      integers = parentButton.data('origText').match(/(\d+)/g);
+        if(parentButton.size() == 0) { return; } // there is no parent button if responding to convo-level responses at bottom of convo perma page
 
-      $.each(integers, function(){
-        incrementedText = parentButton.data('origText').replace(this,parseInt(this)+1);
-        // if this == 0, then incremented == 1, so no pluralization
-        if(this != 0){ incrementedText = incrementedText.replace(/Response$/, 'Responses'); }
+        if ( parentButton.data('origText') == null ) { parentButton.data('origText', parentButton.text()); }
+
+        if( /^[^\d]+$/.test(parentButton.data('origText')) ){ // if origText does not contain a number (most likely says something like "Be the first to respond", but we'll be flexible)
+          parentButton.data('origText',"0 Response");
+        }
+        integers = parentButton.data('origText').match(/(\d+)/g);
+
+        $.each(integers, function(){
+          incrementedText = parentButton.data('origText').replace(this,parseInt(this)+1);
+          // if this == 0, then incremented == 1, so no pluralization
+          if(this != 0){ incrementedText = incrementedText.replace(/Response$/, 'Responses'); }
+        });
+        parentButton
+          .data('origText', incrementedText);
+          
+        if( parentButton.is('span') ) { parentButton.text(incrementedText); }
       });
-      parentButton
-        .data('origText', incrementedText);
-      return el;
     },
     
     scrollTo: function(){
@@ -77,22 +81,20 @@ jQuery(function ($) {
             if ( ! $(clicked).hasClass('top-node-conversation-action') ) {
               $(clicked).updateConversationButtonText();
 
-              if ( $(clicked).hasClass('top-level-contribution-action-button') ) {
-                var $showResponsesButton = $(clicked).closest('.response').find('.conversation-responses');
-                if ( ! $showResponsesButton.data('expanded') ) {
-                  $showResponsesButton.bind('ajax:success', function(){
-                    var $target = $(this).closest('.contribution-container').find('ol.thread-list,ul.thread-list').first(),
-                        responseId = responseNode.filter('li').first().attr('id');
-
-                    setTimeout(function(){ $target.find('#' + responseId).scrollTo(); }, 250);
-                  }).trigger('click'); // expands
-                }
+              var $showResponsesButton = $(clicked).closest('.response').find('.conversation-responses');
+              if ( ! $showResponsesButton.data('expanded') ) {
+                $showResponsesButton.bind('ajax:success', function(){
+                  var $target = $(this).closest('.contribution-container').find('ol.thread-list,ul.thread-list').first(),
+                      responseId = responseNode.filter('li').first().attr('id');
+              
+                  setTimeout(function(){ $target.find('#' + responseId).scrollTo(); }, 250);
+                }).trigger('click'); // expands
               }
             }
             
             $(clicked).appendContributionToThread(responseNode);
             $.fn.colorbox.close();
-            //setTimeout(function(){ responseNode.scrollTo(); }, 250);
+            setTimeout(function(){ responseNode.scrollTo(); }, 250);
           }
         })
         .bindValidationErrorOnAjaxFailure()

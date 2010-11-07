@@ -16,7 +16,12 @@
             = link_to "Moderate", moderate_contribution_path(contribution), :confirm => "Whoa there Tiger!  This will remove the contribution and all the nested responses.  Are you sure you want to do this?", :class => 'moderate', :method => 'delete'
         = render(:partial => "conversations/contributions/#{contribution.type.underscore}", :locals => {:contribution => contribution})
         - if contribution.confirmed # if not confirmed, this is just a preview
-          %div.convo-utility.no-response
+          %div{:class => "convo-utility #{contribution.descendants_count > 0 ? 'response' : 'no-response'}"}
+            %p.respond-link
+              - if contribution.descendants_count > 0
+                = link_to(pluralize(contribution.descendants_count,'Response'), {:action => "node_conversation", :id => contribution.id, :div_id => "contribution-#{contribution.id}"}, :class => "text conversation-responses", :id => "action-link-#{contribution.id}", :title => "View the conversation", 'data-target' => "#thread-div-#{contribution.id}", :remote => true)
+              - else
+                %span.conversation-responses No Responses
             .respond-container
               /=render(:partial => 'conversations/contributions/rating', :locals => {:contribution => contribution})
               %p.respond
