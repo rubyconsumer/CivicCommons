@@ -39,6 +39,7 @@ padding-bottom: 0;
 .contribution-person-name {
 font-weight: bold;
 margin-right: 10px;
+float: left;
 }
 .conversations {margin: 0;}
 /* .conversations li .conversations {margin-top: 1em;} */

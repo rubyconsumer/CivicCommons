@@ -68,7 +68,7 @@ class Ingester
     chars = ActiveSupport::Multibyte::Chars.new(string).tidy_bytes
     
     # Replace \r and \r\n with \n
-    chars = chars.gsub("\r\n", "\r").gsub("\r", "\n")
+    chars = chars.gsub("\r\n", "\r").gsub("\r", "\n\n")
 
     # Replace “smart quotes” with "normal quotes"
     chars = chars.gsub(/[”“]/, '"')

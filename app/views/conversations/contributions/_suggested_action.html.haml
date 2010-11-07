@@ -1,3 +1,3 @@
-%p.content
+%div.content
   %span.contribution-person-name= person_display_name(contribution.person)
-  = auto_link(contribution.content)
+  =auto_link(simple_format(contribution.content))

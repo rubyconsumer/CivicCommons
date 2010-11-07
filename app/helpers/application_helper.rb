@@ -23,5 +23,9 @@ module ApplicationHelper
     "Showing %s of %s"%[collection.count,
                         pluralize(collection.total_entries, name_of_collection)]
   end
+  
+  def nl2br(string)
+	  string.gsub(/\n/, '<br />') if string
+  end
 
 end
