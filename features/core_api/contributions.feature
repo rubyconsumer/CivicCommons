@@ -40,12 +40,13 @@ Feature:
     """
 
   Examples:
-    | type       | comment                                                                | attachment_url | embed_code                                                                             | link_text | link_url                                   |
-    | comment    | This goes to the same problem that there would be in the adult market. |                |                                                                                        |           |                                            |
-    | video      | Check out this sweet goal.                                             |                | <test_embed src='http://www.youtube.com/v/qq7nkbvn1Ic?fs=1&amp;hl=en_US'></test_embed> |           | http://www.youtube.com/watch?v=qq7nkbvn1Ic |
-    | suggestion | Lorem ipsum dolor sit amet, consectetur adipiscing elit.               |                |                                                                                        |           |                                            |
-    | question   | I was wanting to know if you could clariyf the points in your comment? |                |                                                                                        |           |                                            |
-
+    | type          | comment                                                                | attachment_url                                      | embed_code                                                                             | link_text                                                   | link_url                                   |
+    | comment       | This goes to the same problem that there would be in the adult market. |                                                     |                                                                                        |                                                             |                                            |
+    | video         | Check out this sweet goal.                                             |                                                     | <test_embed src='http://www.youtube.com/v/qq7nkbvn1Ic?fs=1&amp;hl=en_US'></test_embed> | YouTube - David Perron Goal vs Islanders - November 21 2009 | http://www.youtube.com/watch?v=qq7nkbvn1Ic |
+    | suggestion    | Lorem ipsum dolor sit amet, consectetur adipiscing elit.               |                                                     |                                                                                        |                                                             |                                            |
+    | question      | I was wanting to know if you could clariyf the points in your comment? |                                                     |                                                                                        |                                                             |                                            |
+    | attached_file | In this pdf, you can see...                                            | http://s3.amazonaws.com/civiccommons/test_pdf.pdf   |                                                                                        |                                                             |                                            |
+    | image         | This image illustrates...                                              | http://s3.amazonaws.com/civiccommons/test_image.png |                                                                                        |                                                             |                                            |
 
 
   @backlog
@@ -65,7 +66,7 @@ Feature:
             parent_url: "http://.../conversations/2",
             created_at: "10/10/2010",
             content: "In this pdf, the author illustrates the results of changing ..."
-            attachment_url: "http://s3.amazon.com/civiccommons/citation.pdf",
+            attachment_url: "http://s3.amazonaws.com/civiccommons/citation.pdf",
             embed_code: "",
             type: "attchment",
             link_text: "",

@@ -168,6 +168,8 @@ class Contribution < ActiveRecord::Base
       :video
     elsif self.suggestion?
       :suggestion
+    elsif self.is_image?
+      :image
     else
       self.type.underscore
     end

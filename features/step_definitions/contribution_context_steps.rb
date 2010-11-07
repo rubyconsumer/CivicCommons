@@ -54,3 +54,12 @@ Given /^I have contributed a attached_file:$/ do |attached_file_comment|
                  attachment: File.new(Rails.root + 'test/fixtures/test_pdf.pdf'),
                  created_at: Date.parse("2010/10/10"))
 end
+
+Given /^I have contributed a image:$/ do |image_comment|
+  Factory.create(:attached_file,
+                 content: image_comment,
+                 person: @current_person,
+                 conversation: @conversation,
+                 created_at: Date.parse("2010/10/10"))
+end
+
