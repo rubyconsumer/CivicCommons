@@ -16,7 +16,6 @@ Feature:
       | Title       | Understanding The Latest Health Care Changes |
 
 
-  @wip
   Scenario Outline: Retrieve a contribution
     Given I have contributed a <type>:
       """
@@ -45,88 +44,10 @@ Feature:
     | video         | Check out this sweet goal.                                             |                                                     | <test_embed src='http://www.youtube.com/v/qq7nkbvn1Ic?fs=1&amp;hl=en_US'></test_embed> | YouTube - David Perron Goal vs Islanders - November 21 2009 | http://www.youtube.com/watch?v=qq7nkbvn1Ic |
     | suggestion    | Lorem ipsum dolor sit amet, consectetur adipiscing elit.               |                                                     |                                                                                        |                                                             |                                            |
     | question      | I was wanting to know if you could clariyf the points in your comment? |                                                     |                                                                                        |                                                             |                                            |
-    | attached_file | In this pdf, you can see...                                            | http://s3.amazonaws.com/civiccommons/test_pdf.pdf   |                                                                                        |                                                             |                                            |
-    | image         | This image illustrates...                                              | http://s3.amazonaws.com/civiccommons/test_image.png |                                                                                        |                                                             |                                            |
+    | attached_file | In this pdf, you can see...                                            | http://s3.amazonaws.com/cc-dev/attachments/original/test_pdf.pdf   |                                                                                        |                                                             |                                            |
+    | image         | This image illustrates...                                              | http://s3.amazonaws.com/cc-dev/attachments/original/test_image.jpg |                                                                                        |                                                             |                                            |
     | link          | This site is amazing                                                   |                                                     |                                                                                        | Yahoo!                                                      | http://www.yahoo.com                       |
 
-
-  @backlog
-  Scenario: Retrieve a contribution with an attachment
-    Given I have contributed an attachment "citation.pdf"
-    And I have commented:
-      """
-        In this pdf, the author illustrates the results of changing ...
-      """
-    When I ask for contributions for the person with People Aggregator ID 12
-    Then I should receive the response:
-      """
-        [
-          {
-            parent_title: "Understanding The Latest Health Care Changes",
-            parent_type: "conversation",
-            parent_url: "http://.../conversations/2",
-            created_at: "10/10/2010",
-            content: "In this pdf, the author illustrates the results of changing ..."
-            attachment_url: "http://s3.amazonaws.com/civiccommons/citation.pdf",
-            embed_code: "",
-            type: "attchment",
-            link_text: "",
-            link_url: ""
-          }
-        ]
-      """
-
-  @backlog
-  Scenario: Retrieve a contribution with an image
-    Given I have contributed an image "picture.png"
-    And I have commented:
-      """
-        Look at this.
-      """
-    When I ask for contributions for the person with People Aggregator ID 12
-    Then I should receive the response:
-      """
-        [
-          {
-            parent_title: "Understanding The Latest Health Care Changes",
-            parent_type: "conversation",
-            parent_url: "http://.../conversations/2",
-            created_at: "10/10/2010",
-            content: "Look at this."
-            attachment_url: "http://s3.amazon.com/civiccommons/picture.jpg",
-            embed_code: "",
-            type: "image",
-            link_text: "",
-            link_url: ""
-          }
-        ]
-      """
-
-  @backlog
-  Scenario: Retrieve a contribution with a link
-    Given I have contributed a link "http://www.cbsnews.com" with the text "Here's My Link"
-    And I have commented:
-      """
-        Checkout the article on ...
-      """
-    When I ask for contributions for the person with People Aggregator ID 12
-    Then I should receive the response:
-      """
-        [
-          {
-            parent_title: "Understanding The Latest Health Care Changes",
-            parent_type: "conversation",
-            parent_url: "http://.../conversations/2",
-            created_at: "10/10/2010",
-            content: "Checkout the article on ..."
-            attachment_url: "",
-            embed_code: "",
-            type: "link",
-            link_text: "Here's My Link",
-            link_url: "http://www.cbsnews.com"
-          }
-        ]
-      """
 
   @backlog
   Scenario: Requesting for a PA user that does not exist
