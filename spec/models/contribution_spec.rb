@@ -305,4 +305,84 @@ describe Contribution do
       contribution.descendants.length.should == 0
     end
   end
+  describe "when deleting contributions of" do
+    def given_a_contribution(type)
+      @person = Factory.create(:normal_person)
+      @other_person = Factory.create(:normal_person)
+      @admin_person = Factory.create(:admin_person)
+      @contribution = Factory.create(type, {:person => @person})
+    end
+    describe "suggested action" do
+      it "should be able to be deleted by admin" do
+        given_a_contribution(:suggested_action)
+        @contribution.destroy_by_user(@admin_person).should be_true
+      end
+      it "should be able to be deleted by the creator" do
+        given_a_contribution(:suggested_action)
+        @contribution.destroy_by_user(@person).should be_true
+      end
+      it "should not be able to be deleted by other person" do
+        given_a_contribution(:suggested_action)
+        @contribution.destroy_by_user(@other_person).should be_false
+      end
+    end
+    describe "EmbeddedSnippet" do
+      it "should be able to be deleted by admin" do
+        given_a_contribution(:embedded_snippet)
+        @contribution.destroy_by_user(@admin_person).should be_true
+      end
+      it "should be able to be deleted by the creator" do
+        given_a_contribution(:embedded_snippet)
+        @contribution.destroy_by_user(@person).should be_true
+      end
+      it "should not be able to be deleted by other person" do
+        given_a_contribution(:embedded_snippet)
+        @contribution.destroy_by_user(@other_person).should be_false
+      end
+    end
+    describe "AttachedFile" do
+      it "should be able to be deleted by admin" do
+        given_a_contribution(:attached_file)
+        @contribution.destroy_by_user(@admin_person).should be_true
+      end
+      it "should be able to be deleted by the creator" do
+        given_a_contribution(:attached_file)
+        @contribution.destroy_by_user(@person).should be_true
+      end
+      it "should not be able to be deleted by other person" do
+        given_a_contribution(:attached_file)
+        @contribution.destroy_by_user(@other_person).should be_false
+      end
+    end
+    describe "PplAggContribution" do
+      it "should be able to be deleted by admin" do
+        given_a_contribution(:ppl_agg_contribution)
+        @contribution.destroy_by_user(@admin_person).should be_true
+      end
+      it "should be able to be deleted by the creator" do
+        given_a_contribution(:ppl_agg_contribution)
+        @contribution.destroy_by_user(@person).should be_true
+      end
+      it "should not be able to be deleted by other person" do
+        given_a_contribution(:ppl_agg_contribution)
+        @contribution.destroy_by_user(@other_person).should be_false
+      end
+      
+    end
+    describe "Link" do
+      it "should be able to be deleted by admin" do
+        given_a_contribution(:link)
+        @contribution.destroy_by_user(@admin_person).should be_true
+      end
+      it "should be able to be deleted by the creator" do
+        given_a_contribution(:link)
+        @contribution.destroy_by_user(@person).should be_true
+      end
+      it "should not be able to be deleted by other person" do
+        given_a_contribution(:link)
+        @contribution.destroy_by_user(@other_person).should be_false
+      end
+      
+    end
+  end
 end

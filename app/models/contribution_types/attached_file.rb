@@ -21,4 +21,9 @@ class AttachedFile < Contribution
     !(attachment_content_type =~ /^image.*/).nil?
   end
   
+  def editable_by?(user)
+    return false if user.nil?
+    (user.admin? || self.owner == user.id) && descendants_count == 0
+  end
+  
 end
