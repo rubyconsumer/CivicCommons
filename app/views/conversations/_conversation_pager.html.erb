@@ -6,7 +6,7 @@
         <a href="<%= conversation_path(conversation)%>">
           <img class="main-img" src="<%= conversation.image.url(:panel) %>" alt="<%= conversation.title %>" width="180" height="120" />
           <h4><%= truncate(conversation.title, {:length => 45, :separator => ' '}) %></h4>
-          <p><%= raw(truncate(conversation.summary, {:length => 125, :separator => ' '})) %></p>
+          <%= simple_format(truncate(conversation.summary, {:length => 125, :separator => ' '})) %>
         </a>
         <div class="photobank">
           <% conversation.participants[0...4].each do |participant| %>
