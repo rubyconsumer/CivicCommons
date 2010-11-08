@@ -26,9 +26,8 @@ class Person < ActiveRecord::Base
 
   validates_length_of :email, :within => 6..255, :too_long => "please use a shorter email address", :too_short => "please use a longer email address"
   validate :zip_code, :length => 10
-  validates_attachment_content_type :avatar, :content_type => %w(image/jpeg image/gif image/png image/jpg image/x-png image/pjpeg)
 
-  validates_presence_of :avatar_file_name, :avatar_content_type, :avatar_file_size
+ 
 
   has_attached_file :avatar,
     :styles => {
@@ -56,6 +55,7 @@ class Person < ActiveRecord::Base
   after_create :create_shadow_account, :unless => :skip_shadow_account
   after_create :notify_civic_commons
   before_save :check_to_send_welcome_email
+  before_save :validate_image_type
   after_save :send_welcome_email, :if => :send_welcome?
   after_destroy :delete_shadow_account, :unless => :skip_shadow_account
   
@@ -224,6 +224,13 @@ class Person < ActiveRecord::Base
   def avatar_url_without_timestamp(style='')
     self.avatar.url(style).gsub(/\?\d+$/, '')
   end
+
+  def validate_image_type
+    if self.avatar
+      Person.validates_attachment_content_type :avatar, :content_type => %w(image/jpeg image/gif image/png image/jpg image/x-png image/pjpeg)
+    end
+  end
+
 
 
   private
