@@ -127,9 +127,13 @@ class Contribution < ActiveRecord::Base
     true
   end
 
-  def attachment_url(style='')
+  def attachment_url
     if self.attachment_file_name
-      attachment.url.gsub(/\?\d+$/, '')
+      if self.is_image?
+        attachment.url(:thumb).gsub(/\?\d+$/, '')
+      else
+        attachment.url.gsub(/\?\d+$/, '')
+      end
     else
       ''
     end
