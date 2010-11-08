@@ -29,6 +29,7 @@ class IssuesController < ApplicationController
     @people = @issue.participants.exclude_organizations
     @organizations = @issue.participants.exclude_people
     @written_contributions = @issue.written_contributions.most_recent
+    @conversation_comments = @issue.conversation_comments.most_recent
     @suggested_actions = @issue.suggested_actions.most_recent
     @media_contributions = @issue.media_contributions.most_recent
     

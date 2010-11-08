@@ -17,9 +17,8 @@ class Issue < ActiveRecord::Base
            :conditions => "type = 'EmbeddedSnippet' or type = 'AttachedFile'")
 
   has_many(:written_contributions, :class_name => "Contribution",
-           :conditions => "type = 'PplAggContribution' or type = 'Link'")
+           :conditions => {:type => ['PplAggContribution', 'Link']})
   has_many :subscriptions, :as => :subscribable
-  
   
   # Anyone who has contributed directly to the issue via a contribution
   has_many(:participants,
@@ -60,5 +59,9 @@ class Issue < ActiveRecord::Base
         most_active
       end
     }
+  
+  def conversation_comments 
+    Comment.joins(:conversation).where({:conversations => {:id => self.conversation_ids}})
+  end
   
 end

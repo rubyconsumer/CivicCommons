@@ -44,6 +44,15 @@ describe Issue do
     @issue2.visits << Factory.create(:visit)
     @issue2.visits << Factory.create(:visit)
   end
+  def given_an_issue_with_conversations_and_comments
+    @person = Factory.create(:normal_person)
+    @issue = Factory.create(:issue)
+    @other_issue = Factory.create(:issue)
+    @other_conversation = Factory.create(:conversation)
+    
+    @conversation = Factory.create(:conversation,:issues => [@issue])
+    @comment = Factory.create(:comment, :person => @person, :conversation => @conversation)
+  end
   context "Top Issues" do
     it "should be determined by total # of contributions to an Issue + total # of page visits." do
       pending
@@ -98,4 +107,15 @@ describe Issue do
       pending
     end
   end
+  context "comments on issues" do
+    it "should display the correct comments(contribution) that are attached to conversations arround that issues" do
+      given_an_issue_with_conversations_and_comments
+      @issue.conversation_comments.should == [@comment]
+    end
+    it "should not display other things on comments" do
+      given_an_issue_with_conversations_and_comments
+      @other_issue.conversation_comments.should == []
+    end
+  end
+  
 end
