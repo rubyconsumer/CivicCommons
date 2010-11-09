@@ -76,8 +76,7 @@ Feature:
     }]
     """
 
-  @backlog
   Scenario: Retrieve subscriptions for non-existant user
     When I ask for subscriptions for the person with People Aggregator ID 1099932
-    Then I should receive a "404 Not Found" response
+    Then I should receive a 404 Not Found response
 

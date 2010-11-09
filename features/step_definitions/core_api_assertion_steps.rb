@@ -35,3 +35,9 @@ Then /^I should receive the contributions with data:$/ do |expected|
 
 end
 
+Then /^I should receive a 404 Not Found response$/ do
+  visit @url
+
+  page.status_code.should == 404
+end
+

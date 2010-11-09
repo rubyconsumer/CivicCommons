@@ -7,7 +7,11 @@ class Api::SubscriptionsController < ActionController::Base
     subscribed_items =
       Api::SubscribedItems.for_person_by_people_aggregator_id(params[:id], request)
 
-    respond_with subscribed_items
+    if subscribed_items
+      respond_with subscribed_items
+    else
+      head :status => 404
+    end
   end
 
 
