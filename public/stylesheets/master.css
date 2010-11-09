@@ -703,6 +703,7 @@ div#search form input.textbox:focus {outline: 0 none;}
 div#search input.submit {
 background: transparent url(../images/search-submit.png) no-repeat 0 0;
 border: none;
+color: transparent; /* Hack to make the value of the submit input invisible to IE */
 display: block;
 height: 26px;
 margin: 0;
@@ -710,6 +711,7 @@ position: absolute;
 right: -24px;
 vertical-align: middle;
 text-indent: -9999px;
+text-transform: uppercase; /* Hack to make the value of the submit input invisible to IE */
 top: -1px;
 width: 24px;
 -webkit-border-radius: 0;
