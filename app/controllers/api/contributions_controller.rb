@@ -7,7 +7,11 @@ class Api::ContributionsController < ActionController::Base
     contributions =
       Api::Contributions.for_person_by_people_aggregator_id(params[:id], request)
 
-    respond_with contributions
+    if contributions
+      respond_with contributions
+    else
+      head :status => 404
+    end
   end
 
 

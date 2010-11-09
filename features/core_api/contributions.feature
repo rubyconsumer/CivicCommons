@@ -49,7 +49,6 @@ Feature:
     | link          | This site is amazing                                                   |                                                                    |                                                                                        | Yahoo!                                                      | http://www.yahoo.com                       |
 
 
-  @backlog
   Scenario: Requesting for a PA user that does not exist
     When I ask for contributions for the person with People Aggregator ID 1000321
-    Then I should receive a "404 Not Found" response
+    Then I should receive a 404 Not Found response
