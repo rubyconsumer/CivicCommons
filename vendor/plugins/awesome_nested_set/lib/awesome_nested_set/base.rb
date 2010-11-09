@@ -84,7 +84,7 @@ module CollectiveIdea #:nodoc:
               end
 
               before_create  :set_default_left_and_right, :unless =>  :excluded_from_nested_set?
-              before_save    :set_default_left_and_right, :if =>      :skipped_before_create_and_no_longer_excluded?
+              before_save    :set_default_left_and_right, :if =>      :skipped_before_create_but_no_longer_excluded?
               
               before_save    :store_new_parent,           :unless =>  :excluded_from_nested_set?
               after_save     :move_to_new_parent,         :unless =>  :excluded_from_nested_set?
@@ -484,7 +484,7 @@ module CollectiveIdea #:nodoc:
           end
 
           def store_new_parent
-            @move_to_new_parent_id = send("#{parent_column_name}_changed?") || skipped_before_create_and_no_longer_excluded? ? parent_id : false
+            @move_to_new_parent_id = send("#{parent_column_name}_changed?") || skipped_before_create_but_no_longer_excluded? ? parent_id : false
             true # force callback to return true
           end
 
@@ -548,8 +548,14 @@ module CollectiveIdea #:nodoc:
           end
           
           # If options[:exclude_unless] specified, and record has just been updated to no match conditions
-          def skipped_before_create_and_no_longer_excluded?
-            return acts_as_nested_set_options[:exclude_unless] && !new_record? && (left.nil? || right.nil?) && !excluded_from_nested_set?
+          def skipped_before_create_but_no_longer_excluded?
+            skipped_before_create = acts_as_nested_set_options[:exclude_unless] && !new_record?
+            skipped_before_create &&= left.nil? || right.nil? || 
+                                      ( self.send("#{left_column_name}_changed?") && self.send("#{left_column_name}_was").nil? ) ||
+                                      ( self.send("#{right_column_name}_changed?") && self.send("#{right_column_name}_was").nil? )
+            no_longer_excluded = !excluded_from_nested_set?
+            
+            return skipped_before_create && no_longer_excluded
           end
 
           # reload left, right, and parent
