@@ -10,13 +10,15 @@ Given /^an issue:$/ do |table|
 
   issue = table.rows_hash
 
-  attachment = File.join(attachments_path, issue['Image'])
+  if issue['Image']
+    attachment = File.open(File.join(attachments_path, issue['Image']))
+  end
 
   @issue =
     Factory.create(:issue,
                    id:   issue['ID'],
                    name: issue['Name'],
-                   image: File.open(attachment),
+                   image: attachment,
                    summary: issue['Summary'],
                    zip_code: issue['Zip Code'])
 
@@ -25,6 +27,10 @@ Given /^an issue:$/ do |table|
 
 end
 
+Given /^I am following the issue:$/ do |table|
+  Given("an issue:", table)
+  @issue.subscribe(@current_person)
+end
 
 Given /^I have a contribution on the issue$/ do
   Factory.create(:comment,

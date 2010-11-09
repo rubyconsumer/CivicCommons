@@ -7,6 +7,12 @@ class SubscriptionPresenter < Presenter::Base
   end
 
 
+  def parent_id; parent.id end
+
+
+  def parent_type; parent.class.name.underscore end
+
+
   def parent_conversation?
     parent.class.name == "Conversation"
   end

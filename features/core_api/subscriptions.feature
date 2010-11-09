@@ -21,7 +21,6 @@ Feature:
       | ID   | 2                                             |
       | Name | Democrats Upset About Recent Election Results |
 
-  @wip
   Scenario: Retrieve all subscriptions
     When I ask for subscriptions for the person with People Aggregator ID 12
     Then I should receive the response:

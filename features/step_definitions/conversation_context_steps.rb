@@ -35,11 +35,18 @@ Given /^I have [a\s]?(\d*|\w*)\s?comments? on the conversation$/ do |number|
 
 end
 
+
 Given /^I have comment on the conversation:$/ do |comment|
   Factory.create(:contribution,
                  person: @current_person,
                  content: comment,
                  issue: nil,
                  conversation: @conversation)
+end
+
+
+Given /^I am following the conversation:$/ do |table|
+  Given("a conversation:", table)
+  @conversation.subscribe(@current_person)
 end
 
