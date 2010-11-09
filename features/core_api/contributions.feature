@@ -52,3 +52,15 @@ Feature:
   Scenario: Requesting for a PA user that does not exist
     When I ask for contributions for the person with People Aggregator ID 1000321
     Then I should receive a 404 Not Found response
+
+  Scenario: Request 1 page of contributions
+    Given I have ten comments on the conversation
+    And I want 5 contributions per page
+    When I ask for one page of contributions for the person with People Aggregator ID 12
+    Then I should the data in my response:
+      | content        | type    |
+      | Test Comment 1 | comment |
+      | Test Comment 2 | comment |
+      | Test Comment 3 | comment |
+      | Test Comment 4 | comment |
+      | Test Comment 5 | comment |

@@ -25,6 +25,11 @@ Factory.define :comment do |f|
   f.association :parent, :factory => :top_level_contribution
 end
 
+
+Factory.define :comment_with_unique_content, :parent => :comment do |f|
+  f.sequence(:content) {|n| "Test Comment #{n}" }
+end
+
 Factory.define :suggested_action do |f|
   f.datetime "2010-06-30 12:39:43"
   f.association :person, :factory => :normal_person

@@ -28,7 +28,8 @@ Given /^I have [a\s]?(\d*|\w*)\s?comments? on the conversation$/ do |number|
   number = words_to_num(number) unless number =~ /\d+/
 
   number.times do
-    Factory.create(:comment,
+    Factory.create(:comment_with_unique_content,
+                   created_at: Date.parse("2010/10/10"),
                    person: @current_person,
                    conversation: @conversation)
   end

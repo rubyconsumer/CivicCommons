@@ -72,4 +72,7 @@ Given /^I have contributed a link:$/ do |link_comment|
                  url: "http://www.yahoo.com")
 end
 
+Given /^I want (\d+) contributions per page$/ do |per_page|
+  @per_page = per_page
+end
 

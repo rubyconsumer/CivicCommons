@@ -41,3 +41,34 @@ Then /^I should receive a 404 Not Found response$/ do
   page.status_code.should == 404
 end
 
+Then /^I should the data in my response:$/ do |table|
+  data = table.hashes
+
+
+  template = <<-EOT
+  {
+    "parent_title": "Understanding The Latest Health Care Changes",
+    "parent_type": "conversation",
+    "parent_url": "http://www.example.com/conversations/2",
+    "created_at": "2010-10-10T04:00:00Z",
+    "content": "<comment>",
+    "attachment_url": "",
+    "embed_code": "",
+    "type": "<type>",
+    "link_text": "",
+    "link_url": ""
+  }
+  EOT
+
+  expected =  data.map do |comment|
+                template.gsub(/<comment>/, comment['content']).
+                         gsub(/<type>/, comment['type'])
+              end.join(",")
+
+  expected = "[#{expected}]"
+
+  puts expected.inspect
+
+  Then("I should receive the response:", expected)
+end
+
