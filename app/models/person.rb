@@ -78,7 +78,7 @@ class Person < ActiveRecord::Base
   end
   
   def validate_invite_token(token)
-    token =~ /([a-zA-Z]{2})([0-9]{4})/i
+    token =~ /([a-zA-Z]{3})([0-9]{4})/i
   end
 
   def create_shadow_account
