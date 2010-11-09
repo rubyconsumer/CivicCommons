@@ -19,10 +19,10 @@ require 'cucumber/rails/capybara_javascript_emulation' # Lets you click links wi
 
 require 'ruby-debug'
 
+require 'webmock'
+
 require File.dirname(__FILE__) + '/words_to_num'
 
-
-WebMock.allow_net_connect!
 
 
 def cleanup_shadow_accounts
@@ -31,6 +31,17 @@ def cleanup_shadow_accounts
   person = PeopleAggregator::Person.find_by_email("joe@duplicate.com")
   person.destroy if person
 end
+
+World(WebMock::API)
+
+include WebMock::API
+
+stub_request(:any, /http:\/\/s3\.amazonaws\.com\/cc-dev\/attachments/)
+stub_request(:any, /http:\/\/s3\.amazonaws\.com/)
+stub_request(:any, %r{http://www.yahoo.com/}).
+  to_return(:body => "<html><title>Yahoo!</title><body></body></html>")
+stub_request(:any, %r{http://www.youtube.com/}).
+  to_return(:body => "<html><title>YouTube - David Perron Goal vs Islanders - November 21 2009</title><body></body></html>")
 
 After("@api") do |s|
   cleanup_shadow_accounts

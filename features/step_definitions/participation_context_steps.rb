@@ -10,6 +10,7 @@ Given /^a registered user:$/ do |table|
                    zip_code:             user['Zip'],
                    people_aggregator_id: user['People Aggregator ID'],
                    password:             user['Password'])
+
 end
 
 

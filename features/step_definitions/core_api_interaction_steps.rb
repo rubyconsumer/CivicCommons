@@ -12,4 +12,3 @@ When /^I ask for subscriptions for the person with People Aggregator ID (\d+)$/ 
   @url = "/api/people-aggregator/person/#{person_id}/subscriptions"
 end
 
-
