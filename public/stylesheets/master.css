@@ -564,6 +564,7 @@ padding-left: 0;
 text-align: center;
 }
 div#user p {margin-bottom: .7em;}
+*:first-child+html div.signed-out div#user {display: inline;}
 a.createacct-link {
 background: url(/images/add.png) no-repeat 0 2px;
 padding-left: 18px;
