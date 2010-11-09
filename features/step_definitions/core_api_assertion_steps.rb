@@ -67,8 +67,6 @@ Then /^I should the data in my response:$/ do |table|
 
   expected = "[#{expected}]"
 
-  puts expected.inspect
-
   Then("I should receive the response:", expected)
 end
 
