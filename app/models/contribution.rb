@@ -27,13 +27,9 @@ class Contribution < ActiveRecord::Base
   # Scope for contributions that are still editable, i.e. no descendants and less than 30 minutes old
   scope :editable, where(["#{quoted_table_name}.created_at >= DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 30 MINUTE)"])
   
-  before_create :set_confirmed
+  after_initialize :set_confirmed, :if => :new_record? # sets confirmed to false by default when object created
   
-  attr_accessor :override_confirmed
-  
-  def after_initialize
-    set_confirmed if self.new_record?
-  end
+  attr_reader :override_confirmed
   
   def self.find_or_new_unconfirmed(params,person)
     attrs = {
@@ -125,7 +121,7 @@ class Contribution < ActiveRecord::Base
   
   def editable_by?(user)
     return false if user.nil?
-    (user.admin? || (self.owner == user.id && self.created_at > 30.minutes.ago)) && self.descendants_count == 0 && self.confirmed
+    (user.admin? || (self.owner == user.id && self.created_at > 30.minutes.ago)) && self.confirmed && self.descendants_count == 0
   end
 
   def moderate_contribution
@@ -147,6 +143,11 @@ class Contribution < ActiveRecord::Base
     end
   end
   
+  def override_confirmed=(value)
+    @override_confirmed = value
+    self.confirmed = true if value
+  end
+  
   protected
   
   def self.setup_node_level_contribution(params,person)
@@ -157,16 +158,12 @@ class Contribution < ActiveRecord::Base
     return model,params
   end
   
-  def override_confirmed?
-    self.override_confirmed
-  end
-  
   def top_level_contribution?
     self.class == TopLevelContribution
   end
   
   def set_confirmed
-    self.confirmed = self.override_confirmed? || self.top_level_contribution? ? true : 0
+    self.confirmed = self.override_confirmed || self.top_level_contribution? ? true : 0
     # RAILS BUG - ActiveRecord::RecordNotSaved if set to false, but works for true, 1, and 0
   end
 

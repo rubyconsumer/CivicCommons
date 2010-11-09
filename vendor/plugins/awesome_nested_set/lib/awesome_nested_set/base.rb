@@ -76,17 +76,18 @@ module CollectiveIdea #:nodoc:
               has_many :children, :class_name => self.base_class.to_s,
                 :foreign_key => parent_column_name, :order => quoted_left_column_name
 
-              attr_accessor :skip_before_destroy, :skip_
+              attr_accessor :skip_before_destroy
 
               # no bulk assignment
               if accessible_attributes.blank?
                 attr_protected  left_column_name.intern, right_column_name.intern
               end
 
-              before_create  :set_default_left_and_right, :unless => :excluded?
-              before_save    :set_default_left_and_right, :if => :no_longer_excluded?
-              before_save    :store_new_parent,           :unless => :excluded?
-              after_save     :move_to_new_parent,         :unless => :excluded?
+              before_create  :set_default_left_and_right, :unless =>  :excluded_from_nested_set?
+              before_save    :set_default_left_and_right, :if =>      :skipped_before_create_and_no_longer_excluded?
+              
+              before_save    :store_new_parent,           :unless =>  :excluded_from_nested_set?
+              after_save     :move_to_new_parent,         :unless =>  :excluded_from_nested_set?
               before_destroy :destroy_descendants
 
               # no assignment to structure fields
@@ -483,7 +484,7 @@ module CollectiveIdea #:nodoc:
           end
 
           def store_new_parent
-            @move_to_new_parent_id = send("#{parent_column_name}_changed?") || no_longer_excluded? ? parent_id : false
+            @move_to_new_parent_id = send("#{parent_column_name}_changed?") || skipped_before_create_and_no_longer_excluded? ? parent_id : false
             true # force callback to return true
           end
 
@@ -539,23 +540,16 @@ module CollectiveIdea #:nodoc:
           
           # If attributes do not match options[:exclude_unless], then do not update any nested_set_records
           # :exclude_unless => {:confirmed => true, :deleted => false}
-          def excluded?
-            return false unless acts_as_nested_set_options[:exclude_unless]
-            acts_as_nested_set_options[:exclude_unless].each do |attr, value|
-              return true if self[attr] != value
+          def excluded_from_nested_set?
+            (acts_as_nested_set_options[:exclude_unless] || {}).each do |attribute, value|
+              return true unless self[attribute] == value
             end
             return false
           end
           
           # If options[:exclude_unless] specified, and record has just been updated to no match conditions
-          def no_longer_excluded?
-            # First, check to see if exclude_unless is specified and if record is currently NOT excluded
-            return false unless acts_as_nested_set_options[:exclude_unless] && !self.excluded? && !self.new_record? && self.changed?
-            # Provided, the above, now check to see if the record JUST NOW became NOT excluded
-            acts_as_nested_set_options[:exclude_unless].each do |attr, value|
-              return true if self.send(attr.to_s << '_changed?') && self.send(attr.to_s << '_was') != value && self[attr] == value
-            end
-            return false
+          def skipped_before_create_and_no_longer_excluded?
+            return acts_as_nested_set_options[:exclude_unless] && !new_record? && (left.nil? || right.nil?) && !excluded_from_nested_set?
           end
 
           # reload left, right, and parent
