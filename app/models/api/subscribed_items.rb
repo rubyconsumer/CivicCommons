@@ -13,16 +13,20 @@ class Api::SubscribedItems
 
 
   def self.for_person(person, request)
-    subscriptions = person.subscriptions
+    subscriptions = person.subscriptions.where(subscribable_type: request['type'])
 
     subscriptions.map do |subscription|
       subscription = SubscriptionPresenter.new(subscription, request)
-      {
+
+      hash = {
         id: subscription.parent_id,
         title: subscription.parent_title,
-        url: subscription.parent_url,
-        type: subscription.parent_type
+        url: subscription.parent_url
       }
+
+      hash.merge(type: subscription.parent_type) unless request['type']
+
+      hash
     end
   end
 

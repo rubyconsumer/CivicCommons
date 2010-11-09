@@ -47,9 +47,8 @@ Feature:
     ]
     """
 
-  @backlog
   Scenario: Retrieve subscribed conversations
-    When I ask for conversations the person with People Aggregator ID 12 is subscribed to
+    When I ask for conversations the person with People Aggregator ID 12 is following
     Then I should receive the response:
     """
     [
@@ -66,14 +65,13 @@ Feature:
     ]
     """
 
-  @backlog
   Scenario: Retrieve subscribed issues
-    When I ask for issues the person with People Aggregator ID 12 is subscribed to
+    When I ask for issues the person with People Aggregator ID 12 is following
     Then I should receive the response:
     """
     [{
       "id": 2,
-      "title": "Understanding The Latest Health Care Changes",
+      "title": "Democrats Upset About Recent Election Results",
       "url": "http://www.example.com/issues/2"
     }]
     """
@@ -81,5 +79,5 @@ Feature:
   @backlog
   Scenario: Retrieve subscriptions for non-existant user
     When I ask for subscriptions for the person with People Aggregator ID 1099932
-    Then I should receive a "404 Not Found" response:
+    Then I should receive a "404 Not Found" response
 
