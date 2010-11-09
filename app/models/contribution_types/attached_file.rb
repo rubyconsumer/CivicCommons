@@ -9,7 +9,7 @@ class AttachedFile < Contribution
     :path => IMAGE_ATTACHMENT_PATH,
     :styles => {:thumb => "75x75>", :medium => "300x300>", :large => "800x800>"}
       
-  #validates_attachment_presence :attachment
+  validates_attachment_presence :attachment
   
   before_attachment_post_process :is_image?
 
