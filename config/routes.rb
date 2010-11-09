@@ -30,7 +30,7 @@ Civiccommons::Application.routes.draw do
   match '/conversations/new_node_contribution', :to=>'conversations#new_node_contribution', :via=>[:get]
   match '/conversations/edit_node_contribution', :to=>'conversations#edit_node_contribution', :via=>[:get]
   match '/conversations/update_node_contribution', :to=>'conversations#update_node_contribution', :via=>[:put]  
-  match '/conversations/preview_node_contribution', :to=>'conversations#preview_node_contribution', :via=>[:post]
+  match '/conversations/preview_node_contribution', :to=>'conversations#preview_node_contribution', :via=>[:post,:put]
   match '/conversations/rate_contribution', :to=>'conversations#rate_contribution'#, :via=>[:post]
   match '/conversations/rate', :to=>'conversations#rate', :via=>[:post]
   match '/subscriptions/subscribe', :to=>'subscriptions#subscribe', :via=>[:post]

@@ -5,6 +5,7 @@ module CollectiveIdea #:nodoc:
       module Descendants
         # Returns the number of nested children of this object.
         def descendants_count
+          return nil if right.nil? || left.nil?
           return (right - left - 1)/2
         end
 

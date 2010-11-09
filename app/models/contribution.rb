@@ -4,7 +4,7 @@ class Contribution < ActiveRecord::Base
   include Rateable
   include Visitable
   include TopItemable
-  acts_as_nested_set
+  acts_as_nested_set :exclude_unless => {:confirmed => true}
   profanity_filter :content, :method => 'hollow'
   
   ALL_TYPES = ["Answer","AttachedFile","Comment","EmbeddedSnippet","Link",
@@ -25,11 +25,15 @@ class Contribution < ActiveRecord::Base
   scope :confirmed, where(:confirmed => true)
   scope :unconfirmed, where(:confirmed => false)
   # Scope for contributions that are still editable, i.e. no descendants and less than 30 minutes old
-  scope :editable, where(["(#{quoted_table_name}.#{quoted_right_column_name} - #{quoted_table_name}.#{quoted_left_column_name} - 1) > 0 AND #{quoted_table_name}.created_at >= DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 30 MINUTE)"])
+  scope :editable, where(["#{quoted_table_name}.created_at >= DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 30 MINUTE)"])
   
   before_create :set_confirmed
   
   attr_accessor :override_confirmed
+  
+  def after_initialize
+    set_confirmed if self.new_record?
+  end
   
   def self.find_or_new_unconfirmed(params,person)
     attrs = {
@@ -90,6 +94,10 @@ class Contribution < ActiveRecord::Base
 
   def suggestion?
     false
+  end
+  
+  def unconfirmed?
+    !self.confirmed
   end
   
   def confirm!

@@ -36,6 +36,10 @@ module CollectiveIdea #:nodoc:
           #   child objects are destroyed alongside this object by calling their destroy
           #   method. If set to :delete_all (default), all the child objects are deleted
           #   without calling their destroy method.
+          # * +:exclude_unless+ - postpones creating and updating nested_set columns for left and right,
+          #   until record matches conditions specified by exclude_unless
+          #   Example <tt>acts_as_nested_set :exclude_unless => {:confirmed => true, :deleted => false}</tt>
+          #   This will not call nested_set callbacks until record is confirmed AND is not deleted.
           #
           # See CollectiveIdea::Acts::NestedSet::ClassMethods for a list of class methods and
           # CollectiveIdea::Acts::NestedSet::InstanceMethods for a list of instance methods added
@@ -46,6 +50,7 @@ module CollectiveIdea #:nodoc:
               :left_column => 'lft',
               :right_column => 'rgt',
               :dependent => :delete_all, # or :destroy
+              :exclude_unless => false,
             }.merge(options)
 
             if options[:scope].is_a?(Symbol) && options[:scope].to_s !~ /_id$/
@@ -71,16 +76,17 @@ module CollectiveIdea #:nodoc:
               has_many :children, :class_name => self.base_class.to_s,
                 :foreign_key => parent_column_name, :order => quoted_left_column_name
 
-              attr_accessor :skip_before_destroy
+              attr_accessor :skip_before_destroy, :skip_
 
               # no bulk assignment
               if accessible_attributes.blank?
                 attr_protected  left_column_name.intern, right_column_name.intern
               end
 
-              before_create  :set_default_left_and_right
-              before_save    :store_new_parent
-              after_save     :move_to_new_parent
+              before_create  :set_default_left_and_right, :unless => :excluded?
+              before_save    :set_default_left_and_right, :if => :no_longer_excluded?
+              before_save    :store_new_parent,           :unless => :excluded?
+              after_save     :move_to_new_parent,         :unless => :excluded?
               before_destroy :destroy_descendants
 
               # no assignment to structure fields
@@ -477,7 +483,7 @@ module CollectiveIdea #:nodoc:
           end
 
           def store_new_parent
-            @move_to_new_parent_id = send("#{parent_column_name}_changed?") ? parent_id : false
+            @move_to_new_parent_id = send("#{parent_column_name}_changed?") || no_longer_excluded? ? parent_id : false
             true # force callback to return true
           end
 
@@ -529,6 +535,27 @@ module CollectiveIdea #:nodoc:
               # Don't allow multiple calls to destroy to corrupt the set
               self.skip_before_destroy = true
             end
+          end
+          
+          # If attributes do not match options[:exclude_unless], then do not update any nested_set_records
+          # :exclude_unless => {:confirmed => true, :deleted => false}
+          def excluded?
+            return false unless acts_as_nested_set_options[:exclude_unless]
+            acts_as_nested_set_options[:exclude_unless].each do |attr, value|
+              return true if self[attr] != value
+            end
+            return false
+          end
+          
+          # If options[:exclude_unless] specified, and record has just been updated to no match conditions
+          def no_longer_excluded?
+            # First, check to see if exclude_unless is specified and if record is currently NOT excluded
+            return false unless acts_as_nested_set_options[:exclude_unless] && !self.excluded? && !self.new_record? && self.changed?
+            # Provided, the above, now check to see if the record JUST NOW became NOT excluded
+            acts_as_nested_set_options[:exclude_unless].each do |attr, value|
+              return true if self.send(attr.to_s << '_changed?') && self.send(attr.to_s << '_was') != value && self[attr] == value
+            end
+            return false
           end
 
           # reload left, right, and parent
