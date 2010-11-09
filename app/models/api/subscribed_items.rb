@@ -13,7 +13,11 @@ class Api::SubscribedItems
 
 
   def self.for_person(person, request)
-    subscriptions = person.subscriptions.where(subscribable_type: request['type'])
+    subscriptions = if request['type']
+                      person.subscriptions.where(subscribable_type: request['type'])
+                    else
+                      person.subscriptions
+                    end
 
     subscriptions.map do |subscription|
       subscription = SubscriptionPresenter.new(subscription, request)
@@ -24,7 +28,7 @@ class Api::SubscribedItems
         url: subscription.parent_url
       }
 
-      hash.merge(type: subscription.parent_type) unless request['type']
+      hash[:type] = subscription.parent_type unless request['type']
 
       hash
     end
