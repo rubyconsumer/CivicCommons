@@ -108,7 +108,7 @@ describe Person do
 
 
   it "creates a shadow account after saving" do
-    person = Person.new(Factory.attributes_for(:person_with_shadow_account))
+    person = Factory.build(:person_with_shadow_account)
     PeopleAggregator::Person.stub!(:create).and_return(OpenStruct.new(id: 42))
     person.save
     person.people_aggregator_id.should == 42
@@ -116,7 +116,7 @@ describe Person do
 
 
   it "doesn't create a shadow account when there are errors" do
-    person = Person.new(Factory.attributes_for(:person_with_shadow_account))
+    person = Factory.build(:person_with_shadow_account)
 
     PeopleAggregator::Person.stub(:create) do
       raise PeopleAggregator::Error.new("There was an error saving this person.")
