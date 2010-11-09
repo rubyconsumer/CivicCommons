@@ -199,28 +199,54 @@ describe Person do
       person.encrypted_password.should == encrypted_before
     end
 
-    it "should have errors when missing avatar file size" do
+    it "skips encrypted password and salt when password salt is missing" do
+      person = Factory.create(:normal_person)
+      encrypted_before = person.encrypted_password
+      salt_before = person.password_salt
+
+      person.api_update(:encrypted_password =>
+                        "$2a$10$95c0ac175c8566911bb03uvHgL7PXXveLmPKg4gZ7K/md5a5aXD4m")
+
+      person.encrypted_password.should == encrypted_before
+      person.password_salt.should == salt_before
+    end
+    
+    it "skips encrypted password and salt when encrypted password is missing" do
+      person = Factory.create(:normal_person)
+      encrypted_before = person.encrypted_password
+      salt_before = person.password_salt
+
+      person.api_update(:password_salt => "$2a$10$95c0ac175c8566911bb039$")
+
+      person.encrypted_password.should == encrypted_before
+      person.password_salt.should == salt_before
+    end
+    
+    it "strips trailing $ from password_salt and updates encrypted password and salt" do
       person = Factory.create(:normal_person)
 
-      person.api_update(:avatar => {:file_name => "test.jpg",
-                          :content_type => "image/jpg"})
-
-      person.errors.should_not be_empty
+      person.api_update(:password_salt => "$2a$10$95c0ac175c8566911bb039$",
+                        :encrypted_password =>
+                        "$2a$10$95c0ac175c8566911bb03uvHgL7PXXveLmPKg4gZ7K/md5a5aXD4m")
+      person.save.should be_true
       
-      person.save.should be_false
+      person.password_salt.should == "$2a$10$95c0ac175c8566911bb039"
+      person.encrypted_password.should == "$2a$10$95c0ac175c8566911bb03uvHgL7PXXveLmPKg4gZ7K/md5a5aXD4m"
+
+      person.valid_password?("testpass").should be_true
     end
 
-    it "should have errors when missing avatar file name" do
+    it "should have error on invalid password salt" do
       person = Factory.create(:normal_person)
-
-      person.api_update(:avatar => {:file_size => 100,
-                          :content_type => "image/jpg"})
-
-      person.errors.should_not be_empty
       
-      person.save.should be_false
-    end
+      person.api_update(:password_salt => "$2a$10$95c0ac175c8$",
+                        :encrypted_password =>
+                        "$2a$10$95c0ac175c8566911bb03uvHgL7PXXveLmPKg4gZ7K/md5a5aXD4m")
 
+      person.save.should be_false
+      person.errors[:password_salt].should_not be_nil
+    end
+    
     it "should have errors when missing avatar content_type" do
       person = Factory.create(:normal_person)
 

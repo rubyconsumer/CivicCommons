@@ -27,7 +27,9 @@ class Person < ActiveRecord::Base
   validates_length_of :email, :within => 6..255, :too_long => "please use a shorter email address", :too_short => "please use a longer email address"
   validate :zip_code, :length => 10
 
- 
+  # Ensure format of salt
+  validates_with PasswordSaltValidator
+
 
   has_attached_file :avatar,
     :styles => {
@@ -124,6 +126,7 @@ class Person < ActiveRecord::Base
   #     :url => "http://some_amazon_s3_url"
   #   },
   #   :encrypted_password => "XXXXXXXXXXXX",
+  #   :password_salt => "$2a$10$95c0ac175c8566911bb039$"
   # }
   # 
   def api_update(params)
@@ -131,8 +134,14 @@ class Person < ActiveRecord::Base
 
     # encrypted password is a protected attribute, explicitly update it if
     # it was changed
-    if _encrypted_password = params.delete(:encrypted_password)
+    _encrypted_password = params.delete(:encrypted_password)
+    _password_salt = params.delete(:password_salt)
+    if _encrypted_password && _password_salt
+      if _password_salt.ends_with?("$")
+        _password_salt.chop!
+      end
       self.encrypted_password = _encrypted_password
+      self.password_salt = _password_salt
     end
 
     # Handle updating the avatar
