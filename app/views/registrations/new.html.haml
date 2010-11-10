@@ -37,7 +37,14 @@
         =f.fields_for :invite do |invite|
           .form-block
             = invite.label :invitation_token, 'Invite Code:'
-            = invite.text_field :invitation_token, :placeholder => 'PRIVATE BETA', :class => "textbox ", :maxlength => 40
+            - if form_presenter.errors[:"invite.invitation_token"].any?
+              %span.field-with-error
+                = invite.text_field :invitation_token, :placeholder => 'PRIVATE BETA', :class => "textbox ", :maxlength => 40
+              %span.validation-error
+                %nbsp
+                = form_presenter.errors[:"invite.invitation_token"].join(", ")
+            - else
+              = invite.text_field :invitation_token, :placeholder => 'PRIVATE BETA', :class => "textbox ", :maxlength => 40
         .form-block
           = f.label :avatar, 'Upload an Image:'
           -# Bug with Paperclip:
