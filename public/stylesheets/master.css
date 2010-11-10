@@ -56,11 +56,20 @@ div#show_conversation {margin-top: -15px;}
 .divided li, div.divided div {
 border-bottom: 1px solid #b1b3b6;
 margin-bottom: 1em;
-padding-bottom: 1.2em;
 }
 .divided li:last-child, .divided div:last-child {
 border-bottom: none;
 padding-bottom: 0;
+}
+.divided a:link, .divided a:hover, .divided a:active, .divided a:visited {
+color:#2C87B7;
+text-decoration:underline;
+}
+p.profile-meta { 
+margin-bottom:0;
+font-size:0.9em;
+font-style:italic;
+color:#666;
 }
 /* ul.link-list a, ol.link-list a, .module_actions ul a {text-decoration: none;} */
 ul li, ol li, dl dd {
