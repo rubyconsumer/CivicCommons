@@ -80,7 +80,7 @@
             <% end %>
             <h4><%= link_to truncate(contribution.title), contribution.url %></h4>
             <p>Submitted by: <a href="#link-to-PA-profile"><%= contribution.person.name %></a></p>
-            <p><%= link_to 'Delete', contribution_path(contribution), :class => 'delete button' if contribution.editable_by?(current_person) %></p>
+            <p><%= link_to 'Delete', contribution_path(contribution), :class => 'delete' if contribution.editable_by?(current_person) %></p>
             </li>
           <% end %>
           
@@ -88,7 +88,7 @@
             <li class='offset-1'>
               <%= image_tag comment.person.avatar(:standard), :alt => comment.person.name, :class => 'callout', :width => 40, :height => 40 %>
               <%=render :partial => "conversations/contributions/comment", :object => comment, :as => :contribution %>
-              <p><%= link_to 'Delete', contribution_path(comment), :class => 'delete button' if comment.editable_by?(current_person) %></p>
+              <p><%= link_to 'Delete', contribution_path(comment), :class => 'delete' if comment.editable_by?(current_person) %></p>
             </li>
           <% end %>
           
@@ -109,7 +109,7 @@
           <div class="dnld <%= media_style(contribution) %>">
             <p><strong><%= media_link_info(contribution) %></strong></p>
             <p><em>Submitted by: <%= contribution.person.name %></em></p>
-            <p><%= link_to 'Delete', contribution_path(contribution), :class => 'delete button' if contribution.editable_by?(current_person) %></p>
+            <p><%= link_to 'Delete', contribution_path(contribution), :class => 'delete' if contribution.editable_by?(current_person) %></p>
           </div>
         <% end %>
         <% if person_signed_in? %>
