@@ -108,7 +108,11 @@
           <a name="contribution<%= contribution.id %>"></a>
           <div class="dnld <%= media_style(contribution) %>">
             <p><strong><%= media_link_info(contribution) %></strong></p>
-            <p><em>Submitted by: <%= contribution.person.name %></em></p>
+            <p><em><%= contribution.person.name %></em>
+              <% if contribution.content %>
+              &dash; <%= contribution.content %>
+              <% end %>
+              </p>
             <p><%= link_to 'Delete', contribution_path(contribution), :class => 'delete' if contribution.editable_by?(current_person) %></p>
           </div>
         <% end %>
