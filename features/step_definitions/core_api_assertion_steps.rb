@@ -60,12 +60,13 @@ Then /^I should the data in my response:$/ do |table|
   }
   EOT
 
-  expected =  data.map do |comment|
+
+  expected = data.map do |comment|
                 template.gsub(/<comment>/, comment['content']).
                          gsub(/<type>/, comment['type'])
               end.join(",")
 
-  expected = "[#{expected}]"
+  expected = "{'total':10,'contributions':[#{expected}]}"
 
   Then("I should receive the response:", expected)
 end
