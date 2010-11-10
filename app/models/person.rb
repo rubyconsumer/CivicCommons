@@ -56,11 +56,11 @@ class Person < ActiveRecord::Base
   scope :proxy_accounts, where(:proxy => true)
 
 
+  before_save :validate_image_type
   before_create :check_and_populate_invite, :unless => :skip_invite
   after_create :create_shadow_account, :unless => :skip_shadow_account
   after_create :notify_civic_commons
   before_save :check_to_send_welcome_email
-  before_save :validate_image_type
   after_save :send_welcome_email, :if => :send_welcome?
   after_destroy :delete_shadow_account, :unless => :skip_shadow_account
   
@@ -239,6 +239,7 @@ class Person < ActiveRecord::Base
     self.email = (first_name + last_name).gsub(/['\s]/,'').downcase + "@example.com"
     self.password = 'p4s$w0Rd'
     self.proxy = true
+    @skip_invite = true
   end
   
   def subscriptions_include?(subscribable)
