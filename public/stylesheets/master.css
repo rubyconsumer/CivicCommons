@@ -230,6 +230,7 @@ a.cancel {font-weight: normal;}
 .form-group .related {margin-left: 80px;}
 .form-group .related input.textbox {width: 400px;}
 .validation-error {color: #ae1111;}
+.friendly-alert { color:#000; font-size:1.6em; font-weight:bold; margin-bottom:1em; }
 div.validation-error > ul > li { 
 float: none; 
 margin: 0; 
