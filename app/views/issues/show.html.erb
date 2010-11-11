@@ -87,18 +87,6 @@
             <p><%= link_to 'Delete', contribution_path(contribution), :class => 'delete' if contribution.editable_by?(current_person) %></p>
             </li>
           <% end %>
-          
-          <%  @conversation_comments.each do |comment| %>
-            <li class='offset-1'>
-              <%= image_tag comment.person.avatar(:standard), :alt => comment.person.name, :class => 'callout', :width => 40, :height => 40 %>
-              <%=render :partial => "conversations/contributions/comment", :object => comment, :as => :contribution %>
-              <p><%= link_to 'Delete', contribution_path(comment), :class => 'delete' if comment.editable_by?(current_person) %></p>
-            </li>
-          <% end %>
-          
-          
-          
-          
         </ol>
         <% if person_signed_in? %>
           <p><%= link_to("Write a contribution", pa_new_issue_contribution_url(current_person, @issue), :class => 'button') %> </p>
