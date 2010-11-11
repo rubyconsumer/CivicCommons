@@ -55,19 +55,15 @@
   <div class="wrapper">
     <div class="content-container">
       <div class='main-content'>
-        <div class='feature'>
-          <div class='feat-callout'>
-            <%= image_tag @issue.image.url(:normal), :alt => @issue.name, :width => 300, :height => 200 %>
-          </div>
-          <div class="feat-content">
-            <p><%= raw (@issue.summary) %></p>
-            <p><strong><%= link_to @issue.url_title, source_url(@issue) %></strong></p>
-            <p><strong>Created On:</strong> <%= @issue.created_at.strftime("%m/%d/%Y") %></p>
-            <!--
-            # TODO - admin only? or remove?
-            <p><a href="#">Edit summary</a></p>
-            -->
-          </div>
+        <div class='feature group'>
+          <%= image_tag @issue.image.url(:normal), :alt => @issue.name, :width => 300, :height => 200, :class => 'float featured main-img' %>
+          <p><%= raw (@issue.summary) %></p>
+          <p><strong><%= link_to @issue.url_title, source_url(@issue) %></strong></p>
+          <p><strong>Created On:</strong> <%= @issue.created_at.strftime("%m/%d/%Y") %></p>
+          <!--
+          # TODO - admin only? or remove?
+          <p><a href="#">Edit summary</a></p>
+          -->
         </div>
 
         <h3>Contributions</h3>
