@@ -73,8 +73,12 @@
         <h3>Contributions</h3>
         <ol class='contributions divided'>
           <% @written_contributions.each do |contribution| %>
-            <li class='offset-1'>
-            <% if contribution.is_image? %>
+          <% 
+              is_image = contribution.is_image?
+              li_class = is_image ? "offset-1" : ""
+          %>
+          <li class="<%=li_class%>">
+            <% if is_image %>
               <%= image_tag contribution.attachment(:thumb), :alt => contribution.title, :class => 'callout', :width => 90, :height => 60 %>
               <img class="callout" src="#contribution-image-goes-here" alt="contribution image goes here" width="90" height="60" />
             <% end %>
