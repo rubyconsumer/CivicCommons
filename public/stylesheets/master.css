@@ -1231,7 +1231,7 @@ width: 620px;
 }
 div.convo-popup ul, div#cboxLoadedContent div.tab-strip-options ul {
 float: left;
-margin: 0;
+margin: 0 10px 0 0;
 padding: 0;
 }
 div.convo-popup li, div#cboxLoadedContent div.tab-strip-options ul li a {
@@ -1245,7 +1245,7 @@ font-weight: bold;
 list-style: none;
 margin: 0;
 padding: 8px 0 8px 15px;
-width: 120px;
+width: 100px;
 }
 div#cboxLoadedContent div.tab-strip-options ul li a#comment_tab {border-top: none;}
 div.convo-popup li:last-child {border-bottom: none;}
@@ -1255,30 +1255,44 @@ border-right: none;
 color: #333;
 cursor: pointer;
 }
-div.convo-popup form, div#cboxLoadedContent form#contribution_new {
+div.convo-popup form, div#cboxLoadedContent form#contribution_new,  div#cboxLoadedContent form.contribution_edit {
 float: right;
 margin: 7px 2px 0 0;
 width: 414px;
 }
-div.convo-popup form textarea, div#cboxLoadedContent form#contribution_new textarea {
+div.convo-popup form textarea, div#cboxLoadedContent textarea {
 display: block;
 height: 135px;
 margin-bottom: 8px;
 width: 405px;
 }
-div.convo-entry input.textbox,  div#cboxLoadedContent .input-with-options form#contribution_new label, div.convo-entry p.help-text {
-float: left;
+div.convo-entry input.textbox,  div#cboxLoadedContent .input-with-options label, div.convo-entry p.help-text {
+/* float: left; */
 width: 310px;
 }
 
-div.convo-entry a.button, div#cboxLoadedContent form#contribution_new input#contribution_submit {float: right;}
-div#cboxLoadedContent .input-with-options form#contribution_new label {
+div.convo-entry a.button, div#cboxLoadedContent input#contribution_submit {
+/* float: right; */
+margin-top: 5px;
+}
+div#cboxLoadedContent .input-with-options label {
 background-color: transparent;
 color: #444;
 height: auto;
 padding: 0;
 }
-div#cboxLoadedContent .input-with-options form#contribution_new label a {color: #444;}
+div#cboxLoadedContent .input-with-options label a {color: #444;}
+
+/* Preview */
+div#cboxLoadedContent li.offset-1 {
+list-style-type: none;
+margin-top: 10px;
+}
+div#cboxLoadedContent div.contribution-preview form.contribution_edit {
+float: none;
+margin-left: 70px;
+width: auto;
+}
 
 /* Moderate Button */
 .moderate {float: right}
