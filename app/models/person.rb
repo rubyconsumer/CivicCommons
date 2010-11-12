@@ -56,7 +56,6 @@ class Person < ActiveRecord::Base
   scope :proxy_accounts, where(:proxy => true)
 
 
-  before_save :validate_image_type
   before_create :check_and_populate_invite, :unless => :skip_invite
   after_create :create_shadow_account, :unless => :skip_shadow_account
   after_create :notify_civic_commons
