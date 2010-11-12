@@ -1,3 +1,4 @@
+- embed = '<object type="application/x-shockwave-flash" align="middle" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="320" height="205" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=10,0,0,0" pluginspage="http://www.adobe.com/go/getflashplayer" id="WetokuPlayer" name="WetokuPlayer"><param name="movie" value="http://wetoku.com/player/vod/10246" /><param name="allowScriptAccess" value="always" /><param name="menu" value="false"/><param name="allowFullScreen" value="true" /><param name="wmode" value="transparent" /><param name="flashvars" value="vid=danmoulthrop.2Fg/8a4db83c01981a704993b691010feb3cce74ee4a" /><embed src="http://wetoku.com/player/vod/10246" width="320" height="205" flashvars="vid=danmoulthrop.2Fg/8a4db83c01981a704993b691010feb3cce74ee4a" allowScriptAccess="always" type="application/x-shockwave-flash" allowFullScreen="true" wmode="transparent" menu="false"></embed></object>'
 %li.offset-1
   %div.top-level-contribution.contribution-container
     - if contribution
@@ -7,7 +8,7 @@
         %a{:name=>"#post#{contribution.id}"}
         %div.content
           %span.contribution-person-name= person_display_name(contribution.person)
-          =auto_link(simple_format(contribution.content))
+          =auto_link(simple_format(contribution.content, {}, {:sanitize => false}))
         %div{:class => "convo-utility #{contribution.descendants_count > 0 ? 'response' : 'no-response'}"}
           %p.respond-link
             - if contribution.descendants_count > 0
