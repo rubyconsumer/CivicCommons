@@ -47,6 +47,18 @@ describe Ingester do
 more blah"
     
   end
+  
+  it "embeds code in transcript" do
+    script = read_fixture("embedded_video.txt")
+    
+    dialogs = Ingester.ingest(script)
+    video_dialog = dialogs.first
+    embedded_video = <<-EOF
+<object type="application/x-shockwave-flash" align="middle" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="320" height="205" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=10,0,0,0" pluginspage="http://www.adobe.com/go/getflashplayer" id="WetokuPlayer" name="WetokuPlayer"><param name="movie" value="http://wetoku.com/player/vod/10246" /><param name="allowScriptAccess" value="always" /><param name="menu" value="false"/><param name="allowFullScreen" value="true" /><param name="wmode" value="transparent" /><param name="flashvars" value="vid=danmoulthrop.2Fg/8a4db83c01981a704993b691010feb3cce74ee4a" /><embed src="http://wetoku.com/player/vod/10246" width="320" height="205" flashvars="vid=danmoulthrop.2Fg/8a4db83c01981a704993b691010feb3cce74ee4a" allowScriptAccess="always" type="application/x-shockwave-flash" allowFullScreen="true" wmode="transparent" menu="false"></embed></object>
+EOF
+    embedded_video.strip!
+    video_dialog.should include embedded_video
+  end
 end
 
 describe Ingester, "generic error handling" do
