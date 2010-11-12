@@ -1,0 +1,297 @@
+
+speaker "Hannah Belsito"
+dialog <<-enddialog
+<object type="application/x-shockwave-flash" align="middle" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="320" height="205" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=10,0,0,0" pluginspage="http://www.adobe.com/go/getflashplayer" id="WetokuPlayer" name="WetokuPlayer"><param name="movie" value="http://wetoku.com/player/vod/10246" /><param name="allowScriptAccess" value="always" /><param name="menu" value="false"/><param name="allowFullScreen" value="true" /><param name="wmode" value="transparent" /><param name="flashvars" value="vid=danmoulthrop.2Fg/8a4db83c01981a704993b691010feb3cce74ee4a" /><embed src="http://wetoku.com/player/vod/10246" width="320" height="205" flashvars="vid=danmoulthrop.2Fg/8a4db83c01981a704993b691010feb3cce74ee4a" allowScriptAccess="always" type="application/x-shockwave-flash" allowFullScreen="true" wmode="transparent" menu="false"></embed></object>
+enddialog
+
+speaker "Hannah Belsito"
+dialog <<-enddialog
+Hi!
+enddialog
+
+speaker "Jason Segedy"
+dialog <<-enddialog 
+Hi, Hannah.Good morning!
+enddialog
+
+speaker "Hannah Belsito"
+dialog <<-enddialog 
+I’m Hannah Belsito.  I’m the director of Cleveland Bridge Builders, which is a program of the Cleveland Leadership Center.
+enddialog
+
+speaker "Jason Segedy"
+dialog <<-enddialog
+I’m Jason Segedy.  I’m the director of AMATS,
+which is the metropolitan planning association that serves the greater Akron area, and we specialize in transportation planning.
+enddialog
+
+speaker "Hannah Belsito"
+dialog <<-enddialog 
+Great.  So… we’re going to be talking today about what the key elements are in creating places and practices that contribute to the development of young professional talent.  Do you have any thoughts on that?
+enddialog
+
+speaker "Jason Segedy"
+dialog <<-enddialog 
+It’s definitely a topic that we discuss a lot about down here in the Akron area.  I definitely have some thoughts about it.  You know, I read a lot of blogs by people like Richard Florida, and think about that topic a lot – of how we attract young talent.  I was actually just talking with Jason here earlier about what makes people want to stay in the region, and discussing some of my experiences with going away to grad school and coming back and realizing I actually really like northeast Ohio.
+enddialog
+
+speaker "Hannah Belsito"
+dialog <<-enddialog
+So what is your story?  Did you grow up in this area, and then move away and come back?  Is that what you’re saying?
+enddialog
+
+speaker "Jason Segedy"
+dialog <<-enddialog 
+Yes, I did.  I grew up here in Akron.  I went to graduate school down in North Carolina, in Charlotte, and I just kind of assumed when I moved there, I would probably stay and move on to some other part of the country.  Over the time down there I realized there were a lot of things I like about this area  you know, first and foremost, that it was home, but on top of that, things like our park system, which I really always kind of took for granted.  Living down there, basically one or two metroparks for the whole greater Charlotte area, and there are one or two metroparks within walking-distance of where I live in Akron.   So it’s amenities like that, I think, that I really realized I really liked.
+enddialog
+
+speaker "Hannah Belsito"
+dialog <<-enddialog 
+So is your family still here?
+enddialog
+
+speaker "Jason Segedy"
+dialog <<-enddialog
+They are, they are…  how about you?  Are you originally from..?
+enddialog
+
+speaker "Hannah Belsito"
+dialog <<-enddialog 
+I grew up in the Youngstown area, Salem, Ohio, a very small town, and came up here to go to John Carroll [University] in the Cleveland area. And I stayed because of the cost of living. I bought a condo in the Warehouse District when I was 24 years old. So my big pitch on the region is there’s not many places in the US where you can buy a condo in the hip urban core and still be able to got o the bars and restaurants and have a fun life. My big comparison is my friend who right around the time i moved here decided to move to Chicago. And she rented an apartment in Chicago, in a cool area, in the Lincoln Park area, but she spent double what my mortgage was on her rent.  And her condo was probably half the size of mine, and I was building equity. And she lived on ramen noodles and tuna and I got to go to all the restaurants. So that’s always my comparison, but I don’t think that’s enough to bring people back. But you hit on a good point.   One thing I think about a lot is should we focus on people from here that moved away and do a “come Back to Cleveland” campaign? Because I think that’s one of the first reasons people move away. My sister’s ten years younger than me, and I wanted to be close to my family, so that’s a huge reason why I stayed.
+enddialog
+
+speaker "Jason Segedy"
+dialog <<-enddialog 
+I think that’s true. And I was thinking about this on my way over here, and the first core target group of people has to be people who are from the region. Not that it’s not important to try and attract others, but I think you do have that carrot of this is home, this is where I’m from. I root for the Browns (even though it’s a masochistic pursuit to root for the Browns) but we really have that advantage. We have a large population of people that go to school [here]. And one thing I’ve thought about too, is, You meet a lot of people like Richard Florida talking about what do you do to retain young professionals or attract them, and there’s a lot of talk about having an educated populous. I think we really do have an educated populous, but the problem is people get educated here and then they move. A comparison to someplace like Boston or San Francisco, I’m not so sure that inherently they have such a greater share of educated people right out of the gate, but it’s that they have the jobs that attract the educated to their region.
+enddialog
+
+speaker "Hannah Belsito"
+dialog <<-enddialog
+Right, so, we seem to be hitting on two strategies, one, to kind of bring people home who are from here and left, and two, make sure the educated, those just coming out of our undergraduate institutions stay. 
+enddialog
+
+speaker "Jason Segedy"
+dialog <<-enddialog 
+Right, right, I think that is kind of the two-pronged approach. Another thing I think about a lot on the topic is, there’s always discussion around this issue of do you create cool places to try to get young people to congregate. And yeah, insofar as you can do that I think that’s important, but I always kind of feel that if you can get the people there they will help to create the cool places. And I think it’s a lot more of an organic thing like that, and I think when people try too hard to just make something cool that’s not enough. I think getting the young people there first, I think the market will just naturally develop for restaurants and bars and, you know cool shops and you know all the things that people in their 20’s and 30s tend to patronize. What I’m not an expert on is how you actually get those jobs here. That’s something for people smarter…
+enddialog
+
+speaker "Hannah Belsito"
+dialog <<-enddialog 
+Right, well that’s something I would ask you. I mean, did you come back and then look for a job, or did you look for a job, and when you found it, then come back?
+enddialog
+
+speaker "Jason Segedy"
+dialog <<-enddialog
+That’s what I did in my experience. I decided I did want to come back. I looked for a job in the region and was fortunate to find one. And that was when I moved back. So I did move back with a particular job already found, which I know is, especially in this economy now, is a really difficult thing, but I think if we can…
+enddialog
+
+speaker "Hannah Belsito"
+dialog <<-enddialog 
+I have a friend named Patrick Manfroni that is really thinking a lot about that exact thing and he’s started kind of a-I guess you would call it a company, but it’s called the “Cleveland Recruiting Company”. And all he does is, he’s built a network on Facebook and when he hears of jobs in Cleveland, he sends it out to the whole Facebook network. And that is how he’s trying to bring those people back. He’s built the network around people who are from here but have moved away but are wanting to move back. The one thing we are very aware of in Cleveland, I don’t know how it is in Akron but a lot of the really cool jobs don’t get posted on the career board or in the classified ads; instead they are just kind of passed around the professionals. So he’s one who hears of those jobs, so he’s thinking, could I just push them out to this huge network instead of just keeping them insular between these professionals in the region.
+enddialog
+
+speaker "Jason Segedy"
+dialog <<-enddialog 
+I think that’s a great idea because another thing I was thinking about on the way over is that even though the economy is really tough right now, for the jobs that are available out there, that has to be a better way of letting expatriates from the area kind of know about them, and I wouldn’t know the first thing about where that information would be available so I think that’s really cool that you use social media and things like Facebook to get the word out.
+enddialog
+
+speaker "Hannah Belsito"
+dialog <<-enddialog
+Yeah so if you have anyone looking, send them to &quot;The Cleveland Recruiting&quot; company on Facebook. 
+enddialog
+
+speaker "Jason Segedy"
+dialog <<-enddialog 
+&#40;Laugh$#41; I’ll do that.
+enddialog
+
+speaker "Hannah Belsito"
+dialog <<-enddialog 
+Do you know any places that seem to be really attracting a lot of young people? And if so why do you think? I know a lot of my friend from undergrad went straight to Chicago and they went without jobs. They just felt confident that they’d find a job once they got there.
+enddialog
+
+speaker "Jason Segedy"
+dialog <<-enddialog
+Yeah, I there are, as far as other cities, I’ve thought about this too, where people will throw around the names of cities that are considered to be cool magnets for younger people and they’ll talk about Portland or Austin or Nashville and Chicago comes up a lot too and I think you’re right, that for whatever reason people feel, I think because they’ve created that identity and that buzz, and I think there’s a reality behind it, people know they can move there and I think they are more willing to just kind of move, jump in with both feet and then find a job. I always think about a lot of those cities, I don’t think there was anything so inherently cool about Austin or Portland 30 or 40 years ago, you know, it’s just they were just kind of able to develop that reputation which is based in reality. And I think that’s a key to their success. As much as we could try to emulate that here I think that’s really important.
+enddialog
+
+speaker "Hannah Belsito"
+dialog <<-enddialog 
+I agree. So do you think of anything we could start doing to try to help this? What do you think about economic development organizations in the region right now? Are they doing the right thing?
+enddialog
+
+speaker "Jason Segedy"
+dialog <<-enddialog 
+I talk to people a lot from organizations like TeamNEO and NEOtech and I think they are doing a lot of good things, especially with, one of the examples right here in Akron is trying to build up the biotechnology industry and create startups and small companies and kind of get economies of scale. One of the things that I think that’s really important is being done down here- I’m actually sitting down at the University of Akron right now- and it’s just such a huge resource in the whole strategy of retaining and attracting talent to the region, because the University’s really made a big push to try to market itself as not just a commuter school but as a place for people from other parts of the country and other parts of the world to come and I think that’s a key strategy of just getting people in the region. And I think if there are jobs for them in the region when they graduate they’re a lot more likely to stay.
+enddialog
+
+speaker "Hannah Belsito"
+dialog <<-enddialog
+That’s something we think about here at the Cleveland Leadership Center a lot. We have leadership development instead of engagement programs for high school, college, young professional and senior level executives. And I would say most of our programs are more focused on that retention piece. You’re already here, so we’ll educate you on what’s going on here and hope that that makes you stay. One of our programs is ICleveland is a program for college interns. The idea for that is two-fold: You’re most likely to stay where you have an internship. So if we can make sure your internship is really valuable experience maybe that will keep you here. There’s studies that show that where you intern, you’ll likely get a job and therefore stay. So I think you’re right, I think Cleveland State and University of Akron are doing a great job and now it’s up to people like the Cleveland Leadership Center and Leadership Akron in Akron to really engage those people in the region so they want to stay and see the value of staying once they’ve been through those programs.
+enddialog
+
+speaker "Jason Segedy"
+dialog <<-enddialog 
+I think that makes a lot of sense and to kind of echo that, I was at a conference yesterday in Columbus and went with a couple people from my staff. One of my staff members is 28; it hasn’t been that long since he’s been out of schools and he went to OSU, and he ran into one of the people who graduated with him and we were talking about that very thing. They were reminiscing about the people in their class and it was amazing how many of them actually had stayed in Columbus.
+enddialog
+
+speaker "Hannah Belsito"
+dialog <<-enddialog 
+Yeah, they do a good job in Columbus.
+enddialog
+
+speaker "Jason Segedy"
+dialog <<-enddialog
+Yes, and the guy we were talking to was from Lincoln, Nebraska. So it wasn't like all the people that they went to school with were originally from Ohio. But you’re right, Columbus, a lot of people had interned for say, state planning agencies down there and they stayed. I think it is a powerful way to attract people and keep them.
+enddialog
+
+speaker "Hannah Belsito"
+dialog <<-enddialog 
+Going back to kind of our economic development institutions, I agree with you that they do a really good job of kind of attracting jobs and companies and industries here, but I think the next step is too make sure whatever those industries are producing is getting to the young people, you know that message is kind of getting to them.
+enddialog
+
+speaker "Jason Segedy"
+dialog <<-enddialog 
+Yeah, I think that is something that could be done better. I’m not sure that message is getting to the young people. I think a lot of what the economic development agencies are working on doing revolves around manufacturing a lot still- and I’m a big believe that we have to have some kind of a manufacturing base in this country and in this region- but I do think that sometimes in this region, we get caught up in trying to regain that legacy of industrialism that we had in the past and I’m not sure that we ever will and I think It’s really important to be open minded about attracting new economic activity that might not revolve around manufacturing.
+enddialog
+
+speaker "Hannah Belsito"
+dialog <<-enddialog
+Yeah, I completely agree.
+enddialog
+
+speaker "Jason Segedy"
+dialog <<-enddialog 
+One other thought I had, Hannah, on Universities that's been our experience down here in Akron, especially, is the University has really branched out now with building and helping to kind of support a lot of new housing for students that’s kind of migrating into the downtown area. We have an area called “22 East Exchange” down here now which is right downtown, and there’s student apartments, and that’s what they’re going to bring to the downtown itself as far having a-I hate to say “captive audience” but captive audience of people that will patronize business after 5 o’clock when all the downtown workers go home. It’s almost like seeing those green shoots coming out of the ground. It’s been a small thing at the beginning, but I think it could be the start of something really important for restoring downtown living. 
+enddialog
+
+speaker "Hannah Belsito"
+dialog <<-enddialog 
+And you know, I’m hopeful, and I think it’s probably happening, that the University of Akron and Cleveland State are communicating, because similar things are happening here. Cleveland State has really developed Euclid Avenue. And it seems like University of Akron is a little bit ahead of us because we just built the buildings but I’ve been working on Euclid Avenue for about six years and it’s very clear to me the transformation just adding that student housing. Cleveland State has really been a commuter school for most of its history. It’s just now becoming a place where students live, work and play and its really transformed Euclid. So I think that really is a great strategy. Now if we can just keep them here after they graduate...
+enddialog
+
+speaker "Jason Segedy"
+dialog <<-enddialog
+Yeah, I think that’s great. And up in Cleveland, with the completion of the Euclid Corridor, I think there’s a lot of opportunity for those students and those without cars to access University Circle easily. Cleveland State has the advantage of being basically right downtown and easy access to all the entertainment and opportunities that are downtown so I think that’s really good. I’ve heard similar things in Youngstown too, and I know you said you’re originally from there, you know, with YSU.
+enddialog
+
+speaker "Hannah Belsito"
+dialog <<-enddialog 
+And another really cool thing happening in Youngstown is all of their, that I’ve noticed, all of their institution are really embracing young people. I mean, the mayor is like 34 or something, so there’s a huge culture shift there of welcoming. I don’t know how Akron is but Cleveland has a tiny bit of an old guard mentality (laughing)…so not letting young people kind of….
+enddialog
+
+speaker "Jason Segedy"
+dialog <<-enddialog 
+We’ve got that a lot here too
+enddialog
+
+speaker "Hannah Belsito"
+dialog <<-enddialog
+I think Youngstown had it too, but I think- I hate to say it- but I think they hit such rock bottom that it was like, “why not let young people in?” and I really hear that’s the place to be a young person and have you’re voice heard and make change in the community. So maybe Akron and Cleveland need to hit super rock-bottom , so that we can be more like Youngstown, kind of really letting our young people have a seat at the table and their voices heard in the major institutions.
+enddialog
+
+speaker "Jason Segedy"
+dialog <<-enddialog 
+I think you definitely it on something there. I think there is a big generational component to it. I’m 38, I’m a “Gen X”er, and a lot of times I feel like we’re the generation that everyone forgot but that’s kind of our persona, we kind of brought that on ourselves. But I think it’s really encouraging to me, seeing people in their early 20’s…now there is a lot more of a “Gen Y” focus I think. And people who are in power, who are maybe 20 years my senior, that are starting to think about retiring or think about the future- I’ve noticed that, maybe it’s just with aging, but its kind of a loosening of the reigns and you know, thinking about the future, and I think the timing is really good on that.
+enddialog
+
+speaker "Hannah Belsito"
+dialog <<-enddialog 
+I think you’re right.
+enddialog
+
+
+speaker "Jason Segedy"
+dialog <<-enddialog
+And hopefully “Gen X” will still be around a little while here (laugh)
+enddialog
+
+speaker "Hannah Belsito"
+dialog <<-enddialog 
+ I’m Gen X too, but I’m right at the end. I turn 30 this year, so I was born in 1980. I ‘m just at the end of “Gen X”, but I agree with you, we were totally forgotten; The "Millennials" are the new big thing.
+enddialog
+
+speaker "Jason Segedy"
+dialog <<-enddialog 
+I agree with you, if you think about it that way then you are a “Gen X”. You’re right in that murky area.
+enddialog
+
+speaker "Hannah Belsito"
+dialog <<-enddialog
+Right. So any other thoughts? I think we’ve had a really great conversation. I’d like to start getting involved in ways to bring- I think what we’ve come up with is ways to really retaining those students coming out of University of Akron, Youngstown State, Cleveland State and all the other private institutions in the area, and kind of talk to our economic development institutions about how can we really start to communicate the great things you’re doing to the young professionals and start to bring some young people back. I know Jumpstart-we have a Cleveland Bridge Builder alum working there, kind of trying to match startup companies with young talent. His name’s Robert Hada-He sends out a list of jobs in entrepreneurial companies that Jumpstart has supported. So I think that’s one way to start to get the message out and connect young people to the jobs that are coming out of these institutions. 
+enddialog
+
+speaker "Jason Segedy"
+dialog <<-enddialog 
+That’s very cool. The one other topic I tend to think about a lot pertaining to young people and jobs, especially because people that talk about this, including me, in white collar professions and have graduate degrees, I think sometimes what gets overlooked is people that aren’t college graduates or the young people that might not be in white collar professional jobs but still, you know, the need to kind of integrate them into the fabric of our communities. And I don’t know that I have the answers on how to do that, but I think that’s also kind of a nationwide challenge. You know, not everyone will go to college. We still have a need for manufacturing and service industries and people like electricians and plumbers, you know, that are incredibly important. Those are really good jobs-where do they fit into the whole equation?
+enddialog
+
+speaker "Hannah Belsito"
+dialog <<-enddialog 
+And how do we reach them? I think it’s easier to reach the YP community because they’re really starting to form around the YP organizations. But I think you’re right-I’ve noticed the YP organizations tend to be more white-collar workers. We’re not seeing the electricians and those types of people joining those groups. So it is a good thing to think about, is how to reach those people as well.
+enddialog
+
+speaker "Jason Segedy"
+dialog <<-enddialog
+Plenty of challenges out there.
+enddialog
+
+speaker "Hannah Belsito"
+dialog <<-enddialog 
+Yeah, we’ve identified a lot of challenges.
+enddialog
+
+speaker "Jason Segedy"
+dialog <<-enddialog 
+Yeah, well I’m an urban planner by trade, and we’re good at pointing out flaws with things, but maybe not so good when the microscope is turned on us.
+enddialog
+
+speaker "Hannah Belsito"
+dialog <<-enddialog 
+Well I’m actually studying the same thing at Cleveland State right now, so I’m working towards a masters in Urban Planning.
+enddialog
+
+speaker "Jason Segedy"
+dialog <<-enddialog 
+It’s a great program.
+enddialog
+
+speaker "Hannah Belsito"
+dialog <<-enddialog 
+It is. I’m really enjoying it. So once I graduate, I’ll call you and we’ll solve all these problems.
+enddialog
+
+speaker "Jason Segedy"
+dialog <<-enddialog
+(laughing) That’s great. Yeah, Jason and I were just talking about Legacy Village and Crocker Park and places like that, and why you had to build, kind of phony new towns when we destroyed the neighborhoods that we had…
+enddialog
+
+speaker "Hannah Belsito"
+dialog <<-enddialog 
+Yes, and why couldn’t we just redevelop something like that in the urban core.
+enddialog
+
+speaker "Jason Segedy"
+dialog <<-enddialog 
+Yes, perhaps a good topic for another conversation.
+enddialog
+
+speaker "Hannah Belsito"
+dialog <<-enddialog
+Yeah, it sounds like a great one. Well it’s been great talking to you. I look forward to talking to you more off-line. I saw you ask me to be your friend on LinkedIn and I will certainly do that. I hope you have a great weekend.
+enddialog
+
+speaker "Jason Segedy"
+dialog <<-enddialog 
+Hey, you too Hannah. It was great talking to you
+enddialog
+
+speaker "Hannah Belsito"
+dialog <<-enddialog 
+Thank you. Bye bye.
+enddialog
+
+speaker "Jason Segedy"
+dialog <<-enddialog
+Have a great weekend. Bye.
+enddialog
