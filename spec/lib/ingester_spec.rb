@@ -21,13 +21,24 @@ describe Ingester do
     }.should_not raise_error
   end
 
-  it "replaces left and right double quotes with simple quotes" do
+  it "replaces left and right double and single quotes with simple quotes" do
     script = read_fixture("smart_quotes.txt")
     
+    dialogs = nil
     lambda {
-      Ingester.ingest(script)
+      dialogs = Ingester.ingest(script)
     }.should_not raise_error
-
+    
+    curly_single_quotes = <<-EOS
+'These are curly single quotes,' I said.
+EOS
+    curly_double_quotes = <<-EOS
+"These are curly double quotes," I said.
+EOS
+    curly_single_quotes.strip!
+    curly_double_quotes.strip!
+    dialogs.first.content.should include curly_single_quotes
+    dialogs.first.content.should include curly_double_quotes
   end
 
   it "handles full transcript" do
