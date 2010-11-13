@@ -15,7 +15,7 @@ Feature:
       | ID          | 2                           |
       | Title       | Understanding The Latest Health Care Changes |
 
-
+  @wip
   Scenario Outline: Retrieve a contribution
     Given I have contributed a <type>:
       """
@@ -24,18 +24,22 @@ Feature:
     When I ask for contributions for the person with People Aggregator ID 12
     Then I should receive the response:
     """
-    [{
-      "parent_title": "Understanding The Latest Health Care Changes",
-      "parent_type": "conversation",
-      "parent_url": "http://www.example.com/conversations/2",
-      "created_at": "2010-10-10T04:00:00Z",
-      "content": "<comment>",
-      "attachment_url": "<attachment_url>",
-      "embed_code": "<embed_code>",
-      "type": "<type>",
-      "link_text": "<link_text>",
-      "link_url": "<link_url>"
-    }]
+    {
+      "total" : 1,
+      "contributions" :
+        [{
+           "parent_title": "Understanding The Latest Health Care Changes",
+           "parent_type": "conversation",
+           "parent_url": "http://www.example.com/conversations/2",
+           "created_at": "2010-10-10T04:00:00Z",
+           "content": "<comment>",
+           "attachment_url": "<attachment_url>",
+           "embed_code": "<embed_code>",
+           "type": "<type>",
+           "link_text": "<link_text>",
+           "link_url": "<link_url>"
+        }]
+     } 
     """
 
   Examples:
@@ -53,6 +57,7 @@ Feature:
     When I ask for contributions for the person with People Aggregator ID 1000321
     Then I should receive a 404 Not Found response
 
+  @wip
   Scenario: Request 1 page of contributions
     Given I have ten comments on the conversation
     And I want 5 contributions per page

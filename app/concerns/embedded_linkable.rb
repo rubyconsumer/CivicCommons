@@ -24,8 +24,8 @@ module EmbeddedLinkable
     description = doc.search("//meta[@name='description']").first
     if description
       description = description.attributes['content']
-    else
-      description = doc.search("//p[1]").first
+    #else
+    #  description = doc.search("//p[1]").first
     end
     instance.title = title.content.strip.gsub(/\s+/, ' ') if title && instance.title.blank?
     instance.description = description.content.strip if description && instance.description.blank?

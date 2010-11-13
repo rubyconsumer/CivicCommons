@@ -2,6 +2,8 @@ speaker “NEAL CONAN”
 dialog <<-enddialog
 This is TALK OF THE NATION. Im Neal Conan in Washington.
 The president tries to close the enthusiasm gap, Castle may write in, Lazio steps out, and wannabe govs square off in California and Illinois. It's Wednesday and time for a debatable edition of the Political Junkie.
+‘These are curly single quotes,’ I said.
+“These are curly double quotes,” I said.
 enddialog
 
 speaker “RONALD REAGAN”

@@ -13,9 +13,7 @@ class Api::Contributions
 
 
   def self.for_person(person, request)
-    contributions = person.contributions
-
-    contributions.map do |contribution|
+    contributions = person.contributions.map do |contribution|
       contribution = ContributionPresenter.new(contribution, request)
       {
         parent_title: contribution.parent_title,
@@ -30,6 +28,7 @@ class Api::Contributions
         link_url: contribution.url.to_s
       }
     end
+
   end
 
 end

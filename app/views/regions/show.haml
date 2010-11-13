@@ -6,13 +6,10 @@
           =@region.name
   .wrapper
     .content-container
-      .main-content
-        .two-col
-          .cols
-            -if @region.image?
-              =image_tag @region.image.url, :alt => @region.name, :class => 'featured main-img'
-          .cols
-            %p= raw(@region.description)
+      .main-content.group
+        -if @region.image?
+          =image_tag @region.image.url, :alt => @region.name, :class => 'featured main-img float'
+        %p= raw(@region.description)
         -if @conversations.length >0
           %h2 Conversations in this Region
           =render :partial => "conversations/conversation_pager"

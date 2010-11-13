@@ -34,8 +34,11 @@ require 'spec_helper'
           @model.title.should match /Pure-CSS Emoticons WordPress Plugin Released - Alfa Jango Blog/
         end
         it "grabs the first paragraph as the description if no meta-description is present" do
-          @model.description.should_not be_blank
-          @model.description.should match /I'll keep this post short and sweet. My good friend, Anthony Montalbano, has released a WordPress plugin for our/
+          #@model.description.should_not be_blank
+          #@model.description.should match /I'll keep this post short and sweet. My good friend, Anthony Montalbano, has released a WordPress plugin for our/
+          # This spec has changed. Because of PA links which wrap navigation elements in paragraph tags,
+          # we now want to simply leave the description blank if there's no meta-description
+          @model.description.should be_blank
         end
       end
       if model == EmbeddedSnippet

@@ -230,6 +230,7 @@ a.cancel {font-weight: normal;}
 .form-group .related {margin-left: 80px;}
 .form-group .related input.textbox {width: 400px;}
 .validation-error {color: #ae1111;}
+.friendly-alert { color:#000; font-size:1.6em; font-weight:bold; margin-bottom:1em; }
 div.validation-error > ul > li { 
 float: none; 
 margin: 0; 
@@ -568,6 +569,7 @@ border-radius: 0 0 8px 8px;
 -moz-box-shadow: 0px 2px 3px rgba(0,0,0,.2);
 box-shadow: 0px 2px 3px rgba(0,0,0,.2);
 }
+#login-status a.user-link { font-size:11px; text-transform:uppercase; }
 div.signed-out div.offset-2 {
 padding-left: 0;
 text-align: center;
@@ -1157,6 +1159,11 @@ border-bottom: 1px solid #b1b3B6;
 -webkit-box-shadow: 0px 1px 3px rgba(0,0,0,.5);
 -moz-box-shadow: 0px 1px 3px rgba(0,0,0,.5);
 box-shadow: 0px 1px 3px rgba(0,0,0,.5);
+}
+img.float {
+  float:left;
+  margin-right:10px;
+  margin-bottom:10px;
 }
 .feature-mast img.featured {
 float:left;

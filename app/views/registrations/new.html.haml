@@ -21,6 +21,9 @@
       %h1 Sign up
       %p
         Want to join the conversation? Lets get the formalities out of the way. 
+      %p
+        We're still in beta, so you'll need a code to get started.  Do you need a code?  
+        = link_to 'Contact us', '/contact-us'
 .wrapper
   .main.section
     = form_for(form_presenter, :as => resource_name, :url => registration_path(resource_name), :html => { :multipart => 'true', :class => "register" }) do |f|
@@ -71,11 +74,12 @@
           = f.submit 'Continue', :class => "submit"
         %a.cancel(href="/" title="Cancel Registration") cancel
     %div#terms(style="display: none;")
-      %p.validation-error
-        Hey, just so you know, the Commons runs by these principles. Take a |
-        look, click below, and we’ll send you a confirmation email. (by the |
-        way, if you don't get that email, check your spam folder)
+      %fieldset.form-group
+        %p.friendly-alert
+          Hey, just so you know, the Commons runs by these principles. Take a |
+          look, click below, and we’ll send you a confirmation email. (by the |
+          way, if you don't get that email, check your spam folder)
+        = succeed 'or' do
+          = submit_tag "I am Totally on Board", :class => "submit no-tab"
+        %a.cancel(href="/" title="Cancel Registration") I Don't Like Civility
       = render :partial => "static_pages/principles_list"
-      = succeed 'or' do
-        = submit_tag "Totally on Board", :class => "submit"
-      %a.cancel(href="/" title="Cancel Registration") I Don't Like Civility

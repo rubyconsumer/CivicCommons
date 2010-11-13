@@ -9,13 +9,14 @@ class Api::ContributionsController < ActionController::Base
 
     if contributions
       if params[:per_page]
-        respond_with contributions.paginate(per_page: params[:per_page], page: params[:page])
+        render :json => {total: contributions.size, contributions: contributions.paginate(per_page: params[:per_page], page: params[:page])}
       else
-        respond_with contributions
+        render :json => {total: contributions.size, contributions: contributions}
       end
     else
       head :status => 404
     end
+
   end
 
 

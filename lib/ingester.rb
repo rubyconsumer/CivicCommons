@@ -71,7 +71,7 @@ class Ingester
     chars = chars.gsub("\r\n", "\r").gsub("\r", "\n\n")
 
     # Replace “smart quotes” with "normal quotes"
-    chars = chars.gsub(/[”“]/, '"')
+    chars = chars.gsub(/[”“]/, '"').gsub(/[‘’]/, "'")
 
     # Convert back to a string
     chars.to_s
