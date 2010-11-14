@@ -5,7 +5,7 @@ module YouTubeable
     base.validates :url, :you_tubeable => true
   end
   
-  YOUTUBE_REGEX = /^http:\/\/www\.youtube\.com\/watch\?.*v=([\d\w]+).*/
+  YOUTUBE_REGEX = /^http:\/\/www\.youtube\.com\/watch\?.*v=([-\d\w]+).*/
 
   def youtube_link?
     YOUTUBE_REGEX.match(self.url)
