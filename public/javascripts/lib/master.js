@@ -3,7 +3,10 @@ $(document).ready(function(){
     $('[placeholder]').placeholder({className: 'placeholder'});
   }
   $('a[data-colorbox]').live('click', function(e){
-    $.colorbox({ href: $(this).attr('href') });
+    $.colorbox({ 
+      transition: 'fade', // needed to fix colorbox bug with jquery 1.4.4
+      href: $(this).attr('href') 
+    });
     e.preventDefault();
   });
 });
