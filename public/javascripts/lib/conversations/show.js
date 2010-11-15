@@ -316,6 +316,7 @@ jQuery(function ($) {
       $('.top-node-conversation-action,.conversation-action').live('click', function(e){
         var $this = $(this);
         $.colorbox({
+          transition: 'fade', // needed to fix colorbox bug with jquery 1.4.4
           href: $this.attr('href'),
           width: '600px',
           height: '320px',
@@ -369,6 +370,7 @@ jQuery(function ($) {
         
         $('a[data-colorbox-iframe]').live('click', function(e){
           $.colorbox({ 
+            transition: 'fade', // needed to fix colorbox bug with jquery 1.4.4
             href: $(this).attr('href'), 
             iframe: true, 
             width: '75%', 
