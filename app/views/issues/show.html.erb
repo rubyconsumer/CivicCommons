@@ -98,7 +98,9 @@
           <a name="contribution<%= contribution.id %>"></a>
           <div class="dnld <%= media_style(contribution) %>">
             <p><strong><%= media_link_info(contribution) %></strong></p>
-            <p><em><%= contribution.person.name %></em>
+            <% unless contribution.person.nil? %>
+              <p><em><%= contribution.person.name %></em>
+            <% end %>
               <% if contribution.content %>
               &ndash; <%= contribution.content %>
               <% end %>
@@ -135,10 +137,13 @@
             <ol class='conversations divided'>
               <% @suggested_actions.each do |suggested_action| %>
                 <li class='offset-1'>
+                <% unless suggested_action.person.nil? %>
                   <%= avatar_tag(suggested_action.person, :style_name => :standard, :class => "callout", :width => 40, :height => 40) %>
                   <p><strong><%= link_to suggested_action.person.name, suggested_action.person %></strong> suggests:</p>
                   <p><%= suggested_action.content %></p>
+
                   <p><%= link_to 'Delete', contribution_path(suggested_action), :class => 'delete button' if suggested_action.editable_by?(current_person) %></p>
+                <% end %>
                 </li>
               <% end %>
             </ol>
