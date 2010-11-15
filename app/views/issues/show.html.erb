@@ -79,8 +79,10 @@
               <img class="callout" src="#contribution-image-goes-here" alt="contribution image goes here" width="90" height="60" />
             <% end %>
             <h4><%= link_to truncate(contribution.title), contribution.url %></h4>
-            <p>Submitted by: <a href="#link-to-PA-profile"><%= contribution.person.name %></a></p>
-            <p><%= link_to 'Delete', contribution_path(contribution), :class => 'delete' if contribution.editable_by?(current_person) %></p>
+            <% unless contribution.person.nil? %>
+              <p>Submitted by: <a href="#link-to-PA-profile"><%= contribution.person.name %></a></p>
+            <% end %>
+              <p><%= link_to 'Delete', contribution_path(contribution), :class => 'delete' if contribution.editable_by?(current_person) %></p>
             </li>
           <% end %>
         </ol>
