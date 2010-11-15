@@ -16,7 +16,8 @@ require 'spec_helper'
         end
       end
       [ "http://www.youtube.com/watch?v=djtNtt8jDW4", 
-        "http://www.youtube.com/watch?v=G75KhTQWyDA&feature=related" ].each do |valid_youtube_url|
+        "http://www.youtube.com/watch?v=G75KhTQWyDA&feature=related",
+        "http://www.youtube.com/watch?v=6hiDd-HpX9I" ].each do |valid_youtube_url|
         valid_youtube_url =~ /(http:\/\/www\.youtube\.com)?(.*)/
         valid_youtube_url_format = $2;
         
