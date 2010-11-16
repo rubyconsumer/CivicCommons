@@ -46,7 +46,7 @@ Civiccommons::Application.configure do
   ActionMailer::Base.smtp_settings = {
     :address              => "smtp.sendgrid.net",
     :domain               => "theciviccommons.com",
-    :user_name            => "joe@joefiorini.com",
+    :user_name            => "winston.tsang@radberry.com",
     :password             => "digitalcity",
     :authentication       => "plain",
     :enable_starttls_auto => true
@@ -55,7 +55,7 @@ Civiccommons::Application.configure do
   config.active_support.deprecation = :log
 
   # For devise gem
-  config.action_mailer.default_url_options = { :host => 'production.theciviccommons.com' }
+  config.action_mailer.default_url_options = { :host => 'www.theciviccommons.com' }
 
   # Enable threaded mode
   # config.threadsafe!
