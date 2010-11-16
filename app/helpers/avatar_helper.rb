@@ -72,6 +72,16 @@ module AvatarHelper
     </a>
     EOHTML
   end
+
+  def link_to_settings(person)
+    settings_link = "myAccount/editProfile"
+    <<-HTML
+    <a href="#{pa_link(settings_link)}" title="Profile Settings">
+      Settings
+    </a>
+    HTML
+  end
+
   
   # Creates an image_tag for a particular person
   # options includes options passed along to image_tag along with

@@ -37,14 +37,14 @@ Civiccommons::Application.routes.draw do
   match '/subscriptions/unsubscribe', :to=>'subscriptions#unsubscribe', :via=>[:post]
 
   # Static pages
-  match '/about', :to=>'static_pages#about', :via=>[:get]
-  match '/faq', :to=>'static_pages#faq', :via=>[:get]
-  match '/principles', :to=>'static_pages#principles', :via=>[:get]
-  match '/team', :to=>'static_pages#team', :via=>[:get]
-  match '/partners', :to=>'static_pages#partners', :via=>[:get]
-  match '/terms', :to=>'static_pages#terms', :via=>[:get]
-  match '/build-the-commons', :to=>'static_pages#build_the_commons', :via=>[:get]
-  match '/contact-us', :to=>'static_pages#contact', :via=>[:get]
+  get '/about', :to=>'static_pages#about'
+  get '/faq', :to=>'static_pages#faq'
+  get '/principles', :to=>'static_pages#principles'
+  get '/team', :to=>'static_pages#team'
+  get '/partners', :to=>'static_pages#partners'
+  get '/terms', :to=>'static_pages#terms'
+  get '/build-the-commons', :to=>'static_pages#build_the_commons'
+  get '/contact-us', :to=>'static_pages#contact'
   
   resources :conversations
   resources :regions   

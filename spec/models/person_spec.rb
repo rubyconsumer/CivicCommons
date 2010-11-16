@@ -76,7 +76,7 @@ describe Person do
       person.should have_validation_error(:email, /please use a longer email address/)
     end
     
-    it "should not allow emails that are too short" do
+    it "should not allow emails that are too long" do
       person = Factory.build(:normal_person, :email => "1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890@1234567890b.c")
       person.valid?.should be_false
       person.should have_validation_error(:email, /please use a shorter email address/)

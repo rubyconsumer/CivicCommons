@@ -48,8 +48,8 @@ var youtube = function() {
           .append(
             $(document.createElement('img'))
             .attr({
-              width: 120,
-              height: 90,
+              width:  90,
+              height: 60,
               src: data.entry['media$group']['media$thumbnail'][0].url,
               title: data.entry['media$group']['media$title']['$t']
             })
