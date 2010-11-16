@@ -20,7 +20,7 @@ Civiccommons::Application.configure do
   ActionMailer::Base.smtp_settings = {
     :address              => "smtp.sendgrid.net",
     :domain               => "theciviccommons.com",
-    :user_name            => "joe@joefiorini.com",
+    :user_name            => "winston.tsang@radberry.com",
     :password             => "digitalcity",
     :authentication       => "plain",
     :enable_starttls_auto => true
