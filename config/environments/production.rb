@@ -1,3 +1,5 @@
+require File.expand_path('./config/initializers/civic_commons.rb')
+
 Civiccommons::Application.configure do
   # Settings specified here will take precedence over those in config/environment.rb
 
@@ -44,10 +46,10 @@ Civiccommons::Application.configure do
   config.action_mailer.raise_delivery_errors = true
 
   ActionMailer::Base.smtp_settings = {
-    :address              => "smtp.sendgrid.net",
-    :domain               => "theciviccommons.com",
-    :user_name            => "winston.tsang@radberry.com",
-    :password             => "digitalcity",
+    :address              => Civiccommons::Config.smtp_address,
+    :domain               => Civiccommons::Config.smtp_domain,
+    :user_name            => Civiccommons::Config.smtp_username,
+    :password             => Civiccommons::Config.smtp_password,
     :authentication       => "plain",
     :enable_starttls_auto => true
   }
@@ -55,7 +57,7 @@ Civiccommons::Application.configure do
   config.active_support.deprecation = :log
 
   # For devise gem
-  config.action_mailer.default_url_options = { :host => 'www.theciviccommons.com' }
+  config.action_mailer.default_url_options = { :host => Civiccommons::Config.devise_mailer_host }
 
   # Enable threaded mode
   # config.threadsafe!

@@ -1,0 +1,31 @@
+development:
+  devise_email: "admin@somewhere.com"
+  devise_mailer_host: "development.somewhere.com"
+  devise_pepper: "somereallylongstringtoemcryptuserspasswords"
+  rails_secret_token: "randonStuffThatsAtLeast30CharachtersYo128DirtyWithTh"
+
+test:
+  devise_email: "admin@somewhere.com"
+  devise_mailer_host: "test.somewhere.com"
+  devise_pepper: "somereallylongstringtoemcryptuserspasswords"
+  rails_secret_token: "randonStuffThatsAtLeast30CharachtersYo128DirtyWithTh"
+
+integration:
+  devise_email: "admin@somewhere.com"
+  devise_mailer_host: "integration.somewhere.com"
+  devise_pepper: "somereallylongstringtoemcryptuserspasswords"
+  rails_secret_token: "randonStuffThatsAtLeast30CharachtersYo128DirtyWithTh"
+  smtp_address: "smtp.minimailer.net"
+  smtp_domain: "example.com"
+  smtp_username: "someone@example.com"
+  smtp_password: "ThePlainAndClearPassword!"
+
+staging:
+  devise_email: "admin@somewhere.com"
+  devise_mailer_host: "staging.somewhere.com"
+  devise_pepper: "somereallylongstringtoemcryptuserspasswords"
+  rails_secret_token: "randonStuffThatsAtLeast30CharachtersYo128DirtyWithTh"
+  smtp_address: "smtp.minimailer.net"
+  smtp_domain: "example.com"
+  smtp_username: "someone@example.com"
+
