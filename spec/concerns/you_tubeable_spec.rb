@@ -39,6 +39,11 @@ require 'spec_helper'
         @model.save
         @model.embed_target.should match /(abcDef0gHI1)+/
       end
+      it "properly sets embed code with hyphen" do
+        @model.url = "http://www.youtube.com/watch?v=6hiDd-HpX9I"
+        @model.save
+        @model.embed_target.should match /(6hiDd-HpX9I)/
+      end
     end
   end
 end
