@@ -77,7 +77,7 @@ module AvatarHelper
     settings_link = "myAccount/editProfile"
     <<-HTML
     <a href="#{pa_link(settings_link)}" title="Profile Settings">
-      Settings
+      SETTINGS
     </a>
     HTML
   end
