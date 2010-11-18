@@ -1323,9 +1323,11 @@ visibility: hidden;
 /* Global Warning */
 .global-warning {
   /*background: url(/images/al-gore.jpg) no repeat left center;*/
-  background: #c00;
-  border-bottom:1px solid #900;
-  text-color:#eff;
+  background: #900;
+  border-bottom:1px solid #700;
+  color:#eff;
+  text-align: center;
+  padding: 6px 0;
 }
 .global-warning a { color:#fff; font-weight:bold; }
 
