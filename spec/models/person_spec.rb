@@ -140,7 +140,7 @@ describe Person do
     it "should send a confirmation email" do
       given_a_new_user_registered
       mailing = ActionMailer::Base.deliveries.first
-      mailing.from.should == ["admin@theciviccommons.com"]
+      mailing.from.should == [Civiccommons::Config.devise_email]
       mailing.to.should == [@person.email]
       mailing.subject.should == "Confirmation instructions"
     end
@@ -154,7 +154,7 @@ describe Person do
     it "should send a notification email to register@civiccommons.com" do
       given_a_new_user_registered
       mailing = ActionMailer::Base.deliveries.last
-      mailing.from.should == ["admin@theciviccommons.com"]
+      mailing.from.should == [Civiccommons::Config.devise_email]
       mailing.to.should == ["register@theciviccommons.com"]
       mailing.subject.should == "New User Registered"
       mailing.body.include?(@person.email).should be_true
@@ -174,7 +174,7 @@ describe Person do
       person.confirmed_at.should_not be_blank
       
       mailing = ActionMailer::Base.deliveries.last
-      mailing.from.should == ["admin@theciviccommons.com"]
+      mailing.from.should == [Civiccommons::Config.devise_email]
       mailing.to.should == [person.email]
       mailing.subject.should == "Welcome to The Civic Commons"
       ActionMailer::Base.deliveries.length.should == 3
@@ -225,13 +225,19 @@ describe Person do
     it "strips trailing $ from password_salt and updates encrypted password and salt" do
       person = Factory.create(:normal_person)
 
-      person.api_update(:password_salt => "$2a$10$95c0ac175c8566911bb039$",
-                        :encrypted_password =>
-                        "$2a$10$95c0ac175c8566911bb03uvHgL7PXXveLmPKg4gZ7K/md5a5aXD4m")
+      pepper = Civiccommons::Config.devise_pepper
+      password_salt = "$2a$10$95c0ac175c8566911bb039"
+
+      encrypted_password = Devise::Encryptors::Bcrypt.
+        digest("testpass", 10, password_salt, pepper)
+      
+      person.api_update(:password_salt => "#{password_salt}$",
+                        :encrypted_password => encrypted_password)
+
       person.save.should be_true
       
-      person.password_salt.should == "$2a$10$95c0ac175c8566911bb039"
-      person.encrypted_password.should == "$2a$10$95c0ac175c8566911bb03uvHgL7PXXveLmPKg4gZ7K/md5a5aXD4m"
+      person.password_salt.should == password_salt
+      person.encrypted_password.should == encrypted_password
 
       person.valid_password?("testpass").should be_true
     end
