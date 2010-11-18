@@ -10,7 +10,7 @@ class Conversation < ActiveRecord::Base
   has_many(:confirmed_contributions, :class_name => 'Contribution',
            :conditions => ['confirmed = ?', true])
  
-  has_many :top_level_contributions
+  has_many :top_level_contributions, :dependent => :destroy
   has_many :subscriptions, :as => :subscribable
   accepts_nested_attributes_for :top_level_contributions, :allow_destroy => true
 
