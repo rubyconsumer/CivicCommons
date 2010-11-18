@@ -67,9 +67,9 @@
                 %h4
                   %a 
                     = text_profile(current_person).html_safe
-                %p
+                %p{:style=>'margin-bottom: 0;'}
                   = link_to_settings(current_person).html_safe
-                  |
+                  %br 
                   = link_to "Logout", destroy_person_session_path, :class => 'user-link'
           - else
             #login-status.signed-out
