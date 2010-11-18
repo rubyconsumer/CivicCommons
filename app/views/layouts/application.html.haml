@@ -52,6 +52,10 @@
     = csrf_meta_tag
 
   %body
+    :plain
+      <!--[if lte IE 6]><!-->
+        <div class="global-warning">You are using a browser which isn't supported.  Try using <a href="http://www.firefox.com">Firefox</a>, <a href="http://www.apple.com/safari">Safari</a> or <a href="http://www.google.com/chrome">Chrome</a>.</div>
+      <!--<![endif]-->
     #header-wrapper
       #header
         %a#logo{:href=>'/', :title => "Civic Commons"} Civic Commons
