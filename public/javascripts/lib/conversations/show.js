@@ -381,5 +381,11 @@ jQuery(function ($) {
            });
           e.preventDefault();
         });
+		$('#contribution_submit').live('click',function(){
+			if($(this).siblings('#contribution_content').hasClass('placeholder') == true){
+				alert("Text can't be blank");
+				return false;
+			}
+		})
   });
 });
