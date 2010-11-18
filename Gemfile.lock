@@ -78,6 +78,10 @@ GEM
       rails (>= 3.0.0.beta4)
     ffi (0.6.3)
       rake (>= 0.8.7)
+    fuubar (0.0.2)
+      rspec (~> 2.0)
+      rspec-instafail (~> 0.1.4)
+      ruby-progressbar (~> 0.0.9)
     geokit (1.5.0)
     gherkin (2.2.4)
       json (~> 1.4.6)
@@ -149,6 +153,7 @@ GEM
     rspec-core (2.0.1)
     rspec-expectations (2.0.1)
       diff-lcs (>= 1.1.2)
+    rspec-instafail (0.1.4)
     rspec-mocks (2.0.1)
       rspec-core (~> 2.0.1)
       rspec-expectations (~> 2.0.1)
@@ -162,6 +167,7 @@ GEM
       columnize (>= 0.3.1)
       linecache19 (>= 0.5.11)
       ruby-debug-base19 (>= 0.11.19)
+    ruby-progressbar (0.0.9)
     ruby-termios (0.9.6)
     ruby_core_source (0.1.4)
       archive-tar-minitar (>= 0.5.2)
@@ -203,6 +209,7 @@ DEPENDENCIES
   devise (= 1.1.2)
   engineyard
   factory_girl_rails
+  fuubar
   geokit
   haml
   hoptoad_notifier
