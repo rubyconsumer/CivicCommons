@@ -22,7 +22,7 @@
           -if article.image?
             =image_tag article.image.url(:subfeature), :class => 'callout', :size => '90x60', :alt => article.title
           -if article.video_url?
-            .video-preview{:data => {:url => article.url}}
+            .callout.video-preview{:data => {:url => article.url}}
           %h4=link_to article.title, article.link
           %p= "By: #{article.author}"
 
