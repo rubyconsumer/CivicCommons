@@ -247,16 +247,5 @@ describe Person do
       person.errors[:password_salt].should_not be_nil
     end
     
-    it "should have errors when missing avatar content_type" do
-      pending
-      person = Factory.create(:normal_person)
-
-      person.api_update(:avatar => {:file_name => "test.jpg",
-                          :file_size => 100})
-
-      person.errors.should_not be_empty
-      
-      person.save.should be_false
-    end
   end
 end
