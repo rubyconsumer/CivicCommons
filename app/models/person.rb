@@ -201,7 +201,7 @@ class Person < ActiveRecord::Base
   end
 
   def name
-    @name ||= ("%s %s" % [self.first_name, self.last_name]).titlecase.strip
+    @name ||= ("%s %s" % [self.first_name, self.last_name]).strip
   end
   
   def notify_civic_commons
