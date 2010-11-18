@@ -319,7 +319,7 @@ jQuery(function ($) {
           transition: 'fade', // needed to fix colorbox bug with jquery 1.4.4
           href: $this.attr('href'),
           width: '600px',
-          height: '320px',
+          height: '330px',
           onComplete: function(){
             var clicked = $this,
                 divId = $(clicked).attr('href').match(/div_id=([^&]+)/)[1],
