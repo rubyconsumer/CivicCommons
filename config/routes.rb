@@ -45,6 +45,8 @@ Civiccommons::Application.routes.draw do
   get '/terms', :to=>'static_pages#terms'
   get '/build-the-commons', :to=>'static_pages#build_the_commons'
   get '/contact-us', :to=>'static_pages#contact'
+  get '/polls', :to => 'polls#index'
+  post '/polls', :to => 'polls#create'
   
   resources :conversations
   resources :regions   

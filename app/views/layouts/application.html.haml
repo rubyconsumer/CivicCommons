@@ -5,7 +5,6 @@
     = javascript_include_tag 'vendor/jquery-1.4.4.min'
     = javascript_include_tag 'vendor/jquery-ui-1.8.2.custom.min'
     = javascript_include_tag 'vendor/jquery-ui-timepicker-addon-0.5.min'
-    = javascript_include_tag 'jquery.xdomainajax.js'
     = javascript_include_tag 'vendor/placeholder-1.0.1.min'
     = javascript_include_tag 'vendor/modernizr-1.5.min'
     = javascript_include_tag 'lib/rails'
@@ -36,6 +35,30 @@
         #{yield :document_ready}
 
       });
+
+    :javascript
+
+      var url = '#{append_pa_authtoken(polls_path(:silent=> true))}'
+
+      $(document).ready(function(){
+        $("#poll_module").load(url, setupPollFormHandler);
+      });
+
+      function setupPollFormHandler(response, status, xhr){
+        $("#poll_module form").submit(function(event) {
+          event.preventDefault();
+
+          var selected_val = $(this).find('input[name=vote]:checked').val();
+          if(selected_val != '') {
+            //post data only if a value is selected
+            $.post(url, $(this).serialize(), function(response, status, xhr){
+              $("#poll_module").load(url, setupPollFormHandler);
+            });
+          }
+          return false;
+        });
+      }
+      
 
       /* Google Analytics */
       var _gaq = _gaq || [];
