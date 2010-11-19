@@ -4,10 +4,10 @@ class Person < ActiveRecord::Base
   include GeometryForStyle
 
   # Include default devise modules. Others available are:
-  # :token_authenticatable, :confirmable, :lockable and :timeoutable
+  # :token_authenticatable, :confirmable, and :timeoutable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
-         :confirmable
+         :confirmable, :lockable
 
   attr_accessor :skip_shadow_account, :organization_name, :send_welcome, :skip_invite
 
@@ -194,7 +194,6 @@ class Person < ActiveRecord::Base
 
   end
 
-
   def name=(value)
     @name = value
     self.first_name, self.last_name = self.class.parse_name(value)
@@ -203,7 +202,7 @@ class Person < ActiveRecord::Base
   def name
     @name ||= ("%s %s" % [self.first_name, self.last_name]).strip
   end
-  
+
   def notify_civic_commons
     Notifier.new_registration_notification(self).deliver
   end
