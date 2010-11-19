@@ -5,11 +5,11 @@ module PeopleAggregator
 
     included do |base|
       class << base; attr_accessor :allowed_keys end
-      base.instance_variable_set("@allowed_keys", [])
     end
 
     module ClassMethods
       def attr_allowable(*keys)
+        @allowed_keys ||= []
         @allowed_keys << keys
         @allowed_keys.flatten!
       end
@@ -34,7 +34,7 @@ module PeopleAggregator
     end
 
     def allowed_keys
-      self.class.allowed_keys
+      self.class.allowed_keys || []
     end
 
   end

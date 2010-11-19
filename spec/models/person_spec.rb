@@ -254,4 +254,33 @@ describe Person do
     end
     
   end
+
+  describe "upon password reset" do
+    it "should call people aggregator with update when valid passwords" do
+      PeopleAggregator::Account.should_receive(:update).once
+      
+      person = Factory.create(:normal_person)
+      person.send(:generate_reset_password_token!)
+
+      person.reset_password!("foobar", "foobar")
+    end
+
+    it "should not call people aggregator with update when passwords to not match" do
+      PeopleAggregator::Account.should_not_receive(:update)
+      
+      person = Factory.create(:normal_person)
+      person.send(:generate_reset_password_token!)
+
+      person.reset_password!("foobar", "foo")
+    end
+
+    it "should not call people aggregator with update when invalid password" do
+      PeopleAggregator::Account.should_not_receive(:update)
+      
+      person = Factory.create(:normal_person)
+      person.send(:generate_reset_password_token!)
+
+      person.reset_password!("", "")
+    end
+  end
 end

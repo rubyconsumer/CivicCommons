@@ -177,6 +177,13 @@ class Person < ActiveRecord::Base
     update_attributes(params)
   end
   
+  def reset_password!(new_password, new_password_confirmation)
+    if super
+      PeopleAggregator::Account.update(self.people_aggregator_id,
+                                       password: self.encrypted_password)
+    end
+  end
+  
   def avatar_width_for_style(style)
     geometry_for_style(style, :avatar).width.to_i
   end
