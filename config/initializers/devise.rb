@@ -3,7 +3,7 @@
 Devise.setup do |config|    
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in DeviseMailer.
-  config.mailer_sender = "admin@theciviccommons.com"
+  config.mailer_sender = Civiccommons::Config.devise_email
 
   # Configure the class responsible to send e-mails.
   # config.mailer = "Devise::Mailer"
@@ -44,7 +44,7 @@ Devise.setup do |config|
   config.encryptor = :bcrypt
 
   # Setup a pepper to generate the encrypted password.
-  config.pepper = "f5e3fd131040faf20bf2b86f363dcf115cd267d468d403b9bbac37b731fa125db7857b63efa6f322339b5e5deae3b2c4c7677c0f8a1f8ed43653d107dc1a20fb"
+  config.pepper = Civiccommons::Config.devise_pepper
 
   # ==> Configuration for :confirmable
   # The time you want to give your user to confirm his account. During this time
@@ -77,6 +77,7 @@ Devise.setup do |config|
   # :failed_attempts = Locks an account after a number of failed attempts to sign in.
   # :none            = No lock strategy. You should handle locking by yourself.
   # config.lock_strategy = :failed_attempts
+  config.lock_strategy = :none
 
   # Defines which strategy will be used to unlock an account.
   # :email = Sends an unlock link to the user email
@@ -84,6 +85,7 @@ Devise.setup do |config|
   # :both  = Enables both strategies
   # :none  = No unlock strategy. You should handle unlocking by yourself.
   # config.unlock_strategy = :both
+  config.unlock_strategy = :none
 
   # Number of authentication tries before locking an account if lock_strategy
   # is failed attempts.

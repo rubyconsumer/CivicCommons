@@ -18,8 +18,10 @@ describe Api::PeopleController do
       "$2a$10$95c0ac175c8566911bb03uvHgL7PXXveLmPKg4gZ7K/md5a5aXD4m"}
 
     response.should be_success
+
     person.reload
-    person.valid_password?("testpass").should be_true
+    person.password_salt.should == "$2a$10$95c0ac175c8566911bb039"
+    person.encrypted_password.should == "$2a$10$95c0ac175c8566911bb03uvHgL7PXXveLmPKg4gZ7K/md5a5aXD4m"
   end
 
   it "should return 404 when not found" do

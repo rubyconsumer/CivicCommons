@@ -4,10 +4,10 @@ class Person < ActiveRecord::Base
   include GeometryForStyle
 
   # Include default devise modules. Others available are:
-  # :token_authenticatable, :confirmable, :lockable and :timeoutable
+  # :token_authenticatable, :confirmable, and :timeoutable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
-         :confirmable
+         :confirmable, :lockable
 
   attr_accessor :skip_shadow_account, :organization_name, :send_welcome, :skip_invite
 
@@ -177,6 +177,13 @@ class Person < ActiveRecord::Base
     update_attributes(params)
   end
   
+  def reset_password!(new_password, new_password_confirmation)
+    if super
+      PeopleAggregator::Account.update(self.people_aggregator_id,
+                                       password: self.encrypted_password)
+    end
+  end
+  
   def avatar_width_for_style(style)
     geometry_for_style(style, :avatar).width.to_i
   end
@@ -194,16 +201,15 @@ class Person < ActiveRecord::Base
 
   end
 
-
   def name=(value)
     @name = value
     self.first_name, self.last_name = self.class.parse_name(value)
   end
 
   def name
-    @name ||= ("%s %s" % [self.first_name, self.last_name]).titlecase.strip
+    @name ||= ("%s %s" % [self.first_name, self.last_name]).strip
   end
-  
+
   def notify_civic_commons
     Notifier.new_registration_notification(self).deliver
   end

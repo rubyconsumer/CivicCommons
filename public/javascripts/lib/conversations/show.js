@@ -50,6 +50,14 @@ jQuery(function ($) {
       var form = this;
       form
         .maskOnSubmit(tabStrip)
+        .bind("ajax:before", function(){
+          $(this).find('input[placeholder], textarea[placeholder]').each( function() {
+            $this = $(this);
+            if( $this.val() == $this.attr('placeholder') ){
+              $this.empty();
+            }
+          });
+        })
         .bind("ajax:success", function(evt, data, status, xhr){
           // apparently there is no way to inspect the HTTP status returned when submitting via iframe (which happens for AJAX file/image uploads)
           //  so, if file/image uploads via this form will always trigger ajax:success even if action returned error status code.
@@ -144,7 +152,7 @@ jQuery(function ($) {
             updateHash: false
           })  
           .live("easytabs:after", function(){
-            //$.colorbox.resize();
+            resizeColorbox();
           });
       },
       
@@ -190,7 +198,9 @@ jQuery(function ($) {
           }
           errorString += "</ul>"
           $(this).find(".validation-error").html(errorString);
-          $.colorbox.resize();
+          setTimeout(function(){
+            resizeColorbox(); // need to delay this a little to give the new html a chance to be appended in the DOM
+          }, 100);
         });
         return this;
       },
@@ -260,6 +270,12 @@ jQuery(function ($) {
     	);
     }
     
+    resizeColorbox = function(){
+      $.colorbox.resize({
+        innerHeight: $('#cboxLoadedContent').children().first().outerHeight() + 20
+      });
+    }
+    
   	$('a.conversation-responses')
   	  .changeTextOnLoading({
         loadText: "Loading responses...",
@@ -319,7 +335,7 @@ jQuery(function ($) {
           transition: 'fade', // needed to fix colorbox bug with jquery 1.4.4
           href: $this.attr('href'),
           width: '600px',
-          height: '320px',
+          height: '330px',
           onComplete: function(){
             var clicked = $this,
                 divId = $(clicked).attr('href').match(/div_id=([^&]+)/)[1],
@@ -328,7 +344,6 @@ jQuery(function ($) {
             
             $(tabStrip).applyEasyTabsToTabStrip();
             $(form).bindContributionFormEvents(clicked,tabStrip);
-            //$.colorbox.resize();
           },
           opacity: 0.6
           //scrolling: false

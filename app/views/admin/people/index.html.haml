@@ -3,17 +3,29 @@
   %thead
     %tr
       %th Name
+      %th Email
       %th Admin
       %th Proxy
+      %th Status
   %tbody
     -@people.each do |person|
+      - locked = person.locked_at?
       %tr
         %td=link_to person.name, admin_person_path(person)
+        %td=person.email
         %td=person.admin?
         %td=person.proxy?
+        - if locked
+          %td.locked Locked
+        - else
+          %td.unlocked Unlocked
         %td=link_to "Edit", edit_admin_person_path(person)
-        %td=link_to "Delete", admin_person_path(person), :confirm => "Are you sure?", :method => :delete
-        
+        - if locked
+          %td=link_to "Unlock", unlock_access_admin_person_path(person, :redirect_to => action_name), :confirm => "This will re-enable access for '#{h person.name}'. Are you sure?", :method => :put
+        - else
+          %td=link_to "Lock", lock_access_admin_person_path(person, :redirect_to => action_name), :confirm => "This will disable access for '#{h person.name}'. Are you sure?", :method => :put
+
+      
 %br
 =link_to "Add Proxy", new_admin_person_path
 

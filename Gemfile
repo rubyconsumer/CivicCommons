@@ -33,6 +33,7 @@ group :test do
   gem "ruby-debug19"
   gem 'webmock'
   gem 'linguistics'
+  gem 'fuubar'
 end
 
 gem 'devise', '1.1.2'

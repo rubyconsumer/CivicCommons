@@ -84,25 +84,25 @@ describe Person do
   end
   
   describe "when displaying a name" do
-    it "should properly capitalize a persons name" do
+    it "should respect case of name entered by person" do 
       person = Factory.create(:normal_person)
       person.first_name = "ektor"
       person.last_name = "van capsula"
-      person.name.should == "Ektor Van Capsula"
+      person.name.should == "ektor van capsula"
     end
     
     it "should display names without leading spaces when the first name is missing" do
       person = Factory.create(:normal_person)
       person.first_name = ""
       person.last_name = "van capsula"
-      person.name.should == "Van Capsula"
+      person.name.should == "van capsula"
     end
     
     it "should display names without trailing spaces when the last name is missing" do
       person = Factory.create(:normal_person)
       person.first_name = "ektor"
       person.last_name = ""
-      person.name.should == "Ektor"
+      person.name.should == "ektor"
     end
   end
 
@@ -140,7 +140,7 @@ describe Person do
     it "should send a confirmation email" do
       given_a_new_user_registered
       mailing = ActionMailer::Base.deliveries.first
-      mailing.from.should == ["admin@theciviccommons.com"]
+      mailing.from.should == [Civiccommons::Config.devise_email]
       mailing.to.should == [@person.email]
       mailing.subject.should == "Confirmation instructions"
     end
@@ -154,7 +154,7 @@ describe Person do
     it "should send a notification email to register@civiccommons.com" do
       given_a_new_user_registered
       mailing = ActionMailer::Base.deliveries.last
-      mailing.from.should == ["admin@theciviccommons.com"]
+      mailing.from.should == [Civiccommons::Config.devise_email]
       mailing.to.should == ["register@theciviccommons.com"]
       mailing.subject.should == "New User Registered"
       mailing.body.include?(@person.email).should be_true
@@ -174,7 +174,7 @@ describe Person do
       person.confirmed_at.should_not be_blank
       
       mailing = ActionMailer::Base.deliveries.last
-      mailing.from.should == ["admin@theciviccommons.com"]
+      mailing.from.should == [Civiccommons::Config.devise_email]
       mailing.to.should == [person.email]
       mailing.subject.should == "Welcome to The Civic Commons"
       ActionMailer::Base.deliveries.length.should == 3
@@ -225,13 +225,19 @@ describe Person do
     it "strips trailing $ from password_salt and updates encrypted password and salt" do
       person = Factory.create(:normal_person)
 
-      person.api_update(:password_salt => "$2a$10$95c0ac175c8566911bb039$",
-                        :encrypted_password =>
-                        "$2a$10$95c0ac175c8566911bb03uvHgL7PXXveLmPKg4gZ7K/md5a5aXD4m")
+      pepper = Civiccommons::Config.devise_pepper
+      password_salt = "$2a$10$95c0ac175c8566911bb039"
+
+      encrypted_password = Devise::Encryptors::Bcrypt.
+        digest("testpass", 10, password_salt, pepper)
+      
+      person.api_update(:password_salt => "#{password_salt}$",
+                        :encrypted_password => encrypted_password)
+
       person.save.should be_true
       
-      person.password_salt.should == "$2a$10$95c0ac175c8566911bb039"
-      person.encrypted_password.should == "$2a$10$95c0ac175c8566911bb03uvHgL7PXXveLmPKg4gZ7K/md5a5aXD4m"
+      person.password_salt.should == password_salt
+      person.encrypted_password.should == encrypted_password
 
       person.valid_password?("testpass").should be_true
     end
@@ -247,15 +253,34 @@ describe Person do
       person.errors[:password_salt].should_not be_nil
     end
     
-    it "should have errors when missing avatar content_type" do
-      person = Factory.create(:normal_person)
+  end
 
-      person.api_update(:avatar => {:file_name => "test.jpg",
-                          :file_size => 100})
-
-      person.errors.should_not be_empty
+  describe "upon password reset" do
+    it "should call people aggregator with update when valid passwords" do
+      PeopleAggregator::Account.should_receive(:update).once
       
-      person.save.should be_false
+      person = Factory.create(:normal_person)
+      person.send(:generate_reset_password_token!)
+
+      person.reset_password!("foobar", "foobar")
+    end
+
+    it "should not call people aggregator with update when passwords to not match" do
+      PeopleAggregator::Account.should_not_receive(:update)
+      
+      person = Factory.create(:normal_person)
+      person.send(:generate_reset_password_token!)
+
+      person.reset_password!("foobar", "foo")
+    end
+
+    it "should not call people aggregator with update when invalid password" do
+      PeopleAggregator::Account.should_not_receive(:update)
+      
+      person = Factory.create(:normal_person)
+      person.send(:generate_reset_password_token!)
+
+      person.reset_password!("", "")
     end
   end
 end

@@ -1,8 +1,5 @@
-class PeopleAggregator::Person
-  include PeopleAggregator::Connector
-  include PeopleAggregator::ApiObject
-
-
+class PeopleAggregator::Person < PeopleAggregator::Account
+  
   attr_allowable :login, :email, :id, :url,
                  :name, :profile, :firstName,
                  :lastName, :login, :password,
@@ -25,8 +22,7 @@ class PeopleAggregator::Person
 
     case r.code
     when 412
-      missing_key = r.parsed_response['msg'][/key (.*) is required/, 1]
-      raise ArgumentError, 'The key "%s" is required.' % missing_key
+      self.class.handle_412(r)
     when 409
       login_name = r.parsed_response['msg'][/Login name (.*) is already taken/, 1]
       raise StandardError, 'The user with login "%s" already exists.' % login_name
@@ -39,7 +35,7 @@ class PeopleAggregator::Person
 
 
   def destroy
-    @attrs.merge!(adminPassword: "admin")
+    @attrs.merge!(adminPassword: Civiccommons::Peopleaggregator.admin_password)
     r = self.class.post('/peopleaggregator/deleteUser', body: { adminPassword: @attrs[:adminPassword],
                                                login: self.login})
 
@@ -47,8 +43,7 @@ class PeopleAggregator::Person
 
     case r.code
     when 412
-      missing_key = r.parsed_response['msg'][/key (.*) is required/, 1]
-      raise ArgumentError, 'The key "%s" is required.' % missing_key
+      self.class.handle_412(r)
     when 404
       login_name = r.parsed_response['msg'][/Login name (.*) is already taken/, 1]
       raise StandardError, 'The user with login "%s" doesn\'t exist.' % login_name
@@ -56,7 +51,6 @@ class PeopleAggregator::Person
 
     self
   end
-
 
   def self.create(attrs)
     self.new(attrs).tap { |p| p.save }

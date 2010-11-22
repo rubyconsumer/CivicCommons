@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101109011449) do
+ActiveRecord::Schema.define(:version => 20101119034557) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -194,6 +194,9 @@ ActiveRecord::Schema.define(:version => 20101109011449) do
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
     t.integer  "people_aggregator_id"
+    t.integer  "failed_attempts",                     :default => 0
+    t.string   "unlock_token"
+    t.datetime "locked_at"
   end
 
   add_index "people", ["email"], :name => "index_people_on_email", :unique => true

@@ -2,7 +2,7 @@ Civiccommons::Application.routes.draw do
 
   devise_for :people,
              :controllers => { :registrations => 'registrations', :confirmations => 'confirmations' },
-             :path_names => { :sign_in => 'login', :sign_out => 'logout', :password => 'secret', :confirmation => 'verification', :unlock => 'unblock', :registration => 'register', :sign_up => 'new' }
+             :path_names => { :sign_in => 'login', :sign_out => 'logout', :password => 'secret', :confirmation => 'verification', :registration => 'register', :sign_up => 'new' }
 
   resources :events
 
@@ -45,6 +45,8 @@ Civiccommons::Application.routes.draw do
   get '/terms', :to=>'static_pages#terms'
   get '/build-the-commons', :to=>'static_pages#build_the_commons'
   get '/contact-us', :to=>'static_pages#contact'
+  get '/polls', :to => 'polls#index'
+  post '/polls', :to => 'polls#create'
   
   resources :conversations
   resources :regions   
@@ -56,6 +58,8 @@ Civiccommons::Application.routes.draw do
     resources   :regions
     resources   :people do
       get 'proxies', :on => :collection
+      put 'lock_access', :on => :member
+      put 'unlock_access', :on => :member
     end
     root        :to => "dashboard#show"
   end

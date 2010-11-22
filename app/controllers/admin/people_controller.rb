@@ -44,6 +44,14 @@ class Admin::PeopleController < Admin::DashboardController
     end
   end
 
+  def lock_access
+    toggle_lock(:lock)
+  end
+
+  def unlock_access
+    toggle_lock(:unlock)
+  end
+
   #GET admin/people/1
   def show
     @person = Person.find(params[:id])
@@ -56,6 +64,21 @@ class Admin::PeopleController < Admin::DashboardController
     respond_to do |format|
       format.html { redirect_to(admin_people_path) }
       format.json { redirect_to (admin_people_path)}
+    end
+  end
+
+  protected
+
+  # Locks or unlocks a person's account which will disable login access
+  # action = either :lock or :unlock
+  def toggle_lock(action)
+    @person = Person.find(params[:id])
+    @person.send("#{action}_access!")
+    flash[:notice] = "Successfully #{action}ed #{@person.name}"
+    if params[:redirect_to]
+      redirect_to :action => params[:redirect_to]
+    else
+      redirect_to admin_people_path
     end
   end
 

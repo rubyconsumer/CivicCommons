@@ -5,7 +5,6 @@
     = javascript_include_tag 'vendor/jquery-1.4.4.min'
     = javascript_include_tag 'vendor/jquery-ui-1.8.2.custom.min'
     = javascript_include_tag 'vendor/jquery-ui-timepicker-addon-0.5.min'
-    = javascript_include_tag 'jquery.xdomainajax.js'
     = javascript_include_tag 'vendor/placeholder-1.0.1.min'
     = javascript_include_tag 'vendor/modernizr-1.5.min'
     = javascript_include_tag 'lib/rails'
@@ -37,6 +36,30 @@
 
       });
 
+    :javascript
+
+      var url = '#{append_pa_authtoken(polls_path(:silent=> true))}'
+
+      $(document).ready(function(){
+        $("#poll_module").load(url, setupPollFormHandler);
+      });
+
+      function setupPollFormHandler(response, status, xhr){
+        $("#poll_module form").submit(function(event) {
+          event.preventDefault();
+
+          var selected_val = $(this).find('input[name=vote]:checked').val();
+          if(selected_val != '') {
+            //post data only if a value is selected
+            $.post(url, $(this).serialize(), function(response, status, xhr){
+              $("#poll_module").load(url, setupPollFormHandler);
+            });
+          }
+          return false;
+        });
+      }
+      
+
       /* Google Analytics */
       var _gaq = _gaq || [];
       _gaq.push(['_setAccount', 'UA-19685339-1']);
@@ -52,6 +75,10 @@
     = csrf_meta_tag
 
   %body
+    :plain
+      <!--[if lte IE 6]>
+        <div class="global-warning">You are using a browser which isn't supported.  Try using <a href="http://www.firefox.com">Firefox</a>, <a href="http://www.apple.com/safari">Safari</a> or <a href="http://www.google.com/chrome">Chrome</a>.</div>
+      <![endif]-->
     #header-wrapper
       #header
         %a#logo{:href=>'/', :title => "Civic Commons"} Civic Commons
@@ -63,9 +90,9 @@
                 %h4
                   %a 
                     = text_profile(current_person).html_safe
-                %p
+                %p{:style=>'margin-bottom: 0;'}
                   = link_to_settings(current_person).html_safe
-                  |
+                  %br 
                   = link_to "Logout", destroy_person_session_path, :class => 'user-link'
           - else
             #login-status.signed-out
