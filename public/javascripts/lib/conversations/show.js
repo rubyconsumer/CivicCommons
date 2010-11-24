@@ -50,7 +50,7 @@ jQuery(function ($) {
       var form = this;
       form
         .maskOnSubmit(tabStrip)
-        .bind("ajax:before", function(){
+        .bind("submit", function(){
           $(this).find('input[placeholder], textarea[placeholder]').each( function() {
             $this = $(this);
             if( $this.val() == $this.attr('placeholder') ){
@@ -272,7 +272,7 @@ jQuery(function ($) {
     
     resizeColorbox = function(){
       $.colorbox.resize({
-        innerHeight: $('#cboxLoadedContent').children().first().outerHeight() + 20
+        innerHeight: $('#cboxLoadedContent').children().first().outerHeight() + 30
       });
     }
     
@@ -335,7 +335,7 @@ jQuery(function ($) {
           transition: 'fade', // needed to fix colorbox bug with jquery 1.4.4
           href: $this.attr('href'),
           width: '600px',
-          height: '330px',
+          height: '340px',
           onComplete: function(){
             var clicked = $this,
                 divId = $(clicked).attr('href').match(/div_id=([^&]+)/)[1],
