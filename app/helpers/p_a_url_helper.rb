@@ -6,7 +6,8 @@ module PAUrlHelper
   def pa_new_issue_contribution_url(person, issue)
     pa_build_post_url("Contribution",
                       :issue_id => issue.id,
-                      :person_id => person.id)
+                      :person_id => person.id,
+                      :title => issue.name)
   end
 
   def pa_new_conversation_contribution_url(person, conversation_id,
