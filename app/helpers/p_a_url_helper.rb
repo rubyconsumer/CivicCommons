@@ -13,7 +13,8 @@ module PAUrlHelper
                                            parent_contribution_id)
     pa_build_post_url("Contribution", :person_id => person.id,
                       :conversation_id => conversation_id,
-                      :parent_contribution_id => parent_contribution_id)
+                      :parent_contribution_id => parent_contribution_id,
+                      :title => Conversation.find(conversation_id).title)
   end
 
   protected
