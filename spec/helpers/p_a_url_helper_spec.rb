@@ -36,6 +36,7 @@ describe PAUrlHelper do
     before(:each) do
       helper.stub!(:pa_authtoken).and_return("&authToken=42")
       @person = Factory.create(:normal_person)
+      conversation = Factory.create(:conversation, :id => 2)
 
       @contribution_id = 12
       @conversation_id = 2
