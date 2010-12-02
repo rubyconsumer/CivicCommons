@@ -22,7 +22,6 @@ class Person < ActiveRecord::Base
   has_many :ratings
   has_many :subscriptions
   has_and_belongs_to_many :conversations, :join_table => 'conversations_guides', :foreign_key => :guide_id
-  has_and_belongs_to_many :events, :join_table => 'events_guides', :foreign_key => :guide_id
 
   has_many :contributed_conversations, :through => :contributions, :source => :conversation, :uniq => true
   has_many :contributed_issues, :through => :contributions, :source => :issue, :uniq => true

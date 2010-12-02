@@ -11,9 +11,6 @@ describe TopItem, "when retrieving the top items by date" do
     @seven_day_issue = Factory.create(:issue, {:conversations=>[@seven_day_conversation], :created_at=>(Time.now - 7.days)})
     @three_day_issue = Factory.create(:issue, {:conversations=>[@three_day_conversation], :created_at=>(Time.now - 3.days)})
     @today_issue = Factory.create(:issue, {:conversations=>[@today_conversation], :created_at=>Time.now})
-    @seven_day_event = Factory.create(:event, {:conversations=>[@seven_day_conversation], :created_at=>(Time.now - 7.days)})
-    @three_day_event = Factory.create(:event, {:conversations=>[@three_day_conversation], :created_at=>(Time.now - 3.days)})
-    @today_event = Factory.create(:event, {:conversations=>[@today_conversation], :created_at=>Time.now})
   end
   
   it "should return the number passed in" do
@@ -34,11 +31,6 @@ describe TopItem, "when retrieving the top items by date" do
     items.include?(@today_conversation).should == true
     items.include?(@today_contribution).should == true
     items.include?(@today_issue).should == true
-    items.include?(@today_event).should == true
-    
-    # old_top_items.each do |oti|                     # <= Please don't do stuff like this. I'm leaving this in here for educational purposes. You can't do this, because 4 items all have the same created_at timestamp
-    #   items.include?(oti.item).should == false      #     and MySQL is not consistent about which 2 of the 4 latest items will be included in TopItems.newest_items. This is not a bug, just a trivial and unrealistic
-    # end                                             #     test that there is no reason to have a spec for.
   end  
   
 end
@@ -55,11 +47,6 @@ describe TopItem, "when retrieving the top items by rating" do
     @one_rating_issue = Factory.create(:issue, {:recent_rating=>1})
     Issue.stub(:get_top_rated).and_return([@ten_rating_issue, @five_rating_issue, @one_rating_issue])
     
-    @ten_rating_event = Factory.create(:event, {:recent_rating=>10})
-    @five_rating_event = Factory.create(:event, {:recent_rating=>5})    
-    @one_rating_event = Factory.create(:event, {:recent_rating=>1})
-    Event.stub(:get_top_rated).and_return([@ten_rating_event, @five_rating_event, @one_rating_event])
-
     @ten_rating_contribution = Factory.create(:contribution, {:recent_rating=>10})
     @five_rating_contribution = Factory.create(:contribution, {:recent_rating=>5})    
     @one_rating_contribution = Factory.create(:contribution, {:recent_rating=>1})
@@ -103,11 +90,6 @@ describe TopItem, "when retrieving the top items by number of visits" do
     @five_visit_issue = Factory.create(:issue, {:recent_visits=>5})    
     @one_visit_issue = Factory.create(:issue, {:recent_visits=>1})
     Issue.stub(:get_top_visited).and_return([@ten_visit_issue, @five_visit_issue, @one_visit_issue])
-    
-    @ten_visit_event = Factory.create(:event, {:recent_visits=>10})
-    @five_visit_event = Factory.create(:event, {:recent_visits=>5})    
-    @one_visit_event = Factory.create(:event, {:recent_visits=>1})
-    Event.stub(:get_top_visited).and_return([@ten_visit_event, @five_visit_event, @one_visit_event])
   end
   
   it "should merge all visitable types" do
@@ -117,7 +99,6 @@ describe TopItem, "when retrieving the top items by number of visits" do
     items.include?(@ten_visit_conversation).should == true
     items.include?(@ten_visit_contribution).should == true
     items.include?(@ten_visit_issue).should == true
-    items.include?(@ten_visit_event).should == true        
   end  
   
   it "should return the number passed in" do
