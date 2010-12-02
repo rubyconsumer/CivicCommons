@@ -48,12 +48,7 @@ class Person < ActiveRecord::Base
       joins(:conversations => :issues).where(['issue_id = ?',issue.id]).select('DISTINCT(people.id),people.*') if issue
     } 
 
-  # Stubbed out. We will need ot distinguish between a person and an org
-  scope(:exclude_people, :conditions => {:organization => true})
-  scope(:exclude_organizations, :conditions => {:organization => false})
-  
   scope :proxy_accounts, where(:proxy => true)
-
 
   before_create :check_and_populate_invite, :unless => :skip_invite
   after_create :create_shadow_account, :unless => :skip_shadow_account
@@ -82,7 +77,7 @@ class Person < ActiveRecord::Base
   def create_shadow_account
     begin
       Rails.logger.info("Creating shadow account for user with email #{email}")
-      if self.organization_name.blank?
+      self.organization_name.blank?
         pa_person = PeopleAggregator::Person.create(id:                         id,
                                                     firstName:                  first_name,
                                                     lastName:                   last_name,
@@ -99,26 +94,7 @@ class Person < ActiveRecord::Base
                                                     profileAvatarSmallHeight:   avatar_width_for_style(:medium),
                                                     profileAvatarSmallURL:      avatar_url_without_timestamp(:medium))
 
-      else
-        Rails.logger.info("Creating group named #{organization_name} for shadow account #{email}")
-        pa_person = PeopleAggregator::Organization.create(id:                         id,
-                                                          firstName:                  first_name,
-                                                          lastName:                   last_name,
-                                                          login:                      email,
-                                                          password:                   encrypted_password,
-                                                          email:                      email,
-                                                          profilePictureWidth:        avatar_width_for_style(:large),
-                                                          profilePictureHeight:       avatar_height_for_style(:large),
-                                                          profilePictureURL:          avatar_url_without_timestamp(:large),
-                                                          profileAvatarWidth:         avatar_width_for_style(:standard),
-                                                          profileAvatarHeight:        avatar_height_for_style(:standard),
-                                                          profileAvatarURL:           avatar_url_without_timestamp(:standard),
-                                                          profileAvatarSmallWidth:    avatar_width_for_style(:medium),
-                                                          profileAvatarSmallHeight:   avatar_width_for_style(:medium),
-                                                          profileAvatarSmallURL:      avatar_url_without_timestamp(:medium),
-                                                          groupName:                  organization_name)
-
-      end
+      
     rescue PeopleAggregator::Error => e
       errors.add(:person, e.message)
       raise ActiveRecord::RecordNotSaved
