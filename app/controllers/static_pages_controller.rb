@@ -22,4 +22,8 @@ class StaticPagesController < ApplicationController
 
   def contact
   end
+
+  def poster
+    render :layout => 'poster'
+  end
 end
