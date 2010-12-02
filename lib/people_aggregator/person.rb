@@ -35,7 +35,7 @@ class PeopleAggregator::Person < PeopleAggregator::Account
 
 
   def destroy
-    @attrs.merge!(adminPassword: Civiccommons::Peopleaggregator.admin_password)
+    @attrs.merge!(adminPassword: Civiccommons::PeopleAggregator.admin_password)
     r = self.class.post('/peopleaggregator/deleteUser', body: { adminPassword: @attrs[:adminPassword],
                                                login: self.login})
 
