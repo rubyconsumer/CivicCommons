@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
-[Event, Contribution, Issue, Conversation].each do |model_type|
+[Contribution, Issue, Conversation].each do |model_type|
   describe model_type, "Should have the required columns for Visitable" do
     it "has total_visits" do
       model_type.column_names.should include 'total_visits'
