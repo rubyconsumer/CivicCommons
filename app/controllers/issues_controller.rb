@@ -26,8 +26,7 @@ class IssuesController < ApplicationController
     @latest_conversations = @issue.conversations.latest_updated.limit(3)
     all_conversations_on_issue = @issue.conversations.latest_updated
     @conversations = all_conversations_on_issue.paginate(:page => params[:page], :per_page => 6)
-    @people = @issue.participants.exclude_organizations
-    @organizations = @issue.participants.exclude_people
+    @people = @issue.participants
     @written_contributions = @issue.written_contributions.most_recent
     @conversation_comments = @issue.conversation_comments.most_recent
     @suggested_actions = @issue.suggested_actions.most_recent
