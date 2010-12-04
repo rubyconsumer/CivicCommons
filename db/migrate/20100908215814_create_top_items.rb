@@ -9,7 +9,7 @@ class CreateTopItems < ActiveRecord::Migration
     
     items = []
     
-    [Conversation,Contribution,Event,Issue].collect{ |o| items = items | o.all }
+    [Conversation,Contribution,Issue].collect{ |o| items = items | o.all }
     
     items.sort_by{ |i| i.created_at }.each do |item|
       TopItem.create(:item => item, :item_created_at => item.created_at, :recent_rating => (item.calculate_recent_rating if item.respond_to?(:ratings)), :recent_visits => (item.calculate_recent_visits if item.respond_to?(:visits)))
