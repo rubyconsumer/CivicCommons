@@ -12,12 +12,12 @@ class Person < ActiveRecord::Base
   attr_accessor :skip_shadow_account, :organization_name, :send_welcome, :skip_invite
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :name, :first_name, :last_name, :email, :password, :password_confirmation, :top, :zip_code, :admin, :validated, 
+  attr_accessible :name, :first_name, :last_name, :email, :password, :password_confirmation, :top, :zip_code, :admin, :validated,
                   :avatar, :organization_name, :invite, :invite_attributes
 
   has_one :invite
   accepts_nested_attributes_for :invite
-  
+
   has_many :contributions, :foreign_key => 'owner', :uniq => true
   has_many :ratings
   has_many :subscriptions
@@ -42,11 +42,11 @@ class Person < ActiveRecord::Base
     :s3_credentials => S3Config.credential_file,
     :default_url => '/images/avatar_70.gif',
     :path => ":attachment/:id/:style/:filename"
-  
+
 
   scope :participants_of_issue, lambda{ |issue|
       joins(:conversations => :issues).where(['issue_id = ?',issue.id]).select('DISTINCT(people.id),people.*') if issue
-    } 
+    }
 
   scope :proxy_accounts, where(:proxy => true)
 
@@ -56,7 +56,7 @@ class Person < ActiveRecord::Base
   before_save :check_to_send_welcome_email
   after_save :send_welcome_email, :if => :send_welcome?
   after_destroy :delete_shadow_account, :unless => :skip_shadow_account
-  
+
   def check_to_send_welcome_email
     @send_welcome = true if confirmed_at_changed? && confirmed_at_was.blank? && !confirmed_at.blank?
   end
@@ -69,7 +69,7 @@ class Person < ActiveRecord::Base
       raise ActiveRecord::RecordNotSaved
     end
   end
-  
+
   def validate_invite_token(token)
     token =~ /([a-zA-Z]{3})([0-9]{4})/i
   end
@@ -94,7 +94,7 @@ class Person < ActiveRecord::Base
                                                     profileAvatarSmallHeight:   avatar_width_for_style(:medium),
                                                     profileAvatarSmallURL:      avatar_url_without_timestamp(:medium))
 
-      
+
     rescue PeopleAggregator::Error => e
       errors.add(:person, e.message)
       raise ActiveRecord::RecordNotSaved
@@ -118,7 +118,7 @@ class Person < ActiveRecord::Base
   #   :encrypted_password => "XXXXXXXXXXXX",
   #   :password_salt => "$2a$10$95c0ac175c8566911bb039$"
   # }
-  # 
+  #
   def api_update(params)
     params ||= {}
 
@@ -139,7 +139,7 @@ class Person < ActiveRecord::Base
       if url = avatar_params[:url]
         Rails.logger.info("New avatar url for Person #{self.id}\n #{url}")
       end
-      
+
       # loop through all the attributes required by paperclip to circumvent
       # requesting the file from AWS. Slight hack around the way paper clip works
       required_attrs = [:file_name, :content_type, :file_size]
@@ -151,14 +151,14 @@ class Person < ActiveRecord::Base
 
     update_attributes(params)
   end
-  
+
   def reset_password!(new_password, new_password_confirmation)
     if super
       PeopleAggregator::Account.update(self.people_aggregator_id,
                                        password: self.encrypted_password)
     end
   end
-  
+
   def avatar_width_for_style(style)
     geometry_for_style(style, :avatar).width.to_i
   end
@@ -188,7 +188,7 @@ class Person < ActiveRecord::Base
   def notify_civic_commons
     Notifier.new_registration_notification(self).deliver
   end
-  
+
   def send_welcome?
     @send_welcome
   end
@@ -221,11 +221,10 @@ class Person < ActiveRecord::Base
     self.proxy = true
     @skip_invite = true
   end
-  
+
   def subscriptions_include?(subscribable)
     subscriptions.map(&:subscribable).include?(subscribable)
   end
-
 
   def avatar_url_without_timestamp(style='')
     self.avatar.url(style).gsub(/\?\d+$/, '')

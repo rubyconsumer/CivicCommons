@@ -2,7 +2,7 @@ class Api::ContributedConversations
 
   def self.for_person_by_people_aggregator_id(people_aggregator_id, request)
     person = Person.find_by_people_aggregator_id(people_aggregator_id)
-    
+
     if person
       for_person(person, request)
     else
