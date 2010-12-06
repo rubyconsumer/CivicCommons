@@ -38,7 +38,7 @@
 
     :javascript
 
-      var url = '#{append_pa_authtoken(polls_path(:silent=> true))}'
+      var url = '#{append_pa_authtoken(polls_path(:silent=> true))}';
 
       $(document).ready(function(){
         $("#poll_module").load(url, setupPollFormHandler);
