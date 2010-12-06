@@ -1,10 +1,10 @@
 class ConversationsController < ApplicationController
   before_filter :verify_admin, :only=>[:new, :create, :edit, :update, :destroy]
-  
+
   # GET /conversations
   # GET /conversations.xml
   def index
-    @conversations = Conversation.paginate(:page => params[:page], :per_page => 12)
+    @conversations = Conversation.latest_updated.paginate(:page => params[:page], :per_page => 12)
 
     @main_article = Article.conversation_main_article.first
     @sub_articles = Article.conversation_sub_articles.limit(3)
@@ -17,7 +17,7 @@ class ConversationsController < ApplicationController
 
   # GET /conversations/1
   # GET /conversations/1.xml
-  def show    
+  def show
     @conversation = Conversation.includes(:guides, :issues).find(params[:id])
     @conversation.visit!((current_person.nil? ? nil : current_person.id))
     @top_level_contributions = TopLevelContribution.where(:conversation_id => @conversation.id).includes([:person]).order('created_at ASC')
@@ -26,55 +26,55 @@ class ConversationsController < ApplicationController
     @conversation_contributions = Contribution.not_top_level.confirmed.without_parent.where(:conversation_id => @conversation.id).includes([:person]).order('created_at ASC')
     @conversation_contributions = @conversation_contributions.with_user_rating(current_person) if current_person
     #@contributions = Contribution.confirmed.with_user_rating(current_person).descendants_of(@conversation_contributions).includes([:person])
-    
+
     @top_level_contribution = Contribution.new # for conversation comment form
     @tlc_participants = @top_level_contributions.collect{ |tlc| tlc.owner }
 
     @latest_contribution = @conversation.confirmed_contributions.most_recent.first
-    
+
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @conversation }
     end
   end
-  
+
   def dialog
     @conversation = Conversation.includes(:guides, :issues).find(params[:id])
     @conversation.visit!((current_person.nil? ? nil : current_person.id))
     @conversation_contributions = Contribution.confirmed.not_top_level.without_parent.with_user_rating(current_person).where(:conversation_id => @conversation.id).includes([:person]).order('created_at ASC')
     @contributions = Contribution.confirmed.with_user_rating(current_person).descendants_of(@conversation_contributions).includes([:person])
-    
+
     @contribution = Contribution.new # for conversation comment form
-    
+
     @latest_contribution = @conversation.confirmed_contributions.most_recent.first
-    
+
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @conversation }
     end
   end
-  
+
   def node_conversation
     @top_level_contribution = Contribution.find(params[:id])
     @contributions = @top_level_contribution.children.confirmed.includes(:person)
     @contributions = @contributions.with_user_rating(current_person) if current_person
     @top_level_contribution.visit!((current_person.nil? ? nil : current_person.id))
     @contribution = Contribution.new(:parent_id => @top_level_contribution.id, :conversation_id => @top_level_contribution.conversation_id)
-    
+
     respond_to do |format|
       format.js { render :partial => "conversations/node_conversation", :layout => false}
       format.html { render :partial => "conversations/node_conversation", :layout => false}
       format.xml  { render :xml => @conversation }
     end
   end
-  
+
   def edit_node_contribution
     @contribution = Contribution.find(params[:contribution_id])
     respond_to do |format|
       format.js{ render(:partial => 'conversations/new_contribution_form', :locals => {:div_id => params[:div_id], :type => @contribution.type.underscore.to_sym}, :layout => false) }
     end
   end
-  
+
   def update_node_contribution
     @contribution = Contribution.with_user_rating(current_person).find(params[:contribution][:id])
     respond_to do |format|
@@ -85,7 +85,7 @@ class ConversationsController < ApplicationController
       end
     end
   end
-  
+
   def new_node_contribution
     @contribution = Contribution.find_or_new_unconfirmed(params, Person.first)#current_person)
     respond_to do |format|
@@ -93,7 +93,7 @@ class ConversationsController < ApplicationController
       format.html { render(:partial => "conversations/tabbed_post_box", :locals => {:div_id => params[:div_id], :layout => false}) }
     end
   end
-  
+
   def preview_node_contribution
     @contribution = Contribution.update_or_create_node_level_contribution(params[:contribution], current_person)
     respond_to do |format|
@@ -106,7 +106,7 @@ class ConversationsController < ApplicationController
       end
     end
   end
-  
+
   #TODO: consider moving this to its own controller?
   def confirm_node_contribution
     @contribution = Contribution.unconfirmed.find_by_id_and_owner(params[:contribution][:id], current_person.id)
@@ -144,7 +144,7 @@ class ConversationsController < ApplicationController
   # POST /conversations
   # POST /conversations.xml
   def create
-    ActiveRecord::Base.transaction do 
+    ActiveRecord::Base.transaction do
       @conversation = Conversation.new(params[:conversation])
       #TODO: Fix this conversation issues creation since old conversation.issues= method has been destroyed
       #NOTE: Issues were previously defined as Conversation has_many Issues, but this is wrong, should be habtm
@@ -180,11 +180,11 @@ class ConversationsController < ApplicationController
       end
     end
   end
-  
+
   def rate_contribution
     @contribution = Contribution.find(params[:contribution][:id])
     rating = params[:contribution][:rating]
-    
+
     respond_to do |format|
       if @contribution.rate!(rating.to_i, current_person)
         format.js { render(:partial => 'conversations/contributions/rating', :locals => {:contribution => @contribution}, :layout => false, :status => :created) }

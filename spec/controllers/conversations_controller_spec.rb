@@ -7,17 +7,24 @@ describe ConversationsController do
   end
 
   describe "GET index" do
-    it "assigns all conversations as @conversations" do
-      Conversation.stub(:paginate) { [mock_conversation] }
-      get :index
-      assigns(:conversations).should eq([mock_conversation])
+
+    before do
+      @old_conversation = Factory.create(:conversation, {:updated_at => (Time.now - 30.seconds)})
+      @new_conversation = Factory.create(:conversation, {:updated_at => (Time.now - 2.seconds)})
     end
+
+    it "assigns all conversations as @conversations" do
+      get :index
+      assigns(:conversations).first.should == @new_conversation
+      assigns(:conversations).last.should  == @old_conversation
+    end
+
   end
 
   describe "GET show" do
-    before(:each) do 
+    before(:each) do
       @person = Factory.create(:normal_person)
-      @controller.stub(:current_person).and_return(@person)      
+      @controller.stub(:current_person).and_return(@person)
     end
     it "assigns the requested conversation as @conversation" do
       pending
@@ -37,7 +44,7 @@ describe ConversationsController do
     before(:each) do
       @admin_person = Factory.create(:admin_person)
       @controller.stub(:current_person).and_return(@admin_person)
-    end    
+    end
     it "assigns a new conversation as @conversation" do
       Conversation.stub(:new) { mock_conversation }
       get :new
@@ -49,7 +56,7 @@ describe ConversationsController do
     before(:each) do
       @admin_person = Factory.create(:admin_person)
       @controller.stub(:current_person).and_return(@admin_person)
-    end    
+    end
     it "assigns the requested conversation as @conversation" do
       Conversation.stub(:find).with("37") { mock_conversation }
       get :edit, :id => "37"
@@ -61,7 +68,7 @@ describe ConversationsController do
     before(:each) do
       @admin_person = Factory.create(:admin_person)
       @controller.stub(:current_person).and_return(@admin_person)
-    end    
+    end
     describe "with valid params" do
       it "adds selected issues to the conversation" do
         mock_issue = mock_model(Issue)
@@ -71,7 +78,7 @@ describe ConversationsController do
 
         post :create, {:conversation => {'these' => 'params'}, :issue_ids=>["1"]}
       end
-      
+
       it "set the start time as the current time" do
         current_time = Time.now
         Time.stub!(:now).and_return(current_time)
@@ -81,9 +88,9 @@ describe ConversationsController do
 
         post :create, {:conversation => {'these' => 'params'}}
       end
-      
-      
-      it "assigns a newly created conversation as @conversation" do        
+
+
+      it "assigns a newly created conversation as @conversation" do
         Conversation.stub(:new).with({'these' => 'params'}) { mock_conversation(:save => true) }
         post :create, :conversation => {'these' => 'params'}
         assigns(:conversation).should be(mock_conversation)
@@ -111,13 +118,13 @@ describe ConversationsController do
       end
     end
   end
-  
+
   # Not sure why this is here, there is not suppose to be explicit conversation rating, only aggregate from contributions
   #describe "POST rate" do
   #  before(:each) do
   #    @person = Factory.create(:normal_person)
   #    @controller.stub(:current_person).and_return(@person)
-  #  end    
+  #  end
   #  it "should return the new conversation rating" do
   #    Conversation.stub(:find).with(1) { mock_conversation }
   #    mock_conversation.stub(:rate!)
@@ -125,14 +132,14 @@ describe ConversationsController do
   #    post :rate, {:conversation_id=>1, :rating=>1}
   #    response.should be_success
   #    response.body.should == "5"
-  #  end    
+  #  end
   #end
 
   describe "PUT update" do
     before(:each) do
       @admin_person = Factory.create(:admin_person)
       @controller.stub(:current_person).and_return(@admin_person)
-    end    
+    end
     describe "with valid params" do
       it "updates the requested conversation" do
         Conversation.should_receive(:find).with("37") { mock_conversation }
@@ -173,7 +180,7 @@ describe ConversationsController do
     before(:each) do
       @admin_person = Factory.create(:admin_person)
       @controller.stub(:current_person).and_return(@admin_person)
-    end        
+    end
     it "destroys the requested conversation" do
       Conversation.should_receive(:find).with("37") { mock_conversation }
       mock_conversation.should_receive(:destroy)
@@ -186,5 +193,5 @@ describe ConversationsController do
       response.should redirect_to(conversations_url)
     end
   end
-  
+
 end
