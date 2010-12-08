@@ -19,7 +19,7 @@
           %div{:class => "convo-utility #{contribution.descendants_count > 0 ? 'response' : 'no-response'}"}
             %p.respond-link
               - if contribution.descendants_count > 0
-                = link_to(pluralize(contribution.descendants_count,'Response'), {:action => "node_conversation", :id => contribution.id, :div_id => "contribution-#{contribution.id}"}, :class => "text conversation-responses", :id => "action-link-#{contribution.id}", :title => "View the conversation", 'data-target' => "#thread-div-#{contribution.id}", :remote => true)
+                = link_to(pluralize(contribution.descendants_count,'Response'), {:action => "node_conversation", :id => contribution.id, :div_id => "contribution-#{contribution.id}"}, :class => "text conversation-responses", :id => "action-link-#{contribution.id}", :title => "View the conversation", 'data-target' => "#thread-div-#{contribution.id}", :remote => true, 'data-type' => 'html')
               - else
                 %span.conversation-responses No Responses
             - if current_person

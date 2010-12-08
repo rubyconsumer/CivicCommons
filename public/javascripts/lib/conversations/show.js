@@ -141,6 +141,8 @@ jQuery(function ($) {
       applyEasyTabsToTabStrip: function() {
         var $container = this;
         
+        if ( $container.length == 0 ) { return this; }
+        
         $container
           .resizeResponseInputs()
           .easytabs({
@@ -290,9 +292,6 @@ jQuery(function ($) {
   	    // turn button into a toggle to hide/show what gets loaded so that subsequent clicks to redo the ajax call
   	    $(clicked).click(actionToggle(clicked,target,"Hide responses"));
         $(target).hide().html(xhr.responseText).slideDown().find('.rate-form-container').hide(); // insert content
-        $(tabStrip).applyEasyTabsToTabStrip();
-
-        $(form).bindContributionFormEvents(clicked,tabStrip);
       })
       .liveAlertOnAjaxFailure();
       

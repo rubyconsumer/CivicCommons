@@ -10,7 +10,6 @@
     = javascript_include_tag 'lib/rails'
     = javascript_include_tag 'lib/master'
     = javascript_include_tag 'lib/chosen_issues'
-    = javascript_include_tag 'lib/youtube'
     = javascript_include_tag 'vendor/jquery.colorbox-min'
     = javascript_include_tag 'vendor/jquery.form'
     = javascript_include_tag 'vendor/jquery.remotipart'
@@ -38,7 +37,7 @@
 
     :javascript
 
-      var url = '#{append_pa_authtoken(polls_path(:silent=> true))}'
+      var url = '#{append_pa_authtoken(polls_path(:silent=> true))}';
 
       $(document).ready(function(){
         $("#poll_module").load(url, setupPollFormHandler);
