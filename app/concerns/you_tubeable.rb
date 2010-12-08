@@ -13,6 +13,9 @@ module YouTubeable
   
   def embed_youtube_video
     video_id = self.url.gsub(YOUTUBE_REGEX, '\1')
+    if self.respond_to?(:youtube_id)
+      self.youtube_id = video_id
+    end
     self.embed_target = embed_code_for_video(video_id)
   end
 
