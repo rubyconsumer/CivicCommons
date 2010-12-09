@@ -80,7 +80,7 @@ class IssuesController < ApplicationController
       create_node_level_contribution(contribution_params, current_person)
 
     respond_to do |format|
-      format.js do
+      format.json do
         if @contribution.save
           render :json => @contribution, :status => :created
         else
