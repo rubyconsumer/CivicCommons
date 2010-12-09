@@ -152,7 +152,7 @@ jQuery(function ($) {
             defaultTab: '.default-tab',
             animationSpeed: 250,
             updateHash: false
-          })  
+          })
           .live("easytabs:after", function(){
             resizeColorbox();
           });
