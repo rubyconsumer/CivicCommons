@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101119034557) do
+ActiveRecord::Schema.define(:version => 20101208000430) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(:version => 20101119034557) do
     t.boolean  "issue_article",                        :default => false
     t.boolean  "conversation_article",                 :default => false
     t.string   "embed_target",         :limit => 1000
+    t.string   "youtube_id"
   end
 
   create_table "contributions", :force => true do |t|
@@ -122,12 +123,6 @@ ActiveRecord::Schema.define(:version => 20101119034557) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "creator_id"
-    t.integer  "total_visits"
-    t.integer  "recent_visits"
-    t.integer  "total_rating"
-    t.integer  "recent_rating"
-    t.datetime "last_visit_date"
-    t.datetime "last_rating_date"
   end
 
   create_table "events_guides", :id => false, :force => true do |t|

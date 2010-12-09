@@ -3,13 +3,13 @@ require 'spec_helper'
 describe Conversation do
   describe "when retrieving all of the issues associated with a conversation" do
     before(:each) do
-      @normal_person = Factory.create(:normal_person)      
+      @normal_person = Factory.create(:normal_person)
     end
     it "should return issue" do
       conversation = Factory.create(:conversation)
       issue = Factory.create(:issue, :conversations=>[conversation])
-      
-      conversation.issues.count.should == 1      
+
+      conversation.issues.count.should == 1
       conversation.issues[0].should == issue
     end
   end
@@ -21,9 +21,9 @@ describe Conversation do
       @conversation = Factory.create(:conversation)
     end
 
-  end  
+  end
   context "about an issue" do
-    
+
     it "should sort by the latest updated conversations" do
       issue = Factory.create(:issue, :name => 'A first issue')
       conversation1 = Factory.create(:conversation, {:issues => [issue], :updated_at => (Time.now - 3.seconds)})
@@ -34,5 +34,5 @@ describe Conversation do
       issue.conversations.latest_updated.should == [conversation2,conversation3,conversation1]
     end
   end
-  
+
 end

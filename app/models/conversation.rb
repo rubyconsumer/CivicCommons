@@ -5,11 +5,11 @@ class Conversation < ActiveRecord::Base
   include Subscribable
   include Regionable
   include GeometryForStyle
-  
+
   has_many :contributions
   has_many(:confirmed_contributions, :class_name => 'Contribution',
            :conditions => ['confirmed = ?', true])
- 
+
   has_many :top_level_contributions, :dependent => :destroy
   has_many :subscriptions, :as => :subscribable
   accepts_nested_attributes_for :top_level_contributions, :allow_destroy => true
@@ -22,7 +22,7 @@ class Conversation < ActiveRecord::Base
   has_and_belongs_to_many :guides, :class_name => 'Person', :join_table => 'conversations_guides', :association_foreign_key => :guide_id
   has_and_belongs_to_many :issues
   has_and_belongs_to_many :events
-  
+
   has_attached_file :image,
     :styles => {
        :normal => "480x300#",
@@ -33,7 +33,7 @@ class Conversation < ActiveRecord::Base
     :default_url => '/images/convo_img_:style.gif'
 
   search_methods :containing_issue, :containing_guide
-  
+
   scope :latest_updated, :order => 'updated_at DESC'
 
   scope :containing_guide,
@@ -44,7 +44,7 @@ class Conversation < ActiveRecord::Base
      joins("inner join posts on conversations.id = posts.conversable_id inner join issues on posts.postable_id = issues.id").
       where("posts.postable_type = 'Issue'").
       where("lower(issues.name) like ?", "%" + target.downcase.strip + "%")}
-  
+
   # Return a comma-and-space-delimited list of the Issues
   # relevant to this Conversation, e.g., "Jobs, Sports, Religion"
   def issues_text
