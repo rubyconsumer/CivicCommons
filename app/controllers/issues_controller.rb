@@ -80,16 +80,13 @@ class IssuesController < ApplicationController
       create_node_level_contribution(contribution_params, current_person)
 
     respond_to do |format|
-      format.json do
-        if @contribution.save
-          render :json => @contribution, :status => :created
-        else
-          render :json => {:errors => @contribution.errors.full_messages }, :status => :unprocessable_entity
-        end
+      if @contribution.save
+        format.html { render :json => @contribution, :status => :created }
+      else
+        format.html { render :json => {:errors => @contribution.errors.full_messages }, :status => :unprocessable_entity }
       end
     end
   end
-  
 
   # PUT /issues/1
   # PUT /issues/1.xml

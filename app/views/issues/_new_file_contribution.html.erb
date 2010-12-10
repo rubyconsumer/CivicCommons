@@ -2,7 +2,7 @@
     :remote => true, :html => {:class => "general-aside contribution-form", :style => "display:none",
                                 :multipart => true,
                                 :id => "new-file-contribution",
-                                'data-type' => 'json'} do |f| %>
+                                'data-type' => 'html'} do |f| %>
   <div class='form-block'>
     <%= f.text_area(:content, :rows => 2, :placeholder => "Description of File") %>
     <%= f.file_field(:attachment) %>
