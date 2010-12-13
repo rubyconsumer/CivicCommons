@@ -123,6 +123,12 @@ ActiveRecord::Schema.define(:version => 20101208000430) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "creator_id"
+    t.integer  "total_visits"
+    t.integer  "recent_visits"
+    t.integer  "total_rating"
+    t.integer  "recent_rating"
+    t.datetime "last_visit_date"
+    t.datetime "last_rating_date"
   end
 
   create_table "events_guides", :id => false, :force => true do |t|

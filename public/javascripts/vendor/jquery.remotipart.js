@@ -5,17 +5,20 @@ jQuery(function ($) {
 	     */
 	    callRemotipart: function () {
 	        var el      = this,
-	            url     = el.attr('action');
+	            url     = el.attr('action'),
+              dataType = el.attr('data-type') || 'script';
 
 	        if (url === undefined) {
 	          throw "No URL specified for remote call (action must be present).";
 	        } else {
 	            if (el.triggerAndReturn('ajax:before')) {
-					if(url.substr(-3) != '.js') url += '.js'; //force rails to respond to respond to the request with :format = js
-	                el.data('jquery-form-submitted',true);
+                if(url.substr(-3) != '.js' && dataType == 'script') {
+                  url += '.js'; //force rails to respond to respond to the request with :format = js
+                  el.data('remotipart-submitted-js',true);
+                }
 	                el.ajaxSubmit({
 	                    url: url,
-	                    dataType: 'script',
+	                    dataType: dataType,
 	                    beforeSend: function (xhr) {
 	                        el.trigger('ajax:loading', xhr);
 	                    },

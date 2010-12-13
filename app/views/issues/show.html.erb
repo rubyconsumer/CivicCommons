@@ -5,8 +5,8 @@
 
     $(document).ready(function() {
       $('form.contribution-form').live("ajax:success", function(evt, data, status, xhr) {
-        var json = $.parseJSON(data); // throws error if data is not JSON
         try {
+          var json = $.parseJSON(data); // throws error if data is not JSON
           if("errors" in json) {return $(this).trigger('ajax:failure', xhr, status, data);} // only gets to here if JSON parsing was successful and has error key
         } catch(err) {  }
         location.reload();
