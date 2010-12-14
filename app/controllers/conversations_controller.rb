@@ -114,7 +114,7 @@ class ConversationsController < ApplicationController
     respond_to do |format|
       if @contribution.confirm!
         format.js   { render :partial => "conversations/contributions/threaded_contribution_template", :locals => {:contribution => @contribution}, :status => (params[:preview] ? :accepted : :created) }
-        format.html { redirect_to(@contribution.item, :notice => 'Contribution was successfully created.') }
+        format.html   { render :partial => "conversations/contributions/threaded_contribution_template", :locals => {:contribution => @contribution}, :status => (params[:preview] ? :accepted : :created) }
         format.xml  { render :xml => @contribution, :status => :created, :location => @contribution }
       else
         format.js   { render :json => @contribution.errors, :status => :unprocessable_entity }
