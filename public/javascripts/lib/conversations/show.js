@@ -72,7 +72,7 @@ jQuery(function ($) {
               divId = $(tabStrip).attr('id'),
               responseNode;
               
-          if( $(this).data('jquery-form-submitted') == true ) {
+          if( $(this).data('remotipart-submitted-js') == true ) {
             responseNode = $($("<div />").html(xhr.responseText).text()); // this is needed to properly unescape the HTML returned from doing the jquery.form plugin's ajaxSubmit for some reason
           } else {
             responseNode = $(xhr.responseText);            
@@ -84,7 +84,7 @@ jQuery(function ($) {
                 previewPane = $(this).closest('div').siblings('.contribution-preview');
             
             // bind these ajax handlers to preview form, also add reference to this form on the new preview form
-            previewPane.html(responseNode).children('form').bindContributionFormEvents(clicked,tabStrip).data('origForm',$(this));
+            previewPane.html(responseNode).find('form').bindContributionFormEvents(clicked,tabStrip).data('origForm',$(this));
             
             $(this).find('.validation-error').html(''); // clear any previous errors from form
             $(tabStrip).easytabs('select','li.preview-tab').find(".contribution-preview").find("a.cancel").click(function(e){
@@ -152,7 +152,7 @@ jQuery(function ($) {
             defaultTab: '.default-tab',
             animationSpeed: 250,
             updateHash: false
-          })  
+          })
           .live("easytabs:after", function(){
             resizeColorbox();
           });
@@ -316,7 +316,7 @@ jQuery(function ($) {
           $(form)
             .maskOnSubmit()
             .bind("ajax:success", function(evt, data, status, xhr){
-              if( $(this).data('jquery-form-submitted') == true ) {
+              if( $(this).data('remotipart-submitted-js') == true ) {
                 var responseNode = $($("<div />").html(xhr.responseText).text()); // this is needed to properly unescape the HTML returned from doing the jquery.form plugin's ajaxSubmit for some reason
               } else {
                 var responseNode = $(xhr.responseText);            
