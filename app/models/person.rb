@@ -2,6 +2,7 @@ class Person < ActiveRecord::Base
 
   include Regionable
   include GeometryForStyle
+  include Marketable
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable, and :timeoutable
@@ -236,7 +237,11 @@ class Person < ActiveRecord::Base
     end
   end
 
-
+  def subscribe_to_marketing_email
+    Rails.logger.info("~~~subscribe_to_marketing_email")
+    h = Hominid::Base.new({:api_key => Civiccommons::Config.mailer_api_token})
+    h.subscribe(Civiccommons::Config.mailer_list, email, {:FNAME => first_name, :LNAME => last_name}, {:email_type => 'html'})
+  end
 
   private
 
