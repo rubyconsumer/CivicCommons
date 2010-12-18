@@ -14,6 +14,10 @@ gem 'httparty'
 
 gem 'geokit'
 
+gem 'gibbon'
+gem 'hominid'
+gem 'delayed_job', ">= 2.1.2"
+
 gem 'hoptoad_notifier'
 
 group :development do

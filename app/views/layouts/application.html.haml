@@ -92,7 +92,7 @@
                   = link_to_settings(current_person).html_safe
                   %br 
                   = link_to "Logout", destroy_person_session_path, :class => 'user-link'
-                  %img(src="http://www.peeps.com/cc-login.php?authToken=1:1297529433:c5757ce55333d04a90b01327cea8dbfa35f67768")
+                  %img{:src=> "#{pa_link('cc-login.php')}"}
           - else
             #login-status.signed-out
               .offset-2
