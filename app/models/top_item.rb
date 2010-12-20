@@ -1,10 +1,56 @@
 class TopItem < ActiveRecord::Base
   belongs_to :item, :polymorphic => true
   belongs_to :person
+
+  ITEMS = [:contribution]
+  ITEMS.each do |assoc|
+    belongs_to assoc, :foreign_key => :item_id, :conditions => {:item_type => assoc.to_s.classify}
+  end
   
   before_create :set_item_created_at
   before_create :set_item_recent_rating, :if => :item_rateable?
   before_create :set_item_recent_visits, :if => :item_visitable?
+
+  def self.for(item, options={})
+    if item.is_a?(Hash)
+      item_type = item.keys[0]
+      item_id = item[item_type]
+    else
+      item_type = item
+      item_id = nil
+    end
+    item_column_id = "#{item_type}_id"
+
+    # for :conversation means:
+    # a) top_items[:item_type] or
+    # b) top_items[:item][:conversation_id] IS NOT NULL
+    #
+    # For :person means:
+    # item has person and person_id = :person_id
+    
+    # direct_items for (a)
+    direct_items = self.includes(:item).where(:item_type => item_type.to_s.classify)
+    direct_items.where(:item_id => item_id) if item_id
+
+    # associated_items for (b)
+    top_items = TopItem.arel_table
+    ITEMS.each do |item|
+      item_table = Arel::Table.new(item.to_s.pluralize)
+      top_items = top_items.
+        join(item_table).
+        on(
+           top_items[:item_id].eq( item_table[:id] ),
+           top_items[:item_type].eq( item.to_s.classify ),
+           item_table[item_column_id].not_eq( nil )
+          )
+      top_items = top_items.where( item_table[item_column_id].eq( item_id ) ) if item_id
+      top_items = top_items.where( options.collect{ |key,value| item_table[key].eq( value ) } )
+    end
+    associated_items = TopItem.find_by_sql( top_items.to_sql )
+
+    #p top_items.to_sql
+    return direct_items | associated_items
+  end
   
   def self.newest_items(limit=10)
     self.order("item_created_at DESC").limit(limit)
