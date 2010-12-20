@@ -152,8 +152,12 @@ describe TopItem, "when retrieving top items for specific polymorphic associatio
     items.should include(@conversation_question)
     items.should_not include(@conversation_comment)
   end
-  #it "returns all items for a specified person" do
-  #  result = TopItem.for(:person => @person.id)
+  it "returns all items for a specified person" do
+    result = TopItem.for(:person => @person.id)
+    items = result.collect{ |ti| ti.item }
 
-  #end
+    items.should include(@conversation_comment)
+    items.should include(@issue_comment)
+    items.should_not include(@conversation_question)
+  end
 end
