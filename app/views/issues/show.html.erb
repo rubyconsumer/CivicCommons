@@ -66,7 +66,7 @@
           -->
         </div>
 
-        <h3>Contributions</h3>
+      <h3>Share what's on your mind</h3>
         <ol class='contributions divided'>
           <% @written_contributions.each do |contribution| %>
           <% 
@@ -87,7 +87,7 @@
           <% end %>
         </ol>
         <% if person_signed_in? %>
-          <p><%= link_to("Write a contribution", pa_new_issue_contribution_url(current_person, @issue), :class => 'button') %> </p>
+          <p><%= link_to("Share what's on your mind", pa_new_issue_contribution_url(current_person, @issue), :class => 'button') %> </p>
         <% end %>
 
         <h3>Conversations about this issue:</h3>
