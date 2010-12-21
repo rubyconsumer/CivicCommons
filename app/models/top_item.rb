@@ -30,7 +30,7 @@ class TopItem < ActiveRecord::Base
 
     # associated_items for (b)
     top_items = TopItem.arel_table
-    TopItem.select(:item_type).group(:item_type).collect{ |ti| ti.item_type }.each do |item|
+    TopItem.select(:item_type).group(:item_type).collect(&:item_type).each do |item|
       # Unless item already included in direct_items
       unless item == for_item_type.to_s
         # If item has for_item as an association
@@ -58,7 +58,7 @@ class TopItem < ActiveRecord::Base
     #associated_items = TopItem.find_by_sql( top_items.to_sql )
     associated_items = ActiveRecord::Relation.new(self, top_items) & self.scoped
 
-    all_for_items = (direct_items | associated_items).sort_by{ |i| i.item_created_at }.reverse
+    all_for_items = (direct_items | associated_items).sort_by(&:item_created_at).reverse
     all_for_items = all_for_items.first( self.scoped.limit_value ) if self.scoped.limit_value
 
     #p top_items.to_sql
