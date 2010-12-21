@@ -120,7 +120,7 @@ describe TopItem, "when retrieving top items for specific polymorphic associatio
     @person = Factory.create(:normal_person)
     @conversation_comment = Factory.create(:contribution, :conversation => @conversation, :person => @person)
     @issue_comment = Factory.create(:issue_contribution, :issue => @issue, :person => @person)
-    @conversation_question = Factory.create(:question, {:content => "oh hai?", :override_confirmed => true})
+    @conversation_question = Factory.create(:question, {:content => "oh hai?", :override_confirmed => true, :created_at => 1.hour.ago})
   end
   it "returns direct top_items for specified type" do
     result = TopItem.for(:conversation)
@@ -159,5 +159,25 @@ describe TopItem, "when retrieving top items for specific polymorphic associatio
     items.should include(@conversation_comment)
     items.should include(@issue_comment)
     items.should_not include(@conversation_question)
+  end
+  it "is chainable from an Arel scope" do
+    result = []
+    lambda {
+      result = TopItem.limit(2).for(:conversation)
+    }.should_not raise_error
+    result.size.should == 2
+  end
+  it "allows Arel scopes to be chained to it" do
+    # Would need to include direct_items in same ActiveRecord::Relation
+    # as associated_items, so that a single Relation object could be
+    # returned from TopItem#for. However, for that to work, would need
+    # to use Arel's Where#or method, which doesn't work until Arel 2.0,
+    # so gem would need to be updated.
+    pending "Would need to upgrade to Arel 2.0 to implement this"
+    result = []
+    lambda {
+      result = TopItem.for(:conversation).limit(2)
+    }.should_not raise_error
+    result.size.should == 2
   end
 end
