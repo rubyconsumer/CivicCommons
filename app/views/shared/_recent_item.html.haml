@@ -1,0 +1,12 @@
+.recent_item
+  -if recent_item.person
+    %span.contribution-person-name
+      = recent_item.person.name
+  -if recent_item.content
+    = simple_format(truncate(recent_item.content, :length => 100, :separator => ' '))
+  -if recent_item.issue
+    Posted on:
+    = link_to(recent_item.issue.title, issue_path(recent_item.issue))
+  -if recent_item.conversation
+    Posted on:
+    = link_to(recent_item.conversation.title, conversation_path(recent_item.conversation))

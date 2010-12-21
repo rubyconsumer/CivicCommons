@@ -11,7 +11,8 @@ class IssuesController < ApplicationController
     @regions = Region.all
     @main_article = Article.issue_main_article.first
     @sub_articles = Article.issue_sub_articles.limit(3)
-    
+    @recent_items = TopItem.newest_items(3).for(:issue).collect{ |ti| ti.item }
+
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @issues }

@@ -50,6 +50,12 @@
         </ul>
       </div>
     </div>
+    <div class="mod">
+      <h3>Recent Activity</h3>
+      <div class='mod-content'>
+        <%= render :partial => 'shared/recent_item', :collection => @recent_items, :as => :recent_item %>
+      </div>
+    </div>
   </div><!-- /.aside -->			
 </div><!-- /.content-container -->
 </div>
