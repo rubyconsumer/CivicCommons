@@ -21,7 +21,6 @@ class Conversation < ActiveRecord::Base
 
   has_and_belongs_to_many :guides, :class_name => 'Person', :join_table => 'conversations_guides', :association_foreign_key => :guide_id
   has_and_belongs_to_many :issues
-  has_and_belongs_to_many :events
 
   has_attached_file :image,
     :styles => {
