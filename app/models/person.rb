@@ -48,7 +48,10 @@ class Person < ActiveRecord::Base
       joins(:conversations => :issues).where(['issue_id = ?',issue.id]).select('DISTINCT(people.id),people.*') if issue
     }
 
+  scope :real_accounts, where("proxy is not true")
   scope :proxy_accounts, where(:proxy => true)
+  scope :confirmed_accounts, where("confirmed_at is not null")
+  scope :unconfirmed_accounts, where(:confirmed_at => nil)
 
   before_create :check_and_populate_invite, :unless => :skip_invite
   after_create :create_shadow_account, :unless => :skip_shadow_account

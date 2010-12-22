@@ -3,6 +3,12 @@ class Admin::PeopleController < Admin::DashboardController
   #GET admin/people/
   def index
     @people = Person.all
+    @stats = {
+      :confirmed         => Person.confirmed_accounts.size,
+      :unconfirmed       => Person.unconfirmed_accounts.size,
+      :unconfirmed_real  => Person.unconfirmed_accounts.real_accounts.size,
+      :unconfirmed_proxy => Person.proxy_accounts.size
+    }
   end
   
   #GET admin/proxies
