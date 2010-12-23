@@ -49,15 +49,15 @@ jQuery(function ($) {
     bindContributionFormEvents: function(clicked,tabStrip){
       var form = this;
       form
-        .maskOnSubmit(tabStrip)
         .bind("submit", function(){
           $(this).find('input[placeholder], textarea[placeholder]').each( function() {
             $this = $(this);
             if( $this.val() == $this.attr('placeholder') ){
-              $this.empty();
+              $this.val('');
             }
           });
         })
+        .maskOnSubmit(tabStrip)
         .bind("ajax:success", function(evt, data, status, xhr){
           // apparently there is no way to inspect the HTTP status returned when submitting via iframe (which happens for AJAX file/image uploads)
           //  so, if file/image uploads via this form will always trigger ajax:success even if action returned error status code.
@@ -192,11 +192,11 @@ jQuery(function ($) {
           try{
             var errors = $.parseJSON(xhr.responseText);
           }catch(err){
-            var errors = {msg: "Please reload the page and try again"};
+            var errors = ["Please reload the page and try again"];
           }
           var errorString = "There were errors with the submission:\n<ul>";
           for(error in errors){
-            errorString += "<li>" + error + ' ' + errors[error] + "</li> ";
+            errorString += "<li>" + errors[error] + "</li> ";
           }
           errorString += "</ul>"
           $(this).find(".validation-error").html(errorString);
