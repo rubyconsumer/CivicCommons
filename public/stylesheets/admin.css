@@ -125,6 +125,25 @@ a img {
 	padding-right: 10px;}
 
 /* tables */
+table.people-stats {
+	font-family:arial;
+	background-color: #CDCDCD;
+	margin:10px 0pt 15px;
+	font-size: 8pt;
+	width: 100%;
+	text-align: left;
+}
+table.people-stats tbody td {
+	color: #3D3D3D;
+	padding: 4px;
+	vertical-align: top;
+}
+table.people-stats tr.even {
+	background-color: #F0F0F6;
+}
+
+
+
 table.tablesorter {
 	font-family:arial;
 	background-color: #CDCDCD;

@@ -28,6 +28,15 @@ require 'spec_helper'
          end
        end
     end
+    context "and deleting a #{model_type}" do
+      it "should also delete the top_item" do
+        top_item = @item.top_item
+        @item.destroy
+        lambda do
+          TopItem.find(top_item.id)
+        end.should raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
   end
 end
 

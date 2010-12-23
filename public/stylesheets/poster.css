@@ -16,4 +16,6 @@ strong { font-weight:bold; color:#fff; }
 a { color:#fff; }
 
 #main-column { width:400px; }
+.aside { float:right; width:200px; }
+
 #headline { background: url('/images/logo-on-dark.png') no-repeat bottom right; padding-bottom:100px; margin-bottom:30px; }

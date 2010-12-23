@@ -1218,6 +1218,27 @@ border-top: solid 1px #ddd;
 padding-top: 15px;
 margin-top: -10px;
 }
+.recent-item {
+margin-bottom: 15px;
+padding-bottom: 10px;
+border-bottom: solid 1px #ccc;
+}
+.recent-item:last-child {
+border-bottom: none;
+}
+.recent-item .item-person-name {
+float: left;
+margin-right: 0;
+line-height: 1.2em;
+}
+.recent-item p {
+line-height: 1.2em;
+}
+.recent-item .posted {
+display: block;
+font-style: italic;
+padding-top: 5px;
+}
 
 /*-----------------------------------------------
 =Styles for Convo Modal Popup

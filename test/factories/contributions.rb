@@ -17,6 +17,11 @@ Factory.define :contribution do |f|
   f.override_confirmed true
 end
 
+Factory.define :issue_contribution, :parent => :contribution do |f|
+  f.conversation nil
+  f.association :issue, :factory => :issue
+end
+
 Factory.define :comment do |f|
   f.datetime "2010-06-30 12:39:43"
   f.association :person, :factory => :normal_person
@@ -24,7 +29,6 @@ Factory.define :comment do |f|
   f.content "MyText"
   f.association :parent, :factory => :top_level_contribution
 end
-
 
 Factory.define :comment_with_unique_content, :parent => :comment do |f|
   f.sequence(:content) {|n| "Test Comment #{n}" }

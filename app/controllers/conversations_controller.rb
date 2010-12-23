@@ -9,6 +9,7 @@ class ConversationsController < ApplicationController
     @main_article = Article.conversation_main_article.first
     @sub_articles = Article.conversation_sub_articles.limit(3)
     @regions = Region.all
+    @recent_items = TopItem.newest_items(3).for(:conversation).collect(&:item)
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @conversations }
@@ -31,6 +32,8 @@ class ConversationsController < ApplicationController
     @tlc_participants = @top_level_contributions.collect{ |tlc| tlc.owner }
 
     @latest_contribution = @conversation.confirmed_contributions.most_recent.first
+
+    @recent_items = TopItem.newest_items(5).for(:conversation => @conversation.id).collect(&:item)
 
     respond_to do |format|
       format.html # show.html.erb
@@ -102,7 +105,7 @@ class ConversationsController < ApplicationController
         format.html { render(:partial => "conversations/new_contribution_preview", :locals => {:div_id => params[:div_id], :layout => 'application'}) }
       else
         format.js   { render :json => @contribution.errors, :status => :unprocessable_entity }
-        format.html { render :text => @contribution.errors, :status => :unprocessable_entity }
+        format.html { render :text => @contribution.errors.full_messages, :status => :unprocessable_entity }
       end
     end
   end

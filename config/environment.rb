@@ -9,3 +9,4 @@ Dir["#{Rails.root}/app/models/*"].find_all { |f| File.stat(f).directory? }.colle
 
 require 'ingester'
 
+Time::DATE_FORMATS[:yyyymmdd] = "%Y.%m.%d"
