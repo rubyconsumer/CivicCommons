@@ -105,7 +105,7 @@ class ConversationsController < ApplicationController
         format.html { render(:partial => "conversations/new_contribution_preview", :locals => {:div_id => params[:div_id], :layout => 'application'}) }
       else
         format.js   { render :json => @contribution.errors, :status => :unprocessable_entity }
-        format.html { render :text => @contribution.errors, :status => :unprocessable_entity }
+        format.html { render :text => @contribution.errors.full_messages, :status => :unprocessable_entity }
       end
     end
   end
