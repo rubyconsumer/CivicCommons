@@ -253,24 +253,26 @@ jQuery(function ($) {
             $(this).text(opts.completeText);
           });
         return this;
+      },
+
+      applyToggleToElement: function(target,altText){
+        clicked = this;
+        $(clicked).toggle(
+        	function(){
+        		$(this).text($(this).data('origText'));
+        		$(this).data('expanded', false);
+        		$(target).slideUp();
+        	}, 
+        	function(){
+        		$(this).text(altText);
+        		$(this).data('expanded', true);
+        		$(target).slideDown();
+        	}
+        );
       }
   });
   
   $(document).ready(function() {
-    actionToggle = function(clicked,target,altText){
-      $(clicked).toggle(
-    		function(){
-    			$(this).text(altText);
-    			$(this).data('expanded', true);
-    			$(target).slideDown();
-    		}, 
-    		function(){
-    			$(this).text($(this).data('origText'));
-    			$(this).data('expanded', false);
-    			$(target).slideUp();
-    		}
-    	);
-    }
     
     resizeColorbox = function(){
       $.colorbox.resize({
@@ -290,7 +292,7 @@ jQuery(function ($) {
   	        form = tabStrip+" form";
   	    
   	    // turn button into a toggle to hide/show what gets loaded so that subsequent clicks to redo the ajax call
-  	    $(clicked).click(actionToggle(clicked,target,"Hide responses"));
+        $(clicked).applyToggleToElement(target, "Hide responses");
         $(target).hide().html(xhr.responseText).slideDown().find('.rate-form-container').hide(); // insert content
       })
       .liveAlertOnAjaxFailure();
