@@ -1,4 +1,41 @@
-%h2 People List
+%h2 People
+
+%h3 Statistics
+%table.people-stats
+  %tbody
+    %tr.odd
+      %td
+        Total: 
+      %td
+      %td
+        #{@people.size}
+    %tr.even
+      %td
+        Confirmed:
+      %td
+      %td
+        #{@stats[:confirmed]}
+    %tr.odd
+      %td
+        Unconfirmed:
+      %td
+      %td
+        #{@stats[:unconfirmed]}
+    %tr.even
+      %td
+      %td
+        Real: 
+      %td
+        #{@stats[:unconfirmed_real]}
+    %tr.odd
+      %td
+      %td
+        Proxy: 
+      %td
+        #{@stats[:unconfirmed_proxy]}
+
+
+%h3 List
 %table.people.tablesorter
   %thead
     %tr
@@ -6,15 +43,17 @@
       %th Email
       %th Admin
       %th Proxy
+      %th Confirmed
       %th Status
   %tbody
-    -@people.each do |person|
+    -@people.each_with_index do |person, index|
       - locked = person.locked_at?
       %tr
         %td=link_to person.name, admin_person_path(person)
         %td=person.email
         %td=person.admin?
         %td=person.proxy?
+        %td=person.confirmed_at? ? "#{person.confirmed_at.to_s(:yyyymmdd)}" : "-"
         - if locked
           %td.locked Locked
         - else
