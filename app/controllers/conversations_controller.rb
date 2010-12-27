@@ -71,6 +71,18 @@ class ConversationsController < ApplicationController
     end
   end
 
+  def node_permalink
+    contribution = Contribution.with_user_rating(current_person).find(params[:id])
+    @contributions = contribution.self_and_ancestors.with_user_rating(current_person)
+    @top_level_contribution = @contributions.root
+    params[:div_id] = "contribution-#{@top_level_contribution.id}"
+
+    respond_to do |format|
+      format.js{ }
+      format.html{ render :partial => "conversations/node_conversation", :layout => false}
+    end
+  end
+
   def edit_node_contribution
     @contribution = Contribution.find(params[:contribution_id])
     respond_to do |format|

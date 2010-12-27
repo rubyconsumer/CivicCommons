@@ -26,6 +26,7 @@ Civiccommons::Application.routes.draw do
   match '/conversations/dialog/:id', :to=>'conversations#dialog', :via=>[:get]
   match '/contributions/create_confirmed_contribution', :to=>'contributions#create_confirmed_contribution', :via=>[:post]
   match '/conversations/node_conversation', :to=>'conversations#node_conversation', :via=>[:get]
+  match '/conversations/node_permalink/:id', :to=>'conversations#node_permalink', :via=>[:get]
   match '/conversations/confirm_node_contribution', :to=>'conversations#confirm_node_contribution', :via=>[:put]  
   match '/conversations/new_node_contribution', :to=>'conversations#new_node_contribution', :via=>[:get]
   match '/conversations/edit_node_contribution', :to=>'conversations#edit_node_contribution', :via=>[:get]
