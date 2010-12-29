@@ -102,7 +102,7 @@ class ConversationsController < ApplicationController
   end
 
   def new_node_contribution
-    @contribution = Contribution.find_or_new_unconfirmed(params, Person.first)#current_person)
+    @contribution = Contribution.find_or_new_unconfirmed(params, current_person)
     respond_to do |format|
       format.js { render(:partial => "conversations/tabbed_post_box", :locals => {:div_id => params[:div_id], :layout => false}) }
       format.html { render(:partial => "conversations/tabbed_post_box", :locals => {:div_id => params[:div_id], :layout => false}) }
