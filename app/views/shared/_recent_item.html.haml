@@ -17,7 +17,7 @@
       Posted on:
       = link_to(recent_item.issue.name, issue_path(recent_item.issue))
 
-  - elsif recent_item.respond_to?(:conversation) && recent_item.conversation && ! (controller.controller_name == 'conversations' && controller.action_name == 'show')
+  - elsif recent_item.respond_to?(:conversation) && recent_item.conversation
     %span.posted
       Posted on:
-      = link_to(recent_item.conversation.title, conversation_path(recent_item.conversation))
+      = link_to(recent_item.conversation.title, conversation_node_path(recent_item))

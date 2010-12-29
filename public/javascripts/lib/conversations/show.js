@@ -335,6 +335,9 @@ jQuery(function ($) {
     }
     
     selectResponseFromHash();
+    $(window).hashchange( function(){
+      selectResponseFromHash();
+    });
 
   	$('a.conversation-responses')
   	  .changeTextOnLoading({
