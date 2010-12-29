@@ -41,12 +41,17 @@ jQuery(function ($) {
     },
     
     scrollTo: function(){
-      var top = this.offset().top - 200, // 100px top padding in viewport,
-          origBG = this.css('background') || 'transparent';
-      $('html,body').animate({scrollTop: top}, 1000);
-      console.log(this);
+      var $this = this,
+          top = this.offset().top - 200, // 100px top padding in viewport,
+          origBG = this.css('background') || 'transparent',
+          scrolled = false; // Hack since 'html,body' is the only cross-browser compatible way to scroll window
+                            // which causes callback to run twice.
 
-      return this.effect('highlight', {color: '#c5d36a'}, 5000);
+      $('html,body').animate({scrollTop: top}, 1000, function (){
+        if ( ! scrolled ) { $this.effect('highlight', {color: '#c5d36a'}, 3000); }
+        scrolled = true;
+      });
+      return $this;
     },
     
     bindContributionFormEvents: function(clicked,tabStrip){
@@ -284,10 +289,14 @@ jQuery(function ($) {
 
       if ( hash && hash[1] ){
         var responseId = hash[1];
+        $('.feature-mast').mask('Loading response...');
         $.ajax({
           url: 'node_permalink/' + responseId,
           dataType: 'js',
           type: 'GET',
+          complete: function(){
+            $('.feature-mast').unmask();
+          },
           success: function (data, status, xhr) {
             eval(xhr.responseText);
 
