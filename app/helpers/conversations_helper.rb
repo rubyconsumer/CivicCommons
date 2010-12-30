@@ -78,4 +78,8 @@ module ConversationsHelper
     end
     raw(out)
   end
+
+  def conversation_node_path(contribution)
+    conversation_path(contribution.conversation) + "#node-#{contribution.id}"
+  end
 end

@@ -4,7 +4,6 @@
     =javascript_include_tag 'vendor/jquery-1.4.4.min'
     =javascript_include_tag 'lib/rails'
     =javascript_include_tag 'lib/master'
-    =javascript_include_tag 'lib/youtube'
     =stylesheet_link_tag 'admin.css'
     =javascript_include_tag 'vendor/jquery.tablesorter.min'
     =javascript_include_tag 'lib/admin/sort_table'
@@ -50,6 +49,8 @@
                 =link_to "Proxy Accounts", proxies_admin_people_path
               %li
                 =link_to "Add Proxy Account", new_admin_person_path
+          %li
+            =link_to "Invite Report", admin_invites_path
       %div#main
         =yield
         

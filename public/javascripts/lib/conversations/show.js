@@ -41,23 +41,31 @@ jQuery(function ($) {
     },
     
     scrollTo: function(){
-      var top = this.offset().top - 200; // 100px top padding in viewport
-      $('html,body').animate({scrollTop: top}, 1000);
-      return this;
+      var $this = this,
+          top = this.offset().top - 200, // 100px top padding in viewport,
+          origBG = this.css('background') || 'transparent',
+          scrolled = false; // Hack since 'html,body' is the only cross-browser compatible way to scroll window
+                            // which causes callback to run twice.
+
+      $('html,body').animate({scrollTop: top}, 1000, function (){
+        if ( ! scrolled ) { $this.effect('highlight', {color: '#c5d36a'}, 3000); }
+        scrolled = true;
+      });
+      return $this;
     },
     
     bindContributionFormEvents: function(clicked,tabStrip){
       var form = this;
       form
-        .maskOnSubmit(tabStrip)
         .bind("submit", function(){
           $(this).find('input[placeholder], textarea[placeholder]').each( function() {
             $this = $(this);
             if( $this.val() == $this.attr('placeholder') ){
-              $this.empty();
+              $this.val('');
             }
           });
         })
+        .maskOnSubmit(tabStrip)
         .bind("ajax:success", function(evt, data, status, xhr){
           // apparently there is no way to inspect the HTTP status returned when submitting via iframe (which happens for AJAX file/image uploads)
           //  so, if file/image uploads via this form will always trigger ajax:success even if action returned error status code.
@@ -192,11 +200,11 @@ jQuery(function ($) {
           try{
             var errors = $.parseJSON(xhr.responseText);
           }catch(err){
-            var errors = {msg: "Please reload the page and try again"};
+            var errors = ["Please reload the page and try again"];
           }
           var errorString = "There were errors with the submission:\n<ul>";
           for(error in errors){
-            errorString += "<li>" + error + ' ' + errors[error] + "</li> ";
+            errorString += "<li>" + errors[error] + "</li> ";
           }
           errorString += "</ul>"
           $(this).find(".validation-error").html(errorString);
@@ -253,23 +261,68 @@ jQuery(function ($) {
             $(this).text(opts.completeText);
           });
         return this;
+      },
+
+      applyToggleToElement: function(target,altText){
+        var $clicked = $(this),
+            altText = altText || "Hide";
+        $clicked.toggle(
+        	function(){
+        		$clicked.text($clicked.data('origText'));
+        		$clicked.data('expanded', false);
+        		$(target).slideUp();
+        	}, 
+        	function(){
+        		$clicked.text(altText);
+        		$clicked.data('expanded', true);
+        		$(target).slideDown();
+        	}
+        );
       }
+
   });
   
   $(document).ready(function() {
-    actionToggle = function(clicked,target,altText){
-      $(clicked).toggle(
-    		function(){
-    			$(this).text(altText);
-    			$(this).data('expanded', true);
-    			$(target).slideDown();
-    		}, 
-    		function(){
-    			$(this).text($(this).data('origText'));
-    			$(this).data('expanded', false);
-    			$(target).slideUp();
-    		}
-    	);
+    selectResponseFromHash = function(){
+      var hash = window.location.hash.match(/^#node-([\d]+)/);
+
+      if ( hash && hash[1] ){
+        var responseId = hash[1];
+        $('.feature-mast').mask('Loading response...');
+        $.ajax({
+          url: 'node_permalink/' + responseId,
+          dataType: 'js',
+          type: 'GET',
+          complete: function(){
+            $('.feature-mast').unmask();
+          },
+          success: function (data, status, xhr) {
+            eval(xhr.responseText);
+
+            // Give enough time for target node to append to DOM
+            setTimeout( function(){ 
+              var $target = $('#show-contribution-' + responseId);
+
+              // Change all parent "x Responses" buttons to say "View all x Responses"
+              // to make it clear that the thread is only partially expanded to view
+              // the permalinked response.
+              $target.parents('.contribution-container').each(function(){
+                $(this).find('a.conversation-responses').first().text( function(){
+                  var $this = $(this);
+                  if ( /[\d]+ responses/i.test($this.text()) ) {
+                    // $this.text( $this.text().replace(/([\d]+ responses)/i, "View $1") );
+                  } else {
+                    $this.data('origText', $this.text()).text("Hide response").applyToggleToElement($target, "Hide Response");
+                  }
+                });
+              });
+
+              $target.scrollTo();
+
+            }, 250);
+          }
+        });
+      }
     }
     
     resizeColorbox = function(){
@@ -278,6 +331,11 @@ jQuery(function ($) {
       });
     }
     
+    selectResponseFromHash();
+    $(window).hashchange( function(){
+      selectResponseFromHash();
+    });
+
   	$('a.conversation-responses')
   	  .changeTextOnLoading({
         loadText: "Loading responses...",
@@ -290,7 +348,7 @@ jQuery(function ($) {
   	        form = tabStrip+" form";
   	    
   	    // turn button into a toggle to hide/show what gets loaded so that subsequent clicks to redo the ajax call
-  	    $(clicked).click(actionToggle(clicked,target,"Hide responses"));
+        $(clicked).applyToggleToElement(target, "Hide responses");
         $(target).hide().html(xhr.responseText).slideDown().find('.rate-form-container').hide(); // insert content
       })
       .liveAlertOnAjaxFailure();

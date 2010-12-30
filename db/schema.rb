@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101208000430) do
+ActiveRecord::Schema.define(:version => 20101230105717) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -115,26 +115,21 @@ ActiveRecord::Schema.define(:version => 20101208000430) do
 
   add_index "counties", ["region_id"], :name => "index_counties_on_region_id"
 
-  create_table "events", :force => true do |t|
-    t.string   "title"
-    t.datetime "when"
-    t.string   "where"
-    t.integer  "moderator_id"
+  create_table "delayed_jobs", :force => true do |t|
+    t.integer  "priority",   :default => 0
+    t.integer  "attempts",   :default => 0
+    t.text     "handler"
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "creator_id"
-    t.integer  "total_visits"
-    t.integer  "recent_visits"
-    t.integer  "total_rating"
-    t.integer  "recent_rating"
-    t.datetime "last_visit_date"
-    t.datetime "last_rating_date"
   end
 
-  create_table "events_guides", :id => false, :force => true do |t|
-    t.integer "event_id"
-    t.integer "guide_id"
-  end
+  add_index "delayed_jobs", ["locked_by"], :name => "delayed_jobs_locked_by"
+  add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
 
   create_table "invites", :force => true do |t|
     t.integer  "person_id"
@@ -198,6 +193,8 @@ ActiveRecord::Schema.define(:version => 20101208000430) do
     t.integer  "failed_attempts",                     :default => 0
     t.string   "unlock_token"
     t.datetime "locked_at"
+    t.boolean  "marketable"
+    t.datetime "marketable_at"
   end
 
   add_index "people", ["email"], :name => "index_people_on_email", :unique => true

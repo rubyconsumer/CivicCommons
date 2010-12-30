@@ -2,6 +2,7 @@ class Person < ActiveRecord::Base
 
   include Regionable
   include GeometryForStyle
+  include Marketable
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable, and :timeoutable
@@ -60,8 +61,12 @@ class Person < ActiveRecord::Base
   after_save :send_welcome_email, :if => :send_welcome?
   after_destroy :delete_shadow_account, :unless => :skip_shadow_account
 
+  def newly_confirmed?
+    confirmed_at_changed? && confirmed_at_was.blank? && !confirmed_at.blank?
+  end
+
   def check_to_send_welcome_email
-    @send_welcome = true if confirmed_at_changed? && confirmed_at_was.blank? && !confirmed_at.blank?
+    @send_welcome = true if newly_confirmed?
   end
 
   def check_and_populate_invite
@@ -239,7 +244,19 @@ class Person < ActiveRecord::Base
     end
   end
 
+  # Implement Marketable method
+  def is_marketable?
+    return false if skip_email_marketing
 
+    newly_confirmed? ? true : false
+  end
+
+  # Implement Marketable method
+  def subscribe_to_marketing_email
+    h = Hominid::Base.new({:api_key => Civiccommons::Config.mailer_api_token})
+    h.delay.subscribe(Civiccommons::Config.mailer_list, email, {:FNAME => first_name, :LNAME => last_name}, {:email_type => 'html'})
+    Rails.logger.info("Success. Added mailing list subscription of #{name} to queue.")
+  end
 
   private
 

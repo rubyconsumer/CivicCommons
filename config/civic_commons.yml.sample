@@ -3,12 +3,17 @@ development:
   devise_mailer_host: "development.somewhere.com"
   devise_pepper: "somereallylongstringtoemcryptuserspasswords"
   rails_secret_token: "randonStuffThatsAtLeast30CharachtersYo128DirtyWithTh"
+  mailer_api_token: "socrazyhominidtypeoftoken"
+  mailer_list: "planetoftheapes"
+  
 
 test:
   devise_email: "admin@somewhere.com"
   devise_mailer_host: "test.somewhere.com"
   devise_pepper: "somereallylongstringtoemcryptuserspasswords"
   rails_secret_token: "randonStuffThatsAtLeast30CharachtersYo128DirtyWithTh"
+  mailer_api_token: "socrazyhominidtypeoftoken"
+  mailer_list: "planetoftheapes"
 
 integration:
   devise_email: "admin@somewhere.com"
@@ -19,6 +24,8 @@ integration:
   smtp_domain: "example.com"
   smtp_username: "someone@example.com"
   smtp_password: "ThePlainAndClearPassword!"
+  mailer_api_token: "socrazyhominidtypeoftoken"
+  mailer_list: "planetoftheapes"
 
 staging:
   devise_email: "admin@somewhere.com"
@@ -28,4 +35,6 @@ staging:
   smtp_address: "smtp.minimailer.net"
   smtp_domain: "example.com"
   smtp_username: "someone@example.com"
+  mailer_api_token: "socrazyhominidtypeoftoken"
+  mailer_list: "planetoftheapes"
 
