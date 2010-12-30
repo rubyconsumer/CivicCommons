@@ -10,33 +10,6 @@ describe Contribution do
       @top_level_contribution.confirmed.should be_true
     end
   end
-  describe "when creating several TopLevelContributions at once, a la ingester" do
-    before(:each) do
-      @conversation = Factory.create(:conversation)
-      @person = Factory.create(:normal_person)
-      t1 = Thread.new do
-        @top_level_contribution1 = TopLevelContribution.create!(:content => 'hi', :conversation => @conversation, :person => @person)
-      end
-      t2 = Thread.new do
-        @top_level_contribution2 = TopLevelContribution.create!(:content => 'hi', :conversation => @conversation, :person => @person)
-      end
-      t3 = Thread.new do
-        @top_level_contribution3 = TopLevelContribution.create!(:content => 'hi', :conversation => @conversation, :person => @person)
-      end
-      [t1,t2,t3].collect(&:join)
-    end
-    it "should not duplicate lft/rgt bounds" do
-      contributions = [
-        @top_level_contribution1,
-        @top_level_contribution2,
-        @top_level_contribution3
-      ]
-      puts contributions.collect(&:lft)
-      puts contributions.collect(&:rgt)
-      contributions.collect(&:lft).uniq.size.should == 3
-      contributions.collect(&:rgt).uniq.size.should == 3
-    end
-  end
   describe "when confirming contributions" do
     before(:each) do
       @contribution = Factory.create(:contribution, {:override_confirmed => false})

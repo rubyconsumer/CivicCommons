@@ -35,4 +35,23 @@ describe Conversation do
     end
   end
 
+  describe "when creating several Conversations at once, a la ingester" do
+    before(:each) do
+      @conversation1 = Factory.create(:conversation)
+      @conversation2 = Factory.create(:conversation)
+      [@conversation1, @conversation2].each do |conv|
+        3.times do
+          Factory.create(:top_level_contribution, :conversation => conv)
+        end
+      end
+    end
+    it "does not corrupt lft/rgt bounds when earlier conversations are destroyed" do
+      @conversation1.destroy
+
+      @conversation2.contributions.collect{|c| p "lft/rgt: #{c.lft} / #{c.rgt}"}
+      @conversation2.contributions.collect(&:lft).uniq.size.should == 3
+      @conversation2.contributions.collect(&:rgt).uniq.size.should == 3
+    end
+  end
+
 end
