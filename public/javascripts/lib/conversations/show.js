@@ -278,9 +278,8 @@ jQuery(function ($) {
         		$(target).slideDown();
         	}
         );
-      },
+      }
 
-      
   });
   
   $(document).ready(function() {
@@ -299,8 +298,6 @@ jQuery(function ($) {
           },
           success: function (data, status, xhr) {
             eval(xhr.responseText);
-
-            
 
             // Give enough time for target node to append to DOM
             setTimeout( function(){ 
@@ -324,7 +321,7 @@ jQuery(function ($) {
 
             }, 250);
           }
-        })
+        });
       }
     }
     
