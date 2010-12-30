@@ -4,8 +4,6 @@ Civiccommons::Application.routes.draw do
              :controllers => { :registrations => 'registrations', :confirmations => 'confirmations' },
              :path_names => { :sign_in => 'login', :sign_out => 'logout', :password => 'secret', :confirmation => 'verification', :registration => 'register', :sign_up => 'new' }
 
-  resources :events
-
   resources :ratings
 
   resources :contributions do
