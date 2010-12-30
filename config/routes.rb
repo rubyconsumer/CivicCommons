@@ -6,6 +6,9 @@ Civiccommons::Application.routes.draw do
 
   resources :ratings
 
+  get '/community', to: "community#index", as: 'community' 
+
+
   resources :contributions do
     # This is a GET for now since PA will redirect back with the required bits to create a PA
     # contribution. 
