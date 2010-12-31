@@ -26,23 +26,23 @@ module ConversationsHelper
   def contribution_action_past_tense(contribution_type)
     case contribution_type
     when "Answer"
-      "answered:"
+      "answered a question"
     when "AttachedFile"
-      "shared a file:"
+      "shared a file"
     when "Comment"
-      "commented:"
+      "commented"
     when "EmbeddedSnippet"
-      "shared a video:"
+      "shared a video"
     when "Link"
-      "shared a link:"
+      "shared a link"
     when "PplAggContribution"
-      "wrote a contribution:"
+      "wrote a response"
     when "Question"
-      "asked a question:"
+      "asked a question"
     when "SuggestedAction"
-      "suggested an action:"
+      "suggested an action"
     else
-      "commented:"
+      "responded"
     end
   end
   
