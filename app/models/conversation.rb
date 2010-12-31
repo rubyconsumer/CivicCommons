@@ -10,7 +10,7 @@ class Conversation < ActiveRecord::Base
   has_many(:confirmed_contributions, :class_name => 'Contribution',
            :conditions => ['confirmed = ?', true])
 
-  has_many :top_level_contributions, :dependent => :destroy
+  has_many :top_level_contributions
   has_many :subscriptions, :as => :subscribable
   accepts_nested_attributes_for :top_level_contributions, :allow_destroy => true
 
@@ -30,6 +30,8 @@ class Conversation < ActiveRecord::Base
     :s3_credentials => S3Config.credential_file,
     :path => IMAGE_ATTACHMENT_PATH,
     :default_url => '/images/convo_img_:style.gif'
+
+  before_destroy :destroy_root_contributions # since non-root contributions will be destroyed internally be awesome_nested_set
 
   search_methods :containing_issue, :containing_guide
 
@@ -101,5 +103,18 @@ class Conversation < ActiveRecord::Base
     else
       started_at.mday
     end
+  end
+
+  protected
+
+  def destroy_root_contributions
+    # Make sure to delete root contributions in descending order of rgt
+    # value. Otherwise lft/rgt values will become corrupted due to the
+    # fact that the root objects don't get refreshed with adjusted
+    # lft/rgt values after previous roots are destroyed, while the
+    # decendants will be refreshed with new adjusted lft/rgt values and
+    # thus be shifted out of the lft/rgt ancestor bounds of the stale
+    # root objects in the collect block below.
+    self.contributions.roots.sort_by(&:rgt).reverse.collect(&:destroy)
   end
 end
