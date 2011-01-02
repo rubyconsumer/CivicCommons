@@ -14,7 +14,4 @@ module TopItemable
     self.respond_to?(:confirmed) && self.confirmed_changed? && self.confirmed
   end
   
-  def create_top_item
-    #TopItem.create( :item => self )
-  end
 end
