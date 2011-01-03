@@ -369,6 +369,9 @@ padding: 6px 0;
 =Pagination Styles
 -----------------------------------------------*/
 
+.pagination {
+clear: both;
+}
 .pagination p {padding-top: 1em;}
 .pagination span, .pagination a, .pagination em {
 background: #eee;
