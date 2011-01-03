@@ -2,24 +2,23 @@
 <div class="wrapper">
   <div class="content-container">
     <div class="main-content">
-      <div class="wide_content" id="PeopleModule">
-
+      <div class="wide_content">
         <h1>Community</h1>
-        <div id="PeopleModule">
-          <div style="clear: both;"> 
+        <%= link_to "View by Name", community_path %> |
+        <%= link_to "Recenlty Joined", community_path(:order => 'recent') %>
+        <div class="community">
           <% @people.each do |person| %>
             <div id="<%=person.id %>" class ="buddyimg">
               <div class="img-container" id="imgcontainer_<%= person.id %>">
-              <%= link_to (image_tag person.avatar.url(:standard), :alt => "#{person.name}"), pa_link("user/#{person.people_aggregator_id}"), :title => person.name %>
+                <%= link_to (image_tag person.avatar.url(:standard), :alt => "#{person.name}"), pa_link("user/#{person.people_aggregator_id}"), :title => person.name %>
               </div>
               <div class="text-container" id="label_<%= person.id %>">
                 <h4><%= link_to person.name, pa_link("user/#{person.people_aggregator_id}"), :title => person.name%></h4>
               </div>
             </div>
           <% end %>
-          </div>
 
-          <%= will_paginate @people, :previous_label => "Previous", :next_label => "Next" %>
+        <%= will_paginate @people, :previous_label => "Previous", :next_label => "Next" %>
         </div>
       </div>
     </div>
