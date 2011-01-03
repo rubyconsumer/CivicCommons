@@ -1331,6 +1331,25 @@ padding: 0;
 width: 50%;
 }
 
+.buddyimg .img-container {
+float: left;
+height: 78px;
+overflow: hidden;
+width: 78px;
+}
+
+.buddyimg .img-container img {
+border: 4px solid rgb(224, 224, 224);
+display: block;
+height: 70px;
+width: 70px;
+}
+
+.buddyimg .text-container {
+margin-left: 78px;
+padding: 0 10px;
+}
+
 /*-----------------------------------------------
 =Self Clearing Floats
 -----------------------------------------------*/
