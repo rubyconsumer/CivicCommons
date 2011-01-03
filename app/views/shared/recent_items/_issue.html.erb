@@ -1,0 +1,3 @@
+Issue created:
+<%= link_to( issue.name, issue_path( issue ) ) %>
+<%= simple_format( truncate( issue.summary, :length => 100, :separator => ' ' ) ) %>

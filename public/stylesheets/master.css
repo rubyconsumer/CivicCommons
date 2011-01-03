@@ -1231,9 +1231,11 @@ float: left;
 margin-right: 0;
 line-height: 1.2em;
 }
+/*
 .recent-item p {
 line-height: 1.2em;
 }
+*/
 .recent-item .posted {
 display: block;
 font-style: italic;
