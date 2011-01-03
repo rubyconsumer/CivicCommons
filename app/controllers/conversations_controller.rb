@@ -21,11 +21,9 @@ class ConversationsController < ApplicationController
   def show
     @conversation = Conversation.includes(:guides, :issues).find(params[:id])
     @conversation.visit!((current_person.nil? ? nil : current_person.id))
-    @top_level_contributions = TopLevelContribution.where(:conversation_id => @conversation.id).includes([:person]).order('created_at ASC')
-    @top_level_contributions = @top_level_contributions.with_user_rating(current_person) if current_person
+    @top_level_contributions = TopLevelContribution.where(:conversation_id => @conversation.id).includes([:person]).order('created_at ASC').with_user_rating(current_person)
     # grab all direct contributions to conversation that aren't TLC
-    @conversation_contributions = Contribution.not_top_level.confirmed.without_parent.where(:conversation_id => @conversation.id).includes([:person]).order('created_at ASC')
-    @conversation_contributions = @conversation_contributions.with_user_rating(current_person) if current_person
+    @conversation_contributions = Contribution.not_top_level.confirmed.without_parent.where(:conversation_id => @conversation.id).includes([:person]).order('created_at ASC').with_user_rating(current_person)
     #@contributions = Contribution.confirmed.with_user_rating(current_person).descendants_of(@conversation_contributions).includes([:person])
 
     @top_level_contribution = Contribution.new # for conversation comment form
@@ -58,16 +56,14 @@ class ConversationsController < ApplicationController
   end
 
   def node_conversation
-    @top_level_contribution = Contribution.find(params[:id])
-    @contributions = @top_level_contribution.children.confirmed.includes(:person)
+    @contribution = Contribution.find(params[:id])
+    @contributions = @contribution.children.confirmed.includes(:person)
     @contributions = @contributions.with_user_rating(current_person) if current_person
-    @top_level_contribution.visit!((current_person.nil? ? nil : current_person.id))
-    @contribution = Contribution.new(:parent_id => @top_level_contribution.id, :conversation_id => @top_level_contribution.conversation_id)
+    @contribution.visit!((current_person.nil? ? nil : current_person.id))
 
     respond_to do |format|
       format.js { render :partial => "conversations/node_conversation", :layout => false}
       format.html { render :partial => "conversations/node_conversation", :layout => false}
-      format.xml  { render :xml => @conversation }
     end
   end
 
@@ -75,10 +71,10 @@ class ConversationsController < ApplicationController
     contribution = Contribution.with_user_rating(current_person).find(params[:id])
     @contributions = contribution.self_and_ancestors.with_user_rating(current_person)
     @top_level_contribution = @contributions.root
-    params[:div_id] = "contribution-#{@top_level_contribution.id}"
+    contribution.visit!((current_person.nil? ? nil : current_person.id))
 
     respond_to do |format|
-      format.js{ }
+      format.js
       format.html{ render :partial => "conversations/node_conversation", :layout => false}
     end
   end

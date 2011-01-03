@@ -1,0 +1,3 @@
+Conversation created:
+<%= link_to( conversation.title, conversation_path(conversation)) %>
+<%= simple_format( truncate( conversation.summary, :length => 100, :separator => ' ' ) ) %>
