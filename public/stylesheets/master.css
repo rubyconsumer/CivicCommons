@@ -1321,6 +1321,17 @@ a.button.moderate, input.submit.moderate {background-color: #e74d4d;}
 a.button.moderate:hover, input.submit.moderate:hover {background-color: #d83535;}
 
 /*-----------------------------------------------
+=Community page styles
+-----------------------------------------------*/
+
+.buddyimg {
+float: left;
+margin: 0 0 20px;
+padding: 0;
+width: 50%;
+}
+
+/*-----------------------------------------------
 =Self Clearing Floats
 -----------------------------------------------*/
 
