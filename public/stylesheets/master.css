@@ -1326,6 +1326,10 @@ a.button.moderate:hover, input.submit.moderate:hover {background-color: #d83535;
 /*-----------------------------------------------
 =Community page styles
 -----------------------------------------------*/
+.community {
+clear: both;
+padding-top: 20px;
+}
 
 .buddyimg {
 float: left;
