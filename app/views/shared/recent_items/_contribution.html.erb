@@ -7,8 +7,10 @@
 
 <% if contribution.content %>
   <%= simple_format( truncate( contribution.content, :length => 100, :separator => ' ' ) ) %>
-<% elsif %>
-  <%= contribution_action_past_tense( contribution.type ) %>.
+<% else %>
+  <p>
+    <%= contribution_action_past_tense( contribution.type ) %>.
+  </p>
 <% end %>
 
 <% if contribution.issue && ! ( controller.controller_name == 'issues' && controller.action_name == 'show' ) %>
