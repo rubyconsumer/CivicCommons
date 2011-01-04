@@ -5,11 +5,14 @@
   </span>
 <% end %>
 
-<% if contribution.content %>
+<% unless contribution.content.blank? %>
   <%= simple_format( truncate( contribution.content, :length => 100, :separator => ' ' ) ) %>
 <% else %>
   <p>
-    <%= contribution_action_past_tense( contribution.type ) %>.
+    <%= contribution_action_past_tense( contribution.type ) %><%= contribution.title.blank? ? '.' : ':' %>
+    <% unless contribution.title.blank? %>
+      <%= contribution.title %>
+    <% end %>
   </p>
 <% end %>
 
