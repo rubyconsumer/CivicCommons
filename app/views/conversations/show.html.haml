@@ -60,3 +60,8 @@
                 .photobank
                   -@conversation.participants.select{ |p| !@tlc_participants.include?(p.id) }.each do |participant|
                     =conversation_profile(participant).html_safe
+        - if @recent_items.size > 0
+          .mod
+            %h3 Recent Activity
+            .mod-content
+              = render :partial => 'shared/recent_item', :collection => @recent_items, :as => :recent_item

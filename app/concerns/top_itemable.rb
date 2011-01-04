@@ -1,7 +1,7 @@
 module TopItemable
   
   def self.included(base)
-    base.has_one :top_item, :as => :item
+    base.has_one :top_item, :as => :item, :dependent => :destroy
     base.after_create :create_top_item, :unless => :record_has_confirmed_set_to_false?
     base.after_save :create_top_item, :if => :record_was_just_confirmed?
   end
@@ -14,7 +14,4 @@ module TopItemable
     self.respond_to?(:confirmed) && self.confirmed_changed? && self.confirmed
   end
   
-  def create_top_item
-    #TopItem.create( :item => self )
-  end
 end

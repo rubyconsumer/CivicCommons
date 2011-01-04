@@ -1,0 +1,11 @@
+%h3 List
+%table.invites.tablesorter
+  %thead
+    %tr
+      %th Invite Code
+      %th Count
+  %tbody
+    -@invite_summary.each do |invite|
+      %tr
+        %td=invite[0]
+        %td=invite[1]
