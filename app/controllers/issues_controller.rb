@@ -79,7 +79,7 @@ class IssuesController < ApplicationController
     @issue = Issue.find(params[:id])
     contribution_params = params[:contribution].merge(:issue_id => @issue.id)
     @contribution = Contribution.
-      create_node_level_contribution(contribution_params, current_person)
+      create_confirmed_node_level_contribution(contribution_params, current_person)
 
     respond_to do |format|
       if @contribution.save
