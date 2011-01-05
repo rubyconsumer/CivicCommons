@@ -33,18 +33,7 @@ class Conversation < ActiveRecord::Base
 
   before_destroy :destroy_root_contributions # since non-root contributions will be destroyed internally be awesome_nested_set
 
-  search_methods :containing_issue, :containing_guide
-
   scope :latest_updated, :order => 'updated_at DESC'
-
-  scope :containing_guide,
-    lambda {|target| joins(:guides).map{|x| (x.first_name + x.last_name).includes? target}}
-
-  scope :containing_issue,
-    lambda {|target|
-     joins("inner join posts on conversations.id = posts.conversable_id inner join issues on posts.postable_id = issues.id").
-      where("posts.postable_type = 'Issue'").
-      where("lower(issues.name) like ?", "%" + target.downcase.strip + "%")}
 
   # Return a comma-and-space-delimited list of the Issues
   # relevant to this Conversation, e.g., "Jobs, Sports, Religion"
