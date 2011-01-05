@@ -46,7 +46,7 @@
               <%= image_tag contribution.attachment(:thumb), :alt => contribution.title, :class => 'callout', :width => 90, :height => 60 %>
               <img class="callout" src="#contribution-image-goes-here" alt="contribution image goes here" width="90" height="60" />
             <% end %>
-            <h4><%= link_to truncate(contribution.title), contribution.url %></h4>
+            <h4><%= link_to contribution.title, contribution.url %></h4>
             <% unless contribution.person.nil? %>
               <p>Submitted by: <a href="#link-to-PA-profile"><%= contribution.person.name %></a></p>
             <% end %>

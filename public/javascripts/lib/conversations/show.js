@@ -41,9 +41,17 @@ jQuery(function ($) {
     },
     
     scrollTo: function(){
-      var top = this.offset().top - 200; // 100px top padding in viewport
-      $('html,body').animate({scrollTop: top}, 1000);
-      return this;
+      var $this = this,
+          top = this.offset().top - 200, // 100px top padding in viewport,
+          origBG = this.css('background') || 'transparent',
+          scrolled = false; // Hack since 'html,body' is the only cross-browser compatible way to scroll window
+                            // which causes callback to run twice.
+
+      $('html,body').animate({scrollTop: top}, 1000, function (){
+        if ( ! scrolled ) { $this.effect('highlight', {color: '#c5d36a'}, 3000); }
+        scrolled = true;
+      });
+      return $this;
     },
     
     bindContributionFormEvents: function(clicked,tabStrip){
@@ -256,23 +264,73 @@ jQuery(function ($) {
       },
 
       applyToggleToElement: function(target,altText){
-        clicked = this;
-        $(clicked).toggle(
+        var $clicked = $(this),
+            altText = altText || "Hide";
+        $clicked.toggle(
         	function(){
-        		$(this).text($(this).data('origText'));
-        		$(this).data('expanded', false);
+        		$clicked.text($clicked.data('origText'));
+        		$clicked.data('expanded', false);
         		$(target).slideUp();
         	}, 
         	function(){
-        		$(this).text(altText);
-        		$(this).data('expanded', true);
+        		$clicked.text(altText);
+        		$clicked.data('expanded', true);
         		$(target).slideDown();
         	}
         );
       }
+
   });
   
   $(document).ready(function() {
+    selectResponseFromHash = function(){
+      var hash = window.location.hash.match(/^#node-([\d]+)/);
+
+      if ( hash && hash[1] ){
+        var responseId = hash[1],
+            $onPage = $('#show-contribution-' + responseId);
+
+        // Permalink to contribution already on page (e.g. TopLevelContribution)
+        if ( $onPage.size() > 0 ) {
+          return $onPage.scrollTo();
+        } else {
+          $('.feature-mast').mask('Loading response...');
+          $.ajax({
+            url: 'node_permalink/' + responseId,
+            dataType: 'js',
+            type: 'GET',
+            complete: function(){
+              $('.feature-mast').unmask();
+            },
+            success: function (data, status, xhr) {
+              eval(xhr.responseText);
+
+              // Give enough time for target node to append to DOM
+              setTimeout( function(){ 
+                var $target = $('#show-contribution-' + responseId);
+
+                // Change all parent "x Responses" buttons to say "View all x Responses"
+                // to make it clear that the thread is only partially expanded to view
+                // the permalinked response.
+                $target.parents('.contribution-container').each(function(){
+                  $(this).find('a.conversation-responses').first().text( function(){
+                    var $this = $(this);
+                    if ( /[\d]+ responses/i.test($this.text()) ) {
+                      // $this.text( $this.text().replace(/([\d]+ responses)/i, "View $1") );
+                    } else {
+                      $this.data('origText', $this.text()).text("Hide response").applyToggleToElement($target, "Hide Response");
+                    }
+                  });
+                });
+
+                $target.scrollTo();
+
+              }, 250);
+            }
+          });
+        }
+      }
+    }
     
     resizeColorbox = function(){
       $.colorbox.resize({
@@ -280,6 +338,11 @@ jQuery(function ($) {
       });
     }
     
+    selectResponseFromHash();
+    $(window).hashchange( function(){
+      selectResponseFromHash();
+    });
+
   	$('a.conversation-responses')
   	  .changeTextOnLoading({
         loadText: "Loading responses...",

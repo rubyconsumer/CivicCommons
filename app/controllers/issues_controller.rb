@@ -7,7 +7,7 @@ class IssuesController < ApplicationController
   def index
     @search = Issue.sort(params[:sort]).search(params[:search])
     @issues = @search.paginate(:page => params[:page], :per_page => 20)
-    
+
     @regions = Region.all
     @main_article = Article.issue_main_article.first
     @sub_articles = Article.issue_sub_articles.limit(3)
@@ -32,7 +32,7 @@ class IssuesController < ApplicationController
     @conversation_comments = @issue.conversation_comments.most_recent
     @suggested_actions = @issue.suggested_actions.most_recent
     @media_contributions = @issue.media_contributions.most_recent
-    
+
     @issue.visit!((current_person.nil? ? nil : current_person.id))
     @recent_items = TopItem.newest_items(3).for(:issue => @issue.id).collect(&:item)
 
@@ -79,7 +79,7 @@ class IssuesController < ApplicationController
     @issue = Issue.find(params[:id])
     contribution_params = params[:contribution].merge(:issue_id => @issue.id)
     @contribution = Contribution.
-      create_node_level_contribution(contribution_params, current_person)
+      create_confirmed_node_level_contribution(contribution_params, current_person)
 
     respond_to do |format|
       if @contribution.save

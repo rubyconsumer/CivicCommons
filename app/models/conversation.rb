@@ -10,7 +10,7 @@ class Conversation < ActiveRecord::Base
   has_many(:confirmed_contributions, :class_name => 'Contribution',
            :conditions => ['confirmed = ?', true])
 
-  has_many :top_level_contributions, :dependent => :destroy
+  has_many :top_level_contributions
   has_many :subscriptions, :as => :subscribable
   accepts_nested_attributes_for :top_level_contributions, :allow_destroy => true
 
@@ -31,18 +31,9 @@ class Conversation < ActiveRecord::Base
     :path => IMAGE_ATTACHMENT_PATH,
     :default_url => '/images/convo_img_:style.gif'
 
-  search_methods :containing_issue, :containing_guide
+  before_destroy :destroy_root_contributions # since non-root contributions will be destroyed internally be awesome_nested_set
 
   scope :latest_updated, :order => 'updated_at DESC'
-
-  scope :containing_guide,
-    lambda {|target| joins(:guides).map{|x| (x.first_name + x.last_name).includes? target}}
-
-  scope :containing_issue,
-    lambda {|target|
-     joins("inner join posts on conversations.id = posts.conversable_id inner join issues on posts.postable_id = issues.id").
-      where("posts.postable_type = 'Issue'").
-      where("lower(issues.name) like ?", "%" + target.downcase.strip + "%")}
 
   # Return a comma-and-space-delimited list of the Issues
   # relevant to this Conversation, e.g., "Jobs, Sports, Religion"
@@ -101,5 +92,18 @@ class Conversation < ActiveRecord::Base
     else
       started_at.mday
     end
+  end
+
+  protected
+
+  def destroy_root_contributions
+    # Make sure to delete root contributions in descending order of rgt
+    # value. Otherwise lft/rgt values will become corrupted due to the
+    # fact that the root objects don't get refreshed with adjusted
+    # lft/rgt values after previous roots are destroyed, while the
+    # decendants will be refreshed with new adjusted lft/rgt values and
+    # thus be shifted out of the lft/rgt ancestor bounds of the stale
+    # root objects in the collect block below.
+    self.contributions.roots.sort_by(&:rgt).reverse.collect(&:destroy)
   end
 end

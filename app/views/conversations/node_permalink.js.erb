@@ -1,0 +1,2 @@
+$("#thread-div-<%= @top_level_contribution.id %>")
+  .html("<%= escape_javascript(display_direct_descendant_subset(@contributions, @top_level_contribution.id)) %>");

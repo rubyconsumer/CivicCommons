@@ -4,8 +4,6 @@ Civiccommons::Application.routes.draw do
              :controllers => { :registrations => 'registrations', :confirmations => 'confirmations' },
              :path_names => { :sign_in => 'login', :sign_out => 'logout', :password => 'secret', :confirmation => 'verification', :registration => 'register', :sign_up => 'new' }
 
-  resources :events
-
   resources :ratings
 
   resources :contributions do
@@ -26,6 +24,7 @@ Civiccommons::Application.routes.draw do
   match '/conversations/dialog/:id', :to=>'conversations#dialog', :via=>[:get]
   match '/contributions/create_confirmed_contribution', :to=>'contributions#create_confirmed_contribution', :via=>[:post]
   match '/conversations/node_conversation', :to=>'conversations#node_conversation', :via=>[:get]
+  match '/conversations/node_permalink/:id', :to=>'conversations#node_permalink', :via=>[:get]
   match '/conversations/confirm_node_contribution', :to=>'conversations#confirm_node_contribution', :via=>[:put]  
   match '/conversations/new_node_contribution', :to=>'conversations#new_node_contribution', :via=>[:get]
   match '/conversations/edit_node_contribution', :to=>'conversations#edit_node_contribution', :via=>[:get]
@@ -63,6 +62,7 @@ Civiccommons::Application.routes.draw do
       put 'lock_access', :on => :member
       put 'unlock_access', :on => :member
     end
+    resources   :invites
     root        :to => "dashboard#show"
   end
   

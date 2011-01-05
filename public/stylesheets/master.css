@@ -1229,10 +1229,7 @@ border-bottom: none;
 .recent-item .item-person-name {
 float: left;
 margin-right: 0;
-line-height: 1.2em;
-}
-.recent-item p {
-line-height: 1.2em;
+line-height: 1.4em;
 }
 .recent-item .posted {
 display: block;
