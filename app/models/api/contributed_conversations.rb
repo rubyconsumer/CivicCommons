@@ -13,7 +13,7 @@ class Api::ContributedConversations
 
 
   def self.for_person(person, request)
-    conversations = person.contributed_conversations
+    conversations = person.contributed_conversations.order('contributed_conversations.created_at DESC')
 
     conversations.map do |conversation|
       conversation = ConversationPresenter.new(conversation, request)
