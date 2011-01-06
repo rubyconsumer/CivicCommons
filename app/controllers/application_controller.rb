@@ -13,7 +13,14 @@ class ApplicationController < ActionController::Base
   end
 
   def require_user
-    redirect_to new_person_session_url if current_person.nil?
+    if current_person.nil?
+      if request.xhr?
+        @requested_url = request.url
+        render 'devise/sessions/new_in_modal'
+      else
+        redirect_to new_person_session_url
+      end
+    end
   end
 
   def after_sign_in_path_for(resource_or_scope)

@@ -1,0 +1,21 @@
+<p>
+Please login to continue. If you don't have an account, please <%= link_to 'register', new_person_registration_path %>.
+</p>
+<%= form_for(:person, :url => person_session_path, :remote => true) do |f| %>
+  <fieldset class="form-group">
+    <%= hidden_field_tag 'requested_url', requested_url %>
+    <div class="form-block">
+      <%= f.label :email, 'Email:' %>
+      <%= f.text_field :email %>
+    </div>
+    <div class="form-block">
+      <%= f.label :password, 'Password:' %>
+      <%= f.password_field :password %>
+    </div>
+  </fieldset>
+  <fieldset class="footer">
+    <%= f.submit 'Login', :class => 'submit' %>
+    or
+    <%= link_to 'cancel', '', :onclick => '$.colorbox.close(); return false;', :class => 'cancel' %>
+  </fieldset>
+<% end %>
