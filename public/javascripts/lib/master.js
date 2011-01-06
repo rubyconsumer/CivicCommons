@@ -1,3 +1,12 @@
+jQuery(function ($) {
+
+  // Log all jQuery AJAX requests to Google Analytics
+  $(document).ajaxSend(function(event, xhr, settings){ 
+    _gaq.push(['_trackPageview', settings.url]);
+  });
+
+});
+
 $(document).ready(function(){
   if(typeof(Modernizr) != "undefined" && !Modernizr.input.placeholder) {
     $('[placeholder]').placeholder({className: 'placeholder'});

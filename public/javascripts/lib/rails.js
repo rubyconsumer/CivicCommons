@@ -53,14 +53,14 @@ jQuery(function ($) {
                         data: data,
                         dataType: dataType,
                         type: method.toUpperCase(),
-                        beforeSend: function (xhr) {
-                            el.trigger('ajax:loading', xhr);
+                        beforeSend: function (xhr, settings) {
+                            el.trigger('ajax:loading', [xhr, settings]);
                         },
                         success: function (data, status, xhr) {
                             el.trigger('ajax:success', [data, status, xhr]);
                         },
-                        complete: function (xhr) {
-                            el.trigger('ajax:complete', xhr);
+                        complete: function (xhr, status) {
+                            el.trigger('ajax:complete', [xhr, status]);
                         },
                         error: function (xhr, status, error) {
                             el.trigger('ajax:failure', [xhr, status, error]);
