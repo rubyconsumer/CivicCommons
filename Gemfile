@@ -42,8 +42,6 @@ end
 
 gem 'devise', '1.1.2'
 
-gem 'meta_search'
-
 gem 'paperclip'
 gem 'aws-s3'
 gem 'nokogiri'
