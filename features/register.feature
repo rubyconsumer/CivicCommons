@@ -14,9 +14,9 @@ Feature:
         | Password  | abcd1234      |
       Then a user should be created with email "joe@test.com"
       And a confirmation email is sent:
-        | From    | admin@theciviccommons.com     |
-        | To      | joe@test.com                  |
-        | Subject | Confirmation instructions     |
+        | From    | "The Civic Commons" <admin@theciviccommons.com>     |
+        | To      | joe@test.com                                        |
+        | Subject | Confirmation instructions                           |
       And a People Aggregator shadow account should be created
 
 

@@ -1,0 +1,15 @@
+<div class="mod">
+  <h3>Northeast Ohio Counties</h3>
+
+  <div class="mod-content">
+    <ul class='link-list'>
+      <% @regions.each do |region| %>
+        <% if region.default? %>
+          <li><%=link_to region.name, "/regions/default"%></li>
+        <% else %>
+          <li><%=link_to region.name, region %></li>
+        <%end%>
+      <%end%>
+    </ul>
+  </div>
+</div>
