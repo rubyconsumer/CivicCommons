@@ -13,7 +13,7 @@ class Api::ContributedIssues
 
 
   def self.for_person(person, request)
-    issues = person.contributed_issues
+    issues = person.contributed_issues.order('contributed_issues.created_at DESC')
 
     issues.map do |issue|
       issue = IssuePresenter.new(issue, request)
