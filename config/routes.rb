@@ -5,6 +5,7 @@ Civiccommons::Application.routes.draw do
              :path_names => { :sign_in => 'login', :sign_out => 'logout', :password => 'secret', :confirmation => 'verification', :registration => 'register', :sign_up => 'new' }
 
   resources :ratings
+  resources :user, only: [:show, :update, :edit]
 
   get '/community', to: "community#index", as: 'community' 
 
