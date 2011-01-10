@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110104160053) do
+ActiveRecord::Schema.define(:version => 20110110220007) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -196,6 +196,7 @@ ActiveRecord::Schema.define(:version => 20110104160053) do
     t.datetime "locked_at"
     t.boolean  "marketable"
     t.datetime "marketable_at"
+    t.text     "bio"
   end
 
   add_index "people", ["email"], :name => "index_people_on_email", :unique => true
