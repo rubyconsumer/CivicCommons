@@ -151,6 +151,18 @@ class Contribution < ActiveRecord::Base
     self.confirmed = true if value
   end
   
+  def contribution_type
+    if self.you_tubeable?
+      :video
+    elsif self.suggestion?
+      :suggestion
+    elsif self.is_image?
+      :image
+    else
+      self.type.underscore
+    end
+  end
+
   protected
   
   def self.setup_node_level_contribution(params,person)
@@ -172,19 +184,6 @@ class Contribution < ActiveRecord::Base
 
   def you_tubeable?
     false
-  end
-
-
-  def contribution_type
-    if self.you_tubeable?
-      :video
-    elsif self.suggestion?
-      :suggestion
-    elsif self.is_image?
-      :image
-    else
-      self.type.underscore
-    end
   end
 
   def url_title

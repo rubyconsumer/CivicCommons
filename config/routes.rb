@@ -9,6 +9,7 @@ Civiccommons::Application.routes.draw do
   end
 
   resources :ratings
+  resources :user, only: [:show, :update, :edit]
 
   get '/community', to: "community#index", as: 'community' 
 
