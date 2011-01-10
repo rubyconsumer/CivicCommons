@@ -11,67 +11,79 @@
 		</div>
 	</div>
 </div>
+
 <div class="wrapper">
+
   <div class="content-container">
-	  <div class="main-content">
+    
+    <div class="main-content">
       <div class="wide_content" id="UserContributionsModule">
         <h2>Contributions </h2>  
         <div class="divided">
           <%= render :partial => "contribution", :collection => @contributions %>
         </div>
-      <div class="pagination">
-        <%= will_paginate @contributions, previous_label: 'Previous', next_label: 'Next' %>
+        <div class="pagination">
+          <%= will_paginate @contributions, previous_label: 'Previous', next_label: 'Next' %>
+        </div>
       </div>
     </div>
+
+    <div class="aside supplementary">
+      <% unless @user.bio.nil? %>
+      <div class="mod" id="AboutUserModule">
+        <h3>About <%= @user.name %></h3>
+        <div class="mod-content">
+          <p>
+            <%= @user.bio %>
+            <br />
+          </p>
+	      </div>
+      </div>
+      <% end %>
+
+      <div class="mod" id="MyLinksModule">
+        <h3>Hannah's Links</h3> 
+        <div class="mod-content">
+          <div class="module_browse_groups">
+            <ul>
+              <li class="color">
+                <a href="#" onclick="javascript:show_hide_network_categories('link_id_0','arrow_close_1'); return false;">Cleveland Leadreship Ce..</a>
+                <ul id="link_id_0" class="display_true">
+			            <li>
+                    <a href="http://www.cleveleads.org"  target='blank'>Get involved in the Cle..</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="mod" id="UserFollowingIssuesModule">
+        <h3>Issues I am Following</h3> 
+        <div class="mod-content">
+          <ul class='link-list'>
+            <li>
+              <a href="http://www.theciviccommons.com/issues">Hannah is just getting started.</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mod" id="UserFollowingConversationsModule">
+        <h3>Conversations I am Following</h3> 
+        <div class="mod-content">
+          <ul class='link-list'>
+            <li>
+              <a href="http://www.theciviccommons.com/conversations/21">How do we attract young professional talent?</a>
+            </li>
+			    </ul>
+        </div>
+      </div>
+
+    </div>			
+
   </div>
-			<div class="aside supplementary">
-			 				<div class="mod" id="AboutUserModule">
- <h3>About Hannah Belsito</h3> <div class="mod-content">
 
-	 <p>
-	I'm a life-long learner; passionate about civic engagement, historic preservation, reading, learning, building relationships, and both personal and professional development.  I love living, working and playing in
-Cleveland and Northeast Ohio.<br /></p>
-	    </div>
-</div><div class="mod" id="MyLinksModule">
- <h3>Hannah's Links</h3> <div class="mod-content">
-	   
-<div class="module_browse_groups">
-  <ul>
-      
-    <li class="color"><a href="#" onclick="javascript:show_hide_network_categories('link_id_0','arrow_close_1'); return false;">   
-    Cleveland Leadreship Ce..</a>
-
-      
-      <ul id="link_id_0" class="display_true">
-                    
-			  <li>
-          <a href="http://www.cleveleads.org"  target='blank'>
-           Get involved in the Cle..          </a>
-        </li>
-      
-			 
-        </ul>
-      </li> 
-     </ul>
-   
-   </div>
-
-	    </div>
-</div><div class="mod" id="UserFollowingIssuesModule">
- <h3>Issues I am Following</h3> <div class="mod-content">
-	 	<ul class='link-list'>
-				<li><a href="http://www.theciviccommons.com/issues">Hannah is just getting started.</a></li>
-			</ul>
-	    </div>
-</div><div class="mod" id="UserFollowingConversationsModule">
-
- <h3>Conversations I am Following</h3> <div class="mod-content">
-	 	<ul class='link-list'>
-				<li><a href="http://www.theciviccommons.com/conversations/21">How do we attract young professional talent?</a></li>
-			</ul>
-	    </div>
-</div>			 </div>
-		</div>
-
-	</div>
+</div>
 <% end %>
