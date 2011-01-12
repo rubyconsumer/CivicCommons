@@ -1,3 +1,5 @@
+var lastAjaxSettings;
+
 jQuery(function ($) {
 
   // Log all jQuery AJAX requests to Google Analytics
@@ -9,19 +11,6 @@ jQuery(function ($) {
   });
 
   $('#ajax-login-form')
-  .live('ajax:success', function(evt, data, status, xhr){
-   // console.log(lastAjaxSettings);
-   // $.ajax({
-   //   url: lastAjaxSettings.url,
-   //   data: lastAjaxSettings.data,
-   //   dataType: lastAjaxSettings.dataType,
-   //   type: lastAjaxSettings.type,
-   //   beforeSend: lastAjaxSettings.beforeSend,
-   //   success: lastAjaxSettings.success,
-   //   complete: lastAjaxSettings.complete,
-   //   error: lastAjaxSettings.error
-   // });
-  })
   .live('ajax:failure', function(evt, xhr, status, error){
     alert('Login failed!');
   })
