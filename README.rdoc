@@ -1,0 +1,35 @@
+= Welcome to The Civic Commons
+
+http://www.theciviccommons.com
+
+The Civic Commons is a new way to bring communities together with conversation and emerging technology. We’re focused on building conversations and connections that have the power to become informed, productive collective civic action.
+
+A commons is a shared public space devoted to the public good. And that’s what Civic Commons is—a space we come to so we can learn more about our shared interest and then act on it together. We’ll build it with our contributions, conversations and actions.
+
+Even while this is important, heady stuff, we want to make your civic involvement easy and fun, something you can do after you put the kids to bed, something you might actually want to do, as much as, say, you want to fire up the DVR or head over to Facebook. Think of Civic Commons as social media for civic good.
+
+== Copyright
+
+Copyright (c) The Civic Commons -- released under the MIT license.
+
+== License
+
+http://www.opensource.org/licenses/mit-license.php  
+
+Permission is hereby granted, free of charge, to any person obtaining a copy  
+of this software and associated documentation files (the "Software"), to deal  
+in the Software without restriction, including without limitation the rights  
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell  
+copies of the Software, and to permit persons to whom the Software is  
+furnished to do so, subject to the following conditions:  
+ 
+The above copyright notice and this permission notice shall be included in  
+all copies or substantial portions of the Software.  
+ 
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR  
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,  
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE  
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER  
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,  
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN  
+THE SOFTWARE.  
