@@ -13,21 +13,7 @@
       <%= render :partial => '/conversations/conversation_pager' %>
     </div><!-- /.main-content -->
     <div class="aside supplementary">
-      <div class="mod">
-        <h3>Northeast Ohio Counties</h3>
-
-        <div class="mod-content">
-          <ul class='link-list'>
-            <% @regions.each do |r| %>
-              <% if r.default? %>
-                <li><%=link_to r.name, "/regions/default"%></li>
-              <% else %>
-                <li><%=link_to r.name, r%></li>
-              <%end%>
-            <%end%>
-          </ul>
-        </div>
-      </div>
+      <%= render :partial => '/regions/index' %>
       <% if @recent_items.size > 0 %>
         <div class="mod">
           <h3>Recent Activity</h3>

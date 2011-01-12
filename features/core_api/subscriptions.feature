@@ -28,9 +28,9 @@ Feature:
     [
       {
         "id": 2,
-        "title": "Understanding The Latest Health Care Changes",
-        "url": "http://www.example.com/conversations/2",
-        "type": "conversation"
+        "title": "Democrats Upset About Recent Election Results",
+        "url": "http://www.example.com/issues/2",
+        "type": "issue"
       },
       {
         "id": 3,
@@ -40,9 +40,9 @@ Feature:
       },
       {
         "id": 2,
-        "title": "Democrats Upset About Recent Election Results",
-        "url": "http://www.example.com/issues/2",
-        "type": "issue"
+        "title": "Understanding The Latest Health Care Changes",
+        "url": "http://www.example.com/conversations/2",
+        "type": "conversation"
       }
     ]
     """
@@ -53,14 +53,14 @@ Feature:
     """
     [
       {
-        "id": 2,
-        "title": "Understanding The Latest Health Care Changes",
-        "url": "http://www.example.com/conversations/2"
-      },
-      {
         "id": 3,
         "title": "Obamacare Pushes on Through Despite Antagonists",
         "url": "http://www.example.com/conversations/3"
+      },
+      {
+        "id": 2,
+        "title": "Understanding The Latest Health Care Changes",
+        "url": "http://www.example.com/conversations/2"
       }
     ]
     """

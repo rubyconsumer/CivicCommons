@@ -13,11 +13,8 @@ class Api::SubscribedItems
 
 
   def self.for_person(person, request)
-    subscriptions = if request['type']
-                      person.subscriptions.where(subscribable_type: request['type'])
-                    else
-                      person.subscriptions
-                    end
+    subscriptions = person.subscriptions.order('subscriptions.created_at DESC')
+    subscriptions = subscriptions.where(subscribable_type: request['type']) if request['type']
 
     subscriptions.map do |subscription|
       subscription = SubscriptionPresenter.new(subscription, request)

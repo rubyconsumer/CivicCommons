@@ -5,7 +5,7 @@ class IssuesController < ApplicationController
   # GET /issues
   # GET /issues.xml
   def index
-    @search = Issue.sort(params[:sort]).search(params[:search])
+    @search = Issue.sort(params[:sort])
     @issues = @search.paginate(:page => params[:page], :per_page => 20)
 
     @regions = Region.all

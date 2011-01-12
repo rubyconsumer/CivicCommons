@@ -8,19 +8,19 @@ describe IssuesController do
   describe "GET index" do
     it "assigns all issues as @issues" do
       result = [mock_issue]
-      Issue.stub(:search).and_return(result)
+      Issue.stub(:sort).and_return(result)
       result.stub(:all).and_return(result)
-      
+
       get :index
       assigns(:issues).should == [mock_issue]
     end
   end
 
   describe "GET show" do
-    before(:each) do 
+    before(:each) do
       @person = Factory.create(:normal_person)
-      @controller.stub(:current_person).and_return(@person)      
-    end    
+      @controller.stub(:current_person).and_return(@person)
+    end
     it "assigns the requested issue as @issue" do
       Issue.stub(:find).with("37") { mock_issue }
       get :show, :id => "37"
@@ -28,17 +28,17 @@ describe IssuesController do
     end
     it "records a visit to the issue passing the current user" do
       Issue.stub(:find).with("37") { mock_issue }
-      mock_issue.should_receive(:visit!).with(@person.id)      
+      mock_issue.should_receive(:visit!).with(@person.id)
       get :show, :id => "37"
-    end    
+    end
   end
 
   describe "GET new" do
-    before(:each) do 
+    before(:each) do
       @person = Factory.create(:admin_person)
-      @controller.stub(:current_person).and_return(@person)      
-    end    
-    
+      @controller.stub(:current_person).and_return(@person)
+    end
+
     it "assigns a new issue as @issue" do
       Issue.stub(:new) { mock_issue }
       get :new
@@ -47,11 +47,11 @@ describe IssuesController do
   end
 
   describe "GET edit" do
-    before(:each) do 
+    before(:each) do
       @person = Factory.create(:admin_person)
-      @controller.stub(:current_person).and_return(@person)      
-    end    
-    
+      @controller.stub(:current_person).and_return(@person)
+    end
+
     it "assigns the requested issue as @issue" do
       Issue.stub(:find).with("37") { mock_issue }
       get :edit, :id => "37"
@@ -60,10 +60,10 @@ describe IssuesController do
   end
 
   describe "POST create" do
-    before(:each) do 
+    before(:each) do
       @person = Factory.create(:admin_person)
-      @controller.stub(:current_person).and_return(@person)      
-    end    
+      @controller.stub(:current_person).and_return(@person)
+    end
 
     describe "with valid params" do
       it "assigns a newly created issue as @issue" do
@@ -96,10 +96,10 @@ describe IssuesController do
   end
 
   describe "PUT update" do
-    before(:each) do 
+    before(:each) do
       @person = Factory.create(:admin_person)
-      @controller.stub(:current_person).and_return(@person)      
-    end    
+      @controller.stub(:current_person).and_return(@person)
+    end
 
     describe "with valid params" do
       it "updates the requested issue" do
@@ -138,11 +138,11 @@ describe IssuesController do
   end
 
   describe "DELETE destroy" do
-    before(:each) do 
+    before(:each) do
       @person = Factory.create(:admin_person)
-      @controller.stub(:current_person).and_return(@person)      
-    end    
-    
+      @controller.stub(:current_person).and_return(@person)
+    end
+
     it "destroys the requested issue" do
       Issue.should_receive(:find).with("37") { mock_issue }
       mock_issue.should_receive(:destroy)
