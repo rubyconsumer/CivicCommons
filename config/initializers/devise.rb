@@ -28,6 +28,7 @@ Devise.setup do |config|
 
   # Tell if authentication through HTTP Basic Auth is enabled. True by default.
   # config.http_authenticatable = true
+  config.http_authenticatable_on_xhr = false
 
   # The realm used in Http Basic Authentication
   # config.http_authentication_realm = "Application"
@@ -123,6 +124,7 @@ Devise.setup do |config|
   # If you have any extra navigational formats, like :iphone or :mobile, you
   # should add them to the navigational formats lists. Default is [:html]
   # config.navigational_formats = [:html, :iphone]
+  config.navigational_formats = [:html, :js]
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not (yet) supported by Devise,

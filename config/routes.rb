@@ -1,8 +1,12 @@
 Civiccommons::Application.routes.draw do
 
   devise_for :people,
-             :controllers => { :registrations => 'registrations', :confirmations => 'confirmations' },
+             :controllers => { :registrations => 'registrations', :confirmations => 'confirmations', :sessions => 'sessions' },
              :path_names => { :sign_in => 'login', :sign_out => 'logout', :password => 'secret', :confirmation => 'verification', :registration => 'register', :sign_up => 'new' }
+
+  devise_scope :person do
+    match '/people/ajax_login', :to=>'sessions#ajax_create', :via=>[:post]
+  end
 
   resources :ratings
 

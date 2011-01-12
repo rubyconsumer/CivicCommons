@@ -16,7 +16,12 @@ class ApplicationController < ActionController::Base
     if current_person.nil?
       if request.xhr?
         @requested_url = request.url
-        render 'devise/sessions/new_in_modal'
+        render :partial => 'sessions/new'
+     #   
+     #   respond_to do |format|
+     #     format.js { render 'devise/sessions/new_in_modal' }
+     #     format.html { render :partial => 'devise/sessions/new' }
+     #   end
       else
         redirect_to new_person_session_url
       end

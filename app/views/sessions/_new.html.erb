@@ -1,9 +1,10 @@
 <p>
 Please login to continue. If you don't have an account, please <%= link_to 'register', new_person_registration_path %>.
 </p>
-<%= form_for(:person, :url => person_session_path, :remote => true) do |f| %>
+<%= form_for(:person, :url => '/people/ajax_login', :remote => true, :html => {:id => 'ajax-login-form'}) do |f| %>
+  <p class="validation-error"></p>
   <fieldset class="form-group">
-    <%= hidden_field_tag 'requested_url', requested_url %>
+    <%= hidden_field_tag 'requested_url', @requested_url %>
     <div class="form-block">
       <%= f.label :email, 'Email:' %>
       <%= f.text_field :email %>
