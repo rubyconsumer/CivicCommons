@@ -1,4 +1,6 @@
 class SubscriptionsController < ApplicationController
+  before_filter :require_user
+
   def subscribe
     Rails.logger.info("We are in the ajax subscribe.")
     
