@@ -1,4 +1,7 @@
 <% if person_signed_in? %>
+    $('#login-status')
+      .html('<%= escape_javascript( render :partial => 'layouts/logged_in' ) %>')
+      .removeClass('signed-out');
   $.ajax({
     url: lastAjaxSettings.url,
     data: lastAjaxSettings.data,
