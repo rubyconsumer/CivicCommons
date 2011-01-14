@@ -1,7 +1,7 @@
 require 'bcrypt'
 
 class PasswordSaltValidator < ActiveModel::Validator
-  
+
   # Ensure the salt is a valid bcrypt salt since the salt can be assigned
   # via People Aggregator API updates.
   # NOTE this is a very leaky abstraction in that it assumes BCrypt is the

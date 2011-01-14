@@ -44,6 +44,14 @@ class Person < ActiveRecord::Base
     :default_url => '/images/avatar_70.gif',
     :path => ":attachment/:id/:style/:filename"
 
+  validates_attachment_content_type :avatar,
+                                    :content_type => %w(image/jpeg image/gif image/png image/jpg image/x-png image/pjpeg),
+                                    :message => "Not a valid image file."
+  process_in_background :avatar
+
+  def avatar_exists
+    self.avatar.exists?
+  end
 
   scope :participants_of_issue, lambda{ |issue|
       joins(:conversations => :issues).where(['issue_id = ?',issue.id]).select('DISTINCT(people.id),people.*') if issue
@@ -236,12 +244,6 @@ class Person < ActiveRecord::Base
 
   def avatar_url_without_timestamp(style='')
     self.avatar.url(style).gsub(/\?\d+$/, '')
-  end
-
-  def validate_image_type
-    if self.avatar
-      Person.validates_attachment_content_type :avatar, :content_type => %w(image/jpeg image/gif image/png image/jpg image/x-png image/pjpeg)
-    end
   end
 
   # Implement Marketable method

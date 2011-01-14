@@ -1,6 +1,15 @@
 require 'spec_helper'
 
 describe Person do
+  subject { Factory.build(:normal_person) }
+
+  it { should be_valid }
+  it { should have_attached_file :avatar }
+  it { should validate_attachment_content_type(:avatar).allowing(["image/gif", "image/jpeg", "image/png"])
+                .rejecting(['text/plain']) }
+end
+
+describe Person do
 
   describe "when parsing the name" do
     it "should parse simple name" do
@@ -8,13 +17,13 @@ describe Person do
       first.should == "John"
       last.should == "Doe"
     end
-    
+
     it "should have blank last name when missing" do
       first, last = Person.parse_name("John")
       first.should == "John"
       last.should == ""
     end
-    
+
     it "should handle complex last name" do
       first, last = Person.parse_name("John van Buren")
       first.should == "John"
@@ -48,7 +57,7 @@ describe Person do
       person = given_a_person_with_name "Wendy"
       Person.find_all_by_name("Wendy").should == [person]
     end
-    
+
     it "should find when first and last name" do
       person = given_a_person_with_name "Wendy Smith"
       Person.find_all_by_name("Wendy Smith").should == [person]
@@ -59,7 +68,7 @@ describe Person do
       Person.find_all_by_name("Wendy van Buren").should == [person]
     end
   end
-  
+
   describe "when setting the name" do
     it "should split the entry into first name and last name" do
       person = Factory.create(:normal_person)
@@ -68,36 +77,36 @@ describe Person do
       person.last_name.should == "Doe"
     end
   end
-  
+
   context "when setting the email address" do
     it "should not allow emails that are too short" do
       person = Factory.build(:normal_person, :email => "a@b.c")
       person.valid?.should be_false
       person.should have_validation_error(:email, /please use a longer email address/)
     end
-    
+
     it "should not allow emails that are too long" do
       person = Factory.build(:normal_person, :email => "1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890@1234567890b.c")
       person.valid?.should be_false
       person.should have_validation_error(:email, /please use a shorter email address/)
     end
   end
-  
+
   describe "when displaying a name" do
-    it "should respect case of name entered by person" do 
+    it "should respect case of name entered by person" do
       person = Factory.create(:normal_person)
       person.first_name = "ektor"
       person.last_name = "van capsula"
       person.name.should == "ektor van capsula"
     end
-    
+
     it "should display names without leading spaces when the first name is missing" do
       person = Factory.create(:normal_person)
       person.first_name = ""
       person.last_name = "van capsula"
       person.name.should == "van capsula"
     end
-    
+
     it "should display names without trailing spaces when the last name is missing" do
       person = Factory.create(:normal_person)
       person.first_name = "ektor"
@@ -144,13 +153,13 @@ describe Person do
       mailing.to.should == [@person.email]
       mailing.subject.should == "Confirmation instructions"
     end
-    
+
     it "should not send a welcome email" do
       given_a_new_user_registered
       mailing = ActionMailer::Base.deliveries.last
       mailing.subject.should_not == "Welcome to The Civic Commons"
     end
-    
+
     it "should send a notification email to register@civiccommons.com" do
       given_a_new_user_registered
       mailing = ActionMailer::Base.deliveries.last
@@ -164,15 +173,15 @@ describe Person do
     it "should send a welcome email" do
       ActionMailer::Base.deliveries = []
       person = Factory.create(:normal_person)
-      
+
       mailing = ActionMailer::Base.deliveries.last
       mailing.subject.should_not == "Welcome to The Civic Commons"
-      
+
       person.confirmed_at = Time.now
       person.save
-      
+
       person.confirmed_at.should_not be_blank
-      
+
       mailing = ActionMailer::Base.deliveries.last
       mailing[:from].to_s.should == Civiccommons::Config.devise_email
       mailing.to.should == [person.email]
@@ -210,7 +219,7 @@ describe Person do
       person.encrypted_password.should == encrypted_before
       person.password_salt.should == salt_before
     end
-    
+
     it "skips encrypted password and salt when encrypted password is missing" do
       person = Factory.create(:normal_person)
       encrypted_before = person.encrypted_password
@@ -221,7 +230,7 @@ describe Person do
       person.encrypted_password.should == encrypted_before
       person.password_salt.should == salt_before
     end
-    
+
     it "strips trailing $ from password_salt and updates encrypted password and salt" do
       person = Factory.create(:normal_person)
 
@@ -230,12 +239,12 @@ describe Person do
 
       encrypted_password = Devise::Encryptors::Bcrypt.
         digest("testpass", 10, password_salt, pepper)
-      
+
       person.api_update(:password_salt => "#{password_salt}$",
                         :encrypted_password => encrypted_password)
 
       person.save.should be_true
-      
+
       person.password_salt.should == password_salt
       person.encrypted_password.should == encrypted_password
 
@@ -244,7 +253,7 @@ describe Person do
 
     it "should have error on invalid password salt" do
       person = Factory.create(:normal_person)
-      
+
       person.api_update(:password_salt => "$2a$10$95c0ac175c8$",
                         :encrypted_password =>
                         "$2a$10$95c0ac175c8566911bb03uvHgL7PXXveLmPKg4gZ7K/md5a5aXD4m")
@@ -252,13 +261,13 @@ describe Person do
       person.save.should be_false
       person.errors[:password_salt].should_not be_nil
     end
-    
+
   end
 
   describe "upon password reset" do
     it "should call people aggregator with update when valid passwords" do
       PeopleAggregator::Account.should_receive(:update).once
-      
+
       person = Factory.create(:normal_person)
       person.send(:generate_reset_password_token!)
 
@@ -267,7 +276,7 @@ describe Person do
 
     it "should not call people aggregator with update when passwords to not match" do
       PeopleAggregator::Account.should_not_receive(:update)
-      
+
       person = Factory.create(:normal_person)
       person.send(:generate_reset_password_token!)
 
@@ -276,7 +285,7 @@ describe Person do
 
     it "should not call people aggregator with update when invalid password" do
       PeopleAggregator::Account.should_not_receive(:update)
-      
+
       person = Factory.create(:normal_person)
       person.send(:generate_reset_password_token!)
 

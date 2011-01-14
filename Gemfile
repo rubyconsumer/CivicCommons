@@ -43,6 +43,8 @@ end
 
 gem 'devise', '1.1.2'
 
-gem 'paperclip'
+gem 'shoulda'
+gem 'paperclip', "2.3.8"
+gem 'delayed_paperclip'
 gem 'aws-s3'
 gem 'nokogiri'

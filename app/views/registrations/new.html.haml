@@ -13,16 +13,16 @@
     terms.find("input.submit").click(function(){
       person_form.submit();
     });
-    
+
   });
 .feature-mast
   .wrapper
     .content-containter
       %h1 Sign up
       %p
-        Want to join the conversation? Lets get the formalities out of the way. 
+        Want to join the conversation? Lets get the formalities out of the way.
       %p
-        We're still in beta, so you'll need a code to get started.  Do you need a code?  
+        We're still in beta, so you'll need a code to get started.  Do you need a code?
         = link_to 'Contact us', '/contact-us'
 .wrapper
   .main.section
@@ -54,12 +54,13 @@
           -# http://groups.google.com/group/paperclip-plugin/browse_thread/thread/eb08ef344c6b9a68
           -# Errors end up on :avatar_file_name and not :avatar which do not
           -# get automagically picked up by Rails Field Errors
-          - if form_presenter.errors[:avatar_file_name].any?
+          - if form_presenter.errors[:avatar_file_name].any? || form_presenter.errors[:avatar_content_type].any?
             %span.field-with-error
               = f.file_field :avatar, :class => "textbox"
             %span.validation-error
               %nbsp
-              = form_presenter.errors[:avatar_file_name].join(", ")
+              = form_presenter.errors[:avatar_file_name].join(", ")    if form_presenter.errors[:avatar_file_name].any?
+              = form_presenter.errors[:avatar_content_type].join(", ") if form_presenter.errors[:avatar_content_type].any?
           - else
             = f.file_field :avatar, :class => "textbox"
       %fieldset.form-group
