@@ -26,10 +26,10 @@ jQuery(function ($){
         });
       })
       .bind('ajax:loading', function(){
-        $('#contribution-form-container').mask('Loading...');
+        $(this).mask('Loading...');
       })
       .bind('ajax:complete', function(){
-        $('#contribution-form-container').unmask();
+        $(this).unmask();
       })
       .bind("ajax:success", function(evt, data, status, xhr) {
         try {

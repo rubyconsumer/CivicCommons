@@ -1,0 +1,1 @@
+<%= render :partial => ( contribution.is_a?(SuggestedAction) ? 'issues/contributions/suggested_action' : 'issues/contributions/media_contribution' ), :locals => {:contribution => contribution} %>

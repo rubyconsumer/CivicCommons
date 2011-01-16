@@ -1,12 +1,24 @@
-var $forms = $('.contribution-form');
-$('#media-contributions').prepend("<%= escape_javascript(
-  render :partial => 'media_contribution', :locals => {:contribution => @contribution}
+<% if @contribution.is_a?(SuggestedAction) %>
+    var $container = $('#suggested-action-form-container'),
+        $target = $('#suggested-actions');
+<% else %>
+    var $container = $('#media-contribution-form-container'),
+        $target = $('#media-contributions');
+<% end %>
+
+var $forms = $container.find('form.contribution-form');
+
+$target.prepend("<%= escape_javascript(
+  render :partial => 'issues/contributions/contribution_template', :locals => {:contribution => @contribution}
 ) %>");
 
 $forms.find('input:text,textarea').val('');
 $forms.find('.errors').empty();
 
-$forms.hide();
-$('p#resource-contributions').show('slow');
-
-$('#media-contribution-<%= @contribution.id %>').scrollTo();
+<% unless @contribution.is_a?(SuggestedAction) %>
+  $forms.hide();
+  $('p#resource-contributions').show('slow');
+  $('#media-contribution-<%= @contribution.id %>').scrollTo();
+<% else %>
+  $('#suggested-action-<%= @contribution.id %>').scrollTo();
+<% end %>
