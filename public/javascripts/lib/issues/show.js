@@ -12,45 +12,52 @@ jQuery(function ($){
       }
     });
 
-  $('form.contribution-form')
-    .live('submit', function(){
-      $(this).find('input[placeholder], textarea[placeholder]').each( function() {
-        $this = $(this);
-        if( $this.val() == $this.attr('placeholder') ){
-          $this.val('');
-        }
-      });
-    })
-    .live("ajax:success", function(evt, data, status, xhr) {
-      try {
-        var json = $.parseJSON(data); // throws error if data is not JSON
-        if("errors" in json) {return $(this).trigger('ajax:failure', xhr, status, data);} // only gets to here if JSON parsing was successful and has error key
-      } catch(err) {  }
-      //location.reload();
-      
-    })
-    .live("ajax:failure", function(evt, xhr, status, error) {
-      var errors = $.parseJSON(xhr.responseText)['errors'].join("<br/>");
-      $(this).find(".errors").html(errors);
-    });
+  
 
 	$(document).ready(function(){
 
-      var toggleForm = function(type) {
-        $('p#resource-contributions > a.' + type + '-link').click(function() {
-          $('p#resource-contributions').hide();
-          var formSelector = 'form#new-' + type + '-contribution';
-          $(formSelector).show('slow');
-          $(formSelector + ' button.cancel').live('click', function() {
-            $(formSelector).hide();
-            $('p#resource-contributions').show();
-            return false;
-          });
+    $('form.contribution-form')
+      .bind('submit', function(){
+        $(this).find('input[placeholder], textarea[placeholder]').each( function() {
+          $this = $(this);
+          if( $this.val() == $this.attr('placeholder') ){
+            $this.val('');
+          }
+        });
+      })
+      .bind('ajax:loading', function(){
+        $('#contribution-form-container').mask('Loading...');
+      })
+      .bind('ajax:complete', function(){
+        $('#contribution-form-container').unmask();
+      })
+      .bind("ajax:success", function(evt, data, status, xhr) {
+        try {
+          var json = $.parseJSON(data); // throws error if data is not JSON
+          if("errors" in json) {return $(this).trigger('ajax:failure', xhr, status, data);} // only gets to here if JSON parsing was successful and has error key
+        } catch(err) {  }
+        // Don't do anything (will be handled by create_contribution.js.erb)
+      })
+      .bind("ajax:failure", function(evt, xhr, status, error) {
+        var errors = $.parseJSON(xhr.responseText)['errors'].join("<br/>");
+        $(this).find(".errors").html(errors);
+      });
+
+    var toggleForm = function(type) {
+      $('p#resource-contributions > a.' + type + '-link').click(function() {
+        $('p#resource-contributions').hide();
+        var formSelector = 'form#new-' + type + '-contribution';
+        $(formSelector).show('slow');
+        $(formSelector + ' button.cancel').live('click', function() {
+          $(formSelector).hide();
+          $('p#resource-contributions').show();
           return false;
         });
-      };
-      toggleForm("url");
-      toggleForm("file");
-      toggleForm("video");
+        return false;
+      });
+    };
+    toggleForm("url");
+    toggleForm("file");
+    toggleForm("video");
 	});
 });

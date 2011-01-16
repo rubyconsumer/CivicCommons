@@ -15,6 +15,22 @@ jQuery(function ($) {
     alert('Login failed!');
   })
 
+  $.fn.extend({
+    scrollTo: function(){
+      var $this = this,
+          top = this.offset().top - 200, // 100px top padding in viewport,
+          origBG = this.css('background') || 'transparent',
+          scrolled = false; // Hack since 'html,body' is the only cross-browser compatible way to scroll window
+                            // which causes callback to run twice.
+
+      $('html,body').animate({scrollTop: top}, 1000, function (){
+        if ( ! scrolled ) { $this.effect('highlight', {color: '#c5d36a'}, 3000); }
+        scrolled = true;
+      });
+      return $this;
+    }
+  });
+
 });
 
 $(document).ready(function(){

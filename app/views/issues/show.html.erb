@@ -61,25 +61,14 @@
         <h3>Conversations about this issue:</h3>
         <%= render :partial => '/conversations/conversation_pager' %>
       </div><!-- /.main-content -->
-      <div class='aside supplementary'>
-        <% @media_contributions.each do |contribution| %>
-          <a name="contribution<%= contribution.id %>"></a>
-          <div class="dnld <%= media_style(contribution) %>">
-            <p><strong><%= media_link_info(contribution) %></strong></p>
-            <p><em><%= contribution.person.name %></em>
-              <% if contribution.content %>
-              &ndash; <%= contribution.content %>
-              <% end %>
-            </p>
-            <p>
-              <%= link_to 'Delete', contribution_path(contribution), :class => 'delete', :remote => true, :method => :delete, :confirm => "Are you sure you want to delete this?" if contribution.editable_by?(current_person) %>
-            </p>
-          </div>
-        <% end %>
-        <p id="resource-contributions"><a href="#" class="file-link button">File</a><a class="file-link button" href="#">Image</a><a class="video-link button" href="#">Video</a><a class="url-link button" href="#">Link</a></p>
-        <%= render :partial => "new_file_contribution" %>
-        <%= render :partial => "new_url_contribution" %>
-        <%= render :partial => "new_embedded_snippet_contribution" %>
+      <div id='media-contributions' class='aside supplementary'>
+        <%= render :partial => "media_contribution", :collection => @media_contributions, :as => :contribution %>
+        <div id="contribution-form-container">
+          <p id="resource-contributions"><a href="#" class="file-link button">File</a><a class="file-link button" href="#">Image</a><a class="video-link button" href="#">Video</a><a class="url-link button" href="#">Link</a></p>
+          <%= render :partial => "new_file_contribution" %>
+          <%= render :partial => "new_url_contribution" %>
+          <%= render :partial => "new_embedded_snippet_contribution" %>
+        </div>
 
         <div class="mod">
           <h3>People active in this issue</h3>

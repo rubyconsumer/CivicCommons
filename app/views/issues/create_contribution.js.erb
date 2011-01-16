@@ -1,0 +1,12 @@
+var $forms = $('.contribution-form');
+$('#media-contributions').prepend("<%= escape_javascript(
+  render :partial => 'media_contribution', :locals => {:contribution => @contribution}
+) %>");
+
+$forms.find('input:text,textarea').val('');
+$forms.find('.errors').empty();
+
+$forms.hide();
+$('p#resource-contributions').show('slow');
+
+$('#media-contribution-<%= @contribution.id %>').scrollTo();
