@@ -1,7 +1,17 @@
 <% if person_signed_in? %>
-    $('#login-status')
-      .html('<%= escape_javascript( render :partial => 'layouts/logged_in' ) %>')
-      .removeClass('signed-out');
+
+  // Ideally, this would check to see if the last Ajax request was called via colorbox.
+  // Not sure how to do that at the moment, so instead we'll assume that colorbox
+  // requests are those that are requested via HTML, and so we'll close the colorbox
+  // if the login is what created it, meaning the previous request was likely JS.
+  if ( lastAjaxSettings.dataType == 'script' ) {
+    $.colorbox.close();
+  }
+
+  $('#login-status')
+    .html('<%= escape_javascript( render :partial => 'layouts/logged_in' ) %>')
+    .removeClass('signed-out');
+
   $.ajax({
     url: lastAjaxSettings.url,
     data: lastAjaxSettings.data,
@@ -11,6 +21,7 @@
     success: lastAjaxSettings.success,
     complete: lastAjaxSettings.complete,
     error: lastAjaxSettings.error
+
   });
 <% else %>
   // Devise populates login error message in flash.alert

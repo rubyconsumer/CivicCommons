@@ -50,7 +50,7 @@
             <% unless contribution.person.nil? %>
               <p>Submitted by: <a href="#link-to-PA-profile"><%= contribution.person.name %></a></p>
             <% end %>
-              <p><%= link_to 'Delete', contribution_path(contribution), :class => 'delete' if contribution.editable_by?(current_person) %></p>
+            <p><%= link_to 'Delete', contribution_path(contribution), :class => 'delete', :remote => true, :method => :delete, :confirm => "Are you sure you want to delete this?" if contribution.editable_by?(current_person) %></p>
             </li>
           <% end %>
         </ol>
@@ -70,16 +70,16 @@
               <% if contribution.content %>
               &ndash; <%= contribution.content %>
               <% end %>
-              </p>
-            <p><%= link_to 'Delete', contribution_path(contribution), :class => 'delete' if contribution.editable_by?(current_person) %></p>
+            </p>
+            <p>
+              <%= link_to 'Delete', contribution_path(contribution), :class => 'delete', :remote => true, :method => :delete, :confirm => "Are you sure you want to delete this?" if contribution.editable_by?(current_person) %>
+            </p>
           </div>
         <% end %>
-        <% if person_signed_in? %>
-          <p id="resource-contributions"><a href="#" class="file-link button">File</a><a class="file-link button" href="#">Image</a><a class="video-link button" href="#">Video</a><a class="url-link button" href="#">Link</a></p>
-          <%= render :partial => "new_file_contribution" %>
-          <%= render :partial => "new_url_contribution" %>
-          <%= render :partial => "new_embedded_snippet_contribution" %>
-        <% end %>
+        <p id="resource-contributions"><a href="#" class="file-link button">File</a><a class="file-link button" href="#">Image</a><a class="video-link button" href="#">Video</a><a class="url-link button" href="#">Link</a></p>
+        <%= render :partial => "new_file_contribution" %>
+        <%= render :partial => "new_url_contribution" %>
+        <%= render :partial => "new_embedded_snippet_contribution" %>
 
         <div class="mod">
           <h3>People active in this issue</h3>
@@ -106,7 +106,7 @@
                   <%= avatar_tag(suggested_action.person, :style_name => :standard, :class => "callout", :width => 40, :height => 40) %>
                   <p><strong><%= link_to suggested_action.person.name, suggested_action.person %></strong> suggests:</p>
                   <p><%= suggested_action.content %></p>
-                  <p><%= link_to 'Delete', contribution_path(suggested_action), :class => 'delete button' if suggested_action.editable_by?(current_person) %></p>
+                  <p><%= link_to 'Delete', contribution_path(suggested_action), :class => 'delete button', :remote => true, :method => :delete, :confirm => "Are you sure you want to delete this?" if suggested_action.editable_by?(current_person) %></p>
                 </li>
               <% end %>
             </ol>
