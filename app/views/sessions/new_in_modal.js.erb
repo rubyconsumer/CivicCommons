@@ -5,6 +5,7 @@ $.colorbox({
           )
   ) %>",
   onComplete: function(){
-    $.colorbox.resize({height: 350});
+    $('#colorbox').find('[placeholder]').placeholder({className: 'placeholder'});
+    $.colorbox.resize();
   }
 });

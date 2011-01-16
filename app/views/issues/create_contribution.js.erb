@@ -14,6 +14,7 @@ $target.prepend("<%= escape_javascript(
 
 $forms.find('input:text,textarea').val('');
 $forms.find('.errors').empty();
+$forms.find('[placeholder]').placeholder({className: 'placeholder'});
 
 <% unless @contribution.is_a?(SuggestedAction) %>
   $forms.hide();

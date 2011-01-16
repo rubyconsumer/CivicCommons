@@ -1,3 +1,4 @@
+<div id="ajax-login-container">
 <p>
 Please login to continue. If you don't have an account, please <%= link_to 'register', new_person_registration_path %>.
 </p>
@@ -7,7 +8,7 @@ Please login to continue. If you don't have an account, please <%= link_to 'regi
     <%= hidden_field_tag 'requested_url', @requested_url %>
     <div class="form-block">
       <%= f.label :email, 'Email:' %>
-      <%= f.text_field :email %>
+      <%= f.text_field :email, :placeholder => "me@johnnyappleseed.com" %>
     </div>
     <div class="form-block">
       <%= f.label :password, 'Password:' %>
@@ -20,3 +21,4 @@ Please login to continue. If you don't have an account, please <%= link_to 'regi
     <%= link_to 'cancel', '', :onclick => '$.colorbox.close(); return false;', :class => 'cancel' %>
   </fieldset>
 <% end %>
+</div>

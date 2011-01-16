@@ -589,6 +589,9 @@ font-size: .75em;
 margin-bottom: .2em;
 text-transform: uppercase;
 }
+div#ajax-login-container {
+padding: 20px;
+}
 .important {
 background: #dbedf5;
 border-left: 1px solid #d9dade;
