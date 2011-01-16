@@ -56,6 +56,8 @@
         </ol>
         <% if person_signed_in? %>
           <p><%= link_to("Share what's on your mind", pa_new_issue_contribution_url(current_person, @issue), :class => 'button') %> </p>
+        <% else %>
+          <p><%= link_to("Login to share what's on your mind", new_person_session_path, :class => 'button') %></p>
         <% end %>
 
         <h3>Conversations about this issue:</h3>
