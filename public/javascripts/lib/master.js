@@ -7,6 +7,8 @@ jQuery(function ($) {
     _gaq.push(['_trackPageview', settings.url]);
     if ( settings.url != "/people/ajax_login" ) {
       lastAjaxSettings = settings;
+      lastAjaxEvent = event;
+      lastAjaxIsColorbox = $('#colorbox').is(':visible');
     }
   });
 
