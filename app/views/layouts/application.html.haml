@@ -116,7 +116,7 @@
               %li
                 = link_to 'Partners', '/partners'
               %li
-                %a{:href =>"#{pa_link('press')}", :title => "In the news"} In The News
+                = link_to 'In The News', '/press'
               %li
                 = link_to 'Contact us', '/contact-us'
     = yield :main_body
@@ -136,7 +136,7 @@
           %li
             = link_to 'Partners', '/partners'
           %li
-            %a{:href =>"#{pa_link('press')}", :title => "In the news"} In The News
+            = link_to 'In The News', '/press'
           %li
             = link_to 'Contact us', '/contact-us'
         %p 
