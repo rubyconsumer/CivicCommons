@@ -1324,6 +1324,36 @@ a.button.moderate, input.submit.moderate {background-color: #e74d4d;}
 a.button.moderate:hover, input.submit.moderate:hover {background-color: #d83535;}
 
 /*-----------------------------------------------
+=In The News styles
+-----------------------------------------------*/
+.in-the-news-post {
+border-bottom: 1px solid #CDCDCD;
+margin-bottom: 0.6em;
+}
+
+.in-the-news-post .decoration {
+font-size: 1.8em;
+line-height: 0.8em;
+text-align: center;
+}
+
+.in-the-news-post h2 {
+font-size: 1.1em;
+}
+
+.in-the-news-post .date {
+border-bottom: 1px solid #CDCDCD;
+font-size: 1.1em;
+font-weight: bold;
+margin-bottom: 0.8em;
+padding-bottom: 0.5em;
+}
+
+.in-the-news-post .source {
+display: block;
+}
+
+/*-----------------------------------------------
 =Community page styles
 -----------------------------------------------*/
 .community {
