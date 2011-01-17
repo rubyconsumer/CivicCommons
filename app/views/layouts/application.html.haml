@@ -83,16 +83,7 @@
         #header-utility
           - if current_person
             #login-status
-              .offset-2
-                = user_profile(current_person).html_safe
-                %h4
-                  %a 
-                    = text_profile(current_person).html_safe
-                %p{:style=>'margin-bottom: 0;'}
-                  = link_to_settings(current_person).html_safe
-                  %br 
-                  = link_to "Logout", destroy_person_session_path, :class => 'user-link'
-                  %img{:src=> "#{pa_link('cc-login.php')}"}
+              = render :partial => 'layouts/logged_in'
           - else
             #login-status.signed-out
               .offset-2

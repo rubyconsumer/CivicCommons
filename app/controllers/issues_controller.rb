@@ -1,6 +1,6 @@
 class IssuesController < ApplicationController
   before_filter :verify_admin, :only=>[:new, :create, :edit, :update, :destroy]
-  before_filter :authenticate_person!, :only => [:create_contribution]
+  before_filter :require_user, :only => [:create_contribution]
 
   # GET /issues
   # GET /issues.xml
@@ -83,7 +83,8 @@ class IssuesController < ApplicationController
 
     respond_to do |format|
       if @contribution.save
-        format.html { render :json => @contribution, :status => :created }
+        format.html { render :partial => 'media_contribution', :locals => {:contribution => @contribution}, :status => :created }
+        format.js
       else
         format.html { render :json => {:errors => @contribution.errors.full_messages }, :status => :unprocessable_entity }
       end

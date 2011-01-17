@@ -13,3 +13,6 @@ config/people_aggregator.yml
 **/.DS_Store
 .rvmrc
 .*.sw?
+*.*~
+*~
+.idea

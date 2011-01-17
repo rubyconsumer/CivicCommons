@@ -1,0 +1,11 @@
+$.colorbox({
+  html: "<%= escape_javascript(
+          raw(
+            render( :partial => 'sessions/new' )
+          )
+  ) %>",
+  onComplete: function(){
+    $('#colorbox').find('[placeholder]').placeholder({className: 'placeholder'});
+    $.colorbox.resize();
+  }
+});

@@ -1,5 +1,6 @@
 class ConversationsController < ApplicationController
   before_filter :verify_admin, :only=>[:new, :create, :edit, :update, :destroy]
+  before_filter :require_user, :only=>[:new_node_contribution, :preview_node_contribution, :confirm_node_contribution]
 
   # GET /conversations
   # GET /conversations.xml
@@ -75,7 +76,6 @@ class ConversationsController < ApplicationController
 
     respond_to do |format|
       format.js
-      format.html{ render :partial => "conversations/node_conversation", :layout => false}
     end
   end
 
@@ -156,6 +156,7 @@ class ConversationsController < ApplicationController
   # POST /conversations.xml
   def create
     ActiveRecord::Base.transaction do
+      @conversation = Conversation.new(params[:conversation])
       @conversation = Conversation.new(params[:conversation])
       #TODO: Fix this conversation issues creation since old conversation.issues= method has been destroyed
       #NOTE: Issues were previously defined as Conversation has_many Issues, but this is wrong, should be habtm

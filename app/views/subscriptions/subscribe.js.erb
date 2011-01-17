@@ -1,0 +1,3 @@
+$('#follow').replaceWith("<%= escape_javascript(
+  render :partial => 'subscribed', :locals => {:subscribable_type => params[:type], :subscribable_id => params[:id]}
+) %>");

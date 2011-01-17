@@ -1,28 +1,20 @@
 jQuery(function ($){
+
+  $('a.delete')
+    .live('ajax:success', function(evt, data, status, xhr){
+      $(this).closest('li,div.dnld').remove();
+    })
+    .live('ajax:failure', function(evt, xhr, status, error){
+      try {
+        alert( $.parseJSON(xhr.responseText)['base'] );
+      } catch(err) {
+        alert( 'Something went wrong. Please refresh the page and try again.');
+      }
+    });
+
+  
+
 	$(document).ready(function(){
-		$('a.delete').live('click',function(){
-			if ( confirm('Are you sure you want to delete this?' ) ){
-				var anchor = $(this);
-				$.ajax({
-					type: 'delete',
-					url: anchor.attr('href'),
-					complete: function(XMLHttpRequest, textStatus){
-						if(textStatus == 'success'){
-							//console.log(anchor);
-							to_remove = anchor.closest('li, div.dnld');
-							to_remove.remove();
-						}else{
-							alert( "something failed" );
-						}
-					},
-	        error: function (XMLHttpRequest, textStatus, errorThrown) {
-						var error = $.parseJSON(XMLHttpRequest.responseText)['base'];
-	          alert(error);
-	        }
-				});
-			}
-			return false;
-		});
 
     $('form.contribution-form')
       .bind('submit', function(){
@@ -33,33 +25,39 @@ jQuery(function ($){
           }
         });
       })
-      .live("ajax:success", function(evt, data, status, xhr) {
+      .bind('ajax:loading', function(){
+        $(this).mask('Loading...');
+      })
+      .bind('ajax:complete', function(){
+        $(this).unmask();
+      })
+      .bind("ajax:success", function(evt, data, status, xhr) {
         try {
           var json = $.parseJSON(data); // throws error if data is not JSON
           if("errors" in json) {return $(this).trigger('ajax:failure', xhr, status, data);} // only gets to here if JSON parsing was successful and has error key
         } catch(err) {  }
-        location.reload();
+        // Don't do anything (will be handled by create_contribution.js.erb)
       })
-      .live("ajax:failure", function(evt, xhr, status, error) {
+      .bind("ajax:failure", function(evt, xhr, status, error) {
         var errors = $.parseJSON(xhr.responseText)['errors'].join("<br/>");
         $(this).find(".errors").html(errors);
       });
 
-      var toggleForm = function(type) {
-        $('p#resource-contributions > a.' + type + '-link').click(function() {
-          $('p#resource-contributions').hide();
-          var formSelector = 'form#new-' + type + '-contribution';
-          $(formSelector).show('slow');
-          $(formSelector + ' button.cancel').live('click', function() {
-            $(formSelector).hide();
-            $('p#resource-contributions').show();
-            return false;
-          });
+    var toggleForm = function(type) {
+      $('p#resource-contributions > a.' + type + '-link').click(function() {
+        $('p#resource-contributions').hide();
+        var formSelector = 'form#new-' + type + '-contribution';
+        $(formSelector).show('slow');
+        $(formSelector + ' button.cancel').live('click', function() {
+          $(formSelector).hide();
+          $('p#resource-contributions').show();
           return false;
         });
-      };
-      toggleForm("url");
-      toggleForm("file");
-      toggleForm("video");
+        return false;
+      });
+    };
+    toggleForm("url");
+    toggleForm("file");
+    toggleForm("video");
 	});
 });
