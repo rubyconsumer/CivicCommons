@@ -56,6 +56,7 @@ Civiccommons::Application.routes.draw do
   get '/polls',             to: 'polls#index'
   post '/polls',            to: 'polls#create'
   get '/blog',              to: 'static_pages#blog',                as: 'blog'
+  get '/press',             to: 'static_pages#in_the_news'
 
   resources :conversations
   resources :regions   
