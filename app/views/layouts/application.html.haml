@@ -106,7 +106,7 @@
             %a{:href =>'/about', :title => "About Us"} About Us
             %ul
               %li 
-                %a{:href =>"#{pa_link(:home)}", :title => "Blog"} Blog
+                = link_to 'Blog', blog_path
               %li 
                 = link_to 'FAQ', '/faq'
               %li
@@ -124,7 +124,7 @@
       #footer-inner
         %ul.sub-nav
           %li
-            %a{:href =>"#{pa_link(:home)}", :title => "Blog"} Blog
+            = link_to 'Blog', blog_path
           %li 
             = link_to 'About Us', '/about'
           %li 
