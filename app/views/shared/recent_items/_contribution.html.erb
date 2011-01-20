@@ -19,7 +19,7 @@
 <% if contribution.issue && ! ( controller.controller_name == 'issues' && controller.action_name == 'show' ) %>
   <span class="posted">
     Posted on:
-    <%= link_to( contribution.issue.name, issue_path( contribution.issue ) ) %>
+    <%= link_to( contribution.issue.name, issue_node_path( contribution ) ) %>
   </span>
 <% elsif contribution.conversation %>
   <span class="posted">
