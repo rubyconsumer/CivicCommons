@@ -83,7 +83,7 @@ require 'spec_helper'
          it "returns the user's rating if the user has rated it" do
            @item.rate!(1,@person)
            scoped_item = model_type.with_user_rating(@person).find(@item)
-           scoped_item.user_rating.should == "1"
+           scoped_item.user_rating.should == 1
          end
          it "loads all records, even ones the user has not rated (ensures proper joins type used in scope)" do
            item_2 = Factory.create(model_type.to_s.underscore)
