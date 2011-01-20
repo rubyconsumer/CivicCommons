@@ -8,6 +8,7 @@ describe AvatarHelper do
     @registered_user.id = 13
     @invalid_registered_user = Factory.build(:registered_user, :first_name => "Someone", :last_name => "Bad")
     @invalid_registered_user.id = 4
+    @amazon_config = YAML.load_file( File.join(Rails.root, "config", "amazon_s3.yml"))[Rails.env]
   end
   
   context "link to profile" do
@@ -43,7 +44,7 @@ EOHTML
       helper.stub(:current_person).and_return(@me)
       helper.should_receive(:pa_link).with("user/#{@registered_user.people_aggregator_id}").and_return("http://pa.com/user/#{@registered_user.people_aggregator_id}?pa_token=sometoken")
       
-      @registered_user.avatar.url(:standard).gsub(/\?\d*/, '').should == "http://s3.amazonaws.com/cc-dev/avatars/13/standard/test_image.jpg"
+      @registered_user.avatar.url(:standard).gsub(/\?\d*/, '').should == "http://s3.amazonaws.com/#{@amazon_config['bucket']}/avatars/13/standard/test_image.jpg"
       @registered_user.avatar.stub(:url).and_return("http://avatar_url")
       
       helper.text_profile(@registered_user).should == <<-EOHTML
@@ -61,7 +62,7 @@ EOHTML
   
   context "profile image" do
     it "should display a profile image with the default size" do
-      @me.avatar.url(:standard).gsub(/\?\d*/, '').should == "http://s3.amazonaws.com/cc-dev/avatars/1/standard/test_image.jpg"
+      @me.avatar.url(:standard).gsub(/\?\d*/, '').should == "http://s3.amazonaws.com/#{@amazon_config['bucket']}/avatars/1/standard/test_image.jpg"
       
       @me.avatar.stub(:url).and_return("http://avatar_url")
       helper.profile_image(@me).should == "    <img src=\"http://avatar_url\" alt=\"My Self\" height=\"20\" width=\"20\" title=\"My Self\"/>\n"
