@@ -16,6 +16,21 @@ jQuery(function ($){
 
 	$(document).ready(function(){
 
+    selectResponseFromHash = function(){
+      var hash = window.location.hash.match(/^#node-([\d]+)/);
+
+      if ( hash && hash[1] ){
+        var responseId = hash[1],
+            $onPage = $('#contribution-' + responseId);
+
+        // Permalink to contribution already on page (e.g. TopLevelContribution)
+        if ( $onPage.size() > 0 ) {
+          return $onPage.scrollTo();
+        }
+      }
+    }
+    selectResponseFromHash();
+
     $('form.contribution-form')
       .bind('submit', function(){
         $(this).find('input[placeholder], textarea[placeholder]').each( function() {

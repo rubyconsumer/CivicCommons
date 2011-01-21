@@ -30,4 +30,8 @@ module IssuesHelper
       "http://" + issue.url
     end
   end
+
+  def issue_node_path(contribution)
+    issue_path(contribution.issue) + "#node-#{contribution.id}"
+  end
 end

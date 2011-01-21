@@ -19,7 +19,7 @@ $forms.find('[placeholder]').placeholder({className: 'placeholder'});
 <% unless @contribution.is_a?(SuggestedAction) %>
   $forms.hide();
   $('p#resource-contributions').show('slow');
-  $('#media-contribution-<%= @contribution.id %>').scrollTo();
+  $('#contribution-<%= @contribution.id %>').scrollTo();
 <% else %>
-  $('#suggested-action-<%= @contribution.id %>').scrollTo();
+  $('#contribution-<%= @contribution.id %>').scrollTo();
 <% end %>

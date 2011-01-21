@@ -1,4 +1,4 @@
-<li id="suggested-action-<%= contribution.id %>" class='offset-1'>
+<li id="contribution-<%= contribution.id %>" class='offset-1'>
   <%= avatar_tag(contribution.person, :style_name => :standard, :class => "callout", :width => 40, :height => 40) %>
   <p><strong><%= link_to contribution.person.name, contribution.person %></strong> suggests:</p>
   <p><%= contribution.content %></p>
