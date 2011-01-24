@@ -1,6 +1,11 @@
 require 'spec_helper'
 
 describe Conversation do
+  it { should have_many :contributions  }
+  it { should have_attached_file :image }
+end
+
+describe Conversation do
   describe "when retrieving all of the issues associated with a conversation" do
     before(:each) do
       @normal_person = Factory.create(:normal_person)
