@@ -99,7 +99,7 @@ class TopItem < ActiveRecord::Base
                  item_table[for_item_column_id].not_eq( nil )
                 )
             top_items = top_items.where( item_table[for_item_column_id].eq( for_item_id ) ) if for_item_id
-            top_items = top_items.where( options.collect{ |key,value| item_table[key].eq( value ) } )
+            top_items = top_items.where( options.collect{ |key,value| item_table[key].eq( value ) }.reduce(:and) ) if options.size > 0
           end
         end
       end
