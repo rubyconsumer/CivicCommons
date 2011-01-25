@@ -26,6 +26,7 @@ group :development do
   gem "hpricot"
   gem "ruby_parser"
   gem "engineyard"
+  gem "ruby-debug19"
 end
 
 group :test do
