@@ -367,7 +367,7 @@ describe Contribution do
         given_a_contribution(:ppl_agg_contribution)
         @contribution.destroy_by_user(@other_person).should be_false
       end
-      
+
     end
     describe "Link" do
       it "should be able to be deleted by admin" do
@@ -382,7 +382,38 @@ describe Contribution do
         given_a_contribution(:link)
         @contribution.destroy_by_user(@other_person).should be_false
       end
-      
     end
+
   end
+
+  context "Existing contribution, conversation, and issue" do
+
+     let(:contribution) {Contribution.new(content: "This is a contribution")}
+     let(:conversation) {Conversation.create(title: "I'm a conversation")}
+     let(:issue)        {Issue.create(name: "I'm an Issue")}
+
+     describe "Contribution#item_id" do
+       it "Retuns the id of the issue" do
+         issue.contributions << contribution
+         contribution.item_id.should == issue.id
+       end
+       it "Returns the id of the conversation" do
+         conversation.contributions << contribution
+         contribution.item_id.should == conversation.id
+       end
+     end
+
+     describe "Contribution#item_class" do
+       it "Returns 'Issue' if the item was contributed to an Issue" do
+         issue.contributions << contribution
+         contribution.item_class.should == issue.class.to_s
+       end
+       it "Returns 'Conversation' if the item was contributed to a conversation" do
+         conversation.contributions << contribution
+         contribution.item_class.should == conversation.class.to_s
+       end
+     end
+
+  end
+
 end

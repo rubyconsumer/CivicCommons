@@ -90,7 +90,11 @@ class Contribution < ActiveRecord::Base
   end
 
   def item_class
-    self.conversation.class.to_s || self.issue.class.to_s
+    if conversation
+      conversation.class.to_s
+    elsif issue
+      issue.class.to_s
+    end
   end
 
   # Is this contribution an Image? Default to false, override in
