@@ -27,7 +27,6 @@ Civiccommons::Application.routes.draw do
   resources :issues do
     post 'create_contribution', :on => :member
   end
-  resources :conversations
   resources :regions
   resources :links
 
@@ -43,6 +42,9 @@ Civiccommons::Application.routes.draw do
   match '/conversations/preview_node_contribution',    to: 'conversations#preview_node_contribution'
   match '/conversations/rate_contribution',            to: 'conversations#rate_contribution'
   post '/conversations/rate',                          to: 'conversations#rate'
+
+  resources :conversations
+
   post '/subscriptions/subscribe',                     to: 'subscriptions#subscribe'
   post '/subscriptions/unsubscribe',                   to: 'subscriptions#unsubscribe'
   get '/community',                                    to: 'community#index',                                 as: 'community'
