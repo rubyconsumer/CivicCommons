@@ -7,16 +7,12 @@ describe ContributionsController do
       { get: "/contributions/create_from_pa"}.should route_to(controller: 'contributions', action: 'create_from_pa')
     end
 
-    it "recognizes and generates #edit" do
-      { :get => "/contributions/1/edit" }.should route_to(:controller => "contributions", :action => "edit", :id => "1")
-    end
-
     it "recognizes and generates #update" do
-      { :put => "/contributions/1" }.should route_to(:controller => "contributions", :action => "update", :id => "1") 
+      { put: "/contributions/1" }.should route_to(controller: "contributions", action: "update", id: "1") 
     end
 
     it "recognizes and generates #destroy" do
-      { :delete => "/contributions/1" }.should route_to(:controller => "contributions", :action => "destroy", :id => "1") 
+      { delete: "/contributions/1" }.should route_to(controller: "contributions", action: "destroy", id: "1") 
     end
 
   end
