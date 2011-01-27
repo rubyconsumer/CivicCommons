@@ -1,25 +1,6 @@
 class ContributionsController < ApplicationController
   include ContributionsHelper
 
-  def show
-    @contribution = Contribution.find(params[:id])
-    @contribution.visit!((current_person.nil? ? nil : current_person.id))
-
-    respond_to do |format|
-      format.html
-      format.xml  { render :xml => @contribution }
-    end
-  end
-
-  def new
-    @contribution = Contribution.new
-
-    respond_to do |format|
-      format.html
-      format.xml  { render :xml => @contribution }
-    end
-  end
-
   def create_from_pa
     if params.has_key?(:issue_id)
       item = Issue.find(params[:issue_id])
@@ -38,24 +19,6 @@ class ContributionsController < ApplicationController
     contribution.save!
     redirect_to polymorphic_url(item)
 
-  end
-
-  def create
-    @contribution = Contribution.new(params[:contribution])
-
-    respond_to do |format|
-      if @contribution.save
-        format.html { redirect_to(@contribution, :notice => 'Contribution was successfully created.') }
-        format.xml  { render :xml => @contribution, :status => :created, :location => @contribution }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @contribution.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
-
-  def edit
-    @contribution = Contribution.find(params[:id])
   end
 
   def update
@@ -91,7 +54,6 @@ class ContributionsController < ApplicationController
     @contribution.moderate_contribution
     redirect_to conversation_path(@contribution.conversation)
   end
-
 
   def create_confirmed_contribution
     @contribution = Contribution.create_confirmed_node_level_contribution(params[:contribution], current_person)

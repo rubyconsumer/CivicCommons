@@ -1,7 +1,7 @@
 Civiccommons::Application.routes.draw do
 
   #Application Root
-  root :to => "homepage#show"
+  root to: "homepage#show"
 
   #Devise Routes
   devise_for :people,
@@ -13,7 +13,6 @@ Civiccommons::Application.routes.draw do
   end
 
   #Custom Matchers
-  get '/conversations/dialog/:id',                     to: 'conversations#dialog'
   post '/contributions/create_confirmed_contribution', to: 'contributions#create_confirmed_contribution'
   get '/conversations/node_conversation',              to: 'conversations#node_conversation'
   get '/conversations/node_permalink/:id',             to: 'conversations#node_permalink'
@@ -54,7 +53,7 @@ Civiccommons::Application.routes.draw do
   resources :people
   resources :ratings
   resources :user, only: [:show, :update, :edit]
-  resources :contributions, except: [:index] do
+  resources :contributions, only: [:edit, :update, :destroy] do
     # This is a GET for now since PA will redirect back with the required bits to create a PA contribution. 
     get "create_from_pa", :on => :collection
   end
