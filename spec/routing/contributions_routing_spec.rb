@@ -3,24 +3,12 @@ require "spec_helper"
 describe ContributionsController do
   describe "routing" do
 
-        it "recognizes and generates #index" do
-      { :get => "/contributions" }.should route_to(:controller => "contributions", :action => "index")
-    end
-
-        it "recognizes and generates #new" do
-      { :get => "/contributions/new" }.should route_to(:controller => "contributions", :action => "new")
-    end
-
-    it "recognizes and generates #show" do
-      { :get => "/contributions/1" }.should route_to(:controller => "contributions", :action => "show", :id => "1")
+    it "recognizes and generates #create_from_pa" do
+      { get: "/contributions/create_from_pa"}.should route_to(controller: 'contributions', action: 'create_from_pa')
     end
 
     it "recognizes and generates #edit" do
       { :get => "/contributions/1/edit" }.should route_to(:controller => "contributions", :action => "edit", :id => "1")
-    end
-
-    it "recognizes and generates #create" do
-      { :post => "/contributions" }.should route_to(:controller => "contributions", :action => "create") 
     end
 
     it "recognizes and generates #update" do
