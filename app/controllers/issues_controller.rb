@@ -87,6 +87,7 @@ class IssuesController < ApplicationController
         format.js
       else
         format.html { render :json => {:errors => @contribution.errors.full_messages }, :status => :unprocessable_entity }
+        format.js { render :json => {:errors => @contribution.errors.full_messages }, :status => :unprocessable_entity }
       end
     end
   end
