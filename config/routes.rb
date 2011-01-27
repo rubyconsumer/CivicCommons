@@ -54,7 +54,7 @@ Civiccommons::Application.routes.draw do
   resources :people
   resources :ratings
   resources :user, only: [:show, :update, :edit]
-  resources :contributions do
+  resources :contributions, except: [:index] do
     # This is a GET for now since PA will redirect back with the required bits to create a PA contribution. 
     get "create_from_pa", :on => :collection
   end

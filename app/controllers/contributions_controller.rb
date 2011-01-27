@@ -1,15 +1,6 @@
 class ContributionsController < ApplicationController
   include ContributionsHelper
 
-  def index
-    @contributions = Contribution.all
-
-    respond_to do |format|
-      format.html
-      format.xml  { render :xml => @contributions }
-    end
-  end
-
   def show
     @contribution = Contribution.find(params[:id])
     @contribution.visit!((current_person.nil? ? nil : current_person.id))
