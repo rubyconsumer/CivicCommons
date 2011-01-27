@@ -1,5 +1,4 @@
 class ConversationsController < ApplicationController
-  before_filter :verify_admin, :only=>[:new, :create, :edit, :update, :destroy]
   before_filter :require_user, :only=>[:new_node_contribution, :preview_node_contribution, :confirm_node_contribution]
 
   # GET /conversations
@@ -33,22 +32,6 @@ class ConversationsController < ApplicationController
     @latest_contribution = @conversation.confirmed_contributions.most_recent.first
 
     @recent_items = TopItem.newest_items(5).for(:conversation => @conversation.id).collect(&:item)
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @conversation }
-    end
-  end
-
-  def dialog
-    @conversation = Conversation.includes(:guides, :issues).find(params[:id])
-    @conversation.visit!((current_person.nil? ? nil : current_person.id))
-    @conversation_contributions = Contribution.confirmed.not_top_level.without_parent.with_user_rating(current_person).where(:conversation_id => @conversation.id).includes([:person]).order('created_at ASC')
-    @contributions = Contribution.confirmed.with_user_rating(current_person).descendants_of(@conversation_contributions).includes([:person])
-
-    @contribution = Contribution.new # for conversation comment form
-
-    @latest_contribution = @conversation.confirmed_contributions.most_recent.first
 
     respond_to do |format|
       format.html # show.html.erb
@@ -118,7 +101,6 @@ class ConversationsController < ApplicationController
     end
   end
 
-  #TODO: consider moving this to its own controller?
   def confirm_node_contribution
     @contribution = Contribution.unconfirmed.find_by_id_and_owner(params[:contribution][:id], current_person.id)
 
@@ -136,102 +118,4 @@ class ConversationsController < ApplicationController
     end
   end
 
-  # GET /conversations/new
-  # GET /conversations/new.xml
-  def new
-    @conversation = Conversation.new
-    @presenter = IngestPresenter.new(@conversation)
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @conversation }
-    end
-  end
-
-  # GET /conversations/1/edit
-  def edit
-    @conversation = Conversation.find(params[:id])
-  end
-
-  # POST /conversations
-  # POST /conversations.xml
-  def create
-    ActiveRecord::Base.transaction do
-      @conversation = Conversation.new(params[:conversation])
-      @conversation = Conversation.new(params[:conversation])
-      #TODO: Fix this conversation issues creation since old conversation.issues= method has been destroyed
-      #NOTE: Issues were previously defined as Conversation has_many Issues, but this is wrong, should be habtm
-      @conversation.issues = Issue.find(params[:issue_ids]) unless params[:issue_ids].blank?
-      @conversation.started_at = Time.now
-      @presenter = IngestPresenter.new(@conversation, params[:file])
-
-      @conversation.save!
-      @presenter.save!
-      respond_to do |format|
-        format.html { redirect_to(@conversation, :notice => 'Conversation was successfully created.') }
-        format.xml  { render :xml => @conversation, :status => :created, :location => @conversation }
-      end
-    end
-  rescue ActiveRecord::RecordInvalid => e
-    respond_to do |format|
-      format.html { render :action => "new" }
-      format.xml  { render :xml => @conversation.errors + @presenter.errors, :status => :unprocessable_entity }
-    end
-  end
-  # PUT /conversations/1
-  # PUT /conversations/1.xml
-  def update
-    @conversation = Conversation.find(params[:id])
-
-    respond_to do |format|
-      if @conversation.update_attributes(params[:conversation])
-        format.html { redirect_to(@conversation, :notice => 'Conversation was successfully updated.') }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @conversation.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
-
-  def rate_contribution
-    @contribution = Contribution.find(params[:contribution][:id])
-    rating = params[:contribution][:rating]
-
-    respond_to do |format|
-      if @contribution.rate!(rating.to_i, current_person)
-        format.js { render(:partial => 'conversations/contributions/rating', :locals => {:contribution => @contribution}, :layout => false, :status => :created) }
-      end
-        format.js { render :json => @contribution.errors[:rating].first, :status => :unprocessable_entity }
-    end
-  end
-
-  # DELETE /conversations/1
-  # DELETE /conversations/1.xml
-  def destroy
-    @conversation = Conversation.find(params[:id])
-    @conversation.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(conversations_url) }
-      format.xml  { head :ok }
-    end
-  end
-
-
-  # Kludge to convert US date-time (mm/dd/yyyy hh:mm am) to an
-  # ISO-like date-time (yyyy-mm-ddThh:mm:ss).
-  # There is probably a better way to do this. Please refactor.
-  private
-  def convert_us_date_to_iso(input)
-    hour = input[11,2].to_i
-    if (hour == 12)
-      hour = 0
-    end
-    if (input[17,2] == "pm")
-      hour += 12
-    end
-    hour = sprintf("%02d",hour)
-    input[6,4]+"-"+input[0,2]+"-"+input[3,2]+"T"+hour+":"+input[14,2]+":00"
-  end
 end

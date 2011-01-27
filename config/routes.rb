@@ -1,7 +1,7 @@
 Civiccommons::Application.routes.draw do
 
   #Application Root
-  root :to => "homepage#show"
+  root to: "homepage#show"
 
   #Devise Routes
   devise_for :people,
@@ -12,25 +12,37 @@ Civiccommons::Application.routes.draw do
     match '/people/ajax_login', :to=>'sessions#ajax_create', :via=>[:post]
   end
 
-  #Custom Matchers
-  get '/conversations/dialog/:id',                     to: 'conversations#dialog'
-  post '/contributions/create_confirmed_contribution', to: 'contributions#create_confirmed_contribution'
+  constraints FilterConstraint do
+    get 'conversations/:filter', to: 'conversations#filter', as: 'conversations_filter'
+  end
+
+#Custom Matchers
+  #Contributions
+  get '/contributions/create_from_pa',                 to: 'contributions#create_from_pa',                   as: 'create_contribution_from_pa'
+  post '/contributions/create_confirmed_contribution', to: 'contributions#create_confirmed_contribution',    as: 'create_confirmed_contribution'
+  delete '/contributions/moderate/:id',                to: 'contributions#moderate_contribution',            as: 'moderate_contribution'
+  delete '/contributions/:id',                         to: 'contributions#destroy',                          as: 'contribution'
+
+ #Conversations
+  get '/conversations/',                               to: 'conversations#index',                            as: 'conversations'
+  match '/conversations/preview_node_contribution',    to: 'conversations#preview_node_contribution'
   get '/conversations/node_conversation',              to: 'conversations#node_conversation'
-  get '/conversations/node_permalink/:id',             to: 'conversations#node_permalink'
-  put '/conversations/confirm_node_contribution',      to: 'conversations#confirm_node_contribution'
   get '/conversations/new_node_contribution',          to: 'conversations#new_node_contribution'
   get '/conversations/edit_node_contribution',         to: 'conversations#edit_node_contribution'
+  get '/conversations/node_permalink/:id',             to: 'conversations#node_permalink'
+  get '/conversations/:id',                            to: 'conversations#show',                             as: 'conversation'
   put '/conversations/update_node_contribution',       to: 'conversations#update_node_contribution'
-  match '/conversations/preview_node_contribution',    to: 'conversations#preview_node_contribution'
-  match '/conversations/rate_contribution',            to: 'conversations#rate_contribution'
-  post '/conversations/rate',                          to: 'conversations#rate'
+  put '/conversations/confirm_node_contribution',      to: 'conversations#confirm_node_contribution'
+  #Subscriptions
   post '/subscriptions/subscribe',                     to: 'subscriptions#subscribe'
   post '/subscriptions/unsubscribe',                   to: 'subscriptions#unsubscribe'
+  #Community
   get '/community',                                    to: 'community#index',                                 as: 'community'
-  delete '/contributions/moderate/:id',                to: 'contributions#moderate_contribution',             as: 'moderate_contribution'
+  #TopItems
   get '/top_items/newest',                             to: 'top_items#newest',                                as: 'newest_items'
   get '/top_items/highest_rated',                      to: 'top_items#highest_rated',                         as: 'highest_rated_items'
   get '/top_items/most_visited',                       to: 'top_items#most_visited',                          as: 'most_visited_items'
+  #Widget
   get '/widget',                                       to: 'widget#index'
 
   #Static Pages
@@ -48,36 +60,28 @@ Civiccommons::Application.routes.draw do
   get '/press',             to: 'static_pages#in_the_news'
 
   #Resource Declared Routes
-  resources :questions
-  resources :people
-  resources :ratings
-  resources :user, only: [:show, :update, :edit]
-  resources :contributions do
-    # This is a GET for now since PA will redirect back with the required bits to create a PA contribution. 
-    get "create_from_pa", :on => :collection
+  resources :user, only: [:show, :update, :edit] do
+    delete "destroy_avatar", on: :member
   end
-  resources :answers
   resources :issues do
-    post 'create_contribution', :on => :member
+    post 'create_contribution', on: :member
   end
   resources :regions
   resources :links
-  resources :conversations
 
   #Namespaces
   namespace "admin" do
+    root      to: "dashboard#show"
     resources :articles
     resources :conversations
-    resources :simple_conversations
     resources :issues
     resources :regions
+    resources :invites
     resources :people do
       get 'proxies',       on: :collection
       put 'lock_access',   on: :member
       put 'unlock_access', on: :member
     end
-    resources :invites
-    root      to: "dashboard#show"
   end
 
 
