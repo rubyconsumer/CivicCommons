@@ -1,6 +1,15 @@
 class UserController < ApplicationController
 
+  before_filter :verify_ownership?, :only => [:edit, :update, :destroy_avatar]
+
+  def verify_ownership?
+    unless(current_person && current_person == Person.find(params[:id]))
+      redirect_to community_path
+    end
+  end
+
   def edit
+    @person = Person.find(params[:id])
   end
 
   def show
@@ -19,6 +28,28 @@ class UserController < ApplicationController
   end
 
   def update
+    @person = Person.find(params[:id])
+    respond_to do |format|
+      if @person.update_attributes(params[:person])
+        flash[:notice] = "Successfully edited your profile"
+        format.html { redirect_to root_path }
+      else
+        format.html { render :action => "edit" }
+      end
+    end
   end
 
+ def destroy_avatar
+  @person = Person.find(params[:id])
+  @person.avatar = nil
+  if @person.save
+    respond_to do |format|
+      format.js { render :json => { :avatarUrl => @person.avatar.url } }
+    end
+  else
+    respond_to do |format|
+      format.js { render :status => 500 }
+    end
+  end
+ end
 end

@@ -53,7 +53,9 @@ Civiccommons::Application.routes.draw do
   resources :questions
   resources :people
   resources :ratings
-  resources :user, only: [:show, :update, :edit]
+  resources :user, only: [:show, :update, :edit] do
+    delete "destroy_avatar", on: :member
+  end
   resources :contributions do
     # This is a GET for now since PA will redirect back with the required bits to create a PA contribution. 
     get "create_from_pa", :on => :collection

@@ -4,7 +4,7 @@ class PeopleAggregator::Login
   
   base_uri "#{Civiccommons::PeopleAggregator.URL}/api/json.php/peopleaggregator"
   
-  attr_allowable :login, :password, :authToken, :tokenLifetime
+  attr_allowable :login, :password, :authToken, :tokenLifetime, :code, :msg
   
   def self.login(login, password)
     r = post('/login', body: { adminPassword: 'admin',
