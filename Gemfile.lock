@@ -104,7 +104,8 @@ GEM
       json (> 1.4.0)
     haml (3.0.25)
     highline (1.6.1)
-    hominid (3.0.2)
+    hominid (2.2.0)
+      json (>= 1.2.0)
     hoptoad_notifier (2.4.2)
       activesupport
       builder
@@ -225,7 +226,7 @@ DEPENDENCIES
   geokit
   gibbon
   haml
-  hominid
+  hominid (= 2.2.0)
   hoptoad_notifier
   hpricot
   httparty
