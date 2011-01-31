@@ -20,7 +20,7 @@ Civiccommons::Application.routes.draw do
   delete '/contributions/:id',                         to: 'contributions#destroy',                          as: 'contribution'
   #Conversations
   get '/conversations/',                               to: 'conversations#index',                            as: 'conversations'
-  match '/conversations/preview_node_contribution',      to: 'conversations#preview_node_contribution'
+  match '/conversations/preview_node_contribution',    to: 'conversations#preview_node_contribution'
   get '/conversations/node_conversation',              to: 'conversations#node_conversation'
   get '/conversations/new_node_contribution',          to: 'conversations#new_node_contribution'
   get '/conversations/edit_node_contribution',         to: 'conversations#edit_node_contribution'
