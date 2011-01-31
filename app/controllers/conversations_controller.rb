@@ -1,5 +1,4 @@
 class ConversationsController < ApplicationController
-  before_filter :verify_admin, :only=>[:new, :create, :edit, :update, :destroy]
   before_filter :require_user, :only=>[:new_node_contribution, :preview_node_contribution, :confirm_node_contribution]
 
   # GET /conversations
@@ -102,7 +101,6 @@ class ConversationsController < ApplicationController
     end
   end
 
-  #TODO: consider moving this to its own controller?
   def confirm_node_contribution
     @contribution = Contribution.unconfirmed.find_by_id_and_owner(params[:contribution][:id], current_person.id)
 
@@ -120,85 +118,4 @@ class ConversationsController < ApplicationController
     end
   end
 
-  # GET /conversations/new
-  # GET /conversations/new.xml
-  def new
-    @conversation = Conversation.new
-    @presenter = IngestPresenter.new(@conversation)
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @conversation }
-    end
-  end
-
-  # GET /conversations/1/edit
-  def edit
-    @conversation = Conversation.find(params[:id])
-  end
-
-  # POST /conversations
-  # POST /conversations.xml
-  def create
-    ActiveRecord::Base.transaction do
-      @conversation = Conversation.new(params[:conversation])
-      @conversation = Conversation.new(params[:conversation])
-      #TODO: Fix this conversation issues creation since old conversation.issues= method has been destroyed
-      #NOTE: Issues were previously defined as Conversation has_many Issues, but this is wrong, should be habtm
-      @conversation.issues = Issue.find(params[:issue_ids]) unless params[:issue_ids].blank?
-      @conversation.started_at = Time.now
-      @presenter = IngestPresenter.new(@conversation, params[:file])
-
-      @conversation.save!
-      @presenter.save!
-      respond_to do |format|
-        format.html { redirect_to(@conversation, :notice => 'Conversation was successfully created.') }
-        format.xml  { render :xml => @conversation, :status => :created, :location => @conversation }
-      end
-    end
-  rescue ActiveRecord::RecordInvalid => e
-    respond_to do |format|
-      format.html { render :action => "new" }
-      format.xml  { render :xml => @conversation.errors + @presenter.errors, :status => :unprocessable_entity }
-    end
-  end
-  # PUT /conversations/1
-  # PUT /conversations/1.xml
-  def update
-    @conversation = Conversation.find(params[:id])
-
-    respond_to do |format|
-      if @conversation.update_attributes(params[:conversation])
-        format.html { redirect_to(@conversation, :notice => 'Conversation was successfully updated.') }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @conversation.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
-
-  def rate_contribution
-    @contribution = Contribution.find(params[:contribution][:id])
-    rating = params[:contribution][:rating]
-
-    respond_to do |format|
-      if @contribution.rate!(rating.to_i, current_person)
-        format.js { render(:partial => 'conversations/contributions/rating', :locals => {:contribution => @contribution}, :layout => false, :status => :created) }
-      end
-        format.js { render :json => @contribution.errors[:rating].first, :status => :unprocessable_entity }
-    end
-  end
-
-  # DELETE /conversations/1
-  # DELETE /conversations/1.xml
-  def destroy
-    @conversation = Conversation.find(params[:id])
-    @conversation.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(conversations_url) }
-      format.xml  { head :ok }
-    end
-  end
 end
