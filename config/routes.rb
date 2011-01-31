@@ -56,9 +56,6 @@ Civiccommons::Application.routes.draw do
   get '/press',             to: 'static_pages#in_the_news'
 
   #Resource Declared Routes
-  resources :questions
-  resources :people
-  resources :ratings
   resources :user, only: [:show, :update, :edit]
   resources :answers
   resources :issues do
