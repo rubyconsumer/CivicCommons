@@ -19,7 +19,7 @@ class ConversationsController < ApplicationController
   # GET /conversations/1
   # GET /conversations/1.xml
   def show
-    @conversation = Conversation.includes(:guides, :issues).find(params[:id])
+    @conversation = Conversation.includes(:issues).find(params[:id])
     @conversation.visit!((current_person.nil? ? nil : current_person.id))
     @top_level_contributions = TopLevelContribution.where(:conversation_id => @conversation.id).includes([:person]).order('created_at ASC').with_user_rating(current_person)
     # grab all direct contributions to conversation that aren't TLC
