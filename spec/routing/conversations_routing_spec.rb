@@ -39,5 +39,9 @@ describe ConversationsController do
       { put: "/conversations/confirm_node_contribution" }.should route_to(controller: "conversations", action: "confirm_node_contribution")
     end
 
+    it "recognizes and generates #preview_node_contribution" do
+      { post: "/conversations/preview_node_contribution" }.should route_to(controller: "conversations", action: "preview_node_contribution")
+    end
+
   end
 end
