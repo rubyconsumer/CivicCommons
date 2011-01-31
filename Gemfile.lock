@@ -225,7 +225,7 @@ DEPENDENCIES
   geokit
   gibbon
   haml
-  hominid (= 2.2.0)
+  hominid (>= 2.2.0)
   hoptoad_notifier
   hpricot
   httparty
