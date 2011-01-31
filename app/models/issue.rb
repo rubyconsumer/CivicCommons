@@ -1,5 +1,4 @@
 class Issue < ActiveRecord::Base
-  include Rateable
   include Visitable
   include TopItemable
   include Subscribable
