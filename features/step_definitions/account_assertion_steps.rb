@@ -8,7 +8,7 @@ Then /^a confirmation email is sent:$/ do |table|
 
   mailing = ActionMailer::Base.deliveries.first
 
-  mailing.from.should == [values['From']]
+  mailing.from.should == [Civiccommons::Config.devise_email]
   mailing.to.should == [values['To']]
   mailing.subject.should == values['Subject']
 end
