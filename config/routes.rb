@@ -14,15 +14,13 @@ Civiccommons::Application.routes.draw do
 
 #Custom Matchers
   #Contributions
-
-  get '/contributions/create_from_pa',                 to: 'contributions#create_from_pa',                   as: 'create_contribution_from_pa'
+  get '/contributions/create_from_pa',                 to: 'contributions#create_from_pa',                   as: 'create_from_pa_contributions'
   post '/contributions/create_confirmed_contribution', to: 'contributions#create_confirmed_contribution',    as: 'create_confirmed_contribution'
   delete '/contributions/moderate/:id',                to: 'contributions#moderate_contribution',            as: 'moderate_contribution'
   delete '/contributions/:id',                         to: 'contributions#destroy',                          as: 'contribution'
-  
- #Conversations
+  #Conversations
   get '/conversations/',                               to: 'conversations#index',                            as: 'conversations'
-  get '/conversations/preview_node_contribution',      to: 'conversations#preview_node_contribution'
+  match '/conversations/preview_node_contribution',      to: 'conversations#preview_node_contribution'
   get '/conversations/node_conversation',              to: 'conversations#node_conversation'
   get '/conversations/new_node_contribution',          to: 'conversations#new_node_contribution'
   get '/conversations/edit_node_contribution',         to: 'conversations#edit_node_contribution'
@@ -66,17 +64,17 @@ Civiccommons::Application.routes.draw do
 
   #Namespaces
   namespace "admin" do
+    root      to: "dashboard#show"
     resources :articles
     resources :conversations
     resources :issues
     resources :regions
+    resources :invites
     resources :people do
       get 'proxies',       on: :collection
       put 'lock_access',   on: :member
       put 'unlock_access', on: :member
     end
-    resources :invites
-    root      to: "dashboard#show"
   end
 
 
