@@ -19,8 +19,8 @@ Civiccommons::Application.routes.draw do
   delete '/contributions/moderate/:id',                to: 'contributions#moderate_contribution',            as: 'moderate_contribution'
   delete '/contributions/:id',                         to: 'contributions#destroy',                          as: 'contribution'
   #Conversations
-  get '/conversations/',                               to: 'conversations#index',                            as: 'conversations'
   match '/conversations/preview_node_contribution',    to: 'conversations#preview_node_contribution'
+  get '/conversations/',                               to: 'conversations#index',                            as: 'conversations'
   get '/conversations/node_conversation',              to: 'conversations#node_conversation'
   get '/conversations/new_node_contribution',          to: 'conversations#new_node_contribution'
   get '/conversations/edit_node_contribution',         to: 'conversations#edit_node_contribution'
@@ -31,10 +31,13 @@ Civiccommons::Application.routes.draw do
   #Subscriptions
   post '/subscriptions/subscribe',                     to: 'subscriptions#subscribe'
   post '/subscriptions/unsubscribe',                   to: 'subscriptions#unsubscribe'
+  #Community
   get '/community',                                    to: 'community#index',                                 as: 'community'
+  #TopItems
   get '/top_items/newest',                             to: 'top_items#newest',                                as: 'newest_items'
   get '/top_items/highest_rated',                      to: 'top_items#highest_rated',                         as: 'highest_rated_items'
   get '/top_items/most_visited',                       to: 'top_items#most_visited',                          as: 'most_visited_items'
+  #Widget
   get '/widget',                                       to: 'widget#index'
 
   #Static Pages
@@ -55,6 +58,13 @@ Civiccommons::Application.routes.draw do
 
   #Resource Declared Routes
   resources :user, only: [:show, :update, :edit]
+<<<<<<< HEAD
+=======
+  resources :contributions, only: [:edit, :update, :destroy] do
+    # This is a GET for now since PA will redirect back with the required bits to create a PA contribution. 
+    get "create_from_pa", :on => :collection
+  end
+>>>>>>> 60020a42cd5fff1b7e3431c5257e80bf67618929
   resources :answers
   resources :issues do
     post 'create_contribution', on: :member
