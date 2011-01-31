@@ -43,7 +43,8 @@ stub_request(:any, %r{http://www.yahoo.com/}).
 stub_request(:any, %r{http://www.youtube.com/}).
   to_return(:body => "<html><title>YouTube - David Perron Goal vs Islanders - November 21 2009</title><body></body></html>")
 stub_request(:get, "#{Civiccommons::PeopleAggregator.URL}/api/json.php/peopleaggregator/getUserProfile?login=joe@test.com").
-  to_return(:body => File.open("#{Rails.root}/test/fixtures/example_pa_user_profile.html"), :status => 200)
+  to_return(:body => File.open("#{Rails.root}/test/fixtures/example_pa_user_profile.html"),
+    :headers => {'content-type' => 'application/javascript; charset=UTF-8'}, :status => 200)
 
 After("@api") do |s|
   cleanup_shadow_accounts
