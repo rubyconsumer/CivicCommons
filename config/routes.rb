@@ -21,15 +21,16 @@ Civiccommons::Application.routes.draw do
   delete '/contributions/:id',                         to: 'contributions#destroy',                          as: 'contribution'
   
  #Conversations
+  get '/conversations/',                               to: 'conversations#index',                            as: 'conversations'
+  get '/conversations/preview_node_contribution',      to: 'conversations#preview_node_contribution'
   get '/conversations/node_conversation',              to: 'conversations#node_conversation'
-  get '/conversations/node_permalink/:id',             to: 'conversations#node_permalink'
-  put '/conversations/confirm_node_contribution',      to: 'conversations#confirm_node_contribution'
   get '/conversations/new_node_contribution',          to: 'conversations#new_node_contribution'
   get '/conversations/edit_node_contribution',         to: 'conversations#edit_node_contribution'
+  get '/conversations/node_permalink/:id',             to: 'conversations#node_permalink'
+  get '/conversations/:id',                            to: 'conversations#show',                             as: 'conversation'
   put '/conversations/update_node_contribution',       to: 'conversations#update_node_contribution'
-  match '/conversations/preview_node_contribution',    to: 'conversations#preview_node_contribution'
-  match '/conversations/rate_contribution',            to: 'conversations#rate_contribution'
-  post '/conversations/rate',                          to: 'conversations#rate'
+  put '/conversations/confirm_node_contribution',      to: 'conversations#confirm_node_contribution'
+  #Subscriptions
   post '/subscriptions/subscribe',                     to: 'subscriptions#subscribe'
   post '/subscriptions/unsubscribe',                   to: 'subscriptions#unsubscribe'
   get '/community',                                    to: 'community#index',                                 as: 'community'
@@ -65,13 +66,11 @@ Civiccommons::Application.routes.draw do
   end
   resources :regions
   resources :links
-  resources :conversations
 
   #Namespaces
   namespace "admin" do
     resources :articles
     resources :conversations
-    resources :simple_conversations
     resources :issues
     resources :regions
     resources :people do
