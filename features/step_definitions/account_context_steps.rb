@@ -17,7 +17,7 @@ Given /^the user signs up with:$/ do |table|
     fill_in 'organization_name', with: values['Organization']
   end
 
-  click 'Continue'
+  click_button 'Continue'
 
   @current_person = Person.where(email: values['Email']).first
 end

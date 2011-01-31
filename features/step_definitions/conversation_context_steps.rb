@@ -49,5 +49,6 @@ end
 Given /^I am following the conversation:$/ do |table|
   Given("a conversation:", table)
   @conversation.subscribe(@current_person)
+  sleep(2)
 end
 

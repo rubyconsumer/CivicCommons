@@ -31,7 +31,7 @@ end
 
 group :test do
 #  gem 'jasmine'#, :path => 'vendor/gems/jasmine'
-  gem 'cucumber'
+  gem 'cucumber', '~>0.9.0'
   gem 'capybara'
   gem 'cucumber-rails'
   gem 'rspec-rails', '>= 2.4.0'
