@@ -12,24 +12,6 @@ Civiccommons::Application.routes.draw do
     match '/people/ajax_login', :to=>'sessions#ajax_create', :via=>[:post]
   end
 
-
-
-  #Resource Declared Routes
-  resources :questions
-  resources :people
-  resources :ratings
-  resources :user, only: [:show, :update, :edit]
-  resources :contributions do
-    # This is a GET for now since PA will redirect back with the required bits to create a PA contribution. 
-    get "create_from_pa", :on => :collection
-  end
-  resources :answers
-  resources :issues do
-    post 'create_contribution', :on => :member
-  end
-  resources :regions
-  resources :links
-
   #Custom Matchers
   get '/conversations/dialog/:id',                     to: 'conversations#dialog'
   post '/contributions/create_confirmed_contribution', to: 'contributions#create_confirmed_contribution'
@@ -42,9 +24,6 @@ Civiccommons::Application.routes.draw do
   match '/conversations/preview_node_contribution',    to: 'conversations#preview_node_contribution'
   match '/conversations/rate_contribution',            to: 'conversations#rate_contribution'
   post '/conversations/rate',                          to: 'conversations#rate'
-
-  resources :conversations
-
   post '/subscriptions/subscribe',                     to: 'subscriptions#subscribe'
   post '/subscriptions/unsubscribe',                   to: 'subscriptions#unsubscribe'
   get '/community',                                    to: 'community#index',                                 as: 'community'
@@ -70,6 +49,22 @@ Civiccommons::Application.routes.draw do
   get '/blog',              to: 'static_pages#blog',                as: 'blog'
   get '/press',             to: 'static_pages#in_the_news'
 
+  #Resource Declared Routes
+  resources :questions
+  resources :people
+  resources :ratings
+  resources :user, only: [:show, :update, :edit]
+  resources :contributions do
+    # This is a GET for now since PA will redirect back with the required bits to create a PA contribution. 
+    get "create_from_pa", :on => :collection
+  end
+  resources :answers
+  resources :issues do
+    post 'create_contribution', :on => :member
+  end
+  resources :regions
+  resources :links
+  resources :conversations
 
   #Namespaces
   namespace "admin" do

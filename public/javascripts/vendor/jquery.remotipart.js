@@ -11,6 +11,10 @@ jQuery(function ($) {
 	        if (url === undefined) {
 	          throw "No URL specified for remote call (action must be present).";
 	        } else {
+              // Since iframe-submitted form is submitted normal-style and cannot set custom headers,
+              // we'll add a custom hidden input to keep track and let the server know this was still
+              // an AJAX form.
+              el.append($('<input type="hidden" name="ajax_submitted" value=true />'));
 	            if (el.triggerAndReturn('ajax:before')) {
                 if(url.substr(-3) != '.js' && dataType == 'script') {
                   url += '.js'; //force rails to respond to respond to the request with :format = js
