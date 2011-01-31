@@ -201,16 +201,6 @@ ActiveRecord::Schema.define(:version => 20110214230143) do
   add_index "people", ["email"], :name => "index_people_on_email", :unique => true
   add_index "people", ["reset_password_token"], :name => "index_people_on_reset_password_token", :unique => true
 
-  create_table "ratings", :force => true do |t|
-    t.datetime "datetime"
-    t.integer  "person_id"
-    t.integer  "rating"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "rateable_id"
-    t.string   "rateable_type"
-  end
-
   create_table "regions", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"

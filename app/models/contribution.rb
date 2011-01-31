@@ -1,7 +1,6 @@
 require 'parent_validator'
 
 class Contribution < ActiveRecord::Base
-  include Rateable
   include Visitable
   include TopItemable
 
