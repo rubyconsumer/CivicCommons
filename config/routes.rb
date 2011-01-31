@@ -58,13 +58,6 @@ Civiccommons::Application.routes.draw do
 
   #Resource Declared Routes
   resources :user, only: [:show, :update, :edit]
-<<<<<<< HEAD
-=======
-  resources :contributions, only: [:edit, :update, :destroy] do
-    # This is a GET for now since PA will redirect back with the required bits to create a PA contribution. 
-    get "create_from_pa", :on => :collection
-  end
->>>>>>> 60020a42cd5fff1b7e3431c5257e80bf67618929
   resources :answers
   resources :issues do
     post 'create_contribution', on: :member
