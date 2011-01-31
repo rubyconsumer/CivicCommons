@@ -12,8 +12,15 @@ Civiccommons::Application.routes.draw do
     match '/people/ajax_login', :to=>'sessions#ajax_create', :via=>[:post]
   end
 
-  #Custom Matchers
-  post '/contributions/create_confirmed_contribution', to: 'contributions#create_confirmed_contribution'
+#Custom Matchers
+  #Contributions
+
+  get '/contributions/create_from_pa',                 to: 'contributions#create_from_pa',                   as: 'create_contribution_from_pa'
+  post '/contributions/create_confirmed_contribution', to: 'contributions#create_confirmed_contribution',    as: 'create_confirmed_contribution'
+  delete '/contributions/moderate/:id',                to: 'contributions#moderate_contribution',            as: 'moderate_contribution'
+  delete '/contributions/:id',                         to: 'contributions#destroy',                          as: 'contribution'
+  
+ #Conversations
   get '/conversations/node_conversation',              to: 'conversations#node_conversation'
   get '/conversations/node_permalink/:id',             to: 'conversations#node_permalink'
   put '/conversations/confirm_node_contribution',      to: 'conversations#confirm_node_contribution'
@@ -26,7 +33,6 @@ Civiccommons::Application.routes.draw do
   post '/subscriptions/subscribe',                     to: 'subscriptions#subscribe'
   post '/subscriptions/unsubscribe',                   to: 'subscriptions#unsubscribe'
   get '/community',                                    to: 'community#index',                                 as: 'community'
-  delete '/contributions/moderate/:id',                to: 'contributions#moderate_contribution',             as: 'moderate_contribution'
   get '/top_items/newest',                             to: 'top_items#newest',                                as: 'newest_items'
   get '/top_items/highest_rated',                      to: 'top_items#highest_rated',                         as: 'highest_rated_items'
   get '/top_items/most_visited',                       to: 'top_items#most_visited',                          as: 'most_visited_items'
@@ -53,13 +59,9 @@ Civiccommons::Application.routes.draw do
   resources :people
   resources :ratings
   resources :user, only: [:show, :update, :edit]
-  resources :contributions, only: [:edit, :update, :destroy] do
-    # This is a GET for now since PA will redirect back with the required bits to create a PA contribution. 
-    get "create_from_pa", :on => :collection
-  end
   resources :answers
   resources :issues do
-    post 'create_contribution', :on => :member
+    post 'create_contribution', on: :member
   end
   resources :regions
   resources :links

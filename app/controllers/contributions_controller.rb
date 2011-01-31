@@ -21,22 +21,6 @@ class ContributionsController < ApplicationController
 
   end
 
-  def update
-    @contribution = Contribution.find(params[:id])
-
-    respond_to do |format|
-      if @contribution.update_attributes_by_user(params[:contribution], current_person)
-        format.js   { render :status => :ok }
-        format.html { redirect_to(@contribution, :notice => 'Contribution was successfully updated.') }
-        format.xml  { head :ok }
-      else
-        format.js   { render :json => @contribution.errors, :status => :unprocessable_entity }
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @contribution.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
-
   def destroy
     @contribution = Contribution.find(params[:id])
     respond_to do |format|
