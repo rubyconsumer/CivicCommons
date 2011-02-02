@@ -38,26 +38,25 @@ Civiccommons::Application.routes.draw do
   post '/subscriptions/unsubscribe',                   to: 'subscriptions#unsubscribe'
   #Community
   get '/community',                                    to: 'community#index',                                 as: 'community'
-  #TopItems
-  get '/top_items/newest',                             to: 'top_items#newest',                                as: 'newest_items'
-  get '/top_items/highest_rated',                      to: 'top_items#highest_rated',                         as: 'highest_rated_items'
-  get '/top_items/most_visited',                       to: 'top_items#most_visited',                          as: 'most_visited_items'
   #Widget
   get '/widget',                                       to: 'widget#index'
+  #Polls
+  get '/polls',             to: 'polls#index'
+  post '/polls',            to: 'polls#create'
 
-  #Static Pages
+#Static Pages
   get '/about',             to: 'static_pages#about'
-  get '/faq',               to: 'static_pages#faq'
-  get '/principles',        to: 'static_pages#principles'
-  get '/team',              to: 'static_pages#team'
-  get '/partners',          to: 'static_pages#partners'
-  get '/terms',             to: 'static_pages#terms'
+  get '/blog',              to: 'static_pages#blog',                as: 'blog'
   get '/build-the-commons', to: 'static_pages#build_the_commons'
   get '/contact-us',        to: 'static_pages#contact'
-  get '/posters',           to: 'static_pages#poster'
+  get '/faq',               to: 'static_pages#faq'
+  get '/partners',          to: 'static_pages#partners'
   get '/poster',            to: 'static_pages#poster'
-  get '/blog',              to: 'static_pages#blog',                as: 'blog'
+  get '/posters',           to: 'static_pages#poster'
   get '/press',             to: 'static_pages#in_the_news'
+  get '/principles',        to: 'static_pages#principles'
+  get '/team',              to: 'static_pages#team'
+  get '/terms',             to: 'static_pages#terms'
 
   #Resource Declared Routes
   resources :user, only: [:show, :update, :edit] do
@@ -66,17 +65,16 @@ Civiccommons::Application.routes.draw do
   resources :issues do
     post 'create_contribution', on: :member
   end
-  resources :regions
-  resources :links
+  resources :regions, only: [:index, :show]
+  resources :links, only: [:new, :create]
 
-  #Namespaces
+#Namespaces
   namespace "admin" do
     root      to: "dashboard#show"
     resources :articles
     resources :conversations
     resources :issues
     resources :regions
-    resources :invites
     resources :people do
       get 'proxies',       on: :collection
       put 'lock_access',   on: :member
