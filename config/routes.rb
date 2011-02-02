@@ -58,7 +58,7 @@ Civiccommons::Application.routes.draw do
   resources :issues, only: [:index, :show] do
     post 'create_contribution', on: :member
   end
-  resources :regions
+  resources :regions, only: [:index, :show]
   resources :links
 
 #Namespaces
