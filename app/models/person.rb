@@ -85,13 +85,13 @@ class Person < ActiveRecord::Base
                                                     email:                      email,
                                                     profilePictureWidth:        avatar_width_for_style(:large),
                                                     profilePictureHeight:       avatar_height_for_style(:large),
-                                                    profilePictureURL:          avatar_url_without_timestamp(:large),
+                                                    profilePictureURL:          avatar_path(:large),
                                                     profileAvatarWidth:         avatar_width_for_style(:standard),
                                                     profileAvatarHeight:        avatar_height_for_style(:standard),
-                                                    profileAvatarURL:           avatar_url_without_timestamp(:standard),
+                                                    profileAvatarURL:           avatar_path(:standard),
                                                     profileAvatarSmallWidth:    avatar_width_for_style(:medium),
                                                     profileAvatarSmallHeight:   avatar_width_for_style(:medium),
-                                                    profileAvatarSmallURL:      avatar_url_without_timestamp(:medium))
+                                                    profileAvatarSmallURL:      avatar_path(:medium))
 
 
     rescue PeopleAggregator::Error => e
@@ -224,8 +224,8 @@ class Person < ActiveRecord::Base
     subscriptions.map(&:subscribable).include?(subscribable)
   end
 
-  def avatar_url_without_timestamp(style='')
-    self.avatar.url(style).gsub(/\?\d+$/, '')
+  def avatar_path(style='')
+    self.avatar.path(style)
   end
 
   # Implement Marketable method
