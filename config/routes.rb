@@ -59,7 +59,7 @@ Civiccommons::Application.routes.draw do
     post 'create_contribution', on: :member
   end
   resources :regions, only: [:index, :show]
-  resources :links
+  resources :links, only: [:new, :create]
 
 #Namespaces
   namespace "admin" do
