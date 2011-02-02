@@ -17,8 +17,7 @@ end
 describe Marketable do
   before :each do
     attrs = Factory.attributes_for(:normal_person)
-    @marketable = MarketableTest.new(attrs.merge(:invitation_token => 'ZZZ1234'))
-    @marketable.skip_invite = true
+    @marketable = MarketableTest.new(attrs)
   end
 
   it "should be subscribable to email marketing" do
