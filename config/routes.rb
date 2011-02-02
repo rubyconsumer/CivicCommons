@@ -33,30 +33,28 @@ Civiccommons::Application.routes.draw do
   post '/subscriptions/unsubscribe',                   to: 'subscriptions#unsubscribe'
   #Community
   get '/community',                                    to: 'community#index',                                 as: 'community'
-  #TopItems
-  get '/top_items/newest',                             to: 'top_items#newest',                                as: 'newest_items'
-  get '/top_items/highest_rated',                      to: 'top_items#highest_rated',                         as: 'highest_rated_items'
-  get '/top_items/most_visited',                       to: 'top_items#most_visited',                          as: 'most_visited_items'
   #Widget
   get '/widget',                                       to: 'widget#index'
-
-  #Static Pages
-  get '/about',             to: 'static_pages#about'
-  get '/faq',               to: 'static_pages#faq'
-  get '/principles',        to: 'static_pages#principles'
-  get '/team',              to: 'static_pages#team'
-  get '/partners',          to: 'static_pages#partners'
-  get '/terms',             to: 'static_pages#terms'
-  get '/build-the-commons', to: 'static_pages#build_the_commons'
-  get '/contact-us',        to: 'static_pages#contact'
-  get '/posters',           to: 'static_pages#poster'
-  get '/poster',            to: 'static_pages#poster'
+  #Polls
   get '/polls',             to: 'polls#index'
   post '/polls',            to: 'polls#create'
-  get '/blog',              to: 'static_pages#blog',                as: 'blog'
-  get '/press',             to: 'static_pages#in_the_news'
 
-  #Resource Declared Routes
+
+#Static Pages
+  get '/about',             to: 'static_pages#about'
+  get '/blog',              to: 'static_pages#blog',                as: 'blog'
+  get '/build-the-commons', to: 'static_pages#build_the_commons'
+  get '/contact-us',        to: 'static_pages#contact'
+  get '/faq',               to: 'static_pages#faq'
+  get '/partners',          to: 'static_pages#partners'
+  get '/poster',            to: 'static_pages#poster'
+  get '/posters',           to: 'static_pages#poster'
+  get '/press',             to: 'static_pages#in_the_news'
+  get '/principles',        to: 'static_pages#principles'
+  get '/team',              to: 'static_pages#team'
+  get '/terms',             to: 'static_pages#terms'
+
+#Resource Declared Routes
   resources :user, only: [:show, :update, :edit]
   resources :answers
   resources :issues do
@@ -65,7 +63,7 @@ Civiccommons::Application.routes.draw do
   resources :regions
   resources :links
 
-  #Namespaces
+#Namespaces
   namespace "admin" do
     root      to: "dashboard#show"
     resources :articles
