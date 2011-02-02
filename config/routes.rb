@@ -39,7 +39,6 @@ Civiccommons::Application.routes.draw do
   get '/polls',             to: 'polls#index'
   post '/polls',            to: 'polls#create'
 
-
 #Static Pages
   get '/about',             to: 'static_pages#about'
   get '/blog',              to: 'static_pages#blog',                as: 'blog'
@@ -56,7 +55,7 @@ Civiccommons::Application.routes.draw do
 
 #Resource Declared Routes
   resources :user, only: [:show, :update, :edit]
-  resources :issues do
+  resources :issues, only: [:index, :show] do
     post 'create_contribution', on: :member
   end
   resources :regions
