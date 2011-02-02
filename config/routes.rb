@@ -56,7 +56,6 @@ Civiccommons::Application.routes.draw do
 
 #Resource Declared Routes
   resources :user, only: [:show, :update, :edit]
-  resources :answers
   resources :issues do
     post 'create_contribution', on: :member
   end
