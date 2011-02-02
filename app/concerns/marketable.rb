@@ -6,7 +6,7 @@ module Marketable
         marketable_at = DateTime.now
       end
     end
-    
+
     def is_marketable?
       raise Exception, "Marketable Method Unimplemented. Marketable.subscribe_to_email_marketing?"
     end

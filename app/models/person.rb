@@ -10,14 +10,11 @@ class Person < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable,
          :confirmable, :lockable
 
-  attr_accessor :skip_shadow_account, :organization_name, :send_welcome, :skip_invite
+  attr_accessor :skip_shadow_account, :organization_name, :send_welcome
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :name, :first_name, :last_name, :email, :password, :password_confirmation, :top, :zip_code, :admin, :validated,
-                  :avatar, :organization_name, :invite, :invite_attributes
-
-  has_one :invite
-  accepts_nested_attributes_for :invite
+                  :avatar, :organization_name
 
   has_many :contributions, :foreign_key => 'owner', :uniq => true
   has_many :ratings
@@ -62,7 +59,6 @@ class Person < ActiveRecord::Base
   scope :confirmed_accounts, where("confirmed_at is not null")
   scope :unconfirmed_accounts, where(:confirmed_at => nil)
 
-  before_create :check_and_populate_invite, :unless => :skip_invite
   after_create :create_shadow_account, :unless => :skip_shadow_account
   after_create :notify_civic_commons
   before_save :check_to_send_welcome_email
@@ -75,19 +71,6 @@ class Person < ActiveRecord::Base
 
   def check_to_send_welcome_email
     @send_welcome = true if newly_confirmed?
-  end
-
-  def check_and_populate_invite
-    if validate_invite_token(invite.invitation_token)
-      invite.email = self.email
-      invite.valid_invite = true
-    else
-      raise ActiveRecord::RecordNotSaved
-    end
-  end
-
-  def validate_invite_token(token)
-    token =~ /([a-zA-Z]{3})([0-9]{4})/i
   end
 
   def create_shadow_account
@@ -235,7 +218,6 @@ class Person < ActiveRecord::Base
     self.email = (first_name + last_name).gsub(/['\s]/,'').downcase + "@example.com"
     self.password = 'p4s$w0Rd'
     self.proxy = true
-    @skip_invite = true
   end
 
   def subscriptions_include?(subscribable)
@@ -255,7 +237,7 @@ class Person < ActiveRecord::Base
 
   # Implement Marketable method
   def subscribe_to_marketing_email
-    h = Hominid::Base.new({:api_key => Civiccommons::Config.mailer_api_token})
+    h = Hominid::Base.new(api_key: Civiccommons::Config.mailer_api_token)
     h.delay.subscribe(Civiccommons::Config.mailer_list, email, {:FNAME => first_name, :LNAME => last_name}, {:email_type => 'html'})
     Rails.logger.info("Success. Added mailing list subscription of #{name} to queue.")
   end
