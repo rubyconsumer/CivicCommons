@@ -9,5 +9,3 @@ describe CommunityController do
   end
 
 end
-
-
