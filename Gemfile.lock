@@ -1,3 +1,10 @@
+GIT
+  remote: git://github.com/JangoSteve/remotipart.git
+  revision: f34fffd463e5daccb078cd618ddf99df7272c81b
+  branch: more-flexible
+  specs:
+    remotipart (0.2.1)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -236,6 +243,7 @@ DEPENDENCIES
   paperclip (= 2.3.8)
   rails (= 3.0.3)
   rails3-generators
+  remotipart!
   rspec-rails (>= 2.4.0)
   ruby-debug19
   ruby_parser
