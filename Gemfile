@@ -21,7 +21,7 @@ gem 'delayed_job', ">= 2.1.2"
 
 gem 'hoptoad_notifier'
 
-gem 'remotipart', :git => 'git://github.com/JangoSteve/remotipart.git', :branch => 'more-flexible'
+gem 'remotipart', :git => 'git://github.com/CivicCommons/remotipart.git', :branch => 'more-flexible'
 
 group :development do
   gem "rails3-generators"

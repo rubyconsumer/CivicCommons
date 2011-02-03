@@ -1,6 +1,6 @@
 GIT
-  remote: git://github.com/JangoSteve/remotipart.git
-  revision: f34fffd463e5daccb078cd618ddf99df7272c81b
+  remote: git://github.com/CivicCommons/remotipart.git
+  revision: 9b56b50e7ec0e0fac516b4a7b76e0ad099970ff3
   branch: more-flexible
   specs:
     remotipart (0.2.1)
