@@ -19,7 +19,3 @@
 
 # Learn more: http://github.com/javan/whenever
 set :output, File.expand_path(File.dirname(__FILE__), 'log/cron_log.log')
-
-every 1.minutes do
-  command "mkdir ~/Desktop/tmp"
-end
