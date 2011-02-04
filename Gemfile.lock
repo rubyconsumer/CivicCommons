@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/CivicCommons/remotipart.git
-  revision: 9b56b50e7ec0e0fac516b4a7b76e0ad099970ff3
+  revision: 9b56b50
   branch: more-flexible
   specs:
     remotipart (0.2.1)
