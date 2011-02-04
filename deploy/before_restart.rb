@@ -3,6 +3,11 @@ run "echo Working on #{node[:environment][:framework_env]} environment."
 
 current_environment = node[:environment][:framework_env]
 
+# Setup cronjobs for the machine from config/schedule.rb
+run "echo Updating the crontab on the server"
+application = node[:applications].keys.first.to_s
+run "cd #{current_path} && whenever --update-crontab #{application}"
+
 # If it's not a production environment, tell robots to not crawl the site
 if current_environment != "production"
   run "echo Activate Ignore All robot.txt..."

@@ -23,6 +23,8 @@ gem 'hoptoad_notifier'
 
 gem 'remotipart', :git => 'git://github.com/CivicCommons/remotipart.git', :branch => 'more-flexible'
 
+gem 'whenever', :require => false
+
 group :development do
   gem "rails3-generators"
   gem "hpricot"
