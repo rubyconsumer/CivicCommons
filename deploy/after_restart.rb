@@ -5,7 +5,7 @@ current_environment = node[:environment][:framework_env]
 
 # Setup cronjobs for the machine from config/schedule.rb
 run "echo Updating the crontab on the server"
-application = node[:applications].keys.first.to_s
-run "cd #{current_path} && whenever --update-crontab #{application}"
+application = File.basename(current_path) # use the application folder name as the crontab namespace
+run "cd #{current_path} && whenever --update-crontab \"#{application}\""
 
 run "echo ~~~ Custom After Restart Hooks - Complete..."
