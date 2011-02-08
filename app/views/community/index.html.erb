@@ -5,7 +5,7 @@
       <div class="wide_content">
         <h1>Community</h1>
         <%= link_to "View by Name", community_path %> |
-        <%= link_to "Recenlty Joined", community_path(:order => 'recent') %>
+        <%= link_to "Recently Joined", community_path(:order => 'recent') %>
         <div class="community">
           <% @people.each do |person| %>
             <div id="<%=person.id %>" class ="buddyimg">
