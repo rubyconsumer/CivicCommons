@@ -72,6 +72,7 @@ Civiccommons::Application.routes.draw do
   resources :regions
   resources :links
   resources :conversations
+  resources :invites
 
   #Namespaces
   namespace "admin" do

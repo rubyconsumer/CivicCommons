@@ -9,7 +9,7 @@ Factory.define :people do |f|
     u.skip_email_marketing true
   end
 
-  Factory.define :registered_user, :class => Person do |u|
+  Factory.define :registered_user, :parent => :normal_person do |u|
     u.confirmed_at { Time.now }
     u.avatar {File.new(Rails.root + 'test/fixtures/images/test_image.jpg')}
     u.skip_shadow_account true

@@ -8,14 +8,17 @@ ENV["RAILS_ENV"] ||= "test"
 require File.expand_path(File.dirname(__FILE__) + '/../../config/environment')
 
 require 'cucumber/formatter/unicode' # Remove this line if you don't want Cucumber Unicode support
+require 'cucumber/rails'
 require 'cucumber/rails/world'
-require 'cucumber/rails/active_record'
 require 'cucumber/web/tableish'
+
+# require 'email_spec'
+require 'email_spec/cucumber'
 
 require 'capybara/rails'
 require 'capybara/cucumber'
 require 'capybara/session'
-require 'cucumber/rails/capybara_javascript_emulation' # Lets you click links with onclick javascript handlers without using @culerity or @javascript
+require 'cucumber/rails/capybara/javascript_emulation' # Lets you click links with onclick javascript handlers without using @culerity or @javascript
 
 require 'ruby-debug'
 
@@ -60,7 +63,7 @@ Capybara.default_selector = :css
 # pages, more or less in the same way your application would behave in the
 # default production environment. It's not recommended to do this for all
 # of your scenarios, as this makes it hard to discover errors in your application.
-ActionController::Base.allow_rescue = false
+# ActionController::Base.allow_rescue = false
 
 # If you set this to true, each scenario will run in a database transaction.
 # You can still turn off transactions on a per-scenario basis, simply tagging 
