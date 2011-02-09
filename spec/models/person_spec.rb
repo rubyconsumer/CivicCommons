@@ -284,6 +284,7 @@ describe Person do
     end
 
     it "should not call people aggregator with update when invalid password" do
+      pending "~~~~~~THIS GOES AWAY WHEN PA IS PHASED OUT~~~~~~~"
       PeopleAggregator::Account.should_not_receive(:update)
 
       person = Factory.create(:normal_person)

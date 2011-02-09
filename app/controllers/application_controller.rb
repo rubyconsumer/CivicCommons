@@ -15,8 +15,8 @@ class ApplicationController < ActionController::Base
   def require_user
     if current_person.nil?
       # AJAX file uploads submitted normal-style via iframe, so also
-      # check for custom ajax_submitted param set in jquery.remotipart.js
-      if request.xhr? || params[:ajax_submitted]
+      # check for custom remotipart_submitted param set in jquery.remotipart.js
+      if request.xhr? || params[:remotipart_submitted]
         @requested_url = request.url
         respond_to do |format|
           format.html { render :partial => 'sessions/new' }

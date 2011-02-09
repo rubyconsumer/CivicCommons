@@ -1,32 +1,34 @@
-<% if person_signed_in? %>
+<%= remotipart_response do %>
+  <% if person_signed_in? %>
 
-  if ( ! lastAjaxIsColorbox ) {
-    $.colorbox.close();
-  }
+    if ( ! lastAjaxIsColorbox ) {
+      $.colorbox.close();
+    }
 
-  $('#login-status')
-    .html('<%= escape_javascript( render :partial => 'layouts/logged_in' ) %>')
-    .removeClass('signed-out');
+    $('#login-status')
+      .html('<%= escape_javascript( render :partial => 'layouts/logged_in' ) %>')
+      .removeClass('signed-out');
 
-  if ( /ajax_submitted=true/.test(lastAjaxSettings.data) ){
-    var el = $('input[name="ajax_submitted"]').parents('form');
-    el.submit();
-  } else {
-    $.ajax({
-      url: lastAjaxSettings.url,
-      data: lastAjaxSettings.data,
-      dataType: lastAjaxSettings.dataType,
-      type: lastAjaxSettings.type,
-      beforeSend: lastAjaxSettings.beforeSend,
-      success: lastAjaxSettings.success,
-      complete: lastAjaxSettings.complete,
-      error: lastAjaxSettings.error
+    if ( /remotipart_submitted=true/.test(lastAjaxSettings.data) ){
+      var el = $('input[name="remotipart_submitted"]').parents('form');
+      el.submit();
+    } else {
+      $.ajax({
+        url: lastAjaxSettings.url,
+        data: lastAjaxSettings.data,
+        dataType: lastAjaxSettings.dataType,
+        type: lastAjaxSettings.type,
+        beforeSend: lastAjaxSettings.beforeSend,
+        success: lastAjaxSettings.success,
+        complete: lastAjaxSettings.complete,
+        error: lastAjaxSettings.error
 
-    });
-  }
-<% else %>
-  // Devise populates login error message in flash.alert
-  $('#ajax-login-form').find('.validation-error')
-    .html('<%= flash.alert %>');
-  $.colorbox.resize();
+      });
+    }
+  <% else %>
+    // Devise populates login error message in flash.alert
+    $('#ajax-login-form').find('.validation-error')
+      .html('<%= flash.alert %>');
+    $.colorbox.resize();
+  <% end %>
 <% end %>

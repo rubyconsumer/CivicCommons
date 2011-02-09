@@ -147,6 +147,19 @@ padding-top: 8px;
 text-align: right;
 width: 140px;
 }
+.form-label-offset{
+margin:5px 0 5px 160px;
+}
+.form-label-offset .title{
+display:block;
+font-weight:bold;
+padding:5px 0;
+color:#555;
+}
+.form-label-offset a img {float:left}
+.form-label-offset .remove_picture{
+margin-left:5px;
+}
 input.textbox, textarea, input.textbox.small {
 font-family: Helvetica, Arial, sans-serif;
 font-size: 1em;

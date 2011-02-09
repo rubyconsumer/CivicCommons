@@ -13,7 +13,7 @@ class Person < ActiveRecord::Base
   attr_accessor :skip_shadow_account, :organization_name, :send_welcome
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :name, :first_name, :last_name, :email, :password, :password_confirmation, :top, :zip_code, :admin, :validated,
+  attr_accessible :name, :first_name, :last_name, :email, :password, :password_confirmation, :bio, :top, :zip_code, :admin, :validated,
                   :avatar, :organization_name
 
   has_many :contributions, :foreign_key => 'owner', :uniq => true
@@ -85,13 +85,13 @@ class Person < ActiveRecord::Base
                                                     email:                      email,
                                                     profilePictureWidth:        avatar_width_for_style(:large),
                                                     profilePictureHeight:       avatar_height_for_style(:large),
-                                                    profilePictureURL:          avatar_url_without_timestamp(:large),
+                                                    profilePictureURL:          avatar_path(:large),
                                                     profileAvatarWidth:         avatar_width_for_style(:standard),
                                                     profileAvatarHeight:        avatar_height_for_style(:standard),
-                                                    profileAvatarURL:           avatar_url_without_timestamp(:standard),
+                                                    profileAvatarURL:           avatar_path(:standard),
                                                     profileAvatarSmallWidth:    avatar_width_for_style(:medium),
                                                     profileAvatarSmallHeight:   avatar_width_for_style(:medium),
-                                                    profileAvatarSmallURL:      avatar_url_without_timestamp(:medium))
+                                                    profileAvatarSmallURL:      avatar_path(:medium))
 
 
     rescue PeopleAggregator::Error => e
@@ -224,8 +224,8 @@ class Person < ActiveRecord::Base
     subscriptions.map(&:subscribable).include?(subscribable)
   end
 
-  def avatar_url_without_timestamp(style='')
-    self.avatar.url(style).gsub(/\?\d+$/, '')
+  def avatar_path(style='')
+    self.avatar.path(style)
   end
 
   # Implement Marketable method
@@ -235,12 +235,18 @@ class Person < ActiveRecord::Base
     newly_confirmed? ? true : false
   end
 
-  # Implement Marketable method
+
+# Implement Marketable method
   def subscribe_to_marketing_email
     h = Hominid::Base.new(api_key: Civiccommons::Config.mailer_api_token)
     h.delay.subscribe(Civiccommons::Config.mailer_list, email, {:FNAME => first_name, :LNAME => last_name}, {:email_type => 'html'})
     Rails.logger.info("Success. Added mailing list subscription of #{name} to queue.")
   end
+
+  protected
+    def password_required?
+      !persisted? || password.present? || password_confirmation.present?
+    end
 
   private
 
