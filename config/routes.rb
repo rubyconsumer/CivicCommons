@@ -68,7 +68,6 @@ Civiccommons::Application.routes.draw do
     resources :conversations
     resources :issues
     resources :regions
-    resources :invites
     resources :people do
       get 'proxies',       on: :collection
       put 'lock_access',   on: :member
