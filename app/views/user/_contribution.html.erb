@@ -6,7 +6,7 @@
     <% if contribution.is_image? %>
       <%= image_tag contribution.attachment.url %>
     <% else %>
-      <%= link_to("Download: #{contribution.attachment_file_name}", contribution.attachment.url, {:target => :blank}) %>
+      <%= link_to(contribution.attachment_file_name, contribution.attachment.url, {:target => :blank}) %>
     <% end %>
   <% end %>
   <p><%= contribution.content.html_safe %></p>
