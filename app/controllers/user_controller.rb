@@ -15,10 +15,11 @@ class UserController < ApplicationController
   def show
     @user = Person.includes(:contributions, :subscriptions).find(params[:id])
 
-    @contributions = @user.contributions.collect do |contribution|
+    @contributions = @user.contributions.order('contributions.created_at DESC')
+    @contributions = @contributions.paginate(page: params[:page], per_page: 6)
+    @contributions.collect do |contribution|
       ContributionPresenter.new(contribution)
     end
-    @contributions = @contributions.paginate(page: params[:page], per_page: 6)
 
     @issue_subscriptions = @user.subscriptions.select do |subscription|
       subscription.subscribable_type == "Issue"
