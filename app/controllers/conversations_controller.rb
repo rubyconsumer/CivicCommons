@@ -5,11 +5,9 @@ class ConversationsController < ApplicationController
   # GET /conversations
   # GET /conversations.xml
   def index
-    @active = Conversation.latest_updated.limit(3)
-    @popular = Conversation.get_top_visited(3)
+    @active = Conversation.includes(:participants).latest_updated.limit(3)
+    @popular = Conversation.includes(:participants).get_top_visited(3)
 
-    @main_article = Article.conversation_main_article.first
-    @sub_articles = Article.conversation_sub_articles.limit(3)
     @regions = Region.all
     @recent_items = TopItem.newest_items(3).for(:conversation).collect(&:item)
     respond_to do |format|

@@ -1,10 +1,9 @@
 <% content_for :main do %>
 <div class="wrapper">
 <div class="content-container">
-      <h1>Conversations</h1>
+      <h1><%= params[:filter].titleize %> Conversations</h1>
 
       <div class="main-content">
-        <h3><%= params[:filter].titleize %> Conversations</h3>
 
       <%= render :partial => '/conversations/conversation_pager' %>
 
