@@ -12,12 +12,9 @@
       <h1>Conversations</h1>
 
       <div class="main-content">
+        <h3><%= params[:filter].titleize %> Conversations</h3>
 
-        <h3>Current Active Conversations</h3>
-        <%= render :partial => '/conversations/conversation_band', :locals => {:conversations => @active} %>
-
-        <h3>Popular Conversations</h3>
-        <%= render :partial => '/conversations/conversation_band', :locals => {:conversations => @popular} %>
+      <%= render :partial => '/conversations/conversation_pager' %>
 
       </div><!-- /.main-content -->     
       <div class='aside supplementary'>

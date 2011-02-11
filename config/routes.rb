@@ -24,6 +24,8 @@ Civiccommons::Application.routes.draw do
   match '/conversations/preview_node_contribution',    to: 'conversations#preview_node_contribution'
   match '/conversations/rate_contribution',            to: 'conversations#rate_contribution'
   post '/conversations/rate',                          to: 'conversations#rate'
+
+  get 'conversations/:filter',                         to: 'conversations#filter',                            as: 'conversations_filter', constraints: FilterConstraint.new
   post '/subscriptions/subscribe',                     to: 'subscriptions#subscribe'
   post '/subscriptions/unsubscribe',                   to: 'subscriptions#unsubscribe'
   get '/community',                                    to: 'community#index',                                 as: 'community'

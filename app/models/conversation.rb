@@ -34,6 +34,13 @@ class Conversation < ActiveRecord::Base
   before_destroy :destroy_root_contributions # since non-root contributions will be destroyed internally be awesome_nested_set
 
   scope :latest_updated, :order => 'updated_at DESC'
+  scope :active, latest_updated
+  scope :popular, get_top_visited
+
+  def self.filtered(filter)
+    raise "Undefined Filter :#{filter}" unless scopes.keys.include?(filter.to_sym)
+    scoped & self.send(filter)
+  end
 
   # Return a comma-and-space-delimited list of the Issues
   # relevant to this Conversation, e.g., "Jobs, Sports, Religion"
