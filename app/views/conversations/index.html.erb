@@ -24,10 +24,7 @@
         <div class="mod">
           <h3>Featured</h3>
           <div class="mod-content">
-            <ul class='link-list'>
-              <li><%= link_to "Active", conversations_filter_path(:active) %></li>
-              <li><%= link_to "Popular", conversations_filter_path(:popular) %></li>
-            </ul>
+            <%= render :partial => '/conversations/filters' %>
           </div>
         </div>
         <div class="mod">

@@ -19,10 +19,8 @@ class ConversationsController < ApplicationController
   end
 
   def filter
-    @conversations = Conversation.filtered(params[:filter]).paginate(:page => params[:page], :per_page => 12)
+    @conversations = Conversation.includes(:participants).filtered(params[:filter]).paginate(:page => params[:page], :per_page => 12)
 
-    @main_article = Article.conversation_main_article.first
-    @sub_articles = Article.conversation_sub_articles.limit(3)
     @regions = Region.all
     @recent_items = TopItem.newest_items(3).for(:conversation).collect(&:item)
     respond_to do |format|

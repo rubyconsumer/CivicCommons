@@ -31,5 +31,11 @@ describe ConversationsController do
       { :delete => "/conversations/1" }.should route_to(:controller => "conversations", :action => "destroy", :id => "1") 
     end
 
+    Conversation.available_filter_names.each do |filter_name|
+      it "recognizes and generates #filter route for :#{filter_name} filter" do
+        { :get => "/conversations/#{filter_name}" }.should route_to(:controller => "conversations", :action => "filter", :filter => filter_name)
+      end
+    end
+
   end
 end
