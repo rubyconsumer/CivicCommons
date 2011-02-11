@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110110220007) do
+ActiveRecord::Schema.define(:version => 20110211173541) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -131,16 +131,6 @@ ActiveRecord::Schema.define(:version => 20110110220007) do
 
   add_index "delayed_jobs", ["locked_by"], :name => "delayed_jobs_locked_by"
   add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
-
-  create_table "invites", :force => true do |t|
-    t.integer  "person_id"
-    t.string   "invitation_token",   :limit => 40
-    t.datetime "invitation_sent_at"
-    t.boolean  "valid_invite"
-    t.string   "email"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "issues", :force => true do |t|
     t.string   "name"
