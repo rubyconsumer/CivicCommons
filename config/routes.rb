@@ -49,8 +49,6 @@ Civiccommons::Application.routes.draw do
   get '/contact-us',        to: 'static_pages#contact'
   get '/posters',           to: 'static_pages#poster'
   get '/poster',            to: 'static_pages#poster'
-  get '/polls',             to: 'polls#index'
-  post '/polls',            to: 'polls#create'
   get '/blog',              to: 'static_pages#blog',                as: 'blog'
   get '/press',             to: 'static_pages#in_the_news'
 
