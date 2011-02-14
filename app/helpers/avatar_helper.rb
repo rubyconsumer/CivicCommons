@@ -9,9 +9,9 @@ module AvatarHelper
       loggedout_image
     end
   end
-  
+
   def text_profile(person)
-    if person && person.people_aggregator_id
+    if person
       link_to_profile(person) do
         person.name
       end
@@ -19,39 +19,33 @@ module AvatarHelper
       person.name
     end
   end
-  
+
   def conversation_profile(person)
     avatar_profile(person, 40)
   end
-  
+
   def contribution_profile(person)
     avatar_profile(person, 40)
   end
-  
+
   def featured_profile(person)
     avatar_profile(person, 50)
   end
-  
+
   def profile_image(person, size=20)
-    <<-EOHTML
-    <img src="#{person.avatar.url(:standard)}" alt="#{person.name}" height="#{size}" width="#{size}" title="#{person.name}"/>
-    EOHTML
+    image_tag person.avatar.url(:standard), alt: person.name, height: size, width: size, title: person.name
   end
-  
+
   def loggedin_image(person, size=40)
-    <<-EOHTML
-    <img src="#{person.avatar.url(:standard)}" alt="#{person.name}" class='callout' height="#{size}" width="#{size}"/>
-    EOHTML
+    image_tag person.avatar.url(:standard), alt: person.name, class: 'callout', height: size, width: size
   end
-  
+
   def loggedout_image(size=40)
-    <<-EOHTML
-    <img src='/images/avatar_#{size}.gif' alt='default avatar' class='callout' height='#{size}' width='#{size}'> 
-    EOHTML
+    image_tag "avatar_#{size}.gif", alt: 'default avatar', class: 'callout', height: size, width: size
   end
-  
+
   def avatar_profile(person, size=20)
-    if person && person.people_aggregator_id
+    if person
       link_to_profile(person) do
         profile_image(person, size)
       end
@@ -59,30 +53,16 @@ module AvatarHelper
       profile_image(person, size)
     end
   end
-  
+
   def link_to_profile(person)
-    if current_person == person
-      profile_link = "me"
-    else
-      profile_link = "user/#{person.people_aggregator_id}"
-    end
-    <<-EOHTML
-    <a href="#{pa_link(profile_link)}" title="#{person.name}">
-      #{yield}
-    </a>
-    EOHTML
+    link_to yield, user_path(person), title: person.name
   end
 
   def link_to_settings(person)
-    settings_link = "myAccount/editProfile"
-    <<-HTML
-    <a href="#{pa_link(settings_link)}" title="Profile Settings">
-      SETTINGS
-    </a>
-    HTML
+    link_to "Settings", edit_user_path(person), title: "Profile Settings", class: 'user-link'
   end
 
-  
+
   # Creates an image_tag for a particular person
   # options includes options passed along to image_tag along with
   # :style_name which is a directive for paperclip which determines the

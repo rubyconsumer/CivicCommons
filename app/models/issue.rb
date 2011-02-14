@@ -16,8 +16,6 @@ class Issue < ActiveRecord::Base
   has_many(:media_contributions, :class_name => "Contribution",
            :conditions => {:type => ['EmbeddedSnippet', 'Link', 'AttachedFile']})
 
-  has_many(:written_contributions, :class_name => "Contribution",
-           :conditions => {:type => ['PplAggContribution']})
   has_many :subscriptions, :as => :subscribable
   
   # Anyone who has contributed directly to the issue via a contribution

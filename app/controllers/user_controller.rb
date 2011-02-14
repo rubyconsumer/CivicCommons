@@ -19,6 +19,15 @@ class UserController < ApplicationController
   end
 
   def update
+    @person = Person.find(params[:id])
+    respond_to do |format|
+      if @person.update_attributes(params[:person])
+        flash[:notice] = "Successfully edited your profile"
+        format.html { redirect_to user_path(@person) }
+      else
+        format.html { render :action => "edit" }
+      end
+    end
   end
 
 end

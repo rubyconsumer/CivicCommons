@@ -35,8 +35,6 @@ module ConversationsHelper
       "shared a video"
     when "Link"
       "shared a link"
-    when "PplAggContribution"
-      "wrote a response"
     when "Question"
       "asked a question"
     when "SuggestedAction"
