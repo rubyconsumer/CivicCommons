@@ -1404,9 +1404,8 @@ padding: 0 10px;
 /*-----------------------------------------------
 =Community page styles
 -----------------------------------------------*/
-
-img.blog-pic {float: left; width: 32px; height 32:pix; padding-right: 5px;}
 div.blog {margin-bottom: 20px;}
+div.blog img.callout {float: left; width: 32px; height: 32px; padding-right: 5px;}
 .blog_inner, .post_info {padding-left: 40px;}
 .blog_inner a, .post_info a {color: #0099FF;}
 .post_info {padding-top: 20px;}
