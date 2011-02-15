@@ -59,11 +59,10 @@ class Person < ActiveRecord::Base
   scope :confirmed_accounts, where("confirmed_at is not null")
   scope :unconfirmed_accounts, where(:confirmed_at => nil)
 
-  after_create :create_shadow_account, :unless => :skip_shadow_account
   after_create :notify_civic_commons
   before_save :check_to_send_welcome_email
   after_save :send_welcome_email, :if => :send_welcome?
-  after_destroy :delete_shadow_account, :unless => :skip_shadow_account
+
 
   def newly_confirmed?
     confirmed_at_changed? && confirmed_at_was.blank? && !confirmed_at.blank?
@@ -73,106 +72,12 @@ class Person < ActiveRecord::Base
     @send_welcome = true if newly_confirmed?
   end
 
-  def create_shadow_account
-    begin
-      Rails.logger.info("Creating shadow account for user with email #{email}")
-      self.organization_name.blank?
-        pa_person = PeopleAggregator::Person.create(id:                         id,
-                                                    firstName:                  first_name,
-                                                    lastName:                   last_name,
-                                                    login:                      email,
-                                                    password:                   encrypted_password,
-                                                    email:                      email,
-                                                    profilePictureWidth:        avatar_width_for_style(:large),
-                                                    profilePictureHeight:       avatar_height_for_style(:large),
-                                                    profilePictureURL:          avatar_path(:large),
-                                                    profileAvatarWidth:         avatar_width_for_style(:standard),
-                                                    profileAvatarHeight:        avatar_height_for_style(:standard),
-                                                    profileAvatarURL:           avatar_path(:standard),
-                                                    profileAvatarSmallWidth:    avatar_width_for_style(:medium),
-                                                    profileAvatarSmallHeight:   avatar_width_for_style(:medium),
-                                                    profileAvatarSmallURL:      avatar_path(:medium))
-
-
-    rescue PeopleAggregator::Error => e
-      errors.add(:person, e.message)
-      raise ActiveRecord::RecordNotSaved
-    end
-
-
-    save_pa_identifier(pa_person)
-  end
-
-  # Handles updating only certain fields exposed via the api
-  # example hash of params would be
-  # { :name => "John Foo",
-  #   :email => "johnfoo@example.com",
-  #   :zip_code => "60600",
-  #   :avatar => {
-  #     :content_type => "image/jpeg",
-  #     :file_name => "test.jpeg",
-  #     :file_size => 1000,
-  #     :url => "http://some_amazon_s3_url"
-  #   },
-  #   :encrypted_password => "XXXXXXXXXXXX",
-  #   :password_salt => "$2a$10$95c0ac175c8566911bb039$"
-  # }
-  #
-  def api_update(params)
-    params ||= {}
-
-    # encrypted password is a protected attribute, explicitly update it if
-    # it was changed
-    _encrypted_password = params.delete(:encrypted_password)
-    _password_salt = params.delete(:password_salt)
-    if _encrypted_password && _password_salt
-      if _password_salt.ends_with?("$")
-        _password_salt.chop!
-      end
-      self.encrypted_password = _encrypted_password
-      self.password_salt = _password_salt
-    end
-
-    # Handle updating the avatar
-    if (avatar_params = params[:avatar]) && avatar_params.any?
-      if url = avatar_params[:url]
-        Rails.logger.info("New avatar url for Person #{self.id}\n #{url}")
-      end
-
-      # loop through all the attributes required by paperclip to circumvent
-      # requesting the file from AWS. Slight hack around the way paper clip works
-      required_attrs = [:file_name, :content_type, :file_size]
-      required_attrs.each do |attr|
-        self.send("avatar_#{attr}=", avatar_params[attr])
-      end
-      self.avatar_updated_at = Time.now
-    end
-
-    update_attributes(params)
-  end
-
-  def reset_password!(new_password, new_password_confirmation)
-    if super
-      PeopleAggregator::Account.update(self.people_aggregator_id,
-                                       password: self.encrypted_password)
-    end
-  end
-
   def avatar_width_for_style(style)
     geometry_for_style(style, :avatar).width.to_i
   end
 
   def avatar_height_for_style(style)
     geometry_for_style(style, :avatar).height.to_i
-  end
-
-
-  def delete_shadow_account
-    Rails.logger.info("Deleting shadow account for user with email #{email}")
-
-    pa_person = PeopleAggregator::Person.find_by_email(self.email)
-    pa_person.destroy
-
   end
 
   def name=(value)
@@ -248,11 +153,4 @@ class Person < ActiveRecord::Base
       !persisted? || password.present? || password_confirmation.present?
     end
 
-  private
-
-  def save_pa_identifier(pa_person)
-    Rails.logger.info("Success.  Person created.  Updating Person with People Agg ID...")
-    self.people_aggregator_id = pa_person.id
-    self.save
-  end
 end
