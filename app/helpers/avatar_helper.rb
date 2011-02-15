@@ -11,7 +11,7 @@ module AvatarHelper
   end
 
   def text_profile(person)
-    if person && person.people_aggregator_id
+    if person
       link_to_profile(person) do
         person.name
       end
@@ -45,7 +45,7 @@ module AvatarHelper
   end
 
   def avatar_profile(person, size=20)
-    if person && person.people_aggregator_id
+    if person
       link_to_profile(person) do
         profile_image(person, size)
       end
