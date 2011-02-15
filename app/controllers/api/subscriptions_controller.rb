@@ -5,7 +5,7 @@ class Api::SubscriptionsController < ActionController::Base
   def index
 
     subscribed_items =
-      Api::SubscribedItems.for_person_by_people_aggregator_id(params[:id], request)
+      Api::SubscribedItems.for_person_by_id(params[:id], request)
 
     if subscribed_items
       respond_with subscribed_items

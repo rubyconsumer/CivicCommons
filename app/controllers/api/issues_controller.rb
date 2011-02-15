@@ -6,7 +6,7 @@ class Api::IssuesController < ActionController::Base
     Rails.logger.debug params.inspect
 
     contributed_issues =
-        Api::ContributedIssues.for_person_by_people_aggregator_id(params[:id], request)
+        Api::ContributedIssues.for_person_by_id(params[:id], request)
 
     respond_with contributed_issues
   end
