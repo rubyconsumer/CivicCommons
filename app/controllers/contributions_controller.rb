@@ -29,26 +29,6 @@ class ContributionsController < ApplicationController
     end
   end
 
-  def create_from_pa
-    if params.has_key?(:issue_id)
-      item = Issue.find(params[:issue_id])
-    else
-      item = Conversation.find(params[:conversation_id])
-      parent = item.contributions.find(params[:parent_contribution_id])
-    end
-
-    contribution = Contribution.
-      create_confirmed_node_level_contribution({:type => "PplAggContribution",
-                                                 :url => params[:link],
-                                                 :title => params[:title],
-                                                 :item => item,
-                                                 :parent => parent},
-                                     Person.find(params[:person_id]))
-    contribution.save!
-    redirect_to polymorphic_url(item)
-
-  end
-
   def create
     @contribution = Contribution.new(params[:contribution])
 

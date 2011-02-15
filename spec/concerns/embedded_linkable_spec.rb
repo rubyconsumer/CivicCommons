@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-[Link, EmbeddedSnippet, PplAggContribution].each do |model|
+[Link, EmbeddedSnippet].each do |model|
   describe model, "When working with links" do
     before(:each) do
       @model = Factory.build(model.to_s.underscore)
