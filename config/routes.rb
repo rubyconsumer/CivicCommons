@@ -92,9 +92,7 @@ Civiccommons::Application.routes.draw do
     get '/:id/conversations',                              to: 'conversations#index',  format: :json
     get '/:id/issues',                                     to: 'issues#index',         format: :json
     get '/:id/contributions',                              to: 'contributions#index',  format: :json
-    get '/people-aggregator/person/:id/subscriptions',     to: 'subscriptions#index',  format: :json
-    get '/people-aggregator/person/:id/contributions',     to: 'contributions#index',  format: :json
-    put '/people-aggregator/person/:people_aggregator_id', to: 'people#update',        format: :json
+    get '/:id/subscriptions',                              to: 'subscriptions#index',  format: :json
   end
 
 end
