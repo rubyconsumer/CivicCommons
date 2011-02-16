@@ -34,7 +34,7 @@ group :development do
 end
 
 group :test do
-  gem 'jasmine'#, :path => 'vendor/gems/jasmine'
+  #gem 'jasmine'#, :path => 'vendor/gems/jasmine'
   gem 'cucumber', '~>0.9.0'
   gem 'capybara'
   gem 'cucumber-rails'
