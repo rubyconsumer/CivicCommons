@@ -40,9 +40,6 @@ Civiccommons::Application.routes.draw do
   get '/community',                                    to: 'community#index',                                 as: 'community'
   #Widget
   get '/widget',                                       to: 'widget#index'
-  #Polls
-  get '/polls',             to: 'polls#index'
-  post '/polls',            to: 'polls#create'
 
 #Static Pages
   get '/about',             to: 'static_pages#about'
