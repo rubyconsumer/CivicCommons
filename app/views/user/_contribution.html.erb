@@ -2,6 +2,17 @@
   <% unless contribution.title.nil? %>
     <%= link_to contribution.title, contribution.url %>
   <% end %>
-  <p><%= contribution.content %></p>
-  <p class="profile-meta">Contributed to <%= link_to  %> on <%= contribution.created_at %></p>
+  <% if contribution.is_a?(AttachedFile) %>
+    <% if contribution.is_image? %>
+      <%= image_tag contribution.attachment.url %>
+    <% else %>
+      <%= link_to(contribution.attachment_file_name, contribution.attachment.url, {:target => :blank}) %>
+    <% end %>
+  <% end %>
+  <p><%= contribution.content.html_safe %></p>
+  <% if contribution.issue && ! ( controller.controller_name == 'issues' && controller.action_name == 'show' ) %>
+  <p class="profile-meta">Contributed to <%= link_to( contribution.issue.name, issue_node_path( contribution ) ) %> on <%= contribution.created_at.strftime("%B %e, %Y") %></p>
+  <% elsif contribution.conversation %>
+  <p class="profile-meta">Contributed to <%= link_to( contribution.conversation.title, conversation_node_path( contribution ) ) %> on <%= contribution.created_at.strftime("%B %e, %Y") %></p>
+  <% end %>
 </div>

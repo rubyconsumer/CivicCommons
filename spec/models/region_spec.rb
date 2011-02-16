@@ -45,7 +45,7 @@ describe Region do
 
   describe "issues" do
 
-    before(:all) do
+    before(:each) do
       @issue = Factory.create(:issue, {:zip_code => "all"})
     end
 

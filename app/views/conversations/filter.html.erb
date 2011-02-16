@@ -1,22 +1,16 @@
 <% content_for :main do %>
 <div class="wrapper">
 <div class="content-container">
-      <h1>Conversations</h1>
+      <h1><%= params[:filter].titleize %> Conversations</h1>
 
       <div class="main-content">
 
-        <%= link_to "See more", conversations_filter_url(:active), :class => 'see-more' %>
-        <h3>Current Active Conversations</h3>
-        <%= render :partial => '/conversations/conversation_band', :locals => {:conversations => @active} %>
-
-        <%= link_to "See more", conversations_filter_url(:popular), :class => 'see-more' %>
-        <h3>Popular Conversations</h3>
-        <%= render :partial => '/conversations/conversation_band', :locals => {:conversations => @popular} %>
+      <%= render :partial => '/conversations/conversation_pager' %>
 
       </div><!-- /.main-content -->     
       <div class='aside supplementary'>
         <div class="mod">
-          <h3>Featured Conversations</h3>
+          <h3>Featured</h3>
           <div class="mod-content">
             <%= render :partial => '/conversations/filters' %>
           </div>

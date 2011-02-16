@@ -12,6 +12,9 @@ Civiccommons::Application.routes.draw do
     match '/people/ajax_login', :to=>'sessions#ajax_create', :via=>[:post]
   end
 
+  constraints FilterConstraint do
+    get 'conversations/:filter', to: 'conversations#filter', as: 'conversations_filter'
+  end
 #Custom Matchers
   #Contributions
   get '/contributions/create_from_pa',                 to: 'contributions#create_from_pa',                   as: 'create_from_pa_contributions'

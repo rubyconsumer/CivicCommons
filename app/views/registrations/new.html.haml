@@ -21,9 +21,6 @@
       %h1 Sign up
       %p
         Want to join the conversation? Lets get the formalities out of the way.
-      %p
-        We're still in beta, so you'll need a code to get started.  Do you need a code?
-        = link_to 'Contact us', '/contact-us'
 .wrapper
   .main.section
     = form_for(form_presenter, :as => resource_name, :url => registration_path(resource_name), :html => { :multipart => 'true', :class => "register" }) do |f|
