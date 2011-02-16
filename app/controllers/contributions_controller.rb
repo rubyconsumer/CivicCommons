@@ -81,7 +81,6 @@ class ContributionsController < ApplicationController
     redirect_to conversation_path(@contribution.conversation)
   end
 
-
   def create_confirmed_contribution
     @contribution = Contribution.create_confirmed_node_level_contribution(params[:contribution], current_person)
     redirect_to("#{contribution_parent_page(@contribution)}#contribution#{@contribution.id}",

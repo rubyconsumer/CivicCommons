@@ -28,11 +28,7 @@
           <p><%= raw (@issue.summary) %></p>
           <p><strong><%= link_to @issue.url_title, source_url(@issue) %></strong></p>
           <p><strong>Created On:</strong> <%= @issue.created_at.strftime("%m/%d/%Y") %></p>
-          <!--
-          # TODO - admin only? or remove?
-          <p><a href="#">Edit summary</a></p>
-          -->
-        </div>
+       </div>
 
         <h3>Conversations about this issue:</h3>
         <%= render :partial => '/conversations/conversation_pager' %>
