@@ -337,6 +337,7 @@ padding-left: 25px;
 .dnld.document {background: url(/images/document.png) no-repeat 0 3px;}
 .dnld.link {background: url(/images/link.png) no-repeat 0 3px;}
 .dnld.image {background: url(/images/image.png) no-repeat 0 3px;}
+.dnld.image img {max-width: 595px;}
 .dnld strong {display: block;}
 .dnld p {margin-bottom: .2em;}
 
