@@ -1,5 +1,5 @@
 <ul class='link-list'>
-  <li><%= link_to "Recently Active", conversations_filter_path(:active) %></li>
-  <li><%= link_to "Most Popular", conversations_filter_path(:popular) %></li>
-  <li><%= link_to "Recently Created", conversations_filter_path(:recent) %></li>
+  <% Conversation.available_filter_names.each do |filter| %>
+    <li><%= link_to filter_title(filter), conversations_filter_path(filter) %></li>
+  <% end %>
 </ul>

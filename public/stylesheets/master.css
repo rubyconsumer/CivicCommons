@@ -135,6 +135,20 @@ margin: .5em 0 .2em;
 text-transform: none;
 }
 
+.conversation-tile-group {
+border-bottom: solid 1px #cdcdcd;
+padding: 0 0 25px;
+margin: 0 0 15px;
+}
+
+.conversation-tile-group:last-child {
+border-bottom: none;
+}
+
+.conversation-tile-group h3 {
+border: none;
+}
+
 /*-----------------------------------------------
 =Form Styles
 -----------------------------------------------*/
@@ -297,7 +311,7 @@ div.topic-header p {margin-bottom: 0}
 p.topic-count {float: left;}
 p.topic-selection {float: right;}
 p.topic-selection a {margin-left: 1em;}
-a.see-more { float: right; margin-top: 0.5em; }
+a.see-more { float: right; }
 
 /*-----------------------------------------------
 =Offset List Styles
