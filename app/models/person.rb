@@ -10,7 +10,7 @@ class Person < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable,
          :confirmable, :lockable
 
-  attr_accessor :skip_shadow_account, :organization_name, :send_welcome
+  attr_accessor :organization_name, :send_welcome
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :name, :first_name, :last_name, :email, :password, :password_confirmation, :bio, :top, :zip_code, :admin, :validated,

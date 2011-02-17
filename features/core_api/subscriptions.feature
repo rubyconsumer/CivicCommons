@@ -1,5 +1,5 @@
 Feature:
-  As a People Aggregator developer
+  As a developer
   I want to be able to retrieve a user's subscriptions
   So that I encourage others to participate and show how people are using the system
 

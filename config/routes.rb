@@ -17,7 +17,6 @@ Civiccommons::Application.routes.draw do
   end
 #Custom Matchers
   #Contributions
-  get '/contributions/create_from_pa',                 to: 'contributions#create_from_pa',                   as: 'create_from_pa_contributions'
   post '/contributions/create_confirmed_contribution', to: 'contributions#create_confirmed_contribution',    as: 'create_confirmed_contribution'
   delete '/contributions/moderate/:id',                to: 'contributions#moderate_contribution',            as: 'moderate_contribution'
   delete '/contributions/:id',                         to: 'contributions#destroy',                          as: 'contribution'
