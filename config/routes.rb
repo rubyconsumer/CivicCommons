@@ -22,7 +22,6 @@ Civiccommons::Application.routes.draw do
   post '/contributions/create_confirmed_contribution', to: 'contributions#create_confirmed_contribution',    as: 'create_confirmed_contribution'
   delete '/contributions/moderate/:id',                to: 'contributions#moderate_contribution',            as: 'moderate_contribution'
   delete '/contributions/:id',                         to: 'contributions#destroy',                          as: 'contribution'
-
  #Conversations
   get '/conversations/',                               to: 'conversations#index',                            as: 'conversations'
   match '/conversations/preview_node_contribution',    to: 'conversations#preview_node_contribution'
@@ -40,8 +39,7 @@ Civiccommons::Application.routes.draw do
   get '/community',                                    to: 'community#index',                                 as: 'community'
   #Widget
   get '/widget',                                       to: 'widget#index'
-
-#Static Pages
+  #Static Pages
   get '/about',             to: 'static_pages#about'
   get '/blog',              to: 'static_pages#blog',                as: 'blog'
   get '/build-the-commons', to: 'static_pages#build_the_commons'
@@ -55,7 +53,7 @@ Civiccommons::Application.routes.draw do
   get '/team',              to: 'static_pages#team'
   get '/terms',             to: 'static_pages#terms'
 
-  #Resource Declared Routes
+#Resource Declared Routes
   resources :user, only: [:show, :update, :edit] do
     delete "destroy_avatar", on: :member
   end
@@ -78,7 +76,6 @@ Civiccommons::Application.routes.draw do
       put 'unlock_access', on: :member
     end
   end
-
 
   namespace "api" do
     get '/:id/conversations',                              to: 'conversations#index',  format: :json
