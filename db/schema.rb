@@ -186,6 +186,7 @@ ActiveRecord::Schema.define(:version => 20110214230143) do
     t.boolean  "marketable"
     t.datetime "marketable_at"
     t.text     "bio"
+    t.boolean  "receive_digest",                      :default => true
   end
 
   add_index "people", ["email"], :name => "index_people_on_email", :unique => true
