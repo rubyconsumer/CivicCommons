@@ -1,7 +1,8 @@
 <% content_for :main do %>
 <div class="wrapper">
 <div class="content-container">
-      <h1><%= params[:filter].titleize %> Conversations</h1>
+      <h1><%= filter_title params[:filter] %> Conversations</h1>
+      <h3><%= filter_description params[:filter] %></h3>
 
       <div class="main-content">
 

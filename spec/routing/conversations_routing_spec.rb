@@ -43,10 +43,6 @@ describe ConversationsController do
       { put: "/conversations/confirm_node_contribution" }.should route_to(controller: "conversations", action: "confirm_node_contribution")
     end
 
-    it "recognizes and generates #preview_node_contribution" do
-      { post: "/conversations/preview_node_contribution" }.should route_to(controller: "conversations", action: "preview_node_contribution")
-    end
-
     Conversation.available_filter_names.each do |filter_name|
       it "recognizes and generates #filter route for :#{filter_name} filter" do
         { :get => "/conversations/#{filter_name}" }.should route_to(:controller => "conversations", :action => "filter", :filter => filter_name)

@@ -15,6 +15,7 @@ Civiccommons::Application.routes.draw do
   constraints FilterConstraint do
     get 'conversations/:filter', to: 'conversations#filter', as: 'conversations_filter'
   end
+
 #Custom Matchers
   #Contributions
   post '/contributions/create_confirmed_contribution', to: 'contributions#create_confirmed_contribution',    as: 'create_confirmed_contribution'
@@ -53,7 +54,9 @@ Civiccommons::Application.routes.draw do
   get '/terms',             to: 'static_pages#terms'
 
 #Resource Declared Routes
-  resources :user, only: [:show, :update, :edit]
+  resources :user, only: [:show, :update, :edit] do
+    delete "destroy_avatar", on: :member
+  end
   resources :issues, only: [:index, :show] do
     post 'create_contribution', on: :member
   end
@@ -73,7 +76,6 @@ Civiccommons::Application.routes.draw do
       put 'unlock_access', on: :member
     end
   end
-
 
   namespace "api" do
     get '/:id/conversations',                              to: 'conversations#index',  format: :json

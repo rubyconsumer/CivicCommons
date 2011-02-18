@@ -11,9 +11,7 @@
 
           <div class="blog" id="outer_block_57">
             <h2>Prepping for the fifth Civic Commons radio show</h2>
-            <a href="http://social.theciviccommons.com/user/9">
-              <img src="http://s3.amazonaws.com/com.theciviccommons.production/avatars/9/large/Moulthrop1.jpg" class="blog-pic" alt="Dan Moulthrop" />
-            </a>
+            <%= user_profile(@people[:dan]) %>
             <div class="blog_inner">
               <p>We're heading towards our fifth show with Civic Commons radio program. If you haven't heard it yet, the latest can be heard here: <a href="http://goo.gl/nc2Bg" target="_blank">http://goo.gl/nc2Bg</a>. One of the challenges we came across on our last show was the fact that everyone on our citizens' roundtable agreed, despite the fact they came from very different backgrounds (academic, entrepreneur, economic development). So, we feel we fell a little short on our commitment to diversity.</p>
               <p>In light of that, we're doubling down on that commitment. Consider this an open invitation to bring your disagreement into the conversation, here at the Commons, at any event we're a part of, and on our radio program. On the program, everybody seemed to fall on the side of more collaboration, more tax sharing, more doing things in the interest of the whole region, rather than just a single community. The thing is, I've spoken to lots of people who think that tax sharing, for one, is a horrible idea. I'm not sure, but I think those people may be in the minority, but that perspective is really important to hear from.</p>
@@ -22,7 +20,7 @@
             </div>
 
             <div class="post_info">
-              posted by <a href="http://social.theciviccommons.com/user/9">Dan Moulthrop</a> on February 14, 2011
+              posted by <%= link_to @people[:dan].name, user_path(@people[:dan]) %> on February 14, 2011
             </div>
 
          </div>
@@ -46,17 +44,6 @@
             <div class='blog_inner'>
               <p>
               I love radio. There's nothing quite like the intimacy it allows. When it's done well, it feels like a conversation
-              you're already a part of. Those of us who have steady radio habits know exactly what I'm referring to. That's part
-              of why it was so difficult for me to leave my last job at WCPN, and also why I was so excited when Mark Krieger
-              of <a href="http://en.wikipedia.org/wiki/WJCU">WJCU</a> (88.7 FM) invited the Civic Commons to take advantage of an
-              8:30 a.m. slot that is opening Saturday mornings.
-              </p>
-              <p>
-              So this Saturday morning (1/22) the Civic Commons is taking to the airwaves. Our goal with the radio show is to take
-              a different sort of approach to the issues we're dealing with every day across Northeast Ohio. Our main goal is to
-              bring your voice to the airwaves as much as possible. We'll be starting off by using the
-              <a href="http://www.theciviccommons.com/principles">CC principles</a> as a way to examine what's happening in the
-              region. For a variety of reasons, we thought we'd start with transparency. That gives us a chance to examine the
               recent transition to a new form government in Cuyahoga County and some of the stumbles along the way. (If you want
               a preview, you can hear the
               <a href="http://s3.amazonaws.com/com.theciviccommons.production/attachments/3389/original/rogers-greenspan%20intv.mp3?1295262987">entire, unedited interview</a>

@@ -80,4 +80,30 @@ module ConversationsHelper
   def conversation_node_path(contribution)
     conversation_path(contribution.conversation) + "#node-#{contribution.id}"
   end
+
+  def filter_title(filter)
+    case filter.to_sym
+    when :active
+      "Most Active"
+    when :popular
+      "Most Popular"
+    when :recent
+      "Recently Created"
+    else
+      "Filtered"
+    end
+  end
+
+  def filter_description(filter)
+    case filter.to_sym
+    when :active
+      "These are conversations that are inspiring people to join in."
+    when :popular
+      "These are the conversations that are sparking interest."
+    when :recent
+      "These are the conversations that are just getting started."
+    else
+      "These are the conversations that match your filter."
+    end
+  end
 end
