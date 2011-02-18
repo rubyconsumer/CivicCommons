@@ -62,6 +62,7 @@ Civiccommons::Application.routes.draw do
   end
   resources :regions, only: [:index, :show]
   resources :links, only: [:new, :create]
+  resources :invites, only: [:new, :create]
 
 #Namespaces
   namespace "admin" do
