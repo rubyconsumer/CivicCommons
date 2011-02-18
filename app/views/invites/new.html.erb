@@ -1,0 +1,41 @@
+<%#Given that I am on the invitation page
+   Then I should see a textarea for invitee email addresses
+   And I should see a “Send Invitations” button
+   And I should see a “Cancel” link%>
+
+
+<% content_for :main_body do %>
+
+  <div class="wrapper">
+    <div class="content-container">
+      <div class="main-content">
+        <span>
+          <p>
+          Invite your friends and colleges to the wonderful world of The Civic Commons!
+          </p>
+        </span>
+        <% if flash[:notice] %>
+          <span class="flash-notice">
+            <%=flash[:notice] %>
+          </span>
+        <% end %>
+        <%= form_tag invites_url, :method => :post do %>
+          <fieldset class="form-group">
+            <%= hidden_field_tag :source_type, "#{@source_type}" %>
+            <%= hidden_field_tag :source_id, "#{@source_id}" %>
+          </fieldset>
+          <fieldset class="form-group">
+          <%= label :invites, :email %>
+          <%= text_area :invites, :emails, :rows => 10 %>
+          </fieldset>
+          <fieldset class="footer">
+            <%= submit_tag 'Send Invite', :class=> 'submit' %>
+            <%= submit_tag 'Cancel', :class=> 'button' %>
+          </fieldset>
+        <% end %>
+
+      </div>
+    </div>
+  </div>
+
+<% end %>

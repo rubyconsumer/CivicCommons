@@ -7,12 +7,7 @@
   - unless @contribution.new_record? || @contribution.unconfirmed?
     = f.hidden_field(:id)
   = f.text_area(:content, :rows => "3", :placeholder => contribution_form_placeholder_text_for(type))
-  - if type == :question
-    -#
-      %label
-        /Who can answer?
-        = f.select(:askee, [ [ "This question may be answered by Anyone", "Anyone" ], [ "This question may ONLY be answered by a Moderator", "Moderator" ] ])
-  - elsif type == :attached_file
+  - if type == :attached_file
     %label
       Upload a file:
       = f.file_field(:attachment)

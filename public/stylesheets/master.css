@@ -65,7 +65,7 @@ padding-bottom: 0;
 color:#2C87B7;
 text-decoration:underline;
 }
-p.profile-meta { 
+p.profile-meta {
 margin-bottom:0;
 font-size:0.9em;
 font-style:italic;
@@ -259,9 +259,9 @@ a.cancel {font-weight: normal;}
 .form-group .related input.textbox {width: 400px;}
 .validation-error {color: #ae1111;}
 .friendly-alert { color:#000; font-size:1.6em; font-weight:bold; margin-bottom:1em; }
-div.validation-error > ul > li { 
-float: none; 
-margin: 0; 
+div.validation-error > ul > li {
+float: none;
+margin: 0;
 padding: 0;
 text-align: left;
 }
@@ -351,6 +351,7 @@ padding-left: 25px;
 .dnld.document {background: url(/images/document.png) no-repeat 0 3px;}
 .dnld.link {background: url(/images/link.png) no-repeat 0 3px;}
 .dnld.image {background: url(/images/image.png) no-repeat 0 3px;}
+.dnld.image img {max-width: 595px;}
 .dnld strong {display: block;}
 .dnld p {margin-bottom: .2em;}
 
@@ -638,6 +639,15 @@ z-index: 1;
 #login-status a:hover, .important a:hover {color: #f3f3f3;}
 */
 
+.flash-notice{
+  background-color: #ffff99;
+  border-top: 3px solid #ffff66;
+  border-bottom: 3px solid #ffff66;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+  line-height: 25px;}
+
 /* Main Navigation */
 #nav-wrapper {background: #4f5561 url(/images/nav_wrapper_bg.gif) repeat-x top;}
 #nav-wrapper #nav {
@@ -715,11 +725,11 @@ color: #555;
 }
 /* Selected Nav States */
 
-body#home li#home-nav, 
-body#conversations li#conversations-nav, 
-body#issues li#issue-nav, 
-body#community li#community-nav, 
-body#about li#about-nav, 
+body#home li#home-nav,
+body#conversations li#conversations-nav,
+body#issues li#issue-nav,
+body#community li#community-nav,
+body#about li#about-nav,
 #nav-wrapper #main-nav li.active a {background: #bac872 url(../images/nav_hover.gif) repeat-x top;}
 
 /* Search Form Styles */
