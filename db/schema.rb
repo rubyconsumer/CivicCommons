@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110211173541) do
+ActiveRecord::Schema.define(:version => 20110214230143) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -180,7 +180,6 @@ ActiveRecord::Schema.define(:version => 20110211173541) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
-    t.integer  "people_aggregator_id"
     t.integer  "failed_attempts",                     :default => 0
     t.string   "unlock_token"
     t.datetime "locked_at"
@@ -190,18 +189,7 @@ ActiveRecord::Schema.define(:version => 20110211173541) do
   end
 
   add_index "people", ["email"], :name => "index_people_on_email", :unique => true
-  add_index "people", ["people_aggregator_id"], :name => "pa_id_index", :unique => true
   add_index "people", ["reset_password_token"], :name => "index_people_on_reset_password_token", :unique => true
-
-  create_table "ratings", :force => true do |t|
-    t.datetime "datetime"
-    t.integer  "person_id"
-    t.integer  "rating"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "rateable_id"
-    t.string   "rateable_type"
-  end
 
   create_table "regions", :force => true do |t|
     t.string   "name"

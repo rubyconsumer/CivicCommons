@@ -8,8 +8,8 @@ Given /^a registered user:$/ do |table|
                    email:                user['Email'],
                    avatar:                File.open(File.join(attachments_path, 'imageAttachment.png')),
                    zip_code:             user['Zip'],
-                   people_aggregator_id: user['People Aggregator ID'],
-                   password:             user['Password'])
+                   password:             user['Password'],
+                   id:                   user['ID'])
 
 end
 
