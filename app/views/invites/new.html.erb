@@ -1,10 +1,5 @@
-<%#Given that I am on the invitation page
-   Then I should see a textarea for invitee email addresses
-   And I should see a “Send Invitations” button
-   And I should see a “Cancel” link%>
-
-
 <% content_for :main_body do %>
+
   <% if flash[:notice] -%>
     <div class="flash-notice">
       <%=flash[:notice] %>
