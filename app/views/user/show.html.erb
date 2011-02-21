@@ -18,13 +18,17 @@
     
     <div class="main-content">
       <div class="wide_content" id="UserContributionsModule">
-        <h2>Contributions </h2>  
-        <div class="divided">
-          <%= render :partial => "contribution", :collection => @contributions %>
-        </div>
-        <div class="pagination">
-          <%= will_paginate @contributions, previous_label: 'Previous', next_label: 'Next' %>
-        </div>
+        <h2>Contributions</h2>
+        <% if @contributions.empty? %>
+          <p><%= @user.name %> is just getting started</p>
+        <% else %>
+          <div class="divided">
+            <%= render :partial => "contribution", :collection => @contributions %>
+          </div>
+          <div class="pagination">
+            <%= will_paginate @contributions, :inner_window => 3, previous_label: 'Previous', next_label: 'Next' %>
+          </div>
+        <% end %>
       </div>
     </div>
 

@@ -18,7 +18,7 @@
             </div>
           <% end %>
 
-        <%= will_paginate @people, :previous_label => "Previous", :next_label => "Next" %>
+        <%= will_paginate @people, :inner_window => 3, :previous_label => "Previous", :next_label => "Next" %>
         </div>
       </div>
     </div>
