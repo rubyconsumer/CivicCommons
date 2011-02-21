@@ -24,12 +24,12 @@ class ConversationsController < ApplicationController
 
   # GET /conversations/1
   def show
-    @conversation = Conversation.includes(:guides, :issues).find(params[:id])
+    @conversation = Conversation.includes(:issues).find(params[:id])
     @conversation.visit!((current_person.nil? ? nil : current_person.id))
-    @top_level_contributions = TopLevelContribution.where(:conversation_id => @conversation.id).includes([:person]).order('created_at ASC').with_user_rating(current_person)
+    @top_level_contributions = TopLevelContribution.where(:conversation_id => @conversation.id).includes([:person]).order('created_at ASC')
     # grab all direct contributions to conversation that aren't TLC
-    @conversation_contributions = Contribution.not_top_level.confirmed.without_parent.where(:conversation_id => @conversation.id).includes([:person]).order('created_at ASC').with_user_rating(current_person)
-    #@contributions = Contribution.confirmed.with_user_rating(current_person).descendants_of(@conversation_contributions).includes([:person])
+    @conversation_contributions = Contribution.not_top_level.confirmed.without_parent.where(:conversation_id => @conversation.id).includes([:person]).order('created_at ASC')
+    #@contributions = Contribution.confirmed.descendants_of(@conversation_contributions).includes([:person])
 
     @top_level_contribution = Contribution.new # for conversation comment form
     @tlc_participants = @top_level_contributions.collect{ |tlc| tlc.owner }
@@ -44,8 +44,8 @@ class ConversationsController < ApplicationController
   def dialog
     @conversation = Conversation.includes(:guides, :issues).find(params[:id])
     @conversation.visit!((current_person.nil? ? nil : current_person.id))
-    @conversation_contributions = Contribution.confirmed.not_top_level.without_parent.with_user_rating(current_person).where(:conversation_id => @conversation.id).includes([:person]).order('created_at ASC')
-    @contributions = Contribution.confirmed.with_user_rating(current_person).descendants_of(@conversation_contributions).includes([:person])
+    @conversation_contributions = Contribution.confirmed.not_top_level.without_parent.where(:conversation_id => @conversation.id).includes([:person]).order('created_at ASC')
+    @contributions = Contribution.confirmed.descendants_of(@conversation_contributions).includes([:person])
 
     @contribution = Contribution.new # for conversation comment form
 
@@ -57,7 +57,6 @@ class ConversationsController < ApplicationController
   def node_conversation
     @contribution = Contribution.find(params[:id])
     @contributions = @contribution.children.confirmed.includes(:person)
-    @contributions = @contributions.with_user_rating(current_person) if current_person
     @contribution.visit!((current_person.nil? ? nil : current_person.id))
 
     respond_to do |format|
@@ -67,8 +66,8 @@ class ConversationsController < ApplicationController
   end
 
   def node_permalink
-    contribution = Contribution.with_user_rating(current_person).find(params[:id])
-    @contributions = contribution.self_and_ancestors.with_user_rating(current_person)
+    contribution = Contribution.find(params[:id])
+    @contributions = contribution.self_and_ancestors
     @top_level_contribution = @contributions.root
     contribution.visit!((current_person.nil? ? nil : current_person.id))
 
@@ -85,7 +84,7 @@ class ConversationsController < ApplicationController
   end
 
   def update_node_contribution
-    @contribution = Contribution.with_user_rating(current_person).find(params[:contribution][:id])
+    @contribution = Contribution.find(params[:contribution][:id])
     respond_to do |format|
       if @contribution.update_attributes_by_user(params[:contribution], current_person)
         format.js{ render(:partial => "conversations/contributions/threaded_contribution_template", :locals => {:contribution => @contribution, :div_id => params[:div_id]}, :layout => false, :status => :ok) }
