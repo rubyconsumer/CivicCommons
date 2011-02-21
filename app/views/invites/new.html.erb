@@ -1,11 +1,10 @@
-<%#Given that I am on the invitation page
-   Then I should see a textarea for invitee email addresses
-   And I should see a “Send Invitations” button
-   And I should see a “Cancel” link%>
-
-
 <% content_for :main_body do %>
 
+  <% if flash[:notice] -%>
+    <div class="flash-notice">
+      <%=flash[:notice] %>
+    </div>
+  <% end -%>
   <div class="wrapper">
     <div class="content-container">
       <div class="main-content">
@@ -14,11 +13,6 @@
           Invite your friends and colleges to the wonderful world of The Civic Commons!
           </p>
         </span>
-        <% if flash[:notice] %>
-          <span class="flash-notice">
-            <%=flash[:notice] %>
-          </span>
-        <% end %>
         <%= form_tag invites_url, :method => :post do %>
           <fieldset class="form-group">
             <%= hidden_field_tag :source_type, "#{@source_type}" %>
