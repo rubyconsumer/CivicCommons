@@ -8,17 +8,19 @@ describe ConversationsController do
 
   describe "GET index" do
 
-    before do
-      @old_conversation = Factory.create(:conversation, {:updated_at => (Time.now - 30.seconds), :last_visit_date => Time.now, :recent_visits => 2})
-      @new_conversation = Factory.create(:conversation, {:updated_at => (Time.now - 2.seconds), :last_visit_date => Time.now, :recent_visits => 1})
+    before(:each) do
+      @old_conversation = Factory.create(:conversation, {:created_at => (Time.now - 2.days), :updated_at => (Time.now - 30.seconds), :last_visit_date => Time.now, :recent_visits => 2})
+      @new_conversation = Factory.create(:conversation, {:created_at => (Time.now - 1.day), :updated_at => (Time.now - 2.seconds), :last_visit_date => Time.now, :recent_visits => 1})
     end
 
-    it "assigns all conversations as @active and @popular" do
+    it "assigns all conversations as @active, @popular, and @recent" do
       get :index
       assigns(:active).first.should == @new_conversation
       assigns(:active).last.should  == @old_conversation
       assigns(:popular).first.should == @old_conversation
       assigns(:popular).last.should == @new_conversation
+      assigns(:recent).first.should == @new_conversation
+      assigns(:recent).last.should == @old_conversation
     end
 
   end
