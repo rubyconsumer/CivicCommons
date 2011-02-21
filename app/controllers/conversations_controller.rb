@@ -121,7 +121,7 @@ class ConversationsController < ApplicationController
 
     respond_to do |format|
       if @contribution.confirm!
-        Subscription.create(person_id: current_person.id, subscribable_type: @contribution.item_class, subscribable_id: @contribution.item_id)
+        Subscription.create_unless_exists(current_person, @contribution.item)
         format.js   { render :partial => "conversations/contributions/threaded_contribution_template", :locals => {:contribution => @contribution}, :status => (params[:preview] ? :accepted : :created) }
         format.html   { render :partial => "conversations/contributions/threaded_contribution_template", :locals => {:contribution => @contribution}, :status => (params[:preview] ? :accepted : :created) }
       else

@@ -37,4 +37,26 @@ describe Subscription do
 
   end
 
+  describe "Subscription.create_unless_exists" do
+
+    before(:each) do
+      @person = Factory.create(:normal_person)
+      @conversation = Factory.create(:conversation)
+      Subscription.create_unless_exists(@person, @conversation)
+    end
+
+    context "A person can only subscibe to an item one time" do
+      it "creates a new subscription for the person when a subscription does not exist" do
+        @person.subscriptions.collect {|sub| sub.subscribable}.include?(@conversation).should be_true
+      end
+
+      it "does not create a new subscription if the subscription already exists" do
+        Subscription.create_unless_exists(@person, @conversation)
+        @person.subscriptions.length.should == 1
+      end
+
+    end
+
+  end
+
 end

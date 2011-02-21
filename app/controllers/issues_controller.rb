@@ -46,7 +46,7 @@ class IssuesController < ApplicationController
     contribution_params = params[:contribution].merge(:issue_id => @issue.id)
     @contribution = Contribution.
       create_confirmed_node_level_contribution(contribution_params, current_person)
-    Subscription.create(person_id: current_person.id, subscribable_type: @issue.class.to_s, subscribable_id: @issue.id)
+    Subscription.create_unless_exists(current_person, @issue)
 
     respond_to do |format|
       if @contribution.save

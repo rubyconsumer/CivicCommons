@@ -31,4 +31,10 @@ class Subscription < ActiveRecord::Base
     end
   end
 
+  def self.create_unless_exists(person, subscribable)
+    unless person.subscriptions.collect{|sub| sub.subscribable}.include?(subscribable)
+      person.subscriptions.create(subscribable: subscribable)
+    end
+  end
+
 end
