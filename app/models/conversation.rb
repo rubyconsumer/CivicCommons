@@ -75,26 +75,6 @@ class Conversation < ActiveRecord::Base
     end
   end
 
-  #
-  # Represent the "Started At" column in a reader-friendly format.
-  #
-  # This is kind of a kludge. It also doesn't properly say
-  # "yesterday" when you're talking about New Year's Eve.
-  def start_time_text
-   if (started_at == nil)
-     return "Don't know"
-   end
-   diff = started_at.yday - Time.now.yday
-   sameyear = (started_at.year == Time.now.year)
-   if (diff == 0 && sameyear)
-     started_at.strftime("TODAY at %I:%M %p")
-   elsif (diff == -1 && sameyear)
-     started_at.strftime("YESTERDAY at %I:%M %p")
-   else
-     started_at.strftime("%A, %B %d, %Y at %I:%M %p")
-   end
-  end
-
   def start_month_text
     if started_at == nil
       "?"
