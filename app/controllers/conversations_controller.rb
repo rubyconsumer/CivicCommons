@@ -3,32 +3,26 @@ class ConversationsController < ApplicationController
   before_filter :require_user, :only=>[:new_node_contribution, :preview_node_contribution, :confirm_node_contribution]
 
   # GET /conversations
-  # GET /conversations.xml
   def index
     @active = Conversation.includes(:participants).latest_updated.limit(3)
     @popular = Conversation.includes(:participants).get_top_visited(3)
+    @recent = Conversation.includes(:participants).latest_created.limit(3)
 
     @regions = Region.all
     @recent_items = TopItem.newest_items(3).for(:conversation).collect(&:item)
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @conversations }
-    end
+    render :index
   end
 
   def filter
-    @conversations = Conversation.includes(:participants).filtered(params[:filter]).paginate(:page => params[:page], :per_page => 12)
+    @filter = params[:filter]
+    @conversations = Conversation.includes(:participants).filtered(@filter).paginate(:page => params[:page], :per_page => 12)
 
     @regions = Region.all
     @recent_items = TopItem.newest_items(3).for(:conversation).collect(&:item)
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @conversations }
-    end
+    render :index
   end
 
   # GET /conversations/1
-  # GET /conversations/1.xml
   def show
     @conversation = Conversation.includes(:guides, :issues).find(params[:id])
     @conversation.visit!((current_person.nil? ? nil : current_person.id))
@@ -44,10 +38,7 @@ class ConversationsController < ApplicationController
 
     @recent_items = TopItem.newest_items(5).for(:conversation => @conversation.id).collect(&:item)
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @conversation }
-    end
+    render :show
   end
 
   def dialog
@@ -60,10 +51,7 @@ class ConversationsController < ApplicationController
 
     @latest_contribution = @conversation.confirmed_contributions.most_recent.first
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @conversation }
-    end
+    render :show
   end
 
   def node_conversation
@@ -137,25 +125,19 @@ class ConversationsController < ApplicationController
         Subscription.create(person_id: current_person.id, subscribable_type: @contribution.item_class, subscribable_id: @contribution.item_id)
         format.js   { render :partial => "conversations/contributions/threaded_contribution_template", :locals => {:contribution => @contribution}, :status => (params[:preview] ? :accepted : :created) }
         format.html   { render :partial => "conversations/contributions/threaded_contribution_template", :locals => {:contribution => @contribution}, :status => (params[:preview] ? :accepted : :created) }
-        format.xml  { render :xml => @contribution, :status => :created, :location => @contribution }
       else
         format.js   { render :json => @contribution.errors, :status => :unprocessable_entity }
         format.html { render :text => @contribution.errors, :status => :unprocessable_entity }
-        format.xml  { render :xml => @contribution.errors, :status => :unprocessable_entity }
       end
     end
   end
 
   # GET /conversations/new
-  # GET /conversations/new.xml
   def new
     @conversation = Conversation.new
     @presenter = IngestPresenter.new(@conversation)
 
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @conversation }
-    end
+    render :new
   end
 
   # GET /conversations/1/edit
@@ -164,7 +146,6 @@ class ConversationsController < ApplicationController
   end
 
   # POST /conversations
-  # POST /conversations.xml
   def create
     ActiveRecord::Base.transaction do
       @conversation = Conversation.new(params[:conversation])
@@ -177,30 +158,20 @@ class ConversationsController < ApplicationController
 
       @conversation.save!
       @presenter.save!
-      respond_to do |format|
-        format.html { redirect_to(@conversation, :notice => 'Conversation was successfully created.') }
-        format.xml  { render :xml => @conversation, :status => :created, :location => @conversation }
-      end
+      redirect_to(@conversation, :notice => 'Conversation was successfully created.')
     end
   rescue ActiveRecord::RecordInvalid => e
-    respond_to do |format|
-      format.html { render :action => "new" }
-      format.xml  { render :xml => @conversation.errors + @presenter.errors, :status => :unprocessable_entity }
-    end
+    render :new
   end
+
   # PUT /conversations/1
-  # PUT /conversations/1.xml
   def update
     @conversation = Conversation.find(params[:id])
 
-    respond_to do |format|
-      if @conversation.update_attributes(params[:conversation])
-        format.html { redirect_to(@conversation, :notice => 'Conversation was successfully updated.') }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @conversation.errors, :status => :unprocessable_entity }
-      end
+    if @conversation.update_attributes(params[:conversation])
+      redirect_to(@conversation, :notice => 'Conversation was successfully updated.')
+    else
+      render :action => "edit"
     end
   end
 
@@ -217,15 +188,11 @@ class ConversationsController < ApplicationController
   end
 
   # DELETE /conversations/1
-  # DELETE /conversations/1.xml
   def destroy
     @conversation = Conversation.find(params[:id])
     @conversation.destroy
 
-    respond_to do |format|
-      format.html { redirect_to(conversations_url) }
-      format.xml  { head :ok }
-    end
+    redirect_to(conversations_url)
   end
 
 

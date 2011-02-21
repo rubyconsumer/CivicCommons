@@ -1282,6 +1282,67 @@ font-style: italic;
 padding-top: 5px;
 }
 
+/*- Featured Conversation Filters ----------*/
+
+.aside .f-conv h3 {
+border-bottom: none;
+padding-bottom: 0;
+padding-left: 13px;
+}
+.aside .f-conv ul.feat-list {
+margin-left: 0;
+}
+.aside .f-conv ul.feat-list li {
+list-style-type: none;
+}
+.aside .f-conv ul.feat-list li a {
+background-color: #eaeaea;
+background-repeat: no-repeat;
+border: 1px solid #9a9a9a;
+color: #777;
+font-weight: bold;
+display: block;
+margin-bottom: .8em;
+padding: 6px 10px 6px 40px;
+text-decoration: none;
+text-shadow: 0 1px 1px rgba(255,255,255,1);
+-webkit-border-radius: 8px;
+-moz-border-radius: 8px;
+border-radius: 8px;
+-webkit-box-shadow: 0 2px 3px rgba(0,0,0,.15);
+-moz-box-shadow: 0 2px 3px rgba(0,0,0,.15);
+box-shadow: 0 2px 3px rgba(0,0,0,.15);
+}
+.aside .f-conv ul.feat-list li a:hover, .aside .f-conv ul.feat-list li a.active {
+background-color: #dbedf5;
+border-color: #7a9ba7;
+color: #51778e;
+}
+.aside .f-conv ul.feat-list li a:active {
+background-color: #c1d9e4;
+}
+.aside .f-conv ul.feat-list li a#active-f {
+background-image: url(../images/people-f.png);
+background-position: 10px 7px;
+}
+.aside .f-conv ul.feat-list li a#active-f:hover, .aside .f-conv ul.feat-list li a#active-f.active {
+background-position: 10px -58px;
+}
+.aside .f-conv ul.feat-list li a#popular-f {
+background-image: url(../images/popular-f.png);
+background-position: 12px 7px;
+}
+.aside .f-conv ul.feat-list li a#popular-f:hover, .aside .f-conv ul.feat-list li a#popular-f.active {
+background-position: 12px -57px;
+}
+.aside .f-conv ul.feat-list li a#recent-f {
+background-image: url(../images/calendar-f.png);
+background-position: 14px 5px;
+}
+.aside .f-conv ul.feat-list li a#recent-f:hover, .aside .f-conv ul.feat-list li a#recent-f.active {
+background-position: 14px -56px;
+}
+
 /*-----------------------------------------------
 =Styles for Convo Modal Popup
 -----------------------------------------------*/

@@ -83,17 +83,21 @@ module ConversationsHelper
     conversation_path(contribution.conversation) + "#node-#{contribution.id}"
   end
 
-  def filter_title(filter)
+  def filter_title(filter, suffix = nil)
     case filter.to_sym
     when :active
-      "Most Active"
+      title = "Most Active"
     when :popular
-      "Most Popular"
+      title = "Most Popular"
     when :recent
-      "Recently Created"
+      title = "Recently Created"
     else
-      "Filtered"
+      title = "Filtered"
     end
+
+    if suffix then title += suffix end
+
+    title
   end
 
   def filter_description(filter)

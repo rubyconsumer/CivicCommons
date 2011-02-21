@@ -1,5 +1,6 @@
-<ul class='link-list'>
+<ul class='feat-list'>
   <% Conversation.available_filter_names.each do |filter| %>
-    <li><%= link_to filter_title(filter), conversations_filter_path(filter) %></li>
+    <% cls = (@filter == filter ? 'active' : '') %>
+    <li><%= link_to filter_title(filter, ' Conversations'), conversations_filter_path(filter), :id => filter.to_s + '-f', :class => cls %></li>
   <% end %>
 </ul>
