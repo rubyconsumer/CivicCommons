@@ -16,7 +16,7 @@ module Visitable
     self.total_visits ||= 0
     self.total_visits = self.total_visits + 1
     self.last_visit_date = Time.now
-    self.recent_visits = calculate_recent_visits    
+    self.recent_visits = calculate_recent_visits
   end
   
   def visit!(user_id)
@@ -25,7 +25,7 @@ module Visitable
   end
     
   def calculate_recent_visits
-    self.visits.where("#{self.table_name}.created_at >= '#{(Time.now - 30.days)}'").count
-  end  
+    self.visits.where("created_at >= '#{(Time.now - 30.days)}'").count
+  end
 end
 
