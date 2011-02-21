@@ -2,7 +2,7 @@ module Visitable
   
   module ClassMethods
     def get_top_visited(limit = 10)
-      self.where("last_visit_date >= '#{(Time.now - 30.days)}'").order("recent_visits DESC").limit(limit)
+      self.where("#{self.table_name}.last_visit_date >= '#{(Time.now - 30.days)}'").order("#{self.table_name}.recent_visits DESC").limit(limit)
     end
   end
     
@@ -25,7 +25,7 @@ module Visitable
   end
     
   def calculate_recent_visits
-    self.visits.where("created_at >= '#{(Time.now - 30.days)}'").count
+    self.visits.where("#{self.table_name}.created_at >= '#{(Time.now - 30.days)}'").count
   end  
 end
 
