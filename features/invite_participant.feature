@@ -23,7 +23,7 @@ Feature:
     Given I am signed in
     And that I am on the invitation page
     Then I should see a textarea for invitee email addresses
-    And I should see a 'Send Invite' button
+    And I should see a 'Send' button
     And I should see a 'Cancel' link
 
   Scenario: User clicks Cancel link
@@ -34,19 +34,19 @@ Feature:
     Then I should be on the conversation page
     And they should receive no emails
 
-  Scenario: User click Send Invite link with empty textbox
+  Scenario: User click Send link with empty textbox
     Given I am signed in
     And that I am on the invitation page
     And the invitee textarea is empty
-    When I click the 'Send Invite' button
+    When I click the 'Send' button
     Then I should see an error message
     And they should receive no emails
 
-  Scenario: User clicks Send Invite link with valid emails
+  Scenario: User clicks Send link with valid emails
     Given I am signed in
     And that I am on the invitation page
     When I enter one or more comma-delimited email addresses in the invitee textarea
-    And I click the 'Send Invite' button
+    And I click the 'Send' button
     Then I should be on the conversation page
     And I should see a success message
     And "alpha@example.com" should receive an email with subject "You've been invited to the Civic Commons!"

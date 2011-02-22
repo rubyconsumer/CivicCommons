@@ -10,7 +10,7 @@
       <div class="main-content">
         <span>
           <p>
-          Invite your friends and colleges to the wonderful world of The Civic Commons!
+          Who do you want to invite to join this conversation? Just list email addresses one per line and we’ll send out the invitations. If you’d like us to send one to you, too, just add yours to the list.
           </p>
         </span>
         <%= form_tag invites_url, :method => :post do %>
@@ -23,7 +23,7 @@
           <%= text_area :invites, :emails, :rows => 10 %>
           </fieldset>
           <fieldset class="footer">
-            <%= submit_tag 'Send Invite', :class=> 'submit' %>
+            <%= submit_tag 'Send', :class=> 'submit' %>
             <%= submit_tag 'Cancel', :class=> 'button' %>
           </fieldset>
         <% end %>

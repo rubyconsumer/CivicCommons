@@ -11,15 +11,15 @@ Then /will not see an 'Invite Participants' button$/ do
 end
 
 Then /^I will be on the invitation page$/ do
-  find(".main-content").text.should =~ /Invite your friends and colleges to the wonderful world of The Civic Commons!/
+  find(".main-content").text.should =~ /Who do you want to invite to join this conversation?/
 end
 
 Then /^I should see a textarea for invitee email addresses$/ do
   page.should have_selector('textarea#invites_emails')
 end
 
-Then /^I should see a 'Send Invite' button$/ do
-  find('input.submit').value.should =~ /Send Invite/
+Then /^I should see a 'Send' button$/ do
+  find('input.submit').value.should =~ /Send/
 end
 
 Then /^I should see a 'Cancel' link$/ do
@@ -36,5 +36,5 @@ Then /^I should see an error message$/ do
 end
 
 Then /^I should see a success message$/ do
-  find('.flash-notice').text.should =~ /Invite was successfully created./
+  find('.flash-notice').text.should =~ /Thank you! You're helping to make Northeast Ohio stronger!/
 end

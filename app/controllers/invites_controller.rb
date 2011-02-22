@@ -32,12 +32,11 @@ class InvitesController < ApplicationController
 
       respond_to do |format|
         if result
-          format.html { redirect_to(redirect_location, :notice => 'Invite was successfully created.') }
-          format.xml  { render :xml => @invite, :status => :created, :location => @invite }
+          notice = "Thank you! You're helping to make Northeast Ohio stronger!"
+          format.html { redirect_to(redirect_location, :notice => notice) }
         else
           flash[:notice] = "There was a problem with the entered emails."
           format.html { render :action => "new" }
-          format.xml  { render :xml => @invite.errors, :status => :unprocessable_entity }
         end
       end
     end

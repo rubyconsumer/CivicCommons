@@ -6,8 +6,8 @@ When /^I click the cancel link$/ do
   click_on 'Cancel'
 end
 
-When /^I click the 'Send Invite' button$/ do
-  click_on 'Send Invite'
+When /^I click the 'Send' button$/ do
+  click_on 'Send'
 end
 
 When /^I enter one or more comma\-delimited email addresses in the invitee textarea$/ do
