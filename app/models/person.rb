@@ -8,7 +8,8 @@ class Person < ActiveRecord::Base
   # :token_authenticatable, :confirmable, and :timeoutable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
-         :confirmable, :lockable
+         :confirmable, :lockable,
+         :omniauthable
 
   attr_accessor :organization_name, :send_welcome
 
@@ -16,6 +17,8 @@ class Person < ActiveRecord::Base
   attr_accessible :name, :first_name, :last_name, :email, :password, :password_confirmation, :bio, :top, :zip_code, :admin, :validated,
                   :avatar, :remember_me, :daily_digest
 
+  has_one :facebook_authentication, :class_name => 'Authentication', :conditions => {:provider => 'facebook'}
+  has_many :authentications, :dependent => :destroy
   has_many :content_items, :foreign_key => 'author'
   has_many :contributions, :foreign_key => 'owner', :uniq => true
   has_many :ratings
@@ -30,7 +33,8 @@ class Person < ActiveRecord::Base
   validates_presence_of :name
 
   # Ensure format of salt
-  validates_with PasswordSaltValidator
+  # Commented out because devise 1.2.RC doesn't store password_salt column anymore, if it uses bcrypt
+  # validates_with PasswordSaltValidator 
 
   has_attached_file :avatar,
     :styles => {
@@ -47,10 +51,6 @@ class Person < ActiveRecord::Base
                                     :content_type => %w(image/jpeg image/gif image/png image/jpg image/x-png image/pjpeg),
                                     :message => "Not a valid image file."
   process_in_background :avatar
-
-  def avatar_exists
-    self.avatar.exists?
-  end
 
   scope :participants_of_issue, lambda{ |issue|
       joins(:conversations => :issues).where(['issue_id = ?',issue.id]).select('DISTINCT(people.id),people.*') if issue
@@ -81,7 +81,7 @@ class Person < ActiveRecord::Base
   def avatar_height_for_style(style)
     geometry_for_style(style, :avatar).height.to_i
   end
-
+  
   def name=(value)
     @name = value
     self.first_name, self.last_name = self.class.parse_name(value)
@@ -157,6 +157,46 @@ class Person < ActiveRecord::Base
 
     newly_confirmed? ? true : false
   end
+  
+  # https://graph.facebook.com/#{uid}/picture
+  # optional params: type=small|square|large
+  # square (50x50), small (50 pixels wide, variable height), and large (about 200 pixels wide, variable height):
+  def facebook_profile_pic_url(type = :square)
+    "https://graph.facebook.com/#{facebook_authentication.uid}/picture?type=#{type}" if facebook_authenticated?
+  end
+  
+  def facebook_authenticated?
+    !facebook_authentication.blank?
+  end
+  
+  def link_with_facebook(authentication)
+    ActiveRecord::Base.transaction do
+      self.facebook_authentication = authentication  
+      self.encrypted_password = ''
+      save!
+      facebook_authentication.persisted?
+    end
+  end
+  
+  def conflicting_email?(other_email)
+    if other_email.blank? || (other_email.to_s.downcase.strip == email.to_s.downcase.strip)
+      false
+    else
+      true
+    end
+  end
+  
+  # Overiding Devise::Models::DatabaseAuthenticatable
+  # due to needing to set encrypted_password to blank, so that it doesn't error out when it is set to nil
+  def valid_password?(password)
+    encrypted_password.blank? ? false : super
+  end
+  
+  # If this account has been linked to facebook auth, then password is not required
+  def password_required? 
+    facebook_authenticated? ? false : super
+  end
+  
 
   # Add the email subscription signup as a delayed job
   def subscribe_to_marketing_email

@@ -17,7 +17,12 @@ Civiccommons::Application.routes.draw do
   #Application Root
   root to: "homepage#show"
 
- #Custom Matchers
+#Custom Matchers
+  #authentication
+  post '/authentication/decline_fb_auth',              to: 'authentication#decline_fb_auth',                 as: 'decline_fb_auth'
+  get  '/authentication/conflicting_email',            to: 'authentication#conflicting_email',               as: 'conflicting_email'
+  post '/authentication/conflicting_email',            to: 'authentication#update_conflicting_email',               as: 'update_conflicting_email'
+  get   '/authentication/fb_linking_success',           to: 'authentication#fb_linking_success',              as: 'fb_linking_success'
   #Contributions
   post '/contributions/create_confirmed_contribution', to: 'contributions#create_confirmed_contribution',    as: 'create_confirmed_contribution'
   delete '/contributions/moderate/:id',                to: 'contributions#moderate_contribution',            as: 'moderate_contribution'
@@ -60,9 +65,9 @@ Civiccommons::Application.routes.draw do
   get '/jobs',              to: 'static_pages#jobs'
   get '/careers',           to: 'static_pages#jobs'
 
- #Devise Routes
+#Devise Routes
   devise_for :people,
-             :controllers => { :registrations => 'registrations', :confirmations => 'confirmations', :sessions => 'sessions' },
+             :controllers => { :registrations => 'registrations', :confirmations => 'confirmations', :sessions => 'sessions', :omniauth_callbacks => "registrations/omniauth_callbacks"},
              :path_names => { :sign_in => 'login', :sign_out => 'logout', :password => 'secret', :confirmation => 'verification', :registration => 'register', :sign_up => 'new' }
 
   devise_scope :person do

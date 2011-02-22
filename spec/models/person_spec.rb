@@ -6,10 +6,15 @@ describe Person do
   it { should be_valid }
   it { should have_attached_file :avatar }
   it { should validate_attachment_content_type(:avatar).allowing(["image/gif", "image/jpeg", "image/png"])
-    .rejecting(['text/plain']) }
+	.rejecting(['text/plain']) }
 end
 
 describe Person do
+  context "Associations" do
+    it "should has_many Authentications" do
+      Person.reflect_on_association(:authentications).macro == :has_many
+    end
+  end
 
   describe "validate required data" do
 
@@ -195,92 +200,85 @@ describe Person do
     end
   end
 
-  describe "custom finders" do
-
-    before(:each) do
-      @kirk = Factory.create(:registered_user, :first_name => 'James', :last_name => 'Kirk', :confirmed_at => 1.year.ago)
-      @kirk2 = Factory.create(:registered_user, :first_name => 'Tiberius', :last_name => 'Kirk', :confirmed_at => 1.year.ago)
-      @hetfield = Factory.create(:registered_user, :first_name => 'James', :last_name => 'Hetfield', :confirmed_at => 1.month.ago)
-      @ulrich = Factory.create(:registered_user, :first_name => 'Lars', :last_name => 'Ulrich', :confirmed_at => 1.week.ago)
-      @burton = Factory.create(:registered_user, :first_name => 'Cliff', :last_name => 'Burton', :confirmed_at => nil)
-      @hammett = Factory.create(:registered_user, :first_name => 'Kirk', :last_name => 'Hammett', :confirmed_at => 1.month.ago)
-      @trujillo = Factory.create(:registered_user, :first_name => 'Robert', :last_name => 'Trujillo', :confirmed_at => 1.month.ago, :locked_at => 1.day.ago)
-      @mustaine = Factory.create(:registered_user, :first_name => 'Dave', :last_name => '', :confirmed_at => 1.month.ago)
-      @newsted = Factory.create(:registered_user, :first_name => 'Jason Newsted', :last_name => "'New Kid'", :confirmed_at => 1.month.ago)
+  context "Facebook authentication" do
+    describe "when having a facebook authentication associated" do
+      def given_a_person_with_facebook_auth
+        @person = Factory.build(:normal_person)
+        @authentication = Factory.build(:authentication, :provider => 'facebook')
+        @person.link_with_facebook(@authentication)
+      end
+      it "should show that it does have the correct authentication" do
+        given_a_person_with_facebook_auth
+        @person.facebook_authentication.should == @authentication
+        @person.facebook_authentication.should be_persisted
+      end
+      it "should return true if an account is facebook authenticated" do
+        given_a_person_with_facebook_auth
+        @person.facebook_authenticated?.should be_true
+      end
+      it "should wiped out the current person's password, so they can't login using local account anymore" do
+        @person = Factory.create(:normal_person, :password => 'password')
+        @person.valid_password?('password').should be_true
+        @authentication = Factory.build(:authentication, :provider => 'facebook')
+        @person.link_with_facebook(@authentication)
+        @person.valid_password?('password').should be_false 
+      end
     end
-
-    context "for finding all confirmed users" do
-
-      context "find_confirmed_order_by_recency" do
-
-        before(:each) do
-          @people = Person.find_confirmed_order_by_recency
-        end
-
-        it "should not be empty when valid data exists" do
-          @people.should_not be_empty
-        end
-
-        it "should not find unconfirmed people" do
-          @people.should_not include(@burton)
-        end
-
-        it "should not find locked people" do
-          @people.should_not include(@trujillo)
-        end
-
-        it "should sort by confirmed_at DESC" do
-          @people.first.should eq @ulrich
-          @people.last.should eq @kirk
-        end
-
+    describe "link_with_facebook" do
+      it "should return true if correctly saved" do
+        @person = Factory.build(:normal_person)
+        @authentication = Factory.build(:authentication, :provider => 'facebook')
+        @person.link_with_facebook(@authentication).should be_true
       end
-
-      context "find_confirmed_order_by_last_name with no parameters" do
-
-        before(:each) do
-          @people = Person.find_confirmed_order_by_last_name
-        end
-
-        it "should not be empty when valid data exists" do
-          @people.should_not be_empty
-        end
-
-        it "should not find unconfirmed people" do
-          @people.should_not include(@burton)
-        end
-
-        it "should not find locked people" do
-          @people.should_not include(@trujillo)
-        end
-
-        it "should sort alphabetically last/first with blank last names at the end" do
-          @people.first.should eq @hammett
-          @people[1].should eq @hetfield
-          @people.last.should eq @newsted
-        end
-
+      it "should return false if incorrectly saved" do
+        @person = Factory.build(:normal_person)
+        @authentication = Authentication.new
+        @person.link_with_facebook(@authentication).should be_false
       end
-
-      context "find_confirmed_order_by_last_name with letter parameter" do
-
-        before(:each) do
-          @people = Person.find_confirmed_order_by_last_name('h')
-        end
-
-        it "should not be empty when valid data exists" do
-          @people.should_not be_empty
-        end
-
-        it "should sort alphabetically last/first" do
-          @people.first.should eq @hammett
-          @people.last.should eq @hetfield
-        end
-
-      end
-
     end
+    describe "when an account is not facebook authenticated" do
+      it "should return false if we check for it" do
+        @person = Factory.build(:normal_person)
+        @person.facebook_authenticated?.should be_false 
+      end
+    end
+    describe "conflicting_email?" do
+      def given_a_normal_person
+        @person = Factory.build(:normal_person, :email => 'johnd@test.com')
+      end
+      it "should return false if other email is blank?" do
+        given_a_normal_person
+        @person.conflicting_email?(nil).should be_false
+        @person.conflicting_email?('').should be_false
+      end
+      it "should return false if other_email is the same as existing email" do
+        given_a_normal_person
+        @person.conflicting_email?('JohnD@Test.com').should be_false        
+      end
+      it "should return true if other_email is same NOT the same as existing email " do
+        given_a_normal_person
+        @person.conflicting_email?('johnd.different.email@test.com').should be_true                
+      end
+    end
+    describe "facebook_profile_pic_url" do
+      def given_a_normal_person_with_facebook_auth
+        @person = Factory.build(:normal_person, :email => 'johnd@test.com')
+        @authentication = Factory.build(:facebook_authentication, :uid => 12345)
+        @person.link_with_facebook(@authentication)
+      end
 
+      it "should return the correct picture url of Facebook" do
+        given_a_normal_person_with_facebook_auth
+        @person.facebook_profile_pic_url.should == 'https://graph.facebook.com/12345/picture?type=square'
+      end
+      it "should return the correct type on the picture url of Facebook" do
+        given_a_normal_person_with_facebook_auth
+        @person.facebook_profile_pic_url(:large).should == 'https://graph.facebook.com/12345/picture?type=large'
+      end
+      it "should return nil if user has not been authenticated with fb" do
+         @person = Factory.build(:normal_person, :email => 'johnd@test.com')
+         @person.facebook_profile_pic_url.should be_nil
+      end
+    end
   end
-
 end
