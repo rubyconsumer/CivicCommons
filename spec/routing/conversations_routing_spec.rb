@@ -16,10 +16,6 @@ describe ConversationsController do
     end
 
     it "recognizes and generates #node_conversation" do
-      pending "BUG IN RAILS PREVENTS THIS FROM PASSING, BUG ONLY AFFECTS TESTS, NOT ACTUAL APP...
-      Should be re-enabled when bug is fixed. Bug described:
-      https://github.com/rspec/rspec-rails/issues/issue/239
-      https://rails.lighthouseapp.com/projects/8994-ruby-on-rails/tickets/5805"
       { get: "/conversations/node_conversation" }.should route_to(controller: "conversations", action: "node_conversation")
     end
 
@@ -28,10 +24,6 @@ describe ConversationsController do
     end
 
     it "recognizes and generates #edit_node_contribution" do
-      pending "BUG IN RAILS PREVENTS THIS FROM PASSING, BUG ONLY AFFECTS TESTS, NOT ACTUAL APP...
-      Should be re-enabled when bug is fixed. Bug described:
-      https://github.com/rspec/rspec-rails/issues/issue/239
-      https://rails.lighthouseapp.com/projects/8994-ruby-on-rails/tickets/5805"
       { get: "/conversations/edit_node_contribution" }.should route_to(controller: "conversations", action: "edit_node_contribution")
     end
 
@@ -40,18 +32,10 @@ describe ConversationsController do
     end
 
     it "recognizes and generates #new_node_contribution" do
-      pending "BUG IN RAILS PREVENTS THIS FROM PASSING, BUG ONLY AFFECTS TESTS, NOT ACTUAL APP...
-      Should be re-enabled when bug is fixed. Bug described:
-      https://github.com/rspec/rspec-rails/issues/issue/239
-      https://rails.lighthouseapp.com/projects/8994-ruby-on-rails/tickets/5805"
       { get: "/conversations/new_node_contribution" }.should route_to(controller: "conversations", action: "new_node_contribution")
     end
 
     it "recognizes and generates #preview_node_contribution" do
-      pending "BUG IN RAILS PREVENTS THIS FROM PASSING, BUG ONLY AFFECTS TESTS, NOT ACTUAL APP...
-      Should be re-enabled when bug is fixed. Bug described:
-      https://github.com/rspec/rspec-rails/issues/issue/239
-      https://rails.lighthouseapp.com/projects/8994-ruby-on-rails/tickets/5805"
       { get: "/conversations/preview_node_contribution" }.should route_to(controller: "conversations", action: "preview_node_contribution")
     end
 
