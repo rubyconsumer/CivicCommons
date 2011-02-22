@@ -7,11 +7,11 @@ Feature:
     Given that I have a user account
     And I am logged in
     And I am on the home page
-    When I select "Create a Conversation"
+    When I select the "Create a Conversation" link
     Then I will be on the responsibilities page
     And I will see the responsibilities verbiage
-    And I will see an “Accept” button
-    And I will see a “Cancel” link
+    And I will see an "Accept" button
+    And I will see a "Cancel" link
 
     Given that I am on the responsibilities page
     When I select the "Cancel" link
@@ -46,10 +46,10 @@ Feature:
     And I should see a "No Thanks" link
 
     Given that I am on the conversation creation success page
-    And I select the "No Thanks" link
+    When I select the "No Thanks" link
     Then I should be on the conversation page for my conversation
     And no invitations should be sent
 
     Given that I am on the conversation creation success page
-    And I press the "Invite Participants" button
+    When I press the "Invite Participants" button
     Then I should be on the invite participants page
