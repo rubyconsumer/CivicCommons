@@ -29,7 +29,9 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource_or_scope)
-    if session[:link] 
+    if session[:previous]
+      session[:previous]
+    elsif session[:link]
       new_link_path
     else
       super
