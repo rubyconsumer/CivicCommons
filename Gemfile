@@ -45,10 +45,15 @@ group :test do
   gem 'linguistics'
   gem 'fuubar', '~>0.0.3'
   gem "cucumber-rails", "0.4.0.beta.1"
-  gem "capybara", "~> 0.4.0"
-  gem "rspec-rails", "~> 2.2.0"
   gem "database_cleaner", "~> 0.6.0"
   gem 'email_spec'
+  gem 'flexmock'
+end
+
+group :development, :test do
+  gem "rspec-rails", "~> 2.2.0"
+  gem 'steak'
+  gem "capybara", "~> 0.4.0"
 end
 
 gem 'devise', '1.1.2'
