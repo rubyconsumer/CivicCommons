@@ -1,16 +1,5 @@
 require File.expand_path(File.dirname(__FILE__) + '/acceptance_helper')
 
-def sign_in(user)
-  visit new_person_session_path(user)
-  fill_in('Email', :with => user.email)
-  fill_in('Password', :with => user.password)
-  click_on('Login')
-end
-
-def sign_out(user = nil)
-  visit destroy_person_session_path
-end
-
 feature "Authorization Threats", %q{
   As an attacker
   I want to circumvent authorization rules
@@ -23,7 +12,7 @@ feature "Authorization Threats", %q{
       # Given an admin user exists
       # And I am not logged in
       @admin = Factory.create(:admin_person)      
-      sign_out
+      LoginPage.new(page).sign_out
     end
 
     scenario "illegally access a user profile page" do
@@ -54,7 +43,8 @@ feature "Authorization Threats", %q{
       # And I am logged in as the non-admin user
       @admin = Factory.create(:admin_person)      
       @user = Factory.create(:registered_user)      
-      sign_in @user
+      login_page = LoginPage.new(page)
+      login_page.sign_in(@user)
     end
 
     scenario "illegally access a user profile page" do
