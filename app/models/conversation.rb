@@ -10,7 +10,7 @@ class Conversation < ActiveRecord::Base
            :conditions => ['confirmed = ?', true])
 
   has_many :top_level_contributions
-  has_many :subscriptions, :as => :subscribable
+  has_many :subscriptions, :as => :subscribable, :dependent => :destroy
   accepts_nested_attributes_for :top_level_contributions, :allow_destroy => true
 
   # any person that has made a contribution to the convo
