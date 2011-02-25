@@ -50,6 +50,21 @@ module HelperMethods
   end
 
   ###################################################################
+  
+  def clear_mail_queue
+    ActionMailer::Base.deliveries.clear
+  end
+
+  def should_send_an_email(values={})
+    mailing = ActionMailer::Base.deliveries.first
+    mailing[:from].to_s.should == Civiccommons::Config.devise_email
+    mailing.to.should == [values['To']]
+    mailing.subject.should == values['Subject']
+  end
+
+  def should_not_send_an_email
+    ActionMailer::Base.deliveries.should be_empty
+  end
 
 end
 
