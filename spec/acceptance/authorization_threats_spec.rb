@@ -8,61 +8,69 @@ feature "Authorization Threats", %q{
 
   describe "when not logged in" do
 
+    # Given an admin user exists
+    let :admin do
+      Factory :admin_person
+    end
+
     background do
-      # Given an admin user exists
-      # And I am not logged in
-      @admin = Factory.create(:admin_person)      
+      # Given I am not logged in
       LoginPage.new(page).sign_out
     end
 
-    scenario "illegally access a user profile page" do
+    scenario "I cannot access a user profile page" do
       # When I visit a user's profile page
       # The I should not be on that user's profile page
       # And I should be redirected to the community page
-      visit edit_user_path(@admin)
-      current_path.should_not == edit_user_path(@admin)
-      current_path.should == community_path
+      visit edit_user_path(admin)
+      should_not_be_on edit_user_path(admin)
+      should_be_on community_path
     end
 
-    scenario "illegally access the admin pages" do
+    scenario "I cannot access the admin pages" do
       # When I visit the admin page
       # Then I should not be on the admin page
       # And I should be redirected to the login page
       visit admin_root_path
-      current_path.should_not == admin_root_path
-      current_path.should == new_person_session_path
+      should_not_be_on admin_root_path
+      should_be_on new_person_session_path
     end
 
   end
 
   describe "when logged in" do
 
-    background do
-      # Given an admin user exists
-      # And an non-admin user exists
-      # And I am logged in as the non-admin user
-      @admin = Factory.create(:admin_person)      
-      @user = Factory.create(:registered_user)      
-      login_page = LoginPage.new(page)
-      login_page.sign_in(@user)
+    # Given an admin user exists
+    let :admin do
+      Factory :admin_person
     end
 
-    scenario "illegally access a user profile page" do
+    # Given a registered user (non-admin) exists
+    let :user do
+      Factory :registered_user
+    end
+
+    background do
+      # Given I am logged in as a registered user
+      LoginPage.new(page).sign_in(user)
+    end
+
+    scenario "I cannot access a user profile page" do
       # When I visit a user's profile page
       # The I should not be on that user's profile page
       # And I should be redirected to the community page
-      visit edit_user_path(@admin)
-      current_path.should_not == edit_user_path(@admin)
-      current_path.should == community_path
+      visit edit_user_path(admin)
+      should_not_be_on edit_user_path(admin)
+      should_be_on community_path
     end
 
-    scenario "illegally access the admin pages" do
+    scenario "I cannot access the admin pages" do
       # When I visit the admin page
       # Then I should not be on the admin page
       # And I should be redirected to home page
       visit admin_root_path
-      current_path.should_not == admin_root_path
-      current_path.should == root_path
+      should_not_be_on admin_root_path
+      should_be_on root_path
     end
 
   end
