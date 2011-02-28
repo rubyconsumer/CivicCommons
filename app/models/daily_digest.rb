@@ -1,7 +1,7 @@
 class DailyDigest
-
+  
   attr_reader :mailing_list
-
+  
   def initialize
     @mailing_list = Person.where(daily_digest: true)
   end
@@ -16,13 +16,13 @@ class DailyDigest
   end
 
   def retrieve_updated_conversations(person)
-    time_range = (Time.now.midnight - 1.day)..Time.now
-    conversations = Conversation.includes(:subscriptions, contributions: :owner).where('subscriptions.person_id' => person, 'conversations.updated_at' => time_range)
+    time_range = (Time.now.midnight - 1.day)..(Time.now.midnight - 1.second)
+    Conversation.includes(:subscriptions, contributions: :owner).where('subscriptions.person_id' => person, 'conversations.updated_at' => time_range)
   end
   
   def retrieve_contributions(person)
-    time_range = (Time.now.midnight - 1.day)..Time.now
-    contributions = Contribution.includes(:conversation => :subscriptions).where('subscriptions.person_id' => person, 'contributions.created_at' => time_range)
+    time_range = (Time.now.midnight - 1.day)..(Time.now.midnight - 1.second)
+    Contribution.includes(:conversation => :subscriptions).where('subscriptions.person_id' => person, 'contributions.created_at' => time_range).where('contributions.type != \'TopLevelContribution\'')
   end
 
 end
