@@ -10,14 +10,19 @@ class DailyDigest
     mailing_list.each do |person|
       updated_conversations = retrieve_updated_conversations(person)
       unless updated_conversations.empty?
-        Notifier.daily_digest(person, updated_conversations).deliver
+        #Notifier.daily_digest(person, updated_conversations).deliver
       end
     end
   end
 
   def retrieve_updated_conversations(person)
-    time_range = (Time.now.midnight - 1.day)..Time.now.midnight
-    conversations = Conversation.includes(:subscriptions).where('subscriptions.person_id' => person, 'conversations.updated_at' => time_range)
+    time_range = (Time.now.midnight - 1.day)..Time.now
+    conversations = Conversation.includes(:subscriptions, contributions: :owner).where('subscriptions.person_id' => person, 'conversations.updated_at' => time_range)
+  end
+  
+  def retrieve_contributions(person)
+    time_range = (Time.now.midnight - 1.day)..Time.now
+    contributions = Contribution.includes(:conversation => :subscriptions).where('subscriptions.person_id' => person, 'contributions.created_at' => time_range)
   end
 
 end
