@@ -10,8 +10,13 @@ Feature:
     When I select the "Create a Conversation" link
     Then I will be on the responsibilities page
     And I will see the responsibilities verbiage
-    And I will see an "Accept" button
+    And I will see an "I agree, continue" button
     And I will see a "Cancel" link
+
+    Given that I have a user account
+    And I am logged in
+    When I visit the conversation creation page directly
+    Then I will be redirected to the responsibilities page
 
     Given that I am on the responsibilities page
     When I select the "Cancel" link
@@ -19,7 +24,7 @@ Feature:
     And no conversation will be created
 
     Given that I am on the responsibilities page
-    When I press the "Accept" button
+    When I press the "I agree, continue" button
     Then I will be on the conversation creation page
 
     Given that I am on the conversation creation page

@@ -7,15 +7,15 @@ Given /am logged in$/ do
 end
 
 Given /am on the home page$/ do
-  visit '/'
+  visit path_to('the homepage')
 end
 
 Given /am on the responsibilities page$/ do
-  visit '/conversations/responsibilities'
+  visit conversation_responsibilities_path
 end
 
 Given /am on the conversation creation page$/ do
-  visit '/conversations/new'
+  visit new_conversation_path(:accept => true)
 end
 
 Given /have entered valid conversation data$/ do

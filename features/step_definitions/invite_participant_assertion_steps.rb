@@ -1,5 +1,5 @@
 Then /should be on the conversation page$/ do
-  current_path.should == "/conversations"
+  current_path.should == conversations_path
 end
 
 Then /will see an 'Invite Participants' button$/ do

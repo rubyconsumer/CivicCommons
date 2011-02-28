@@ -3,5 +3,9 @@ When /select the "([^"]*)" link$/ do |name|
 end
 
 When /press the "([^"]*)" button$/ do |name|
-  pending # express the regexp above with the code you wish you had
+  click_link_or_button(name)
+end
+
+When /visit the conversation creation page directly$/ do
+  visit new_conversation_path
 end
