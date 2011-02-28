@@ -31,4 +31,12 @@ class Notifier < Devise::Mailer
          :to => @resource[:emails])
   end
 
+  def daily_digest(person, conversations)
+    @person = person
+    @conversations = conversations
+    mail(:subject => "Civic Commons Daily Digest",
+         :from => Devise.mailer_sender,
+         :to => @person.email)
+  end
+
 end
