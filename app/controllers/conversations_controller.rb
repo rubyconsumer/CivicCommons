@@ -1,5 +1,5 @@
 class ConversationsController < ApplicationController
-  before_filter :verify_admin, :only=>[:new, :create, :edit, :update, :destroy]
+  before_filter :require_user, :only=>[:new, :create, :edit, :update, :destroy]
   before_filter :require_user, :only=>[:new_node_contribution, :preview_node_contribution, :confirm_node_contribution]
 
   # GET /conversations
@@ -133,6 +133,7 @@ class ConversationsController < ApplicationController
 
   # GET /conversations/new
   def new
+    return redirect_to :conversation_responsibilities unless params[:accept]
     @conversation = Conversation.new
     @presenter = IngestPresenter.new(@conversation)
 
@@ -193,7 +194,6 @@ class ConversationsController < ApplicationController
 
     redirect_to(conversations_url)
   end
-
 
   # Kludge to convert US date-time (mm/dd/yyyy hh:mm am) to an
   # ISO-like date-time (yyyy-mm-ddThh:mm:ss).

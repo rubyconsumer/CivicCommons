@@ -1,0 +1,18 @@
+<%= fields_for @conversation.contribution, :as => :contribution do |f| %>
+  <%= f.hidden_field(:type, :value => type.to_s.camelcase) %>
+  <%= f.text_area(:content, :rows => "3", :placeholder => contribution_form_placeholder_text_for(type)) %>
+  <% if type == :attached_file %>
+    <label>
+      Upload a file:
+    </label>
+    <%= f.file_field(:attachment) %>
+  <% elsif type == :link %>
+    <label></label>
+    <%= f.text_field(:url, :type => "text", :class => "textbox link", :placeholder => "http://www.example.com") %>
+  <% elsif type == :embedded_snippet %>
+    <label></label>
+    <%= f.text_field(:url, :type => "text", :class => "textbox link youtube", :placeholder => "www.youtube.com/watch?v=123456") %>
+    <div class="youtube-thumbnail"></div>
+  <% end %>
+  <div class="validation-error"></div>
+<% end %>

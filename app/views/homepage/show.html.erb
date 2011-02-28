@@ -13,6 +13,7 @@
       <%= render :partial => '/conversations/conversation_pager' %>
     </div><!-- /.main-content -->
     <div class="aside supplementary">
+      <%= link_to "Create a Conversation", conversation_responsibilities_path, :id => 'create-a-conversation', :class => 'button' %>
       <%= render :partial => '/regions/index' %>
       <% if @recent_items.size > 0 %>
         <div class="mod">

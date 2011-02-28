@@ -1343,6 +1343,10 @@ background-position: 14px 5px;
 background-position: 14px -56px;
 }
 
+#create-a-conversation {
+margin-bottom: 20px;
+}
+
 /*-----------------------------------------------
 =Styles for Convo Modal Popup
 -----------------------------------------------*/

@@ -30,6 +30,7 @@ Civiccommons::Application.routes.draw do
   get '/conversations/node_permalink/:id',             to: 'conversations#node_permalink'
   put '/conversations/update_node_contribution',       to: 'conversations#update_node_contribution'
   put '/conversations/confirm_node_contribution',      to: 'conversations#confirm_node_contribution'
+  get '/conversations/responsibilities',               to: 'conversations#responsibilities',                 as: 'conversation_responsibilities'
   #Subscriptions
   post '/subscriptions/subscribe',                     to: 'subscriptions#subscribe'
   post '/subscriptions/unsubscribe',                   to: 'subscriptions#unsubscribe'
@@ -74,7 +75,7 @@ Civiccommons::Application.routes.draw do
   resources :issues, only: [:index, :show] do
     post 'create_contribution', on: :member
   end
-  resources :conversations, only: [:index, :show]
+  resources :conversations, only: [:index, :show, :new]
   resources :regions, only: [:index, :show]
   resources :links, only: [:new, :create]
   resources :invites, only: [:new, :create]
