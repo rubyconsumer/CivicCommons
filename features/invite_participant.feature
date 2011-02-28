@@ -49,6 +49,6 @@ Feature:
     And I click the 'Send' button
     Then I should be on the conversation page
     And I should see a success message
-    And "alpha@example.com" should receive an email with subject "You've been invited to the Civic Commons!"
-    And "bravo@example.com" should receive an email with subject "You've been invited to the Civic Commons!"
-    And "charlie@example.com" should receive an email with subject "You've been invited to the Civic Commons!"
+    And "alpha@example.com" should receive an email with subject "invite.*conversation"
+    And "bravo@example.com" should receive an email with subject "invite.*conversation"
+    And "charlie@example.com" should receive an email with subject "invite.*conversation"

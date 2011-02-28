@@ -26,8 +26,9 @@ class Notifier < Devise::Mailer
     @resource = resource
     @user = @resource[:user]
     @conversation = @resource[:conversation]
-    mail(:subject => "You've been invited to the Civic Commons!",
+    mail(:subject => @user.name + " wants to invite you to a conversation at The Civic Commons",
          :from => Devise.mailer_sender,
          :to => @resource[:emails])
   end
+
 end
