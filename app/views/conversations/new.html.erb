@@ -1,3 +1,13 @@
+<% content_for :document_ready do %>
+  $('.tab-strip').easytabs({
+    tabActiveClass: 'tab-active',
+    tabActivePanel: 'panel-active',
+    tabs: '> .tab-area > .tab-strip-options > ul > li',
+    defaultTab: '.default-tab',
+    animationSpeed: 250,
+    updateHash: false
+  });
+<% end %>
 <% content_for :main do %>
   <div class="wrapper">
     <div class="content-container">
@@ -20,37 +30,34 @@
           <% end %>
           <p>
             <%= conversation.label :title %>
-            <br />
             <%= conversation.text_field :title %>
           </p>
 
           <p>
             <%= conversation.label :image, "Attach an Image (Looks best at 3:2 ratio)" %>
-            <br />
             <%= conversation.file_field :image %>
           </p>
+          <br class="clear" />
 
           <p>
             <%= conversation.label :summary %>
-            <br />
             <%= conversation.text_area :summary %>
           </p>
 
           <p>
             <%= conversation.label :zip_code, "Enter Zip Code" %>
-            <br>
             <%= conversation.text_field :zip_code %>
           </p>
 
           <p>
             <%= conversation.label :issues, "Select Issues" %>
-            <br />
             <table>
               <% Issue.alphabetical.each_slice(2) do |slice| %>
                 <tr>
                   <% slice.each do |issue| %>
                     <td>
-                      <%= check_box_tag "conversation[issue_ids][]", issue.id, @conversation.issues.include?(issue) %>
+                      <input id="conversation_issue_ids_" name="conversation[issue_ids][]" type="checkbox" value=<%= issue.id %> />
+                      <!--<%= check_box_tag "conversation[issue_ids][]", issue.id, @conversation.issues.include?(issue) %> //-->
                       <%= issue.name %>
                     </td>
                   <% end %>
@@ -58,8 +65,9 @@
               <% end %>
             </table>
           </p>
+          <br class="clear" />
 
-          <div class="tab-strip">
+          <div id="new-convo-contribution" class="tab-strip">
             <div class="tab-area input-with-options">
               <div class="tab-strip-options">
                 <ul>
@@ -75,22 +83,22 @@
               </div>
               <div class="panels">
                 <div id="new-comment">
-                  <%= render :partial => 'user_conversation_contribution_fields', :locals => {:type => :comment} %>
+                  <%= render :partial => 'user_conversation_contribution_fields', :locals => {:form => conversation, :type => :comment} %>
                 </div>
                 <div id="new-question">
-                  <%= render :partial => 'user_conversation_contribution_fields', :locals => {:type => :question} %>
+                  <%= render :partial => 'user_conversation_contribution_fields', :locals => {:form => conversation, :type => :question} %>
                 </div>
                 <div id="new-attached_file">
-                  <%= render :partial => 'user_conversation_contribution_fields', :locals => {:type => :attached_file} %>
+                  <%= render :partial => 'user_conversation_contribution_fields', :locals => {:form => conversation, :type => :attached_file} %>
                 </div>
                 <div id="new-link">
-                  <%= render :partial => 'user_conversation_contribution_fields', :locals => {:type => :link} %>
+                  <%= render :partial => 'user_conversation_contribution_fields', :locals => {:form => conversation, :type => :link} %>
                 </div>
                 <div id="new-embedded_snippet">
-                  <%= render :partial => 'user_conversation_contribution_fields', :locals => {:type => :embedded_snippet} %>
+                  <%= render :partial => 'user_conversation_contribution_fields', :locals => {:form => conversation, :type => :embedded_snippet} %>
                 </div>
                 <div id="new-suggested_action">
-                  <%= render :partial => 'user_conversation_contribution_fields', :locals => {:type => :suggested_action} %>
+                  <%= render :partial => 'user_conversation_contribution_fields', :locals => {:form => conversation, :type => :suggested_action} %>
                 </div>
               </div>
             </div>
@@ -100,7 +108,7 @@
             <%= conversation.submit %>
           </p>
 
-          <%= link_to "Back", admin_conversations_path %>
+          <%= link_to "Cancel", root_url %>
         <% end %>
       </div>
     </div>

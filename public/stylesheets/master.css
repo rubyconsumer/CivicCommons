@@ -1428,6 +1428,30 @@ a.button.moderate, input.submit.moderate {background-color: #e74d4d;}
 a.button.moderate:hover, input.submit.moderate:hover {background-color: #d83535;}
 
 /*-----------------------------------------------
+=New User-generated Conversation styles
+-----------------------------------------------*/
+.tab-strip#new-convo-contribution .tab-strip-options {
+width: 160px;
+}
+
+.tab-strip#new-convo-contribution textarea,
+.tab-strip#new-convo-contribution input[type=text] {
+width: 448px;
+}
+
+.tab-strip#new-convo-contribution textarea {
+height: 156px;
+}
+
+.tab-strip#new-convo-contribution .input-with-options label {
+width: 440px;
+}
+
+.tab-strip#new-convo-contribution .input-with-options label input[type=text] {
+width: 428px;
+}
+
+/*-----------------------------------------------
 =In The News styles
 -----------------------------------------------*/
 .in-the-news-post {

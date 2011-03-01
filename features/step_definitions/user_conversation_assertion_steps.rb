@@ -11,7 +11,11 @@ Then /see an? "([^"]*)" link/ do |name|
 end
 
 Then /see an? "([^"]*)" button$/ do |name|
-  page.should have_selector('button,a.button', :text => name)
+  page.should have_selector('input[type=submit],button,a.button', :text => name)
+end
+
+Then /see an? "([^"]*)" submit button$/ do |name|
+  page.should have_selector("input[type=submit][value='#{name}']")
 end
 
 Then /be redirected to the responsibilities page$/ do
@@ -35,16 +39,17 @@ Then /see an? "([^"]*)" text (box|area)$/ do |name, el|
 end
 
 Then /see an? Issues selection field$/ do
-  page.should have_select('issue_ids')
+  page.should have_field('conversation[issue_ids][]')
 end
 
 Then /see an? image upload field$/ do
-  pending # express the regexp above with the code you wish you had
+  page.should have_field('conversation[image]')
 end
 
 Then /^the conversation should be created$/ do
-  @conversation = Conversation.first
+  @conversation = Conversation.where(title: @values['Title']).first
   @conversation.should_not be_nil
+  #@conversation.issues.should == @issues
 end
 
 Then /be on the conversation creation success page$/ do

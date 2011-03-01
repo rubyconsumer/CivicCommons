@@ -9,7 +9,7 @@
 #   user
 # end
 
-Given /^I am signed in$/ do
+Given /^I am (?:signed|logged) in$/ do
   user = Factory.create(:registered_user)
   visit(new_person_session_url)
   fill_in 'person_email', :with => user.email

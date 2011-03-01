@@ -1,6 +1,5 @@
 class ConversationsController < ApplicationController
-  before_filter :require_user, :only=>[:new, :create, :edit, :update, :destroy]
-  before_filter :require_user, :only=>[:new_node_contribution, :preview_node_contribution, :confirm_node_contribution]
+  before_filter :require_user, :only=>[:new, :create, :new_node_contribution, :preview_node_contribution, :confirm_node_contribution]
 
   # GET /conversations
   def index
@@ -135,36 +134,38 @@ class ConversationsController < ApplicationController
   def new
     return redirect_to :conversation_responsibilities unless params[:accept]
     @conversation = Conversation.new
-    @presenter = IngestPresenter.new(@conversation)
+    @contribution = Contribution.new
 
     render :new
   end
 
   # GET /conversations/1/edit
+  # NOT IMPLEMENTED YET, I.E. NOT ROUTEABLE
   def edit
     @conversation = Conversation.find(params[:id])
   end
 
   # POST /conversations
   def create
-    ActiveRecord::Base.transaction do
-      @conversation = Conversation.new(params[:conversation])
-      @conversation = Conversation.new(params[:conversation])
-      #TODO: Fix this conversation issues creation since old conversation.issues= method has been destroyed
-      #NOTE: Issues were previously defined as Conversation has_many Issues, but this is wrong, should be habtm
-      @conversation.issues = Issue.find(params[:issue_ids]) unless params[:issue_ids].blank?
-      @conversation.started_at = Time.now
-      @presenter = IngestPresenter.new(@conversation, params[:file])
+    Rails.logger.info params[:conversation]
+    @conversation = Conversation.new_user_generated_conversation(params[:conversation], current_person)
+    @conversation.started_at = Time.now
 
-      @conversation.save!
-      @presenter.save!
-      redirect_to(@conversation, :notice => 'Conversation was successfully created.')
+    respond_to do |format|
+      if @conversation.save!
+        format.html { redirect_to(conversation_invite_path(@conversation), :notice => 'Conversation was successfully created.') }
+      else
+        format.html { render :new }
+      end
     end
-  rescue ActiveRecord::RecordInvalid => e
-    render :new
+  end
+
+  def invite
+    @conversation = Conversation.find(params[:id])
   end
 
   # PUT /conversations/1
+  # NOT IMPLEMENTED YET, I.E. NOT ROUTEABLE
   def update
     @conversation = Conversation.find(params[:id])
 
@@ -188,6 +189,7 @@ class ConversationsController < ApplicationController
   end
 
   # DELETE /conversations/1
+  # NOT IMPLEMENTED YET, I.E. NOT ROUTEABLE
   def destroy
     @conversation = Conversation.find(params[:id])
     @conversation.destroy

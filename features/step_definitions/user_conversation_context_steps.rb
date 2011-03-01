@@ -1,11 +1,3 @@
-Given /have a user account$/ do
-  Factory.create(:registered_user)
-end
-
-Given /am logged in$/ do
-  @current_person = Person.first
-end
-
 Given /am on the home page$/ do
   visit path_to('the homepage')
 end
@@ -15,13 +7,26 @@ Given /am on the responsibilities page$/ do
 end
 
 Given /am on the conversation creation page$/ do
+  Factory.create(:issue)
   visit new_conversation_path(:accept => true)
+  @issues = [Issue.first]
 end
 
-Given /have entered valid conversation data$/ do
-  pending # express the regexp above with the code you wish you had
+Given /have entered valid conversation data:$/ do |table|
+  @values = table.rows_hash
+
+  fill_in 'conversation[title]', with: @values['Title']
+  fill_in 'conversation[summary]', with: @values['Summary']
+  fill_in 'conversation[zip_code]', with: @values['Zip Code']
+  # BUG: This doesn't work right with Capybara
+  #      instead of submitting ["1"], it submits ["[\"1\"]"]
+  #check 'conversation[issue_ids][]'
+  attach_file('conversation[image]', File.join(attachments_path, 'imageAttachment.png'))
+
+  fill_in 'conversation[contributions_attributes][0][content]', with: @values['Comment']
 end
 
 Given /am on the conversation creation success page$/ do
-  pending # express the regexp above with the code you wish you had
+  @conversation = Factory.create(:conversation)
+  visit conversation_invite_path(:conversation => @conversation)
 end
