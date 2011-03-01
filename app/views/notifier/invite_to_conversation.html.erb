@@ -1,0 +1,15 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="10"><tr>
+  <td style="padding:20px 0 0 0;">
+    <p style="line-height:1.4em;">Hi:</p>
+    <p style="line-height:1.4em;"><%= @user.name %> wants to invite you to add your voice to an important conversation at the Civic Commons about <b>"<%= @conversation.title %>."</b></p>
+    <p style="line-height:1.4em;"></p>
+    <p style="line-height:1.4em;">Here's a little more information:</p>
+    <p style="line-height:1.4em;"></p>
+    <p style="line-height:1.4em;"><%=h @conversation.summary%></p>
+    <p style="line-height:1.4em;"></p>	
+    <p style="line-height:1.4em;"><a href="<%= conversation_url(@conversation) %>"><img src="<%= root_url %>images/email-join-conversation.png" width="165" height="17" alt="Join the Conversation" style="border:0;" /></a></p>
+    <p style="line-height:1.4em;"></p>
+    <p style="line-height:1.4em;">See you at the Commons!</p>
+		<p style="line-height:1.4em;"><%= link_to "The Civic Commons", root_url %></p>
+  </td>
+</tr></table>

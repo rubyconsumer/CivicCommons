@@ -90,4 +90,13 @@ describe Conversation do
       TopItem.where(:id => item_ids).count.should == 0
     end
   end
+
+  describe "when filtering conversations" do
+    Conversation.available_filter_names.each do |filter_name|
+      it "filters by :#{filter_name} by grabbing the appropriate named scope and doesn't raise error" do
+        Conversation.should_receive(Conversation.available_filters[filter_name.to_sym])
+        lambda { Conversation.filtered(filter_name) }.should_not raise_error
+      end
+    end
+  end
 end

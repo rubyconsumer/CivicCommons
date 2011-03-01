@@ -35,8 +35,6 @@ module ConversationsHelper
       "shared a video"
     when "Link"
       "shared a link"
-    when "PplAggContribution"
-      "wrote a response"
     when "Question"
       "asked a question"
     when "SuggestedAction"
@@ -81,5 +79,35 @@ module ConversationsHelper
 
   def conversation_node_path(contribution)
     conversation_path(contribution.conversation) + "#node-#{contribution.id}"
+  end
+
+  def filter_title(filter, suffix = nil)
+    case filter.to_sym
+    when :active
+      title = "Most Active"
+    when :popular
+      title = "Most Popular"
+    when :recent
+      title = "Recently Created"
+    else
+      title = "Filtered"
+    end
+
+    if suffix then title += suffix end
+
+    title
+  end
+
+  def filter_description(filter)
+    case filter.to_sym
+    when :active
+      "These are conversations that are inspiring people to join in."
+    when :popular
+      "These are the conversations that are sparking interest."
+    when :recent
+      "These are the conversations that are just getting started."
+    else
+      "These are the conversations that match your filter."
+    end
   end
 end

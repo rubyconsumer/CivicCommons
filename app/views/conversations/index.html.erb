@@ -1,23 +1,40 @@
 <% content_for :main do %>
-<div class="feature-mast">
-<div class="wrapper">
-<div class="content-container">
-  <%= render :partial => '/articles/featured' %>
-</div>
-</div>
-</div>
-
 <div class="wrapper">
 <div class="content-container">
       <h1>Conversations</h1>
 
       <div class="main-content">
-        <h3>Current Active Conversations</h3>
 
-      <%= render :partial => '/conversations/conversation_pager' %>
+        <div class="conversation-tile-group group">
+          <h3>Most Active Conversations</h3>
+          <%= render :partial => '/conversations/conversation_band', :locals => {:conversations => @active} %>
+          <%= link_to "See more active conversations", conversations_filter_url(:active), :class => 'see-more' %>
+        </div>
+
+        <div class="conversation-tile-group group">
+          <h3>Most Popular Conversations</h3>
+          <%= render :partial => '/conversations/conversation_band', :locals => {:conversations => @popular} %>
+          <%= link_to "See more popular conversations", conversations_filter_url(:popular), :class => 'see-more' %>
+        </div>
+
+        <div class="conversation-tile-group group">
+          <h3>Recently Created Conversations</h3>
+          <%= render :partial => '/conversations/conversation_band', :locals => {:conversations => @recent} %>
+          <%= link_to "See more recently created conversations", conversations_filter_url(:recent), :class => 'see-more' %>
+        </div>
 
       </div><!-- /.main-content -->     
+
       <div class='aside supplementary'>
+        <div class="f-conv">
+          <!-- <h3>Featured Conversations</h3> -->
+          <div class="mod-content">
+            <%= render :partial => '/conversations/filters' %>
+          </div>
+        </div>
+
+        <div>&nbsp;</div>
+
         <div class="mod">
           <h3>Northeast Ohio Counties</h3>
           <div class="mod-content">
@@ -32,6 +49,7 @@
             </ul>
           </div>
         </div>
+
         <% if @recent_items.size > 0 %>
           <div class="mod">
             <h3>Recent Activity</h3>

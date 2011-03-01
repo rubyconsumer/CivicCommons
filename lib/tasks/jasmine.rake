@@ -1,4 +1,4 @@
-if Rails.env == "test"
-  require 'jasmine'
-  load 'jasmine/tasks/jasmine.rake'
-end
+#if Rails.env == "test"
+  #require 'jasmine'
+  #load 'jasmine/tasks/jasmine.rake'
+#end

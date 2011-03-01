@@ -34,16 +34,21 @@ group :development do
 end
 
 group :test do
-#  gem 'jasmine'#, :path => 'vendor/gems/jasmine'
-  gem 'cucumber', '~>0.9.0'
-  gem 'capybara'
-  gem 'cucumber-rails'
-  gem 'rspec-rails', '>= 2.4.0'
+  #gem 'jasmine'#, :path => 'vendor/gems/jasmine'
+  gem 'cucumber', '~>0.10.0'
+  #gem 'capybara'
+  #gem 'cucumber-rails', :git => 'git://github.com/aslakhellesoy/cucumber-rails.git', :branch => 'v0.4.0.beta.1'
+  #gem 'rspec-rails', '>= 2.4.0'
   gem "factory_girl_rails", '~>1.0.1'
   gem "ruby-debug19"
   gem 'webmock'
   gem 'linguistics'
   gem 'fuubar', '~>0.0.3'
+  gem "cucumber-rails", "0.4.0.beta.1"
+  gem "capybara", "~> 0.4.0"
+  gem "rspec-rails", "~> 2.2.0"
+  gem "database_cleaner", "~> 0.6.0"
+  gem 'email_spec'
 end
 
 gem 'devise', '1.1.2'

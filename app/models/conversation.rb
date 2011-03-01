@@ -1,5 +1,4 @@
 class Conversation < ActiveRecord::Base
-  include Rateable
   include Visitable
   include TopItemable
   include Subscribable
@@ -11,7 +10,7 @@ class Conversation < ActiveRecord::Base
            :conditions => ['confirmed = ?', true])
 
   has_many :top_level_contributions
-  has_many :subscriptions, :as => :subscribable
+  has_many :subscriptions, :as => :subscribable, :dependent => :destroy
   accepts_nested_attributes_for :top_level_contributions, :allow_destroy => true
 
   # any person that has made a contribution to the convo
@@ -34,6 +33,24 @@ class Conversation < ActiveRecord::Base
   before_destroy :destroy_root_contributions # since non-root contributions will be destroyed internally be awesome_nested_set
 
   scope :latest_updated, :order => 'updated_at DESC'
+  scope :latest_created, :order => 'created_at DESC'
+
+  def self.available_filters
+    {
+      :active => :latest_updated,
+      :popular => :get_top_visited,
+      :recent => :latest_created
+    }
+  end
+
+  def self.available_filter_names
+    available_filters.keys.collect(&:to_s)
+  end
+
+  def self.filtered(filter)
+    raise "Undefined Filter :#{filter}" unless available_filter_names.include?(filter)
+    scoped & self.send(available_filters[filter.to_sym])
+  end
 
   # Return a comma-and-space-delimited list of the Issues
   # relevant to this Conversation, e.g., "Jobs, Sports, Religion"
@@ -56,26 +73,6 @@ class Conversation < ActiveRecord::Base
     else
       "No Guides yet"
     end
-  end
-
-  #
-  # Represent the "Started At" column in a reader-friendly format.
-  #
-  # This is kind of a kludge. It also doesn't properly say
-  # "yesterday" when you're talking about New Year's Eve.
-  def start_time_text
-   if (started_at == nil)
-     return "Don't know"
-   end
-   diff = started_at.yday - Time.now.yday
-   sameyear = (started_at.year == Time.now.year)
-   if (diff == 0 && sameyear)
-     started_at.strftime("TODAY at %I:%M %p")
-   elsif (diff == -1 && sameyear)
-     started_at.strftime("YESTERDAY at %I:%M %p")
-   else
-     started_at.strftime("%A, %B %d, %Y at %I:%M %p")
-   end
   end
 
   def start_month_text

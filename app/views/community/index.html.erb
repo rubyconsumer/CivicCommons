@@ -10,15 +10,15 @@
           <% @people.each do |person| %>
             <div id="<%=person.id %>" class ="buddyimg">
               <div class="img-container" id="imgcontainer_<%= person.id %>">
-                <%= link_to (image_tag person.avatar.url(:standard), :alt => "#{person.name}"), pa_link("user/#{person.people_aggregator_id}"), :title => person.name %>
+                <%= user_profile(person) %>
               </div>
               <div class="text-container" id="label_<%= person.id %>">
-                <h4><%= link_to person.name, pa_link("user/#{person.people_aggregator_id}"), :title => person.name%></h4>
+                <h4><%= link_to person.name, user_path(person), title: person.name%></h4>
               </div>
             </div>
           <% end %>
 
-        <%= will_paginate @people, :previous_label => "Previous", :next_label => "Next" %>
+        <%= will_paginate @people, :inner_window => 3, :previous_label => "Previous", :next_label => "Next" %>
         </div>
       </div>
     </div>
