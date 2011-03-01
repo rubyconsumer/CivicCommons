@@ -99,4 +99,44 @@ describe Conversation do
       end
     end
   end
+
+  describe "when creating a user-generated conversation" do
+    before(:each) do
+      @person = Factory.build(:normal_person)
+
+      @contributions = {
+        "0" => Factory.build(:comment, :owner => @person.id, :conversation => nil, :parent => nil).attributes,
+        "1" => Question.new.attributes,
+        "2" => AttachedFile.new.attributes,
+        "3" => Link.new.attributes,
+        "4" => EmbeddedSnippet.new.attributes,
+        "5" => SuggestedAction.new.attributes
+      }
+
+      # Need to deep clone @contributions so we can preserve original hash of attributes above
+      # when Contribution.setup_node_level_contribution modifies the attribute objects in the hash
+      # (i.e. shallow cloning with #clone or #dup won't suffice
+      @contributions_attributes = Marshal::load(Marshal.dump(@contributions))
+      @conversation = Factory.build(:user_generated_conversation, :person => @person, :contributions_attributes => @contributions_attributes)
+    end
+
+    it "raises an error if conversation created without owner" do
+      @conversation.person = nil
+      @conversation.save
+      @conversation.should have_validation_error(:person)
+    end
+
+    it "filters out all invalid contributions (i.e. blank contributions from contribution form) before save" do
+      @conversation.save
+      @conversation.errors.should be_empty
+      @conversation.contributions.size.should == 1
+    end
+
+    it "raises an error if conversation created with multiple contributions" do
+      @contributions["1"] = Factory.build(:question, :conversation => nil, :parent => nil).attributes
+      @conversation = Factory.build(:user_generated_conversation, :contributions_attributes => @contributions)
+      @conversation.save
+      @conversation.should have_validation_error(:contributions, /only.*one/)
+    end
+  end
 end

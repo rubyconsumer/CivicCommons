@@ -21,6 +21,10 @@ class Conversation < ActiveRecord::Base
   has_and_belongs_to_many :guides, :class_name => 'Person', :join_table => 'conversations_guides', :association_foreign_key => :guide_id
   has_and_belongs_to_many :issues
 
+  belongs_to :person, :foreign_key => "owner"
+
+  attr_accessor :user_generated
+
   has_attached_file :image,
     :styles => {
        :normal => "480x300#",
@@ -29,6 +33,10 @@ class Conversation < ActiveRecord::Base
     :s3_credentials => S3Config.credential_file,
     :path => IMAGE_ATTACHMENT_PATH,
     :default_url => '/images/convo_img_:style.gif'
+
+  validates :person, :must_be_logged_in => true, :if => :user_generated?
+  validates_length_of :contributions, :maximum => 1, :on => :create, :if => :user_generated?,
+    :message => "Please only fill out one contribution to get the conversation started."
 
   before_destroy :destroy_root_contributions # since non-root contributions will be destroyed internally be awesome_nested_set
 
@@ -50,6 +58,31 @@ class Conversation < ActiveRecord::Base
   def self.filtered(filter)
     raise "Undefined Filter :#{filter}" unless available_filter_names.include?(filter)
     scoped & self.send(available_filters[filter.to_sym])
+  end
+
+  def self.new_user_generated_conversation(params,person)
+    params.merge!(:person => person)
+    returning self.new(params) do |convo|
+      convo.user_generated = true
+    end
+  end
+
+  # Define our own method for allowing fields_for :contribution, rather
+  # than using accepts_nested_association :contributions.
+  # We need to use our custom Contribution builder to create contributions
+  # of only allowed types.
+  def contributions_attributes=(attributes)
+    contributions = attributes.each_value.each_with_object([]) { |attr, contributions|
+      attr.merge!(:item => self)
+      # Rather than set contribution.person over and over, 
+      # it will now be set from contribution#set_person_from_item before_validation hook
+      contributions << Contribution.new_confirmed_node_level_contribution(attr, nil) if Contribution.valid_attributes?(attr)
+    }
+    self.contributions << contributions
+  end
+
+  def user_generated?
+    user_generated || person
   end
 
   # Return a comma-and-space-delimited list of the Issues
@@ -103,4 +136,5 @@ class Conversation < ActiveRecord::Base
     # root objects in the collect block below.
     self.contributions.roots.sort_by(&:rgt).reverse.collect(&:destroy)
   end
+
 end
