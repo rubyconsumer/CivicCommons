@@ -53,7 +53,6 @@ describe Admin::ArticlesController do
       end
 
       it "redirects to the created article" do
-        pending
         Article.stub(:new) { mock_article(:save => true) }
         post :create, :article => {}
         response.should redirect_to(admin_article_url(mock_article))
@@ -92,7 +91,6 @@ describe Admin::ArticlesController do
       end
 
       it "redirects to the article" do
-        pending
         Article.stub(:find) { mock_article(:update_attributes => true) }
         put :update, :id => "1"
         response.should redirect_to(admin_article_url(mock_article))
