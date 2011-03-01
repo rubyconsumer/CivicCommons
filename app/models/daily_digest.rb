@@ -22,7 +22,7 @@ class DailyDigest
   
   def retrieve_contributions(person)
     time_range = (Time.now.midnight - 1.day)..(Time.now.midnight - 1.second)
-    Contribution.includes(:conversation => :subscriptions).where('subscriptions.person_id' => person, 'contributions.created_at' => time_range).where('contributions.type != \'TopLevelContribution\'')
+    Contribution.includes(:person, :conversation => :subscriptions).where('subscriptions.person_id' => person, 'contributions.created_at' => time_range).where('contributions.type != \'TopLevelContribution\'')
   end
 
 end
