@@ -25,7 +25,8 @@ class Person < ActiveRecord::Base
   has_many :contributed_issues, :through => :contributions, :source => :issue, :uniq => true
 
   validates_length_of :email, :within => 6..255, :too_long => "please use a shorter email address", :too_short => "please use a longer email address"
-  validate :zip_code, :length => 10
+  validates_length_of :zip_code, :within => (5..10), :allow_empty => false, :allow_nil => false
+  validates_presence_of :name
 
   # Ensure format of salt
   validates_with PasswordSaltValidator
@@ -148,9 +149,10 @@ class Person < ActiveRecord::Base
     Rails.logger.info("Success. Added mailing list subscription of #{name} to queue.")
   end
 
-  protected
-    def password_required?
-      !persisted? || password.present? || password_confirmation.present?
-    end
+protected
+
+  def password_required?
+    !persisted? || password.present? || password_confirmation.present?
+  end
 
 end

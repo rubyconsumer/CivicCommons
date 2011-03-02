@@ -11,6 +11,30 @@ end
 
 describe Person do
 
+  describe "validate required data" do
+
+    before(:each) do
+      @person = Factory.build(:normal_person)
+    end
+
+    it "should require first name or last name" do
+      @person.first_name = ''
+      @person.last_name = ''
+      @person.should_not be_valid
+    end
+
+    it "should require email address" do
+      @person.email = ''
+      @person.should_not be_valid
+    end
+
+    it "should require zip_code" do
+      @person.zip_code = ''
+      @person.should_not be_valid
+    end
+
+  end
+
   describe "when parsing the name" do
     it "should parse simple name" do
       first, last = Person.parse_name("John Doe")
@@ -94,21 +118,21 @@ describe Person do
 
   describe "when displaying a name" do
     it "should respect case of name entered by person" do
-      person = Factory.create(:normal_person)
+      person = Factory.build(:normal_person)
       person.first_name = "ektor"
       person.last_name = "van capsula"
       person.name.should == "ektor van capsula"
     end
 
     it "should display names without leading spaces when the first name is missing" do
-      person = Factory.create(:normal_person)
+      person = Factory.build(:normal_person)
       person.first_name = ""
       person.last_name = "van capsula"
       person.name.should == "van capsula"
     end
 
     it "should display names without trailing spaces when the last name is missing" do
-      person = Factory.create(:normal_person)
+      person = Factory.build(:normal_person)
       person.first_name = "ektor"
       person.last_name = ""
       person.name.should == "ektor"
