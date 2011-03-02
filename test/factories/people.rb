@@ -20,6 +20,7 @@ Factory.define :people do |f|
     u.sequence(:email) {|n| "test.account#{n}@mysite.com" }
     u.avatar File.new(Rails.root + 'test/fixtures/images/test_image.jpg')
     u.skip_email_marketing true
+    u.daily_digest false
   end
 
   Factory.define :registered_user, :parent => :normal_person do |u|

@@ -4,14 +4,12 @@
       <h1>Here’s a quick update on what’s going on at the Commons.</h1>
       <% @conversations.each do |conversation| %>
         <h2><%=conversation.title %></h2>
-          <% conversation.contributions.from_yesterday.each do |contribution| %>
-            <p>In response to <%= "#{contribution.parent.owner.name}, #{contribution.owner.name}
-            #{contribution_past_tense(contribution.class)} %> <%= link_to "Continue the Conversation", conversation_url(conversation)%>
-            </p>
+          <% conversation.contributions.each do |contribution| %>
+            <!-- TODO: Finish email formatting -->
           <% end %>
       <% end %>
 
-      <p>Don’t want to receive these updates any more? No problem. <%= link_to "(Click here)", edit_user_url(person) %></p>
+      <p>Don’t want to receive these updates any more? No problem. <%= link_to "(Click here)", edit_user_url(@person) %></p>
 
     </td>
   </tr>
