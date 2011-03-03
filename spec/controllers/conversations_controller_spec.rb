@@ -83,7 +83,8 @@ describe ConversationsController do
 
   describe "POST create" do
     before(:each) do
-      @controller.stub(:current_person) { Factory.build(:normal_person) }
+      @person = Factory.build(:normal_person, :id => 1)
+      @controller.stub(:current_person) { @person }
     end
 
     def do_create
@@ -92,7 +93,7 @@ describe ConversationsController do
 
     describe "with valid params" do
       before(:each) do
-        Conversation.stub(:new).with({}) { mock_conversation(:save => true) }
+        Conversation.stub(:new_user_generated_conversation).with({}, @person) { mock_conversation(:save => true) }
       end
 
       it "assigns created conversation to @conversation" do
@@ -101,20 +102,20 @@ describe ConversationsController do
       end
 
       it "creates conversation with checked issue_ids" do
-        Conversation.stub(:new) { mock_conversation(:save => true) }
-        Conversation.should_receive(:new).with({'issue_ids' => ["5","10"]})
+        Conversation.should_receive(:new_user_generated_conversation).with({'issue_ids' => ["5","10"]}, @person)
         post :create, :conversation => {:issue_ids => ["5", "10"]}
       end
 
       it "redirects to invite page to invite participants" do
+        mock_conversation(:id => '35', :save => true)
         do_create
-        response.should redirect_to conversation_invite_url(mock_conversation)
+        response.should redirect_to new_invite_url(:source_type => :conversations, :source_id => '35')
       end
     end
 
     describe "with invalid params" do
       before(:each) do
-        Conversation.stub(:new).with({}) { mock_conversation(:save => false) }
+        Conversation.stub(:new_user_generated_conversation) { mock_conversation(:save => false) }
       end
 
       it "renders :new template" do

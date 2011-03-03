@@ -5,6 +5,20 @@
       <%=flash[:notice] %>
     </div>
   <% end -%>
+
+  <% if @conversation %>
+    <div class="feature-mast">
+      <div class="wrapper">
+        <div class="content-container">
+          <div class="main-content">
+            <%= image_tag @conversation.image.url(:panel), :class => 'featured main-img', :width => '120', :height => '80' %>
+            <h1><%= @conversation.title %></h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
   <div class="wrapper">
     <div class="content-container">
       <div class="main-content">
@@ -23,8 +37,8 @@
           <%= text_area :invites, :emails, :rows => 10 %>
           </fieldset>
           <fieldset class="footer">
-            <%= submit_tag 'Send', :class=> 'submit' %>
-            <%= submit_tag 'Cancel', :class=> 'button' %>
+            <%= submit_tag 'Invite Participants', :class=> 'submit' %>
+            <%= link_to 'No Thanks', {:controller => @source_type, :action => :show, :id => @source_id}, :class=> 'cancel' %>
           </fieldset>
         <% end %>
 

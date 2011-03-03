@@ -134,7 +134,7 @@ class ConversationsController < ApplicationController
   def new
     return redirect_to :conversation_responsibilities unless params[:accept]
     @conversation = Conversation.new
-    @contribution = Contribution.new
+    @contributions = [Contribution.new]
 
     render :new
   end
@@ -147,21 +147,18 @@ class ConversationsController < ApplicationController
 
   # POST /conversations
   def create
-    Rails.logger.info params[:conversation]
     @conversation = Conversation.new_user_generated_conversation(params[:conversation], current_person)
     @conversation.started_at = Time.now
+    # Load @contributions to populate re-rendered :new form if save is unsuccessful
+    @contributions = @conversation.contributions | @conversation.rejected_contributions
 
     respond_to do |format|
-      if @conversation.save!
-        format.html { redirect_to(conversation_invite_path(@conversation), :notice => 'Conversation was successfully created.') }
+      if @conversation.save
+        format.html { redirect_to(new_invite_path(:source_type => :conversations, :source_id => @conversation.id), :notice => 'Conversation was successfully created.') }
       else
         format.html { render :new }
       end
     end
-  end
-
-  def invite
-    @conversation = Conversation.find(params[:id])
   end
 
   # PUT /conversations/1

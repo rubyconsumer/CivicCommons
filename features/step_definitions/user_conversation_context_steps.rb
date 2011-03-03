@@ -20,13 +20,16 @@ Given /have entered valid conversation data:$/ do |table|
   fill_in 'conversation[zip_code]', with: @values['Zip Code']
   # BUG: This doesn't work right with Capybara
   #      instead of submitting ["1"], it submits ["[\"1\"]"]
+  #      see https://github.com/jnicklas/capybara/issues/#issue/283
+  #
   #check 'conversation[issue_ids][]'
   attach_file('conversation[image]', File.join(attachments_path, 'imageAttachment.png'))
 
   fill_in 'conversation[contributions_attributes][0][content]', with: @values['Comment']
 end
 
-Given /am on the conversation creation success page$/ do
+Given /am on the invite participants page$/ do
   @conversation = Factory.create(:conversation)
-  visit conversation_invite_path(:conversation => @conversation)
+  Given 'a clear email queue'
+  visit new_invite_url(:source_type => :conversations, :source_id => @conversation.id)
 end

@@ -23,7 +23,7 @@ class Conversation < ActiveRecord::Base
 
   belongs_to :person, :foreign_key => "owner"
 
-  attr_accessor :user_generated
+  attr_accessor :user_generated, :rejected_contributions
 
   has_attached_file :image,
     :styles => {
@@ -35,7 +35,7 @@ class Conversation < ActiveRecord::Base
     :default_url => '/images/convo_img_:style.gif'
 
   validates :person, :must_be_logged_in => true, :if => :user_generated?
-  validates_length_of :contributions, :maximum => 1, :on => :create, :if => :user_generated?,
+  validates_length_of :contributions, :is => 1, :on => :create, :if => :user_generated?,
     :message => "Please only fill out one contribution to get the conversation started."
 
   before_destroy :destroy_root_contributions # since non-root contributions will be destroyed internally be awesome_nested_set
@@ -72,13 +72,18 @@ class Conversation < ActiveRecord::Base
   # We need to use our custom Contribution builder to create contributions
   # of only allowed types.
   def contributions_attributes=(attributes)
-    contributions = attributes.each_value.each_with_object([]) { |attr, contributions|
+    self.rejected_contributions = []
+    attributes.each_value { |attr|
       attr.merge!(:item => self)
       # Rather than set contribution.person over and over, 
       # it will now be set from contribution#set_person_from_item before_validation hook
-      contributions << Contribution.new_confirmed_node_level_contribution(attr, nil) if Contribution.valid_attributes?(attr)
+      contribution = Contribution.new_confirmed_node_level_contribution(attr, nil)
+      if Contribution.valid_attributes?(attr)
+        self.contributions << contribution
+      else
+        self.rejected_contributions << contribution
+      end
     }
-    self.contributions << contributions
   end
 
   def user_generated?

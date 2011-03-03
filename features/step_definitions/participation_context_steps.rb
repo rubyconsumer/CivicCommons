@@ -28,6 +28,9 @@ Given /^I am (?:signed|logged) in$/ do
   click_button 'Login'
 end
 
+Given /^I am not (?:signed|logged) in$/ do
+  visit(destroy_person_session_url)
+end
 
 Given /^a registered user:$/ do |table|
   user = table.rows_hash
