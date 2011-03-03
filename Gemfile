@@ -16,7 +16,7 @@ gem 'httparty'
 gem 'geokit'
 
 gem 'gibbon'
-gem 'hominid', "2.2.0"
+gem 'hominid', "3.0.2"
 gem 'delayed_job', ">= 2.1.2"
 
 gem 'hoptoad_notifier'
