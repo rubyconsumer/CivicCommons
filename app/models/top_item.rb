@@ -58,55 +58,108 @@ class TopItem < ActiveRecord::Base
   # chainable on other scopes, but other scopes cannot be chained to it,
   # so only use this at the end of scope chains
   def self.for(for_item, options={})
+
     if for_item.is_a?(Hash)
-      for_item_type = for_item.keys[0]
-      for_item_id = for_item[for_item_type]
+      # e.g. :person => 35
+      for_item_type = for_item.keys[0]       # :person
+      for_item_id = for_item[for_item_type]  # 35
     else
-      for_item_type = for_item
+      # e.g. :conversation
+      for_item_type = for_item               # :conversation
       for_item_id = nil
     end
 
     # for :conversation means:
-    # a) top_items[:item_type] or
-    # b) top_items[:item][:conversation_id] IS NOT NULL
+    # a) top_items[:item_type] or                        <= direct_items
+    # b) top_items[:item][:conversation_id] IS NOT NULL  <= associated_items
     #
     # For :person means:
-    # item has person and person_id = :person_id
-    #
-    # direct_items for (a)
+    # item has person and person_id = :person_id         <= direct_items only
+
+    # direct_items
     direct_items = self.scoped.includes(:item).where(:item_type => for_item_type.to_s.classify)
     direct_items = direct_items.where(:item_id => for_item_id) if for_item_id
 
-    # associated_items for (b)
+    # associated_items
+    # Now we start building the SQL for selecting associated items.
+    # This is done so we can select all associated items with a single LIMIT, etc.
+    # even across polymorphic associations. So, let's get started...
+
+    # `top_items` table
     top_items = TopItem.arel_table
+    # Initialize our SQL string with the `top_items` table
+    # Note this is actually an Arel::SelectManager instance (which has a +to_sql+ method)
+    sql_builder = Arel::SelectManager.new(ActiveRecord::Base, top_items)
+    where_builder = []
+
+    # Select all item_types that exist in top_items table and loop through each to
+    # manually join each polymorphic association's table
     TopItem.select(:item_type).group(:item_type).collect(&:item_type).each do |item|
+
       # Unless item already included in direct_items
       unless item == for_item_type.to_s
+
         # If item has for_item as an association
-        for_item_column_id = item.constantize.reflect_on_association(for_item_type)
-        if !for_item_column_id.nil?
+        for_item_association = item.constantize.reflect_on_association(for_item_type)
+        if for_item_association
+
           # ...get association foreign_key
-          for_item_column_id = for_item_column_id.options[:foreign_key] || "#{for_item_type}_id"
-          # Unless association column doesn't exist (like if it's a
-          # complex has_many :through association)
-          item_table = Arel::Table.new(item.underscore.pluralize)
+          for_item_column_id = for_item_association.options[:foreign_key] || "#{for_item_type}_id"
+
+          item_table = Arel::Table.new(item.underscore.pluralize) # e.g. "Contribution" becomes `contributions` table
+
+          # Unless association column doesn't exist on item_table,
+          # like if it's a has_many :through association
           unless item_table[for_item_column_id].nil?
-            top_items = top_items.
-              join(item_table).
-              on(
-                 top_items[:item_id].eq( item_table[:id] ),
-                 top_items[:item_type].eq( item.to_s.classify ),
-                 item_table[for_item_column_id].not_eq( nil )
+
+            wheres = []
+            # WHERE `contributions`.`owner` = 35 -- if id was specified
+            wheres << item_table[for_item_column_id].eq( for_item_id ) if for_item_id
+            # WHERE `contributions`.#{option.key[0]} = #{option.value[0]} AND `contributions`.#{option.key[1]} = #{option.value[1]} AND... -- if options were given
+            wheres << options.collect{ |key,value| item_table[key].eq( value ) }.reduce(:and) if options.size > 0
+            if wheres.empty?
+              join_type = Arel::Nodes::InnerJoin
+            else
+              where_builder << Arel::Nodes::Grouping.new(wheres) unless wheres.empty?
+              join_type = Arel::Nodes::LeftJoin
+            end
+
+            sql_builder = sql_builder.
+              join(item_table, join_type).                            # LEFT JOIN `contributions`
+              on(                                                     #   ON
+                 top_items[:item_id].eq( item_table[:id] ),           #   `top_items`.`item_id` = `contributions`.`id`
+                 top_items[:item_type].eq( item.to_s.classify ),      #   AND `top_items`.`item_type` = "Contribution"
+                 item_table[for_item_column_id].not_eq( nil )         #   AND `contributions`.owner IS NOT NULL
                 )
-            top_items = top_items.where( item_table[for_item_column_id].eq( for_item_id ) ) if for_item_id
-            top_items = top_items.where( options.collect{ |key,value| item_table[key].eq( value ) }.reduce(:and) ) if options.size > 0
+
           end
         end
       end
     end
-    #associated_items = TopItem.find_by_sql( top_items.to_sql )
-    associated_items = ActiveRecord::Relation.new(self, top_items) & self.scoped
 
+    sql_builder.constraints << where_builder.reduce(:or) unless where_builder.empty?
+
+    # At this point, we'd see:
+    # sql_builder.to_sql
+    # #=>
+    # SELECT  FROM `top_items` 
+    # LEFT JOIN `contributions` 
+    #   ON `top_items`.`item_id` = `contributions`.`id` 
+    #   AND `top_items`.`item_type` = 'Contribution' 
+    #   AND `contributions`.`owner` IS NOT NULL 
+    # LEFT JOIN `conversations` 
+    #   ON `top_items`.`item_id` = `conversations`.`id` 
+    #   AND `top_items`.`item_type` = 'Conversation' 
+    #   AND `conversations`.`owner` IS NOT NULL 
+    # WHERE ((`contributions`.`owner` = 35) OR (`conversations`.`owner` = 35))
+
+    #associated_items = TopItem.find_by_sql( top_items.to_sql )
+
+    # This creates a relation so that this +for+ method is chainable, and also passes in any parameters,
+    # such as +limit+, from the existing chain if the +for+ method is chained to a relation
+    associated_items = ActiveRecord::Relation.new(self, sql_builder) & self.scoped
+
+    # Hack needed to limit total items returned until above can be re-written with new Arel2 methods
     all_for_items = (direct_items | associated_items).sort_by(&:item_created_at).reverse
     all_for_items = all_for_items.first( self.scoped.limit_value ) if self.scoped.limit_value
 
