@@ -1,6 +1,6 @@
 Given /^that I am on the invitation page$/ do
-  Factory.create(:conversation)
-  visit new_invite_url
+  @conversation = Factory.create(:conversation)
+  visit new_invite_url(:source_type => :conversations, :source_id => @conversation.id)
 end
 
 Given /^the invitee textarea is empty$/ do

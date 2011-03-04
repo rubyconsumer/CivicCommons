@@ -25,7 +25,8 @@ class Person < ActiveRecord::Base
   has_many :contributed_issues, :through => :contributions, :source => :issue, :uniq => true
 
   validates_length_of :email, :within => 6..255, :too_long => "please use a shorter email address", :too_short => "please use a longer email address"
-  validate :zip_code, :length => 10
+  validates_length_of :zip_code, :within => (5..10), :allow_empty => false, :allow_nil => false
+  validates_presence_of :name
 
   # Ensure format of salt
   validates_with PasswordSaltValidator
@@ -140,17 +141,16 @@ class Person < ActiveRecord::Base
     newly_confirmed? ? true : false
   end
 
-
-# Implement Marketable method
+  # Add the email subscription signup as a delayed job
   def subscribe_to_marketing_email
-    h = Hominid::Base.new(api_key: Civiccommons::Config.mailer_api_token)
-    h.delay.subscribe(Civiccommons::Config.mailer_list, email, {:FNAME => first_name, :LNAME => last_name}, {:email_type => 'html'})
-    Rails.logger.info("Success. Added mailing list subscription of #{name} to queue.")
+    Delayed::Job.enqueue Jobs::SubscribeToMarketingEmailJob.new(Civiccommons::Config.mailer['api_token'], Civiccommons::Config.mailer['list'], email, {:FNAME => first_name, :LNAME => last_name}, 'html')
+    Rails.logger.info("Success. Added #{name} with email #{email} to email queue.")
   end
 
-  protected
-    def password_required?
-      !persisted? || password.present? || password_confirmation.present?
-    end
+protected
+
+  def password_required?
+    !persisted? || password.present? || password_confirmation.present?
+  end
 
 end

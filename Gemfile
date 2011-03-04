@@ -16,12 +16,13 @@ gem 'httparty'
 gem 'geokit'
 
 gem 'gibbon'
-gem 'hominid', "2.2.0"
+gem 'hominid', "~>3.0.2"
 gem 'delayed_job', ">= 2.1.2"
 
 gem 'hoptoad_notifier'
 
 gem 'remotipart', :git => 'git://github.com/CivicCommons/remotipart.git', :branch => 'more-flexible'
+#gem 'arel', :git => 'git://github.com/CivicCommons/arel.git', :branch => 'left-gemtest'
 
 gem 'whenever', :require => false
 
@@ -45,10 +46,15 @@ group :test do
   gem 'linguistics'
   gem 'fuubar', '~>0.0.3'
   gem "cucumber-rails", "0.4.0.beta.1"
-  gem "capybara", "~> 0.4.0"
-  gem "rspec-rails", "~> 2.2.0"
   gem "database_cleaner", "~> 0.6.0"
   gem 'email_spec'
+  gem 'flexmock'
+end
+
+group :development, :test do
+  gem "rspec-rails", "~> 2.2.0"
+  gem 'steak'
+  gem "capybara", "~> 0.4.0"
 end
 
 gem 'devise', '1.1.2'

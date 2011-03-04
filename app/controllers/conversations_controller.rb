@@ -1,6 +1,5 @@
 class ConversationsController < ApplicationController
-  before_filter :verify_admin, :only=>[:new, :create, :edit, :update, :destroy]
-  before_filter :require_user, :only=>[:new_node_contribution, :preview_node_contribution, :confirm_node_contribution]
+  before_filter :require_user, :only=>[:new, :create, :new_node_contribution, :preview_node_contribution, :confirm_node_contribution]
 
   # GET /conversations
   def index
@@ -133,44 +132,44 @@ class ConversationsController < ApplicationController
 
   # GET /conversations/new
   def new
+    return redirect_to :conversation_responsibilities unless params[:accept]
     @conversation = Conversation.new
-    @presenter = IngestPresenter.new(@conversation)
+    @contributions = [Contribution.new]
 
     render :new
   end
 
   # GET /conversations/1/edit
+  # NOT IMPLEMENTED YET, I.E. NOT ROUTEABLE
   def edit
     @conversation = Conversation.find(params[:id])
   end
 
   # POST /conversations
   def create
-    ActiveRecord::Base.transaction do
-      @conversation = Conversation.new(params[:conversation])
-      @conversation = Conversation.new(params[:conversation])
-      #TODO: Fix this conversation issues creation since old conversation.issues= method has been destroyed
-      #NOTE: Issues were previously defined as Conversation has_many Issues, but this is wrong, should be habtm
-      @conversation.issues = Issue.find(params[:issue_ids]) unless params[:issue_ids].blank?
-      @conversation.started_at = Time.now
-      @presenter = IngestPresenter.new(@conversation, params[:file])
+    @conversation = Conversation.new_user_generated_conversation(params[:conversation], current_person)
+    @conversation.started_at = Time.now
+    # Load @contributions to populate re-rendered :new form if save is unsuccessful
+    @contributions = @conversation.contributions | @conversation.rejected_contributions
 
-      @conversation.save!
-      @presenter.save!
-      redirect_to(@conversation, :notice => 'Conversation was successfully created.')
+    respond_to do |format|
+      if @conversation.save
+        format.html { redirect_to(new_invite_path(:source_type => :conversations, :source_id => @conversation.id, :conversation_created => true), :notice => 'Conversation was successfully created.') }
+      else
+        format.html { render :new, :status => :unprocessable_entity  }
+      end
     end
-  rescue ActiveRecord::RecordInvalid => e
-    render :new
   end
 
   # PUT /conversations/1
+  # NOT IMPLEMENTED YET, I.E. NOT ROUTEABLE
   def update
     @conversation = Conversation.find(params[:id])
 
     if @conversation.update_attributes(params[:conversation])
       redirect_to(@conversation, :notice => 'Conversation was successfully updated.')
     else
-      render :action => "edit"
+      render :action => "edit", :status => :unprocessable_entity
     end
   end
 
@@ -187,13 +186,13 @@ class ConversationsController < ApplicationController
   end
 
   # DELETE /conversations/1
+  # NOT IMPLEMENTED YET, I.E. NOT ROUTEABLE
   def destroy
     @conversation = Conversation.find(params[:id])
     @conversation.destroy
 
     redirect_to(conversations_url)
   end
-
 
   # Kludge to convert US date-time (mm/dd/yyyy hh:mm am) to an
   # ISO-like date-time (yyyy-mm-ddThh:mm:ss).

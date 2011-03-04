@@ -1,5 +1,5 @@
 class Admin::ArticlesController < Admin::DashboardController
-  
+
   # GET /articles
   # GET /articles.xml
   def index
@@ -42,7 +42,7 @@ class Admin::ArticlesController < Admin::DashboardController
 
     respond_to do |format|
       if @article.save
-        format.html { redirect_to(admin_article_path @article, :notice => 'Article was successfully created.') }
+        format.html { redirect_to(admin_article_path(@article), :notice => 'Article was successfully created.') }
       else
         format.html { render :action => "new" }
       end
@@ -56,7 +56,7 @@ class Admin::ArticlesController < Admin::DashboardController
 
     respond_to do |format|
       if @article.update_attributes(params[:article])
-        format.html { redirect_to(admin_article_path @article, :notice => 'Article was successfully updated.') }
+        format.html { redirect_to(admin_article_path(@article), :notice => 'Article was successfully updated.') }
       else
         format.html { render :action => "edit" }
       end

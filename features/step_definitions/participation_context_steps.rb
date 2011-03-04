@@ -9,7 +9,7 @@
 #   user
 # end
 
-Given /^I am signed in$/ do
+Given /^I am (?:signed|logged) in$/ do
   user = Factory.create(:registered_user)
   visit(new_person_session_url)
   fill_in 'person_email', :with => user.email
@@ -28,6 +28,9 @@ Given /^I am signed in$/ do
   click_button 'Login'
 end
 
+Given /^I am not (?:signed|logged) in$/ do
+  visit(destroy_person_session_url)
+end
 
 Given /^a registered user:$/ do |table|
   user = table.rows_hash

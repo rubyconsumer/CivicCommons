@@ -1,7 +1,21 @@
 # Read about factories at http://github.com/thoughtbot/factory_girl
 
 Factory.define :people do |f|
+
+  Factory.define :invalid_person, :class=>Person do |u|
+    u.first_name ''
+    u.last_name ''
+    u.zip_code '44313'
+    u.password 'password'
+    u.email ''
+    u.avatar File.new(Rails.root + 'test/fixtures/images/test_image.jpg')
+    u.skip_email_marketing true
+  end
+
   Factory.define :normal_person, :class=>Person do |u|
+    u.first_name 'John'
+    u.last_name 'Doe'
+    u.zip_code '44313'
     u.password 'password'
     u.sequence(:email) {|n| "test.account#{n}@mysite.com" }
     u.avatar File.new(Rails.root + 'test/fixtures/images/test_image.jpg')
@@ -14,7 +28,7 @@ Factory.define :people do |f|
     u.skip_email_marketing true
   end
 
-  Factory.define :admin_person, :class=>Person do |u|
+  Factory.define :admin_person, :parent => :normal_person do |u|
     u.password 'password'
     u.sequence(:email) {|n| "test.admin.account#{n}@mysite.com" }
     u.admin true
@@ -22,7 +36,7 @@ Factory.define :people do |f|
     u.skip_email_marketing true
   end
 
-  Factory.define :marketable_person, :class=>Person do |u|
+  Factory.define :marketable_person, :parent => :normal_person do |u|
     u.password 'password'
     u.sequence(:email) {|n| "test.account#{n}@mysite.com" }
     u.avatar File.new(Rails.root + 'test/fixtures/images/test_image.jpg')

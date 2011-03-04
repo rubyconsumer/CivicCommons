@@ -43,6 +43,15 @@ describe ConversationsController do
       { put: "/conversations/confirm_node_contribution" }.should route_to(controller: "conversations", action: "confirm_node_contribution")
     end
 
+    it "recognizes and generates #new" do
+      pending "BUG IN RAILS PREVENTS THIS FROM PASSING, BUG ONLY AFFECTS TESTS, NOT ACTUAL APP..."
+      { :get => "/conversations/new" }.should route_to(:controller => "conversations", :action => "new")
+    end
+
+    it "recognizes and generates #create" do
+      { :post => "/conversations" }.should route_to(:controller => "conversations", :action => "create")
+    end
+
     Conversation.available_filter_names.each do |filter_name|
       it "recognizes and generates #filter route for :#{filter_name} filter" do
         { :get => "/conversations/#{filter_name}" }.should route_to(:controller => "conversations", :action => "filter", :filter => filter_name)

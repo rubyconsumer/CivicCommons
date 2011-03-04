@@ -1,0 +1,22 @@
+<% content_for :main do %>
+  <div class="wrapper">
+    <div class="content-container">
+      <div class="main-content">
+        <h1>Create a Conversation</h1>
+        <p>
+          You are in charge of your conversation. Here are your responsibilities:
+        </p>
+        <ol>
+          <li>Check in on your conversation.</li>
+          <li>Alert administrator of issues.</li>
+          <li>Invite people to participate.</li>
+        </ol>
+        <p>
+          <%= link_to "I agree, continue", new_conversation_path(:accept => true), :class => 'button' %>
+          or
+          <%= link_to "Cancel", root_url %>
+        </p>
+      </div>
+    </div>
+  </div>
+<% end %>

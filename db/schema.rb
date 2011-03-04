@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110218202823) do
+ActiveRecord::Schema.define(:version => 20110301062718) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -89,6 +89,7 @@ ActiveRecord::Schema.define(:version => 20110218202823) do
     t.string   "audio_clip_content_type"
     t.integer  "audio_clip_file_size"
     t.datetime "audio_clip_updated_at"
+    t.integer  "owner"
   end
 
   create_table "conversations_events", :id => false, :force => true do |t|
