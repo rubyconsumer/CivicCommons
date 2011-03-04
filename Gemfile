@@ -22,7 +22,7 @@ gem 'delayed_job', ">= 2.1.2"
 gem 'hoptoad_notifier'
 
 gem 'remotipart', :git => 'git://github.com/CivicCommons/remotipart.git', :branch => 'more-flexible'
-gem 'arel', :git => 'git://github.com/CivicCommons/arel.git', :branch => 'left-gemtest'
+#gem 'arel', :git => 'git://github.com/CivicCommons/arel.git', :branch => 'left-gemtest'
 
 gem 'whenever', :require => false
 

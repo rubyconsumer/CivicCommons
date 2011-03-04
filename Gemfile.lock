@@ -1,11 +1,4 @@
 GIT
-  remote: git://github.com/CivicCommons/arel.git
-  revision: d5750d8
-  branch: left-gemtest
-  specs:
-    arel (2.0.9.20110222133018)
-
-GIT
   remote: git://github.com/CivicCommons/remotipart.git
   revision: 9b56b50
   branch: more-flexible
@@ -45,6 +38,7 @@ GEM
     activesupport (3.0.3)
     addressable (2.2.4)
     archive-tar-minitar (0.5.2)
+    arel (2.0.8)
     aws-s3 (0.6.2)
       builder
       mime-types
@@ -233,7 +227,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  arel!
   aws-s3
   capybara (~> 0.4.0)
   cucumber (~> 0.10.0)

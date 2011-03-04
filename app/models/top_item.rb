@@ -121,11 +121,11 @@ class TopItem < ActiveRecord::Base
               join_type = Arel::Nodes::InnerJoin
             else
               where_builder << Arel::Nodes::Grouping.new(wheres) unless wheres.empty?
-              join_type = Arel::Nodes::LeftJoin
+              join_type = Arel::Nodes::OuterJoin
             end
 
             sql_builder = sql_builder.
-              join(item_table, join_type).                            # LEFT JOIN `contributions`
+              join(item_table, join_type).                            # {INNER|LEFT OUTER} JOIN `contributions`
               on(                                                     #   ON
                  top_items[:item_id].eq( item_table[:id] ),           #   `top_items`.`item_id` = `contributions`.`id`
                  top_items[:item_type].eq( item.to_s.classify ),      #   AND `top_items`.`item_type` = "Contribution"
@@ -143,11 +143,11 @@ class TopItem < ActiveRecord::Base
     # sql_builder.to_sql
     # #=>
     # SELECT  FROM `top_items` 
-    # LEFT JOIN `contributions` 
+    # LEFT OUTER JOIN `contributions` 
     #   ON `top_items`.`item_id` = `contributions`.`id` 
     #   AND `top_items`.`item_type` = 'Contribution' 
     #   AND `contributions`.`owner` IS NOT NULL 
-    # LEFT JOIN `conversations` 
+    # LEFT OUTER JOIN `conversations` 
     #   ON `top_items`.`item_id` = `conversations`.`id` 
     #   AND `top_items`.`item_type` = 'Conversation' 
     #   AND `conversations`.`owner` IS NOT NULL 
