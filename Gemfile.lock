@@ -244,7 +244,7 @@ DEPENDENCIES
   geokit
   gibbon
   haml
-  hominid (= 3.0.2)
+  hominid (~> 3.0.2)
   hoptoad_notifier
   hpricot
   httparty
