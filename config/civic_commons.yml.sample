@@ -7,7 +7,7 @@ development:
     app_id: 'crazyfacebookid'
     app_secret: 'facebooksecretsauce'
   mailer:
-    api_token: "socrazyhominidtypeoftoken"
+    api_token: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-us1"
     list: "planetoftheapes"
   rails_secret_token: "randonStuffThatsAtLeast30CharachtersYo128DirtyWithTh"
   smtp:
@@ -25,7 +25,7 @@ test:
     app_id: 'crazyfacebookid'
     app_secret: 'facebooksecretsauce'
   mailer:
-    api_token: "socrazyhominidtypeoftoken"
+    api_token: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-us1"
     list: "planetoftheapes"
   rails_secret_token: "randonStuffThatsAtLeast30CharachtersYo128DirtyWithTh"
   smtp:
@@ -43,7 +43,7 @@ integration:
     app_id: 'crazyfacebookid'
     app_secret: 'facebooksecretsauce'
   mailer:
-    api_token: "socrazyhominidtypeoftoken"
+    api_token: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-us1"
     list: "planetoftheapes"
   rails_secret_token: "randonStuffThatsAtLeast30CharachtersYo128DirtyWithTh"
   smtp:
@@ -61,7 +61,7 @@ staging:
     app_id: 'crazyfacebookid'
     app_secret: 'facebooksecretsauce'
   mailer:
-    api_token: "socrazyhominidtypeoftoken"
+    api_token: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-us1"
     list: "planetoftheapes"
   rails_secret_token: "randonStuffThatsAtLeast30CharachtersYo128DirtyWithTh"
   smtp:
@@ -79,7 +79,7 @@ production:
     app_id: 'crazyfacebookid'
     app_secret: 'facebooksecretsauce'
   mailer:
-    api_token: "socrazyhominidtypeoftoken"
+    api_token: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-us1"
     list: "planetoftheapes"
   rails_secret_token: "randonStuffThatsAtLeast30CharachtersYo128DirtyWithTh"
   smtp:
