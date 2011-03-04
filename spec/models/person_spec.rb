@@ -152,7 +152,7 @@ describe Person do
     it "should send a confirmation email" do
       given_a_new_user_registered
       mailing = ActionMailer::Base.deliveries.first
-      mailing[:from].to_s.should == Civiccommons::Config.devise_email
+      mailing[:from].to_s.should == Civiccommons::Config.devise['email']
       mailing.to.should == [@person.email]
       mailing.subject.should == "Confirmation instructions"
     end
@@ -166,7 +166,7 @@ describe Person do
     it "should send a notification email to register@civiccommons.com" do
       given_a_new_user_registered
       mailing = ActionMailer::Base.deliveries.last
-      mailing[:from].to_s.should == Civiccommons::Config.devise_email
+      mailing[:from].to_s.should == Civiccommons::Config.devise['email']
       mailing.to.should == ["register@theciviccommons.com"]
       mailing.subject.should == "New User Registered"
       mailing.body.include?(@person.email).should be_true
@@ -186,7 +186,7 @@ describe Person do
       person.confirmed_at.should_not be_blank
 
       mailing = ActionMailer::Base.deliveries.last
-      mailing[:from].to_s.should == Civiccommons::Config.devise_email
+      mailing[:from].to_s.should == Civiccommons::Config.devise['email']
       mailing.to.should == [person.email]
       mailing.subject.should == "Welcome to The Civic Commons"
       ActionMailer::Base.deliveries.length.should == 3

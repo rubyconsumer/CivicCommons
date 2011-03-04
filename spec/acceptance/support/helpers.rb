@@ -57,7 +57,7 @@ module HelperMethods
 
   def should_send_an_email(values={})
     mailing = ActionMailer::Base.deliveries.first
-    mailing[:from].to_s.should == Civiccommons::Config.devise_email
+    mailing[:from].to_s.should == Civiccommons::Config.devise['email']
     mailing.to.should == [values['To']]
     mailing.subject.should == values['Subject']
   end

@@ -1,40 +1,90 @@
 development:
-  devise_email: "admin@somewhere.com"
-  devise_mailer_host: "development.somewhere.com"
-  devise_pepper: "somereallylongstringtoemcryptuserspasswords"
+  devise:
+    email: "The Civic Commons <admin@somewhere.com>"
+    mailer_host: "development.somewhere.com"
+    pepper: "somereallylongstringtoemcryptuserspasswords"
+  facebook:
+    app_id: 'crazyfacebookid'
+    app_secret: 'facebooksecretsauce'
+  mailer:
+    api_token: "socrazyhominidtypeoftoken"
+    list: "planetoftheapes"
   rails_secret_token: "randonStuffThatsAtLeast30CharachtersYo128DirtyWithTh"
-  mailer_api_token: "socrazyhominidtypeoftoken"
-  mailer_list: "planetoftheapes"
-  
+  smtp:
+    address: "smtp.sendsomemail.net"
+    domain: "somewhere.com"
+    username: "someadmin@somewhere.com"
+    password: "somethingsupercryptic"
 
 test:
-  devise_email: "admin@somewhere.com"
-  devise_mailer_host: "test.somewhere.com"
-  devise_pepper: "somereallylongstringtoemcryptuserspasswords"
+  devise:
+    email: "The Civic Commons <admin@somewhere.com>"
+    mailer_host: "test.somewhere.com"
+    pepper: "somereallylongstringtoemcryptuserspasswords"
+  facebook:
+    app_id: 'crazyfacebookid'
+    app_secret: 'facebooksecretsauce'
+  mailer:
+    api_token: "socrazyhominidtypeoftoken"
+    list: "planetoftheapes"
   rails_secret_token: "randonStuffThatsAtLeast30CharachtersYo128DirtyWithTh"
-  mailer_api_token: "socrazyhominidtypeoftoken"
-  mailer_list: "planetoftheapes"
+  smtp:
+    address: "smtp.sendsomemail.net"
+    domain: "somewhere.com"
+    username: "someadmin@somewhere.com"
+    password: "somethingsupercryptic"
 
 integration:
-  devise_email: "admin@somewhere.com"
-  devise_mailer_host: "integration.somewhere.com"
-  devise_pepper: "somereallylongstringtoemcryptuserspasswords"
+  devise:
+    email: "The Civic Commons <admin@somewhere.com>"
+    mailer_host: "integration.somewhere.com"
+    pepper: "somereallylongstringtoemcryptuserspasswords"
+  facebook:
+    app_id: 'crazyfacebookid'
+    app_secret: 'facebooksecretsauce'
+  mailer:
+    api_token: "socrazyhominidtypeoftoken"
+    list: "planetoftheapes"
   rails_secret_token: "randonStuffThatsAtLeast30CharachtersYo128DirtyWithTh"
-  smtp_address: "smtp.minimailer.net"
-  smtp_domain: "example.com"
-  smtp_username: "someone@example.com"
-  smtp_password: "ThePlainAndClearPassword!"
-  mailer_api_token: "socrazyhominidtypeoftoken"
-  mailer_list: "planetoftheapes"
+  smtp:
+    address: "smtp.sendsomemail.net"
+    domain: "somewhere.com"
+    username: "someadmin@somewhere.com"
+    password: "somethingsupercryptic"
 
 staging:
-  devise_email: "admin@somewhere.com"
-  devise_mailer_host: "staging.somewhere.com"
-  devise_pepper: "somereallylongstringtoemcryptuserspasswords"
+  devise:
+    email: "The Civic Commons <admin@somewhere.com>"
+    mailer_host: "staging.somewhere.com"
+    pepper: "somereallylongstringtoemcryptuserspasswords"
+  facebook:
+    app_id: 'crazyfacebookid'
+    app_secret: 'facebooksecretsauce'
+  mailer:
+    api_token: "socrazyhominidtypeoftoken"
+    list: "planetoftheapes"
   rails_secret_token: "randonStuffThatsAtLeast30CharachtersYo128DirtyWithTh"
-  smtp_address: "smtp.minimailer.net"
-  smtp_domain: "example.com"
-  smtp_username: "someone@example.com"
-  mailer_api_token: "socrazyhominidtypeoftoken"
-  mailer_list: "planetoftheapes"
+  smtp:
+    address: "smtp.sendsomemail.net"
+    domain: "somewhere.com"
+    username: "someadmin@somewhere.com"
+    password: "somethingsupercryptic"
+
+production:
+  devise:
+    email: "The Civic Commons <admin@somewhere.com>"
+    mailer_host: "production.somewhere.com"
+    pepper: "somereallylongstringtoemcryptuserspasswords"
+  facebook:
+    app_id: 'crazyfacebookid'
+    app_secret: 'facebooksecretsauce'
+  mailer:
+    api_token: "socrazyhominidtypeoftoken"
+    list: "planetoftheapes"
+  rails_secret_token: "randonStuffThatsAtLeast30CharachtersYo128DirtyWithTh"
+  smtp:
+    address: "smtp.sendsomemail.net"
+    domain: "somewhere.com"
+    username: "someadmin@somewhere.com"
+    password: "somethingsupercryptic"
 

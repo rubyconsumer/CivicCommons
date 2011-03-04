@@ -143,7 +143,7 @@ class Person < ActiveRecord::Base
 
   # Add the email subscription signup as a delayed job
   def subscribe_to_marketing_email
-    Delayed::Job.enqueue Jobs::SubscribeToMarketingEmailJob.new(Civiccommons::Config.mailer_api_token, Civiccommons::Config.mailer_list, email, {:FNAME => first_name, :LNAME => last_name}, 'html')
+    Delayed::Job.enqueue Jobs::SubscribeToMarketingEmailJob.new(Civiccommons::Config.mailer['api_token'], Civiccommons::Config.mailer['list'], email, {:FNAME => first_name, :LNAME => last_name}, 'html')
     Rails.logger.info("Success. Added #{name} with email #{email} to email queue.")
   end
 
