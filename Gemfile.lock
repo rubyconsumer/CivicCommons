@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/CivicCommons/arel.git
-  revision: d5750d819bdbcc3f4f9d0a5b4d9af0c253172289
+  revision: d5750d8
   branch: left-gemtest
   specs:
     arel (2.0.9.20110222133018)
