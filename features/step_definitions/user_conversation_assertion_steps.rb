@@ -10,18 +10,6 @@ Then /see the responsibilities verbiage$/ do
   page.should have_content("your responsibilities")
 end
 
-Then /see (?:the|an?) "([^"]*)" link/ do |name|
-  page.should have_link(name)
-end
-
-Then /see (?:the|an?) "([^"]*)" button$/ do |name|
-  page.should have_selector('input[type=submit],button,a.button', :text => name)
-end
-
-Then /see (?:the|an?) "([^"]*)" submit button$/ do |name|
-  page.should have_selector("input[type=submit][value='#{name}']")
-end
-
 Then /be redirected to the responsibilities page$/ do
   current_path.should == conversation_responsibilities_path
 end
@@ -36,10 +24,6 @@ end
 
 Then /be on the conversation creation page$/ do
   current_path.should == new_conversation_path
-end
-
-Then /see an? "([^"]*)" text (box|area)$/ do |name, el|
-  page.should have_field(name)
 end
 
 Then /see an? Issues selection field$/ do
@@ -57,7 +41,8 @@ Then /^the conversation should be created$/ do
 end
 
 Then /be on the invite participants page$/ do
-  current_url.should == new_invite_url(:source_type => :conversations, :source_id => @conversation.id)
+  current_path.should == '/invites/new'
+  page.should have_selector(:xpath, ".//input[@type='hidden'][@value=#{@conversation.id}]")
 end
 
 Then /see the success message$/ do

@@ -62,7 +62,7 @@ Feature:
     And I should see an "Invite Participants" submit button
     And I should see a "No Thanks" link
 
-    Given that I am on the invite participants page
+    Given that I am on the invite participants page after creating a conversation
     When I select the "No Thanks" link
     Then I should be on the conversation page for my conversation
     And no invitations should be sent

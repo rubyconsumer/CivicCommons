@@ -154,9 +154,9 @@ class ConversationsController < ApplicationController
 
     respond_to do |format|
       if @conversation.save
-        format.html { redirect_to(new_invite_path(:source_type => :conversations, :source_id => @conversation.id), :notice => 'Conversation was successfully created.') }
+        format.html { redirect_to(new_invite_path(:source_type => :conversations, :source_id => @conversation.id, :conversation_created => true), :notice => 'Conversation was successfully created.') }
       else
-        format.html { render :new }
+        format.html { render :new, :status => :unprocessable_entity  }
       end
     end
   end
@@ -169,7 +169,7 @@ class ConversationsController < ApplicationController
     if @conversation.update_attributes(params[:conversation])
       redirect_to(@conversation, :notice => 'Conversation was successfully updated.')
     else
-      render :action => "edit"
+      render :action => "edit", :status => :unprocessable_entity
     end
   end
 

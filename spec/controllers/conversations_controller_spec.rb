@@ -109,7 +109,7 @@ describe ConversationsController do
       it "redirects to invite page to invite participants" do
         mock_conversation(:id => '35', :save => true)
         do_create
-        response.should redirect_to new_invite_url(:source_type => :conversations, :source_id => '35')
+        response.should redirect_to new_invite_url(:source_type => :conversations, :source_id => '35', :conversation_created => true)
       end
     end
 

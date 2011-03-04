@@ -2,7 +2,7 @@ When /select the "([^"]*)" link$/ do |name|
   click_link name
 end
 
-When /press the "([^"]*)" button$/ do |name|
+When /(?:press|click) the "([^"]*)" button$/ do |name|
   click_link_or_button(name)
 end
 

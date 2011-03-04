@@ -27,7 +27,7 @@ class InvitesController < ApplicationController
     respond_to do |format|
       if result
         notice = "Thank you! You're helping to make Northeast Ohio stronger!"
-        format.html { redirect_to(:controller => @source_type, :action => :show, :id => @source_id, :notice => notice) }
+        format.html { redirect_to({ :controller => @source_type, :action => :show, :id => @source_id }, :notice => notice) }
       else
         flash[:notice] = "There was a problem with the entered emails."
         format.html { render :action => "new" }
