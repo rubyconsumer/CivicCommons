@@ -38,6 +38,8 @@ class Conversation < ActiveRecord::Base
   validates_length_of :contributions, :is => 1, :on => :create, :if => :user_generated?,
     :message => "Please only fill out one contribution to get the conversation started."
 
+  validates :title, :summary, :zip_code, :presence => true
+
   before_destroy :destroy_root_contributions # since non-root contributions will be destroyed internally be awesome_nested_set
 
   scope :latest_updated, :order => 'updated_at DESC'

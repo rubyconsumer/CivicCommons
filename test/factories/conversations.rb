@@ -5,6 +5,7 @@ Factory.define :conversation do |f|
   f.finished_at ""
   f.summary "MyString"
   f.title "Some Randon Title"
+  f.zip_code "48105"
 end
 
 Factory.define :user_generated_conversation, :parent => :conversation do |f|
