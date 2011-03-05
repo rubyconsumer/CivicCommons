@@ -5,6 +5,8 @@ class ApplicationController < ActionController::Base
 
   layout 'application'
 
+protected
+
   def verify_admin
     unless current_person && current_person.admin?
       flash[:error] = "You must be an admin to view this page."
@@ -36,6 +38,14 @@ class ApplicationController < ActionController::Base
     else
       super
     end
+  end
+
+  def require_ssl
+
+    if Rails.env.production? and not request.ssl?
+      redirect_to 'https://' + request.host + request.request_uri
+    end
+
   end
 
 end
