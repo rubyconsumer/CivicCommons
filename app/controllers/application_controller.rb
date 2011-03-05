@@ -42,7 +42,7 @@ protected
 
   def require_ssl
 
-    if Rails.env.production? and not request.ssl?
+    unless request.ssl?
       redirect_to 'https://' + request.host + request.request_uri
     end
 

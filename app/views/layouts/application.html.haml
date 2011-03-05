@@ -72,18 +72,18 @@
       #nav
         %ul#main-nav
           %li
-            = link_to 'Home', root_path, :title => 'Home'
+            = link_to 'Home', root_url, :title => 'Home'
           %li
-            = link_to 'Conversations', conversations_path, :title => 'Conversations'
+            = link_to 'Conversations', conversations_url, :title => 'Conversations'
           %li
-            = link_to 'Issues', issues_path, :title => 'Issues'
+            = link_to 'Issues', issues_url, :title => 'Issues'
           %li
-            = link_to 'Community', community_path, :title => 'Community'
+            = link_to 'Community', community_url, :title => 'Community'
           %li.drop
             %a{:href =>'/about', :title => "About Us"} About Us
             %ul
               %li 
-                = link_to 'Blog', blog_path
+                = link_to 'Blog', blog_url
               %li 
                 = link_to 'FAQ', '/faq'
               %li
@@ -103,7 +103,7 @@
       #footer-inner
         %ul.sub-nav
           %li
-            = link_to 'Blog', blog_path
+            = link_to 'Blog', blog_url
           %li 
             = link_to 'About Us', '/about'
           %li 
