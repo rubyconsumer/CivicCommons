@@ -1,3 +1,4 @@
+require 'conversation_helper'
 class Notifier < Devise::Mailer
   layout 'mailer'
 
