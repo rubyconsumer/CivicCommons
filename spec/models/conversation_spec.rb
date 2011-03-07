@@ -6,6 +6,27 @@ describe Conversation do
 end
 
 describe Conversation do
+  describe "a valid conversation" do
+    before :each do
+      @conversation = Factory.build(:conversation)
+    end
+    it "is invalid with no title" do
+      @conversation.title = nil
+      @conversation.should be_invalid
+      @conversation.should have_validation_error(:title)
+    end
+    it "is invalid with no zip code" do
+      @conversation.zip_code = nil
+      @conversation.should be_invalid
+      @conversation.should have_validation_error(:zip_code)
+    end
+    it "is invalid with no summary" do
+      @conversation.summary = nil
+      @conversation.should be_invalid
+      @conversation.should have_validation_error(:summary)
+    end
+  end
+
   describe "when retrieving all of the issues associated with a conversation" do
     before(:each) do
       @normal_person = Factory.create(:normal_person)
