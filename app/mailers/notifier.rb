@@ -1,6 +1,7 @@
-require 'conversation_helper'
 class Notifier < Devise::Mailer
+
   layout 'mailer'
+  add_template_helper(ConversationsHelper)
 
   def welcome(record)
     @resource = record

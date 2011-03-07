@@ -2,7 +2,6 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery
   include AvatarHelper
-  include ConversationHelper
 
   layout 'application'
 
