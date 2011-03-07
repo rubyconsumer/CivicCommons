@@ -25,6 +25,7 @@
   .wrapper
     .content-container
       .main-content
+        = render :partial => 'layouts/create_conversation'
         #show_conversation
           %input{:type=>"hidden", :id=>"conversation_id", :value=>"#{@conversation.id}"}
           %input{:type=>"hidden", :id=>"post_model_type", :value=>"Comment"}

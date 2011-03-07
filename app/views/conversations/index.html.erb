@@ -5,6 +5,8 @@
 
       <div class="main-content">
 
+        <%= render :partial => 'layouts/create_conversation' %>
+
         <div class="conversation-tile-group group">
           <h3>Most Active Conversations</h3>
           <%= render :partial => '/conversations/conversation_band', :locals => {:conversations => @active} %>
@@ -18,15 +20,14 @@
         </div>
 
         <div class="conversation-tile-group group">
-          <h3>Recently Created Conversations</h3>
+          <h3>Newest Conversations</h3>
           <%= render :partial => '/conversations/conversation_band', :locals => {:conversations => @recent} %>
-          <%= link_to "See more recently created conversations", conversations_filter_url(:recent), :class => 'see-more' %>
+          <%= link_to "See more of the newest conversations", conversations_filter_url(:recent), :class => 'see-more' %>
         </div>
 
       </div><!-- /.main-content -->     
 
       <div class='aside supplementary'>
-        <%= link_to "Create a Conversation", conversation_responsibilities_path, :id => 'create-a-conversation', :class => 'button' %>
         <div class="f-conv">
           <!-- <h3>Featured Conversations</h3> -->
           <div class="mod-content">
