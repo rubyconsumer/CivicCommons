@@ -15,45 +15,50 @@
   <div class="wrapper">
     <div class="content-container">
       <div class="main-content">
-        <h1>New Conversation</h1>
+        <h1>Start a Conversation</h1>
 
         <%= form_for @conversation, :html =>{:multipart => true} do |conversation| %>
           <% if @conversation.errors.any? %>
             <div id="error_explanation">
               <h2>
-                <%= pluralize(@conversation.errors.size, "error") %>
-                prohibited this conversation from being saved:
+                It looks like we’re still missing some important information:
               </h2>
               <ul>
-                <% @conversation.errors.full_messages.each do |msg| %>
+                <% @conversation.errors.each do |attr,msg| %>
                   <li><%= msg %></li>
                 <% end %>
               </ul>
             </div>
           <% end %>
+
+          <p>Choose a title for your conversation (Make it descriptive, maybe provocative, but most of all, it should make sense)</p>
           <fieldset class="form-group">
             <%= conversation.label :title %>
             <%= conversation.text_field :title %>
           </fieldset>
 
+          <p>Choose an image to go with your conversation (it will look best if you choose one with a 3:2 ratio—wide, not tall)</p>
           <fieldset class="form-group">
-            <%= conversation.label :image, "Attach an Image (Looks best at 3:2 ratio)" %>
+            <%= conversation.label :image %>
             <%= conversation.file_field :image %>
           </fieldset>
           <br class="clear" />
 
+          <p>Give us a short description of what you want to accomplish with this conversation.</p>
           <fieldset class="form-group">
             <%= conversation.label :summary %>
             <%= conversation.text_area :summary %>
           </fieldset>
 
+          <p>Just so we know where you are, what’s your zip code?</p>
           <fieldset class="form-group">
-            <%= conversation.label :zip_code, "Enter Zip Code" %>
+            <%= conversation.label :zip_code, "Zip Code" %>
             <%= conversation.text_field :zip_code %>
           </fieldset>
 
+          <p>Which issues is this conversation related to?</p>
           <fieldset class="form-group">
-            <%= conversation.label :issues, "Select Issues" %>
+            <%= conversation.label :issues, "Issue(s)" %>
             <table>
               <% Issue.alphabetical.each_slice(2) do |slice| %>
                 <tr>
@@ -69,6 +74,7 @@
           </fieldset>
           <br class="clear" />
 
+          <p>Get the ball rolling with a comment, question, or maybe a thought-provoking video you’ve already uploaded to YouTube.</p>
           <fieldset class="form-group">
             <div id="new-convo-contribution" class="tab-strip">
               <div class="tab-area input-with-options">
@@ -77,7 +83,7 @@
                     <li class="default-tab">
                       <%= link_to "Comment", "#new-comment" %>
                     </li>
-                    <li><%= link_to "Suggest An Action", "#new-suggested_action" %></li>
+                    <li><%= link_to "Suggest Action", "#new-suggested_action" %></li>
                     <li><%= link_to "Question", "#new-question" %></li>
                     <li><%= link_to "Attach", "#new-attached_file" %></li>
                     <li><%= link_to "Link", "#new-link" %></li>
@@ -109,7 +115,7 @@
           </fieldset>
 
           <fieldset class="footer">
-            <%= conversation.submit 'Create Conversation', :class => 'submit' %>
+            <%= conversation.submit 'Start My Conversation', :class => 'submit' %>
             <%= link_to "Cancel", root_url %>
           </fieldset>
 

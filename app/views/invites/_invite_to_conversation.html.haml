@@ -1,3 +1,3 @@
 - if current_person
   %span#invite-participant
-    = link_to("Invite Participants", {:controller => "invites", :action => "new", :source_type => "conversations", :source_id => conversation.id}, :class => "text button", :title => "")
+    = link_to("Send Invitations", {:controller => "invites", :action => "new", :source_type => "conversations", :source_id => conversation.id}, :class => "text button", :title => "")

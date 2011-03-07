@@ -7,7 +7,7 @@ Then /be on the responsibilities page$/ do
 end
 
 Then /see the responsibilities verbiage$/ do
-  page.should have_content("your responsibilities")
+  page.should have_content("responsibilities")
 end
 
 Then /be redirected to the responsibilities page$/ do
@@ -40,13 +40,13 @@ Then /^the conversation should be created$/ do
   #@conversation.issues.should == @issues
 end
 
-Then /be on the invite participants page$/ do
+Then /be on the Send Invitations page$/ do
   current_path.should == '/invites/new'
   page.should have_selector(:xpath, ".//input[@type='hidden'][@value=#{@conversation.id}]")
 end
 
 Then /see the success message$/ do
-  page.should have_content('successfully created')
+  page.should have_content('created')
 end
 
 Then /see the conversation box and image$/ do

@@ -12,8 +12,11 @@ Feature:
       | Password             | abcd1234      |
       | ID                   | 12            |
     And a conversation:
-      | ID          | 2                           |
-      | Title       | Understanding The Latest Health Care Changes |
+      | ID       | 2                                            |
+      | Title    | Understanding The Latest Health Care Changes |
+      | Summary  | This is a great new conversation.            |
+      | Zip Code | 48105                                        |
+      | Comment  | This is a sweet new comment.                 |
 
   @wip
   Scenario Outline: Retrieve a contribution

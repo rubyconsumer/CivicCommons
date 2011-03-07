@@ -20,7 +20,7 @@ class Admin::ConversationsController < Admin::DashboardController
       @conversation.save!
       @presenter.save!
       respond_to do |format|
-        format.html { redirect_to(admin_conversation_path(@conversation), :notice => 'Conversation was successfully created.') }
+        format.html { redirect_to(admin_conversation_path(@conversation), :notice => 'Your conversation has been created!') }
         format.xml  { render :xml => @conversation, :status => :created, :location => @conversation }
       end
     end

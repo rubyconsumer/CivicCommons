@@ -28,7 +28,7 @@ Given /have entered valid conversation data:$/ do |table|
   fill_in 'conversation[contributions_attributes][0][content]', with: @values['Comment']
 end
 
-Given /am on the invite participants page after creating a conversation$/ do
+Given /am on the Send Invitations page after creating a conversation$/ do
   @conversation = Factory.create(:conversation)
   Given 'a clear email queue'
   visit new_invite_url(:source_type => :conversations, :source_id => @conversation.id, :conversation_created => true)

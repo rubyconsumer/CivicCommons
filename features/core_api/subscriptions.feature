@@ -12,11 +12,17 @@ Feature:
       | Password             | abcd1234      |
       | ID                   | 12            |
     Given I am following the conversation:
-      | ID    | 2                                            |
-      | Title | Understanding The Latest Health Care Changes |
+      | ID       | 2                                            |
+      | Title    | Understanding The Latest Health Care Changes |
+      | Summary  | This is a great new conversation.            |
+      | Zip Code | 48105                                        |
+      | Comment  | This is a sweet new comment.                 |
     Given I am following the conversation:
-      | ID    | 3                                               |
-      | Title | Obamacare Pushes on Through Despite Antagonists |
+      | ID       | 3                                               |
+      | Title    | Obamacare Pushes on Through Despite Antagonists |
+      | Summary  | This is a great new conversation.               |
+      | Zip Code | 48105                                           |
+      | Comment  | This is a sweet new comment.                    |
     And I am following the issue:
       | ID   | 2                                             |
       | Name | Democrats Upset About Recent Election Results |
