@@ -481,7 +481,7 @@ describe Contribution do
   context "Existing contribution, conversation, and issue" do
 
      let(:contribution) {Contribution.new(content: "This is a contribution")}
-     let(:conversation) {Conversation.create(title: "I'm a conversation")}
+     let(:conversation) {Factory.create(:conversation, title: "I'm a conversation")}
      let(:issue)        {Issue.create(name: "I'm an Issue")}
 
      describe "Contribution#item_id" do
