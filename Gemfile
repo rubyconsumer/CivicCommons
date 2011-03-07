@@ -52,8 +52,9 @@ end
 
 group :development, :test do
   gem "rspec-rails", "~> 2.2.0"
-  gem 'steak'
+  gem "steak"
   gem "capybara", "~> 0.4.0"
+  gem "launchy"
 end
 
 gem 'devise', '1.1.2'
