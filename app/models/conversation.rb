@@ -37,6 +37,8 @@ class Conversation < ActiveRecord::Base
   validates :person, :must_be_logged_in => true, :if => :user_generated?
   validates_length_of :contributions, :is => 1, :on => :create, :if => :user_generated?,
     :message => "Please only fill out one contribution to get the conversation started."
+  validates_length_of :issues, :minimum => 1, :on => :create, :if => :user_generated?,
+    :message => "Please choose at least one issue that best relates to your conversation."
 
   validates_presence_of :title, :message => "Please choose a title for your conversation."
   validates_presence_of :summary, :message => "Please give us a short summary."

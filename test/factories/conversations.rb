@@ -11,4 +11,5 @@ end
 Factory.define :user_generated_conversation, :parent => :conversation do |f|
   f.user_generated true
   f.association :person, :factory => :normal_person
+  f.issues { |c| [c.association(:issue)] }
 end

@@ -12,17 +12,14 @@ describe Conversation do
     end
     it "is invalid with no title" do
       @conversation.title = nil
-      @conversation.should be_invalid
       @conversation.should have_validation_error(:title)
     end
     it "is invalid with no zip code" do
       @conversation.zip_code = nil
-      @conversation.should be_invalid
       @conversation.should have_validation_error(:zip_code)
     end
     it "is invalid with no summary" do
       @conversation.summary = nil
-      @conversation.should be_invalid
       @conversation.should have_validation_error(:summary)
     end
   end
@@ -169,6 +166,11 @@ describe Conversation do
       build_conversation(@contributions)
       @conversation.save
       @conversation.should have_validation_error(:contributions)
+    end
+
+    it "raises error if conversation created with no associated issues" do
+      @conversation.issues = []
+      @conversation.should have_validation_error(:issues)
     end
   end
 end
