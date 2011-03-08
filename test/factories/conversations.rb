@@ -6,10 +6,10 @@ Factory.define :conversation do |f|
   f.summary "MyString"
   f.title "Some Randon Title"
   f.zip_code "48105"
+  f.issues { |c| [c.association(:issue)] }
 end
 
 Factory.define :user_generated_conversation, :parent => :conversation do |f|
   f.user_generated true
   f.association :person, :factory => :normal_person
-  f.issues { |c| [c.association(:issue)] }
 end

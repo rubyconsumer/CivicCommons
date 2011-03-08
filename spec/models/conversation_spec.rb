@@ -22,6 +22,10 @@ describe Conversation do
       @conversation.summary = nil
       @conversation.should have_validation_error(:summary)
     end
+    it "is invalid with no issues" do
+      @conversation.issues = []
+      @conversation.should have_validation_error(:issues)
+    end
   end
 
   describe "when retrieving all of the issues associated with a conversation" do
@@ -32,8 +36,8 @@ describe Conversation do
       conversation = Factory.create(:conversation)
       issue = Factory.create(:issue, :conversations=>[conversation])
 
-      conversation.issues.count.should == 1
-      conversation.issues[0].should == issue
+      conversation.issues.reload.count.should == 2
+      conversation.issues.should include issue
     end
   end
 
