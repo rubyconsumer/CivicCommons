@@ -158,7 +158,7 @@ describe Conversation do
       @contributions["1"] = Factory.build(:question, :conversation => nil, :parent => nil).attributes
       build_conversation(@contributions)
       @conversation.save
-      @conversation.should have_validation_error(:contributions, /only.*one/)
+      @conversation.should have_validation_error(:contributions)
     end
 
     it "raises error if conversation created with no contributions" do
