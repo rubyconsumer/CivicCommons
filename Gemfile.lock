@@ -103,7 +103,6 @@ GEM
       railties (>= 3.0.0)
     ffi (0.6.3)
       rake (>= 0.8.7)
-    flexmock (0.8.11)
     fuubar (0.0.3)
       rspec (~> 2.0)
       rspec-instafail (~> 0.1.4)
@@ -239,7 +238,6 @@ DEPENDENCIES
   email_spec
   engineyard
   factory_girl_rails (~> 1.0.1)
-  flexmock
   fuubar (~> 0.0.3)
   geokit
   gibbon

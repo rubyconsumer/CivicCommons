@@ -32,6 +32,7 @@
 
         <h3>Conversations about this issue:</h3>
         <%= render :partial => '/conversations/conversation_pager' %>
+        <%= render :partial => 'layouts/create_conversation' %>
       </div><!-- /.main-content -->
       <div id='media-contributions' class='aside supplementary'>
         <%= render :partial => "issues/contributions/media_contribution", :collection => @media_contributions, :as => :contribution %>

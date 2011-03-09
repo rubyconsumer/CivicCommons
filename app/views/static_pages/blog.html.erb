@@ -10,6 +10,30 @@
           <h1>Common Blog</h1>
 
           <div class="blog" id="outer_block_57">
+            <h2>Some stuff worth looking at (if you've never seen them)</h2>
+            <%= user_profile(@people[:dan]) %>
+            <div class="blog_inner">
+              <p>New people are joining the Civic Commons every day, and, if you're among those new sign ups, we're very excited to welcome you here. If you've never seen them, you might be interested in these short videos we put together to explain a little about what we do and how we do it.
+              <p>&nbsp;</p>
+              <p>First is an introduction to the Civic Commons</p>
+              <iframe title="YouTube video player" width="640" height="390" src="http://www.youtube.com/embed/onUd7aZhu9g" frameborder="0" allowfullscreen></iframe>
+              <p>&nbsp;</p>
+              <p>Second, a short piece about the principles that guide our work and the conversations we have both online and in the community.</p>
+              <iframe title="YouTube video player" width="640" height="390" src="http://www.youtube.com/embed/LViBIL8b0cQ" frameborder="0" allowfullscreen></iframe>
+              <p>&nbsp;</p>
+              <p>There's also this explainer about how this site works.</p>
+              <iframe title="YouTube video player" width="640" height="390" src="http://www.youtube.com/embed/6hiDd-HpX9I" frameborder="0" allowfullscreen></iframe>
+              <p>&nbsp;</p>
+              <p>And, there's this must-see about how you can help make this place better and help make your community stronger (don't worry, it's pretty easy).</p>
+              <iframe title="YouTube video player" width="640" height="390" src="http://www.youtube.com/embed/7jV8Nez4Z8I" frameborder="0" allowfullscreen></iframe>
+            </div>
+
+            <div class="post_info">
+              posted by <%= link_to @people[:dan].name, user_path(@people[:dan]) %> on March 10, 2011
+            </div>
+          </div>
+
+          <div class="blog" id="outer_block_57">
             <h2>Prepping for the fifth Civic Commons radio show</h2>
             <%= user_profile(@people[:dan]) %>
             <div class="blog_inner">
@@ -22,7 +46,6 @@
             <div class="post_info">
               posted by <%= link_to @people[:dan].name, user_path(@people[:dan]) %> on February 14, 2011
             </div>
-
          </div>
 
           <div class="blog" id="outer_block_57">
@@ -35,7 +58,6 @@
             <div class="post_info">
               posted by <%= link_to @people[:dan].name, user_path(@people[:dan]) %> on January 22, 2011
             </div>
-
          </div>
 
           <div class="blog" id="outer_block_57">
@@ -57,7 +79,6 @@
             <div class="post_info">
               posted by <%= link_to @people[:dan].name, user_path(@people[:dan]) %> on January 08, 2011
             </div>
-
          </div>
 
          <div class="blog" id="outer_block_57">
@@ -98,7 +119,6 @@
             <div class="post_info">
               posted by <%= link_to @people[:dan].name, user_path(@people[:dan]) %> on January 08, 2011
             </div>
-
           </div>
 
           <div class="blog" id="outer_block_55">
@@ -138,7 +158,6 @@
             <div class="post_info">
               posted by <%= link_to @people[:dan].name, user_path(@people[:dan]) %> on December 30, 2010
             </div>
-
           </div>
 
           <div class="blog" id="outer_block_54">
@@ -163,7 +182,6 @@
             <div class="post_info">
               posted by <%= link_to @people[:noelle].name, user_path(@people[:noelle]) %> on December 29, 2010
             </div>
-
           </div>
 
           <div class="blog" id="outer_block_39">
@@ -204,7 +222,6 @@
             <div class="post_info">
               posted by <%= link_to @people[:noelle].name, user_path(@people[:noelle]) %> on December 01, 2010
             </div>
-
           </div>
 
           <div class="blog" id="outer_block_36">
@@ -246,7 +263,6 @@
             <div class="post_info">
               posted by <%= link_to @people[:dan].name, user_path(@people[:dan]) %> on November 22, 2010
             </div>
-
           </div>
 
           <div class="blog" id="outer_block_18">
@@ -272,7 +288,6 @@
             <div class="post_info">
               posted by <%= link_to @people[:noelle].name, user_path(@people[:noelle]) %> on November 09, 2010
             </div>
-
           </div>
 
           <div class="blog" id="outer_block_2">
@@ -329,7 +344,6 @@
             <div class="post_info">
               posted by <%= link_to @people[:dan].name, user_path(@people[:dan]) %> on November 03, 2010
             </div>
-
           </div>
 
           <div class="blog" id="outer_block_1">
@@ -392,7 +406,6 @@
             <div class="post_info">
               posted by <%= link_to @people[:dan].name, user_path(@people[:dan]) %> on November 03, 2010
             </div>
-
           </div>
 
         </div>
