@@ -50,8 +50,8 @@ feature "Authorization Threats", %q{
       Factory :registered_user
     end
 
+    # Given I am logged in as a registered user
     background do
-      # Given I am logged in as a registered user
       LoginPage.new(page).sign_in(user)
     end
 

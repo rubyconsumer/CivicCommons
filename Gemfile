@@ -53,6 +53,8 @@ group :test do
   gem "database_cleaner", "~> 0.6.0"
   gem 'email_spec'
   gem 'simplecov'
+  gem 'autotest'
+  gem 'autotest-rails'
 end
 
 group :development, :test do

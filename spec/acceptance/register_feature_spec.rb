@@ -1,7 +1,5 @@
 require File.expand_path(File.dirname(__FILE__) + '/acceptance_helper')
 
-require 'pp'
-
 feature "Register Feature", %q{
   As an anonymous person
   I want to sign up for an account

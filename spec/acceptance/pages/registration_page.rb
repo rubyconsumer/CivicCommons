@@ -1,11 +1,10 @@
-class RegistrationPage
+require File.expand_path(File.dirname(__FILE__) + '/page_object')
 
-  def initialize(page)
-    @page = page 
-  end
+class RegistrationPage < PageObject
 
   def visit
     @page.visit '/people/register/new'
+    @page
   end
 
   def fill_registration_form_and_submit(person)
@@ -17,6 +16,7 @@ class RegistrationPage
     #@page.attach_file("person[avatar]", File.join(attachments_path, 'imageAttachment.png'))
 
     @page.click_button 'Continue'
+    @page
   end
 
 end
