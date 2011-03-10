@@ -25,6 +25,14 @@ gem 'remotipart', :git => 'git://github.com/CivicCommons/remotipart.git', :branc
 
 gem 'whenever', :require => false
 
+gem 'devise', '1.1.2'
+
+gem 'shoulda'
+gem 'paperclip', "2.3.8"
+gem 'delayed_paperclip'
+gem 'aws-s3'
+gem 'nokogiri'
+
 group :development do
   gem "rails3-generators"
   gem "hpricot"
@@ -43,6 +51,7 @@ group :test do
   gem "cucumber-rails", "0.4.0.beta.1"
   gem "database_cleaner", "~> 0.6.0"
   gem 'email_spec'
+  gem 'simplecov'
 end
 
 group :development, :test do
@@ -50,11 +59,3 @@ group :development, :test do
   gem 'steak'
   gem "capybara", "~> 0.4.0"
 end
-
-gem 'devise', '1.1.2'
-
-gem 'shoulda'
-gem 'paperclip', "2.3.8"
-gem 'delayed_paperclip'
-gem 'aws-s3'
-gem 'nokogiri'

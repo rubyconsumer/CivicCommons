@@ -4,6 +4,7 @@ db/*.sql
 log/*.log
 tmp/*
 tmp/**/*
+coverage
 rake/**/*
 config/amazon_s3.yml
 config/civic_commons.yml
