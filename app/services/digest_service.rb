@@ -1,4 +1,4 @@
-class Services::DigestService
+class DigestService
 
   attr_reader :digest_recipients, :updated_contributions, :updated_conversations,
               :digest_set

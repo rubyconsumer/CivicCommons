@@ -369,6 +369,7 @@ describe Contribution do
     end
 
     it "should not be valid without a person" do
+      pending "Validation has not been written yet..."
       contribution = Contribution.
         create_node_level_contribution({:issue_id => @issue.id,
                                          :content => "Foo Bar",
