@@ -50,15 +50,15 @@ Feature:
 
     # BUG: This cuke cannot pass sincs one or more issues must be related to each convo
     #      See note in user_conversation_context_steps.rb
-    #Given that I am on the conversation creation page
-    #And I have entered valid conversation data:
-    #  | Title             | Some Conversation                 |
-    #  | Summary           | This is a great new conversation. |
-    #  | Zip Code          | 48105                             |
-    #  | Comment           | This is a sweet new comment.      |
-    #When I press the "Start My Conversation" button
-    #Then the conversation should be created
-    #And I should be on the Send Invitations page
-    #And I should see the success message
-    #And I should see the conversation box and image
-    #And I should see an "Send Invitations" submit button
+    Given that I am on the conversation creation page
+    And I have entered valid conversation data:
+      | Title             | Some Conversation                 |
+      | Summary           | This is a great new conversation. |
+      | Zip Code          | 48105                             |
+      | Comment           | This is a sweet new comment.      |
+    When I press the "Start My Conversation" button
+    Then the conversation should be created
+    And I should be on the Send Invitations page
+    And I should see the success message
+    And I should see the conversation box and image
+    And I should see an "Send Invitations" submit button

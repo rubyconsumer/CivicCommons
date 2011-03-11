@@ -22,7 +22,7 @@ Given /have entered valid conversation data:$/ do |table|
   #      instead of submitting ["1"], it submits ["[\"1\"]"]
   #      see https://github.com/jnicklas/capybara/issues/#issue/283
   #
-  #check 'conversation[issue_ids][]'
+  check 'conversation[issue_ids][]'
   attach_file('conversation[image]', File.join(attachments_path, 'imageAttachment.png'))
 
   fill_in 'conversation[contributions_attributes][0][content]', with: @values['Comment']

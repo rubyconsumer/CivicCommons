@@ -5,6 +5,14 @@ GIT
   specs:
     remotipart (0.2.1)
 
+GIT
+  remote: git://github.com/econsultancy/rack-test.git
+  revision: 7edd5bcb98a57686f015c26fc6c0c3dbdc3319d8
+  branch: econsultancy-20110119
+  specs:
+    rack-test (0.5.7)
+      rack (>= 1.0)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -144,8 +152,6 @@ GEM
     rack (1.2.1)
     rack-mount (0.6.13)
       rack (>= 1.0.0)
-    rack-test (0.5.7)
-      rack (>= 1.0)
     rails (3.0.3)
       actionmailer (= 3.0.3)
       actionpack (= 3.0.3)
@@ -253,6 +259,7 @@ DEPENDENCIES
   mysql2
   nokogiri
   paperclip (= 2.3.8)
+  rack-test!
   rails (= 3.0.3)
   rails3-generators
   remotipart!
