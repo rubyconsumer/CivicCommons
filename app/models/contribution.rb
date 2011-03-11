@@ -1,7 +1,6 @@
 require 'parent_validator'
 
 class Contribution < ActiveRecord::Base
-  include Rateable
   include Visitable
   include TopItemable
 
@@ -11,7 +10,7 @@ class Contribution < ActiveRecord::Base
   profanity_filter :content, :method => 'hollow'
 
   ALL_TYPES = ["Answer","AttachedFile","Comment","EmbeddedSnippet","Link",
-               "Question","SuggestedAction", "PplAggContribution"]
+               "Question","SuggestedAction"]
 
   belongs_to :person, :foreign_key => "owner"
   belongs_to :conversation
@@ -31,6 +30,7 @@ class Contribution < ActiveRecord::Base
   scope :editable, where(["#{quoted_table_name}.created_at >= DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 30 MINUTE)"])
 
   after_initialize :set_confirmed, :if => :new_record? # sets confirmed to false by default when object created
+  before_validation :set_person_from_item, :if => :person_blank?
 
   attr_reader :override_confirmed
 
@@ -57,6 +57,11 @@ class Contribution < ActiveRecord::Base
     model.new(params)
   end
 
+  def self.new_confirmed_node_level_contribution(params, person)
+    params.merge!(:override_confirmed => true)
+    new_node_level_contribution(params, person)
+  end
+
   def self.create_node_level_contribution(params, person)
     model, params = setup_node_level_contribution(params,person)
     contribution = model.create(params)
@@ -71,6 +76,14 @@ class Contribution < ActiveRecord::Base
     count = self.unconfirmed.where(["created_at < ?", (Time.now - age)]).count
     self.unconfirmed.destroy_all(["created_at < ?", (Time.now - age)])
     return count
+  end
+
+  def self.valid_attributes?(attributes)
+    mock = self.new(attributes)
+    unless mock.valid?
+      return mock.errors.select{|k,v| attributes.keys.collect(&:to_sym).include?(k)}.size == 0
+    end
+    true
   end
 
   def item=(item)
@@ -178,7 +191,7 @@ class Contribution < ActiveRecord::Base
   protected
 
   def self.setup_node_level_contribution(params,person)
-    model = params.delete(:type).constantize
+    model = (params.delete(:type) || params.delete('type')).constantize
     # could probably do this much cleaner, but still need to sanitize this for now
     raise(ArgumentError, "not a valid node-level Contribution type") unless ALL_TYPES.include?(model.to_s)
     params.merge!({:person => person})
@@ -204,5 +217,13 @@ class Contribution < ActiveRecord::Base
     else
       ''
     end
+  end
+
+  def person_blank?
+    self.person.blank?
+  end
+
+  def set_person_from_item
+    self.person = item.person
   end
 end

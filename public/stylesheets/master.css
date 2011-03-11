@@ -65,11 +65,12 @@ padding-bottom: 0;
 color:#2C87B7;
 text-decoration:underline;
 }
-p.profile-meta { 
+p.profile-meta {
 margin-bottom:0;
 font-size:0.9em;
 font-style:italic;
 color:#666;
+padding-bottom: 1em;
 }
 /* ul.link-list a, ol.link-list a, .module_actions ul a {text-decoration: none;} */
 ul li, ol li, dl dd {
@@ -132,6 +133,20 @@ margin: -15px 0 0 0;
 border-bottom: none;
 margin: .5em 0 .2em;
 text-transform: none;
+}
+
+.conversation-tile-group {
+border-bottom: solid 1px #cdcdcd;
+padding: 0 0 25px;
+margin: 0 0 15px;
+}
+
+.conversation-tile-group:last-child {
+border-bottom: none;
+}
+
+.conversation-tile-group h3 {
+border: none;
 }
 
 /*-----------------------------------------------
@@ -244,9 +259,9 @@ a.cancel {font-weight: normal;}
 .form-group .related input.textbox {width: 400px;}
 .validation-error {color: #ae1111;}
 .friendly-alert { color:#000; font-size:1.6em; font-weight:bold; margin-bottom:1em; }
-div.validation-error > ul > li { 
-float: none; 
-margin: 0; 
+div.validation-error > ul > li {
+float: none;
+margin: 0;
 padding: 0;
 text-align: left;
 }
@@ -296,6 +311,7 @@ div.topic-header p {margin-bottom: 0}
 p.topic-count {float: left;}
 p.topic-selection {float: right;}
 p.topic-selection a {margin-left: 1em;}
+a.see-more { float: right; }
 
 /*-----------------------------------------------
 =Offset List Styles
@@ -335,6 +351,7 @@ padding-left: 25px;
 .dnld.document {background: url(/images/document.png) no-repeat 0 3px;}
 .dnld.link {background: url(/images/link.png) no-repeat 0 3px;}
 .dnld.image {background: url(/images/image.png) no-repeat 0 3px;}
+.dnld.image img {max-width: 595px;}
 .dnld strong {display: block;}
 .dnld p {margin-bottom: .2em;}
 
@@ -622,6 +639,15 @@ z-index: 1;
 #login-status a:hover, .important a:hover {color: #f3f3f3;}
 */
 
+.flash-notice{
+  background-color: #ffff99;
+  border-top: 3px solid #ffff66;
+  border-bottom: 3px solid #ffff66;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+  line-height: 25px;}
+
 /* Main Navigation */
 #nav-wrapper {background: #4f5561 url(/images/nav_wrapper_bg.gif) repeat-x top;}
 #nav-wrapper #nav {
@@ -699,11 +725,11 @@ color: #555;
 }
 /* Selected Nav States */
 
-body#home li#home-nav, 
-body#conversations li#conversations-nav, 
-body#issues li#issue-nav, 
-body#community li#community-nav, 
-body#about li#about-nav, 
+body#home li#home-nav,
+body#conversations li#conversations-nav,
+body#issues li#issue-nav,
+body#community li#community-nav,
+body#about li#about-nav,
 #nav-wrapper #main-nav li.active a {background: #bac872 url(../images/nav_hover.gif) repeat-x top;}
 
 /* Search Form Styles */
@@ -1256,6 +1282,105 @@ font-style: italic;
 padding-top: 5px;
 }
 
+/*- Featured Conversation Filters ----------*/
+
+.aside .f-conv h3 {
+border-bottom: none;
+padding-bottom: 0;
+padding-left: 13px;
+}
+.aside .f-conv ul.feat-list {
+margin-left: 0;
+}
+.aside .f-conv ul.feat-list li {
+list-style-type: none;
+}
+.aside .f-conv ul.feat-list li a {
+background-color: #eaeaea;
+background-repeat: no-repeat;
+border: 1px solid #9a9a9a;
+color: #777;
+font-weight: bold;
+display: block;
+margin-bottom: .8em;
+padding: 6px 10px 6px 40px;
+text-decoration: none;
+text-shadow: 0 1px 1px rgba(255,255,255,1);
+-webkit-border-radius: 8px;
+-moz-border-radius: 8px;
+border-radius: 8px;
+-webkit-box-shadow: 0 2px 3px rgba(0,0,0,.15);
+-moz-box-shadow: 0 2px 3px rgba(0,0,0,.15);
+box-shadow: 0 2px 3px rgba(0,0,0,.15);
+}
+.aside .f-conv ul.feat-list li a:hover, .aside .f-conv ul.feat-list li a.active {
+background-color: #dbedf5;
+border-color: #7a9ba7;
+color: #51778e;
+}
+.aside .f-conv ul.feat-list li a:active {
+background-color: #c1d9e4;
+}
+.aside .f-conv ul.feat-list li a#active-f {
+background-image: url(../images/people-f.png);
+background-position: 10px 7px;
+}
+.aside .f-conv ul.feat-list li a#active-f:hover, .aside .f-conv ul.feat-list li a#active-f.active {
+background-position: 10px -58px;
+}
+.aside .f-conv ul.feat-list li a#popular-f {
+background-image: url(../images/popular-f.png);
+background-position: 12px 7px;
+}
+.aside .f-conv ul.feat-list li a#popular-f:hover, .aside .f-conv ul.feat-list li a#popular-f.active {
+background-position: 12px -57px;
+}
+.aside .f-conv ul.feat-list li a#recent-f {
+background-image: url(../images/calendar-f.png);
+background-position: 14px 5px;
+}
+.aside .f-conv ul.feat-list li a#recent-f:hover, .aside .f-conv ul.feat-list li a#recent-f.active {
+background-position: 14px -56px;
+}
+
+#create-a-conversation {
+margin-bottom: 20px;
+}
+
+/*- Create Conversation Feature ----------*/
+
+.convo-create {
+background: #dbedf5 url(../images/convo_create_bg.gif) repeat-x bottom;
+border: 1px solid #7a9ba7;
+color: #51778e;
+font-size: 1.167em;
+margin-bottom: 20px;
+padding: 20px 20px 15px;
+text-shadow: 0 1px 1px rgba(255,255,255,.9);
+-moz-border-radius: 8px;
+-webkit-border-radius: 8px;
+border-radius: 8px;
+-moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+-webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+.convo-create p {
+float: left;
+line-height: 1.5em;
+margin-bottom: 0;
+width: 320px;
+}
+.convo-create .convo-create-btn {
+background: url(../images/create_convo_btn.png) no-repeat 0 0;
+display: block;
+float: right;
+height: 50px;
+outline: none;
+text-indent: -9999px;
+width: 235px;
+}
+.convo-create .convo-create-btn:hover {background-position: bottom;}
+
 /*-----------------------------------------------
 =Styles for Convo Modal Popup
 -----------------------------------------------*/
@@ -1337,6 +1462,30 @@ a.button.moderate, input.submit.moderate {background-color: #e74d4d;}
 a.button.moderate:hover, input.submit.moderate:hover {background-color: #d83535;}
 
 /*-----------------------------------------------
+=New User-generated Conversation styles
+-----------------------------------------------*/
+.tab-strip#new-convo-contribution .tab-strip-options {
+width: 160px;
+}
+
+.tab-strip#new-convo-contribution textarea,
+.tab-strip#new-convo-contribution input[type=text] {
+width: 448px;
+}
+
+.tab-strip#new-convo-contribution textarea {
+height: 156px;
+}
+
+.tab-strip#new-convo-contribution .input-with-options label {
+width: 440px;
+}
+
+.tab-strip#new-convo-contribution .input-with-options label input[type=text] {
+width: 428px;
+}
+
+/*-----------------------------------------------
 =In The News styles
 -----------------------------------------------*/
 .in-the-news-post {
@@ -1403,9 +1552,8 @@ padding: 0 10px;
 /*-----------------------------------------------
 =Community page styles
 -----------------------------------------------*/
-
-img.blog-pic {float: left; width: 32px; height 32:pix; padding-right: 5px;}
 div.blog {margin-bottom: 20px;}
+div.blog img.callout {float: left; width: 32px; height: 32px; padding-right: 5px;}
 .blog_inner, .post_info {padding-left: 40px;}
 .blog_inner a, .post_info a {color: #0099FF;}
 .post_info {padding-top: 20px;}
@@ -1413,7 +1561,7 @@ div.blog {margin-bottom: 20px;}
 =Self Clearing Floats
 -----------------------------------------------*/
 
-#wrapper:after, #header:after, .feature:after, div.tab-strip ul:after, div.tab-area:after, #nav:after, #header-wrapper:after, .section:after, .content-container:after, .photobank:after, div.three-col:after, div.three-col-sm:after, .form-block:after, .offset-1:after, .offset-2:after, form:after, .convo-utility:after, ul.social-media:after, div.two-col:after, div.two-col-sm:after, .conversations:after, div.convo-popup:after, .pagination p:after {
+#wrapper:after, #header:after, .feature:after, div.tab-strip ul:after, div.tab-area:after, #nav:after, #header-wrapper:after, .section:after, .content-container:after, .photobank:after, div.three-col:after, div.three-col-sm:after, .form-block:after, .offset-1:after, .offset-2:after, form:after, .convo-utility:after, ul.social-media:after, div.two-col:after, div.two-col-sm:after, .conversations:after, div.convo-popup:after, .pagination p:after, .convo-create:after {
 content: ".";
 display: block;
 height: 0;
@@ -1442,9 +1590,9 @@ visibility: hidden;
 .global-warning a { color:#fff; font-weight:bold; }
 
 /* IE6 */
-* html #wrapper, * html #header, * html .feature, * html div.tab-strip ul, * html div.tab-area, * html #nav, * html #header-wrapper, * html .section, * html .content-container, * html .photobank, * html div.three-col, * html div.three-col-sm, * html .form-block, * html .offset-1, * html .offset-2, * html form, * html .convo-utility, * html ul.social-media, * html div.two-col, * html div.two-col-sm, * html .conversations, * html div.convo-popup, * html .pagination p, * html #header-utility {zoom: 1;}
+* html #wrapper, * html #header, * html .feature, * html div.tab-strip ul, * html div.tab-area, * html #nav, * html #header-wrapper, * html .section, * html .content-container, * html .photobank, * html div.three-col, * html div.three-col-sm, * html .form-block, * html .offset-1, * html .offset-2, * html form, * html .convo-utility, * html ul.social-media, * html div.two-col, * html div.two-col-sm, * html .conversations, * html div.convo-popup, * html .pagination p, * html #header-utility, * html .convo-create {zoom: 1;}
 * html .group {zoom: 1;}
 
 /* IE7 */
-*:first-child+html #wrapper, *:first-child+html #header, *:first-child+html .feature, *:first-child+html div.tab-strip ul, *:first-child+html div.tab-area, *:first-child+html #nav, #header-wrapper, *:first-child+html .section, *:first-child+html .content-container, *:first-child+html .photobank, *:first-child+html div.three-col, *:first-child+html div.three-col-sm, *:first-child+html .form-block, *:first-child+html .offset-1, *:first-child+html .offset-2, *:first-child+html form, *:first-child+html .convo-utility, *:first-child+html ul.social-media, *:first-child+html div.two-col, *:first-child+html div.two-col-sm, *:first-child+html .conversations, *:first-child+html div.convo-popup, *:first-child+html .pagination p, *:first-child+html #header-utility {zoom: 1;}
+*:first-child+html #wrapper, *:first-child+html #header, *:first-child+html .feature, *:first-child+html div.tab-strip ul, *:first-child+html div.tab-area, *:first-child+html #nav, #header-wrapper, *:first-child+html .section, *:first-child+html .content-container, *:first-child+html .photobank, *:first-child+html div.three-col, *:first-child+html div.three-col-sm, *:first-child+html .form-block, *:first-child+html .offset-1, *:first-child+html .offset-2, *:first-child+html form, *:first-child+html .convo-utility, *:first-child+html ul.social-media, *:first-child+html div.two-col, *:first-child+html div.two-col-sm, *:first-child+html .conversations, *:first-child+html div.convo-popup, *:first-child+html .pagination p, *:first-child+html #header-utility, *:first-child+html .convo-create {zoom: 1;}
 *:first-child+html .group {zoom: 1;}

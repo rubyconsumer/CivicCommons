@@ -26,7 +26,6 @@ describe Marketable do
 
   it "should subscribe to email list" do
     @marketable.subscribe_to_marketing_email.should be_true
-    #@marketable.skip_shadow_account = true
     #@marketable.subscribe!.should be_true
   end
 end

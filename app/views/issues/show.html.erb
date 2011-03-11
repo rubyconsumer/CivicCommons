@@ -28,40 +28,11 @@
           <p><%= raw (@issue.summary) %></p>
           <p><strong><%= link_to @issue.url_title, source_url(@issue) %></strong></p>
           <p><strong>Created On:</strong> <%= @issue.created_at.strftime("%m/%d/%Y") %></p>
-          <!--
-          # TODO - admin only? or remove?
-          <p><a href="#">Edit summary</a></p>
-          -->
-        </div>
-
-      <h3>Share what's on your mind</h3>
-        <ol class='contributions divided'>
-          <% @written_contributions.each do |contribution| %>
-          <% 
-              is_image = contribution.is_image?
-              li_class = is_image ? "offset-1" : ""
-          %>
-          <li class="<%=li_class%>">
-            <% if is_image %>
-              <%= image_tag contribution.attachment(:thumb), :alt => contribution.title, :class => 'callout', :width => 90, :height => 60 %>
-              <img class="callout" src="#contribution-image-goes-here" alt="contribution image goes here" width="90" height="60" />
-            <% end %>
-            <h4><%= link_to contribution.title, contribution.url %></h4>
-            <% unless contribution.person.nil? %>
-              <p>Submitted by: <a href="#link-to-PA-profile"><%= contribution.person.name %></a></p>
-            <% end %>
-            <p><%= link_to 'Delete', contribution_path(contribution), :class => 'delete', :remote => true, :method => :delete, :confirm => "Are you sure you want to delete this?" if contribution.editable_by?(current_person) %></p>
-            </li>
-          <% end %>
-        </ol>
-        <% if person_signed_in? %>
-          <p><%= link_to("Share what's on your mind", pa_new_issue_contribution_url(current_person, @issue), :class => 'button') %> </p>
-        <% else %>
-          <p><%= link_to("Login to share what's on your mind", new_person_session_path, :class => 'button') %></p>
-        <% end %>
+       </div>
 
         <h3>Conversations about this issue:</h3>
         <%= render :partial => '/conversations/conversation_pager' %>
+        <%= render :partial => 'layouts/create_conversation' %>
       </div><!-- /.main-content -->
       <div id='media-contributions' class='aside supplementary'>
         <%= render :partial => "issues/contributions/media_contribution", :collection => @media_contributions, :as => :contribution %>
@@ -84,7 +55,7 @@
         </div>
 
         <div class="mod">
-          <h3>Suggest an Action</h3>
+          <h3>Suggest Action</h3>
           <div class="mod-content">
             <div id='suggested-action-form-container'>
               <%= render :partial => "new_suggested_action_contribution" %>

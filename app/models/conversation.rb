@@ -1,5 +1,4 @@
 class Conversation < ActiveRecord::Base
-  include Rateable
   include Visitable
   include TopItemable
   include Subscribable
@@ -11,7 +10,7 @@ class Conversation < ActiveRecord::Base
            :conditions => ['confirmed = ?', true])
 
   has_many :top_level_contributions
-  has_many :subscriptions, :as => :subscribable
+  has_many :subscriptions, :as => :subscribable, :dependent => :destroy
   accepts_nested_attributes_for :top_level_contributions, :allow_destroy => true
 
   # any person that has made a contribution to the convo
@@ -22,6 +21,10 @@ class Conversation < ActiveRecord::Base
   has_and_belongs_to_many :guides, :class_name => 'Person', :join_table => 'conversations_guides', :association_foreign_key => :guide_id
   has_and_belongs_to_many :issues
 
+  belongs_to :person, :foreign_key => "owner"
+
+  attr_accessor :user_generated, :rejected_contributions
+
   has_attached_file :image,
     :styles => {
        :normal => "480x300#",
@@ -31,9 +34,67 @@ class Conversation < ActiveRecord::Base
     :path => IMAGE_ATTACHMENT_PATH,
     :default_url => '/images/convo_img_:style.gif'
 
+  validates :person, :must_be_logged_in => true, :if => :user_generated?
+  validates_length_of :contributions, :is => 1, :on => :create, :if => :user_generated?,
+    :message => "Please get the ball rolling with the first comment, question, or contribution of some sort."
+  validates_length_of :issues, :minimum => 1, :on => :create,
+    :message => "Please choose at least one issue that best relates to your conversation."
+
+  validates_presence_of :title, :message => "Please choose a title for your conversation."
+  validates_presence_of :summary, :message => "Please give us a short summary."
+  validates_presence_of :zip_code, :message => "Please give us a zip code for a little geographic context."
+
   before_destroy :destroy_root_contributions # since non-root contributions will be destroyed internally be awesome_nested_set
 
   scope :latest_updated, :order => 'updated_at DESC'
+  scope :latest_created, :order => 'created_at DESC'
+
+  def self.available_filters
+    {
+      :active => :latest_updated,
+      :popular => :get_top_visited,
+      :recent => :latest_created
+    }
+  end
+
+  def self.available_filter_names
+    available_filters.keys.collect(&:to_s)
+  end
+
+  def self.filtered(filter)
+    raise "Undefined Filter :#{filter}" unless available_filter_names.include?(filter)
+    scoped & self.send(available_filters[filter.to_sym])
+  end
+
+  def self.new_user_generated_conversation(params,person)
+    params.merge!(:person => person)
+    returning self.new(params) do |convo|
+      convo.user_generated = true
+    end
+  end
+
+  # Define our own method for allowing fields_for :contribution, rather
+  # than using accepts_nested_association :contributions.
+  # We need to use our custom Contribution builder to create contributions
+  # of only allowed types.
+  def contributions_attributes=(attributes)
+    self.rejected_contributions = []
+    attributes.each_value { |attr|
+      attr.merge!(:item => self)
+      # Rather than set contribution.person over and over, 
+      # it will now be set from contribution#set_person_from_item before_validation hook
+      contribution = Contribution.new_confirmed_node_level_contribution(attr, nil)
+      if Contribution.valid_attributes?(attr)
+        self.contributions << contribution
+      else
+        self.rejected_contributions << contribution
+      end
+    }
+  end
+
+  def user_generated?
+    user_generated || person
+  end
 
   # Return a comma-and-space-delimited list of the Issues
   # relevant to this Conversation, e.g., "Jobs, Sports, Religion"
@@ -56,26 +117,6 @@ class Conversation < ActiveRecord::Base
     else
       "No Guides yet"
     end
-  end
-
-  #
-  # Represent the "Started At" column in a reader-friendly format.
-  #
-  # This is kind of a kludge. It also doesn't properly say
-  # "yesterday" when you're talking about New Year's Eve.
-  def start_time_text
-   if (started_at == nil)
-     return "Don't know"
-   end
-   diff = started_at.yday - Time.now.yday
-   sameyear = (started_at.year == Time.now.year)
-   if (diff == 0 && sameyear)
-     started_at.strftime("TODAY at %I:%M %p")
-   elsif (diff == -1 && sameyear)
-     started_at.strftime("YESTERDAY at %I:%M %p")
-   else
-     started_at.strftime("%A, %B %d, %Y at %I:%M %p")
-   end
   end
 
   def start_month_text
@@ -106,4 +147,5 @@ class Conversation < ActiveRecord::Base
     # root objects in the collect block below.
     self.contributions.roots.sort_by(&:rgt).reverse.collect(&:destroy)
   end
+
 end

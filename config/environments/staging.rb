@@ -20,10 +20,10 @@ Civiccommons::Application.configure do
   config.action_mailer.raise_delivery_errors = true
 
   ActionMailer::Base.smtp_settings = {
-    :address              => Civiccommons::Config.smtp_address,
-    :domain               => Civiccommons::Config.smtp_domain,
-    :user_name            => Civiccommons::Config.smtp_username,
-    :password             => Civiccommons::Config.smtp_password,
+    :address              => Civiccommons::Config.smtp['address'],
+    :domain               => Civiccommons::Config.smtp['domain'],
+    :user_name            => Civiccommons::Config.smtp['username'],
+    :password             => Civiccommons::Config.smtp['password'],
     :authentication       => "plain",
     :enable_starttls_auto => true
   }
@@ -31,6 +31,6 @@ Civiccommons::Application.configure do
   config.active_support.deprecation = :log
 
   # For devise gem
-  config.action_mailer.default_url_options = { :host => Civiccommons::Config.devise_mailer_host }
+  config.action_mailer.default_url_options = { :host => Civiccommons::Config.devise['mailer_host'] }
 
 end

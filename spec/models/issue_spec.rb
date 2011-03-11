@@ -9,15 +9,17 @@ describe Issue do
     @person2 = Factory.create(:normal_person)
     @person3 = Factory.create(:normal_person)
 
-    @contribution1 = Factory.create(:contribution,:issue => @issue1)
-    @contribution2 = Factory.create(:contribution,:issue => @issue1)
-    
-    @contribution3 = Factory.create(:contribution,:issue => @issue2)
-    @contribution4 = Factory.create(:contribution,:issue => @issue2)
-    @contribution5 = Factory.create(:contribution,:issue => @issue2)
+    conversation = Factory.create(:conversation, :issues => [@issue1, @issue2, @issue3])
+    @contribution1 = Factory.create(:contribution, :conversation => conversation, :parent => nil, :issue => @issue1)
+    @contribution2 = Factory.create(:contribution, :conversation => conversation, :parent => nil, :issue => @issue1)
 
-    @contribution6 = Factory.create(:contribution,:issue => @issue3)
+    @contribution3 = Factory.create(:contribution, :conversation => conversation, :parent => nil, :issue => @issue2)
+    @contribution4 = Factory.create(:contribution, :conversation => conversation, :parent => nil, :issue => @issue2)
+    @contribution5 = Factory.create(:contribution, :conversation => conversation, :parent => nil, :issue => @issue2)
+
+    @contribution6 = Factory.create(:contribution, :conversation => conversation, :parent => nil, :issue => @issue3)
   end
+
   def given_an_issue_with_contributions_and_participants
     @issue = Factory.create(:issue)
     @person1 = Factory.create(:normal_person)
@@ -27,39 +29,44 @@ describe Issue do
     @contribution2 = Factory.create(:contribution, :person => @person2, :issue => @issue)
     @contribution3 = Factory.create(:contribution, :person => @person2, :issue => @issue)
   end
+
   def given_an_issue_with_contributions_and_conversations_and_page_visits
     @issue = Factory.create(:issue)
     @contribution = Factory.create(:contribution,:issue => @issue)
     @conversation = Factory.create(:conversation,:issues => [@issue])
     @issue.visits << Factory.create(:visit)
   end
+
   def given_2_issues_with_contributions_and_visits
     @issue1 = Factory.create(:issue)
     Factory.create(:contribution,:issue => @issue1)
     @issue1.visits << Factory.create(:visit)
-    
+
     @issue2 = Factory.create(:issue)
     Factory.create(:contribution,:issue => @issue2)
     Factory.create(:contribution,:issue => @issue2)
     @issue2.visits << Factory.create(:visit)
     @issue2.visits << Factory.create(:visit)
   end
+
   def given_an_issue_with_conversations_and_comments
     @person = Factory.create(:normal_person)
     @issue = Factory.create(:issue)
     @other_issue = Factory.create(:issue)
     @other_conversation = Factory.create(:conversation)
-    
+
     @conversation = Factory.create(:conversation,:issues => [@issue])
     @comment = Factory.create(:comment, :person => @person, :conversation => @conversation)
   end
+
   context "Top Issues" do
     it "should be determined by total # of contributions to an Issue + total # of page visits." do
       pending
       given_2_issues_with_contributions_and_visits
       Issue.top_issues.should == [@issue2,@issue1]
-    end  
+    end
   end
+
   context "counters" do
     it "should have the correct count of contributions" do
       given_an_issue_with_contributions_and_conversations_and_page_visits
@@ -87,11 +94,11 @@ describe Issue do
   context "Sort filter" do
     it "should sort issue by alphabetical" do
       given_3_issues
-      Issue.sort('alphabetical').should == [@issue1, @issue2, @issue3]
+      Issue.sort('alphabetical').collect(&:id).should == [@issue1, @issue2, @issue3].collect(&:id)
     end
     it "should sort issue by date created" do
       given_3_issues
-      Issue.sort('most_recent').should == [@issue3, @issue2, @issue1]
+      Issue.sort('most_recent').collect(&:id).should == [@issue3, @issue2, @issue1].collect(&:id)
     end
     it "should sort issue by recently updated" do
       given_3_issues
@@ -117,5 +124,5 @@ describe Issue do
       @other_issue.conversation_comments.should == []
     end
   end
-  
+
 end

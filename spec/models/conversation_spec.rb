@@ -6,6 +6,28 @@ describe Conversation do
 end
 
 describe Conversation do
+  describe "a valid conversation" do
+    before :each do
+      @conversation = Factory.build(:conversation)
+    end
+    it "is invalid with no title" do
+      @conversation.title = nil
+      @conversation.should have_validation_error(:title)
+    end
+    it "is invalid with no zip code" do
+      @conversation.zip_code = nil
+      @conversation.should have_validation_error(:zip_code)
+    end
+    it "is invalid with no summary" do
+      @conversation.summary = nil
+      @conversation.should have_validation_error(:summary)
+    end
+    it "is invalid with no issues" do
+      @conversation.issues = []
+      @conversation.should have_validation_error(:issues)
+    end
+  end
+
   describe "when retrieving all of the issues associated with a conversation" do
     before(:each) do
       @normal_person = Factory.create(:normal_person)
@@ -14,8 +36,8 @@ describe Conversation do
       conversation = Factory.create(:conversation)
       issue = Factory.create(:issue, :conversations=>[conversation])
 
-      conversation.issues.count.should == 1
-      conversation.issues[0].should == issue
+      conversation.issues.reload.count.should == 2
+      conversation.issues.should include issue
     end
   end
 
@@ -88,6 +110,71 @@ describe Conversation do
       item_ids = @conversation.contributions.includes(:top_item).collect{ |c| c.top_item.id }
       @conversation.destroy
       TopItem.where(:id => item_ids).count.should == 0
+    end
+  end
+
+  describe "when filtering conversations" do
+    Conversation.available_filter_names.each do |filter_name|
+      it "filters by :#{filter_name} by grabbing the appropriate named scope and doesn't raise error" do
+        Conversation.should_receive(Conversation.available_filters[filter_name.to_sym])
+        lambda { Conversation.filtered(filter_name) }.should_not raise_error
+      end
+    end
+  end
+
+  describe "when creating a user-generated conversation" do
+    before(:each) do
+      @person = Factory.build(:normal_person)
+
+      @contributions = {
+        "0" => Factory.build(:comment, :owner => @person.id, :conversation => nil, :parent => nil).attributes,
+        "1" => Question.new.attributes,
+        "2" => AttachedFile.new.attributes,
+        "3" => Link.new.attributes,
+        "4" => EmbeddedSnippet.new.attributes,
+        "5" => SuggestedAction.new.attributes
+      }
+
+      build_conversation(@contributions)
+    end
+
+    def build_conversation(attributes)
+      # Need to deep clone @contributions so we can preserve original hash of attributes above
+      # when Contribution.setup_node_level_contribution modifies the attribute objects in the hash
+      # (i.e. shallow cloning with #clone or #dup won't suffice
+      attributes = Marshal::load(Marshal.dump(attributes))
+      @conversation = Factory.build(:user_generated_conversation, :person => @person, :contributions_attributes => attributes)
+    end
+
+    it "raises an error if conversation created without owner" do
+      @conversation.person = nil
+      @conversation.save
+      @conversation.should have_validation_error(:person)
+    end
+
+    it "filters out all invalid contributions (i.e. blank contributions from contribution form) before save" do
+      @conversation.save
+      @conversation.errors.should be_empty
+      @conversation.contributions.size.should == 1
+    end
+
+    it "raises an error if conversation created with multiple contributions" do
+      @contributions["1"] = Factory.build(:question, :conversation => nil, :parent => nil).attributes
+      build_conversation(@contributions)
+      @conversation.save
+      @conversation.should have_validation_error(:contributions)
+    end
+
+    it "raises error if conversation created with no contributions" do
+      @contributions["0"] = Comment.new.attributes
+      build_conversation(@contributions)
+      @conversation.save
+      @conversation.should have_validation_error(:contributions)
+    end
+
+    it "raises error if conversation created with no associated issues" do
+      @conversation.issues = []
+      @conversation.should have_validation_error(:issues)
     end
   end
 end

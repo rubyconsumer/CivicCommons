@@ -1,5 +1,18 @@
 var lastAjaxSettings;
 
+(function ($) {
+  $.fn.extend({
+    scrubPlaceholderText: function(){
+      $(this).find('input[placeholder], textarea[placeholder]').each( function() {
+        $this = $(this);
+        if( $this.val() == $this.attr('placeholder') ){
+          $this.val('');
+        }
+      });
+    }
+  })
+})(jQuery);
+
 jQuery(function ($) {
 
   // Log all jQuery AJAX requests to Google Analytics

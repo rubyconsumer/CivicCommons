@@ -1,0 +1,48 @@
+<% content_for :main_body do %>
+
+  <% if flash[:notice] -%>
+    <div class="flash-notice">
+      <%=flash[:notice] %>
+    </div>
+  <% end -%>
+
+  <% if @conversation %>
+    <div class="feature-mast">
+      <div class="wrapper">
+        <div class="content-container">
+          <div class="main-content">
+            <%= image_tag @conversation.image.url(:panel), :class => 'featured main-img', :width => '120', :height => '80' %>
+            <h1><%= @conversation.title %></h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="wrapper">
+    <div class="content-container">
+      <div class="main-content">
+        <span>
+          <p>
+          Who do you want to invite to join this conversation? Just list email addresses one per line and we’ll send out the invitations. If you’d like us to send one to you, too, just add yours to the list.
+          </p>
+        </span>
+        <%= form_tag invites_url, :method => :post do %>
+          <fieldset class="form-group">
+            <%= hidden_field_tag :source_type, "#{@source_type}" %>
+            <%= hidden_field_tag :source_id, "#{@source_id}" %>
+          </fieldset>
+          <fieldset class="form-group">
+          <%= label :invites, :email %>
+          <%= text_area :invites, :emails, :rows => 10 %>
+          </fieldset>
+          <fieldset class="footer">
+            <%= submit_tag from_conversation_create_page? ? 'Send Invitations' : 'Send', :class=> 'submit' %>
+          </fieldset>
+        <% end %>
+
+      </div>
+    </div>
+  </div>
+
+<% end %>

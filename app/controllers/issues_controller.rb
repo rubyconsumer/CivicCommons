@@ -1,5 +1,4 @@
 class IssuesController < ApplicationController
-  before_filter :verify_admin, :only=>[:new, :create, :edit, :update, :destroy]
   before_filter :require_user, :only => [:create_contribution]
 
   # GET /issues
@@ -23,12 +22,11 @@ class IssuesController < ApplicationController
   # GET /issues/1
   # GET /issues/1.xml
   def show
-    @issue = Issue.find(params[:id])
+    @issue = Issue.includes(:conversations, :participants).find(params[:id])
     @latest_conversations = @issue.conversations.latest_updated.limit(3)
     all_conversations_on_issue = @issue.conversations.latest_updated
     @conversations = all_conversations_on_issue.paginate(:page => params[:page], :per_page => 6)
     @people = @issue.participants
-    @written_contributions = @issue.written_contributions.most_recent
     @conversation_comments = @issue.conversation_comments.most_recent
     @suggested_actions = @issue.suggested_actions.most_recent
     @media_contributions = @issue.media_contributions.most_recent
@@ -43,44 +41,12 @@ class IssuesController < ApplicationController
     end
   end
 
-  # GET /issues/new
-  # GET /issues/new.xml
-  def new
-    @issue = Issue.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @issue }
-    end
-  end
-
-  # GET /issues/1/edit
-  def edit
-    @issue = Issue.find(params[:id])
-  end
-
-  # POST /issues
-  # POST /issues.xml
-  def create
-    @issue = Issue.new(params[:issue])
-
-    respond_to do |format|
-      if @issue.save
-        format.html { redirect_to(@issue, :notice => 'Issue was successfully created.') }
-        format.xml  { render :xml => @issue, :status => :created, :location => @issue }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @issue.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
-
   def create_contribution
     @issue = Issue.find(params[:id])
     contribution_params = params[:contribution].merge(:issue_id => @issue.id)
     @contribution = Contribution.
       create_confirmed_node_level_contribution(contribution_params, current_person)
-    Subscription.create(person_id: current_person.id, subscribable_type: @issue.class.to_s, subscribable_id: @issue.id)
+    Subscription.create_unless_exists(current_person, @issue)
 
     respond_to do |format|
       if @contribution.save
@@ -93,31 +59,4 @@ class IssuesController < ApplicationController
     end
   end
 
-  # PUT /issues/1
-  # PUT /issues/1.xml
-  def update
-    @issue = Issue.find(params[:id])
-
-    respond_to do |format|
-      if @issue.update_attributes(params[:issue])
-        format.html { redirect_to(@issue, :notice => 'Issue was successfully updated.') }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @issue.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /issues/1
-  # DELETE /issues/1.xml
-  def destroy
-    @issue = Issue.find(params[:id])
-    @issue.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(issues_url) }
-      format.xml  { head :ok }
-    end
-  end
 end
