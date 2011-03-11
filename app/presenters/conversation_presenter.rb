@@ -1,10 +1,7 @@
-class ConversationPresenter < Presenter::Base
-  include Rails.application.routes.url_helpers
-
+class ConversationPresenter < PresenterBase
 
   def url
     conversation_url(@object, host: request.host)
   end
-
 
 end
