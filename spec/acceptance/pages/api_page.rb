@@ -7,11 +7,17 @@ class ApiPage < PageObject
     @url_base = '/api/'
   end
 
-  def visit_subscriptions(person = nil)
-    if person.nil?
-      visit @url_base + 'subscriptions'
+  def visit_subscriptions(person, type = nil)
+    if person.respond_to?(:id)
+      id = person.id
     else
-      visit "#{@url_base}#{person.id}/subscriptions"
+      id = person.to_i
+    end
+
+    if type.nil?
+      visit "#{@url_base}#{id}/subscriptions"
+    else
+      visit "#{@url_base}#{id}/subscriptions?type=#{type.singularize}"
     end
   end
 
