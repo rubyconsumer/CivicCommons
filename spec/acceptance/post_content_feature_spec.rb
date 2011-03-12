@@ -6,7 +6,7 @@ require 'pp'
 
 feature "Post Content Item", %q{
   As an administrator,
-  I want to post content a content item
+  I want to post a content item
   So that I can show information on the web site without starting a conversation or issue
 } do
 
@@ -37,8 +37,21 @@ feature "Post Content Item", %q{
       # And I should see a list of content items
 
       visit admin_root_path(admin)
-      visit content_items_root_path
-      should_be_on content_items_root_path
+      visit admin_content_items_path
+      should_be_on admin_content_items_path
+#      page.should have_content('Blog Post 1')
 
+    end
+
+    scenario "Administrator can create a new conent item" do
+      # Given I am on the content item creation page
+      # And I have selected a content type
+      # And I have entered valid content data
+      # When I press the “Create Content Item” button
+      # Then the content item should be created
+      # And I should be on the content item summary page
+      # And I should see the success message
+      # And I should see my name as the author
+      
     end
 end

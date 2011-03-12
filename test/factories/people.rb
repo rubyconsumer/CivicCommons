@@ -34,6 +34,9 @@ Factory.define :people do |f|
     u.admin true
     u.avatar File.new(Rails.root + 'test/fixtures/images/test_image.jpg')
     u.skip_email_marketing true
+
+    # since this is an admin, assume they are confirmed
+    u.confirmed_at '2011-03-04 15:33:33'
   end
 
   Factory.define :marketable_person, :parent => :normal_person do |u|

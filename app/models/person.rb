@@ -16,6 +16,7 @@ class Person < ActiveRecord::Base
   attr_accessible :name, :first_name, :last_name, :email, :password, :password_confirmation, :bio, :top, :zip_code, :admin, :validated,
                   :avatar, :remember_me
 
+  has_many :content_items, :foreign_key => 'author'
   has_many :contributions, :foreign_key => 'owner', :uniq => true
   has_many :ratings
   has_many :subscriptions
