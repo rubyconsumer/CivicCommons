@@ -25,6 +25,14 @@ gem 'remotipart', :git => 'git://github.com/CivicCommons/remotipart.git', :branc
 
 gem 'whenever', :require => false
 
+gem 'devise', '1.1.2'
+
+gem 'shoulda'
+gem 'paperclip', "2.3.8"
+gem 'delayed_paperclip'
+gem 'aws-s3'
+gem 'nokogiri'
+
 group :development do
   gem "rails3-generators"
   gem "hpricot"
@@ -34,11 +42,8 @@ group :development do
 end
 
 group :test do
-  #gem 'jasmine'#, :path => 'vendor/gems/jasmine'
+  gem "rack-test", :git => 'git://github.com/econsultancy/rack-test.git', :branch => 'econsultancy-20110119'
   gem 'cucumber', '~>0.10.0'
-  #gem 'capybara'
-  #gem 'cucumber-rails', :git => 'git://github.com/aslakhellesoy/cucumber-rails.git', :branch => 'v0.4.0.beta.1'
-  #gem 'rspec-rails', '>= 2.4.0'
   gem "factory_girl_rails", '~>1.0.1'
   gem "ruby-debug19"
   gem 'webmock'
@@ -47,7 +52,9 @@ group :test do
   gem "cucumber-rails", "0.4.0.beta.1"
   gem "database_cleaner", "~> 0.6.0"
   gem 'email_spec'
-  gem 'flexmock'
+  gem 'simplecov'
+  gem 'autotest'
+  gem 'autotest-rails'
 end
 
 group :development, :test do
@@ -56,11 +63,3 @@ group :development, :test do
   gem "capybara", "~> 0.4.0"
   gem "launchy"
 end
-
-gem 'devise', '1.1.2'
-
-gem 'shoulda'
-gem 'paperclip', "2.3.8"
-gem 'delayed_paperclip'
-gem 'aws-s3'
-gem 'nokogiri'

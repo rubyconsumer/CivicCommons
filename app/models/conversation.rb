@@ -36,9 +36,13 @@ class Conversation < ActiveRecord::Base
 
   validates :person, :must_be_logged_in => true, :if => :user_generated?
   validates_length_of :contributions, :is => 1, :on => :create, :if => :user_generated?,
-    :message => "Please only fill out one contribution to get the conversation started."
+    :message => "Please get the ball rolling with the first comment, question, or contribution of some sort."
+  validates_length_of :issues, :minimum => 1, :on => :create,
+    :message => "Please choose at least one issue that best relates to your conversation."
 
-  validates :title, :summary, :zip_code, :presence => true
+  validates_presence_of :title, :message => "Please choose a title for your conversation."
+  validates_presence_of :summary, :message => "Please give us a short summary."
+  validates_presence_of :zip_code, :message => "Please give us a zip code for a little geographic context."
 
   before_destroy :destroy_root_contributions # since non-root contributions will be destroyed internally be awesome_nested_set
 

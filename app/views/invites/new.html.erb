@@ -37,8 +37,7 @@
           <%= text_area :invites, :emails, :rows => 10 %>
           </fieldset>
           <fieldset class="footer">
-            <%= submit_tag from_conversation_create_page? ? 'Invite Participants' : 'Send', :class=> 'submit' %>
-            <%= link_to from_conversation_create_page? ? 'No Thanks' : 'Cancel', {:controller => @source_type, :action => :show, :id => @source_id}, :class=> 'cancel' %>
+            <%= submit_tag from_conversation_create_page? ? 'Send Invitations' : 'Send', :class=> 'submit' %>
           </fieldset>
         <% end %>
 

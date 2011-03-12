@@ -12,13 +12,19 @@ Feature:
       | Password             | abcd1234      |
       | ID                   | 12            |
     Given I am following the conversation:
-      | ID    | 2                                            |
-      | Title | Understanding The Latest Health Care Changes |
+      | ID       | 2                                            |
+      | Title    | Understanding The Latest Health Care Changes |
+      | Summary  | This is a great new conversation.            |
+      | Zip Code | 48105                                        |
+      | Comment  | This is a sweet new comment.                 |
     Given I am following the conversation:
-      | ID    | 3                                               |
-      | Title | Obamacare Pushes on Through Despite Antagonists |
+      | ID       | 3                                               |
+      | Title    | Obamacare Pushes on Through Despite Antagonists |
+      | Summary  | This is a great new conversation.               |
+      | Zip Code | 48105                                           |
+      | Comment  | This is a sweet new comment.                    |
     And I am following the issue:
-      | ID   | 2                                             |
+      | ID   | 200                                           |
       | Name | Democrats Upset About Recent Election Results |
 
   Scenario: Retrieve all subscriptions
@@ -27,9 +33,9 @@ Feature:
     """
     [
       {
-        "id": 2,
+        "id": 200,
         "title": "Democrats Upset About Recent Election Results",
-        "url": "http://www.example.com/issues/2",
+        "url": "http://www.example.com/issues/200",
         "type": "issue"
       },
       {
@@ -70,9 +76,9 @@ Feature:
     Then I should receive the response:
     """
     [{
-      "id": 2,
+      "id": 200,
       "title": "Democrats Upset About Recent Election Results",
-      "url": "http://www.example.com/issues/2"
+      "url": "http://www.example.com/issues/200"
     }]
     """
 

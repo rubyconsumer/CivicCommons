@@ -12,18 +12,19 @@ describe Conversation do
     end
     it "is invalid with no title" do
       @conversation.title = nil
-      @conversation.should be_invalid
       @conversation.should have_validation_error(:title)
     end
     it "is invalid with no zip code" do
       @conversation.zip_code = nil
-      @conversation.should be_invalid
       @conversation.should have_validation_error(:zip_code)
     end
     it "is invalid with no summary" do
       @conversation.summary = nil
-      @conversation.should be_invalid
       @conversation.should have_validation_error(:summary)
+    end
+    it "is invalid with no issues" do
+      @conversation.issues = []
+      @conversation.should have_validation_error(:issues)
     end
   end
 
@@ -35,8 +36,8 @@ describe Conversation do
       conversation = Factory.create(:conversation)
       issue = Factory.create(:issue, :conversations=>[conversation])
 
-      conversation.issues.count.should == 1
-      conversation.issues[0].should == issue
+      conversation.issues.reload.count.should == 2
+      conversation.issues.should include issue
     end
   end
 
@@ -161,7 +162,7 @@ describe Conversation do
       @contributions["1"] = Factory.build(:question, :conversation => nil, :parent => nil).attributes
       build_conversation(@contributions)
       @conversation.save
-      @conversation.should have_validation_error(:contributions, /only.*one/)
+      @conversation.should have_validation_error(:contributions)
     end
 
     it "raises error if conversation created with no contributions" do
@@ -169,6 +170,11 @@ describe Conversation do
       build_conversation(@contributions)
       @conversation.save
       @conversation.should have_validation_error(:contributions)
+    end
+
+    it "raises error if conversation created with no associated issues" do
+      @conversation.issues = []
+      @conversation.should have_validation_error(:issues)
     end
   end
 end

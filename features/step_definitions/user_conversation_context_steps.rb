@@ -22,13 +22,13 @@ Given /have entered valid conversation data:$/ do |table|
   #      instead of submitting ["1"], it submits ["[\"1\"]"]
   #      see https://github.com/jnicklas/capybara/issues/#issue/283
   #
-  #check 'conversation[issue_ids][]'
+  check 'conversation[issue_ids][]'
   attach_file('conversation[image]', File.join(attachments_path, 'imageAttachment.png'))
 
   fill_in 'conversation[contributions_attributes][0][content]', with: @values['Comment']
 end
 
-Given /am on the invite participants page after creating a conversation$/ do
+Given /am on the Send Invitations page after creating a conversation$/ do
   @conversation = Factory.create(:conversation)
   Given 'a clear email queue'
   visit new_invite_url(:source_type => :conversations, :source_id => @conversation.id, :conversation_created => true)

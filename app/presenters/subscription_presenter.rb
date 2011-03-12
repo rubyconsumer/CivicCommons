@@ -1,22 +1,16 @@
-class SubscriptionPresenter < Presenter::Base
-  include Rails.application.routes.url_helpers
-
+class SubscriptionPresenter < PresenterBase
 
   def parent
     @object.subscribable
   end
 
-
   def parent_id; parent.id end
 
-
   def parent_type; parent.class.name.underscore end
-
 
   def parent_conversation?
     parent.class.name == "Conversation"
   end
-
 
   def parent_issue?
     parent.class.name == "Issue"
@@ -42,7 +36,4 @@ class SubscriptionPresenter < Presenter::Base
     end
   end
 
-
 end
-
-

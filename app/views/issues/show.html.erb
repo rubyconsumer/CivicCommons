@@ -32,6 +32,7 @@
 
         <h3>Conversations about this issue:</h3>
         <%= render :partial => '/conversations/conversation_pager' %>
+        <%= render :partial => 'layouts/create_conversation' %>
       </div><!-- /.main-content -->
       <div id='media-contributions' class='aside supplementary'>
         <%= render :partial => "issues/contributions/media_contribution", :collection => @media_contributions, :as => :contribution %>
@@ -54,7 +55,7 @@
         </div>
 
         <div class="mod">
-          <h3>Suggest an Action</h3>
+          <h3>Suggest Action</h3>
           <div class="mod-content">
             <div id='suggested-action-form-container'>
               <%= render :partial => "new_suggested_action_contribution" %>

@@ -1,11 +1,8 @@
-class ContributionPresenter < Presenter::Base
-  include Rails.application.routes.url_helpers
-
+class ContributionPresenter < PresenterBase
 
   def parent
     (@object.conversation || @object.issue)
   end
-
 
   def parent_conversation?
     parent.class.name == "Conversation"
@@ -36,6 +33,4 @@ class ContributionPresenter < Presenter::Base
     end
   end
 
-
 end
-

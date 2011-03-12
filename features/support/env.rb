@@ -24,6 +24,8 @@ require 'ruby-debug'
 
 require 'webmock'
 
+require 'pp'
+
 require File.dirname(__FILE__) + '/words_to_num'
 
 World(WebMock::API)

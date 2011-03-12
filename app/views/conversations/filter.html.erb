@@ -5,9 +5,8 @@
       <h3><%= filter_description params[:filter] %></h3>
 
       <div class="main-content">
-
+        <%= render :partial => 'layouts/create_conversation' %>
         <%= render :partial => '/conversations/conversation_pager' %>
-
       </div><!-- /.main-content -->     
 
       <div class='aside supplementary'>

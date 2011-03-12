@@ -88,7 +88,7 @@ module ConversationsHelper
     when :popular
       title = "Most Popular"
     when :recent
-      title = "Recently Created"
+      title = "Newest"
     else
       title = "Filtered"
     end

@@ -9,14 +9,15 @@ describe Issue do
     @person2 = Factory.create(:normal_person)
     @person3 = Factory.create(:normal_person)
 
-    @contribution1 = Factory.create(:contribution,:issue => @issue1)
-    @contribution2 = Factory.create(:contribution,:issue => @issue1)
+    conversation = Factory.create(:conversation, :issues => [@issue1, @issue2, @issue3])
+    @contribution1 = Factory.create(:contribution, :conversation => conversation, :parent => nil, :issue => @issue1)
+    @contribution2 = Factory.create(:contribution, :conversation => conversation, :parent => nil, :issue => @issue1)
 
-    @contribution3 = Factory.create(:contribution,:issue => @issue2)
-    @contribution4 = Factory.create(:contribution,:issue => @issue2)
-    @contribution5 = Factory.create(:contribution,:issue => @issue2)
+    @contribution3 = Factory.create(:contribution, :conversation => conversation, :parent => nil, :issue => @issue2)
+    @contribution4 = Factory.create(:contribution, :conversation => conversation, :parent => nil, :issue => @issue2)
+    @contribution5 = Factory.create(:contribution, :conversation => conversation, :parent => nil, :issue => @issue2)
 
-    @contribution6 = Factory.create(:contribution,:issue => @issue3)
+    @contribution6 = Factory.create(:contribution, :conversation => conversation, :parent => nil, :issue => @issue3)
   end
 
   def given_an_issue_with_contributions_and_participants
@@ -93,11 +94,11 @@ describe Issue do
   context "Sort filter" do
     it "should sort issue by alphabetical" do
       given_3_issues
-      Issue.sort('alphabetical').should == [@issue1, @issue2, @issue3]
+      Issue.sort('alphabetical').collect(&:id).should == [@issue1, @issue2, @issue3].collect(&:id)
     end
     it "should sort issue by date created" do
       given_3_issues
-      Issue.sort('most_recent').should == [@issue3, @issue2, @issue1]
+      Issue.sort('most_recent').collect(&:id).should == [@issue3, @issue2, @issue1].collect(&:id)
     end
     it "should sort issue by recently updated" do
       given_3_issues

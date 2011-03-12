@@ -29,7 +29,7 @@ describe Subscription do
 
     context "Subscribably type is a Conversation" do
       it "returns the conversation's title" do
-        conversation = Conversation.create(title: "How to improve Cleveland")
+        conversation = Factory.create(:conversation, title: "How to improve Cleveland")
         subscription = Subscription.create(subscribable_type: conversation.class.to_s, subscribable_id: conversation.id)
         subscription.display_name == "How to improve Cleveland"
       end

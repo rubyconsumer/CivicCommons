@@ -1,5 +1,5 @@
-When /click the 'Invite Participants' button$/ do
-  click_on 'Invite Participants'
+When /click the 'Send Invitations' button$/ do
+  click_on 'Send Invitations'
 end
 
 When /^I click the cancel link$/ do
