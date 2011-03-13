@@ -1,4 +1,6 @@
 class InvitesController < ApplicationController
+  before_filter :require_user
+
   def new
     @source_type = params[:source_type]
     @source_id = params[:source_id]
@@ -7,7 +9,11 @@ class InvitesController < ApplicationController
     end
 
     respond_to do |format|
-      format.html
+      if request.xhr?
+        format.html { render :partial => 'form', :layout => false }
+      else
+        format.html
+      end
     end
   end
 
@@ -26,11 +32,13 @@ class InvitesController < ApplicationController
 
     respond_to do |format|
       if result
-        notice = "Thank you! You're helping to make Northeast Ohio stronger!"
-        format.html { redirect_to({ :controller => @source_type, :action => :show, :id => @source_id }, :notice => notice) }
+        @notice = "Thank you! You're helping to make Northeast Ohio stronger!"
+        format.html { redirect_to({ :controller => @source_type, :action => :show, :id => @source_id }, :notice => @notice) }
+        format.js
       else
-        flash[:notice] = "There was a problem with the entered emails."
+        flash[:notice] = @error = "There was a problem with the entered emails."
         format.html { render :action => "new" }
+        format.js
       end
     end
   end
