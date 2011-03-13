@@ -1385,12 +1385,14 @@ width: 235px;
 =Styles for Convo Modal Popup
 -----------------------------------------------*/
 
-div#cboxLoadedContent div.tab-strip {font-size: .75em;}
+div#cboxLoadedContent div.tab-strip, div#cboxLoadedContent div.invite-form {font-size: .75em;}
 div.convo-popup, div#cboxLoadedContent {
 background: #eaeaea url(../images/convo_popup_bg.gif) repeat-x top;
 border: 1px solid #ced1d6;
 width: 620px;
 }
+div#cboxLoadedContent div.invite-form { padding: 10px 15px 0; }
+div#cboxLoadedContent div.invite-form p { margin: 10px 15px 0; }
 div.convo-popup ul, div#cboxLoadedContent div.tab-strip-options ul {
 float: left;
 margin: 0 10px 0 0;
