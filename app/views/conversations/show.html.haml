@@ -17,7 +17,7 @@
             %strong
               = format_date @conversation.created_at
             \-
-            = raw @conversation.summary
+            = @conversation.user_generated? ? @conversation.summary : raw(@conversation.summary)
         .aside.supplementary.convo-mast-buttons
           %p
             %span#subscription
