@@ -851,6 +851,14 @@ width: 97%;
 }
 
 /* p.convo-meta {margin-bottom: 2em;} */
+p.convo-summary {
+clear: both;
+padding-top: 15px;
+}
+
+.convo-mast-buttons a.button {
+width: 150px;
+}
 
 /* Conversation Divider */
 div.convo-divider {
