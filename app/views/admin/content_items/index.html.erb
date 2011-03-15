@@ -1,0 +1,18 @@
+<h2>Content Items</h2>
+
+<table>
+  <tr>
+    <th>Content Item Title</th>
+    <th>Author</th>
+    <th>Type</th>
+    <th>Created Date</th>
+  </tr>
+  <% @content_items.each do |item| %>
+  <tr>
+    <td><%= link_to item.title, admin_content_item_path(item) %></td>
+    <td><%= item.person_id %></td>
+    <td><%= puts item.content_type %></td>
+    <td><%= item.created_at.strftime("%m-%d-%Y") %></td>
+  </tr>
+<% end %>
+</table>
