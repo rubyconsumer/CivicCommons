@@ -84,7 +84,7 @@ Civiccommons::Application.routes.draw do
   namespace "admin" do
     root      to: "dashboard#show"
     resources :articles
-    resources :content_items
+    resources :content_items, only: [:index, :show, :new, :create]
     resources :conversations
     resources :issues
     resources :regions
