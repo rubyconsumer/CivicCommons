@@ -22,6 +22,10 @@ module ConversationsHelper
   def format_time_only(t)
     return t.localtime.strftime("%l:%M %p") unless t.nil?
   end
+
+  def format_date(t)
+    t.localtime.strftime("%b %e, %G") unless t.blank?
+  end
   
   def contribution_action_past_tense(contribution_type)
     case contribution_type

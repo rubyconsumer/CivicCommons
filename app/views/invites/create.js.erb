@@ -1,0 +1,7 @@
+<% if @error %>
+  $('#invite-form').find('.validation-error').html('<%= escape_javascript(@error) %>');
+  $.colorbox.resize();
+<% else %>
+  $.colorbox.close();
+  $('.feature-mast').prepend('<div class="flash-notice"><%= escape_javascript(@notice) %></div>');
+<% end %>
