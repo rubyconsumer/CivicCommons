@@ -42,8 +42,8 @@ Civiccommons::Application.routes.draw do
   #Static Pages
   get '/about',             to: 'static_pages#about'
   get '/blog',              to: 'static_pages#blog',                as: 'blog'
-  get '/build-the-commons', to: 'static_pages#build_the_commons'
-  get '/contact-us',        to: 'static_pages#contact'
+  get '/build_the_commons', to: 'static_pages#build_the_commons'
+  get '/contact_us',        to: 'static_pages#contact'
   get '/faq',               to: 'static_pages#faq'
   get '/partners',          to: 'static_pages#partners'
   get '/poster',            to: 'static_pages#poster'

@@ -55,11 +55,11 @@ module AvatarHelper
   end
 
   def link_to_profile(person)
-    link_to yield, user_path(person), title: person.name
+    link_to yield, user_url(person, :protocol => 'http'), title: person.name
   end
 
   def link_to_settings(person)
-    link_to "Settings", edit_user_path(person), title: "Profile Settings", class: 'user-link'
+    link_to "Settings", secure_edit_user_url(person), title: "Profile Settings", class: 'user-link'
   end
 
 
@@ -70,12 +70,14 @@ module AvatarHelper
   #
   def avatar_tag(person, options={})
     style_name = options.delete(:style_name) || :small
+    url = person.avatar.url(style_name)
+    if request.ssl? then url = url.gsub(/http:/i, 'https:') end
     image_options = {
       :width => 50,
       :height => 50,
       :alt => "avatar",
       :title => person.name}.merge(options)
-    image_tag(person.avatar.url(style_name), image_options)
+    image_tag(url, image_options)
   end
 
 end

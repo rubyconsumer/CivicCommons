@@ -15,6 +15,8 @@ development:
     domain: "somewhere.com"
     username: "someadmin@somewhere.com"
     password: "somethingsupercryptic"
+  security:
+    ssl_login: false
 
 test:
   devise:
@@ -33,6 +35,8 @@ test:
     domain: "somewhere.com"
     username: "someadmin@somewhere.com"
     password: "somethingsupercryptic"
+  security:
+    ssl_login: false
 
 integration:
   devise:
@@ -51,6 +55,8 @@ integration:
     domain: "somewhere.com"
     username: "someadmin@somewhere.com"
     password: "somethingsupercryptic"
+  security:
+    ssl_login: true
 
 staging:
   devise:
@@ -69,6 +75,8 @@ staging:
     domain: "somewhere.com"
     username: "someadmin@somewhere.com"
     password: "somethingsupercryptic"
+  security:
+    ssl_login: true
 
 production:
   devise:
@@ -87,4 +95,6 @@ production:
     domain: "somewhere.com"
     username: "someadmin@somewhere.com"
     password: "somethingsupercryptic"
+  security:
+    ssl_login: true
 
