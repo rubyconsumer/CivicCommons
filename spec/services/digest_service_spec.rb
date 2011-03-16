@@ -135,18 +135,19 @@ describe DigestService do
       ActionMailer::Base.deliveries.clear
     end
 
+
     it "should send one email for each person in the set" do
-      #TODO: figure out why this doesn't work
-      # Without mocking we are reaching through to the view, we want to isloate from the view
-      #notifier = mock(Notifier).should_receive(:deliver).and_return(true)
-      #Notifier.should_receive(:daily_digest).with(@person_with_subs, @convo_array).once.and_return(notifier)
       service = DigestService.new
       service.process_daily_digest(@digest_set)
       ActionMailer::Base.deliveries.length.should == @digest_set.size
     end
 
-    it "should not send any emails when the data set is empty"
-
+    it "should not send any emails when the data set is empty" do
+      service = DigestService.new
+      @digest_set = {}
+      service.process_daily_digest(@digest_set)
+      ActionMailer::Base.deliveries.length.should == 0
+    end
 
   end
 
