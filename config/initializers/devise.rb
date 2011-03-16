@@ -3,7 +3,7 @@
 Devise.setup do |config|    
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in DeviseMailer.
-  config.mailer_sender = Civiccommons::Config.devise_email
+  config.mailer_sender = Civiccommons::Config.devise['email']
 
   # Configure the class responsible to send e-mails.
   # config.mailer = "Devise::Mailer"
@@ -45,7 +45,7 @@ Devise.setup do |config|
   config.encryptor = :bcrypt
 
   # Setup a pepper to generate the encrypted password.
-  config.pepper = Civiccommons::Config.devise_pepper
+  config.pepper = Civiccommons::Config.devise['pepper']
 
   # ==> Configuration for :confirmable
   # The time you want to give your user to confirm his account. During this time
@@ -59,7 +59,7 @@ Devise.setup do |config|
 
   # ==> Configuration for :rememberable
   # The time the user will be remembered without asking for credentials again.
-  # config.remember_for = 2.weeks
+  config.remember_for = 2.weeks
 
   # ==> Configuration for :validatable
   # Range for password length

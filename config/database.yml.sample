@@ -1,5 +1,5 @@
 development:
-  adapter:   mysql
+  adapter:   mysql2
   database:  TheCivicCommons_dev
   username:  civiccommons
   password:  S0M3FaKePaSSwORD
@@ -8,7 +8,7 @@ development:
 
 
 test:
-  adapter:   mysql
+  adapter:   mysql2
   database:  TheCivicCommons_test
   username:  civiccommons
   password:  S0M3FaKePaSSwORD

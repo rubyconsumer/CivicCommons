@@ -1,5 +1,3 @@
-require 'presenter/base'
-
-class RegistrationFormPresenter < Presenter::Form
+class RegistrationFormPresenter < PresenterForm
 
 end

@@ -9,6 +9,7 @@
 <div class="wrapper">
   <div class="content-container">
     <div class="main-content">
+      <%= render :partial => 'layouts/create_conversation' %>
       <h3>Current Active Conversations</h3>
       <%= render :partial => '/conversations/conversation_pager' %>
     </div><!-- /.main-content -->
@@ -22,11 +23,6 @@
           </div>
         </div>
       <% end %>
-      <div class="mod">
-        <h3>Community Poll</h3>
-        <div id="poll_module" class="mod-content">
-        </div>
-      </div>
     </div><!-- /.aside -->
   </div><!-- /.content-container -->
 </div><!-- /.wrapper -->

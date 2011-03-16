@@ -1,5 +1,5 @@
 Feature:
-  As a People Aggregator developer
+  As a developer
   I want to be able to retrieve conversations a user is participating in
   So that I can display the details on the user's profile page
 
@@ -10,10 +10,13 @@ Feature:
       | Email                | joe@test.com  |
       | Zip                  | 44444         |
       | Password             | abcd1234      |
-      | People Aggregator ID | 12            |
+      | ID                   | 12            |
     And a conversation:
-      | ID          | 2                           |
-      | Title       | Understanding The Latest Health Care Changes |
+      | ID       | 2                                            |
+      | Title    | Understanding The Latest Health Care Changes |
+      | Summary  | This is a great new conversation.            |
+      | Zip Code | 48105                                        |
+      | Comment  | This is a sweet new comment.                 |
 
   @wip
   Scenario Outline: Retrieve a contribution
@@ -21,7 +24,7 @@ Feature:
       """
       <comment>
       """
-    When I ask for contributions for the person with People Aggregator ID 12
+    When I ask for contributions for the person with ID 12
     Then I should receive the response:
     """
     {
@@ -53,15 +56,15 @@ Feature:
     | link          | This site is amazing                                                   |                                                                    |                                                                                        | Yahoo!                                                      | http://www.yahoo.com                       |
 
 
-  Scenario: Requesting for a PA user that does not exist
-    When I ask for contributions for the person with People Aggregator ID 1000321
+  Scenario: Requesting for a user that does not exist
+    When I ask for contributions for the person with ID 1000321
     Then I should receive a 404 Not Found response
 
   @wip
   Scenario: Request 1 page of contributions
     Given I have ten comments on the conversation
     And I want 5 contributions per page
-    When I ask for one page of contributions for the person with People Aggregator ID 12
+    When I ask for one page of contributions for the person with ID 12
     Then I should the data in my response:
       | content        | type    |
       | Test Comment 1 | comment |

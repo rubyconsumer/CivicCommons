@@ -2,6 +2,11 @@ class StaticPagesController < ApplicationController
   def about
   end
 
+  def blog
+    people = Person.where('email like "%@theciviccommons.com" or email like "%@futurefundneo.org"')
+    @people = Hash[people.map { |p| [p.first_name.downcase.to_sym, p] }] 
+  end
+
   def faq
   end
 
@@ -24,6 +29,6 @@ class StaticPagesController < ApplicationController
   end
 
   def poster
-    render :layout => 'poster'
+    render layout: 'poster'
   end
 end

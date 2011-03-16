@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110110220007) do
+ActiveRecord::Schema.define(:version => 20110301062718) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -89,6 +89,7 @@ ActiveRecord::Schema.define(:version => 20110110220007) do
     t.string   "audio_clip_content_type"
     t.integer  "audio_clip_file_size"
     t.datetime "audio_clip_updated_at"
+    t.integer  "owner"
   end
 
   create_table "conversations_events", :id => false, :force => true do |t|
@@ -132,21 +133,11 @@ ActiveRecord::Schema.define(:version => 20110110220007) do
   add_index "delayed_jobs", ["locked_by"], :name => "delayed_jobs_locked_by"
   add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
 
-  create_table "invites", :force => true do |t|
-    t.integer  "person_id"
-    t.string   "invitation_token",   :limit => 40
-    t.datetime "invitation_sent_at"
-    t.boolean  "valid_invite"
-    t.string   "email"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "issues", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "summary"
+    t.text     "summary",            :limit => 255
     t.integer  "total_visits"
     t.integer  "recent_visits"
     t.integer  "total_rating"
@@ -190,7 +181,6 @@ ActiveRecord::Schema.define(:version => 20110110220007) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
-    t.integer  "people_aggregator_id"
     t.integer  "failed_attempts",                     :default => 0
     t.string   "unlock_token"
     t.datetime "locked_at"
@@ -200,18 +190,7 @@ ActiveRecord::Schema.define(:version => 20110110220007) do
   end
 
   add_index "people", ["email"], :name => "index_people_on_email", :unique => true
-  add_index "people", ["people_aggregator_id"], :name => "pa_id_index", :unique => true
   add_index "people", ["reset_password_token"], :name => "index_people_on_reset_password_token", :unique => true
-
-  create_table "ratings", :force => true do |t|
-    t.datetime "datetime"
-    t.integer  "person_id"
-    t.integer  "rating"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "rateable_id"
-    t.string   "rateable_type"
-  end
 
   create_table "regions", :force => true do |t|
     t.string   "name"
@@ -230,6 +209,8 @@ ActiveRecord::Schema.define(:version => 20110110220007) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "subscriptions", ["person_id", "subscribable_type", "subscribable_id"], :name => "unique-subs", :unique => true
 
   create_table "top_items", :force => true do |t|
     t.integer  "item_id"

@@ -10,24 +10,78 @@
           <h1>Common Blog</h1>
 
           <div class="blog" id="outer_block_57">
+            <h2></h2>
+            <%= user_profile(@people[:dan]) %>
+            <div class="blog_inner">
+              <p>
+                The Civic Commons is looking for an ambitious and talented individual as its next
+                <strong>Operations and Communications Coordinator</strong>! Check out the <%= link_to 'job description', jobs_path %>.
+                Cover letters and resumes are due by April 1st. Please send all materials to <%= @people[:mike].name %> (<%= mail_to @people[:mike].email %>)</a>.
+              </p>
+            </div>
+
+            <div class="post_info">
+              posted by <%= link_to @people[:mike].name, user_path(@people[:mike]) %> on March 15, 2011
+            </div>
+          </div>
+
+          <div class="blog" id="outer_block_57">
+            <h2>Some stuff worth looking at (if you've never seen them)</h2>
+            <%= user_profile(@people[:dan]) %>
+            <div class="blog_inner">
+              <p>New people are joining the Civic Commons every day, and, if you're among those new sign ups, we're very excited to welcome you here. If you've never seen them, you might be interested in these short videos we put together to explain a little about what we do and how we do it.
+              <p>&nbsp;</p>
+              <p>First is an introduction to the Civic Commons</p>
+              <iframe title="YouTube video player" width="640" height="390" src="http://www.youtube.com/embed/onUd7aZhu9g" frameborder="0" allowfullscreen></iframe>
+              <p>&nbsp;</p>
+              <p>Second, a short piece about the principles that guide our work and the conversations we have both online and in the community.</p>
+              <iframe title="YouTube video player" width="640" height="390" src="http://www.youtube.com/embed/LViBIL8b0cQ" frameborder="0" allowfullscreen></iframe>
+              <p>&nbsp;</p>
+              <p>There's also this explainer about how this site works.</p>
+              <iframe title="YouTube video player" width="640" height="390" src="http://www.youtube.com/embed/6hiDd-HpX9I" frameborder="0" allowfullscreen></iframe>
+              <p>&nbsp;</p>
+              <p>And, there's this must-see about how you can help make this place better and help make your community stronger (don't worry, it's pretty easy).</p>
+              <iframe title="YouTube video player" width="640" height="390" src="http://www.youtube.com/embed/7jV8Nez4Z8I" frameborder="0" allowfullscreen></iframe>
+            </div>
+
+            <div class="post_info">
+              posted by <%= link_to @people[:dan].name, user_path(@people[:dan]) %> on March 10, 2011
+            </div>
+          </div>
+
+          <div class="blog" id="outer_block_57">
+            <h2>Prepping for the fifth Civic Commons radio show</h2>
+            <%= user_profile(@people[:dan]) %>
+            <div class="blog_inner">
+              <p>We're heading towards our fifth show with Civic Commons radio program. If you haven't heard it yet, the latest can be heard here: <a href="http://goo.gl/nc2Bg" target="_blank">http://goo.gl/nc2Bg</a>. One of the challenges we came across on our last show was the fact that everyone on our citizens' roundtable agreed, despite the fact they came from very different backgrounds (academic, entrepreneur, economic development). So, we feel we fell a little short on our commitment to diversity.</p>
+              <p>In light of that, we're doubling down on that commitment. Consider this an open invitation to bring your disagreement into the conversation, here at the Commons, at any event we're a part of, and on our radio program. On the program, everybody seemed to fall on the side of more collaboration, more tax sharing, more doing things in the interest of the whole region, rather than just a single community. The thing is, I've spoken to lots of people who think that tax sharing, for one, is a horrible idea. I'm not sure, but I think those people may be in the minority, but that perspective is really important to hear from.</p>
+              <p>Some of the issues I'm sure we'll be talking about include priorities for the state budget and the future of collective bargaining and the right to work. If you feel you're in the minority on those issues, we very much want your voice in the conversation. Email me. (Danmoulthrop-at-theciviccommons.com)</p>
+              <p>By the way, if you want to catch up on what you may have missed Saturday mornings at 8:30 on WJCU, you can also find our first three programs on some of our issue pages—<a href="/issues/6">Engaging with government</a> and <a href="/issues/10">Collaborative Planning</a>.</p>
+            </div>
+
+            <div class="post_info">
+              posted by <%= link_to @people[:dan].name, user_path(@people[:dan]) %> on February 14, 2011
+            </div>
+         </div>
+
+          <div class="blog" id="outer_block_57">
+            <h2>Back to the airwaves, part 2</h2>
+            <%= user_profile(@people[:dan]) %>
+            <div class="blog_inner">
+              <p>If you missed the show on WJCU (Saturday, 8:30 a.m.) you can hear it <a href="http://s3.amazonaws.com/com.theciviccommons.production/attachments/3401/original/CC20110122.mp3?1295616573">right here</a>.</p>
+            </div>
+
+            <div class="post_info">
+              posted by <%= link_to @people[:dan].name, user_path(@people[:dan]) %> on January 22, 2011
+            </div>
+         </div>
+
+          <div class="blog" id="outer_block_57">
             <h2>Back to the airwaves</h2>
-            <a href="http://theciviccommons.com/user/9">
-              <img src="http://s3.amazonaws.com/com.theciviccommons.production/avatars/9/large/Moulthrop1.jpg" class="blog-pic" alt="Dan Moulthrop" />
-            </a>
+            <%= user_profile(@people[:dan]) %>
             <div class='blog_inner'>
               <p>
               I love radio. There's nothing quite like the intimacy it allows. When it's done well, it feels like a conversation
-              you're already a part of. Those of us who have steady radio habits know exactly what I'm referring to. That's part
-              of why it was so difficult for me to leave my last job at WCPN, and also why I was so excited when Mark Krieger
-              of <a href="http://en.wikipedia.org/wiki/WJCU">WJCU</a> (88.7 FM) invited the Civic Commons to take advantage of an
-              8:30 a.m. slot that is opening Saturday mornings.
-              </p>
-              <p>
-              So this Saturday morning (1/22) the Civic Commons is taking to the airwaves. Our goal with the radio show is to take
-              a different sort of approach to the issues we're dealing with every day across Northeast Ohio. Our main goal is to
-              bring your voice to the airwaves as much as possible. We'll be starting off by using the
-              <a href="http://www.theciviccommons.com/principles">CC principles</a> as a way to examine what's happening in the
-              region. For a variety of reasons, we thought we'd start with transparency. That gives us a chance to examine the
               recent transition to a new form government in Cuyahoga County and some of the stumbles along the way. (If you want
               a preview, you can hear the
               <a href="http://s3.amazonaws.com/com.theciviccommons.production/attachments/3389/original/rogers-greenspan%20intv.mp3?1295262987">entire, unedited interview</a>
@@ -39,16 +93,13 @@
             </div>
 
             <div class="post_info">
-              posted by <a href="http://social.theciviccommons.com/user/9">Dan Moulthrop</a> on January 08, 2011
+              posted by <%= link_to @people[:dan].name, user_path(@people[:dan]) %> on January 08, 2011
             </div>
-
          </div>
 
          <div class="blog" id="outer_block_57">
             <h2>Lessons from the Mobile Town Hall</h2>
-            <a href="http://theciviccommons.com/user/9">
-              <img src="http://s3.amazonaws.com/com.theciviccommons.production/avatars/9/large/Moulthrop1.jpg" class="blog-pic" alt="Dan Moulthrop" />
-            </a>
+            <%= user_profile(@people[:dan]) %>
             <div class='blog_inner'>
               <p>
               Last Wednesday, we spent the lunch hour with about 20 or 30 citizens and Akron Deputy Mayor Dave Lieberth at the
@@ -82,25 +133,22 @@
             </div>
 
             <div class="post_info">
-              posted by <a href="http://social.theciviccommons.com/user/9">Dan Moulthrop</a> on January 08, 2011
+              posted by <%= link_to @people[:dan].name, user_path(@people[:dan]) %> on January 08, 2011
             </div>
-
           </div>
 
           <div class="blog" id="outer_block_55">
             <h2>Mobile Town Hall</h2>
-            <a href="http://social.theciviccommons.com/user/9">
-              <img src="http://s3.amazonaws.com/com.theciviccommons.production/avatars/9/large/Moulthrop1.jpg" class="blog-pic" alt="Dan Moulthrop"/>
-            </a>
+            <%= user_profile(@people[:dan]) %>
             <div class='blog_inner'>
               <p>
-              To kick off the New Year, we’re hosting a special Town Hall meeting in Akron next Wednesday, January 5th. This isn’t
-              your usual Town Hall, though. It’s more like an opportunity for citizens to get some real one-on-one time with one of
+              To kick off the New Year, we're hosting a special Town Hall meeting in Akron next Wednesday, January 5th. This isn't
+              your usual Town Hall, though. It's more like an opportunity for citizens to get some real one-on-one time with one of
               the most important (and most accessible) elected officials in Akron--Deputy Mayor Dave Lieberth.
               </p>
               <p>
               The dep. mayor wants to hear from Akronites on all sorts of stuff: what you'd  like to see improved in Akron, a
-              New Year’s resolution the city should take on, a big idea for improving the city, a pet pothole that’s been bugging
+              New Year's resolution the city should take on, a big idea for improving the city, a pet pothole that's been bugging
               you. What makes this a little different is that we're doing this with a technological twist--Lieberth will be connecting
               with citizens via Skype and we'll be recording the whole thing and then posting it online for others to interact with.
               </p>
@@ -124,16 +172,13 @@
             </div>
 
             <div class="post_info">
-              posted by <a href="http://social.theciviccommons.com/user/9">Dan Moulthrop</a> on December 30, 2010
+              posted by <%= link_to @people[:dan].name, user_path(@people[:dan]) %> on December 30, 2010
             </div>
-
           </div>
 
           <div class="blog" id="outer_block_54">
             <h2>$500 for your creative interpretation</h2>
-            <a href="http://social.theciviccommons.com/user/11">
-              <img src="http://s3.amazonaws.com/com.theciviccommons.production/avatars/11/large/Photo 96.jpg" class="blog-pic" alt="Noelle Celeste"/>
-            </a>
+            <%= user_profile(@people[:noelle]) %>
             <div class='blog_inner'>
               <p>
               We're serious when we say that this is YOUR Civic Commons, that's why we've launched a poster contest that invites you
@@ -151,16 +196,13 @@
             </div>
 
             <div class="post_info">
-              posted by <a href="http://social.theciviccommons.com/user/11">Noelle Celeste</a> on December 29, 2010
+              posted by <%= link_to @people[:noelle].name, user_path(@people[:noelle]) %> on December 29, 2010
             </div>
-
           </div>
 
           <div class="blog" id="outer_block_39">
             <h2>Another Experiment in Social Media for Social Good Gets Started</h2>
-            <a href="http://social.theciviccommons.com/user/11">
-              <img src="http://s3.amazonaws.com/com.theciviccommons.production/avatars/11/large/Photo 96.jpg" class="blog-pic" alt="Noelle Celeeste"/>
-            </a>
+            <%= user_profile(@people[:noelle]) %>
             <div class='blog_inner'>
               <p>
               Yesterday Jumo launched its <a href="http://www.jumo.com/">beta site</a>.
@@ -194,60 +236,54 @@
             </div>
 
             <div class="post_info">
-              posted by <a href="http://social.theciviccommons.com/user/11">Noelle Celeste</a> on December 01, 2010
+              posted by <%= link_to @people[:noelle].name, user_path(@people[:noelle]) %> on December 01, 2010
             </div>
-
           </div>
 
           <div class="blog" id="outer_block_36">
             <h2>What exactly are we doing here?</h2>
-            <a href="http://social.theciviccommons.com/user/9">
-              <img src="http://s3.amazonaws.com/com.theciviccommons.production/avatars/9/large/Moulthrop1.jpg" class="blog-pic" alt="Dan Moulthrop"/>
-            </a>
+            <%= user_profile(@people[:dan]) %>
             <div class='blog_inner'>
               <p>
               The Civic Commons is a grand experiment. We opened the doors last week to a group of you—close to 200 so far—to
-              help us test this web environment. And we realize it’s maybe not entirely clear what you can do here and why you
+              help us test this web environment. And we realize it's maybe not entirely clear what you can do here and why you
               would want to do it. One of the most common bits of feedback we received last week goes something like this:
-              “It feels like the conversation has already happened,” or “I feel like I’d be interrupting if I jump in.” or
+              “It feels like the conversation has already happened,” or “I feel like I'd be interrupting if I jump in.” or
               “This system is baffling. I keep getting entirely different windows to respond and they're all quirky.”
               <b>This kind of feedback is great. It tells us that what we think we've created isn't working right yet</b>.
               </p>
-              <p>So, I'm going to try to explain exactly what we’re doing and you can tell me how we might do it better. Conversation
-              is basically the engine of civic engagement. It’s how we exchange ideas, how we organize, how we share information with
-              one another. Important civic conversations are happening all over the place, all the time, and <strong>what we’re trying
+              <p>So, I'm going to try to explain exactly what we're doing and you can tell me how we might do it better. Conversation
+              is basically the engine of civic engagement. It's how we exchange ideas, how we organize, how we share information with
+              one another. Important civic conversations are happening all over the place, all the time, and <strong>what we're trying
                 to create is a place and practice for those conversations to continue, to be ongoing, and to involve more people.</strong>
               </p>
               <p>
               So, take <a href="http://theciviccommons.com/conversations/27">the conversation about urban farming</a>—we transcribed a
               City Club event from last Spring and created an opportunity for anyone to join the conversation anywhere in the conversation.
               Where you see &quot;No responses&quot; or &quot;3 responses&quot;--those are all places where you can jump in and add your
-              thoughts, ask a question, suggest an action, or post some piece of information you think is relevant.  We’re used to just
-              seeing things presented and then commenting on them at the end. This is different. We’re trying to make it possible to allow
-              real, authentic, valuable participation by everyone, even people who weren’t there.
+              thoughts, ask a question, suggest an action, or post some piece of information you think is relevant.  We're used to just
+              seeing things presented and then commenting on them at the end. This is different. We're trying to make it possible to allow
+              real, authentic, valuable participation by everyone, even people who weren't there.
               </p>
               <p>
-              Clearly, we haven’t figured this out yet, so help us. What would make this work better?
+              Clearly, we haven't figured this out yet, so help us. What would make this work better?
               </p>
               <p>
-              A couple things we’re contemplating are notifications (if someone comments on something you said or in a conversation you’re
+              A couple things we're contemplating are notifications (if someone comments on something you said or in a conversation you're
               following, you get a heads up), and also the ability to ask a question of a particular conversation participant (or even
-              someone who’s not there, who could be invited to join the Commons). But those could wind up baffling people, too. So your
-              suggestions here are welcome. We’re listening.
+              someone who's not there, who could be invited to join the Commons). But those could wind up baffling people, too. So your
+              suggestions here are welcome. We're listening.
               </p>
             </div>
 
             <div class="post_info">
-              posted by <a href="http://social.theciviccommons.com/user/9">Dan Moulthrop</a> on November 22, 2010
+              posted by <%= link_to @people[:dan].name, user_path(@people[:dan]) %> on November 22, 2010
             </div>
-
           </div>
 
           <div class="blog" id="outer_block_18">
             <h2>National Day of Conversation</h2>
-            <a href="http://social.theciviccommons.com/user/11">
-              <img src="http://s3.amazonaws.com/com.theciviccommons.production/avatars/11/large/Photo 96.jpg" class="blog-pic" alt="Noelle Celeste"/>
-            </a>
+            <%= user_profile(@people[:noelle]) %>
             <div class='blog_inner'>
               <p>
               The Civic Commons team recently sat down for lunch with citizens in Akron and Cleveland while a couple of other groups
@@ -266,34 +302,31 @@
             </div>
 
             <div class="post_info">
-              posted by <a href="http://social.theciviccommons.com/user/11">Noelle Celeste</a> on November 09, 2010
+              posted by <%= link_to @people[:noelle].name, user_path(@people[:noelle]) %> on November 09, 2010
             </div>
-
           </div>
 
           <div class="blog" id="outer_block_2">
             <h2>Can you volunteer at the Civic Commons?</h2>
-            <a href="http://social.theciviccommons.com/user/9">
-              <img src="http://s3.amazonaws.com/com.theciviccommons.production/avatars/9/large/Moulthrop1.jpg" class="blog-pic" alt="Dan Moulthrop"/>
-            </a>
+            <%= user_profile(@people[:dan]) %>
             <div class='blog_inner'>
               <p>
-              We get this question a fair bit, and the answer, of course, is <strong>yes</strong>. There’s lots of ways you can volunteer at
+              We get this question a fair bit, and the answer, of course, is <strong>yes</strong>. There's lots of ways you can volunteer at
               the Commons. Volunteering is one of those things that simply makes life better. We help someone else or some organization, and
-              in return, we get a warm fuzzy feeling and the sense that we’re more of the person we want to be and less of the person who
-              guiltily eats chocolate chips out of the peanut butter jar with a spoon while watching “Glee.” And what’s great about volunteering
-              at the Commons is that it’s not quite like a lot of other volunteer gigs.
+              in return, we get a warm fuzzy feeling and the sense that we're more of the person we want to be and less of the person who
+              guiltily eats chocolate chips out of the peanut butter jar with a spoon while watching “Glee.” And what's great about volunteering
+              at the Commons is that it's not quite like a lot of other volunteer gigs.
               </p>
               <p>
               A few months back I heard was listening to <a href="http://www.wcpn.org/soi">the radio program I used to host</a>. They were
               talking about how to make local governments more efficient, a topic in which I have a keen interest. This guy called in,
-              identifying himself as a listener from Lakewood and a former economic development professional. He said he didn’t think he
-              ever created any jobs, and he didn’t think economic development professionals ever create any jobs, except for more economic
+              identifying himself as a listener from Lakewood and a former economic development professional. He said he didn't think he
+              ever created any jobs, and he didn't think economic development professionals ever create any jobs, except for more economic
               development professionals.
               </p>
               <p>
               Well, I got to wondering, what if we had fifty or a hundred volunteers across this corner of the state, and we could ask them
-              to go their city’s economic development department or community liaison, and ask them three questions:
+              to go their city's economic development department or community liaison, and ask them three questions:
               </p> 
               <p>
               What was your economic development budget for each of the last three years?
@@ -309,42 +342,39 @@
               -- except it would be about economic development and not whether nutritional supplements are snake oil.
               </p>
               <p>
-              So, to pull that off, we can use volunteer reporters, data crunchers, designers, organizers. And elsewhere in the commons, we’ve
+              So, to pull that off, we can use volunteer reporters, data crunchers, designers, organizers. And elsewhere in the commons, we've
               got room for volunteer writers, editors, conversation moderators (or as one of our volunteers put it, “conversation shepherds”),
-              researchers, photographers, transcribers, coders, and social media mavens. I suspect there are a few volunteer categories I’ve
-              forgotten about. Which is to say if you’ve got an idea about how you’d like to lend your talents to the project, you can send an
+              researchers, photographers, transcribers, coders, and social media mavens. I suspect there are a few volunteer categories I've
+              forgotten about. Which is to say if you've got an idea about how you'd like to lend your talents to the project, you can send an
               email to us (<a href="mailto:volunteer@theciviccommons.com">volunteer@theciviccommons.com</a>), and we can certainly find a place
               for you.
               </p>
               <p>
-              The other part of this is that volunteering for the Commons shouldn’t necessarily take a ton of your time (unless you want it to).
-              If you’ve got ten minutes a week, we can use it. And it's worth pointing out at the risk of undermining this call for volunteers,
+              The other part of this is that volunteering for the Commons shouldn't necessarily take a ton of your time (unless you want it to).
+              If you've got ten minutes a week, we can use it. And it's worth pointing out at the risk of undermining this call for volunteers,
               that just participating in a conversation here or suggesting one that you think ought to be launched is a way to make your
               community stronger.
               </p>
             </div>
 
             <div class="post_info">
-              posted by <a href="http://social.theciviccommons.com/user/9">Dan Moulthrop</a> on November 03, 2010
+              posted by <%= link_to @people[:dan].name, user_path(@people[:dan]) %> on November 03, 2010
             </div>
-
           </div>
 
           <div class="blog" id="outer_block_1">
             <h2>A Great Experiment</h2>
-            <a href="http://social.theciviccommons.com/user/9">
-              <img src="http://s3.amazonaws.com/com.theciviccommons.production/avatars/9/large/Moulthrop1.jpg" class="blog-pic" alt="Dan Moulthrop" />
-            </a>
+            <%= user_profile(@people[:dan]) %>
             <div class='blog_inner'>
               <p>
-              The CC team spent a beautiful Saturday afternoon recently at Cleveland State’s student center, participating in Spotlight
-              Cleveland, an event organized by Senator Sherrod Brown’s office to bring together local organizations who have volunteer
-              and networking opportunities for young professionals. We participated for all the reasons you’d expect us to participate—to
+              The CC team spent a beautiful Saturday afternoon recently at Cleveland State's student center, participating in Spotlight
+              Cleveland, an event organized by Senator Sherrod Brown's office to bring together local organizations who have volunteer
+              and networking opportunities for young professionals. We participated for all the reasons you'd expect us to participate—to
               connect with other organizations and interested citizens. But what really piqued our interest was the chance to see if we
               could use an unconventional setting—the ballroom expo—for unconventional civic engagement.
               </p>
               <p>
-              Here’s what we did (and big ups to project directors Lia Lockert and Jason Russell for masterminding this effort):
+              Here's what we did (and big ups to project directors Lia Lockert and Jason Russell for masterminding this effort):
               </p>
               <ol>
                 <li>
@@ -367,32 +397,31 @@
                 choose one community over another, and about the regional identity of this corner of the state)
                 </li>
                 <li>
-                Conversations don’t really require a whole lot of active moderation
+                Conversations don't really require a whole lot of active moderation
                 </li>
                 <li>
                 Unconventional settings can be turned into surprising places for engagement.
                 </li>
               </ul>
               <p>
-              I’ve spent a lot of the last five years actively managing and moderating formal and informal conversations, and I was
+              I've spent a lot of the last five years actively managing and moderating formal and informal conversations, and I was
               happily surprised to find that role was rendered almost irrelevant. In conversations, people naturally rise into roles,
-              asking questions of one another and following up on one another’s comments. The conversations were civil and compelling;
+              asking questions of one another and following up on one another's comments. The conversations were civil and compelling;
               there was a diversity of perspectives, everyone participated. In some ways, this exemplified a lot of the principles we
               put at the center of our work here, the desire to strive to be diverse, participatory, civil, credible, transparent,
               entrepreneurial and optimistic.
               </p>
               <p>
               So, if part of the secret it seems is to set up opportunities and then get out of the way so people can just engage with
-              one another, here’s the challenge: how do you do this online? How do you take one of our online conversations—whether they
+              one another, here's the challenge: how do you do this online? How do you take one of our online conversations—whether they
               begin with a live event or not—and foster the same kind of self-directed energy we found with the participants at Spotlight
               Cleveland?
               </p>
             </div>
 
             <div class="post_info">
-              posted by <a href="http://social.theciviccommons.com/user/9">Dan Moulthrop</a> on November 03, 2010
+              posted by <%= link_to @people[:dan].name, user_path(@people[:dan]) %> on November 03, 2010
             </div>
-
           </div>
 
         </div>

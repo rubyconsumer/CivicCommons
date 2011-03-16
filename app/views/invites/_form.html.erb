@@ -1,0 +1,19 @@
+<div class='invite-form'>
+  <p>
+  Who do you want to invite to join this conversation? Just list email addresses one per line and we’ll send out the invitations. If you’d like us to send one to you, too, just add yours to the list.
+  </p>
+  <%= form_tag invites_url, :method => :post, :remote => request.xhr?, :id => 'invite-form' do %>
+    <div class="validation-error"></div>
+    <fieldset class="form-group">
+      <%= hidden_field_tag :source_type, "#{@source_type}" %>
+      <%= hidden_field_tag :source_id, "#{@source_id}" %>
+    </fieldset>
+    <fieldset class="form-group">
+    <%= label :invites, :email %>
+    <%= text_area :invites, :emails, :rows => 10 %>
+    </fieldset>
+    <fieldset class="footer">
+      <%= submit_tag from_conversation_create_page? ? 'Send Invitations' : 'Send', :class=> 'submit' %>
+    </fieldset>
+  <% end %>
+</div>

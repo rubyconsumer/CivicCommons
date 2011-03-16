@@ -1,20 +1,23 @@
 require 'spec_helper'
 
 describe Invite do
-  it "is valid with a 3 digits 4 letter code" do
-    Invite.new(:invitation_token => "ASD1234").should be_valid
+
+  describe "parse email" do
+    let(:valid_results) {['alpha@example.com', 'bravo@example.com', 'charlie@example.com']}
+
+    it "should parse emails delimited by commas" do
+      emails = "alpha@example.com, bravo@example.com, charlie@example.com"
+
+      email_results = Invite.parse_emails(emails)
+      email_results.should == valid_results
+    end
+
+    it "should parse emails delimited by lines" do
+      emails = "alpha@example.com\r\n bravo@example.com\r\ncharlie@example.com"
+
+      email_results = Invite.parse_emails(emails)
+      email_results.should == valid_results
+    end
   end
-  
-  it "is not valid with non-consecutive 3 digits and 4 letters code." do
-    Invite.new(:invitation_token => "1SXA234").should_not be_valid
-    Invite.new(:invitation_token => "A1B2C34").should_not be_valid
-  end
-  
-  it "should not allow invite codes larger than 7 characters" do
-    Invite.new(:invitation_token => "XZZZ9999X").should_not be_valid
-  end
-  
-  it "should not allow invite codes less than 7 characters" do
-    Invite.new(:invitation_token => "ZZZ888").should_not be_valid
-  end
+
 end

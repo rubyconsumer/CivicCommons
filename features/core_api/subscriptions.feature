@@ -1,5 +1,5 @@
 Feature:
-  As a People Aggregator developer
+  As a developer
   I want to be able to retrieve a user's subscriptions
   So that I encourage others to participate and show how people are using the system
 
@@ -10,26 +10,32 @@ Feature:
       | Email                | joe@test.com  |
       | Zip                  | 44444         |
       | Password             | abcd1234      |
-      | People Aggregator ID | 12            |
+      | ID                   | 12            |
     Given I am following the conversation:
-      | ID    | 2                                            |
-      | Title | Understanding The Latest Health Care Changes |
+      | ID       | 2                                            |
+      | Title    | Understanding The Latest Health Care Changes |
+      | Summary  | This is a great new conversation.            |
+      | Zip Code | 48105                                        |
+      | Comment  | This is a sweet new comment.                 |
     Given I am following the conversation:
-      | ID    | 3                                               |
-      | Title | Obamacare Pushes on Through Despite Antagonists |
+      | ID       | 3                                               |
+      | Title    | Obamacare Pushes on Through Despite Antagonists |
+      | Summary  | This is a great new conversation.               |
+      | Zip Code | 48105                                           |
+      | Comment  | This is a sweet new comment.                    |
     And I am following the issue:
-      | ID   | 2                                             |
+      | ID   | 200                                           |
       | Name | Democrats Upset About Recent Election Results |
 
   Scenario: Retrieve all subscriptions
-    When I ask for subscriptions for the person with People Aggregator ID 12
+    When I ask for subscriptions for the person with ID 12
     Then I should receive the response:
     """
     [
       {
-        "id": 2,
+        "id": 200,
         "title": "Democrats Upset About Recent Election Results",
-        "url": "http://www.example.com/issues/2",
+        "url": "http://www.example.com/issues/200",
         "type": "issue"
       },
       {
@@ -48,7 +54,7 @@ Feature:
     """
 
   Scenario: Retrieve subscribed conversations
-    When I ask for conversations the person with People Aggregator ID 12 is following
+    When I ask for conversations the person with ID 12 is following
     Then I should receive the response:
     """
     [
@@ -66,17 +72,17 @@ Feature:
     """
 
   Scenario: Retrieve subscribed issues
-    When I ask for issues the person with People Aggregator ID 12 is following
+    When I ask for issues the person with ID 12 is following
     Then I should receive the response:
     """
     [{
-      "id": 2,
+      "id": 200,
       "title": "Democrats Upset About Recent Election Results",
-      "url": "http://www.example.com/issues/2"
+      "url": "http://www.example.com/issues/200"
     }]
     """
 
   Scenario: Retrieve subscriptions for non-existant user
-    When I ask for subscriptions for the person with People Aggregator ID 1099932
+    When I ask for subscriptions for the person with ID 1099932
     Then I should receive a 404 Not Found response
 

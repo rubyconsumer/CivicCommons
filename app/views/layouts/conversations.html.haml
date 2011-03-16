@@ -1,4 +1,7 @@
 - content_for :main_body do
+  -if flash[:notice]
+    .flash-notice
+      =flash[:notice]
   = yield :main
   .aside.supplementary
     = yield :sidebar

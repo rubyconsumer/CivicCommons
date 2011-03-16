@@ -1,16 +1,16 @@
 class Admin::ConversationsController < Admin::DashboardController
-  
+
   #GET admin/conversations
   def index
     @conversations = Conversation.all
-  end  
-  
+  end
+
   #GET admin/conversations/new
   def new
     @conversation = Conversation.new(params[:conversation])
     @presenter = IngestPresenter.new(@conversation)
   end
-  
+
   #POST admin/conversations/
   def create
     ActiveRecord::Base.transaction do
@@ -20,7 +20,7 @@ class Admin::ConversationsController < Admin::DashboardController
       @conversation.save!
       @presenter.save!
       respond_to do |format|
-        format.html { redirect_to(admin_conversation_path(@conversation), :notice => 'Conversation was successfully created.') }
+        format.html { redirect_to(admin_conversation_path(@conversation), :notice => 'Your conversation has been created!') }
         format.xml  { render :xml => @conversation, :status => :created, :location => @conversation }
       end
     end
@@ -29,15 +29,15 @@ class Admin::ConversationsController < Admin::DashboardController
       format.html { render new_admin_conversation_path }
       format.xml  { render :xml => @conversation.errors + @presenter.errors, :status => :unprocessable_entity }
     end
-  end  
-  
-  
+  end
+
+
   #GET admin/conversations/:id/edit
   def edit
     @conversation = Conversation.includes(:top_level_contributions).find(params[:id])
     @presenter = IngestPresenter.new(@conversation)
   end
-  
+
   #PUT admin/conversations/:id
   def update
     @conversation = Conversation.find(params[:id])
@@ -48,7 +48,7 @@ class Admin::ConversationsController < Admin::DashboardController
       render edit_admin_conversation_path(@conversation)
     end
   end
-  
+
   #GET admin/conversations/:id
   def show
     @conversation =  Conversation.find(params[:id])
@@ -60,5 +60,5 @@ class Admin::ConversationsController < Admin::DashboardController
     @conversation.destroy
     redirect_to admin_conversations_path
   end
-  
+
 end

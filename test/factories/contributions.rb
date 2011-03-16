@@ -84,12 +84,3 @@ Factory.define :embedded_snippet do |f|
   f.association :parent, :factory => :top_level_contribution
   f.url "http://www.youtube.com/watch?v=djtNtt8jDW4"
 end
-
-Factory.define :ppl_agg_contribution do |f|
-  f.datetime "2010-06-30 12:39:43"
-  f.association :person, :factory => :normal_person
-  f.association :conversation, :factory => :conversation
-  f.content "MyText"
-  f.association :parent, :factory => :top_level_contribution
-  f.url "http://civiccommons.digitalcitymechanics.com/content/cid=5"
-end

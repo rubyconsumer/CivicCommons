@@ -1,11 +1,17 @@
-class Invite < ActiveRecord::Base
-  belongs_to :person
+class Invite
+  def self.parse_emails(emails)
+    cleaned_emails = emails.to_s.gsub(/ /, '')
+    cleaned_emails.gsub!(/\r\n/, ',')
+    cleaned_emails.split(',')
+  end
 
-  validates_format_of :invitation_token, :with => /^([a-zA-Z]{3})([0-9]{4})$/i, :msg => "invalid"
-  
-  scope :group_by_invitation_token, {:group => 'invitation_token'} 
-  
-  def self.summary_report
-    self.group_by_invitation_token.count
+  def self.send_invites(emails, user, conversation)
+    parse_emails(emails).each do |email|
+      resource = {:emails => parse_emails(email), :user => user, :conversation => conversation}
+      mail = Notifier.invite_to_conversation(resource)
+      #Rails.logger.info "mail:#{mail.inspect}"
+      mail_result = mail.deliver
+      #Rails.logger.info "mail result:#{mail_result}"
+    end
   end
 end

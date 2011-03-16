@@ -21,9 +21,6 @@
       %h1 Sign up
       %p
         Want to join the conversation? Lets get the formalities out of the way.
-      %p
-        We're still in beta, so you'll need a code to get started.  Do you need a code?
-        = link_to 'Contact us', '/contact-us'
 .wrapper
   .main.section
     = form_for(form_presenter, :as => resource_name, :url => registration_path(resource_name), :html => { :multipart => 'true', :class => "register" }) do |f|
@@ -37,17 +34,6 @@
         .form-block
           = f.label :zipcode, 'Zip Code:'
           = f.text_field :zip_code, :placeholder => '44101-9999', :class => "textbox ", :maxlength => 10
-        =f.fields_for :invite do |invite|
-          .form-block
-            = invite.label :invitation_token, 'Invite Code:'
-            - if form_presenter.errors[:"invite.invitation_token"].any?
-              %span.field-with-error
-                = invite.text_field :invitation_token, :placeholder => 'PRIVATE BETA', :class => "textbox ", :maxlength => 40
-              %span.validation-error
-                %nbsp
-                = form_presenter.errors[:"invite.invitation_token"].join(", ")
-            - else
-              = invite.text_field :invitation_token, :placeholder => 'PRIVATE BETA', :class => "textbox ", :maxlength => 40
         .form-block
           = f.label :avatar, 'Upload an Image:'
           -# Bug with Paperclip:

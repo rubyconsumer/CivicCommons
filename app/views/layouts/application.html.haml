@@ -35,29 +35,6 @@
 
       });
 
-    :javascript
-
-      var url = '#{append_pa_authtoken(polls_path(:silent=> true))}';
-
-      $(document).ready(function(){
-        $("#poll_module").load(url, setupPollFormHandler);
-      });
-
-      function setupPollFormHandler(response, status, xhr){
-        $("#poll_module form").submit(function(event) {
-          event.preventDefault();
-
-          var selected_val = $(this).find('input[name=vote]:checked').val();
-          if(selected_val != '') {
-            //post data only if a value is selected
-            $.post(url, $(this).serialize(), function(response, status, xhr){
-              $("#poll_module").load(url, setupPollFormHandler);
-            });
-          }
-          return false;
-        });
-      }
-
       /* Google Analytics */
       var _gaq = _gaq || [];
       _gaq.push(['_setAccount', 'UA-19685339-1']);
@@ -118,6 +95,8 @@
               %li
                 = link_to 'In The News', '/press'
               %li
+                = link_to 'Careers', '/jobs'
+              %li
                 = link_to 'Contact us', '/contact-us'
     = yield :main_body
     #footer.footer
@@ -139,6 +118,7 @@
             = link_to 'In The News', '/press'
           %li
             = link_to 'Contact us', '/contact-us'
+        = render :partial => 'layouts/creative_commons'
         %p 
           %a{ :href => '/terms'} Terms of Use
         %ul.social-media

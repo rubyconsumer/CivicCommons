@@ -1,2 +1,50 @@
-<h1>User#edit</h1>
-<p>Find me in app/views/user/edit.html.erb</p>
+<% content_for :main_body do %>
+  <div class="wrapper">
+    <div class="main section">
+      <h1>Settings</h1>
+      <%= form_for @person, :url => user_path(@person), :method => :put, :html=> {:multipart => true} do |person| %>
+        <fieldset class="form-group">
+          <div class="form-block">
+            <%= person.label :name, "Your Name" %>
+            <%= person.text_field :name, :class => 'textbox' %> 
+          </div>
+          <div class="form-block">
+            <%= person.label :zip_code %>
+            <%= person.text_field :zip_code, :class => 'textbox' %>
+          </div>
+          <div class="form-block">
+            <%= person.label :bio %>
+            <%= person.text_area :bio, :class => 'short', :cols => 20, :rows => 10 %>
+          </div>
+          <div class="form-block">
+            <%= person.label :avatar, "Upload Image" %>
+            <%= person.file_field :avatar, :class => 'textbox' %>
+          </div>
+          <div class="form-block">
+            <div class="curr_image form-label-offset">
+              <span class="title">Current Image</span>
+              <a id="profileImage" href="<%= user_path(@person) %>">
+                <%= image_tag @person.avatar.url(:standard), alt: @person.name, class: 'callout picture' %>
+              </a>
+              <%= link_to "Remove Picture", destroy_avatar_user_path(@person), id: "delete", remote: true, method: :delete, confirm: "Are you sure?" %>
+            </div>
+          </div>
+       </fieldset>
+       <fieldset class="form-group">
+        <div class="form-block">
+          <%= person.label :password %>
+          <%= person.password_field :password, :class => 'textbox' %>
+        </div>
+        <div class="form-block">
+          <%= person.label :password_again %>
+          <%= person.password_field :password_confirmation, :class => 'textbox' %>
+        </div>
+       </fieldset>
+      <fieldset class="footer">
+        <%= person.submit :class => 'submit', :value => 'Update Settings' %>
+      </fieldset>
+      <% end %>
+    </div>
+  </div>
+  <%= javascript_include_tag "lib/users/edit" %>
+<% end %>

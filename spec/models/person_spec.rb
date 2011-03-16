@@ -11,6 +11,30 @@ end
 
 describe Person do
 
+  describe "validate required data" do
+
+    before(:each) do
+      @person = Factory.build(:normal_person)
+    end
+
+    it "should require first name or last name" do
+      @person.first_name = ''
+      @person.last_name = ''
+      @person.should_not be_valid
+    end
+
+    it "should require email address" do
+      @person.email = ''
+      @person.should_not be_valid
+    end
+
+    it "should require zip_code" do
+      @person.zip_code = ''
+      @person.should_not be_valid
+    end
+
+  end
+
   describe "when parsing the name" do
     it "should parse simple name" do
       first, last = Person.parse_name("John Doe")
@@ -94,46 +118,25 @@ describe Person do
 
   describe "when displaying a name" do
     it "should respect case of name entered by person" do
-      person = Factory.create(:normal_person)
+      person = Factory.build(:normal_person)
       person.first_name = "ektor"
       person.last_name = "van capsula"
       person.name.should == "ektor van capsula"
     end
 
     it "should display names without leading spaces when the first name is missing" do
-      person = Factory.create(:normal_person)
+      person = Factory.build(:normal_person)
       person.first_name = ""
       person.last_name = "van capsula"
       person.name.should == "van capsula"
     end
 
     it "should display names without trailing spaces when the last name is missing" do
-      person = Factory.create(:normal_person)
+      person = Factory.build(:normal_person)
       person.first_name = "ektor"
       person.last_name = ""
       person.name.should == "ektor"
     end
-  end
-
-
-  it "creates a shadow account after saving" do
-    person = Factory.build(:person_with_shadow_account)
-    PeopleAggregator::Person.stub!(:create).and_return(OpenStruct.new(id: 42))
-    person.save
-    person.people_aggregator_id.should == 42
-  end
-
-
-  it "doesn't create a shadow account when there are errors" do
-    person = Factory.build(:person_with_shadow_account)
-
-    PeopleAggregator::Person.stub(:create) do
-      raise PeopleAggregator::Error.new("There was an error saving this person.")
-    end
-
-    lambda { person.save }.should raise_error(ActiveRecord::RecordNotSaved)
-    person.errors[:person].should include("There was an error saving this person.")
-
   end
 
   describe "upon creation" do
@@ -149,7 +152,7 @@ describe Person do
     it "should send a confirmation email" do
       given_a_new_user_registered
       mailing = ActionMailer::Base.deliveries.first
-      mailing[:from].to_s.should == Civiccommons::Config.devise_email
+      mailing[:from].to_s.should == Civiccommons::Config.devise['email']
       mailing.to.should == [@person.email]
       mailing.subject.should == "Confirmation instructions"
     end
@@ -163,7 +166,7 @@ describe Person do
     it "should send a notification email to register@civiccommons.com" do
       given_a_new_user_registered
       mailing = ActionMailer::Base.deliveries.last
-      mailing[:from].to_s.should == Civiccommons::Config.devise_email
+      mailing[:from].to_s.should == Civiccommons::Config.devise['email']
       mailing.to.should == ["register@theciviccommons.com"]
       mailing.subject.should == "New User Registered"
       mailing.body.include?(@person.email).should be_true
@@ -183,7 +186,7 @@ describe Person do
       person.confirmed_at.should_not be_blank
 
       mailing = ActionMailer::Base.deliveries.last
-      mailing[:from].to_s.should == Civiccommons::Config.devise_email
+      mailing[:from].to_s.should == Civiccommons::Config.devise['email']
       mailing.to.should == [person.email]
       mailing.subject.should == "Welcome to The Civic Commons"
       ActionMailer::Base.deliveries.length.should == 3
@@ -192,104 +195,4 @@ describe Person do
     end
   end
 
-  describe "upon api update" do
-    it "can update name" do
-      person = Factory.create(:normal_person)
-      person.api_update(:name => "John Foo")
-      person.name.should == "John Foo"
-    end
-
-    it "skips encrypted password when missing" do
-      person = Factory.create(:normal_person)
-      encrypted_before = person.encrypted_password
-
-      person.api_update({})
-
-      person.encrypted_password.should == encrypted_before
-    end
-
-    it "skips encrypted password and salt when password salt is missing" do
-      person = Factory.create(:normal_person)
-      encrypted_before = person.encrypted_password
-      salt_before = person.password_salt
-
-      person.api_update(:encrypted_password =>
-                        "$2a$10$95c0ac175c8566911bb03uvHgL7PXXveLmPKg4gZ7K/md5a5aXD4m")
-
-      person.encrypted_password.should == encrypted_before
-      person.password_salt.should == salt_before
-    end
-
-    it "skips encrypted password and salt when encrypted password is missing" do
-      person = Factory.create(:normal_person)
-      encrypted_before = person.encrypted_password
-      salt_before = person.password_salt
-
-      person.api_update(:password_salt => "$2a$10$95c0ac175c8566911bb039$")
-
-      person.encrypted_password.should == encrypted_before
-      person.password_salt.should == salt_before
-    end
-
-    it "strips trailing $ from password_salt and updates encrypted password and salt" do
-      person = Factory.create(:normal_person)
-
-      pepper = Civiccommons::Config.devise_pepper
-      password_salt = "$2a$10$95c0ac175c8566911bb039"
-
-      encrypted_password = Devise::Encryptors::Bcrypt.
-        digest("testpass", 10, password_salt, pepper)
-
-      person.api_update(:password_salt => "#{password_salt}$",
-                        :encrypted_password => encrypted_password)
-
-      person.save.should be_true
-
-      person.password_salt.should == password_salt
-      person.encrypted_password.should == encrypted_password
-
-      person.valid_password?("testpass").should be_true
-    end
-
-    it "should have error on invalid password salt" do
-      person = Factory.create(:normal_person)
-
-      person.api_update(:password_salt => "$2a$10$95c0ac175c8$",
-                        :encrypted_password =>
-                        "$2a$10$95c0ac175c8566911bb03uvHgL7PXXveLmPKg4gZ7K/md5a5aXD4m")
-
-      person.save.should be_false
-      person.errors[:password_salt].should_not be_nil
-    end
-
-  end
-
-  describe "upon password reset" do
-    it "should call people aggregator with update when valid passwords" do
-      PeopleAggregator::Account.should_receive(:update).once
-
-      person = Factory.create(:normal_person)
-      person.send(:generate_reset_password_token!)
-
-      person.reset_password!("foobar", "foobar")
-    end
-
-    it "should not call people aggregator with update when passwords to not match" do
-      PeopleAggregator::Account.should_not_receive(:update)
-
-      person = Factory.create(:normal_person)
-      person.send(:generate_reset_password_token!)
-
-      person.reset_password!("foobar", "foo")
-    end
-
-    it "should not call people aggregator with update when invalid password" do
-      PeopleAggregator::Account.should_not_receive(:update)
-
-      person = Factory.create(:normal_person)
-      person.send(:generate_reset_password_token!)
-
-      person.reset_password!("", "")
-    end
-  end
 end

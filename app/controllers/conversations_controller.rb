@@ -1,31 +1,34 @@
 class ConversationsController < ApplicationController
-  before_filter :verify_admin, :only=>[:new, :create, :edit, :update, :destroy]
-  before_filter :require_user, :only=>[:new_node_contribution, :preview_node_contribution, :confirm_node_contribution]
+  before_filter :require_user, :only=>[:new, :create, :new_node_contribution, :preview_node_contribution, :confirm_node_contribution]
 
   # GET /conversations
-  # GET /conversations.xml
   def index
-    @conversations = Conversation.latest_updated.paginate(:page => params[:page], :per_page => 12)
+    @active = Conversation.includes(:participants).latest_updated.limit(3)
+    @popular = Conversation.includes(:participants).get_top_visited(3)
+    @recent = Conversation.includes(:participants).latest_created.limit(3)
 
-    @main_article = Article.conversation_main_article.first
-    @sub_articles = Article.conversation_sub_articles.limit(3)
     @regions = Region.all
     @recent_items = TopItem.newest_items(3).for(:conversation).collect(&:item)
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @conversations }
-    end
+    render :index
+  end
+
+  def filter
+    @filter = params[:filter]
+    @conversations = Conversation.includes(:participants).filtered(@filter).paginate(:page => params[:page], :per_page => 12)
+
+    @regions = Region.all
+    @recent_items = TopItem.newest_items(3).for(:conversation).collect(&:item)
+    render :filter
   end
 
   # GET /conversations/1
-  # GET /conversations/1.xml
   def show
-    @conversation = Conversation.includes(:guides, :issues).find(params[:id])
+    @conversation = Conversation.includes(:issues).find(params[:id])
     @conversation.visit!((current_person.nil? ? nil : current_person.id))
-    @top_level_contributions = TopLevelContribution.where(:conversation_id => @conversation.id).includes([:person]).order('created_at ASC').with_user_rating(current_person)
+    @top_level_contributions = TopLevelContribution.where(:conversation_id => @conversation.id).includes([:person]).order('created_at ASC')
     # grab all direct contributions to conversation that aren't TLC
-    @conversation_contributions = Contribution.not_top_level.confirmed.without_parent.where(:conversation_id => @conversation.id).includes([:person]).order('created_at ASC').with_user_rating(current_person)
-    #@contributions = Contribution.confirmed.with_user_rating(current_person).descendants_of(@conversation_contributions).includes([:person])
+    @conversation_contributions = Contribution.not_top_level.confirmed.without_parent.where(:conversation_id => @conversation.id).includes([:person]).order('created_at ASC')
+    #@contributions = Contribution.confirmed.descendants_of(@conversation_contributions).includes([:person])
 
     @top_level_contribution = Contribution.new # for conversation comment form
     @tlc_participants = @top_level_contributions.collect{ |tlc| tlc.owner }
@@ -34,32 +37,25 @@ class ConversationsController < ApplicationController
 
     @recent_items = TopItem.newest_items(5).for(:conversation => @conversation.id).collect(&:item)
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @conversation }
-    end
+    render :show
   end
 
   def dialog
     @conversation = Conversation.includes(:guides, :issues).find(params[:id])
     @conversation.visit!((current_person.nil? ? nil : current_person.id))
-    @conversation_contributions = Contribution.confirmed.not_top_level.without_parent.with_user_rating(current_person).where(:conversation_id => @conversation.id).includes([:person]).order('created_at ASC')
-    @contributions = Contribution.confirmed.with_user_rating(current_person).descendants_of(@conversation_contributions).includes([:person])
+    @conversation_contributions = Contribution.confirmed.not_top_level.without_parent.where(:conversation_id => @conversation.id).includes([:person]).order('created_at ASC')
+    @contributions = Contribution.confirmed.descendants_of(@conversation_contributions).includes([:person])
 
     @contribution = Contribution.new # for conversation comment form
 
     @latest_contribution = @conversation.confirmed_contributions.most_recent.first
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @conversation }
-    end
+    render :show
   end
 
   def node_conversation
     @contribution = Contribution.find(params[:id])
     @contributions = @contribution.children.confirmed.includes(:person)
-    @contributions = @contributions.with_user_rating(current_person) if current_person
     @contribution.visit!((current_person.nil? ? nil : current_person.id))
 
     respond_to do |format|
@@ -69,8 +65,8 @@ class ConversationsController < ApplicationController
   end
 
   def node_permalink
-    contribution = Contribution.with_user_rating(current_person).find(params[:id])
-    @contributions = contribution.self_and_ancestors.with_user_rating(current_person)
+    contribution = Contribution.find(params[:id])
+    @contributions = contribution.self_and_ancestors
     @top_level_contribution = @contributions.root
     contribution.visit!((current_person.nil? ? nil : current_person.id))
 
@@ -87,7 +83,7 @@ class ConversationsController < ApplicationController
   end
 
   def update_node_contribution
-    @contribution = Contribution.with_user_rating(current_person).find(params[:contribution][:id])
+    @contribution = Contribution.find(params[:contribution][:id])
     respond_to do |format|
       if @contribution.update_attributes_by_user(params[:contribution], current_person)
         format.js{ render(:partial => "conversations/contributions/threaded_contribution_template", :locals => {:contribution => @contribution, :div_id => params[:div_id]}, :layout => false, :status => :ok) }
@@ -124,72 +120,56 @@ class ConversationsController < ApplicationController
 
     respond_to do |format|
       if @contribution.confirm!
+        Subscription.create_unless_exists(current_person, @contribution.item)
         format.js   { render :partial => "conversations/contributions/threaded_contribution_template", :locals => {:contribution => @contribution}, :status => (params[:preview] ? :accepted : :created) }
         format.html   { render :partial => "conversations/contributions/threaded_contribution_template", :locals => {:contribution => @contribution}, :status => (params[:preview] ? :accepted : :created) }
-        format.xml  { render :xml => @contribution, :status => :created, :location => @contribution }
       else
         format.js   { render :json => @contribution.errors, :status => :unprocessable_entity }
         format.html { render :text => @contribution.errors, :status => :unprocessable_entity }
-        format.xml  { render :xml => @contribution.errors, :status => :unprocessable_entity }
       end
     end
   end
 
   # GET /conversations/new
-  # GET /conversations/new.xml
   def new
+    return redirect_to :conversation_responsibilities unless params[:accept]
     @conversation = Conversation.new
-    @presenter = IngestPresenter.new(@conversation)
+    @contributions = [Contribution.new]
 
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @conversation }
-    end
+    render :new
   end
 
   # GET /conversations/1/edit
+  # NOT IMPLEMENTED YET, I.E. NOT ROUTEABLE
   def edit
     @conversation = Conversation.find(params[:id])
   end
 
   # POST /conversations
-  # POST /conversations.xml
   def create
-    ActiveRecord::Base.transaction do
-      @conversation = Conversation.new(params[:conversation])
-      @conversation = Conversation.new(params[:conversation])
-      #TODO: Fix this conversation issues creation since old conversation.issues= method has been destroyed
-      #NOTE: Issues were previously defined as Conversation has_many Issues, but this is wrong, should be habtm
-      @conversation.issues = Issue.find(params[:issue_ids]) unless params[:issue_ids].blank?
-      @conversation.started_at = Time.now
-      @presenter = IngestPresenter.new(@conversation, params[:file])
+    @conversation = Conversation.new_user_generated_conversation(params[:conversation], current_person)
+    @conversation.started_at = Time.now
+    # Load @contributions to populate re-rendered :new form if save is unsuccessful
+    @contributions = @conversation.contributions | @conversation.rejected_contributions
 
-      @conversation.save!
-      @presenter.save!
-      respond_to do |format|
-        format.html { redirect_to(@conversation, :notice => 'Conversation was successfully created.') }
-        format.xml  { render :xml => @conversation, :status => :created, :location => @conversation }
+    respond_to do |format|
+      if @conversation.save
+        format.html { redirect_to(new_invite_path(:source_type => :conversations, :source_id => @conversation.id, :conversation_created => true), :notice => 'Your conversation has been created!') }
+      else
+        format.html { render :new, :status => :unprocessable_entity  }
       end
     end
-  rescue ActiveRecord::RecordInvalid => e
-    respond_to do |format|
-      format.html { render :action => "new" }
-      format.xml  { render :xml => @conversation.errors + @presenter.errors, :status => :unprocessable_entity }
-    end
   end
+
   # PUT /conversations/1
-  # PUT /conversations/1.xml
+  # NOT IMPLEMENTED YET, I.E. NOT ROUTEABLE
   def update
     @conversation = Conversation.find(params[:id])
 
-    respond_to do |format|
-      if @conversation.update_attributes(params[:conversation])
-        format.html { redirect_to(@conversation, :notice => 'Conversation was successfully updated.') }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @conversation.errors, :status => :unprocessable_entity }
-      end
+    if @conversation.update_attributes(params[:conversation])
+      redirect_to(@conversation, :notice => 'Conversation was successfully updated.')
+    else
+      render :action => "edit", :status => :unprocessable_entity
     end
   end
 
@@ -206,17 +186,13 @@ class ConversationsController < ApplicationController
   end
 
   # DELETE /conversations/1
-  # DELETE /conversations/1.xml
+  # NOT IMPLEMENTED YET, I.E. NOT ROUTEABLE
   def destroy
     @conversation = Conversation.find(params[:id])
     @conversation.destroy
 
-    respond_to do |format|
-      format.html { redirect_to(conversations_url) }
-      format.xml  { head :ok }
-    end
+    redirect_to(conversations_url)
   end
-
 
   # Kludge to convert US date-time (mm/dd/yyyy hh:mm am) to an
   # ISO-like date-time (yyyy-mm-ddThh:mm:ss).

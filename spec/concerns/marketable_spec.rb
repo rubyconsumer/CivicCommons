@@ -17,8 +17,7 @@ end
 describe Marketable do
   before :each do
     attrs = Factory.attributes_for(:normal_person)
-    @marketable = MarketableTest.new(attrs.merge(:invitation_token => 'ZZZ1234'))
-    @marketable.skip_invite = true
+    @marketable = MarketableTest.new(attrs)
   end
 
   it "should be subscribable to email marketing" do
@@ -27,7 +26,6 @@ describe Marketable do
 
   it "should subscribe to email list" do
     @marketable.subscribe_to_marketing_email.should be_true
-    #@marketable.skip_shadow_account = true
     #@marketable.subscribe!.should be_true
   end
 end

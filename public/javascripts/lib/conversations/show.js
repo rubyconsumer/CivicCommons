@@ -66,7 +66,7 @@ jQuery(function ($) {
               divId = $(tabStrip).attr('id'),
               responseNode;
               
-          if( $(this).data('remotipart-submitted-js') == true ) {
+          if( $(this).data('remotipartSubmitted') == 'script' ) {
             responseNode = $($("<div />").html(xhr.responseText).text()); // this is needed to properly unescape the HTML returned from doing the jquery.form plugin's ajaxSubmit for some reason
           } else {
             responseNode = $(xhr.responseText);            
@@ -367,7 +367,7 @@ jQuery(function ($) {
           $(form)
             .maskOnSubmit()
             .bind("ajax:success", function(evt, data, status, xhr){
-              if( $(this).data('remotipart-submitted-js') == true ) {
+              if( $(this).data('remotipartSubmitted') == 'script' ) {
                 var responseNode = $($("<div />").html(xhr.responseText).text()); // this is needed to properly unescape the HTML returned from doing the jquery.form plugin's ajaxSubmit for some reason
               } else {
                 var responseNode = $(xhr.responseText);            

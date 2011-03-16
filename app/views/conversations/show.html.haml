@@ -1,4 +1,4 @@
-- content_for :header do 
+- content_for :header do
   = javascript_include_tag('lib/conversations/show')
   = javascript_include_tag('lib/subscriptions/show')
 
@@ -10,16 +10,23 @@
           %img.featured{ :class => "main-img", :src => @conversation.image.url(:panel), :alt => @conversation.title, :width => "120", :height => "80" }
           %h1= @conversation.title
           %p.convo-meta
-            %strong= pluralize(@conversation.participants.size, "person") 
+            %strong= pluralize(@conversation.participants.size, "person")
             are engaged, last activity
             %strong= time_ago_in_words(@latest_contribution ? @latest_contribution.created_at : @conversation.created_at ) + " ago"
-        .aside.supplementary
+          %p.convo-summary
+            %strong
+              = format_date @conversation.created_at
+            \-
+            = @conversation.user_generated? ? @conversation.summary : raw(@conversation.summary)
+        .aside.supplementary.convo-mast-buttons
           %p
             %span#subscription
               = render :partial => '/subscriptions/subscription', :locals => {:subscribable => @conversation}
           %p
             = link_to("Post to this Conversation", {:action => "new_node_contribution", :id => @conversation.id, :div_id => "conversation-#{@conversation.id}"}, :class => "text button top-node-conversation-action", :id => "conversation-action-link-#{@conversation.id}", :title => "", 'data-target' => "#conversation-action-div-#{@conversation.id}")
-          
+          %p
+            = render :partial => '/invites/invite_to_conversation', :locals => {:conversation => @conversation}
+
   .wrapper
     .content-container
       .main-content
@@ -34,10 +41,6 @@
             =render :partial => "conversations/contributions/threaded_contribution_template", :collection => @conversation_contributions, :as => :contribution
 
       .aside.supplementary
-        .mod
-          %h3 Summary
-          .mod-content
-            %p= raw @conversation.summary
         - if @conversation.issues.size > 0
           .mod
             %h3 Issues
