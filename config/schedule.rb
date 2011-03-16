@@ -13,9 +13,9 @@
 #   rake "some:great:rake:task"
 # end
 #
-#every 1.day, at: '2:00 am' do
-#  runner 
-#end
+every 1.day, at: '2:00 am' do
+  runner "DigestService.send_digest"
+end
 
 # Learn more: http://github.com/javan/whenever
 set :output, File.expand_path(File.dirname(__FILE__), 'log/cron_log.log')

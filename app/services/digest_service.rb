@@ -42,7 +42,7 @@ class DigestService
     time_range = (Time.now.midnight - 1.day)..(Time.now.midnight - 1.second)
 
     # get the list of conversations that were updated yesterday
-    @updated_contributions = Contribution.includes(:conversation).where(:created_at => time_range).order('conversation_id ASC, id ASC')
+    @updated_contributions = Contribution.includes(:conversation).order('conversation_id ASC, id ASC').where(created_at: time_range).where('type != \'TopLevelContribution\'')
   end
 
   def get_updated_conversations
@@ -89,5 +89,12 @@ class DigestService
     return digest_set
 
   end
+
+  def self.send_digest(letter = nil, set = nil)
+    digest = self.new
+    digest.generate_digest_set(letter)
+    digest.process_daily_digest(set)
+  end
+
 
 end
