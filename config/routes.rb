@@ -52,6 +52,8 @@ Civiccommons::Application.routes.draw do
   get '/principles',        to: 'static_pages#principles'
   get '/team',              to: 'static_pages#team'
   get '/terms',             to: 'static_pages#terms'
+  get '/jobs',              to: 'static_pages#jobs'
+  get '/careers',           to: 'static_pages#jobs'
 
  #Devise Routes
   devise_for :people,

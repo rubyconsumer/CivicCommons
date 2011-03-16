@@ -3,8 +3,8 @@ class StaticPagesController < ApplicationController
   end
 
   def blog
-    people = Person.find([9,11], order: 'id ASC')
-    @people = {dan: people.first, noelle: people.last}
+    people = Person.where('email like "%@theciviccommons.com" or email like "%@futurefundneo.org"')
+    @people = Hash[people.map { |p| [p.first_name.downcase.to_sym, p] }] 
   end
 
   def faq
