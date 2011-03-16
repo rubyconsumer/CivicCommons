@@ -17,7 +17,7 @@ Feature:
   Scenario: User goes to invitation page
     Given I am signed in
     And I am on the conversation page
-    When I click the "Send Invitations" button
+    When I click the "Invite a Friend" button
     Then I will be on the invitation page
 
   Scenario: User sees invitation page

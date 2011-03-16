@@ -17,38 +17,6 @@ Civiccommons::Application.routes.draw do
   #Application Root
   root to: "homepage#show"
 
-<<<<<<< HEAD
-  #Devise Routes
-  devise_for :people,
-             :controllers => { :registrations => 'registrations', :confirmations => 'confirmations', :sessions => 'sessions' },
-             :path_names => { :sign_in => 'login', :sign_out => 'logout', :password => 'secret', :confirmation => 'verification', :registration => 'register', :sign_up => 'new' }
-
-  devise_scope :person do
-    match '/people/ajax_login', :to=>'sessions#ajax_create', :via=>[:post]
-  end
-
-
-
-  #Resource Declared Routes
-  resources :questions
-  resources :people
-  resources :ratings
-  resources :user, only: [:show, :update, :edit]
-  resources :contributions do
-    # This is a GET for now since PA will redirect back with the required bits to create a PA contribution. 
-    get "create_from_pa", :on => :collection
-  end
-  resources :answers
-  resources :issues do
-    post 'create_contribution', :on => :member
-  end
-  resources :regions
-  resources :links
-
-  #Custom Matchers
-  get '/conversations/dialog/:id',                     to: 'conversations#dialog'
-  post '/contributions/create_confirmed_contribution', to: 'contributions#create_confirmed_contribution'
-=======
  #Custom Matchers
   #Contributions
   post '/contributions/create_confirmed_contribution', to: 'contributions#create_confirmed_contribution',    as: 'create_confirmed_contribution'
@@ -56,24 +24,14 @@ Civiccommons::Application.routes.draw do
   delete '/contributions/:id',                         to: 'contributions#destroy',                          as: 'contribution'
   #Conversations
   match '/conversations/preview_node_contribution',    to: 'conversations#preview_node_contribution'
->>>>>>> hotfix-v1.1.5a
   get '/conversations/node_conversation',              to: 'conversations#node_conversation'
   get '/conversations/new_node_contribution',          to: 'conversations#new_node_contribution'
   get '/conversations/edit_node_contribution',         to: 'conversations#edit_node_contribution'
   get '/conversations/node_permalink/:id',             to: 'conversations#node_permalink'
   put '/conversations/update_node_contribution',       to: 'conversations#update_node_contribution'
-<<<<<<< HEAD
-  match '/conversations/preview_node_contribution',    to: 'conversations#preview_node_contribution'
-  match '/conversations/rate_contribution',            to: 'conversations#rate_contribution'
-  post '/conversations/rate',                          to: 'conversations#rate'
-
-  resources :conversations
-
-=======
   put '/conversations/confirm_node_contribution',      to: 'conversations#confirm_node_contribution'
   get '/conversations/responsibilities',               to: 'conversations#responsibilities',                 as: 'conversation_responsibilities'
   #Subscriptions
->>>>>>> hotfix-v1.1.5a
   post '/subscriptions/subscribe',                     to: 'subscriptions#subscribe'
   post '/subscriptions/unsubscribe',                   to: 'subscriptions#unsubscribe'
   #Community

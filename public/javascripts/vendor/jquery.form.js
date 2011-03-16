@@ -1,10 +1,6 @@
 /*!
  * jQuery Form Plugin
-<<<<<<< HEAD
- * version: 2.52 (07-DEC-2010)
-=======
  * version: 2.63 (29-JAN-2011)
->>>>>>> hotfix-v1.1.5a
  * @requires jQuery v1.3.2 or later
  *
  * Examples and documentation at: http://malsup.com/jquery/form/

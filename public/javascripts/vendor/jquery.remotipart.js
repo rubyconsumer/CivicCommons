@@ -13,10 +13,6 @@ jQuery(function ($) {
 	        } else {
               // Since iframe-submitted form is submitted normal-style and cannot set custom headers,
               // we'll add a custom hidden input to keep track and let the server know this was still
-<<<<<<< HEAD
-              // an AJAX form.
-              el.append($('<input type="hidden" name="ajax_submitted" value=true />'));
-=======
               // an AJAX form, we'll also make it easy to tell from our jQuery element object.
               el
                 .append($('<input />', {
@@ -26,7 +22,6 @@ jQuery(function ($) {
                 }))
                 .data('remotipartSubmitted', dataType);
 
->>>>>>> hotfix-v1.1.5a
 	            if (el.triggerAndReturn('ajax:before')) {
               if (dataType == 'script') {
 		          	url = url.split('?'); // split on GET params

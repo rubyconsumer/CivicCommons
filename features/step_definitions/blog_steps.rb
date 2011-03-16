@@ -1,6 +1,10 @@
+Given /^the necessary Civic Commons admin users$/ do
+  Factory.create(:admin_person, first_name: 'Dan', last_name: 'Moulthrop', email: 'danmoulthrop@theciviccommons.com')
+  Factory.create(:admin_person, first_name: 'Noelle', last_name: 'Celeste', email: 'noelleceleste@theciviccommons.com')
+  Factory.create(:admin_person, first_name: 'Mike', last_name: 'Shafarenko', email: 'mikeshafarenko@theciviccommons.com')
+end
+
 Given /^I am on the blog page$/ do
-  Factory.create(:normal_person, id: 9)
-  Factory.create(:normal_person, id: 11)
   visit '/blog'
 end
 

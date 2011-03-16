@@ -1,29 +1,3 @@
-<<<<<<< HEAD
-<% unless @contribution.new_record? %>
-  <% if @contribution.is_a?(SuggestedAction) %>
-      var $container = $('#suggested-action-form-container'),
-          $target = $('#suggested-actions');
-  <% else %>
-      var $container = $('#media-contribution-form-container'),
-          $target = $('#media-contributions');
-  <% end %>
-  
-  var $forms = $container.find('form.contribution-form');
-  
-  $target.prepend("<%= escape_javascript(
-    render :partial => 'issues/contributions/contribution_template', :locals => {:contribution => @contribution}
-  ) %>");
-  
-  $forms.find('input:text,textarea').val('');
-  $forms.find('.errors').empty();
-  $forms.find('[placeholder]').placeholder({className: 'placeholder'});
-  
-  <% unless @contribution.is_a?(SuggestedAction) %>
-    $forms.hide();
-    $('p#resource-contributions').show('slow');
-    $('#contribution-<%= @contribution.id %>').scrollTo();
-  <% else %>
-    $('#contribution-<%= @contribution.id %>').scrollTo();
 =======
 <%= remotipart_response do %>
   <% unless @contribution.new_record? %>
@@ -52,6 +26,5 @@
     <% else %>
       $('#contribution-<%= @contribution.id %>').scrollTo();
     <% end %>
->>>>>>> hotfix-v1.1.5a
   <% end %>
 <% end %>
