@@ -1543,11 +1543,10 @@ visibility: hidden;
 }
 
 .confirmation {
-  width: 130px;
+  line-height: 2.5em;
 }
 
 
 form.button_to {
-  float: right;
-  width: 80px;
+  float: left;
 }

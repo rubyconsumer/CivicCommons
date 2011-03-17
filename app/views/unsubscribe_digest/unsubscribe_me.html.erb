@@ -5,10 +5,14 @@
         <h1>Opt out of Civic Commons Notifications</h1>
         <p>
         We send you these notifications so you know what's going on in the conversations you're following and 
-        participating in.  Do you want to stop receiving these notifications to <%= @person.email %>?
+        participating in.
+        </p>
+        <p>
+          Do you want to stop receiving these notifications to <%= @person.email %>?
         </p>
         <div class="confirmation">
-          <%= link_to "Cancel", root_path %><%= button_to "Confirm", unsubscribe_confirmation_path, method: :put %>
+          <%= button_to "Confirm", unsubscribe_confirmation_path, method: :put, class: 'button' %> or
+          <%= link_to "Cancel", root_path %>
         </div>
       </div>
     </div>
