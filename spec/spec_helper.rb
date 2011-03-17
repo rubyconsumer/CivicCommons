@@ -57,6 +57,7 @@ RSpec.configure do |config|
   config.include WebMock::API
   config.include StubbedHttpRequests
   config.include Paperclip::Shoulda::Matchers
+  config.include Devise::TestHelpers, :type => :controller
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
@@ -71,5 +72,3 @@ RSpec.configure do |config|
     stub_amazon_s3_request
   end
 end
-
-include Devise::TestHelpers

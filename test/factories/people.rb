@@ -28,7 +28,7 @@ Factory.define :people do |f|
     u.skip_email_marketing true
   end
 
-  Factory.define :admin_person, :parent => :normal_person do |u|
+  Factory.define :admin_person, :parent => :registered_user do |u|
     u.password 'password'
     u.sequence(:email) {|n| "test.admin.account#{n}@mysite.com" }
     u.admin true
@@ -36,7 +36,7 @@ Factory.define :people do |f|
     u.skip_email_marketing true
   end
 
-  Factory.define :marketable_person, :parent => :normal_person do |u|
+  Factory.define :marketable_person, :parent => :registered_user do |u|
     u.password 'password'
     u.sequence(:email) {|n| "test.account#{n}@mysite.com" }
     u.avatar File.new(Rails.root + 'test/fixtures/images/test_image.jpg')

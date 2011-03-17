@@ -1,6 +1,6 @@
 <div id="ajax-login-container">
 <p>
-Please login to continue. If you don't have an account, please <%= link_to 'register', secure_registration_url %>.
+Please login to continue. If you don't have an account, please <%= link_to 'register', secure_registration_form_url %>.
 </p>
 <%= form_for(:person, :url => secure_ajax_login_url, :remote => true, :html => {:id => 'ajax-login-form'}) do |f| %>
   <p class="validation-error"></p>

@@ -10,7 +10,7 @@ protected
   def verify_admin
     unless current_person && current_person.admin?
       flash[:error] = "You must be an admin to view this page."
-      redirect_to new_person_session_path
+      redirect_to new_person_session_url
     end
   end
 
@@ -30,19 +30,9 @@ protected
     end
   end
 
-  def after_sign_in_path_for(resource_or_scope)
-    if session[:previous] && session[:previous].match(/register\/new/).nil?
-      session[:previous]
-    elsif session[:link]
-      new_link_path
-    else
-      super
-    end
-  end
-
   def require_ssl
     if not request.ssl? and Civiccommons::Config.security['ssl_login']
-      redirect_to request.url.gsub(/http:/i, 'https:')
+      redirect_to request.url.gsub(/^http:\/\//i, 'https://')
     end
   end
 
