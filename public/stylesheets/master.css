@@ -639,6 +639,7 @@ z-index: 1;
 #login-status a:hover, .important a:hover {color: #f3f3f3;}
 */
 
+/*
 .flash-notice{
   background-color: #ffff99;
   border-top: 3px solid #ffff66;
@@ -647,6 +648,18 @@ z-index: 1;
   margin: 0;
   text-align: center;
   line-height: 25px;}
+*/
+.flash-notice {
+  background-color: #BAC675;
+  border: 2px solid #638205;
+  color: #4c6404;
+  font-weight: bold;
+  padding: 2px 0;
+  margin: 10px auto 0 auto;
+  width: 70%;
+  text-align: center;
+  line-height: 25px;
+}
 
 /* Main Navigation */
 #nav-wrapper {background: #4f5561 url(/images/nav_wrapper_bg.gif) repeat-x top;}

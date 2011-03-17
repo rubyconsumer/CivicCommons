@@ -1,4 +1,4 @@
-module RegistrationHelper
+module SecureUrlHelper
 
   def secure_registration_form_url
     protocol = Civiccommons::Config.security['ssl_login'] ? 'https' : 'http'
@@ -25,12 +25,11 @@ module RegistrationHelper
 
   def secure_session_url(resource_name = nil)
     protocol = Civiccommons::Config.security['ssl_login'] ? 'https' : 'http'
-    new_person_session_url(resource_name, :protocol => protocol)
-  end
-
-  def secure_ajax_login_url
-    protocol = Civiccommons::Config.security['ssl_login'] ? 'https' : 'http'
-    people_ajax_login_url(:protocol => protocol)
+    if resource_name.nil?
+      new_person_session_url(:protocol => protocol)
+    else
+      new_person_session_url(resource_name, :protocol => protocol)
+    end
   end
 
 end
