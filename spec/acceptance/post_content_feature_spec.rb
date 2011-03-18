@@ -49,6 +49,20 @@ feature "Post Content Item", %q{
       page.should have_content('Untyped post 1')
     end
 
+    scenario "Delete a content item" do
+      # Given I am on the content items page
+      # When I press the “Delete” link for a content item
+      # And I confirm deletion
+      # Then that content item should be deleted
+      # And I should be on the content items page
+      # And I should see the success message
+
+      visit admin_content_items_path(content)
+      click_link('Delete')
+      should_be_on admin_content_items_path
+      page.should have_content("Successfully deleted content item")
+    end
+
     scenario "Administor does not fill in required fields when writing a new content item" do
       # Given I am on the content creation page
       # And I have not filled in any required fields
@@ -59,8 +73,7 @@ feature "Post Content Item", %q{
       click_button('Create Content item')
       page.should have_content("still missing some important information:")
     end
-
-    scenario "Administrator can create a new content item" do
+    scenario "Create a new content item" do
       # Given I am on the content item creation page
       # And I have entered required content item fields
       # When I press the “Create Content item” button
@@ -71,8 +84,38 @@ feature "Post Content Item", %q{
       visit new_admin_content_item_path
       select('RadioShow', :from => 'content_item_content_type')
       fill_in('content_item_title', :with => 'First Radio Show')
+      fill_in('content_item_url', :with => 'first-radio-show')
+      fill_in('content_item_body', :with => 'This radio show is about that radio show')
       click_button('Create Content item')
       should_be_on admin_content_item_path(content.id - 1)
       page.should have_content("Your content item has been created!")
     end
+
+    scenario "Title field must be unique" do
+      # Given I am on the content item creation page
+      # And I have entered required content item fields
+      # And there is already an existing content item
+      # And it has the same title as the one I entered
+      # When I press the "Create Content item" button
+      # Then I should see an error message
+
+      visit new_admin_content_item_path
+    end
+
+#    scenario "See the edit content item page" do
+      # Given I am on the content items page
+      # When I press the “Edit” link for a content item
+      # Then I should be on the edit content item page
+      # And I should the content item data populated in the content item fields
+#    end
+
+#    scenario "Edit content item" do
+      # Given: I am on the edit content item page
+      # And I have populated all required fields
+      # When I click “Update Content Item” button
+      # Then that content item should be updated
+      # And I should be on the content items page
+      # And I should see a the success message
+#    end
+
 end

@@ -29,4 +29,11 @@ class Admin::ContentItemsController < Admin::DashboardController
   def show
     @content_item = ContentItem.find(params[:id])
   end
+
+  def destroy
+    @content_item = ContentItem.find(params[:id])
+    @content_item.destroy
+    flash[:notice] = "Successfully deleted content item"
+    redirect_to admin_content_items_path
+  end
 end
