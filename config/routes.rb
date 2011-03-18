@@ -34,8 +34,12 @@ Civiccommons::Application.routes.draw do
   #Subscriptions
   post '/subscriptions/subscribe',                     to: 'subscriptions#subscribe'
   post '/subscriptions/unsubscribe',                   to: 'subscriptions#unsubscribe'
+  #UnsubscribeDigest
+  get '/unsubscribe-me/:id',                           to: 'unsubscribe_digest#unsubscribe_me',              as: 'unsubscribe_confirmation'
+  put '/unsubscribe-me/:id',                           to: 'unsubscribe_digest#remove_from_digest'
+
   #Community
-  get '/community',                                    to: 'community#index',                                 as: 'community'
+  get '/community',                                    to: 'community#index',                                as: 'community'
   #Widget
   get '/widget',                                       to: 'widget#index'
 

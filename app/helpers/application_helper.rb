@@ -1,5 +1,5 @@
 module ApplicationHelper
-  
+
   def show_errors(model)
     rv = ""
     all_errors = model.errors.full_messages

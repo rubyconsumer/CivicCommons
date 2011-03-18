@@ -14,7 +14,7 @@ class Person < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :name, :first_name, :last_name, :email, :password, :password_confirmation, :bio, :top, :zip_code, :admin, :validated,
-                  :avatar, :remember_me
+                  :avatar, :remember_me, :daily_digest
 
   has_many :contributions, :foreign_key => 'owner', :uniq => true
   has_many :ratings
