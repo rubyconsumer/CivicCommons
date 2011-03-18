@@ -1,7 +1,7 @@
 class IngestPresenter
 
   attr_reader :errors
-  
+
   def initialize(conversation, file=nil)
     @conversation = conversation
     @file = file
@@ -10,19 +10,19 @@ class IngestPresenter
 
   def save!
     if @file
-    
+
       dialogs = Ingester.ingest(@file.read)
-      
+
       # before creating top level contributions, validate that all
       # speakers have a unique Person
       validate_speakers(dialogs)
-      
+
       dialogs.each do |dialog|
         speaker = Person.find_all_by_name(dialog.speaker).first
         contribution = TopLevelContribution.create!(:conversation => @conversation,
                                                     :content => dialog.content,
                                                     :person => speaker)
-        
+
         @conversation.contributions << contribution
       end
     end
