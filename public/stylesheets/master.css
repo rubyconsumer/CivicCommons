@@ -517,6 +517,14 @@ width: 940px;
 float: left;
 width: 620px;
 }
+.main-content-left {
+float: left;
+width: 120px;
+}
+.main-content-right {
+float: right;
+width: 480px;
+}
 .aside {
 float: right;
 width: 290px;

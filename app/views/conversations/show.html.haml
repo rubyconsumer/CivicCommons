@@ -7,17 +7,29 @@
     .wrapper
       .content-container
         .main-content
-          %img.featured{ :class => "main-img", :src => @conversation.image.url(:panel), :alt => @conversation.title, :width => "120", :height => "80" }
-          %h1= @conversation.title
-          %p.convo-meta
-            %strong= pluralize(@conversation.participants.size, "person")
-            are engaged, last activity
-            %strong= time_ago_in_words(@latest_contribution ? @latest_contribution.created_at : @conversation.created_at ) + " ago"
+          -#%div{:style => "width:120px; float:left;"}
+          .main-content-left
+            %img.featured{ :class => "main-img", :src => @conversation.image.url(:panel), :alt => @conversation.title, :width => "120", :height => "80" }
+          -#%div{:style => "width:480px; float:right;"}
+          .main-content-right
+            %h1= @conversation.title
+            %p.convo-meta
+              %strong= pluralize(@conversation.participants.size, "person")
+              - if @conversation.participants.size == 1
+                is
+              - else
+                are
+              engaged, last activity
+              %strong= time_ago_in_words(@latest_contribution ? @latest_contribution.created_at : @conversation.created_at ) + " ago"
+            %p.convo-meta
+              =render :partial => 'layouts/facebook_like'
           %p.convo-summary
             %strong
               = format_date @conversation.created_at
             \-
             = @conversation.user_generated? ? @conversation.summary : raw(@conversation.summary)
+          -#%p.convo-summary
+            -#=render :partial => 'layouts/facebook_like'
         .aside.supplementary.convo-mast-buttons
           %p
             %span#subscription
