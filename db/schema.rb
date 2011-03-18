@@ -148,7 +148,7 @@ ActiveRecord::Schema.define(:version => 20110308183609) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "summary",            :limit => 255
+    t.text     "summary"
     t.integer  "total_visits"
     t.integer  "recent_visits"
     t.integer  "total_rating"
