@@ -55,7 +55,7 @@ module AvatarHelper
   end
 
   def link_to_profile(person)
-    link_to yield, user_url(person, :protocol => 'http'), title: person.name
+    link_to yield, user_url(person), title: person.name
   end
 
   def link_to_settings(person)
