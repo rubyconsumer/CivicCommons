@@ -3,7 +3,7 @@
     = surround "Logged in as ", "." do
       = current_person.email
     = precede "Not you? " do
-      = link_to "Logout", destroy_person_session_url(:protocol => 'http')
+      = link_to "Logout", destroy_person_session_url
   - else
     %p
       %a
