@@ -9,10 +9,12 @@ class ApplicationController < ActionController::Base
 protected
 
   def verify_admin
-    unless current_person && current_person.admin?
+
+    if require_user and not current_person.admin?
       flash[:error] = "You must be an admin to view this page."
-      redirect_to secure_session_url
+      redirect_to secure_session_url(current_person)
     end
+
   end
 
   def require_user
@@ -26,8 +28,11 @@ protected
           format.js { render 'sessions/new_in_modal' }
         end
       else
-        redirect_to secure_session_url
+        redirect_to secure_new_person_session_url
       end
+      return false
+    else
+      return true
     end
   end
 

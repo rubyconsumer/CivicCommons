@@ -28,4 +28,12 @@ module ApplicationHelper
 	  string.gsub(/\n/, '<br />') if string
   end
 
+  def url_for(options = nil)
+    if Hash === options
+      # change all links to use 'http' protocol unless specified
+      options[:protocol] ||= 'http'
+    end
+    super(options)
+  end
+
 end
