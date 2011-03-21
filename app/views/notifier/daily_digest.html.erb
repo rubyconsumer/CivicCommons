@@ -6,15 +6,19 @@
         <% unless conversation.last.empty? %>
           <h2><%=conversation.first.title %></h2>
           <% conversation.last.each do |contribution| %>
-            <p><%= "In response to #{contribution.parent.person.name}, #{contribution.person.name} #{contribution_action_past_tense(contribution.class)}
-            this #{contribution.contribution_type.to_s.gsub(/_/,' ')} "%> <%= link_to 'Continue the Conversation', conversation_url(conversation.first) %>
-            </p>
+            <% if contribution.parent %>
+              <p><%= "In response to #{contribution.parent.person.name}, #{contribution.person.name} #{contribution_action_past_tense(contribution.class)}
+              this #{contribution.contribution_type.to_s.gsub(/_/,' ')} "%> <%= link_to 'Continue the Conversation', conversation_url(conversation.first) %>
+              </p>
+            <% else %>
+              <p><%= "In response to the conversation, #{contribution.conversation.title}, #{contribution.person.name} #{contribution_action_past_tense(contribution.class)}
+              this #{contribution.contribution_type.to_s.gsub(/_/,' ')} "%> <%= link_to 'Continue the Conversation', conversation_url(conversation.first) %>
+              </p>
+            <% end %>
           <% end %>
         <% end %>
       <% end %>
-
       <p>Don’t want to receive these updates any more? No problem. <%= link_to 'Click here', unsubscribe_confirmation_url(@person) %></p>
-
     </td>
   </tr>
 </table>
