@@ -23,13 +23,22 @@ module SecureUrlHelper
     user_url(resource_name, :protocol => protocol)
   end
 
-  def secure_session_url(resource_name = nil)
-    protocol = Civiccommons::Config.security['ssl_login'] ? 'https' : 'http'
-    if resource_name.nil?
-      new_person_session_url(:protocol => protocol)
+  def secure_session_url(resource_name)
+    if Civiccommons::Config.security['ssl_login']
+      session_url(resource_name).gsub(/http:\/\//, 'https://')
     else
-      new_person_session_url(resource_name, :protocol => protocol)
+      session_url(resource_name)
     end
+  end
+
+  def secure_new_person_registration_url()
+    protocol = Civiccommons::Config.security['ssl_login'] ? 'https' : 'http'
+    new_person_registration_url(:protocol => protocol)
+  end
+
+  def secure_new_person_session_url()
+    protocol = Civiccommons::Config.security['ssl_login'] ? 'https' : 'http'
+    new_person_session_url(:protocol => protocol)
   end
 
 end
