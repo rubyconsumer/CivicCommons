@@ -658,15 +658,16 @@ z-index: 1;
   line-height: 25px;}
 */
 .flash-notice {
-  background-color: #BAC675;
-  border: 2px solid #638205;
-  color: #4c6404;
-  font-weight: bold;
-  padding: 2px 0;
-  margin: 10px auto 0 auto;
-  width: 70%;
-  text-align: center;
-  line-height: 25px;
+background-color: #ddecab;
+background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0.48, rgb(202,226,124)),color-stop(0.74, rgb(221,236,171))); 
+background-image: -moz-linear-gradient(center bottom,rgb(202,226,124) 48%,rgb(221,236,171) 74%);
+color: #4c6404;
+font-weight: bold;
+padding: 5px 0;
+margin-top: 10px;
+width: 100%;
+text-align: center;
+line-height: 25px;
 }
 
 /* Main Navigation */
