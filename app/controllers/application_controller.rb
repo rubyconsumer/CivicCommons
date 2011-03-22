@@ -38,7 +38,7 @@ protected
   end
 
   def require_ssl
-    if not request.ssl? and Civiccommons::Config.security['ssl_login']
+    if not request.ssl? and SecureUrlHelper.https?
       redirect_to request.url.gsub(/^http:\/\//i, 'https://')
     end
   end

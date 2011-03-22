@@ -9,6 +9,7 @@ development:
   mailer:
     api_token: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-us1"
     list: "planetoftheapes"
+    intercept: true
   rails_secret_token: "randonStuffThatsAtLeast30CharachtersYo128DirtyWithTh"
   smtp:
     address: "smtp.sendsomemail.net"
@@ -29,6 +30,7 @@ test:
   mailer:
     api_token: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-us1"
     list: "planetoftheapes"
+    intercept: true
   rails_secret_token: "randonStuffThatsAtLeast30CharachtersYo128DirtyWithTh"
   smtp:
     address: "smtp.sendsomemail.net"
@@ -49,6 +51,7 @@ integration:
   mailer:
     api_token: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-us1"
     list: "planetoftheapes"
+    intercept: true
   rails_secret_token: "randonStuffThatsAtLeast30CharachtersYo128DirtyWithTh"
   smtp:
     address: "smtp.sendsomemail.net"
@@ -69,6 +72,7 @@ staging:
   mailer:
     api_token: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-us1"
     list: "planetoftheapes"
+    intercept: true
   rails_secret_token: "randonStuffThatsAtLeast30CharachtersYo128DirtyWithTh"
   smtp:
     address: "smtp.sendsomemail.net"
@@ -89,6 +93,7 @@ production:
   mailer:
     api_token: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-us1"
     list: "planetoftheapes"
+    intercept: false
   rails_secret_token: "randonStuffThatsAtLeast30CharachtersYo128DirtyWithTh"
   smtp:
     address: "smtp.sendsomemail.net"

@@ -1,12 +1,28 @@
 module SecureUrlHelper
 
+  def self.protocol
+    if self.https?
+      'https'
+    else
+      'http'
+    end
+  end
+
+  def self.http?
+    not self.https?
+  end
+
+  def self.https?
+    cc = Civiccommons::Config
+    cc.respond_to?('security') and cc.security.key?('ssl_login') and cc.security['ssl_login']
+  end
+
   def secure_registration_form_url
-    protocol = Civiccommons::Config.security['ssl_login'] ? 'https' : 'http'
-    new_person_registration_url(:protocol => protocol)
+    new_person_registration_url(:protocol => self.protocol)
   end
 
   def secure_registration_url(resource_name)
-    if Civiccommons::Config.security['ssl_login']
+    if self.https?
       registration_url(resource_name).gsub(/http:\/\//, 'https://')
     else
       registration_url(resource_name)
@@ -14,17 +30,15 @@ module SecureUrlHelper
   end
 
   def secure_edit_user_url(resource_name)
-    protocol = Civiccommons::Config.security['ssl_login'] ? 'https' : 'http'
-    edit_user_url(resource_name, :protocol => protocol)
+    edit_user_url(resource_name, :protocol => self.protocol)
   end
 
   def secure_user_url(resource_name)
-    protocol = Civiccommons::Config.security['ssl_login'] ? 'https' : 'http'
     user_url(resource_name, :protocol => protocol)
   end
 
   def secure_session_url(resource_name)
-    if Civiccommons::Config.security['ssl_login']
+    if self.https?
       session_url(resource_name).gsub(/http:\/\//, 'https://')
     else
       session_url(resource_name)
@@ -32,13 +46,11 @@ module SecureUrlHelper
   end
 
   def secure_new_person_registration_url()
-    protocol = Civiccommons::Config.security['ssl_login'] ? 'https' : 'http'
-    new_person_registration_url(:protocol => protocol)
+    new_person_registration_url(:protocol => self.protocol)
   end
 
   def secure_new_person_session_url()
-    protocol = Civiccommons::Config.security['ssl_login'] ? 'https' : 'http'
-    new_person_session_url(:protocol => protocol)
+    new_person_session_url(:protocol => self.protocol)
   end
 
 end
