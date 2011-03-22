@@ -18,11 +18,11 @@ module SecureUrlHelper
   end
 
   def secure_registration_form_url
-    new_person_registration_url(:protocol => self.protocol)
+    new_person_registration_url(:protocol => SecureUrlHelper.protocol)
   end
 
   def secure_registration_url(resource_name)
-    if self.https?
+    if SecureUrlHelper.https?
       registration_url(resource_name).gsub(/http:\/\//, 'https://')
     else
       registration_url(resource_name)
@@ -30,15 +30,15 @@ module SecureUrlHelper
   end
 
   def secure_edit_user_url(resource_name)
-    edit_user_url(resource_name, :protocol => self.protocol)
+    edit_user_url(resource_name, :protocol => SecureUrlHelper.protocol)
   end
 
   def secure_user_url(resource_name)
-    user_url(resource_name, :protocol => protocol)
+    user_url(resource_name, :protocol => SecureUrlHelper.protocol)
   end
 
   def secure_session_url(resource_name)
-    if self.https?
+    if SecureUrlHelper.https?
       session_url(resource_name).gsub(/http:\/\//, 'https://')
     else
       session_url(resource_name)
@@ -46,11 +46,11 @@ module SecureUrlHelper
   end
 
   def secure_new_person_registration_url()
-    new_person_registration_url(:protocol => self.protocol)
+    new_person_registration_url(:protocol => SecureUrlHelper.protocol)
   end
 
   def secure_new_person_session_url()
-    new_person_session_url(:protocol => self.protocol)
+    new_person_session_url(:protocol => SecureUrlHelper.protocol)
   end
 
 end

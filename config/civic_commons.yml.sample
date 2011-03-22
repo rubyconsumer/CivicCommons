@@ -30,7 +30,7 @@ test:
   mailer:
     api_token: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-us1"
     list: "planetoftheapes"
-    intercept: true
+    intercept: false
   rails_secret_token: "randonStuffThatsAtLeast30CharachtersYo128DirtyWithTh"
   smtp:
     address: "smtp.sendsomemail.net"
