@@ -8,18 +8,19 @@
           <% conversation.last.each do |contribution| %>
             <% if contribution.parent %>
               <p><%= "In response to #{contribution.parent.person.name}, #{contribution.person.name} #{contribution_action_past_tense(contribution.class)}
-              this #{contribution.contribution_type.to_s.gsub(/_/,' ')} "%> <%= link_to 'Continue the Conversation', conversation_url(conversation.first) %>
+              this #{contribution.contribution_type.to_s.gsub(/_/,' ')} "%>. <%= link_to 'Continue the Conversation', conversation_url(conversation.first) %>
               </p>
             <% else %>
-              <p><%= "In response to the conversation, #{contribution.conversation.title}, #{contribution.person.name} #{contribution_action_past_tense(contribution.class)}
-              this #{contribution.contribution_type.to_s.gsub(/_/,' ')} "%> <%= link_to 'Continue the Conversation', conversation_url(conversation.first) %>
+              <p><%= "In response to the conversation, \"#{contribution.conversation.title},\" #{contribution.person.name} #{contribution_action_past_tense(contribution.class)}
+              this #{contribution.contribution_type.to_s.gsub(/_/,' ')} "%>. <%= link_to 'Continue the Conversation', conversation_url(conversation.first) %>
               </p>
             <% end %>
           <% end %>
         <% end %>
       <% end %>
+      <h3>Too much information?</h3>
       <p>
-        Too much information? You can opt out of specific conversations by clicking "Stop Following this Conversation" on that conversation page at
+        You can opt out of specific conversations by clicking "Stop Following this Conversation" on that conversation page at
         <%= link_to 'theciviccommons.com', root_url %>, or you can
         <%= link_to 'unsubscribe', unsubscribe_confirmation_url(@person) %> all together.
       </p>
