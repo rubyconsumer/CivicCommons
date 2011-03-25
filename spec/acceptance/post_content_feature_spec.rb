@@ -28,6 +28,10 @@ feature "Post Content Item", %q{
       LoginPage.new(page).sign_in(admin)
     end
 
+    after(:each) do
+      DatabaseCleaner.clean
+    end
+
     scenario "Administrator can get to administration page" do
       # When I visit the admin page
       # Then I should be on the admin page
@@ -72,6 +76,8 @@ feature "Post Content Item", %q{
       visit new_admin_content_item_path
       click_button('Create Content item')
       page.should have_content("still missing some important information:")
+
+#      should_be_on new_admin_content_item_path
     end
     scenario "Create a new content item" do
       # Given I am on the content item creation page
