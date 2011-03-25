@@ -90,6 +90,7 @@ ActiveRecord::Schema.define(:version => 20110408113914) do
     t.integer  "audio_clip_file_size"
     t.datetime "audio_clip_updated_at"
     t.integer  "owner"
+    t.boolean  "staff_pick",              :default => false, :null => false
   end
 
   create_table "conversations_events", :id => false, :force => true do |t|

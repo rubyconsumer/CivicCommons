@@ -4,11 +4,13 @@
     %tr
       %th Conversation Title
       %th Created Date
+      %th Staff Pick
   %tbody
   -@conversations.each do |conversation|
     %tr
       %td= link_to conversation.title, admin_conversation_path(conversation)
       %td= conversation.created_at.strftime("%m-%d-%Y")
+      %td= (conversation.staff_pick) ? 'on' : 'off'
       %td= link_to "Edit", edit_admin_conversation_path(conversation)
       %td= link_to "Delete", admin_conversation_url(conversation), :method => :delete, :confirm => "Are you sure?"
 %br

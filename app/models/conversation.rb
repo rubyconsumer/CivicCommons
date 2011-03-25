@@ -23,7 +23,7 @@ class Conversation < ActiveRecord::Base
 
   belongs_to :person, :foreign_key => "owner"
 
-  attr_accessor :user_generated, :rejected_contributions
+  attr_accessor :user_generated, :rejected_contributions, :staff_pick
 
   has_attached_file :image,
     :styles => {
