@@ -28,10 +28,6 @@ feature "Post Content Item", %q{
       LoginPage.new(page).sign_in(admin)
     end
 
-    after(:each) do
-      DatabaseCleaner.clean
-    end
-
     scenario "Administrator can get to administration page" do
       # When I visit the admin page
       # Then I should be on the admin page
@@ -99,6 +95,7 @@ feature "Post Content Item", %q{
 
     scenario "Title field must be unique" do
       # Given I am on the content item creation page
+      # And there are existing content items
       # And I have entered required content item fields
       # And there is already an existing content item
       # And it has the same title as the one I entered
@@ -106,6 +103,13 @@ feature "Post Content Item", %q{
       # Then I should see an error message
 
       visit new_admin_content_item_path
+      content
+      select('RadioShow', :from => 'content_item_content_type')
+      fill_in('content_item_title', :with => 'Untyped post 1')
+      fill_in('content_item_url', :with => 'first-radio-show')
+      fill_in('content_item_body', :with => 'This radio show is about that radio show')
+      click_button('Create Content item')
+      page.should have_content("has already been taken")
     end
 
 #    scenario "See the edit content item page" do
@@ -113,6 +117,9 @@ feature "Post Content Item", %q{
       # When I press the “Edit” link for a content item
       # Then I should be on the edit content item page
       # And I should the content item data populated in the content item fields
+
+#      visit admin_content_items_path(content)
+#      click_link('Delete')
 #    end
 
 #    scenario "Edit content item" do
