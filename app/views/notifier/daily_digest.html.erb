@@ -7,14 +7,14 @@
           <h2><%= conversation.first.title %></h2>
           <% conversation.last.each do |contribution| %>
             <% if contribution.parent %>
-              <p><%= "#{contribution.person.name}" %> added:
+              <p><%= "In response to #{contribution.parent.person.name}, #{contribution.person.name}" %> added:
                 <blockquote>
                   <%= contribution.content %>
                 </blockquote>
                 <%= link_to 'Check it out', "#{conversation_url(conversation.first)}#node-#{contribution.id}" %>
               </p>
             <% else %>
-              <p><%= "In response to #{contribution.parent.person.name}, #{contribution.person.name}" %> added:
+              <p><%= "#{contribution.person.name}" %> added:
                 <blockquote>
                   <%= contribution.content %>
                 </blockquote>
