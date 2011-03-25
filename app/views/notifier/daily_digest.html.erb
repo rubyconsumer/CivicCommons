@@ -4,23 +4,21 @@
       <h1>Here’s a quick update on what’s going on at the Commons.</h1>
       <% @conversations.each do |conversation| %>
         <% unless conversation.last.empty? %>
-          <h2><%=conversation.first.title %></h2>
+          <h2><%= conversation.first.title %></h2>
           <% conversation.last.each do |contribution| %>
             <% if contribution.parent %>
-              <p><%= "In response to #{contribution.parent.person.name}, #{contribution.person.name} #{contribution_action_past_tense(contribution.class)}
-              this #{contribution.contribution_type.to_s.gsub(/_/,' ')} "%>:
+              <p><%= "#{contribution.person.name}" %> added:
                 <blockquote>
                   <%= contribution.content %>
                 </blockquote>
-              <%= link_to 'Continue the Conversation', conversation_url(conversation.first) %>
+                <%= link_to 'Check it out', "#{conversation_url(conversation.first)}#node-#{contribution.id}" %>
               </p>
             <% else %>
-              <p><%= "In response to the conversation, \"#{contribution.conversation.title},\" #{contribution.person.name} #{contribution_action_past_tense(contribution.class)}
-              this #{contribution.contribution_type.to_s.gsub(/_/,' ')} "%>:
+              <p><%= "In response to #{contribution.parent.person.name}, #{contribution.person.name}" %> added:
                 <blockquote>
                   <%= contribution.content %>
                 </blockquote>
-              <%= link_to 'Continue the Conversation', conversation_url(conversation.first) %>
+                <%= link_to 'Check it out', "#{conversation_url(conversation.first)}#node-#{contribution.id}" %>
               </p>
             <% end %>
           <% end %>

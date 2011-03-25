@@ -662,9 +662,9 @@ background-color: #ddecab;
 background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0.48, rgb(202,226,124)),color-stop(0.74, rgb(221,236,171)));
 background-image: -moz-linear-gradient(center bottom,rgb(202,226,124) 48%,rgb(221,236,171) 74%);
 color: #4c6404;
-font-weight: bold;
+/*font-weight: bold;*/
 padding: 5px 0;
-margin-top: 10px;
+/*margin-top: 10px;*/
 width: 100%;
 text-align: center;
 line-height: 25px;
