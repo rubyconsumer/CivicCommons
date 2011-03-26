@@ -6,7 +6,7 @@
         <% unless conversation.last.empty? %>
           <h2><%= conversation.first.title %></h2>
           <% conversation.last.each do |contribution| %>
-            <% if contribution.parent %>
+            <% if contribution.parent and contribution.parent.person.id != contribution.person.id %>
               <p><%= "In response to #{contribution.parent.person.name}, #{contribution.person.name}" %> added:
                 <blockquote>
                   <%= contribution.content %>
