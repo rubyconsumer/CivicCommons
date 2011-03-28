@@ -64,6 +64,8 @@ ActiveRecord::Schema.define(:version => 20110409203520) do
     t.string   "embed_target",            :limit => 1000
     t.boolean  "confirmed",                               :default => true
     t.boolean  "notify"
+    t.text     "embedly_code"
+    t.string   "embedly_type"
   end
 
   create_table "conversations", :force => true do |t|

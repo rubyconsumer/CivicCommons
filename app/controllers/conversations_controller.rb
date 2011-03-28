@@ -96,6 +96,7 @@ class ConversationsController < ApplicationController
   end
 
   def preview_node_contribution
+    EmbedlyService.new.fetch_and_merge_params!(params)
     @contribution = Contribution.update_or_create_node_level_contribution(params[:contribution], current_person)
     respond_to do |format|
       if @contribution.valid?

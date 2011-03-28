@@ -10,7 +10,7 @@ class Contribution < ActiveRecord::Base
   profanity_filter :content, :method => 'hollow'
 
   ALL_TYPES = ["Answer","AttachedFile","Comment","EmbeddedSnippet","Link",
-               "Question","SuggestedAction"]
+               "Question","SuggestedAction", "EmbedlyContribution"]
 
   belongs_to :person, :foreign_key => "owner"
   belongs_to :conversation

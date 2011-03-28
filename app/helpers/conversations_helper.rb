@@ -43,6 +43,8 @@ module ConversationsHelper
       "asked a question"
     when "SuggestedAction"
       "suggested an action"
+    when "EmbedlyContribution"
+      "shared a link"
     else
       "responded"
     end
@@ -64,6 +66,8 @@ module ConversationsHelper
       "Comment on link..."
     when :suggested_action
       "Suggest an action..."
+    when :embedly_contribution
+      "Share a link..."
     else
       ""
     end

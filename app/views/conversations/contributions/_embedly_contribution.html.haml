@@ -1,0 +1,10 @@
+%div.content
+  %span.contribution-person-name= person_display_name(contribution.person)
+  =auto_link(simple_format(contribution.content))
+%p.link-title
+  = link_to(contribution.title, contribution.url)
+  %br
+  %span.link-url
+    = contribution.url
+%p.content.link-quote
+  = contribution.description

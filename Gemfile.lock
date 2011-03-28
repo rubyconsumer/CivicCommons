@@ -45,7 +45,7 @@ GEM
       activemodel (= 3.0.3)
       activesupport (= 3.0.3)
     activesupport (3.0.3)
-    addressable (2.2.4)
+    addressable (2.2.5)
     archive-tar-minitar (0.5.2)
     arel (2.0.9)
     autotest (4.4.6)
@@ -101,6 +101,7 @@ GEM
     diff-lcs (1.1.2)
     email_spec (1.1.1)
       rspec (~> 2.0)
+    embedly (0.3.3)
     engineyard (1.3.17)
       engineyard-serverside-adapter (= 1.4.1)
       escape (~> 0.0.4)
@@ -161,7 +162,7 @@ GEM
       activerecord
       activesupport
     polyglot (0.3.1)
-    rack (1.2.2)
+    rack (1.2.1)
     rack-mount (0.6.14)
       rack (>= 1.0.0)
     rails (3.0.3)
@@ -263,6 +264,7 @@ DEPENDENCIES
   delayed_paperclip
   devise (= 1.1.2)
   email_spec
+  embedly
   engineyard
   factory_girl_rails (~> 1.0.1)
   friendly_id (~> 3.2.1)
@@ -278,6 +280,7 @@ DEPENDENCIES
   mysql2
   nokogiri
   paperclip (= 2.3.8)
+  rack (= 1.2.1)
   rack-test!
   rails (= 3.0.3)
   rails3-generators
