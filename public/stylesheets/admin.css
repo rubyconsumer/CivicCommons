@@ -194,10 +194,11 @@ background-color: #8dbdd8;
 /* staff picks */
 .staff_pick
 {
+	color: white;
 	display: block;
+	font-size: 0.1em;
 	height: 24px;
-	margin-left: 10px;
-	text-indent: -9999px;
+	margin: 0 auto;
 	width: 24px;
 }
 
@@ -206,7 +207,8 @@ background-color: #8dbdd8;
 	background: transparent url('../images/icons/star_empty.png') 0 0 no-repeat;
 }
 
-.staff_pick.on
+.staff_pick.on,
+.staff_pick.off:hover
 {
 	background: transparent url('../images/icons/star_full.png') 0 0 no-repeat;
 }
