@@ -79,7 +79,7 @@ class DigestService
       conversations_array.each do |conversation|
 
         contributions = updated_contributions.select do |contribution|
-          contribution.conversation == conversation.first && contribution.person != person
+          contribution.conversation == conversation.first
         end
 
         conversation << contributions

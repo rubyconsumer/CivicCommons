@@ -3,24 +3,24 @@
     <td style="padding: 20px 0 0 0;">
       <h1>Here’s a quick update on what’s going on at the Commons.</h1>
       <% @conversations.each do |conversation| %>
-        <% unless conversation.last.empty? %>
-          <h2><%= conversation.first.title %></h2>
-          <% conversation.last.each do |contribution| %>
-            <% if contribution.parent and contribution.parent.person.id != contribution.person.id %>
-              <p><%= "In response to #{contribution.parent.person.name}, #{contribution.person.name}" %> added:
-                <blockquote>
-                  <%= contribution.content %>
-                </blockquote>
-                <%= link_to 'Check it out', "#{conversation_url(conversation.first)}#node-#{contribution.id}" %>
-              </p>
-            <% else %>
-              <p><%= "#{contribution.person.name}" %> added:
-                <blockquote>
-                  <%= contribution.content %>
-                </blockquote>
-                <%= link_to 'Check it out', "#{conversation_url(conversation.first)}#node-#{contribution.id}" %>
-              </p>
-            <% end %>
+        <h2><%= conversation.first.title %></h2>
+        <% conversation.last.each do |contribution| %>
+          <% if contribution.parent and contribution.parent.person.id != contribution.person.id %>
+            <%  contributer = (@person == contribution.person ? 'you' : contribution.person.name)  %>
+            <p><%= "In response to #{contribution.parent.person.name}, #{contributer}" %> added:
+            <blockquote>
+              <%= contribution.content %>
+            </blockquote>
+            <%= link_to 'Check it out', "#{conversation_url(conversation.first)}#node-#{contribution.id}" %>
+            </p>
+          <% else %>
+            <%  contributer = (@person == contribution.person ? 'You' : contribution.person.name)  %>
+            <p><%= "#{contributer}" %> added:
+            <blockquote>
+              <%= contribution.content %>
+            </blockquote>
+            <%= link_to 'Check it out', "#{conversation_url(conversation.first)}#node-#{contribution.id}" %>
+            </p>
           <% end %>
         <% end %>
       <% end %>
