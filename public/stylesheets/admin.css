@@ -191,28 +191,35 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 background-color: #8dbdd8;
 }
 
+td.handle {
+	cursor: move;
+	font-size: 2em;
+	opacity: 0.1;
+	width: 20px;
+}
+
+tr:hover td.handle {
+	opacity: 1;
+}
+
 /* staff picks */
-.staff_pick
-{
+.staff_pick {
 	display: block;
 	height: 24px;
 	margin: 0 auto;
 	width: 24px;
 }
 
-.staff_pick .text
-{
+.staff_pick .text {
 	display: none;
 }
 
 .staff_pick.off,
-.staff_pick.on:hover
-{
+.staff_pick.on:hover {
 	background: transparent url('../images/icons/star_empty.png') 0 0 no-repeat;
 }
 
 .staff_pick.on,
-.staff_pick.off:hover
-{
+.staff_pick.off:hover {
 	background: transparent url('../images/icons/star_full.png') 0 0 no-repeat;
 }
