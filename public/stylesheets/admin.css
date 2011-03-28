@@ -191,3 +191,22 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 background-color: #8dbdd8;
 }
 
+/* staff picks */
+.staff_pick
+{
+	display: block;
+	height: 24px;
+	margin-left: 10px;
+	text-indent: -9999px;
+	width: 24px;
+}
+
+.staff_pick.off
+{
+	background: transparent url('../images/icons/star_empty.png') 0 0 no-repeat;
+}
+
+.staff_pick.on
+{
+	background: transparent url('../images/icons/star_full.png') 0 0 no-repeat;
+}
