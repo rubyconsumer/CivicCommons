@@ -112,23 +112,50 @@ feature "Post Content Item", %q{
       page.should have_content("has already been taken")
     end
 
-#    scenario "See the edit content item page" do
+    scenario "See the edit content item page" do
       # Given I am on the content items page
       # When I press the “Edit” link for a content item
       # Then I should be on the edit content item page
-      # And I should the content item data populated in the content item fields
 
-#      visit admin_content_items_path(content)
-#      click_link('Delete')
-#    end
+      visit admin_content_items_path(content)
+      click_link("Edit")
+      should_be_on edit_admin_content_item_path(content)
+    end
 
-#    scenario "Edit content item" do
+    scenario "Edit content item" do
       # Given: I am on the edit content item page
       # And I have populated all required fields
       # When I click “Update Content Item” button
       # Then that content item should be updated
       # And I should be on the content items page
       # And I should see a the success message
-#    end
+
+      visit edit_admin_content_item_path(content)
+      select('RadioShow', :from => 'content_item_content_type')
+      fill_in('content_item_title', :with => 'First Radio Show')
+      fill_in('content_item_url', :with => 'first-radio-show')
+      fill_in('content_item_body', :with => 'This radio show is about that radio show')
+      click_button('Update Content item')
+      should_be_on admin_content_items_path
+    end
+=begin
+    scenario "Edit content item without required fields" do
+      # Given: I am on the edit content item page
+      # And I have not populated
+      # When I click “Update Content Item” button
+      # Then that content item should not be updated
+      # And I should be on the edit content item page
+      # And I should see a the an error message
+
+      visit edit_admin_content_item_path(content)
+      select('RadioShow', :from => 'content_item_content_type')
+      fill_in('content_item_title', :with => 'asdsadasd')
+      fill_in('content_item_url', :with => 'first-radio-show')
+      fill_in('content_item_body', :with => 'This radio show is about that radio show')
+save_and_open_page
+      click_button('Update Content item')
+      should_be_on edit_admin_content_item_path(content)
+    end
+=end
 
 end

@@ -6,7 +6,7 @@
     <th>Author</th>
     <th>Type</th>
     <th>Created Date</th>
-    <th></th>
+    <th colspan="2"></th>
   </tr>
   <% @content_items.each do |item| %>
   <tr>
@@ -14,8 +14,8 @@
     <td><%= item.person_id %></td>
     <td><%= puts item.content_type %></td>
     <td><%= item.created_at.strftime("%m-%d-%Y") %></td>
+    <td><%= link_to "Edit", edit_admin_content_item_path(item) %></td>
     <td><%= link_to "Delete", admin_content_item_path(item), method:  :delete, confirm: "Are you sure?" %></td>
-
   </tr>
 <% end %>
 </table>

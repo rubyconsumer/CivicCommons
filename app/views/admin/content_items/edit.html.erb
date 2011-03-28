@@ -1,0 +1,42 @@
+<h2>Edit Content Item</h2>
+<%= form_for [:admin, @content_item], :html =>{:multipart => true} do |f| %>
+  <% if @content_item.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        It looks like we’re still missing some important information:
+      </h2>
+      <ul>
+        <% @content_item.errors.each do |attr,msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <p>
+  <%= f.label :title %><br>
+  <%= f.text_field :title %>
+  </p>
+
+  <p>
+  <%= f.label :url %><br>
+  <%= f.text_field :url %>
+  </p>
+
+  <p>
+  <%= f.label :content_type %><br>
+  <%= f.select :content_type, ContentItem::CONTENT_TYPES %>
+  </p>
+
+  <p>
+  <%= f.label :summary %><br>
+  <%= f.text_area :summary %>
+  </p>
+
+  <p>
+  <%= f.label :body %><br>
+  <%= f.text_area :body %>
+  </p>
+
+  <%= f.submit %>
+<% end %>
