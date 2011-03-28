@@ -1,5 +1,5 @@
 %h2 Conversations
-%table{:id => "conversations"}(summary="List of Conversations") 
+%table.conversations.tablesorter(summary="List of Conversations") 
   %thead  
     %tr
       %th
@@ -25,13 +25,13 @@
     return ui;
   };
   $(document).ready(function(){
-    $("#conversations tbody").sortable({
+    $("table.conversations tbody").sortable({
       axis: "y",
-      containment: "#conversations tbody",
+      containment: "table.conversations tbody",
       cursor: "move",
       handle: ".handle",
       helper: fixTableRowHelper
     })
-    $("#conversations tbody .handle").disableSelection();
+    $("table.conversations tbody .handle").disableSelection();
   });
 %br
