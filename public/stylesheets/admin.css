@@ -194,12 +194,15 @@ background-color: #8dbdd8;
 /* staff picks */
 .staff_pick
 {
-	color: white;
 	display: block;
-	font-size: 0.1em;
 	height: 24px;
 	margin: 0 auto;
 	width: 24px;
+}
+
+.staff_pick .text
+{
+	display: none;
 }
 
 .staff_pick.off,
