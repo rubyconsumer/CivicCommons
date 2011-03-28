@@ -198,7 +198,7 @@ td.handle {
 	width: 20px;
 }
 
-tr:hover td.handle {
+td.handle:hover {
 	opacity: 1;
 }
 
