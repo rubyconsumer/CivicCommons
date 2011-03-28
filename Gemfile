@@ -1,6 +1,7 @@
 source 'http://rubygems.org'
 
-#gem 'mysql', '2.8.1'
+gem 'rack', '1.2.1'
+
 gem 'mysql2'
 
 gem 'rails', "3.0.3"
@@ -14,6 +15,8 @@ gem "will_paginate", "~> 3.0.pre2"
 gem 'httparty'
 
 gem 'geokit'
+
+gem 'embedly'
 
 gem 'gibbon'
 gem 'hominid', "~>3.0.2"

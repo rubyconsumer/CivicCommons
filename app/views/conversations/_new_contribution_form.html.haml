@@ -11,6 +11,10 @@
     %label
       Upload a file:
       = f.file_field(:attachment)
+  - elsif type == :embedly_contribution
+    %label
+      /URL:
+      = f.text_field(:url, :type => "text", :class => "textbox link", :placeholder => "http://www.example.com")
   - elsif type == :link
     %label
       /URL:

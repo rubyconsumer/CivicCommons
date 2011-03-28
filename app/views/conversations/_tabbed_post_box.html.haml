@@ -32,7 +32,7 @@
         %div{:id => "#{div_id}-new-attached_file" }
           = render :partial => 'conversations/new_contribution_form', :locals => {:div_id => div_id, :type => :attached_file}
         %div{:id => "#{div_id}-new-link" }
-          = render :partial => 'conversations/new_contribution_form', :locals => {:div_id => div_id, :type => :link}
+          = render :partial => 'conversations/new_contribution_form', :locals => {:div_id => div_id, :type => :embedly_contribution}
         %div{:id => "#{div_id}-new-embedded_snippet" }
           = render :partial => 'conversations/new_contribution_form', :locals => {:div_id => div_id, :type => :embedded_snippet}
         %div{:id => "#{div_id}-new-suggested_action" }
