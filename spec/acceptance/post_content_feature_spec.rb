@@ -138,7 +138,9 @@ feature "Post Content Item", %q{
       click_button('Update Content item')
       should_be_on admin_content_items_path
     end
+
 =begin
+## Capybara doesn't seem to want to "unfill" fields -- TODO: fix this problem and the test will work
     scenario "Edit content item without required fields" do
       # Given: I am on the edit content item page
       # And I have not populated
