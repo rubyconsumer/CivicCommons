@@ -202,7 +202,8 @@ background-color: #8dbdd8;
 	width: 24px;
 }
 
-.staff_pick.off
+.staff_pick.off,
+.staff_pick.on:hover
 {
 	background: transparent url('../images/icons/star_empty.png') 0 0 no-repeat;
 }
