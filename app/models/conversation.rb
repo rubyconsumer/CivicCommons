@@ -23,7 +23,7 @@ class Conversation < ActiveRecord::Base
 
   belongs_to :person, :foreign_key => "owner"
 
-  attr_accessor :user_generated, :rejected_contributions, :staff_pick
+  attr_accessor :user_generated, :rejected_contributions
 
   has_attached_file :image,
     :styles => {
@@ -90,6 +90,10 @@ class Conversation < ActiveRecord::Base
         self.rejected_contributions << contribution
       end
     }
+  end
+
+  def staff_pick?
+    staff_pick
   end
 
   def user_generated?

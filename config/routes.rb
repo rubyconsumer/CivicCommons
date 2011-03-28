@@ -90,7 +90,9 @@ Civiccommons::Application.routes.draw do
   namespace "admin" do
     root      to: "dashboard#show"
     resources :articles
-    resources :conversations
+    resources :conversations do
+      put 'toggle_staff_pick', on: :member
+    end
     resources :issues
     resources :regions
     resources :people do
