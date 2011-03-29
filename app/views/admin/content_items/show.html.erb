@@ -1,10 +1,17 @@
 <article>
   <header>
     <h1><%= @content_item.title %></h1>
-  </header>
-  <p>content id: <%= @content_item.id %></p>
-  <p>person id: <%= @content_item.person_id %></p>
+    </header>
+    <%= link_to @content_item.url, @content_item.url %>
   <p>Author: <%= @person.first_name + ' ' +  @person.last_name %></p>
-  <p><%= @content_item.url %></p>
+  <p>Content Type: <%= @content_item.content_type %>
+  <p>Summary: </p>
+  <blockquote>
+    <%= @content_item.summary %>
+  </blockquote>
+  <p>Body: </p>
+  <blockquote>
+    <%= @content_item.body %>
+  </blockquote>
 </article>
 
