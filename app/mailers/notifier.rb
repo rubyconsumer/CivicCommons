@@ -37,7 +37,7 @@ class Notifier < Devise::Mailer
     @person = person
     @conversations = conversations
     mail(:subject => "Civic Commons Daily Digest",
-         :from => '"Curator of the Conversation" <curator@theciviccommons.com>',
+         :from => '"Curator of Conversation" <curator@theciviccommons.com>',
          :to => @person.email)
   end
 
