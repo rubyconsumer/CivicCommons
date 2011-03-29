@@ -2,7 +2,9 @@
   <header>
     <h1><%= @content_item.title %></h1>
   </header>
-  <p><%= @content_item.id %></p>
+  <p>content id: <%= @content_item.id %></p>
+  <p>person id: <%= @content_item.person_id %></p>
+  <p>Author: <%= @person.first_name + ' ' +  @person.last_name %></p>
   <p><%= @content_item.url %></p>
 </article>
 

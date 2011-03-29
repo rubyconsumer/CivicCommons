@@ -10,6 +10,7 @@ class Admin::ContentItemsController < Admin::DashboardController
   end
 
   def create
+    params[:content_item][:person_id] = current_person[:id]
     @content_item = ContentItem.new(params[:content_item])
     if @content_item.save
       respond_to do |format|
@@ -24,6 +25,7 @@ class Admin::ContentItemsController < Admin::DashboardController
 
   def show
     @content_item = ContentItem.find(params[:id])
+    @person = Person.find(@content_item.person_id)
   end
 
   def edit
