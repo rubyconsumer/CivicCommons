@@ -18,7 +18,7 @@ describe AvatarHelper do
 
       helper.link_to_profile(@me) do
         "blah"
-      end.should == "<a href=\"/user/1\" title=\"My Self\">blah</a>"
+      end.should =~ /\<a href="\S*\/user\/1" title="My Self">blah<\/a>/i
     end
 
     it "should like to go to a persons public page" do
@@ -27,7 +27,7 @@ describe AvatarHelper do
 
       helper.link_to_profile(@registered_user) do
         "blah"
-      end.should == "<a href=\"/user/13\" title=\"Someone Else\">blah</a>"
+      end.should =~ /\<a href="\S*\/user\/13" title="Someone Else">blah<\/a>/i
     end
   end
 
@@ -39,7 +39,7 @@ describe AvatarHelper do
       @registered_user.avatar.url(:standard).gsub(/\?\d*/, '').should == "http://s3.amazonaws.com/#{@amazon_config['bucket']}/avatars/13/standard/test_image.jpg"
       @registered_user.avatar.stub(:url).and_return("http://avatar_url")
 
-      helper.text_profile(@registered_user).should == "<a href=\"/user/13\" title=\"Someone Else\">Someone Else</a>"
+      helper.text_profile(@registered_user).should =~ /\<a href="\S*\/user\/13" title="Someone Else">Someone Else<\/a>/i
     end
   end
 

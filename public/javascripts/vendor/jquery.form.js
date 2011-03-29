@@ -383,6 +383,11 @@ $.fn.ajaxSubmit = function(options) {
 				log('upload aborted');
 				ok = false;
 			}
+			
+			if (xhr.aborted) {
+				log('upload aborted');
+				ok = false;
+			}
 
 			// ordering of these callbacks/triggers is odd, but that's how $.ajax does it
 			if (ok) {

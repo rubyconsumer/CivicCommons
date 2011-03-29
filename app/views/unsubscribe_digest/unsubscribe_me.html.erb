@@ -1,0 +1,20 @@
+<%= content_for :main_body do %>
+  <div class='wrapper'>
+    <div class='content-container'>
+      <div class='expander'>
+        <h1>Opt out of Civic Commons Notifications</h1>
+        <p>
+        We send you these notifications so you know what's going on in the conversations you're following and 
+        participating in.
+        </p>
+        <p>
+          Do you want to stop receiving these notifications to <%= @person.email %>?
+        </p>
+        <div class="confirmation">
+          <%= button_to "Confirm", unsubscribe_confirmation_path, method: :put, class: 'button' %> or
+          <%= link_to "Cancel", root_path %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

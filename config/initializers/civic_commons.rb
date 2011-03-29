@@ -21,6 +21,21 @@ if !defined?(Civiccommons::Config)
         end
       end
 
+      def self.setup_default_email
+        raise Civiccommons::ConfigNotFoundError, "Please set up the default email address. See the civic_commons.yml.sample for an example." unless self.respond_to?('default_email')
+      end
+
+      def self.validate_intercept_config
+        raise Civiccommons::ConfigNotFoundError, "Please set up the mailer intercept config. See the civic_commons.yml.sample for an example." unless self.mailer.key?('intercept')
+      end
+
+      def self.setup_intercept_email
+        self.mailer['intercept_email'] = self.default_email unless self.mailer.key?('intercept_email')
+      end
+
+      setup_default_email
+      validate_intercept_config
+      setup_intercept_email
     end
   end
 

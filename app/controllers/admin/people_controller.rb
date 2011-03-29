@@ -1,14 +1,9 @@
 class Admin::PeopleController < Admin::DashboardController
-  
+  before_filter :prepare_stats, :only => [:index, :proxies]
+
   #GET admin/people/
   def index
     @people = Person.all
-    @stats = {
-      :confirmed         => Person.confirmed_accounts.size,
-      :unconfirmed       => Person.unconfirmed_accounts.size,
-      :unconfirmed_real  => Person.unconfirmed_accounts.real_accounts.size,
-      :unconfirmed_proxy => Person.proxy_accounts.size
-    }
   end
   
   #GET admin/proxies
@@ -74,6 +69,15 @@ class Admin::PeopleController < Admin::DashboardController
   end
 
   protected
+
+  def prepare_stats
+    @stats = {
+      :confirmed         => Person.confirmed_accounts.size,
+      :unconfirmed       => Person.unconfirmed_accounts.size,
+      :unconfirmed_real  => Person.unconfirmed_accounts.real_accounts.size,
+      :unconfirmed_proxy => Person.proxy_accounts.size
+    }
+  end
 
   # Locks or unlocks a person's account which will disable login access
   # action = either :lock or :unlock

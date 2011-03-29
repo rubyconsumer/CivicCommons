@@ -34,16 +34,20 @@ Civiccommons::Application.routes.draw do
   #Subscriptions
   post '/subscriptions/subscribe',                     to: 'subscriptions#subscribe'
   post '/subscriptions/unsubscribe',                   to: 'subscriptions#unsubscribe'
+  #UnsubscribeDigest
+  get '/unsubscribe-me/:id',                           to: 'unsubscribe_digest#unsubscribe_me',              as: 'unsubscribe_confirmation'
+  put '/unsubscribe-me/:id',                           to: 'unsubscribe_digest#remove_from_digest'
+
   #Community
-  get '/community',                                    to: 'community#index',                                 as: 'community'
+  get '/community',                                    to: 'community#index',                                as: 'community'
   #Widget
   get '/widget',                                       to: 'widget#index'
 
   #Static Pages
   get '/about',             to: 'static_pages#about'
   get '/blog',              to: 'static_pages#blog',                as: 'blog'
-  get '/build-the-commons', to: 'static_pages#build_the_commons'
-  get '/contact-us',        to: 'static_pages#contact'
+  get '/build_the_commons', to: 'static_pages#build_the_commons'
+  get '/contact_us',        to: 'static_pages#contact'
   get '/faq',               to: 'static_pages#faq'
   get '/partners',          to: 'static_pages#partners'
   get '/poster',            to: 'static_pages#poster'
@@ -52,6 +56,8 @@ Civiccommons::Application.routes.draw do
   get '/principles',        to: 'static_pages#principles'
   get '/team',              to: 'static_pages#team'
   get '/terms',             to: 'static_pages#terms'
+  get '/jobs',              to: 'static_pages#jobs'
+  get '/careers',           to: 'static_pages#jobs'
 
  #Devise Routes
   devise_for :people,

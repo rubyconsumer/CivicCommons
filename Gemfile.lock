@@ -130,9 +130,7 @@ GEM
     haml (3.0.25)
     highline (1.6.1)
     hominid (3.0.2)
-    hoptoad_notifier (2.4.6)
-      activesupport
-      builder
+    hoptoad_notifier (2.4.2)
     hpricot (0.8.3)
     httparty (0.7.4)
       crack (= 0.1.8)

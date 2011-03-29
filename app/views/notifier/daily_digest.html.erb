@@ -1,0 +1,35 @@
+<table width="600px" border="0" cellspacing="0">
+  <tr>
+    <td style="padding: 20px 0 0 0;">
+      <h1>Here’s a quick update on what’s going on at the Commons.</h1>
+      <% @conversations.each do |conversation| %>
+        <h2><%= conversation.first.title %></h2>
+        <% conversation.last.each do |contribution| %>
+          <% if contribution.parent and contribution.parent.person.id != contribution.person.id %>
+            <%  contributer = (@person == contribution.person ? 'you' : contribution.person.name)  %>
+            <p><%= "In response to #{contribution.parent.person.name}, #{contributer}" %> added:
+            <blockquote>
+              <%= contribution.content %>
+            </blockquote>
+            <%= link_to 'Check it out', "#{conversation_url(conversation.first)}#node-#{contribution.id}" %>
+            </p>
+          <% else %>
+            <%  contributer = (@person == contribution.person ? 'You' : contribution.person.name)  %>
+            <p><%= "#{contributer}" %> added:
+            <blockquote>
+              <%= contribution.content %>
+            </blockquote>
+            <%= link_to 'Check it out', "#{conversation_url(conversation.first)}#node-#{contribution.id}" %>
+            </p>
+          <% end %>
+        <% end %>
+      <% end %>
+      <h3>Too much information?</h3>
+      <p>
+        You can opt out of specific conversations by clicking "Stop Following this Conversation" on that conversation page at
+        <%= link_to 'theciviccommons.com', root_url %>, or you can
+        <%= link_to 'unsubscribe', unsubscribe_confirmation_url(@person) %> all together.
+      </p>
+    </td>
+  </tr>
+</table>

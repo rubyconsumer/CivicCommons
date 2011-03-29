@@ -1,5 +1,7 @@
 class Notifier < Devise::Mailer
+
   layout 'mailer'
+  add_template_helper(ConversationsHelper)
 
   def welcome(record)
     @resource = record
@@ -29,6 +31,14 @@ class Notifier < Devise::Mailer
     mail(:subject => @user.name + " wants to invite you to a conversation at The Civic Commons",
          :from => Devise.mailer_sender,
          :to => @resource[:emails])
+  end
+
+  def daily_digest(person, conversations)
+    @person = person
+    @conversations = conversations
+    mail(:subject => "Civic Commons Daily Digest",
+         :from => '"Curator of Conversation" <curator@theciviccommons.com>',
+         :to => @person.email)
   end
 
 end

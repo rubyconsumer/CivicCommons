@@ -1,6 +1,6 @@
 - if !current_person
   %p.rating
-    =link_to("Login in to rate", new_person_session_path)
+    =link_to("Login in to rate", secure_session_url)
     =format_rating(contribution)
 - elsif current_person && contribution.user_rating
   %p.rating

@@ -517,6 +517,14 @@ width: 940px;
 float: left;
 width: 620px;
 }
+.main-content-left {
+float: left;
+width: 120px;
+}
+.main-content-right {
+float: right;
+width: 480px;
+}
 .aside {
 float: right;
 width: 290px;
@@ -639,14 +647,16 @@ z-index: 1;
 #login-status a:hover, .important a:hover {color: #f3f3f3;}
 */
 
-.flash-notice{
-  background-color: #ffff99;
-  border-top: 3px solid #ffff66;
-  border-bottom: 3px solid #ffff66;
-  padding: 0;
-  margin: 0;
-  text-align: center;
-  line-height: 25px;}
+.flash-notice {
+background-color: #ddecab;
+background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0.48, rgb(202,226,124)),color-stop(0.74, rgb(221,236,171)));
+background-image: -moz-linear-gradient(center bottom,rgb(202,226,124) 48%,rgb(221,236,171) 74%);
+color: #555;
+padding: 5px 0;
+width: 100%;
+text-align: center;
+line-height: 25px;
+}
 
 /* Main Navigation */
 #nav-wrapper {background: #4f5561 url(/images/nav_wrapper_bg.gif) repeat-x top;}
@@ -1606,3 +1616,19 @@ visibility: hidden;
 /* IE7 */
 *:first-child+html #wrapper, *:first-child+html #header, *:first-child+html .feature, *:first-child+html div.tab-strip ul, *:first-child+html div.tab-area, *:first-child+html #nav, #header-wrapper, *:first-child+html .section, *:first-child+html .content-container, *:first-child+html .photobank, *:first-child+html div.three-col, *:first-child+html div.three-col-sm, *:first-child+html .form-block, *:first-child+html .offset-1, *:first-child+html .offset-2, *:first-child+html form, *:first-child+html .convo-utility, *:first-child+html ul.social-media, *:first-child+html div.two-col, *:first-child+html div.two-col-sm, *:first-child+html .conversations, *:first-child+html div.convo-popup, *:first-child+html .pagination p, *:first-child+html #header-utility, *:first-child+html .convo-create {zoom: 1;}
 *:first-child+html .group {zoom: 1;}
+
+/*-----------------------------------------------
+=Styles for unsubscribe page
+-----------------------------------------------*/
+.expander {
+  min-height: 600px;
+}
+
+.confirmation {
+  line-height: 2.5em;
+}
+
+
+form.button_to {
+  float: left;
+}

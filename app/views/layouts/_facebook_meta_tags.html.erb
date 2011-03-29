@@ -1,0 +1,15 @@
+<% if not @conversation.nil? %>
+  <meta name="title" content="<%=h @conversation.title %>" />
+  <meta name="description" content="<%=h @conversation.summary %>" />
+  <% if not @conversation.image.nil? %>
+    <link rel="image_src" href="<%= @conversation.image.url(:panel) %>" />
+  <% end %>
+  <meta name="medium" content="blog" />
+<% elsif not @issue.nil? %>
+  <meta name="title" content="<%=h @issue.name %>" />
+  <meta name="description" content="<%=h @issue.summary %>" />
+  <% if not @issue.image.nil? %>
+    <link rel="image_src" href="<%= @issue.image.url(:panel) %>" />
+  <% end %>
+  <meta name="medium" content="blog" />
+<% end %>

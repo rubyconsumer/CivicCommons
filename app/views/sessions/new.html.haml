@@ -7,8 +7,8 @@
           = msg
       %p
         = surround "If you don’t have an account, you should ", " first." do
-          = link_to "register", new_person_registration_path
-      = form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
+          = link_to "register", secure_registration_form_url
+      = form_for(resource, :as => resource_name, :url => secure_session_url(resource_name)) do |f|
         %fieldset.form-group
           .form-block
             = f.label :email, 'Email:'
@@ -21,5 +21,5 @@
             = f.label :remember_me, 'Remember Me', :class => 'checkbox'
         %fieldset.footer
           = f.submit 'Login', :class => 'submit'
-          %a.cancel{ :href => new_password_path(resource_name),
+          %a.cancel{ :href => new_password_url(resource_name),
                      :title => "Forgot your Password?" } Forgot your password?

@@ -13,11 +13,11 @@ describe StaticPagesController do
     end
 
     it "recognizes and generates #buld_the_commons" do
-      { get: "/build-the-commons" }.should route_to(controller: "static_pages", action: "build_the_commons")
+      { get: "/build_the_commons" }.should route_to(controller: "static_pages", action: "build_the_commons")
     end
 
     it "recognizes and generates #contact" do
-      { get: "/contact-us" }.should route_to(controller: "static_pages", action: "contact")
+      { get: "/contact_us" }.should route_to(controller: "static_pages", action: "contact")
     end
 
     it "recognizes and generates #faq" do

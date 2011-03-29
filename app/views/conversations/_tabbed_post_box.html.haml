@@ -1,6 +1,6 @@
 %div{:id => div_id, :class => "tab-strip"}
   - if current_person.nil?
-    =link_to("You must login to respond", new_person_session_path)
+    =link_to("You must login to respond", secure_session_url)
     %br
     %br
   - else

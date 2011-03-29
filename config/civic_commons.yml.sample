@@ -1,4 +1,5 @@
 development:
+  default_email: "myemail@example.com"
   devise:
     email: "The Civic Commons <admin@somewhere.com>"
     mailer_host: "development.somewhere.com"
@@ -9,14 +10,19 @@ development:
   mailer:
     api_token: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-us1"
     list: "planetoftheapes"
+    intercept: true
+    intercept_email: "myemail@example.com"
   rails_secret_token: "randonStuffThatsAtLeast30CharachtersYo128DirtyWithTh"
   smtp:
     address: "smtp.sendsomemail.net"
     domain: "somewhere.com"
     username: "someadmin@somewhere.com"
     password: "somethingsupercryptic"
+  security:
+    ssl_login: false
 
 test:
+  default_email: "myemail@example.com"
   devise:
     email: "The Civic Commons <admin@somewhere.com>"
     mailer_host: "test.somewhere.com"
@@ -27,14 +33,19 @@ test:
   mailer:
     api_token: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-us1"
     list: "planetoftheapes"
+    intercept: false
+    intercept_email: "myemail@example.com"
   rails_secret_token: "randonStuffThatsAtLeast30CharachtersYo128DirtyWithTh"
   smtp:
     address: "smtp.sendsomemail.net"
     domain: "somewhere.com"
     username: "someadmin@somewhere.com"
     password: "somethingsupercryptic"
+  security:
+    ssl_login: false
 
 integration:
+  default_email: "myemail@example.com"
   devise:
     email: "The Civic Commons <admin@somewhere.com>"
     mailer_host: "integration.somewhere.com"
@@ -45,14 +56,19 @@ integration:
   mailer:
     api_token: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-us1"
     list: "planetoftheapes"
+    intercept: true
+    intercept_email: "myemail@example.com"
   rails_secret_token: "randonStuffThatsAtLeast30CharachtersYo128DirtyWithTh"
   smtp:
     address: "smtp.sendsomemail.net"
     domain: "somewhere.com"
     username: "someadmin@somewhere.com"
     password: "somethingsupercryptic"
+  security:
+    ssl_login: true
 
 staging:
+  default_email: "myemail@example.com"
   devise:
     email: "The Civic Commons <admin@somewhere.com>"
     mailer_host: "staging.somewhere.com"
@@ -63,14 +79,19 @@ staging:
   mailer:
     api_token: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-us1"
     list: "planetoftheapes"
+    intercept: true
+    intercept_email: "myemail@example.com"
   rails_secret_token: "randonStuffThatsAtLeast30CharachtersYo128DirtyWithTh"
   smtp:
     address: "smtp.sendsomemail.net"
     domain: "somewhere.com"
     username: "someadmin@somewhere.com"
     password: "somethingsupercryptic"
+  security:
+    ssl_login: true
 
 production:
+  default_email: "myemail@example.com"
   devise:
     email: "The Civic Commons <admin@somewhere.com>"
     mailer_host: "production.somewhere.com"
@@ -81,10 +102,14 @@ production:
   mailer:
     api_token: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-us1"
     list: "planetoftheapes"
+    intercept: false
+    intercept_email: "myemail@example.com"
   rails_secret_token: "randonStuffThatsAtLeast30CharachtersYo128DirtyWithTh"
   smtp:
     address: "smtp.sendsomemail.net"
     domain: "somewhere.com"
     username: "someadmin@somewhere.com"
     password: "somethingsupercryptic"
+  security:
+    ssl_login: true
 

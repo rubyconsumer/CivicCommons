@@ -23,7 +23,7 @@
         Want to join the conversation? Lets get the formalities out of the way.
 .wrapper
   .main.section
-    = form_for(form_presenter, :as => resource_name, :url => registration_path(resource_name), :html => { :multipart => 'true', :class => "register" }) do |f|
+    = form_for(form_presenter, :as => resource_name, :url => secure_registration_url(resource_name), :html => { :multipart => 'true', :class => "register" }) do |f|
       %fieldset.form-group
         .form-block
           = f.label :name, 'Your name:'

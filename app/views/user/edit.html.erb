@@ -2,7 +2,7 @@
   <div class="wrapper">
     <div class="main section">
       <h1>Settings</h1>
-      <%= form_for @person, :url => user_path(@person), :method => :put, :html=> {:multipart => true} do |person| %>
+      <%= form_for @person, :url => secure_user_url(@person), :method => :put, :html=> {:multipart => true} do |person| %>
         <fieldset class="form-group">
           <div class="form-block">
             <%= person.label :name, "Your Name" %>

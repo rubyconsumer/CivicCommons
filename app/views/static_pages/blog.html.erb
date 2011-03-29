@@ -10,6 +10,22 @@
           <h1>Common Blog</h1>
 
           <div class="blog" id="outer_block_57">
+            <h2></h2>
+            <%= user_profile(@people[:dan]) %>
+            <div class="blog_inner">
+              <p>
+                The Civic Commons is looking for an ambitious and talented individual as its next
+                <strong>Operations and Communications Coordinator</strong>! Check out the <%= link_to 'job description', jobs_path %>.
+                Cover letters and resumes are due by April 1st. Please send all materials to <%= @people[:mike].name %> (<%= mail_to @people[:mike].email %>)</a>.
+              </p>
+            </div>
+
+            <div class="post_info">
+              posted by <%= link_to @people[:mike].name, user_path(@people[:mike]) %> on March 15, 2011
+            </div>
+          </div>
+
+          <div class="blog" id="outer_block_57">
             <h2>Some stuff worth looking at (if you've never seen them)</h2>
             <%= user_profile(@people[:dan]) %>
             <div class="blog_inner">

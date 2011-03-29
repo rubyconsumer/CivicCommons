@@ -1,5 +1,5 @@
 module ApplicationHelper
-  
+
   def show_errors(model)
     rv = ""
     all_errors = model.errors.full_messages
@@ -26,6 +26,14 @@ module ApplicationHelper
   
   def nl2br(string)
 	  string.gsub(/\n/, '<br />') if string
+  end
+
+  def url_for(options = nil)
+    if Hash === options
+      # change all links to use 'http' protocol unless specified
+      options[:protocol] ||= 'http'
+    end
+    super(options)
   end
 
 end

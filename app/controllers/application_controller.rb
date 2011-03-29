@@ -1,15 +1,21 @@
 class ApplicationController < ActionController::Base
+  include ApplicationHelper
+  include SecureUrlHelper
 
   protect_from_forgery
   include AvatarHelper
 
   layout 'application'
 
+protected
+
   def verify_admin
-    unless current_person && current_person.admin?
+
+    if require_user and not current_person.admin?
       flash[:error] = "You must be an admin to view this page."
-      redirect_to new_person_session_path
+      redirect_to secure_session_url(current_person)
     end
+
   end
 
   def require_user
@@ -23,8 +29,17 @@ class ApplicationController < ActionController::Base
           format.js { render 'sessions/new_in_modal' }
         end
       else
-        redirect_to new_person_session_url
+        redirect_to secure_new_person_session_url
       end
+      return false
+    else
+      return true
+    end
+  end
+
+  def require_ssl
+    if not request.ssl? and SecureUrlHelper.https?
+      redirect_to request.url.gsub(/^http:\/\//i, 'https://')
     end
   end
 
@@ -34,7 +49,7 @@ class ApplicationController < ActionController::Base
     elsif session[:link]
       new_link_path
     else
-      super
+      root_url
     end
   end
 

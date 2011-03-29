@@ -1,5 +1,6 @@
 class UserController < ApplicationController
 
+  before_filter :require_ssl, :only => [:edit, :update]
   before_filter :verify_ownership?, :only => [:edit, :update, :destroy_avatar]
 
   def verify_ownership?
@@ -33,7 +34,7 @@ class UserController < ApplicationController
     respond_to do |format|
       if @person.update_attributes(params[:person])
         flash[:notice] = "Successfully edited your profile"
-        format.html { redirect_to user_path(@person) }
+        format.html { redirect_to user_url(@person) }
       else
         format.html { render :action => "edit" }
       end

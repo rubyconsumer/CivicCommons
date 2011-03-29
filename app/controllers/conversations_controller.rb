@@ -40,19 +40,6 @@ class ConversationsController < ApplicationController
     render :show
   end
 
-  def dialog
-    @conversation = Conversation.includes(:guides, :issues).find(params[:id])
-    @conversation.visit!((current_person.nil? ? nil : current_person.id))
-    @conversation_contributions = Contribution.confirmed.not_top_level.without_parent.where(:conversation_id => @conversation.id).includes([:person]).order('created_at ASC')
-    @contributions = Contribution.confirmed.descendants_of(@conversation_contributions).includes([:person])
-
-    @contribution = Contribution.new # for conversation comment form
-
-    @latest_contribution = @conversation.confirmed_contributions.most_recent.first
-
-    render :show
-  end
-
   def node_conversation
     @contribution = Contribution.find(params[:id])
     @contributions = @contribution.children.confirmed.includes(:person)
@@ -102,6 +89,7 @@ class ConversationsController < ApplicationController
   end
 
   def preview_node_contribution
+    EmbedlyService.new.fetch_and_merge_params!(params)
     @contribution = Contribution.update_or_create_node_level_contribution(params[:contribution], current_person)
     respond_to do |format|
       if @contribution.valid?
@@ -209,4 +197,5 @@ class ConversationsController < ApplicationController
     hour = sprintf("%02d",hour)
     input[6,4]+"-"+input[0,2]+"-"+input[3,2]+"T"+hour+":"+input[14,2]+":00"
   end
+
 end
