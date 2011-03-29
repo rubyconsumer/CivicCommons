@@ -3,16 +3,37 @@ class Registrations::OmniauthCallbacksController < Devise::OmniauthCallbacksCont
   def facebook
     if signed_in? && !current_person.facebook_authenticated?
       link_with_facebook      
-    elsif authentication = Authentication.find_from_auth_hash(env['omniauth.auth'])
-      successful_authentication(authentication)
     else
-      render_js_redirect_to(env['omniauth.origin'] || root_path)
+      if authentication = Authentication.find_from_auth_hash(env['omniauth.auth'])
+        successful_authentication(authentication)
+      else
+        create_account_using_facebook_credentials
+      end
     end
+  end
+  
+  def failure
+    render :text => "#{I18n.t('devise.omniauth_callbacks.failure', :kind => failed_strategy.name.to_s.humanize, :reason => failure_message)}"
   end
 
 private
   def auth_popup?
     params[:auth_popup] && params[:auth_popup] == true
+  end
+  
+  def create_account_using_facebook_credentials
+    person = Person.create_from_auth_hash(env['omniauth.auth'])
+    if person.valid?
+      flash[:notice] = I18n.t "devise.omniauth_callbacks.success", :kind => "Facebook"
+      flash[:successful_fb_registration_modal] = true
+      sign_in person, :event => :authentication
+      render_js_redirect_to((env['omniauth.origin'] || root_path),:text => 'Registering to CivicCommons account using your Facebook Credentials...')
+    elsif person.errors[:email].to_s.include?("has already been taken")
+      flash[:email] = person.email
+      render_js_registering_email_taken
+    else
+      render_js_redirect_to((env['omniauth.origin'] || root_path),:text => "Something went wrong, your account cannot be created")
+    end
   end
   
   def failed_linked_to_facebook
@@ -53,26 +74,31 @@ private
     render_js_redirect_to (env['omniauth.origin'] || root_path), :text => 'Logging in to CivicCommons with Facebook...'
   end
   
-  def render_js_conflicting_email(options={})
+  def render_js_colorbox(options={})
     text = options.delete(:text) || 'Redirecting back to CivicCommons....'
+    path = options.delete(:path)
     render :text => "#{text}<script type='text/javascript'>
       if(window.opener) {
-        window.opener.$.colorbox({href:'#{conflicting_email_path}',opacity:0.5, onComplete: function(){
+        window.opener.$.colorbox({href:'#{path}',opacity:0.5, onComplete: function(){
           window.close();
         }});
         }
       </script>"
   end
+
+  def render_js_registering_email_taken(options={})
+    options[:path] = registering_email_taken_path
+    render_js_colorbox(options)
+  end
+  
+  def render_js_conflicting_email(options={})
+    options[:path] = conflicting_email_path
+    render_js_colorbox(options)
+  end
   
   def render_js_fb_linking_success(options={})
-    text = options.delete(:text) || 'Redirecting back to CivicCommons....'
-    render :text => "#{text}<script type='text/javascript'>
-      if(window.opener) {
-        window.opener.$.colorbox({href:'#{fb_linking_success_path}',opacity:0.5, onComplete: function(){
-          window.close();
-        }});
-        }
-      </script>"
+    options[:path] = fb_linking_success_path
+    render_js_colorbox(options)
   end
   
   def render_js_redirect_to(path = '', options={})

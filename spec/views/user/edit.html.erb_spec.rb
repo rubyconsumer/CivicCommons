@@ -65,5 +65,5 @@ describe '/user/edit.html.erb' do
     end
     
   end
-
+  
 end
