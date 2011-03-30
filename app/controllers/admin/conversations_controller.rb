@@ -51,7 +51,7 @@ class Admin::ConversationsController < Admin::DashboardController
 
   #GET admin/conversations/:id
   def show
-    @conversation =  Conversation.find(params[:id])
+    @conversation = Conversation.find(params[:id])
   end 
 
   #DELETE admin/conversations/:id
@@ -69,6 +69,7 @@ class Admin::ConversationsController < Admin::DashboardController
     if @conversation.save
       status = @conversation.staff_pick? ? 'on' : 'off'
       flash[:notice] = "Staff Pick is turned #{status} for \"#{@conversation.title}\""
+      @conversation.sort
     else
       flash[:error] = "Error saving conversation: \"#{@conversation.title}\""
     end

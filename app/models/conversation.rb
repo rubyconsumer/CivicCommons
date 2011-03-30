@@ -73,6 +73,24 @@ class Conversation < ActiveRecord::Base
     end
   end
 
+  def self.sort
+    staff_picks = []
+    others = []
+    conversations = Conversation.order('staff_pick DESC, position ASC, id ASC')
+    conversations.each_with_index do |conversation, i|
+      staff_picks.push(conversation) if conversation.staff_pick?
+      others.push(conversation) unless conversation.staff_pick?
+    end
+
+    staff_picks.each_with_index do |conversation, i|
+      conversation.update_attribute(:position, i)
+    end
+
+    others.each_with_index do |conversation, i|
+      conversation.update_attribute(:position, i + staff_picks.length)
+    end
+  end
+
   # Define our own method for allowing fields_for :contribution, rather
   # than using accepts_nested_association :contributions.
   # We need to use our custom Contribution builder to create contributions
@@ -90,6 +108,12 @@ class Conversation < ActiveRecord::Base
         self.rejected_contributions << contribution
       end
     }
+  end
+
+  def sort
+    max_position = Conversation.where('staff_pick = true').maximum('position')
+    update_attribute(:position, max_position + 1) if max_position
+    Conversation.sort
   end
 
   def staff_pick?

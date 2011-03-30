@@ -3,6 +3,7 @@
   %thead  
     %tr
       %th
+      %th
       %th Conversation Title
       %th Created Date
       %th Staff Pick
@@ -11,6 +12,7 @@
     - @conversations.each do |conversation|
       %tr
         %td.handle &#11021;
+        %td= conversation.position
         %td= link_to conversation.title, admin_conversation_path(conversation)
         %td= conversation.created_at.strftime("%m-%d-%Y")
         %td= toggle_staff_pick_link(conversation)
