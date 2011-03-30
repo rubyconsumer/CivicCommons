@@ -52,6 +52,7 @@ class Conversation < ActiveRecord::Base
   def self.available_filters
     {
       :active => :latest_updated,
+      :featured => :featured,
       :popular => :get_top_visited,
       :recent => :latest_created
     }
@@ -59,6 +60,10 @@ class Conversation < ActiveRecord::Base
 
   def self.available_filter_names
     available_filters.keys.collect(&:to_s)
+  end
+
+  def self.featured
+    Conversation.where('staff_pick = true').order('position ASC')
   end
 
   def self.filtered(filter)
