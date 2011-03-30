@@ -26,14 +26,28 @@
     });
     return ui;
   };
+  var lastUpdatedRow = null;
+
+  function update_sort(event, ui){
+    lastUpdatedRow = $(ui.item);
+    var current_index = $(ui.item).find('td:nth-child(5) span').html();
+    var next_index = $(ui.item).next().find('td:nth-child(5) span').html();
+    var prev_index = $(ui.item).prev().find('td:nth-child(5) span').html();
+    var data = { current: current_index, next: next_index, prev: prev_index };
+    $.post('/admin/conversations/update_order', data, function(data) {
+      lastUpdatedRow.children().effect('highlight');
+    });
+  }
+
   $(document).ready(function(){
     $("table.conversations tbody").sortable({
       axis: "y",
       containment: "table.conversations tbody",
       cursor: "move",
       handle: ".handle",
-      helper: fixTableRowHelper
-    })
+      helper: fixTableRowHelper,
+      update: update_sort
+    });
     $("table.conversations tbody .handle").disableSelection();
   });
 %br

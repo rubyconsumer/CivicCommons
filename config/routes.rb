@@ -92,6 +92,7 @@ Civiccommons::Application.routes.draw do
     resources :articles
     resources :conversations do
       put 'toggle_staff_pick', on: :member
+      post 'update_order', on: :collection
     end
     resources :issues
     resources :regions

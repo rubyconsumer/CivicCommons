@@ -49,6 +49,11 @@ class Admin::ConversationsController < Admin::DashboardController
     end
   end
 
+  #PUT admin/conversations/update_order
+  def update_order
+    render :nothing => true
+  end
+
   #GET admin/conversations/:id
   def show
     @conversation = Conversation.find(params[:id])
