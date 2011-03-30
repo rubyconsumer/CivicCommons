@@ -64,12 +64,20 @@ class Admin::ConversationsController < Admin::DashboardController
   #POST admin/conversations/:id/toggle_staff_pick
   def toggle_staff_pick
     @conversation = Conversation.find(params[:id])
-    @conversation.toggle!(:staff_pick)
-    flash[:notice] = "Staff Pick is turned " + (@conversation.staff_pick? ? 'on' : 'off') + " for \"#{@conversation.title}\""
+    @conversation.staff_pick = !@conversation.staff_pick
+
+    if @conversation.save
+      status = @conversation.staff_pick? ? 'on' : 'off'
+      flash[:notice] = "Staff Pick is turned #{status} for \"#{@conversation.title}\""
+    else
+      flash[:error] = "Error saving conversation: \"#{@conversation.title}\""
+    end
+
     if params[:redirect_to]
       redirect_to :action => params[:redirect_to]
     else
       redirect_to admin_conversation_path
     end
   end
+
 end

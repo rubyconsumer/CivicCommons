@@ -109,16 +109,25 @@ a img {
 
 #main table {
 	width: 700px;}
-	
-	
+
+.flash-error, .flash-notice{
+	padding: 0;
+	margin: 0;
+	text-align: center;
+	line-height: 25px;
+}
+
+.flash-error{
+	background-color: #e85959;
+	border-top: 3px solid #e74b4b;
+	border-bottom: 3px solid #e74b4b;
+}
+
 .flash-notice{
 	background-color: #ffff99;
 	border-top: 3px solid #ffff66;
 	border-bottom: 3px solid #ffff66;
-	padding: 0;
-	margin: 0;
-	text-align: center;
-	line-height: 25px;}
+}
 	
 #perma-link {
 	float: right;
