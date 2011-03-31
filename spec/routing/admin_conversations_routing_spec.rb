@@ -36,8 +36,12 @@ describe Admin::ConversationsController do
     end
 
     it 'should not recognize or generate GET route' do
-      { :get => "/admin/conversations/1/toggle_staff_pick" }.should_not be_routable
+      { get: "/admin/conversations/1/toggle_staff_pick" }.should_not be_routable
     end
+  end
+
+  it 'recognizes and generates #update_order' do
+    { post: 'admin/conversations/update_order' }.should route_to(controller: 'admin/conversations', action: 'update_order')
   end
 
 end
