@@ -79,13 +79,9 @@ class Conversation < ActiveRecord::Base
   end
 
   def self.sort
-    staff_picks = []
-    others = []
     conversations = Conversation.order('staff_pick DESC, position ASC, id ASC')
-    conversations.each_with_index do |conversation, i|
-      staff_picks.push(conversation) if conversation.staff_pick?
-      others.push(conversation) unless conversation.staff_pick?
-    end
+    staff_picks = conversations.select { |c| c.staff_pick? }
+    others = conversations - staff_picks
 
     staff_picks.each_with_index do |conversation, i|
       conversation.update_attribute(:position, i)
