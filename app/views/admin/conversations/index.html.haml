@@ -10,7 +10,7 @@
       %th(colspan="2") Actions
   %tbody
     - @conversations.each do |conversation|
-      %tr
+      %tr{ :class => conversation.staff_pick ? '' : 'ui-state-disabled' }
         %td.handle &#11021;
         %td= conversation.position
         %td= link_to conversation.title, admin_conversation_path(conversation)
@@ -74,11 +74,13 @@
   $(document).ready(function(){
     $("table.conversations tbody").sortable({
       axis: "y",
+      cancel: ".ui-state-disabled",
       containment: "table.conversations tbody",
       cursor: "move",
       disabled: true,
       handle: ".handle",
       helper: fixTableRowHelper,
+      items: "tr:not(.ui-state-disabled)",
       update: update_sort
     });
     $("table.conversations tbody .handle").disableSelection();
