@@ -57,6 +57,12 @@ group :test do
   gem 'autotest-rails'
 end
 
+# On non-osx platforms, use: bundle install --without osx_test
+group :osx_test do
+  gem 'autotest-fsevent'
+  gem 'autotest-growl'
+end
+
 group :development, :test do
   gem "rspec-rails", "~> 2.2.0"
   gem 'steak'
