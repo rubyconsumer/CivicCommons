@@ -10,7 +10,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(:version => 20110408113914) do
+=======
+ActiveRecord::Schema.define(:version => 20110331202532) do
+>>>>>>> Consolidate Ratings under Rating Group.
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -204,10 +208,16 @@ ActiveRecord::Schema.define(:version => 20110408113914) do
     t.datetime "updated_at"
   end
 
-  create_table "ratings", :force => true do |t|
+  create_table "rating_groups", :force => true do |t|
     t.integer  "person_id"
     t.integer  "conversation_id"
     t.integer  "contribution_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "ratings", :force => true do |t|
+    t.integer  "rating_group_id"
     t.integer  "rating_descriptor_id"
     t.datetime "created_at"
     t.datetime "updated_at"
