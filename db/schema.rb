@@ -206,6 +206,7 @@ ActiveRecord::Schema.define(:version => 20110408113914) do
 
   create_table "ratings", :force => true do |t|
     t.integer  "person_id"
+    t.integer  "conversation_id"
     t.integer  "contribution_id"
     t.integer  "rating_descriptor_id"
     t.datetime "created_at"
