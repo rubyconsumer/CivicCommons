@@ -177,4 +177,29 @@ describe Conversation do
       @conversation.should have_validation_error(:issues)
     end
   end
+
+  describe "sorting conversations" do
+    before(:each) do
+      @conversations = []
+      @conversations << Factory.create(:conversation, { position: 0, staff_pick: true, title: 'Conversation 1' })
+      @conversations << Factory.create(:conversation, { position: 1, staff_pick: true, title: 'Conversation 2' })
+      @conversations << Factory.create(:conversation, { position: 2, staff_pick: false, title: 'Conversation 3' })
+    end
+
+    describe "Conversation#sort" do
+      it "sets the postion to the next highest position of all featured conversations" do
+        conversation = Conversation.first
+        conversation.should_receive(:update_attribute).with(:position, 2).and_return(true)
+        Conversation.should_receive(:sort)
+        
+        conversation.sort
+        same_conversation = conversation.id
+        
+        Conversation.find(same_conversation).position.should == 1
+      end
+
+      it "reorders all of the conversations positions appropriately"
+    end
+  end
+
 end
