@@ -27,6 +27,15 @@
     return ui;
   };
   var lastUpdatedRow = null;
+  var is_ascending = false;
+
+  function header_clicked(event){
+    if($(this).index() == 4){
+      $("table.conversations tbody").sortable("enable");
+    } else {
+      $("table.conversations tbody").sortable("disable");
+    }
+  }
 
   function update_sort(event, ui){
     lastUpdatedRow = $(ui.item);
@@ -34,8 +43,31 @@
     var next_index = $(ui.item).next().find('td:nth-child(5) span').html();
     var prev_index = $(ui.item).prev().find('td:nth-child(5) span').html();
     var data = { current: current_index, next: next_index, prev: prev_index };
+
+    if(next_index > prev_index){ is_ascending = true; }
+    if(next_index < prev_index){ is_ascending = false; }
+
     $.post('/admin/conversations/update_order', data, function(data) {
       lastUpdatedRow.children().effect('highlight');
+      $("table.conversations tbody td:nth-child(2)").each(function(index, element){
+        if(is_ascending)
+        {
+          $(this).html(index);
+        }else{
+          var rows = $("table.conversations tbody tr").length;
+          $(this).html(rows - index - 1);
+        }
+      });
+      $("table.conversations tbody td:nth-child(5) span").each(function(index, element){
+        if(is_ascending)
+        {
+          $(this).html(index);
+        }else{
+          var rows = $("table.conversations tbody tr").length;
+          $(this).html(rows - index - 1);
+        }
+      });
+      $("table.conversations").trigger("update");
     });
   }
 
@@ -44,10 +76,12 @@
       axis: "y",
       containment: "table.conversations tbody",
       cursor: "move",
+      disabled: true,
       handle: ".handle",
       helper: fixTableRowHelper,
       update: update_sort
     });
     $("table.conversations tbody .handle").disableSelection();
+    $("table.conversations thead th").click(header_clicked);
   });
 %br

@@ -51,6 +51,41 @@ class Admin::ConversationsController < Admin::DashboardController
 
   #PUT admin/conversations/update_order
   def update_order
+    if params[:prev] == 'null'
+      current_conversation = Conversation.find_by_position(params[:current].to_i)
+      Conversation.where('position >= ?', params[:next].to_i).each do |conversation|
+        conversation.position += 1
+        conversation.save
+      end
+      current_conversation.position = 0
+      current_conversation.save
+    elsif params[:next] == 'null'
+      current_conversation = Conversation.find_by_position(params[:current].to_i)
+      Conversation.where('position >= ?', params[:prev].to_i).each do |conversation|
+        conversation.position += 1
+        conversation.save
+      end
+      current_conversation.position = 0
+      current_conversation.save
+    elsif params[:next].to_i > params[:prev].to_i
+      current_conversation = Conversation.find_by_position(params[:current].to_i)
+      Conversation.where('position >= ?', params[:next].to_i).each do |conversation|
+        conversation.position += 1
+        conversation.save
+      end
+      current_conversation.position = params[:prev].to_i + 1
+      current_conversation.save
+    elsif params[:next].to_i < params[:prev].to_i
+      current_conversation = Conversation.find_by_position(params[:current].to_i)
+      Conversation.where('position >= ?', params[:prev].to_i).each do |conversation|
+        conversation.position += 1
+        conversation.save
+      end
+      current_conversation.position = params[:next].to_i + 1
+      current_conversation.save
+    end
+
+    Conversation.sort
     render :nothing => true
   end
 
