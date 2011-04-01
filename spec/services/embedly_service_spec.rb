@@ -15,12 +15,7 @@ class MockEmbedly
   end
 
   def marshal_dump
-    data = JSON.parse(@json)
-    data.keys.each do |key|
-      data[key.to_sym] = data[key]
-      data.delete(key)
-    end
-    return data
+    EmbedlyService.parse_raw(@json)
   end
 
 end
@@ -30,6 +25,8 @@ describe EmbedlyService do
   describe "EmbedlyService#fetch(url)" do
 
     context "Success" do
+
+      it "should pass any options through to Embedly"
 
       it "retrieve embedly object given a valid YouTube url" do
 
