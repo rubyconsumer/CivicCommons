@@ -95,16 +95,30 @@ class ConversationsController < ApplicationController
     end
   end
 
+  #TODO Test, baby. Test!
   def preview_node_contribution
-    EmbedlyService.new.fetch_and_merge_params!(params)
+
+    errors = []
+    embedly = EmbedlyService.new
+
+    embedly.fetch_and_merge_params!(params)
     @contribution = Contribution.update_or_create_node_level_contribution(params[:contribution], current_person)
+
+    if not @contribution.valid?
+      errors = @contribution.errors.full_messages
+    elsif embedly.error_code == 400 or embedly.error_code == 404
+      errors = ["There was a problem retrieving information for '#{params[:contribution][:url]}'"]
+    elsif embedly.error_code > 0
+      errors = ['There was a problem with our system. Please try again.']
+    end
+    
     respond_to do |format|
-      if @contribution.valid?
-        format.js { render(:partial => "conversations/new_contribution_preview", :locals => {:div_id => params[:div_id], :layout => false}) }
+      if errors.size == 0
+        format.js   { render(:partial => "conversations/new_contribution_preview", :locals => {:div_id => params[:div_id], :layout => false}) }
         format.html { render(:partial => "conversations/new_contribution_preview", :locals => {:div_id => params[:div_id], :layout => 'application'}) }
       else
-        format.js   { render :json => @contribution.errors, :status => :unprocessable_entity }
-        format.html { render :text => @contribution.errors.full_messages, :status => :unprocessable_entity }
+        format.js   { render :json => errors, :status => :unprocessable_entity }
+        format.html { render :text => errors, :status => :unprocessable_entity }
       end
     end
   end
