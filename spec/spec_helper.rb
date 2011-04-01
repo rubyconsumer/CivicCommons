@@ -64,6 +64,7 @@ Rspec.configure do |config|
   config.before :each do
     stub_contribution_urls
     stub_amazon_s3_request
+    stub_pro_embedly_request
   end
   config.after :each do
   end
