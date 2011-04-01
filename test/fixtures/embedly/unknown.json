@@ -1,0 +1,31 @@
+{
+ "embeds": [],
+ "provider_url": "http://www.theciviccommons.com/",
+ "description": "Oberlin is developing a strategic plan to establish a shared vision our city in 2025.  We invite residents to help shape the Oberlin 2025 plan by contributing ideas & thoughts that will create this shared vision & the goals to achieve that vision.",
+ "original_url": "http://www.theciviccommons.com/conversations/152",
+ "url": "http://www.theciviccommons.com/conversations/152",
+ "images": [
+  {
+   "url": "http://s3.amazonaws.com/com.theciviccommons.production/avatars/73/standard/EricNorenbergHeadshot.JPG?1289853285",
+   "width": 70,
+   "height": 70
+  }
+ ],
+ "safe": true,
+ "provider_display": "www.theciviccommons.com",
+ "favicon_url": "http://www.theciviccommons.com/favicon.ico",
+ "meta": {
+  "medium": "blog",
+  "description": "Oberlin is developing a strategic plan to establish a shared vision our city in 2025.  We invite residents to help shape the Oberlin 2025 plan by contributing ideas & thoughts that will create this shared vision & the goals to achieve that vision.",
+  "title": "City of Oberlin 2025"
+ },
+ "oembed": {},
+ "place": {},
+ "entry": {},
+ "open_graph": {},
+ "title": "City of Oberlin 2025",
+ "provider_name": "Theciviccommons",
+ "cache_age": 100,
+ "type": "html",
+ "payload": {}
+}
