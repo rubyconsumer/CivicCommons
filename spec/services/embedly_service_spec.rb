@@ -131,17 +131,28 @@ describe EmbedlyService do
         data = EmbedlyService.parse_raw(contrib)
         data.should_not be_empty
         data.should have_key(:embeds)
+
+        embedly = EmbedlyService.new.load(contrib)
+        embedly.properties.should_not be_empty
+        embedly.properties.should have_key(:embeds)
       end
 
       it "should properly parse raw data" do
         data = EmbedlyService.parse_raw(fixture_content('embedly/flickr.json'))
         data.should_not be_empty
         data.should have_key(:embeds)
+
+        embedly = EmbedlyService.new.load(fixture_content('embedly/flickr.json'))
+        embedly.properties.should_not be_empty
+        embedly.properties.should have_key(:embeds)
       end
 
       it "should return an empty hash when passed invalid JSON" do
         data = EmbedlyService.parse_raw('garbage')
         data.should be_empty
+
+        embedly = EmbedlyService.new.load('garbage')
+        embedly.properties.should be_empty
       end
 
     end
@@ -170,12 +181,19 @@ describe EmbedlyService do
           html.should =~ /^<object width="550" height="334">/
           html.should =~ /<param name="movie" value="http:\/\/www\.youtube\.com\/v\/onUd7aZhu9g\?version=3"><\/param>/
           # and possibly several more...
+
+          html = EmbedlyService.new.load(fixture_content('embedly/youtube.json')).to_html
+          html.should =~ /^<object width="550" height="334">/
+          html.should =~ /<param name="movie" value="http:\/\/www\.youtube\.com\/v\/onUd7aZhu9g\?version=3"><\/param>/
         end
 
         it "should return valid HTML code for a rich URL" do
           html = EmbedlyService.to_html(fixture_content('embedly/google_map.json'))
           html.should =~ /^<iframe width="425" height="350"/
           # and possibly several more...
+
+          html = EmbedlyService.new.load(fixture_content('embedly/google_map.json')).to_html
+          html.should =~ /^<iframe width="425" height="350"/
         end
 
         it "should return valid HTML code for a link URL"
@@ -198,10 +216,16 @@ describe EmbedlyService do
         it "should return nil when return type is error" do
           html = EmbedlyService.to_html(fixture_content('embedly/bad_url.json'))
           html.should be_nil
+
+          html = EmbedlyService.new.load(fixture_content('embedly/bad_url.json')).to_html
+          html.should be_nil
         end
 
         it "should return nil when given a bad parameter" do
           html = EmbedlyService.to_html('garbage')
+          html.should be_nil
+
+          html = EmbedlyService.new.load('garbage').to_html
           html.should be_nil
         end
 

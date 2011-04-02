@@ -31,6 +31,7 @@ class EmbedlyService
         @error_code = @properties[:error_code].to_i
       else
         @error_code = 500
+        @error = "Server Issues"
       end
       @properties = nil
       Rails.logger.error e.message
@@ -79,6 +80,11 @@ class EmbedlyService
 
   ### Utility Methods
 
+  def load(data)
+    @properties = EmbedlyService.parse_raw(data)
+    return self
+  end
+
   def self.parse_raw(data)
     
     if not data.is_a?(Hash)
@@ -102,13 +108,17 @@ class EmbedlyService
     return data
   end
 
-  def self.to_html(embedly, thumbnail = false)
+  def to_html(thumbnail = false)
+    EmbedlyService.to_html(properties, thumbnail)
+  end
+
+  def self.to_html(code, thumbnail = false)
 
     html = nil
 
-    if not embedly.nil?
+    if not code.nil?
       
-      code = self.parse_raw(embedly)
+      code = self.parse_raw(code) unless code.is_a?(Hash)
 
       if code.has_key?(:oembed)
 
@@ -126,6 +136,10 @@ class EmbedlyService
     end
 
     return html
+  end
+
+  def to_thumbnail
+    EmbedlyService.to_thumbnail(properties)
   end
 
   def self.to_thumbnail(embedly)
