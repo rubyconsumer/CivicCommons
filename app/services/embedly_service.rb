@@ -1,5 +1,10 @@
 class EmbedlyService
 
+  # http://embed.ly/
+  # https://pro.embed.ly/
+  # http://explore.embed.ly/
+  # http://api.embed.ly/
+
   attr_reader :properties
   attr_reader :error
   attr_reader :error_code
@@ -42,12 +47,49 @@ class EmbedlyService
     return (not properties.nil?)
   end
 
+  ### Error Code Convenience Methods
+  
+  def ok?
+    @error_code == 200
+  end
+
+  def bad_request?
+    @error_code == 400
+  end
+
+  def forbidden?
+    @error_code == 403
+  end
+
+  def not_found?
+    @error_code == 404
+  end
+
+  def server_issues?
+    @error_code == 500
+  end
+
+  def not_implemented?
+    @error_code == 501
+  end
+
   def raw
     @properties.to_json
   end
 
+  ### Utility Methods
+
   def self.parse_raw(data)
-    data = JSON.parse(data) unless data.is_a?(Hash)
+    
+    if not data.is_a?(Hash)
+      data = data.embedly_code if data.is_a?(EmbedlyContribution)
+      begin
+        data = JSON.parse(data)
+      rescue JSON::ParserError 
+        data = {}
+      end
+    end
+    
     data.keys.each do |key|
       new_key = key.to_sym
       data[new_key] = data[key]
@@ -56,23 +98,26 @@ class EmbedlyService
         data[new_key] = self.parse_raw(data[new_key])
       end
     end
+    
     return data
   end
 
-  def self.to_html(embedly)
+  def self.to_html(embedly, thumbnail = false)
 
     html = nil
 
-    if not embedly.nil? and embedly.is_a?(EmbedlyContribution)
-
-      code = self.parse_raw(embedly.embedly_code)
+    if not embedly.nil?
+      
+      code = self.parse_raw(embedly)
 
       if code.has_key?(:oembed)
 
-        if code[:oembed].has_key?(:html)
+        if thumbnail
+          html = self.generate_thumbnail_html(code[:oembed])
+        elsif code[:oembed].has_key?(:html)
           html = code[:oembed][:html]
         elsif code[:oembed][:type] == 'photo'
-          # create some html
+          html = self.generate_img_html(code[:oembed])
         elsif code[:oembed][:type] == 'link'
           # create some html
         end
@@ -81,15 +126,38 @@ class EmbedlyService
     end
 
     return html
+  end
 
+  def self.to_thumbnail(embedly)
+    to_html(embedly, true)
   end
 
 protected
 
   def clear_state
-    @error_code = 0
+    @error_code = 200
     @error = nil
     @properties = nil
+  end
+
+  def self.generate_img_html(opts)
+    html = '<img'
+    html << " src=\"#{opts[:url]}\"" if opts.has_key?(:url)
+    html << " height=\"#{opts[:height]}\"" if opts.has_key?(:height)
+    html << " width=\"#{opts[:width]}\"" if opts.has_key?(:width)
+    html << " title=\"#{opts[:title]}\"" if opts.has_key?(:title)
+    html << " alt=\"#{opts[:description]}\"" if opts.has_key?(:description)
+    html << ' />'
+  end
+
+  def self.generate_thumbnail_html(opts)
+    html = '<img'
+    html << " src=\"#{opts[:thumbnail_url]}\"" if opts.has_key?(:thumbnail_url)
+    html << " height=\"#{opts[:thumbnail_height]}\"" if opts.has_key?(:thumbnail_height)
+    html << " width=\"#{opts[:thumbnail_width]}\"" if opts.has_key?(:thumbnail_width)
+    html << " title=\"#{opts[:title]}\"" if opts.has_key?(:title)
+    html << " alt=\"#{opts[:description]}\"" if opts.has_key?(:description)
+    html << ' />'
   end
 
 end

@@ -4,7 +4,7 @@ describe EmbedlyContribution do
 
   before(:each) do
     @person = Factory.build(:registered_user)
-    @embedly_contribution = Factory.attributes_for(:embedly)
+    @embedly_contribution = Factory.attributes_for(:embedly_contribution)
     @embedly_contribution[:person] = @person
   end
 

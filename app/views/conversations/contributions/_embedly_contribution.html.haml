@@ -1,6 +1,6 @@
 %div.content
   %span.contribution-person-name= person_display_name(contribution.person)
 %p.content.link-quote
-  = raw EmbedlyService.to_html(contribution)
+  = raw EmbedlyService.to_thumbnail(contribution)
 %p.content.link-quote
   = contribution.description

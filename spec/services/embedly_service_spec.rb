@@ -5,7 +5,6 @@ require 'spec_helper'
 # Is it better to mock the API interface or mock the API internals?
 # This approach mocks the API.
 class MockEmbedly
-
   def initialize(json)
     @json = json
   end
@@ -17,7 +16,6 @@ class MockEmbedly
   def marshal_dump
     EmbedlyService.parse_raw(@json)
   end
-
 end
 
 describe EmbedlyService do
@@ -118,43 +116,98 @@ describe EmbedlyService do
         #embedly.error.should be_nil
       #end
 
-      #it "retrieve embedly object given a valid Flickr url" do
-        #pending
-        #embedly.fetch('http://www.flickr.com/photos/civiccommons/5387288109/in/set-72157625550814356/')
-        #fixture_content('embedly/flickr.json')
-      #end
+  end
 
-      #it "retrieve embedly object given a valid Twitpic url" do
-        #pending
-        #embedly.fetch('http://www.twitpic.com/4eatzr')
-        #fixture_content('embedly/twitpic.json')
-      #end
+  describe "EmbedlyService#fetch_and_merge_params!(params)" do
+  end
 
-      #it "retrieve embedly object given a valid Facebook photo  url" do
-        #pending
-        #embedly.fetch('https://www.facebook.com/photo.php?fbid=193403794003481&set=a.193403500670177.49699.143930632284131&theater')
-        #fixture_content('embedly/facebook_photo.json')
-      #end
+  describe "HTML helpers" do
 
-      #it "retrieve embedly object given a valid Facebook video url" do
-        #pending
-        #embedly.fetch('http://www.facebook.com/video/video.php?v=10150467656635175')
-        #fixture_content('embedly/facebook_video.json')
-      #end
+    context "self.parse_raw(data)" do
 
-      #it "retrieve embedly object given a valid Google Map url" do
-        #pending
-        #embedly.fetch('http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=1360+East+Ninth+Street,+Suite+210,+Cleveland,+OH+44114&aq=&sll=41.510184,-81.690967&sspn=0.008243,0.019205&ie=UTF8&hq=&hnear=1360+E+9th+St+%23210,+Cleveland,+Cuyahoga,+Ohio+44114&ll=41.503451,-81.690087&spn=0.008244,0.019205&t=h&z=16')
-        #fixture_content('embedly/google_maps.json')
-      #end
+      it "should properly parse data from an EmbedlyContribution" do
+        contrib = Factory.build(:embedly_contribution)
+        contrib.embedly_code = fixture_content('embedly/flickr.json')
+        data = EmbedlyService.parse_raw(contrib)
+        data.should_not be_empty
+        data.should have_key(:embeds)
+      end
 
-      #it "retrieve embedly object given a valid Unknown provider url" do
-        #pending
-        #embedly.fetch('http://www.youtube.com/watch?v=onUd7aZhu9g')
-        #fixture_content('embedly_example_youtube.json')
-      #end
+      it "should properly parse raw data" do
+        data = EmbedlyService.parse_raw(fixture_content('embedly/flickr.json'))
+        data.should_not be_empty
+        data.should have_key(:embeds)
+      end
 
-    #end
+      it "should return an empty hash when passed invalid JSON" do
+        data = EmbedlyService.parse_raw('garbage')
+        data.should be_empty
+      end
+
+    end
+
+    context "self.to_html(embedly)" do
+
+      let(:contrib) do
+        EmbedlyContribution.new
+      end
+
+      context "success" do
+
+        it "should return valid HTML code for a photo URL" do
+          html = EmbedlyService.to_html(fixture_content('embedly/flickr.json'))
+          html.should =~ /^<img/
+          html.should =~ /\s+src="http:\/\/farm6.static\.flickr\.com\/5216\/5387288109_4046bd10e1\.jpg"/
+          html.should =~ /\s+height="324"/
+          html.should =~ /\s+width="500"/
+          html.should =~ /\s+title="The Start"/
+          html.should =~ /\s+alt="Poster #19: &quot;The Start&quot; Created by: Tom Sawyer Community: North Royalton From the Artist: &quot;Even something as simple as a &quot;Hi&quot; can make someone's day&quot;."/
+          html.should =~ /\s*\/>$/
+        end
+
+        it "should return valid HTML code for a video URL" do
+          html = EmbedlyService.to_html(fixture_content('embedly/youtube.json'))
+          html.should =~ /^<object width="550" height="334">/
+          html.should =~ /<param name="movie" value="http:\/\/www\.youtube\.com\/v\/onUd7aZhu9g\?version=3"><\/param>/
+          # and possibly several more...
+        end
+
+        it "should return valid HTML code for a rich URL" do
+          html = EmbedlyService.to_html(fixture_content('embedly/google_map.json'))
+          html.should =~ /^<iframe width="425" height="350"/
+          # and possibly several more...
+        end
+
+        it "should return valid HTML code for a link URL"
+
+        it "should return valid HTML code for a thumbnail" do
+          html = EmbedlyService.to_html(fixture_content('embedly/flickr.json'), true)
+          html.should =~ /^<img/
+          html.should =~ /\s+src="http:\/\/farm6\.static\.flickr\.com\/5216\/5387288109_4046bd10e1_t\.jpg"/
+          html.should =~ /\s+height="65"/
+          html.should =~ /\s+width="100"/
+          html.should =~ /\s+title="The Start"/
+          html.should =~ /\s+alt="Poster #19: &quot;The Start&quot; Created by: Tom Sawyer Community: North Royalton From the Artist: &quot;Even something as simple as a &quot;Hi&quot; can make someone's day&quot;."/
+          html.should =~ /\s*\/>$/
+        end
+
+      end
+
+      context "failure" do
+
+        it "should return nil when return type is error" do
+          html = EmbedlyService.to_html(fixture_content('embedly/bad_url.json'))
+          html.should be_nil
+        end
+
+        it "should return nil when given a bad parameter" do
+          html = EmbedlyService.to_html('garbage')
+          html.should be_nil
+        end
+
+      end
+
+    end
 
   end
 

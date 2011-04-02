@@ -94,8 +94,7 @@ Factory.define :embedded_snippet do |f|
   f.url "http://www.youtube.com/watch?v=djtNtt8jDW4"
 end
 
-
-Factory.define :embedly do |f|
+Factory.define :embedly_contribution do |f|
   f.datetime "2010-06-30 12:39:43"
   f.association :person, :factory => :normal_person
   f.association :conversation, :factory => :conversation

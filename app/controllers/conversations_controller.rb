@@ -106,9 +106,9 @@ class ConversationsController < ApplicationController
 
     if not @contribution.valid?
       errors = @contribution.errors.full_messages
-    elsif embedly.error_code == 400 or embedly.error_code == 404
+    elsif embedly.bad_request? or embedly.not_found?
       errors = ["There was a problem retrieving information for '#{params[:contribution][:url]}'"]
-    elsif embedly.error_code > 0
+    elsif not embedly.ok?
       errors = ['There was a problem with our system. Please try again.']
     end
     
