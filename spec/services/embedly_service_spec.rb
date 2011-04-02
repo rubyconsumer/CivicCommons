@@ -24,7 +24,21 @@ describe EmbedlyService do
 
     context "Success" do
 
-      it "should pass any options through to Embedly"
+      it "should pass all options through to Embedly" do
+
+        url = 'http://www.youtube.com/watch?v=onUd7aZhu9g'
+        opts = {
+          :maxwidth => 100,
+          :maxheight => 100,
+        }
+
+        mock_embedly = mock('embedly')
+        mock_embedly.should_receive(:objectify).once.with(hash_including({url: url}))
+
+        embedly = EmbedlyService.new(mock_embedly)
+        embedly.fetch(url, opts)
+
+      end
 
       it "retrieve embedly object given a valid YouTube url" do
 
@@ -196,10 +210,16 @@ describe EmbedlyService do
           html.should =~ /^<iframe width="425" height="350"/
         end
 
-        it "should return valid HTML code for a link URL"
+        it "should return valid HTML code for a link URL" do
+          html = EmbedlyService.to_html(fixture_content('embedly/unknown.json'))
+          html.should =~ /^<a/
+          html.should =~ /\s+href=\"http:\/\/www\.theciviccommons\.com\/issues\/14\/\?from=statebudget\"/
+          html.should =~ /\s+title=\"The Ohio State Budget\"/
+          html.should =~ /\s*>The Ohio State Budget<\/a>$/
+        end
 
         it "should return valid HTML code for a thumbnail" do
-          html = EmbedlyService.to_html(fixture_content('embedly/flickr.json'), true)
+          html = EmbedlyService.to_thumbnail(fixture_content('embedly/flickr.json'))
           html.should =~ /^<img/
           html.should =~ /\s+src="http:\/\/farm6\.static\.flickr\.com\/5216\/5387288109_4046bd10e1_t\.jpg"/
           html.should =~ /\s+height="65"/
