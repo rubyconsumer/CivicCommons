@@ -97,41 +97,37 @@ class EmbedlyService
     end
     
     data.keys.each do |key|
-      new_key = key.to_sym
-      data[new_key] = data[key]
-      data.delete(key)
-      if data[new_key].is_a?(Hash)
-        data[new_key] = self.parse_raw(data[new_key])
+      if not key.is_a?(Symbol)
+        new_key = key.to_sym
+        data[new_key] = data[key]
+        data.delete(key)
+        if data[new_key].is_a?(Hash)
+          data[new_key] = self.parse_raw(data[new_key])
+        end
       end
     end
     
     return data
   end
 
-  def to_html(thumbnail = false)
-    EmbedlyService.to_html(properties, thumbnail)
+  def to_html
+    EmbedlyService.to_html(properties)
   end
 
-  def self.to_html(code, thumbnail = false)
+  def self.to_html(code)
 
     html = nil
+    code = self.parse_raw(code)
 
-    if not code.nil?
-      
-      code = self.parse_raw(code) unless code.is_a?(Hash)
-
-      if code.has_key?(:oembed)
-
-        if thumbnail
-          html = self.generate_thumbnail_html(code[:oembed])
-        elsif code[:oembed].has_key?(:html)
-          html = code[:oembed][:html]
-        elsif code[:oembed][:type] == 'photo'
-          html = self.generate_img_html(code[:oembed])
-        elsif code[:oembed][:type] == 'link'
-          # create some html
-        end
-      
+    if code.has_key?(:oembed) and not code.has_key?(:error_code)
+      if code[:oembed].has_key?(:html)
+        html = code[:oembed][:html]
+      elsif code[:oembed][:type] == 'photo'
+        html = self.generate_img_html(code[:oembed])
+      elsif code[:oembed][:type] == 'link'
+        html = self.generate_link_html(code[:oembed][:url], code[:oembed][:title])
+      else
+        html = self.generate_link_html(code[:url], code[:title])
       end
     end
 
@@ -142,11 +138,68 @@ class EmbedlyService
     EmbedlyService.to_thumbnail(properties)
   end
 
-  def self.to_thumbnail(embedly)
-    to_html(embedly, true)
+  def self.to_thumbnail(code)
+
+    html = nil
+    code = self.parse_raw(code)
+
+    if code.has_key?(:oembed)
+      html = self.generate_thumbnail_html(code[:oembed])
+    end
+
+    return html
   end
 
-protected
+  def to_fancybox
+    EmbedlyService.to_thumbnail(properties)
+  end
+
+  def self.to_fancybox(code)
+    # http://fancybox.net/
+
+    #<a id="inline" href="#data">thumbnail</a>
+    #<div style="display:none"><div id="data">embed</div></div>
+
+    #<a id="single_image" href="image_big.jpg"><img src="image_small.jpg" alt=""/></a>
+
+    html = nil
+    code = self.parse_raw(code)
+
+    if code.has_key?(:oembed)
+
+      r = 1000 + rand(9000)
+      
+      html = "
+        <script type='text/javascript'> 
+          //<![CDATA[
+            $(document).ready(function() {
+              $(\"a#single_image-#{r}\").fancybox();
+              $(\"a#inline-#{r}\").fancybox();
+            });
+          //]]>
+        </script>
+      "
+      
+      if code[:oembed][:type] == 'photo'
+        html << "<a id=\"single_image-#{r}\" href=\""
+        html << code[:oembed][:url]
+        html << '">'
+        html << self.to_thumbnail(code)
+        html << '"</a>'
+      else
+        html << "<a id=\"inline-#{r}\" href=\"#data-#{r}\">"
+        html << self.to_thumbnail(code)
+        html << '</a>'
+        html << "<div style=\"display:none\"><div id=\"data-#{r}\">"
+        html << self.to_html(code)
+        html << '</div></div>'
+      end
+    end
+
+    return html
+  end
+
+  protected
 
   def clear_state
     @error_code = 200
@@ -162,6 +215,7 @@ protected
     html << " title=\"#{opts[:title]}\"" if opts.has_key?(:title)
     html << " alt=\"#{opts[:description]}\"" if opts.has_key?(:description)
     html << ' />'
+    return html
   end
 
   def self.generate_thumbnail_html(opts)
@@ -172,6 +226,20 @@ protected
     html << " title=\"#{opts[:title]}\"" if opts.has_key?(:title)
     html << " alt=\"#{opts[:description]}\"" if opts.has_key?(:description)
     html << ' />'
+    return html
+  end
+
+  def self.generate_link_html(url, title)
+    html = ''
+    if not url.nil? and not title.nil?
+      html << '<a'
+      html << " href=\"#{url}\""
+      html << " title=\"#{title}\""
+      html << '>'
+      html << title
+      html << '</a>'
+    end
+    return html
   end
 
 end
