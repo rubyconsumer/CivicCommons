@@ -132,46 +132,48 @@ describe EmbedlyService do
 
   end
 
-  describe "EmbedlyService#fetch_and_merge_params!(params)" do
+  describe "EmbedltService#parse_raw(data)" do
+
+    it "should properly parse data from an EmbedlyContribution" do
+      contrib = Factory.build(:embedly_contribution)
+      contrib.embedly_code = fixture_content('embedly/flickr.json')
+      data = EmbedlyService.parse_raw(contrib)
+      data.should_not be_empty
+      data.should have_key(:embeds)
+
+      embedly = EmbedlyService.new.load(contrib)
+      embedly.properties.should_not be_empty
+      embedly.properties.should have_key(:embeds)
+    end
+
+    it "should properly parse raw data" do
+      data = EmbedlyService.parse_raw(fixture_content('embedly/flickr.json'))
+      data.should_not be_empty
+      data.should have_key(:embeds)
+      data.should have_key(:images)
+      data[:images].should be_instance_of(Array)
+      data[:images].should_not be_empty
+      data[:images][0].should be_instance_of(Hash)
+      data[:images][0].should have_key(:url)
+
+      embedly = EmbedlyService.new.load(fixture_content('embedly/flickr.json'))
+      embedly.properties.should_not be_empty
+      embedly.properties.should have_key(:embeds)
+    end
+
+    it "should return an empty hash when passed invalid JSON" do
+      data = EmbedlyService.parse_raw('garbage')
+      data.should be_empty
+
+      embedly = EmbedlyService.new.load('garbage')
+      embedly.properties.should be_empty
+    end
+
   end
 
   describe "HTML helpers" do
 
-    context "self.parse_raw(data)" do
-
-      it "should properly parse data from an EmbedlyContribution" do
-        contrib = Factory.build(:embedly_contribution)
-        contrib.embedly_code = fixture_content('embedly/flickr.json')
-        data = EmbedlyService.parse_raw(contrib)
-        data.should_not be_empty
-        data.should have_key(:embeds)
-
-        embedly = EmbedlyService.new.load(contrib)
-        embedly.properties.should_not be_empty
-        embedly.properties.should have_key(:embeds)
-      end
-
-      it "should properly parse raw data" do
-        data = EmbedlyService.parse_raw(fixture_content('embedly/flickr.json'))
-        data.should_not be_empty
-        data.should have_key(:embeds)
-
-        embedly = EmbedlyService.new.load(fixture_content('embedly/flickr.json'))
-        embedly.properties.should_not be_empty
-        embedly.properties.should have_key(:embeds)
-      end
-
-      it "should return an empty hash when passed invalid JSON" do
-        data = EmbedlyService.parse_raw('garbage')
-        data.should be_empty
-
-        embedly = EmbedlyService.new.load('garbage')
-        embedly.properties.should be_empty
-      end
-
-    end
-
-    context "self.to_html(embedly)" do
+    context "self.to_embed(embedly)" do
 
       let(:contrib) do
         EmbedlyContribution.new
@@ -180,7 +182,7 @@ describe EmbedlyService do
       context "success" do
 
         it "should return valid HTML code for a photo URL" do
-          html = EmbedlyService.to_html(fixture_content('embedly/flickr.json'))
+          html = EmbedlyService.to_embed(fixture_content('embedly/flickr.json'))
           html.should =~ /^<img/
           html.should =~ /\s+src="http:\/\/farm6.static\.flickr\.com\/5216\/5387288109_4046bd10e1\.jpg"/
           html.should =~ /\s+height="324"/
@@ -191,42 +193,105 @@ describe EmbedlyService do
         end
 
         it "should return valid HTML code for a video URL" do
-          html = EmbedlyService.to_html(fixture_content('embedly/youtube.json'))
+          html = EmbedlyService.to_embed(fixture_content('embedly/youtube.json'))
           html.should =~ /^<object width="550" height="334">/
           html.should =~ /<param name="movie" value="http:\/\/www\.youtube\.com\/v\/onUd7aZhu9g\?version=3"><\/param>/
           # and possibly several more...
 
-          html = EmbedlyService.new.load(fixture_content('embedly/youtube.json')).to_html
+          html = EmbedlyService.new.load(fixture_content('embedly/youtube.json')).to_embed
           html.should =~ /^<object width="550" height="334">/
           html.should =~ /<param name="movie" value="http:\/\/www\.youtube\.com\/v\/onUd7aZhu9g\?version=3"><\/param>/
         end
 
         it "should return valid HTML code for a rich URL" do
-          html = EmbedlyService.to_html(fixture_content('embedly/google_map.json'))
+          html = EmbedlyService.to_embed(fixture_content('embedly/google_map.json'))
           html.should =~ /^<iframe width="425" height="350"/
           # and possibly several more...
 
-          html = EmbedlyService.new.load(fixture_content('embedly/google_map.json')).to_html
+          html = EmbedlyService.new.load(fixture_content('embedly/google_map.json')).to_embed
           html.should =~ /^<iframe width="425" height="350"/
         end
 
         it "should return valid HTML code for a link URL" do
-          html = EmbedlyService.to_html(fixture_content('embedly/unknown.json'))
+          html = EmbedlyService.to_embed(fixture_content('embedly/unknown.json'))
           html.should =~ /^<a/
           html.should =~ /\s+href=\"http:\/\/www\.theciviccommons\.com\/issues\/14\/\?from=statebudget\"/
           html.should =~ /\s+title=\"The Ohio State Budget\"/
           html.should =~ /\s*>The Ohio State Budget<\/a>$/
         end
 
-        it "should return valid HTML code for a thumbnail" do
-          html = EmbedlyService.to_thumbnail(fixture_content('embedly/flickr.json'))
-          html.should =~ /^<img/
-          html.should =~ /\s+src="http:\/\/farm6\.static\.flickr\.com\/5216\/5387288109_4046bd10e1_t\.jpg"/
-          html.should =~ /\s+height="65"/
-          html.should =~ /\s+width="100"/
-          html.should =~ /\s+title="The Start"/
-          html.should =~ /\s+alt="Poster #19: &quot;The Start&quot; Created by: Tom Sawyer Community: North Royalton From the Artist: &quot;Even something as simple as a &quot;Hi&quot; can make someone's day&quot;."/
-          html.should =~ /\s*\/>$/
+        context "thumbnail generation" do
+
+          it "should return a valid HTML img tag when at least one image is present" do
+            html = EmbedlyService.to_thumbnail(fixture_content('embedly/flickr.json'))
+            html.should =~ /^<img/
+            html.should =~ /\s+src="http:\/\/farm6\.static\.flickr\.com\/5216\/5387288109_4046bd10e1_z\.jpg"/
+            html.should =~ /\s+height="414"/
+            html.should =~ /\s+width="640"/
+            html.should =~ /\s+title="The Start"/
+            html.should =~ /\s+alt="Poster #19: &quot;The Start&quot; Created by: Tom Sawyer Community: North Royalton From the Artist: &quot;Even something as simple as a &quot;Hi&quot; can make someone's day&quot;."/
+            html.should =~ /\s*\/>$/
+          end
+
+          it "should return nil when no thumbnail is present" do
+            html = EmbedlyService.to_thumbnail(fixture_content('embedly/google.json'))
+            html.should be_nil
+          end
+
+          context "maxwidth" do
+
+            it "should return the widest image when maxwidth is not set" do
+              html = EmbedlyService.to_thumbnail(fixture_content('embedly/flickr.json'))
+              html.should =~ /\s+src="http:\/\/farm6\.static\.flickr\.com\/5216\/5387288109_4046bd10e1_z\.jpg"/
+              html.should =~ /\s+height="414"/
+              html.should =~ /\s+width="640"/
+            end
+
+            it "should return the widest image when maxwidth is greater than biggest image width" do
+              maxwidth = 700
+              html = EmbedlyService.to_thumbnail(fixture_content('embedly/flickr.json'), maxwidth)
+              html.should =~ /\s+src="http:\/\/farm6\.static\.flickr\.com\/5216\/5387288109_4046bd10e1_z\.jpg"/
+              html.should =~ /\s+height="414"/
+              html.should =~ /\s+width="640"/
+            end
+
+            it "should return the widest image when width smaller than maxwidth" do
+              maxwidth = 250
+              html = EmbedlyService.to_thumbnail(fixture_content('embedly/flickr.json'), maxwidth)
+              html.should =~ /\s+src="http:\/\/farm6\.static\.flickr\.com\/5216\/5387288109_4046bd10e1_m\.jpg"/
+              html.should =~ /\s+height="155"/
+              html.should =~ /\s+width="240"/
+            end
+
+            it "should scale the image when all images are wider than maxwidth" do
+              maxwidth = 24
+              html = EmbedlyService.to_thumbnail(fixture_content('embedly/flickr.json'), maxwidth)
+              html.should =~ /\s+src="http:\/\/l\.yimg\.com\/g\/images\/buddyicon\.jpg"/
+              html.should =~ /\s+height="24"/
+              html.should =~ /\s+width="24"/
+            end
+
+          end
+
+          context "Embedly or Fancybox" do
+
+            it "should return embed code if the embed is less than max_embed_width" do
+              maxwidth = 600
+              html = EmbedlyService.to_embed_or_fancybox(fixture_content('embedly/youtube.json'), maxwidth)
+              html.should =~ /^<object width="550" height="334">/
+              html.should =~ /<param name="movie" value="http:\/\/www\.youtube\.com\/v\/onUd7aZhu9g\?version=3"><\/param>/
+            end
+
+            it "should return a thumbnail if the embed is larger than max_embed_width" do
+              maxwidth = 250
+              html = EmbedlyService.to_embed_or_fancybox(fixture_content('embedly/flickr.json'), maxwidth)
+              html.should =~ /\s+src="http:\/\/farm6\.static\.flickr\.com\/5216\/5387288109_4046bd10e1_m\.jpg"/
+              html.should =~ /\s+height="155"/
+              html.should =~ /\s+width="240"/
+            end
+
+          end
+
         end
 
       end
@@ -234,18 +299,18 @@ describe EmbedlyService do
       context "failure" do
 
         it "should return nil when return type is error" do
-          html = EmbedlyService.to_html(fixture_content('embedly/bad_url.json'))
+          html = EmbedlyService.to_embed(fixture_content('embedly/bad_url.json'))
           html.should be_nil
 
-          html = EmbedlyService.new.load(fixture_content('embedly/bad_url.json')).to_html
+          html = EmbedlyService.new.load(fixture_content('embedly/bad_url.json')).to_embed
           html.should be_nil
         end
 
         it "should return nil when given a bad parameter" do
-          html = EmbedlyService.to_html('garbage')
+          html = EmbedlyService.to_embed('garbage')
           html.should be_nil
 
-          html = EmbedlyService.new.load('garbage').to_html
+          html = EmbedlyService.new.load('garbage').to_embed
           html.should be_nil
         end
 
