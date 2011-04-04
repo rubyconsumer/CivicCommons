@@ -178,27 +178,84 @@ describe Conversation do
     end
   end
 
-  describe "sorting conversations" do
+  describe "Conversation#Sort" do
     before(:each) do
+      Conversation.delete_all
       @conversations = []
+    end
+
+    after(:each) do
+      Conversation.delete_all
+    end
+
+    it "will return from order when there are no conversations" do
+      Conversation.sort
+    end
+
+    it "will return from order when the positions shouldn't change" do
       @conversations << Factory.create(:conversation, { position: 0, staff_pick: true, title: 'Conversation 1' })
       @conversations << Factory.create(:conversation, { position: 1, staff_pick: true, title: 'Conversation 2' })
       @conversations << Factory.create(:conversation, { position: 2, staff_pick: false, title: 'Conversation 3' })
+
+      Conversation.sort
+      Conversation.find_by_id(@conversations[0].id).position.should == 0
+      Conversation.find_by_id(@conversations[1].id).position.should == 1
+      Conversation.find_by_id(@conversations[2].id).position.should == 2
     end
 
-    describe "Conversation#sort" do
-      it "sets the postion to the next highest position of all featured conversations" do
-        conversation = Conversation.first
-        conversation.should_receive(:update_attribute).with(:position, 2).and_return(true)
-        Conversation.should_receive(:sort)
-        
-        conversation.sort
-        same_conversation = conversation.id
-        
-        Conversation.find(same_conversation).position.should == 1
-      end
+    it "will order the positions when they are out of order" do
+      @conversations << Factory.create(:conversation, { position: 7, staff_pick: true, title: 'Conversation 1' })
+      @conversations << Factory.create(:conversation, { position: 10, staff_pick: true, title: 'Conversation 2' })
+      @conversations << Factory.create(:conversation, { position: 1, staff_pick: false, title: 'Conversation 3' })
 
-      it "reorders all of the conversations positions appropriately"
+      Conversation.sort
+      Conversation.find_by_id(@conversations[0].id).position.should == 0
+      Conversation.find_by_id(@conversations[1].id).position.should == 1
+      Conversation.find_by_id(@conversations[2].id).position.should == 2
+    end
+
+    it "will order the positions when numbers are repeated" do
+      @conversations << Factory.create(:conversation, { position: 10, staff_pick: true, title: 'Conversation 1' })
+      @conversations << Factory.create(:conversation, { position: 10, staff_pick: true, title: 'Conversation 2' })
+      @conversations << Factory.create(:conversation, { position: 10, staff_pick: false, title: 'Conversation 3' })
+
+      Conversation.sort
+      Conversation.find_by_id(@conversations[0].id).position.should == 0
+      Conversation.find_by_id(@conversations[1].id).position.should == 1
+      Conversation.find_by_id(@conversations[2].id).position.should == 2
+    end
+  end
+
+  describe "Conversation#sort" do
+    before(:each) do
+      Conversation.delete_all
+      @conversations = []
+    end
+
+    after(:each) do
+      Conversation.delete_all
+    end
+
+    it "will sort correctly if there is one conversation with saff_pick on" do
+      @conversations << Factory.create(:conversation, { position: 0, staff_pick: true, title: 'Conversation 1' })
+      @conversations[0].sort
+      Conversation.find_by_id(@conversations[0].id).position.should == 0
+    end
+
+    it "will sort correctly if there is one conversation with saff_pick off" do
+      @conversations << Factory.create(:conversation, { position: 0, staff_pick: false, title: 'Conversation 1' })
+      @conversations[0].sort
+      Conversation.find_by_id(@conversations[0].id).position.should == 0
+    end
+
+    it "sets the postion to the next highest position of all featured conversations" do
+      @conversations << Factory.create(:conversation, { position: 0, staff_pick: true, title: 'Conversation 1' })
+      @conversations << Factory.create(:conversation, { position: 1, staff_pick: true, title: 'Conversation 2' })
+      @conversations << Factory.create(:conversation, { position: 2, staff_pick: false, title: 'Conversation 3' })
+      @conversations[0].sort
+      Conversation.find_by_id(@conversations[0].id).position.should == 1
+      Conversation.find_by_id(@conversations[1].id).position.should == 0
+      Conversation.find_by_id(@conversations[2].id).position.should == 2
     end
   end
 
