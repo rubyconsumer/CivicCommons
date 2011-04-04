@@ -89,8 +89,8 @@ module ConversationsHelper
     case filter.to_sym
     when :active
       title = "Most Active"
-    when :featured
-      title = "Featured"
+    when :recommended
+      title = "Recommended"
     when :popular
       title = "Most Popular"
     when :recent
