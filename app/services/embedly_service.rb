@@ -103,18 +103,50 @@ class EmbedlyService
         data.delete(key)
         if data[new_key].is_a?(Hash)
           data[new_key] = self.parse_raw(data[new_key])
+        elsif data[new_key].is_a?(Array)
+          data[new_key].each do |element|
+            element = self.parse_raw(element)
+          end
         end
       end
     end
-    
+
     return data
   end
 
-  def to_html
-    EmbedlyService.to_html(properties)
+  def to_embed_or_fancybox(max_embed_width = nil)
+    EmbedlyService.to_embed(properties, max_embed_width)
   end
 
-  def self.to_html(code)
+  def self.to_embed_or_fancybox(code, max_embed_width = nil)
+
+    html = nil
+    code = self.parse_raw(code) 
+    
+    # only show full embed if the width is less than max
+    if !max_embed_width.nil? && !code[:oembed].empty? && code[:oembed].has_key?(:html)
+      match = code[:oembed][:html].match(/width="(?<width>\d+)"/i) 
+      if !match.nil?
+        width = match[:width].to_i
+        if width <= max_embed_width
+          html = self.to_embed(code)
+        end
+      end
+    end
+
+    # otherwise show fancybox
+    if html.nil?
+      html = self.to_fancybox(code, max_embed_width)
+    end
+
+    return html
+  end
+
+  def to_embed
+    EmbedlyService.to_embed(properties)
+  end
+
+  def self.to_embed(code)
 
     html = nil
     code = self.parse_raw(code)
@@ -134,27 +166,58 @@ class EmbedlyService
     return html
   end
 
-  def to_thumbnail
-    EmbedlyService.to_thumbnail(properties)
+  def to_thumbnail(maxwidth = nil)
+    EmbedlyService.to_thumbnail(properties, maxwidth)
   end
 
-  def self.to_thumbnail(code)
+  def self.to_thumbnail(code, maxwidth = nil)
 
     html = nil
     code = self.parse_raw(code)
 
-    if code.has_key?(:oembed)
-      html = self.generate_thumbnail_html(code[:oembed])
-    end
+    if !code[:images].empty? 
+      img = nil
+      small = nil
+
+      if maxwidth.nil?
+        code[:images].each do |image|
+          if img.nil? or (image[:width].to_i > img[:width].to_i)
+            img = image
+          end
+        end
+      else
+        code[:images].each do |image|
+          if image[:width].to_i < maxwidth && (img.nil? || image[:width].to_i > img[:width].to_i)
+            img = image
+          end
+          if small.nil? or (image[:width].to_i < small[:width].to_i)
+            small = image
+          end
+        end
+        #img = small if img.nil?
+        if img.nil?
+          img = small
+          scale = { height: (img[:height].to_i*maxwidth/img[:width]), width: maxwidth }
+        end
+
+      end
+
+      opt = { description: code[:description], title: code[:title] }
+      opt.merge!(img)
+      if scale
+        opt.merge!(scale)
+      end
+      html = self.generate_img_html(opt)
+    end 
 
     return html
   end
 
-  def to_fancybox
-    EmbedlyService.to_thumbnail(properties)
+  def to_fancybox(thumb_maxwdith = nil)
+    EmbedlyService.to_thumbnail(properties, thumb_maxwidth)
   end
 
-  def self.to_fancybox(code)
+  def self.to_fancybox(code, thumb_maxwidth = nil)
     # http://fancybox.net/
 
     #<a id="inline" href="#data">thumbnail</a>
@@ -168,30 +231,30 @@ class EmbedlyService
     if code.has_key?(:oembed)
 
       r = 1000 + rand(9000)
-      
+
       html = "
         <script type='text/javascript'> 
           //<![CDATA[
             $(document).ready(function() {
-              $(\"a#single_image-#{r}\").fancybox();
-              $(\"a#inline-#{r}\").fancybox();
+              $(\"a#single_image-#{r}\").fancybox({'scrolling': 'no'});
+              $(\"a#inline-#{r}\").fancybox({'scrolling': 'no'});
             });
           //]]>
         </script>
       "
-      
+
       if code[:oembed][:type] == 'photo'
         html << "<a id=\"single_image-#{r}\" href=\""
         html << code[:oembed][:url]
         html << '">'
-        html << self.to_thumbnail(code)
+        html << self.to_thumbnail(code, thumb_maxwidth)
         html << '"</a>'
       else
         html << "<a id=\"inline-#{r}\" href=\"#data-#{r}\">"
-        html << self.to_thumbnail(code)
+        html << self.to_thumbnail(code, thumb_maxwidth)
         html << '</a>'
         html << "<div style=\"display:none\"><div id=\"data-#{r}\">"
-        html << self.to_html(code)
+        html << self.to_embed(code)
         html << '</div></div>'
       end
     end
