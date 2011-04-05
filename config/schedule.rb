@@ -13,9 +13,19 @@
 #   rake "some:great:rake:task"
 # end
 #
+# Learn more: http://github.com/javan/whenever
+
+
+#
+# Set up Default logging location
+#
+set :output, 'log/whenever_cron.log'
+
+
+#
+# Set up Digest Service
+#
 every 1.day, at: '2:00 am' do
-  runner "DigestService.send_digest"
+  runner "DigestService.send_digest", :output => 'log/digest.log'
 end
 
-# Learn more: http://github.com/javan/whenever
-set :output, File.expand_path(File.dirname(__FILE__), 'log/cron_log.log')
