@@ -259,4 +259,19 @@ describe Conversation do
     end
   end
 
+  describe "after saving a new conversation" do
+    before(:each) do
+      Conversation.delete_all
+      Factory.create(:conversation, { title: 'Conversation 1' })
+      Factory.create(:conversation, { title: 'Conversation 2' })
+      Factory.create(:conversation, { title: 'Conversation 3' })
+    end
+
+    it "it will have the largest position" do
+      conversation = Factory.create(:conversation, { title: 'Conversation 4' })
+      conversation = Conversation.find_by_id(conversation.id)
+      conversation.position.should == 3
+    end
+  end
+
 end

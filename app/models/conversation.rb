@@ -44,6 +44,7 @@ class Conversation < ActiveRecord::Base
   validates_presence_of :summary, :message => "Please give us a short summary."
   validates_presence_of :zip_code, :message => "Please give us a zip code for a little geographic context."
 
+  after_create :set_initial_position
   before_destroy :destroy_root_contributions # since non-root contributions will be destroyed internally be awesome_nested_set
 
   scope :latest_updated, :order => 'updated_at DESC'
@@ -161,6 +162,15 @@ class Conversation < ActiveRecord::Base
       "?"
     else
       started_at.mday
+    end
+  end
+  
+  def set_initial_position
+    max = Conversation.maximum(:position)
+    if max
+     self.update_attribute(:position, max + 1)
+    else
+      self.update_attribute(:position, 0)
     end
   end
 
