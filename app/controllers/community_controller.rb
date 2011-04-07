@@ -3,6 +3,7 @@ class CommunityController < ApplicationController
   def index
     ordered_people
     @regions = Region.all
+    @recent_items = TopItem.newest_items(3).with_items_and_associations.collect(&:item)
   end
 
 
