@@ -1346,6 +1346,13 @@ background-position: 10px 7px;
 .aside .f-conv ul.feat-list li a#active-f:hover, .aside .f-conv ul.feat-list li a#active-f.active {
 background-position: 10px -58px;
 }
+.aside .f-conv ul.feat-list li a#recommended-f {
+background-image: url(../images/recommended-f.png);
+background-position: 12px 4px;
+}
+.aside .f-conv ul.feat-list li a#recommended-f:hover, .aside .f-conv ul.feat-list li a#recommended-f.active {
+background-position: 12px -56px;
+}
 .aside .f-conv ul.feat-list li a#popular-f {
 background-image: url(../images/popular-f.png);
 background-position: 12px 7px;
