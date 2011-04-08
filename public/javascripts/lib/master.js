@@ -16,12 +16,14 @@ var lastAjaxSettings;
 jQuery(function ($) {
 
   // Log all jQuery AJAX requests to Google Analytics
-  $(document).ajaxSend(function(event, xhr, settings){ 
-    _gaq.push(['_trackPageview', settings.url]);
-    if ( settings.url != "/people/ajax_login" ) {
-      lastAjaxSettings = settings;
-      lastAjaxEvent = event;
-      lastAjaxIsColorbox = $('#colorbox').is(':visible');
+  $(document).ajaxSend(function(event, xhr, settings){
+    if(typeof(_gaq) != 'undefined') {
+      _gaq.push(['_trackPageview', settings.url]);
+      if ( settings.url != "/people/ajax_login" ) {
+        lastAjaxSettings = settings;
+        lastAjaxEvent = event;
+        lastAjaxIsColorbox = $('#colorbox').is(':visible');
+      }
     }
   });
 

@@ -2,4 +2,4 @@
   Conversation created:
   <%= link_to( conversation.title, conversation_path(conversation)) %>
 </p>
-<%= simple_format( truncate( conversation.summary, :length => 100, :separator => ' ' ) ) %>
+<%= simple_format( truncate( Sanitize.clean( conversation.summary ), :length => 100, :separator => ' ' ) ) %>

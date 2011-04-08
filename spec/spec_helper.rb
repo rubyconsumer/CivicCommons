@@ -39,6 +39,7 @@ require 'email_spec'
 require 'ostruct'
 require 'paperclip/matchers'
 require 'pp'
+require 'database_cleaner'
 
 # Requires supporting files with custom matchers and macros, etc,
 # in ./support/ and its subdirectories.
@@ -52,6 +53,10 @@ Rspec.configure do |config|
   config.include Paperclip::Shoulda::Matchers
   config.include Devise::TestHelpers, :type => :controller
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
+  config.before :suite do
+    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.clean_with :truncation
+  end
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.use_transactional_fixtures = true
@@ -59,5 +64,13 @@ Rspec.configure do |config|
   config.before :each do
     stub_contribution_urls
     stub_amazon_s3_request
+  end
+  config.before :all do
+    DatabaseCleaner.start
+    stub_contribution_urls
+    stub_amazon_s3_request
+  end
+  config.after :all do
+    DatabaseCleaner.clean
   end
 end

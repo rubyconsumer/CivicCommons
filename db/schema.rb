@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110308183609) do
+ActiveRecord::Schema.define(:version => 20110408113914) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -101,6 +101,8 @@ ActiveRecord::Schema.define(:version => 20110308183609) do
     t.integer  "audio_clip_file_size"
     t.datetime "audio_clip_updated_at"
     t.integer  "owner"
+    t.boolean  "staff_pick",              :default => false, :null => false
+    t.integer  "position"
   end
 
   create_table "conversations_events", :id => false, :force => true do |t|
@@ -161,7 +163,10 @@ ActiveRecord::Schema.define(:version => 20110308183609) do
     t.integer  "image_file_size"
     t.string   "url"
     t.string   "url_title"
+    t.string   "cached_slug"
   end
+
+  add_index "issues", ["cached_slug"], :name => "index_issues_on_cached_slug", :unique => true
 
   create_table "people", :force => true do |t|
     t.string   "first_name"
@@ -213,6 +218,18 @@ ActiveRecord::Schema.define(:version => 20110308183609) do
     t.integer  "image_file_size"
     t.text     "description"
   end
+
+  create_table "slugs", :force => true do |t|
+    t.string   "name"
+    t.integer  "sluggable_id"
+    t.integer  "sequence",                     :default => 1, :null => false
+    t.string   "sluggable_type", :limit => 40
+    t.string   "scope"
+    t.datetime "created_at"
+  end
+
+  add_index "slugs", ["name", "sluggable_type", "sequence", "scope"], :name => "index_slugs_on_n_s_s_and_s", :unique => true
+  add_index "slugs", ["sluggable_id"], :name => "index_slugs_on_sluggable_id"
 
   create_table "subscriptions", :force => true do |t|
     t.integer  "person_id"

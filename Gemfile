@@ -27,12 +27,15 @@ gem 'whenever', :require => false
 
 gem 'devise', '1.1.2'
 
+gem "friendly_id", "~> 3.2.1"
+
 gem 'shoulda'
 gem 'paperclip', "2.3.8"
 gem 'delayed_paperclip'
 gem 'aws-s3'
 gem 'nokogiri'
 gem "stringex", "~> 1.2.0"
+gem 'sanitize'
 
 group :development do
   gem "rails3-generators"
@@ -57,6 +60,12 @@ group :test do
   gem 'autotest'
   gem 'autotest-rails'
 end
+
+# On non-osx platforms, use: bundle install --without osx_test
+# group :osx_test do
+#   gem 'autotest-fsevent'
+#   gem 'autotest-growl'
+# end
 
 group :development, :test do
   gem "rspec-rails", "~> 2.2.0"

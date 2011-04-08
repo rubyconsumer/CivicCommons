@@ -35,7 +35,7 @@ Feature:
       {
         "id": 200,
         "title": "Democrats Upset About Recent Election Results",
-        "url": "http://www.example.com/issues/200",
+        "url": "http://www.example.com/issues/democrats-upset-about-recent-election-results",
         "type": "issue"
       },
       {
@@ -78,7 +78,7 @@ Feature:
     [{
       "id": 200,
       "title": "Democrats Upset About Recent Election Results",
-      "url": "http://www.example.com/issues/200"
+      "url": "http://www.example.com/issues/democrats-upset-about-recent-election-results"
     }]
     """
 

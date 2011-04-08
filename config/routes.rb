@@ -91,7 +91,10 @@ Civiccommons::Application.routes.draw do
     root      to: "dashboard#show"
     resources :articles
     resources :content_items #, only: [:index, :show, :new, :create, :update, :destroy]
-    resources :conversations
+    resources :conversations do
+      put 'toggle_staff_pick', on: :member
+      post 'update_order', on: :collection
+    end
     resources :issues
     resources :regions
     resources :people do

@@ -6,7 +6,7 @@
 <% end %>
 
 <% unless contribution.content.blank? %>
-  <%= simple_format( truncate( contribution.content, :length => 100, :separator => ' ' ) ) %>
+  <%= simple_format( truncate( Sanitize.clean( contribution.content ), :length => 100, :separator => ' ' ) ) %>
 <% else %>
   <p>
     <%= contribution_action_past_tense( contribution.type ) %><%= contribution.title.blank? ? '.' : ':' %>

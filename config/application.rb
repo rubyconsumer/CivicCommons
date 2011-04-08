@@ -49,5 +49,8 @@ module Civiccommons
 
     # For devise gem
     config.action_mailer.default_url_options = { :host => Rails.env == "production" ? "" : "localhost:3000" }
+
+    # Add <style> tags to the bad_tags collection so that internal styles are not shown
+    config.action_view.sanitized_bad_tags = ['style']
   end
 end

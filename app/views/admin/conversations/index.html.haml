@@ -1,14 +1,20 @@
 %h2 Conversations
-%table(summary="List of Conversations") 
+%table.conversations.tablesorter(summary="List of Conversations") 
   %thead  
     %tr
+      %th
       %th Conversation Title
       %th Created Date
+      %th Staff Pick
+      %th(colspan="2") Actions
   %tbody
-  -@conversations.each do |conversation|
-    %tr
-      %td= link_to conversation.title, admin_conversation_path(conversation)
-      %td= conversation.created_at.strftime("%m-%d-%Y")
-      %td= link_to "Edit", edit_admin_conversation_path(conversation)
-      %td= link_to "Delete", admin_conversation_url(conversation), :method => :delete, :confirm => "Are you sure?"
+    - @conversations.each do |conversation|
+      %tr{ :class => conversation.staff_pick ? '' : 'ui-state-disabled' }
+        %td.handle &#11021;
+        %td= link_to conversation.title, admin_conversation_path(conversation)
+        %td= conversation.created_at.strftime("%m-%d-%Y")
+        %td= toggle_staff_pick_link(conversation)
+        %td= link_to "Edit", edit_admin_conversation_path(conversation)
+        %td= link_to "Delete", admin_conversation_url(conversation), :method => :delete, :confirm => "Are you sure?"
+=javascript_include_tag 'lib/admin/conversation_sorting'
 %br
