@@ -34,7 +34,6 @@ gem 'paperclip', "2.3.8"
 gem 'delayed_paperclip'
 gem 'aws-s3'
 gem 'nokogiri'
-gem "stringex", "~> 1.2.0"
 gem 'sanitize'
 
 group :development do

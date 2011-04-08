@@ -24,23 +24,23 @@ class Admin::ContentItemsController < Admin::DashboardController
   end
 
   def show
-    @content_item = ContentItem.find_by_url(params[:id])
+    @content_item = ContentItem.find(params[:id])
     @person = Person.find(@content_item.person_id)
   end
 
   def edit
-    @content_item = ContentItem.find_by_url(params[:id])
+    @content_item = ContentItem.find(params[:id])
   end
 
   def destroy
-    @content_item = ContentItem.find_by_url(params[:id])
+    @content_item = ContentItem.find(params[:id])
     @content_item.destroy
     flash[:notice] = "Successfully deleted content item"
     redirect_to admin_content_items_path
   end
 
   def update
-    @content_item = ContentItem.find_by_url(params[:id])
+    @content_item = ContentItem.find(params[:id])
     respond_to do |format|
       if @content_item.update_attributes(params[:content_item])
         flash[:notice] = "Successfully edited your Content Item"
