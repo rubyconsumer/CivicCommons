@@ -5,4 +5,5 @@ class ContentItem < ActiveRecord::Base
   validates_presence_of :title, :url, :body
   validates_uniqueness_of :title
 
+  has_friendly_id :title, :use_slug => true, :strip_non_ascii => true
 end
