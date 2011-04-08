@@ -27,6 +27,8 @@ gem 'whenever', :require => false
 
 gem 'devise', '1.1.2'
 
+gem "friendly_id", "~> 3.2.1"
+
 gem 'shoulda'
 gem 'paperclip', "2.3.8"
 gem 'delayed_paperclip'

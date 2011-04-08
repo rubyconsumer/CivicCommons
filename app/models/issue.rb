@@ -32,6 +32,7 @@ class Issue < ActiveRecord::Base
                     :path => IMAGE_ATTACHMENT_PATH,
                     :default_url => '/images/issue_img_:style.gif')
 
+  has_friendly_id :name, :use_slug => true, :strip_non_ascii => true
 
   validates :name, :presence => true, :length => { :minimum => 5 }  
   
