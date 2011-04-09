@@ -108,6 +108,8 @@ module ConversationsHelper
     case filter.to_sym
     when :active
       "These are conversations that are inspiring people to join in."
+    when :recommended
+      "These are conversations we think you should check out because they're important and inspiring."
     when :popular
       "These are the conversations that are sparking interest."
     when :recent

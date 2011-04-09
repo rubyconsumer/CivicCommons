@@ -6,6 +6,7 @@ class ConversationsController < ApplicationController
     @active = Conversation.includes(:participants).latest_updated.limit(3)
     @popular = Conversation.includes(:participants).get_top_visited(3)
     @recent = Conversation.includes(:participants).latest_created.limit(3)
+    @recommended = Conversation.includes(:participants).recommended.limit(3)
 
     @regions = Region.all
     @recent_items = TopItem.newest_items(3).for(:conversation).collect(&:item)
