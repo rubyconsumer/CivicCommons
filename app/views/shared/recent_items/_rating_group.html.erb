@@ -6,8 +6,8 @@
   <%= simple_format( truncate( rating_group.contribution.content, :length => 100, :separator => ' ' ) ) %>
 </blockquote>
 
-<% unless controller.action_name == 'show' %>
+<% unless controller.controller_name == 'conversations' && controller.action_name == 'show' %>
   <span class="posted">
-    <%= link_to( rating_group.conversation.title, conversation_path(rating_group.conversation)) %>
+    In <%= link_to( rating_group.conversation.title, conversation_node_path(rating_group.contribution)) %>
   </span>
 <% end %>
