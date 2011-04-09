@@ -92,6 +92,8 @@ ActiveRecord::Schema.define(:version => 20110408113914) do
     t.integer  "audio_clip_file_size"
     t.datetime "audio_clip_updated_at"
     t.integer  "owner"
+    t.boolean  "staff_pick",              :default => false, :null => false
+    t.integer  "position"
   end
 
   create_table "conversations_events", :id => false, :force => true do |t|
@@ -197,6 +199,27 @@ ActiveRecord::Schema.define(:version => 20110408113914) do
 
   add_index "people", ["email"], :name => "index_people_on_email", :unique => true
   add_index "people", ["reset_password_token"], :name => "index_people_on_reset_password_token", :unique => true
+
+  create_table "rating_descriptors", :force => true do |t|
+    t.string   "title"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "rating_groups", :force => true do |t|
+    t.integer  "person_id"
+    t.integer  "conversation_id"
+    t.integer  "contribution_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "ratings", :force => true do |t|
+    t.integer  "rating_group_id"
+    t.integer  "rating_descriptor_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "regions", :force => true do |t|
     t.string   "name"

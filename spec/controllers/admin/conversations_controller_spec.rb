@@ -41,6 +41,18 @@ module Admin
 
     end
 
+    describe "ConversationsController#toggle_staff_pick" do
+      it "toggles the staff_pick flag on a given conversation" do
+        conversation = Factory.create(:conversation, staff_pick: true)
+
+        put :toggle_staff_pick, id: conversation.id
+        Conversation.find_by_id(conversation.id).staff_pick.should be_false
+      end
+
+      it "redirects to the original controller action if provided"
+      it "shows a flash[:error] message if the conversation cannot be saved"
+    end
+
   end
 
 end

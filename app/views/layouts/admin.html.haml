@@ -7,6 +7,7 @@
     =stylesheet_link_tag 'admin.css'
     =javascript_include_tag 'vendor/jquery.tablesorter.min'
     =javascript_include_tag 'lib/admin/sort_table'
+    =javascript_include_tag 'vendor/jquery-ui-1.8.11.min.js'
     %title CivicCommons Admin
   %body
     .admin-header
@@ -14,6 +15,9 @@
         %h1
           =link_to "Civic Commons Admin", admin_root_path
         = csrf_meta_tag
+    -if flash[:error]
+      .flash-error
+        =flash[:error]
     -if flash[:notice]
       .flash-notice
         =flash[:notice]

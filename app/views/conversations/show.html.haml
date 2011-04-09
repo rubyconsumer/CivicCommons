@@ -74,4 +74,4 @@
                 .photobank
                   -@conversation.participants.select{ |p| !@tlc_participants.include?(p.id) }.each do |participant|
                     =conversation_profile(participant).html_safe
-        = render :partial => 'shared/recent_item', :collection => @recent_items, :as => :recent_item
+        = render :partial => 'shared/recent_item', :recent_items => @recent_items

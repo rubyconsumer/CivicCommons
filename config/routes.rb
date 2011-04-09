@@ -31,6 +31,7 @@ Civiccommons::Application.routes.draw do
   put '/conversations/update_node_contribution',       to: 'conversations#update_node_contribution'
   put '/conversations/confirm_node_contribution',      to: 'conversations#confirm_node_contribution'
   get '/conversations/responsibilities',               to: 'conversations#responsibilities',                 as: 'conversation_responsibilities'
+  post '/conversations/toggle_rating',                 to: 'conversations#toggle_rating',                    as: 'conversation_contribution_toggle_rating'
   #Subscriptions
   post '/subscriptions/subscribe',                     to: 'subscriptions#subscribe'
   post '/subscriptions/unsubscribe',                   to: 'subscriptions#unsubscribe'
@@ -90,7 +91,10 @@ Civiccommons::Application.routes.draw do
   namespace "admin" do
     root      to: "dashboard#show"
     resources :articles
-    resources :conversations
+    resources :conversations do
+      put 'toggle_staff_pick', on: :member
+      post 'update_order', on: :collection
+    end
     resources :issues
     resources :regions
     resources :people do
