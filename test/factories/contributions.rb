@@ -17,9 +17,14 @@ Factory.define :contribution do |f|
   f.override_confirmed true
 end
 
+Factory.define :contribution_without_parent, :parent => :contribution do |f|
+  f.parent nil
+end
+
 Factory.define :issue_contribution, :parent => :contribution do |f|
   f.conversation nil
   f.association :issue, :factory => :issue
+  f.parent nil
 end
 
 Factory.define :comment do |f|
@@ -48,6 +53,10 @@ Factory.define :question do |f|
   f.association :conversation, :factory => :conversation
   f.content "MyText?"
   f.association :parent, :factory => :top_level_contribution
+end
+
+Factory.define :question_without_parent, :parent => :question do |f|
+  f.parent nil
 end
 
 Factory.define :answer do |f|

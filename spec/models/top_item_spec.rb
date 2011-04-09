@@ -74,28 +74,29 @@ end
 
 describe TopItem, "when retrieving top items for specific polymorphic association" do
   before(:each) do
-    @conversation = Factory.create(:conversation)
+    @conversation = Factory.create(:conversation, :issues => [Factory.create(:issue, :id => 43)])
     # @issue.id set below to @convo id for spec on #with_items_and_associations that ensures associations are matched to correct items without being mixed up
     @issue = Factory.create(:issue, :id => @conversation.id)
 
     @person = Factory.create(:normal_person)
-    @conversation_comment = Factory.create(:contribution, :conversation => @conversation, :person => @person)
+    @conversation_comment = Factory.create(:contribution_without_parent, :conversation => @conversation, :person => @person)
     @issue_comment = Factory.create(:issue_contribution, :issue => @issue, :person => @person)
-    @conversation_question = Factory.create(:question, {:content => "oh hai?", :override_confirmed => true, :created_at => 1.hour.ago})
+    @other_conversation = Factory.create(:conversation, :created_at => 2.hours.ago)
+    @other_conversation_question = Factory.create(:question_without_parent, {:conversation => @other_conversation, :content => "oh hai?", :override_confirmed => true, :created_at => 1.hour.ago})
   end
   it "returns direct top_items for specified type" do
-    result = TopItem.for(:conversation)
+    result = TopItem.newest_items(3).for(:conversation)
     items = result.collect{ |ti| ti.item }
 
     items.should include(@conversation)
     items.should_not include(@issue)
   end
   it "returns indirect items from specified type" do
-    result = TopItem.for(:conversation)
+    result = TopItem.newest_items(3).for(:conversation)
     items = result.collect{ |ti| ti.item }
 
     items.should include(@conversation_comment)
-    items.should include(@conversation_question)
+    items.should include(@other_conversation_question)
     items.should_not include(@issue_comment)
   end
   it "returns only items from specified item by id" do
@@ -104,14 +105,14 @@ describe TopItem, "when retrieving top items for specific polymorphic associatio
 
     items.should include(@conversation)
     items.should include(@conversation_comment)
-    items.should_not include(@conversation_question)
-    items.should_not include(@conversation_question.conversation)
+    items.should_not include(@other_conversation_question)
+    items.should_not include(@other_conversation)
   end
   it "returns only items from specified items by conditions" do
     result = TopItem.for(:conversation, {:content => "oh hai?", :type => :question})
     items = result.collect{ |ti| ti.item }
 
-    items.should include(@conversation_question)
+    items.should include(@other_conversation_question)
     items.should_not include(@conversation_comment)
   end
   it "returns all items for a specified person" do
@@ -120,7 +121,7 @@ describe TopItem, "when retrieving top items for specific polymorphic associatio
 
     items.should include(@conversation_comment)
     items.should include(@issue_comment)
-    items.should_not include(@conversation_question)
+    items.should_not include(@other_conversation_question)
   end
   it "is chainable from an Arel scope when #for used" do
     result = []
