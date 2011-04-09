@@ -159,10 +159,16 @@ class TopItem < ActiveRecord::Base
     associated_items = ActiveRecord::Relation.new(self, sql_builder) & self.scoped
 
     # Hack needed to limit total items returned until above can be re-written with new Arel2 methods
-    all_for_items = (direct_items | associated_items).sort_by(&:item_created_at).reverse
+    # Once Arel supports +limit+ and +order+ for +Nodes::Union+, this could be used instead to return
+    # an Arel Relation object so that methods further scopes can continue to be chained:
+    #
+    #     all_for_items = direct_items.union(associated_items)
+    #     all_for_items = all_for_items.order(self.scoped.orders) if self.scoped.orders
+    #     all_for_items = all_for_items.limit(self.scoped.limit_value) if self.scoped.limit_value
+    all_for_items = (direct_items | associated_items)
+    all_for_items = all_for_items.sort_by(&:item_created_at).reverse if self.scoped.orders && self.scoped.orders.include?("item_created_at DESC")
     all_for_items = all_for_items.first( self.scoped.limit_value ) if self.scoped.limit_value
 
-    #p top_items.to_sql
     return all_for_items
   end
 
