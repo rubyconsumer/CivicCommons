@@ -17,7 +17,7 @@ class Admin::IssuesController < Admin::DashboardController
       redirect_to admin_issues_path
       flash[:notice] = "Thank you for submitting an issue"
     else
-      render new_issue_path
+      render :new
     end
   end
 
@@ -33,7 +33,7 @@ class Admin::IssuesController < Admin::DashboardController
       redirect_to admin_issues_path
       flash[:notice] = "Thank you for updating the issue"
     else
-      render admin_edit_issue_path(@issue)
+      render :edit
     end
   end
 
