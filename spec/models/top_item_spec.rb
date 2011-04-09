@@ -30,9 +30,9 @@ describe TopItem, "when retrieving the top items by date" do
     items = result.collect{ |ti| ti.item }
     old_top_items = TopItem.order("item_created_at ASC").includes(:item).limit(TopItem.all.size - 10)
 
-    items.include?(@today_conversation).should == true
-    items.include?(@today_contribution).should == true
-    items.include?(@today_issue).should == true
+    items.include?(@today_conversation).should be_true
+    items.include?(@today_contribution).should be_true
+    items.include?(@today_issue).should be_true
   end
 
 end
@@ -42,17 +42,14 @@ describe TopItem, "when retrieving the top items by number of visits" do
     @ten_visit_conversation = Factory.create(:conversation, {:recent_visits=>10})
     @five_visit_conversation = Factory.create(:conversation, {:recent_visits=>5})
     @one_visit_conversation = Factory.create(:conversation, {:recent_visits=>1})
-    Conversation.stub(:get_top_visited).and_return([@ten_visit_conversation, @five_visit_conversation, @one_visit_conversation])
 
     @ten_visit_contribution = Factory.create(:contribution, {:recent_visits=>10})
     @five_visit_contribution = Factory.create(:contribution, {:recent_visits=>5})
     @one_visit_contribution = Factory.create(:contribution, {:recent_visits=>1})
-    Comment.stub(:get_top_visited).and_return([@ten_visit_contribution, @five_visit_contribution, @one_visit_contribution])
 
     @ten_visit_issue = Factory.create(:issue, {:recent_visits=>10})
     @five_visit_issue = Factory.create(:issue, {:recent_visits=>5})
     @one_visit_issue = Factory.create(:issue, {:recent_visits=>1})
-    Issue.stub(:get_top_visited).and_return([@ten_visit_issue, @five_visit_issue, @one_visit_issue])
   end
 
   it "should merge all visitable types" do
