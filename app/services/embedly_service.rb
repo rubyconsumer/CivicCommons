@@ -48,6 +48,10 @@ class EmbedlyService
       end
       params[:contribution][:embedly_code] = raw
       params[:contribution][:url] = properties[:url]
+      params[:contribution][:title] = properties[:title] unless properties[:title].blank?
+      if params[:description].blank? and not properties[:title].blank?
+        params[:contribution][:description] = properties[:description]
+      end
     end
     return (not properties.nil?)
   end
@@ -177,10 +181,16 @@ class EmbedlyService
   def self.to_thumbnail(code, maxwidth = nil)
 
     html = nil
+    img = nil
     code = self.parse_raw(code)
 
-    if !code[:images].empty? 
-      img = nil
+    if not code[:oembed].empty? and code[:oembed].has_key?(:thumbnail_url)
+      img = {
+        :url => code[:oembed][:thumbnail_url],
+        :height => code[:oembed][:thumbnail_height],
+        :width => code[:oembed][:thumbnail_width],
+      }
+    elsif !code[:images].empty?
       small = nil
 
       if maxwidth.nil?
@@ -198,21 +208,19 @@ class EmbedlyService
             small = image
           end
         end
-        #img = small if img.nil?
-        if img.nil?
-          img = small
-          scale = { height: (img[:height].to_i*maxwidth/img[:width]), width: maxwidth }
-        end
-
+        img = small if img.nil?
       end
+    end 
 
+    if not img.nil?
+      if img[:width].to_i > maxwidth
+        img[:width] = maxwidth
+        img[:height] = img[:height].to_i * maxwidth / img[:width]
+      end
       opt = { description: code[:description], title: code[:title] }
       opt.merge!(img)
-      if scale
-        opt.merge!(scale)
-      end
       html = self.generate_img_html(opt)
-    end 
+    end
 
     return html
   end
@@ -252,7 +260,7 @@ class EmbedlyService
         html << code[:oembed][:url]
         html << '">'
         html << self.to_thumbnail(code, thumb_maxwidth)
-        html << '"</a>'
+        html << '</a>'
       else
         html << "<a id=\"inline-#{r}\" href=\"#data-#{r}\">"
         html << self.to_thumbnail(code, thumb_maxwidth)

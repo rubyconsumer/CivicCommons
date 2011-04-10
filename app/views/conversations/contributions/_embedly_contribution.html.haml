@@ -1,5 +1,7 @@
 %div.content
   %span.contribution-person-name= person_display_name(contribution.person)
+  %br
+  %br
   =auto_link(simple_format(contribution.content))
 %p.link-title
   = link_to(contribution.title, contribution.url)
@@ -11,4 +13,4 @@
   -else
     = raw EmbedlyService.to_embed_or_fancybox(contribution, 600)
 %p.content.link-quote
-  = contribution.description
+  = raw contribution.description
