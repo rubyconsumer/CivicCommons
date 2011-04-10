@@ -41,7 +41,11 @@ class EmbedlyService
   def fetch_and_merge_params!(params)
     fetch(params[:contribution][:url])
     unless properties.nil?
-      params[:contribution][:embedly_type] = properties[:type]
+      if properties[:type] == 'html' and not properties[:oembed].empty?
+        params[:contribution][:embedly_type] = properties[:oembed][:type]
+      else
+        params[:contribution][:embedly_type] = properties[:type]
+      end
       params[:contribution][:embedly_code] = raw
       params[:contribution][:url] = properties[:url]
     end
