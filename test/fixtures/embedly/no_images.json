@@ -1,0 +1,40 @@
+{
+ "embeds": [],
+ "provider_url": "http://www.alfajango.com/",
+ "description": "January 6th, 2011 by Steve Schwartz There is an easy way to track all jQuery AJAX requests in an application. This method could really be used to log our AJAX requests however we wish, but this particular example will log requests to Google Analytics. This code will automatically log all jQuery AJAX requests in our application, including those using , , or (and too). This will also work for any jQuery plugins using AJAX requests (e.g. lightbox plugins, etc.), as well as for all Rails 3 remote links and forms (provided we’re using the jQuery UJS driver). In the page...",
+ "original_url": "http://www.alfajango.com/blog/track-jquery-ajax-requests-in-google-analytics/",
+ "url": "http://www.alfajango.com/blog/track-jquery-ajax-requests-in-google-analytics/",
+ "images": [],
+ "safe": true,
+ "provider_display": "www.alfajango.com",
+ "favicon_url": "http://www.alfajango.com/favicon.ico",
+ "meta": {
+  "rss": [
+   {
+    "type": "application/rss+xml",
+    "href": "http://www.alfajango.com/blog/feed/",
+    "tag": "link",
+    "rel": "alternate",
+    "title": "Alfa Jango Blog RSS Feed"
+   },
+   {
+    "type": "application/rss+xml",
+    "href": "http://www.alfajango.com/blog/track-jquery-ajax-requests-in-google-analytics/feed/",
+    "tag": "link",
+    "rel": "alternate",
+    "title": "Alfa Jango Blog » Track jQuery AJAX Requests in Google Analytics Comments Feed"
+   }
+  ],
+  "generator": "WordPress 3.1",
+  "canonical": "http://www.alfajango.com/blog/track-jquery-ajax-requests-in-google-analytics/"
+ },
+ "oembed": {},
+ "place": {},
+ "entry": {},
+ "open_graph": {},
+ "title": "Track jQuery AJAX Requests in Google Analytics - Alfa Jango Blog",
+ "provider_name": "Alfajango",
+ "cache_age": 85118,
+ "type": "html",
+ "payload": {}
+}

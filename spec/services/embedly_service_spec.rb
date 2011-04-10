@@ -238,6 +238,11 @@ describe EmbedlyService do
             html.should be_nil
           end
 
+          it "should return nil when the image array is empty" do
+            html = EmbedlyService.to_thumbnail(fixture_content('embedly/no_images.json'))
+            html.should be_nil
+          end
+
           context "maxwidth" do
 
             it "should return the widest image when maxwidth is not set" do
@@ -290,6 +295,20 @@ describe EmbedlyService do
               html.should =~ /\s+width="100"/
             end
 
+            # Changed our minds and decided to return an empty string instead
+            #it "should return a link if there is no embed code and no image" do
+              #html = EmbedlyService.to_embed_or_fancybox(fixture_content('embedly/no_images.json'))
+              #html.should =~ /^<a/
+              #html.should =~ /\s+href="http:\/\/www\.alfajango\.com\/blog\/track-jquery-ajax-requests-in-google-analytics\/"/
+              #html.should =~ /\s+title=\"Track jQuery AJAX Requests in Google Analytics - Alfa Jango Blog\"/
+              #html.should =~ /\s*>Track jQuery AJAX Requests in Google Analytics - Alfa Jango Blog<\/a>$/
+            #end
+
+            it "should return nil if there is no embed code and no image" do
+              html = EmbedlyService.to_embed_or_fancybox(fixture_content('embedly/no_images.json'))
+              html.should_not be_nil
+              html.should be_empty
+            end
           end
 
         end
