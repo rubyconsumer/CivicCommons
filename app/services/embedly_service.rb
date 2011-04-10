@@ -244,7 +244,8 @@ class EmbedlyService
 
       r = 1000 + rand(9000)
 
-      html = "
+      html = ''
+      js = "
         <script type='text/javascript'> 
           //<![CDATA[
             $(document).ready(function() {
@@ -255,19 +256,25 @@ class EmbedlyService
         </script>
       "
 
-      if code[:oembed][:type] == 'photo'
-        html << "<a id=\"single_image-#{r}\" href=\""
-        html << code[:oembed][:url]
-        html << '">'
-        html << self.to_thumbnail(code, thumb_maxwidth)
-        html << '</a>'
-      else
-        html << "<a id=\"inline-#{r}\" href=\"#data-#{r}\">"
-        html << self.to_thumbnail(code, thumb_maxwidth)
-        html << '</a>'
-        html << "<div style=\"display:none\"><div id=\"data-#{r}\">"
-        html << self.to_embed(code)
-        html << '</div></div>'
+      thumbnail = self.to_thumbnail(code, thumb_maxwidth)
+
+      if not thumbnail.nil?
+        if code[:oembed][:type] == 'photo'
+          html << js
+          html << "<a id=\"single_image-#{r}\" href=\""
+          html << code[:oembed][:url]
+          html << '">'
+          html << thumbnail
+          html << '</a>'
+        else
+          html << js
+          html << "<a id=\"inline-#{r}\" href=\"#data-#{r}\">"
+          html << thumbnail
+          html << '</a>'
+          html << "<div style=\"display:none\"><div id=\"data-#{r}\">"
+          html << self.to_embed(code)
+          html << '</div></div>'
+        end
       end
     end
 
