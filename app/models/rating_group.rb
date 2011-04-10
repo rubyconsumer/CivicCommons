@@ -78,21 +78,8 @@ class RatingGroup < ActiveRecord::Base
     contribution_ids = rgs.collect(&:contribution_id).uniq
     ratings = rgs.collect(&:ratings)
 
-    default_ratings_hash = returning Hash.new do |hash|
-      RatingGroup.rating_descriptors.each do |rd_id, rd_title|
-        hash[rd_title] = {
-          :total => 0,
-          :person => person ? false : nil
-        }
-      end
-    end
-
-    default_contribution_hash = Hash.new do |hash, key|
-      hash[key] = default_ratings_hash
-    end
-
     # Start with new Hash #=> {}
-    out = contribution_ids.each.inject(default_contribution_hash) do |h, contribution_id|
+    out = contribution_ids.each.inject(default_contribution_hash(person)) do |h, contribution_id|
       contribution_rgs = rgs.select{ |rg| rg.contribution_id == contribution_id }
       contribution_person_ratings = contribution_rgs.select{ |rg| rg.person_id == person }.collect(&:ratings).flatten if person
       # Populate hash with each unique contribution_id as a key #=> { 1 => {}, 2 => {} }
@@ -114,5 +101,22 @@ class RatingGroup < ActiveRecord::Base
   def self.rating_descriptors
     # Builds { 1 => 'Appropriate', 2 => 'Inspiring', ... }
     @rating_desciptors = Hash[*RatingDescriptor.select([ :id, :title ]).map{ |m| [m.id, m.title]}.flatten]
+  end
+
+  def self.default_ratings_hash(person=nil)
+    returning Hash.new do |hash|
+      RatingGroup.rating_descriptors.each do |rd_id, rd_title|
+        hash[rd_title] = {
+          :total => 0,
+          :person => person ? false : nil
+        }
+      end
+    end
+  end
+
+  def self.default_contribution_hash(person=nil)
+    Hash.new do |hash, key|
+      hash[key] = default_ratings_hash(person)
+    end
   end
 end

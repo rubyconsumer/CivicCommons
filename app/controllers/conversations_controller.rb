@@ -111,6 +111,7 @@ class ConversationsController < ApplicationController
   #TODO: consider moving this to its own controller?
   def confirm_node_contribution
     @contribution = Contribution.unconfirmed.find_by_id_and_owner(params[:contribution][:id], current_person.id)
+    @ratings = RatingGroup.default_contribution_hash
 
     respond_to do |format|
       if @contribution.confirm!
