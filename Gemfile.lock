@@ -45,7 +45,7 @@ GEM
       activemodel (= 3.0.3)
       activesupport (= 3.0.3)
     activesupport (3.0.3)
-    addressable (2.2.5)
+    addressable (2.2.4)
     archive-tar-minitar (0.5.2)
     arel (2.0.9)
     autotest (4.4.6)
@@ -250,6 +250,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  addressable (= 2.2.4)
   autotest
   autotest-fsevent
   autotest-growl
