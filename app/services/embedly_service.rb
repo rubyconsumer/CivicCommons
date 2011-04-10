@@ -213,9 +213,9 @@ class EmbedlyService
     end 
 
     if not img.nil?
-      if img[:width].to_i > maxwidth
+      if not maxwidth.nil? and img[:width].to_i > maxwidth
+        img[:height] = img[:height].to_i * maxwidth / img[:width].to_i
         img[:width] = maxwidth
-        img[:height] = img[:height].to_i * maxwidth / img[:width]
       end
       opt = { description: code[:description], title: code[:title] }
       opt.merge!(img)

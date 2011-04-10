@@ -225,9 +225,9 @@ describe EmbedlyService do
           it "should return a valid HTML img tag when at least one image is present" do
             html = EmbedlyService.to_thumbnail(fixture_content('embedly/flickr.json'))
             html.should =~ /^<img/
-            html.should =~ /\s+src="http:\/\/farm6\.static\.flickr\.com\/5216\/5387288109_4046bd10e1_z\.jpg"/
-            html.should =~ /\s+height="414"/
-            html.should =~ /\s+width="640"/
+            html.should =~ /\s+src="http:\/\/farm6\.static\.flickr\.com\/5216\/5387288109_4046bd10e1_t\.jpg"/
+            html.should =~ /\s+height="65"/
+            html.should =~ /\s+width="100"/
             html.should =~ /\s+title="The Start"/
             html.should =~ /\s+alt="Poster #19: &quot;The Start&quot; Created by: Tom Sawyer Community: North Royalton From the Artist: &quot;Even something as simple as a &quot;Hi&quot; can make someone's day&quot;."/
             html.should =~ /\s*\/>$/
@@ -242,32 +242,32 @@ describe EmbedlyService do
 
             it "should return the widest image when maxwidth is not set" do
               html = EmbedlyService.to_thumbnail(fixture_content('embedly/flickr.json'))
-              html.should =~ /\s+src="http:\/\/farm6\.static\.flickr\.com\/5216\/5387288109_4046bd10e1_z\.jpg"/
-              html.should =~ /\s+height="414"/
-              html.should =~ /\s+width="640"/
+              html.should =~ /\s+src="http:\/\/farm6\.static\.flickr\.com\/5216\/5387288109_4046bd10e1_t\.jpg"/
+              html.should =~ /\s+height="65"/
+              html.should =~ /\s+width="100"/
             end
 
             it "should return the widest image when maxwidth is greater than biggest image width" do
               maxwidth = 700
               html = EmbedlyService.to_thumbnail(fixture_content('embedly/flickr.json'), maxwidth)
-              html.should =~ /\s+src="http:\/\/farm6\.static\.flickr\.com\/5216\/5387288109_4046bd10e1_z\.jpg"/
-              html.should =~ /\s+height="414"/
-              html.should =~ /\s+width="640"/
+              html.should =~ /\s+src="http:\/\/farm6\.static\.flickr\.com\/5216\/5387288109_4046bd10e1_t\.jpg"/
+              html.should =~ /\s+height="65"/
+              html.should =~ /\s+width="100"/
             end
 
             it "should return the widest image when width smaller than maxwidth" do
               maxwidth = 250
               html = EmbedlyService.to_thumbnail(fixture_content('embedly/flickr.json'), maxwidth)
-              html.should =~ /\s+src="http:\/\/farm6\.static\.flickr\.com\/5216\/5387288109_4046bd10e1_m\.jpg"/
-              html.should =~ /\s+height="155"/
-              html.should =~ /\s+width="240"/
+              html.should =~ /\s+src="http:\/\/farm6\.static\.flickr\.com\/5216\/5387288109_4046bd10e1_t\.jpg"/
+              html.should =~ /\s+height="65"/
+              html.should =~ /\s+width="100"/
             end
 
             it "should scale the image when all images are wider than maxwidth" do
               maxwidth = 24
               html = EmbedlyService.to_thumbnail(fixture_content('embedly/flickr.json'), maxwidth)
-              html.should =~ /\s+src="http:\/\/l\.yimg\.com\/g\/images\/buddyicon\.jpg"/
-              html.should =~ /\s+height="24"/
+              html.should =~ /\s+src="http:\/\/farm6\.static\.flickr\.com\/5216\/5387288109_4046bd10e1_t\.jpg"/
+              html.should =~ /\s+height="15"/
               html.should =~ /\s+width="24"/
             end
 
@@ -285,9 +285,9 @@ describe EmbedlyService do
             it "should return a thumbnail if the embed is larger than max_embed_width" do
               maxwidth = 250
               html = EmbedlyService.to_embed_or_fancybox(fixture_content('embedly/flickr.json'), maxwidth)
-              html.should =~ /\s+src="http:\/\/farm6\.static\.flickr\.com\/5216\/5387288109_4046bd10e1_m\.jpg"/
-              html.should =~ /\s+height="155"/
-              html.should =~ /\s+width="240"/
+              html.should =~ /\s+src="http:\/\/farm6\.static\.flickr\.com\/5216\/5387288109_4046bd10e1_t\.jpg"/
+              html.should =~ /\s+height="65"/
+              html.should =~ /\s+width="100"/
             end
 
           end
