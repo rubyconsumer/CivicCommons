@@ -105,6 +105,10 @@ describe "module and class hierarchy" do
 
       # incorrect syntax examples
 
+      @single_tag_missing_class = "{ccml:bogus_class}"
+
+      @single_tag_missing_method = "{ccml:test_single:bogus_method}"
+
       @single_tag_bad_syntax = "{ccml garbage}"
 
       @tag_pair_bad_syntax = "{ccml:stuff garbage}some stuff in the middle{/ccml:stuff}"
@@ -165,6 +169,14 @@ describe "module and class hierarchy" do
     end
 
     context "incorrect tag syntax" do
+
+      it "should raise TagClassNotFoundError when tag class does not exist" do
+        lambda { CCML.parse(@single_tag_missing_class) }.should raise_error CCML::Error::TagClassNotFoundError
+      end
+
+      it "should raise TagMethodNotFoundError when tag method does not exist" do
+        lambda { CCML.parse(@single_tag_missing_method) }.should raise_error CCML::Error::TagMethodNotFoundError
+      end
 
       it "should raise TemplateError when ccml data is not a string" do
         lambda { CCML.parse(1234567890) }.should raise_error CCML::Error::TemplateError

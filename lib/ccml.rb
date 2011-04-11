@@ -90,7 +90,7 @@ module CCML
   def CCML.parse(ccml)
 
     # find and process tag pairs
-    ccml = CCML.parse_single_tags(ccml)
+    CCML.parse_single_tags!(ccml)
 
     # find and process single tags
 
@@ -104,7 +104,7 @@ module CCML
 
   private
 
-  def CCML.tag_factory(clazz, method, opts={})
+  def CCML.instanciate_tag(clazz, method, opts={})
     if ILLEGAL_TAGS.include?(clazz)
       raise CCML::Error::TagBaseClassInTemplateError
     end
@@ -117,7 +117,27 @@ module CCML
     return tag
   end
 
-  def CCML.parse_single_tags(ccml)
+  def CCML.run_tag_method(tag, method)
+    begin
+      sub = tag.send(method.to_sym)
+    rescue
+      raise CCML::Error::TagMethodNotFoundError, "Unable to find method '#{method}' of '#{tag.class}' object."
+    end
+    return sub
+  end
+
+  def CCML.parse_options(match)
+    opts = {}
+    if not match[:opts].blank?
+      options = match[:opts].scan(OPTIONS_PATTERN)
+      options.each do |opt|
+        opts[opt[0].to_sym] = opt[1]
+      end
+    end
+    return opts
+  end
+
+  def CCML.parse_single_tags!(ccml)
 
     # find the first match
     match = SINGLE_TAG_PATTERN.match(ccml)
@@ -128,30 +148,18 @@ module CCML
       # get the data from the matching string
       clazz = match[:class]
       method = ( match[:method].nil? ? 'index' : match[:method] )
-      opts = {}
-      if not match[:opts].blank?
-        options = match[:opts].scan(OPTIONS_PATTERN)
-        options.each do |opt|
-          opts[opt[0].to_sym] = opt[1]
-        end
-      end
+      opts = CCML.parse_options(match)
 
       # create an instance of the tag class
-      tag = CCML.tag_factory(clazz, method, opts)
+      tag = CCML.instanciate_tag(clazz, method, opts)
 
       # run the method and substitute the results into the ccml
-      #begin
-      sub = tag.send(method.to_sym)
+      sub = CCML.run_tag_method(tag, method)
       ccml.sub!(match.to_s, sub)
-      #rescue
-      #raise CCML::Error::TagMethodNotFoundError, "Unable to find method '#{method}' of '#{clazz}' tag."
-      #end
 
       # look for another match
       match = SINGLE_TAG_PATTERN.match(ccml)
     end
-
-    return ccml
   end
 
 end
