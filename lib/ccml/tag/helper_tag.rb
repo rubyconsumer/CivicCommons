@@ -1,6 +1,6 @@
 module CCML
   module Tag
-    class PartialTag < SingleTag
+    class HelperTag < SingleTag
     end
   end
 end
