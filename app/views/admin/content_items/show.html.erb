@@ -1,17 +1,16 @@
 <article>
   <header>
-    <h1><%= @content_item.title %></h1>
-    </header>
-    <%= link_to @content_item.cached_slug %>
-  <p>Author: <%= @person.first_name + ' ' +  @person.last_name %></p>
+    <h1><%= link_to(@content_item.title, @content_item.cached_slug) %></h1>
+    <p>Author: <%= @person.first_name + ' ' +  @person.last_name %></p>
+  </header>
   <p>Content Type: <%= @content_item.content_type %>
   <p>Summary: </p>
   <blockquote>
-    <%= @content_item.summary %>
+    <%= raw (@content_item.summary) %>
   </blockquote>
   <p>Body: </p>
   <blockquote>
-    <%= @content_item.body %>
+    <%= raw (@content_item.body) %>
   </blockquote>
 </article>
 

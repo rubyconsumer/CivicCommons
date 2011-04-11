@@ -107,9 +107,6 @@ a img {
 .nav a {
 	display: block;}
 
-#main table {
-	width: 700px;}
-
 .flash-error, .flash-notice{
 	padding: 0;
 	margin: 0;
@@ -237,3 +234,4 @@ table.conversations td.handle:hover {
 .staff_pick.off:hover {
 	background: transparent url('../images/icons/star_full.png') 0 0 no-repeat;
 }
+textarea.tinymce{width:695px;}
