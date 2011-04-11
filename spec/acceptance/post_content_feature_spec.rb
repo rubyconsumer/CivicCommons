@@ -195,7 +195,7 @@ save_and_open_page
       fill_in('content_item_body', :with => 'This radio show is about that radio show')
       click_button('Create Content item')
       should_be_on admin_content_item_path(ContentItem.last)
-      page.should have_content("first-radio-show")
+      page.should have_link("First Radio Show", :href => "first-radio-show")
     end
 
     scenario "Title is used as slug when url slug is blank" do
@@ -213,6 +213,6 @@ save_and_open_page
       fill_in('content_item_body', :with => 'This radio show is about that radio show')
       click_button('Create Content item')
       should_be_on admin_content_item_path(ContentItem.last)
-      page.should have_content("first-radio-show")
+      page.should have_link("First Radio Show", :href => "first-radio-show")
     end
 end
