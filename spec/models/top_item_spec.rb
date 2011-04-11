@@ -30,50 +30,11 @@ describe TopItem, "when retrieving the top items by date" do
     items = result.collect{ |ti| ti.item }
     old_top_items = TopItem.order("item_created_at ASC").includes(:item).limit(TopItem.all.size - 10)
 
-    items.include?(@today_conversation).should == true
-    items.include?(@today_contribution).should == true
-    items.include?(@today_issue).should == true
+    items.include?(@today_conversation).should be_true
+    items.include?(@today_contribution).should be_true
+    items.include?(@today_issue).should be_true
   end
 
-end
-
-describe TopItem, "when retrieving the top items by rating" do
-  before(:each) do
-    @ten_rating_conversation = Factory.create(:conversation, {:recent_rating=>10})
-    @five_rating_conversation = Factory.create(:conversation, {:recent_rating=>5})
-    @one_rating_conversation = Factory.create(:conversation, {:recent_rating=>1})
-    Conversation.stub(:get_top_rated).and_return([@ten_rating_conversation, @five_rating_conversation, @one_rating_conversation])
-
-    @ten_rating_issue = Factory.create(:issue, {:recent_rating=>10})
-    @five_rating_issue = Factory.create(:issue, {:recent_rating=>5})
-    @one_rating_issue = Factory.create(:issue, {:recent_rating=>1})
-    Issue.stub(:get_top_rated).and_return([@ten_rating_issue, @five_rating_issue, @one_rating_issue])
-
-    @ten_rating_contribution = Factory.create(:contribution, {:recent_rating=>10})
-    @five_rating_contribution = Factory.create(:contribution, {:recent_rating=>5})
-    @one_rating_contribution = Factory.create(:contribution, {:recent_rating=>1})
-    Comment.stub(:get_top_rated).and_return([@ten_rating_contribution, @five_rating_contribution, @one_rating_contribution])
-
-  end
-
-  it "should merge all rateable types" do
-    result = TopItem.highest_rated
-    items = result.collect{ |ti| ti.item }
-
-    items.include?(@ten_rating_conversation).should == true
-    items.include?(@ten_rating_contribution).should == true
-    items.include?(@ten_rating_issue).should == true
-  end
-
-  it "should return the number passed in" do
-    result = TopItem.highest_rated(5).all.count
-    result.should == 5
-  end
-
-  it "should return 10 items if no limit is passed in" do
-    result = TopItem.highest_rated.all.count
-    result.should == 10
-  end
 end
 
 describe TopItem, "when retrieving the top items by number of visits" do
@@ -81,17 +42,14 @@ describe TopItem, "when retrieving the top items by number of visits" do
     @ten_visit_conversation = Factory.create(:conversation, {:recent_visits=>10})
     @five_visit_conversation = Factory.create(:conversation, {:recent_visits=>5})
     @one_visit_conversation = Factory.create(:conversation, {:recent_visits=>1})
-    Conversation.stub(:get_top_visited).and_return([@ten_visit_conversation, @five_visit_conversation, @one_visit_conversation])
 
     @ten_visit_contribution = Factory.create(:contribution, {:recent_visits=>10})
     @five_visit_contribution = Factory.create(:contribution, {:recent_visits=>5})
     @one_visit_contribution = Factory.create(:contribution, {:recent_visits=>1})
-    Comment.stub(:get_top_visited).and_return([@ten_visit_contribution, @five_visit_contribution, @one_visit_contribution])
 
     @ten_visit_issue = Factory.create(:issue, {:recent_visits=>10})
     @five_visit_issue = Factory.create(:issue, {:recent_visits=>5})
     @one_visit_issue = Factory.create(:issue, {:recent_visits=>1})
-    Issue.stub(:get_top_visited).and_return([@ten_visit_issue, @five_visit_issue, @one_visit_issue])
   end
 
   it "should merge all visitable types" do
@@ -116,28 +74,29 @@ end
 
 describe TopItem, "when retrieving top items for specific polymorphic association" do
   before(:each) do
-    @conversation = Factory.create(:conversation)
+    @conversation = Factory.create(:conversation, :issues => [Factory.create(:issue, :id => 43)])
     # @issue.id set below to @convo id for spec on #with_items_and_associations that ensures associations are matched to correct items without being mixed up
     @issue = Factory.create(:issue, :id => @conversation.id)
 
     @person = Factory.create(:normal_person)
-    @conversation_comment = Factory.create(:contribution, :conversation => @conversation, :person => @person)
+    @conversation_comment = Factory.create(:contribution_without_parent, :conversation => @conversation, :person => @person)
     @issue_comment = Factory.create(:issue_contribution, :issue => @issue, :person => @person)
-    @conversation_question = Factory.create(:question, {:content => "oh hai?", :override_confirmed => true, :created_at => 1.hour.ago})
+    @other_conversation = Factory.create(:conversation, :created_at => 2.hours.ago)
+    @other_conversation_question = Factory.create(:question_without_parent, {:conversation => @other_conversation, :content => "oh hai?", :override_confirmed => true, :created_at => 1.hour.ago})
   end
   it "returns direct top_items for specified type" do
-    result = TopItem.for(:conversation)
+    result = TopItem.newest_items(3).for(:conversation)
     items = result.collect{ |ti| ti.item }
 
     items.should include(@conversation)
     items.should_not include(@issue)
   end
   it "returns indirect items from specified type" do
-    result = TopItem.for(:conversation)
+    result = TopItem.newest_items(3).for(:conversation)
     items = result.collect{ |ti| ti.item }
 
     items.should include(@conversation_comment)
-    items.should include(@conversation_question)
+    items.should include(@other_conversation_question)
     items.should_not include(@issue_comment)
   end
   it "returns only items from specified item by id" do
@@ -146,14 +105,14 @@ describe TopItem, "when retrieving top items for specific polymorphic associatio
 
     items.should include(@conversation)
     items.should include(@conversation_comment)
-    items.should_not include(@conversation_question)
-    items.should_not include(@conversation_question.conversation)
+    items.should_not include(@other_conversation_question)
+    items.should_not include(@other_conversation)
   end
   it "returns only items from specified items by conditions" do
     result = TopItem.for(:conversation, {:content => "oh hai?", :type => :question})
     items = result.collect{ |ti| ti.item }
 
-    items.should include(@conversation_question)
+    items.should include(@other_conversation_question)
     items.should_not include(@conversation_comment)
   end
   it "returns all items for a specified person" do
@@ -162,7 +121,7 @@ describe TopItem, "when retrieving top items for specific polymorphic associatio
 
     items.should include(@conversation_comment)
     items.should include(@issue_comment)
-    items.should_not include(@conversation_question)
+    items.should_not include(@other_conversation_question)
   end
   it "is chainable from an Arel scope when #for used" do
     result = []

@@ -43,23 +43,26 @@ describe ConversationsController do
 
   describe "GET show" do
     before(:each) do
-      @person = Factory.create(:normal_person)
-      @controller.stub(:current_person).and_return(@person)
-      Conversation.stub(:includes).with(:issues) { mock_conversation(:issues => :all_issues) }
-      Conversation.stub(:find).with("37") { mock_conversation }
+      @person = Factory.create(:registered_user)
+      @controller.should_receive(:current_person).at_least(1).and_return(@person)
+      @convo = Factory.create(:conversation)
     end
 
     def do_get
-      get :show, :id => "37"
+      get :show, :id => @convo.id
     end
 
     it "assigns the requested conversation as @conversation" do
       do_get
-      assigns(:conversation).should be(mock_conversation)
+      assigns(:conversation).should == @convo
     end
+
     it "records a visit to the conversation passing the current user" do
-      mock_conversation.should_receive(:visit!).with(@person.id)
       do_get
+      convo = Conversation.find_by_id(@convo.id)
+      convo.total_visits.should == @convo.total_visits + 1
+      convo.recent_visits.should == @convo.recent_visits + 1
+      Visit.where("person_id = #{@person.id} and visitable_id = #{@convo.id}").size.should == 1
     end
   end
 

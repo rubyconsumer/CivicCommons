@@ -7,6 +7,14 @@
 
         <%= render :partial => 'layouts/create_conversation' %>
 
+        <% if @recommended.size > 0 %>
+          <div class="conversation-tile-group group">
+            <h3>Recommended Conversations</h3>
+            <%= render :partial => '/conversations/conversation_band', :locals => {:conversations => @recommended} %>
+            <%= link_to "See more recommended conversations", conversations_filter_url(:recommended), :class => 'see-more' %>
+          </div>
+        <% end %>
+
         <div class="conversation-tile-group group">
           <h3>Most Active Conversations</h3>
           <%= render :partial => '/conversations/conversation_band', :locals => {:conversations => @active} %>
@@ -37,7 +45,7 @@
 
         <div>&nbsp;</div>
 
-        <%= render :partial => 'shared/recent_item' %>
+        <%= render_recent_items_sidebar %>
         <%= render :partial => '/regions/index' %>
       </div><!-- /.aside -->      
   </div>

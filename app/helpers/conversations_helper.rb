@@ -43,6 +43,8 @@ module ConversationsHelper
       "asked a question"
     when "SuggestedAction"
       "suggested an action"
+    when "EmbedlyContribution"
+      "shared a link"
     else
       "responded"
     end
@@ -64,6 +66,8 @@ module ConversationsHelper
       "Comment on link..."
     when :suggested_action
       "Suggest an action..."
+    when :embedly_contribution
+      "Share a link..."
     else
       ""
     end
@@ -108,6 +112,8 @@ module ConversationsHelper
     case filter.to_sym
     when :active
       "These are conversations that are inspiring people to join in."
+    when :recommended
+      "These are conversations we think you should check out because they're important and inspiring."
     when :popular
       "These are the conversations that are sparking interest."
     when :recent
@@ -115,5 +121,13 @@ module ConversationsHelper
     else
       "These are the conversations that match your filter."
     end
+  end
+
+  def rating_buttons(contribution, ratings_hash)
+    out = []
+    RatingGroup.rating_descriptors.each do |id, title|
+      out << link_to( "#{title} <span class='loading'>#{image_tag 'loading.gif'}</span><span class='number'>#{ratings_hash[contribution.id][title][:total]}</span>".html_safe, conversation_contribution_toggle_rating_path(:contribution_id => contribution, :rating_descriptor_title => title), :remote => true, :method => :post, :id => "contribution-#{contribution.id}-rating-#{title}", :class => "rating-button #{'active' if ratings_hash[contribution.id][title][:person]}" )
+    end
+    raw(out.join(' '))
   end
 end

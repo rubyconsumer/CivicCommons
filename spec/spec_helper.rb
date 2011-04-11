@@ -64,6 +64,9 @@ Rspec.configure do |config|
   config.before :each do
     stub_contribution_urls
     stub_amazon_s3_request
+    stub_pro_embedly_request
+  end
+  config.after :each do
   end
   config.before :all do
     DatabaseCleaner.start
@@ -73,4 +76,8 @@ Rspec.configure do |config|
   config.after :all do
     DatabaseCleaner.clean
   end
+end
+
+def fixture_content(path)
+  File.open(File.dirname(__FILE__) + '/../test/fixtures/' + path, 'rb') { |f| f.read }
 end

@@ -1,0 +1,42 @@
+{
+ "embeds": [],
+ "provider_url": "http://www.facebook.com",
+ "description": "Facebook is a social utility that connects people with friends and others who work, study and live around them. People use Facebook to keep up with friends, upload an unlimited number of photos, post links and videos, and learn more about the people they meet.",
+ "original_url": "https://www.facebook.com/video/video.php?v=10150467656635175",
+ "url": "https://www.facebook.com/video/video.php?v=10150467656635175",
+ "images": [],
+ "safe": true,
+ "provider_display": "www.facebook.com",
+ "favicon_url": "https://s-static.ak.facebook.com/rsrc.php/yi/r/q9U99v3_saj.ico",
+ "meta": {
+  "open_search": [
+   {
+    "href": "https://s-static.ak.facebook.com/rsrc.php/yJ/r/H2SSvhJMJA-.xml",
+    "tag": "link",
+    "type": "application/opensearchdescription+xml",
+    "rel": "search",
+    "title": "Facebook"
+   }
+  ],
+  "description": "Facebook is a social utility that connects people with friends and others who work, study and live around them. People use Facebook to keep up with friends, upload an unlimited number of photos, post links and videos, and learn more about the people they meet.",
+  "shortcut_icon": "https://s-static.ak.facebook.com/rsrc.php/yi/r/q9U99v3_saj.ico"
+ },
+ "oembed": {
+  "provider_url": "http://www.facebook.com",
+  "description": "Facebook is a social utility that connects people with friends and others who work, study and live around them. People use Facebook to keep up with friends, upload an unlimited number of photos, post links and videos, and learn more about the people they meet.",
+  "title": "Videos Posted by PBS: NATURE | Outback Pelicans | Synchronized Swimmers | PBS [HQ] | Facebook",
+  "height": 309,
+  "width": 550,
+  "html": "<object type=\"application/x-shockwave-flash\" data=\"http://www.facebook.com/v/10150467656635175\" width=\"550\" height=\"309\">    <param name=\"movie\" value=\"http://www.facebook.com/v/10150467656635175\"></param><param name=\"quality\" value=\"high\"></param><param name=\"allowFullScreen\" value=\"true\"></param><param name=\"allowScriptAccess\" value=\"always\"></param><param name=\"pluginspage\" value=\"http://www.macromedia.com/go/getflashplayer\"></param><param name=\"autoplay\" value=\"false\"></param><param name=\"autostart\" value=\"false\"></param><embed src=\"http://www.facebook.com/v/10150467656635175\" width=\"550\" height=\"309\" type=\"application/x-shockwave-flash\"></embed></object>",
+  "provider_name": "Facebook",
+  "type": "video"
+ },
+ "place": {},
+ "entry": {},
+ "open_graph": {},
+ "title": "Videos Posted by PBS: NATURE | Outback Pelicans | Synchronized Swimmers | PBS [HQ] | Facebook",
+ "provider_name": "Facebook",
+ "cache_age": 86399,
+ "type": "html",
+ "payload": {}
+}

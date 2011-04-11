@@ -17,9 +17,14 @@ Factory.define :contribution do |f|
   f.override_confirmed true
 end
 
+Factory.define :contribution_without_parent, :parent => :contribution do |f|
+  f.parent nil
+end
+
 Factory.define :issue_contribution, :parent => :contribution do |f|
   f.conversation nil
   f.association :issue, :factory => :issue
+  f.parent nil
 end
 
 Factory.define :comment do |f|
@@ -48,6 +53,10 @@ Factory.define :question do |f|
   f.association :conversation, :factory => :conversation
   f.content "MyText?"
   f.association :parent, :factory => :top_level_contribution
+end
+
+Factory.define :question_without_parent, :parent => :question do |f|
+  f.parent nil
 end
 
 Factory.define :answer do |f|
@@ -83,4 +92,15 @@ Factory.define :embedded_snippet do |f|
   f.content "MyText"
   f.association :parent, :factory => :top_level_contribution
   f.url "http://www.youtube.com/watch?v=djtNtt8jDW4"
+end
+
+Factory.define :embedly_contribution do |f|
+  f.datetime "2010-06-30 12:39:43"
+  f.association :person, :factory => :normal_person
+  f.association :conversation, :factory => :conversation
+  f.content "MyText"
+  f.association :parent, :factory => :top_level_contribution
+  f.url "http://www.youtube.com/watch?v=djtNtt8jDW4"
+  f.embedly_type "video"
+  f.embedly_code "valid embedly code"
 end

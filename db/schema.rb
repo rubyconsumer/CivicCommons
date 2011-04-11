@@ -77,6 +77,8 @@ ActiveRecord::Schema.define(:version => 20110411012717) do
     t.string   "embed_target",            :limit => 1000
     t.boolean  "confirmed",                               :default => true
     t.boolean  "notify"
+    t.text     "embedly_code"
+    t.string   "embedly_type"
   end
 
   create_table "conversations", :force => true do |t|
@@ -210,6 +212,27 @@ ActiveRecord::Schema.define(:version => 20110411012717) do
 
   add_index "people", ["email"], :name => "index_people_on_email", :unique => true
   add_index "people", ["reset_password_token"], :name => "index_people_on_reset_password_token", :unique => true
+
+  create_table "rating_descriptors", :force => true do |t|
+    t.string   "title"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "rating_groups", :force => true do |t|
+    t.integer  "person_id"
+    t.integer  "conversation_id"
+    t.integer  "contribution_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "ratings", :force => true do |t|
+    t.integer  "rating_group_id"
+    t.integer  "rating_descriptor_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "regions", :force => true do |t|
     t.string   "name"

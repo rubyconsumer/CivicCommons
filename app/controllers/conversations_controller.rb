@@ -1,11 +1,12 @@
 class ConversationsController < ApplicationController
-  before_filter :require_user, :only=>[:new, :create, :new_node_contribution, :preview_node_contribution, :confirm_node_contribution]
+  before_filter :require_user, :only=>[:new, :create, :new_node_contribution, :preview_node_contribution, :confirm_node_contribution, :toggle_rating]
 
   # GET /conversations
   def index
     @active = Conversation.includes(:participants).latest_updated.limit(3)
     @popular = Conversation.includes(:participants).get_top_visited(3)
     @recent = Conversation.includes(:participants).latest_created.limit(3)
+    @recommended = Conversation.includes(:participants).recommended.limit(3)
 
     @regions = Region.all
     @recent_items = TopItem.newest_items(3).for(:conversation).collect(&:item)
@@ -25,10 +26,16 @@ class ConversationsController < ApplicationController
   def show
     @conversation = Conversation.includes(:issues).find(params[:id])
     @conversation.visit!((current_person.nil? ? nil : current_person.id))
-    @top_level_contributions = TopLevelContribution.where(:conversation_id => @conversation.id).includes([:person]).order('created_at ASC')
+    @contributions = Contribution.for_conversation(@conversation)
+    @ratings = RatingGroup.ratings_for_conversation_by_contribution_with_count(@conversation, current_person)
+    # Build rating totals into contribution
+    # @contributions.each do |c|
+    #   c.ratings       #=> {'some-descriptor' => {:total => 5, :person => true}, 'some-other' => 0, 'and-again' => 1}
+    # end
+
+    @top_level_contributions = @contributions.select{ |c| c.is_a?(TopLevelContribution) }
     # grab all direct contributions to conversation that aren't TLC
-    @conversation_contributions = Contribution.not_top_level.confirmed.without_parent.where(:conversation_id => @conversation.id).includes([:person]).order('created_at ASC')
-    #@contributions = Contribution.confirmed.descendants_of(@conversation_contributions).includes([:person])
+    @conversation_contributions = @contributions.select{ |c| !c.is_a?(TopLevelContribution) && c.parent_id.nil? }
 
     @top_level_contribution = Contribution.new # for conversation comment form
     @tlc_participants = @top_level_contributions.collect{ |tlc| tlc.owner }
@@ -42,7 +49,7 @@ class ConversationsController < ApplicationController
 
   def node_conversation
     @contribution = Contribution.find(params[:id])
-    @contributions = @contribution.children.confirmed.includes(:person)
+    @contributions = @contribution.descendants.confirmed.includes(:person)
     @contribution.visit!((current_person.nil? ? nil : current_person.id))
 
     respond_to do |format|
@@ -88,15 +95,30 @@ class ConversationsController < ApplicationController
     end
   end
 
+  #TODO Test, baby. Test!
   def preview_node_contribution
+
+    errors = []
+    embedly = EmbedlyService.new
+
+    embedly.fetch_and_merge_params!(params)
     @contribution = Contribution.update_or_create_node_level_contribution(params[:contribution], current_person)
+
+    if not @contribution.valid?
+      errors = @contribution.errors.full_messages
+    elsif embedly.bad_request? or embedly.not_found?
+      errors = ["There was a problem retrieving information for '#{params[:contribution][:url]}'"]
+    elsif not embedly.ok?
+      errors = ['There was a problem with our system. Please try again.']
+    end
+    
     respond_to do |format|
-      if @contribution.valid?
-        format.js { render(:partial => "conversations/new_contribution_preview", :locals => {:div_id => params[:div_id], :layout => false}) }
+      if errors.size == 0
+        format.js   { render(:partial => "conversations/new_contribution_preview", :locals => {:div_id => params[:div_id], :layout => false}) }
         format.html { render(:partial => "conversations/new_contribution_preview", :locals => {:div_id => params[:div_id], :layout => 'application'}) }
       else
-        format.js   { render :json => @contribution.errors, :status => :unprocessable_entity }
-        format.html { render :text => @contribution.errors.full_messages, :status => :unprocessable_entity }
+        format.js   { render :json => errors, :status => :unprocessable_entity }
+        format.html { render :text => errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -104,6 +126,7 @@ class ConversationsController < ApplicationController
   #TODO: consider moving this to its own controller?
   def confirm_node_contribution
     @contribution = Contribution.unconfirmed.find_by_id_and_owner(params[:contribution][:id], current_person.id)
+    @ratings = RatingGroup.default_contribution_hash
 
     respond_to do |format|
       if @contribution.confirm!
@@ -160,15 +183,13 @@ class ConversationsController < ApplicationController
     end
   end
 
-  def rate_contribution
-    @contribution = Contribution.find(params[:contribution][:id])
-    rating = params[:contribution][:rating]
+  def toggle_rating
+    @contribution = Contribution.find(params[:contribution_id])
+    @rating_descriptor = RatingDescriptor.find_by_title(params[:rating_descriptor_title])
 
+    RatingGroup.toggle_rating!(current_person, @contribution, @rating_descriptor)
     respond_to do |format|
-      if @contribution.rate!(rating.to_i, current_person)
-        format.js { render(:partial => 'conversations/contributions/rating', :locals => {:contribution => @contribution}, :layout => false, :status => :created) }
-      end
-        format.js { render :json => @contribution.errors[:rating].first, :status => :unprocessable_entity }
+      format.js
     end
   end
 
