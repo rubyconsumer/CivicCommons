@@ -10,6 +10,10 @@ module CustomMatchers
     end
   end
   
+  def content_for(name) 
+    view.instance_variable_get(:@_content_for)[name] 
+  end
+  
   RSpec::Matchers.define :have_validation_error do |field=nil, pattern=//|
     match do |object|
       assert ! object.valid?

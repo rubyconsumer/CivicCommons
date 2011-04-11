@@ -68,7 +68,7 @@ describe Registrations::OmniauthCallbacksController, "handle facebook authentica
         end
         
         it "should have linked the account with facebook" do
-          @person.facebook_authenticated?.should be_true
+          @person.reload.facebook_authenticated?.should be_true
         end
         
         it "should display Facebook linking success modal" do

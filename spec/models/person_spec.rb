@@ -32,11 +32,34 @@ describe Person do
       @person.email = ''
       @person.should_not be_valid
     end
-
-    it "should require zip_code" do
-      @person.zip_code = ''
-      @person.should_not be_valid
+    
+    context "zip code" do
+      def given_a_person_with_no_zip_code
+        @person = Factory.build(:normal_person,:zip_code =>'')
+      end
+      
+      it "should be validated generally" do
+        given_a_person_with_no_zip_code
+        @person.valid?
+        @person.errors.should have_key(:zip_code)
+      end
+      
+      it "should not be validated when facebook unlinking" do
+        given_a_person_with_no_zip_code
+        @person.stub(:facebook_unlinking?).and_return(true)
+        @person.valid?
+        @person.errors.should_not have_key(:zip_code)
+      end
+      
+      it "should not be validated when creating from auth" do
+        given_a_person_with_no_zip_code
+        @person.stub(:create_from_auth?).and_return(true)
+        @person.valid?
+        @person.errors.should_not have_key(:zip_code)
+      end
+      
     end
+
 
   end
 
@@ -361,6 +384,107 @@ describe Person do
         Person.send_reset_password_instructions({:email => 'johnd@example.com'})
         ActionMailer::Base.deliveries.length.should == 1
       end
+    end
+  end
+
+  context "Facebook unlinking" do
+    def given_a_person_with_facebook_auth
+      @person = Factory.build(:normal_person, :email => 'johnd@example.com')
+      @authentication = Factory.build(:authentication, :provider => 'facebook')
+      @person.link_with_facebook(@authentication)
+      
+      # makes sure that password is nil first
+      @person.encrypted_password.should be_blank
+    end
+    
+    def when_unlinking_from_facebook_successfully
+      @person.unlink_from_facebook(:email => 'johnd-new-email@example.com', :password => 'test123', :password_confirmation => 'test123')
+      @person.reload
+    end
+    
+    def when_unlinking_from_facebook_unsuccessfully(person_hash = {})
+      @person.unlink_from_facebook(person_hash)
+    end
+            
+    it "should update the person's email and password and password confirmation" do
+      given_a_person_with_facebook_auth
+      when_unlinking_from_facebook_successfully
+      @person.email.should == "johnd-new-email@example.com"
+    end
+    
+    it "should destroy the authentication record" do
+      given_a_person_with_facebook_auth
+      when_unlinking_from_facebook_successfully
+      @person.facebook_authentication.should be_blank
+    end
+    
+    it "should return the person object" do
+      given_a_person_with_facebook_auth
+      when_unlinking_from_facebook_successfully
+      @person.should be_an_instance_of(Person)
+    end
+    
+    it "should send notification email to the previous email prior to changed if email is updated" do
+      pending
+    end
+    
+    context "failure" do
+      context "on email" do
+        it "should err out when email is not present" do
+          given_a_person_with_facebook_auth
+          when_unlinking_from_facebook_unsuccessfully
+          @person.errors[:email].should == ["can't be blank", "please use a longer email address"]
+        end
+        it "should have the original email after failure" do
+          given_a_person_with_facebook_auth
+          @person.unlink_from_facebook({})
+          @person.errors[:email].should == ["can't be blank", "please use a longer email address"]
+          @person.reload.email.should == "johnd@example.com"
+        end
+      end
+      it "should err out when password is not present" do
+        given_a_person_with_facebook_auth
+        when_unlinking_from_facebook_unsuccessfully
+        @person.errors[:password].should == ["can't be blank"]
+      end
+      it "should err out when passwords do not match" do
+        given_a_person_with_facebook_auth
+        when_unlinking_from_facebook_unsuccessfully({:password => 'test123',:password_confirmation => 'differentpasswordhere'})
+        @person.errors[:password].should == ["Passwords do not match"]
+      end
+    end
+  end
+
+  context "password_required?" do
+    def given_a_person_with_facebook_auth
+      @person = Factory.build(:normal_person)
+      @authentication = Factory.build(:authentication, :provider => 'facebook')
+      @person.link_with_facebook(@authentication)
+    end
+    
+    it "should return return false if facebook_authenticated? is true" do
+      given_a_person_with_facebook_auth
+      @person.send(:password_required?).should be_false
+    end
+    
+    it "should return true if facebook_unlinking? is true" do
+      given_a_person_with_facebook_auth
+      @person.facebook_unlinking = true
+      @person.send(:password_required?).should be_true
+    end
+    
+    it "should return true if not persisted and not create from auth" do
+      @person = Factory.build(:normal_person)
+      @person.send(:password_required?).should be_true
+    end
+    
+    it "should return true if user is changing password by having password and password confirmation field present" do
+      Factory.create(:registered_user)
+      @person = Person.last
+      @person.send(:password_required?).should be_false
+      @person.password = 'test123'
+      @person.password_confirmation = 'test123'
+      @person.send(:password_required?).should be_true
     end
   end
 end

@@ -9,9 +9,21 @@ jQuery(function ($) {
 
   $(document).ready(function() {
     
-    $("a.createacct-link.facebook-auth, a.connectacct-link.facebook-auth").live('click', function(e) {
+    $("a.createacct-link.facebook-auth, a.connectacct-link.facebook-auth:not(.disconnect-fb)").live('click', function(e) {
       popupCenter($(this).attr("href"), $(this).attr("data-width"), $(this).attr("data-height"), "authPopup");
       e.stopPropagation(); return false;
+    });
+    
+    $('.fb-modal a.cancel')
+    .live('click',function(){
+      $.colorbox.close();
+      return false;
+    });
+    
+    $('.fb-modal a.confirm-facebook-unlinking, a.connectacct-link.facebook-auth.disconnect-fb')
+    .live('click',function(){
+      $.colorbox({href:$(this).attr('href')});
+      return false;
     });
     
     /*
@@ -32,6 +44,12 @@ jQuery(function ($) {
     $('form#ajax-auth-update-form')
     .live('ajax:success', function(evt, xhr, status, error){
       $(this).html(xhr);
-    });
+    });    
+    
+    $('#auth-before-facebook-unlinking') 
+    .live('ajax:success', function(evt, xhr, status, error){
+      $(this).replaceWith(xhr);
+    });    
+    
   });
 });

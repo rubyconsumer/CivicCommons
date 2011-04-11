@@ -22,6 +22,8 @@ development:
     ssl_login: false
   embedly:
     key: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  omniauth:
+    full_host: 'http://localhost:3000'
 
 test:
   default_email: "myemail@example.com"
@@ -47,7 +49,8 @@ test:
     ssl_login: false
   embedly:
     key: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
+  omniauth:
+    full_host: 'http://test.com'
 integration:
   default_email: "myemail@example.com"
   devise:
@@ -72,6 +75,8 @@ integration:
     ssl_login: true
   embedly:
     key: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  omniauth:
+    full_host: 'http://integration.theciviccommons.com'
 
 staging:
   default_email: "myemail@example.com"
@@ -97,6 +102,8 @@ staging:
     ssl_login: true
   embedly:
     key: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  omniauth:
+    full_host: 'http://staging.theciviccommons.com'
 
 production:
   default_email: "myemail@example.com"
@@ -122,4 +129,6 @@ production:
     ssl_login: true
   embedly:
     key: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  omniauth:
+    full_host: 'http://production.theciviccommons.com'
 

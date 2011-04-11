@@ -141,5 +141,69 @@ describe AuthenticationController do
       response.body.should render_template 'authentication/_update_account_form'
     end
   end
+
+  context "GET confirm_facebook_unlinking" do
+    before(:each) do
+      @person = mock_person
+      @controller.stub(:current_person).and_return(@person)
+    end
+    
+    context "XHR" do
+      it "should render the layout for XHR request" do
+        xhr :get, :confirm_facebook_unlinking
+        response.should render_template('layouts/content_for/main_body')
+      end
+    end
+    
+    context "not XHR" do
+      it "should render regular layout" do
+        get :confirm_facebook_unlinking
+        response.should render_template('layouts/application')
+      end
+      
+    end
+  end
   
+  context "GET before_facebook_unlinking" do
+    before(:each) do
+      @person = mock_person
+      @controller.stub(:current_person).and_return(@person)
+    end
+    
+    it "should have person" do
+      get :before_facebook_unlinking
+      assigns(:person).should == @person
+    end
+  end
+  
+  context "DELETE process_facebook_unlinking" do
+    before(:each) do
+      @person = mock_person
+      @controller.stub(:current_person).and_return(@person)
+    end
+    
+    it "should unlink with facebook" do
+      @person.should_receive(:unlink_from_facebook)
+      delete :process_facebook_unlinking
+    end
+    
+    it "should render the template /authentication/fb_unlinking_success when successful" do
+      @person.stub(:valid?).and_return(true)
+      delete :process_facebook_unlinking
+      response.should render_template("authentication/fb_unlinking_success", "layouts/application")
+    end
+    
+    it "should re-sign-in using Devise(i.e. not log out automatically)" do
+      @person.stub(:valid?).and_return(true)
+      controller.should_receive(:sign_in).with(@person,hash_including(:event => :authentication, :bypass => true))
+      delete :process_facebook_unlinking
+    end
+    
+    it "should render the template /authentication/before_facebook_unlinking if there is validation error" do
+      @person.stub(:valid?).and_return(false)
+      delete :process_facebook_unlinking
+      response.should render_template("authentication/before_facebook_unlinking", "layouts/application")
+    end
+    
+  end
 end

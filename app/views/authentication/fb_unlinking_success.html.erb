@@ -1,0 +1,11 @@
+<% content_for(:main_body) do %>
+  <div class="fb-auth unlinking-success fb-modal" id="auth-facebook-unlinking-success">
+    <h2>You have successfully unlinked your account.</h2>
+    <p>The next time you log in, please use the email <%= @person.email %> and the password that you've provided.</p>
+    <p>Thanks.</p>
+  </div>
+  <script type="text/javascript">
+    $('a.connectacct-link.facebook-auth.disconnect-fb').replaceWith('<%= escape_javascript(link_with_facebook_link) %>');
+  </script>
+<% end %>
+ 

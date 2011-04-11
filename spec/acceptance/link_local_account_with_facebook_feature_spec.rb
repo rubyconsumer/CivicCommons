@@ -134,7 +134,7 @@ feature "8457517 link local account with facebook", %q{
       page.should_not have_link 'Connect with Facebook'
       
       # And it should have 'Unlink Account' link
-      page.should have_link "Unlink Account"
+      page.should have_link "Unlink from Facebook"
     end
     
   end
@@ -185,7 +185,7 @@ feature "8457517 link local account with facebook", %q{
       login_page.sign_in(@person)
       
       # Then I should not be able to login, and should display the proper message
-      page.should have_content 'You were registered using Facebook, please login with Facebook.'
+      page.should have_content 'It looks like you registered using Facebook, please login with Facebook.'
     end
     
   end

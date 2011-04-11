@@ -61,7 +61,23 @@ describe '/user/edit.html.erb' do
     it "should display 'unlink facebook' button if the user has linked the account with Facebook" do
       given_a_person_with_facebook_authentication
       render
-      content_for(:main_body).should have_selector 'a.connectacct-link.facebook-auth.disconnect-fb', :content => "Unlink Account"
+      content_for(:main_body).should have_selector 'a.connectacct-link.facebook-auth.disconnect-fb', :content => "Unlink from Facebook"
+    end
+    
+    context "Password text fields" do
+      it "should not be displayed when user has linked to Facebook" do
+        given_a_person_with_facebook_authentication
+        render
+        content_for(:main_body).should_not have_selector 'input#person_password'
+        content_for(:main_body).should_not have_selector 'input#person_password_confirmation'
+      end
+      it "should be displayed when user has linked to Facebook" do
+        given_a_person_without_facebook_authentication
+        render
+        content_for(:main_body).should have_selector 'input#person_password'
+        content_for(:main_body).should have_selector 'input#person_password_confirmation'
+      end
+      
     end
     
   end

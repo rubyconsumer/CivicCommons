@@ -11,11 +11,11 @@ class Person < ActiveRecord::Base
          :confirmable, :lockable,
          :omniauthable
 
-  attr_accessor :organization_name, :send_welcome, :create_from_auth
-
+  attr_accessor :organization_name, :send_welcome, :create_from_auth, :facebook_unlinking
+  
   # Setup accessible (or protected) attributes for your model
   attr_accessible :name, :first_name, :last_name, :email, :password, :password_confirmation, :bio, :top, :zip_code, :admin, :validated,
-                  :avatar, :remember_me, :daily_digest, :create_from_auth
+                  :avatar, :remember_me, :daily_digest, :create_from_auth, :facebook_unlinking
 
   has_one :facebook_authentication, :class_name => 'Authentication', :conditions => {:provider => 'facebook'}
   has_many :authentications, :dependent => :destroy
@@ -29,8 +29,8 @@ class Person < ActiveRecord::Base
   has_many :contributed_issues, :through => :contributions, :source => :issue, :uniq => true
 
   validates_length_of :email, :within => 6..255, :too_long => "please use a shorter email address", :too_short => "please use a longer email address"  
-  validates_length_of :zip_code, :within => (5..10), :allow_blank => true, :allow_nil => true, :unless => :create_from_auth?
-  validates_presence_of :zip_code, :message => 'Please enter zipcode.', :unless => :create_from_auth?
+  validates_length_of :zip_code, :within => (5..10), :allow_blank => true, :allow_nil => true, :if => :validate_zip_code?
+  validates_presence_of :zip_code, :message => 'Please enter zipcode.', :if => :validate_zip_code?
   validates_presence_of :name
   
 
@@ -79,13 +79,17 @@ class Person < ActiveRecord::Base
   def create_from_auth?
     @create_from_auth || false
   end
-
+  
   def avatar_width_for_style(style)
     geometry_for_style(style, :avatar).width.to_i
   end
 
   def avatar_height_for_style(style)
     geometry_for_style(style, :avatar).height.to_i
+  end
+  
+  def facebook_unlinking?
+    @facebook_unlinking || false
   end
   
   def name=(value)
@@ -152,6 +156,21 @@ class Person < ActiveRecord::Base
   def subscriptions_include?(subscribable)
     subscriptions.map(&:subscribable).include?(subscribable)
   end
+  
+  def unlink_from_facebook(person_hash)
+    begin
+      ActiveRecord::Base.transaction do
+        self.email = person_hash[:email]
+        self.password = person_hash[:password]
+        self.password_confirmation = person_hash[:password_confirmation]
+        self.facebook_unlinking = true
+        save!
+        self.facebook_authentication.destroy
+      end    
+    rescue
+      self
+    end
+  end
 
   def avatar_path(style='')
     self.avatar.path(style)
@@ -179,6 +198,7 @@ class Person < ActiveRecord::Base
     ActiveRecord::Base.transaction do
       self.facebook_authentication = authentication  
       self.encrypted_password = ''
+      self.create_from_auth = true
       save!
       facebook_authentication.persisted?
     end
@@ -198,15 +218,21 @@ class Person < ActiveRecord::Base
     encrypted_password.blank? ? false : super
   end
   
-  # If this account has been linked to facebook auth, then password is not required
-  def password_required? 
-    facebook_authenticated? ? false : super
+  def validate_zip_code?
+    if create_from_auth? 
+      false
+    elsif facebook_unlinking? 
+      false
+    else 
+      true
+    end
   end
   
-
   # Add the email subscription signup as a delayed job
   def subscribe_to_marketing_email
     Delayed::Job.enqueue Jobs::SubscribeToMarketingEmailJob.new(Civiccommons::Config.mailer['api_token'], Civiccommons::Config.mailer['list'], email, {:FNAME => first_name, :LNAME => last_name}, 'html')
+
+
     Rails.logger.info("Success. Added #{name} with email #{email} to email queue.")
   end
 
@@ -233,7 +259,11 @@ class Person < ActiveRecord::Base
 protected
 
   def password_required?
-    (!persisted? && !create_from_auth?) || password.present? || password_confirmation.present?
+    if facebook_authenticated? 
+      facebook_unlinking? ? true : false
+    else
+      (!persisted? && !create_from_auth?) || password.present? || password_confirmation.present? 
+    end
   end
 
 end
