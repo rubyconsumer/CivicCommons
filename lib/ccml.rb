@@ -80,7 +80,7 @@
 
 module CCML
 
-  SINGLE_TAG_PATTERN = /\{ccml:(?<class>\w+)(:(?<method>\w+))?(?<opts>.*)?\s*}/
+  SINGLE_TAG_PATTERN = /\{ccml:(?<class>\w+)(:(?<method>\w+))?(?<opts>[^}]*)?\s*}/
   TAG_PAIR_PATTERN = //
 
   OPTIONS_PATTERN = /\s+(\w+)='([^']*)'/
@@ -90,7 +90,7 @@ module CCML
   def CCML.parse(ccml)
 
     # find and process tag pairs
-    CCML.parse_single_tags!(ccml)
+    ccml = CCML.parse_single_tags(ccml)
 
     # find and process single tags
 
@@ -137,7 +137,7 @@ module CCML
     return opts
   end
 
-  def CCML.parse_single_tags!(ccml)
+  def CCML.parse_single_tags(ccml)
 
     # find the first match
     match = SINGLE_TAG_PATTERN.match(ccml)
@@ -155,11 +155,13 @@ module CCML
 
       # run the method and substitute the results into the ccml
       sub = CCML.run_tag_method(tag, method)
-      ccml.sub!(match.to_s, sub)
+      ccml = ccml.sub(match.to_s, sub)
 
       # look for another match
       match = SINGLE_TAG_PATTERN.match(ccml)
     end
+
+    return ccml
   end
 
 end
