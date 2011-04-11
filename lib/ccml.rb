@@ -1,37 +1,72 @@
 #--
 # = CCML (Civic Commons Markup Language)
 #
-# CCML is a minimal markup language based on ExpressionEngine tag syntax. It is intended to allow web designers on the Civic Commons project easily embed server-side dynamic behavior into an HTML output stream. CCML was originally created for Managed Issues but may be leveraged for other features. 
+# CCML is a minimal markup language based on ExpressionEngine tag syntax. It is
+# intended to allow web designers on the Civic Commons project easily embed
+# server-side dynamic behavior into an HTML output stream. CCML was originally
+# created for Managed Issues but may be leveraged for other features. 
 #
 # == Syntax
 #
-# The syntax of a CCML tag is identical to the syntax of an ExpressionEngine template tag except that "exp" in the ExpressionEngine tag is replaced by "ccml" in the CCML tag. Tags can be either single tags or tag pairs. Single tags simply generate string data in place of the tag. Tag pairs are iterative. They loop over the body of the tag pair zero or more times and generate more complex string output. The initial implementation will only support single tags. The general syntax of a single tag is:
+# The syntax of a CCML tag is identical to the syntax of an ExpressionEngine
+# template tag except that "exp" in the ExpressionEngine tag is replaced by
+# "ccml" in the CCML tag. Tags can be either single tags or tag pairs. Single
+# tags simply generate string data in place of the tag. Tag pairs are iterative.
+# They loop over the body of the tag pair zero or more times and generate more
+# complex string output. The initial implementation will only support single
+# tags. The general syntax of a single tag is:
 #
-# <code>{ccml:tag_class:method opt="value" opt="value" opt="value"}</code>
+# <code>{ccml:tag_class:method opt='value' opt='value' opt='value'}</code>
 #
-# Tag pairs have two tags: an open tag and a close tag. The open tag follows the same format as a single tag. The close tag has the following syntax:
+# Tag pairs have two tags: an open tag and a close tag. The open tag follows
+# the same format as a single tag. The close tag has the following syntax:
 #
 # <code>{/ccml:tag_class}</code>
 #
 # An example of a single tag with no method name and a parameter list is:
 #
-# <code>{ccml:partial path="conversation/tile"}</code>
+# <code>{ccml:partial path='conversation/tile'}</code>
 #
-# For more information on the ExpressionEngine tag syntax see the documentation at http://expressionengine.com/user_guide/overview/tags.html. Only the tag syntax has been borrowed from ExpressionEngine. The library design and all programming are original.
+# For more information on the ExpressionEngine tag syntax see the documentation
+# at http://expressionengine.com/user_guide/overview/tags.html. Only the tag
+# syntax has been borrowed from ExpressionEngine. The library design and all
+# programming are original.
 #
 # == Architecture
 #
-# CCML processing is handled by a series of modules and classes in the Rails "lib" directory. All classes must exist within the CCML module. The CCML module has a single public method called parse. The parse method takes a single parameter, a string representing the CCML data to be parsed. The return value is a text (HTML, XML, JSON, etc.) string capable of being inserted into a Rails HTTP response.
+# CCML processing is handled by a series of modules and classes in the Rails
+# "lib" directory. All classes must exist within the CCML module. The CCML
+# module has a single public method called parse. The parse method takes a
+# single parameter, a string representing the CCML data to be parsed. The
+# return value is a text (HTML, XML, JSON, etc.) string capable of being
+# inserted into a Rails HTTP response.
 #
-# The class *CCML::Error::TemplateError* is the base class for all template parsing exceptions. The parse method of the CCML module will raise an instance of this class if an error is encountered during parsing. Parsing of the CCML template will cease on the first error.
+# The class *CCML::Error::TemplateError* is the base class for all template
+# parsing exceptions. The parse method of the CCML module will raise an
+# instance of this class if an error is encountered during parsing. Parsing
+# of the CCML template will cease on the first error.
 #
 # === Parsing Process
 #
-# The CCML parsing process is designed to be very simple yet very flexible. Each CCML tag maps to an instance of a *CCML::Tag::Base* subclass. *CCML::Tag::Base* is an abstract class and cannot be used in a template. Using *CCML::Tag::Base* in a template raises a TagBaseClassInTemplate error. *CCML::Tag::Single* and *CCML::Tag::Pair* are abstract subclass of Base used as base subclasses for single tags and tag pairs respectfully. Their direct use will also result in a TagBaseClassInTemplate exception being raised.
+# The CCML parsing process is designed to be very simple yet very flexible.
+# Each CCML tag maps to an instance of a *CCML::Tag::Base* subclass.
+# *CCML::Tag::Base* is an abstract class and cannot be used in a template.
+# Using *CCML::Tag::Base* in a template raises a TagBaseClassInTemplate error.
+# *CCML::Tag::Single* and *CCML::Tag::Pair* are abstract subclass of Base used
+# as base subclasses for single tags and tag pairs respectfully. Their direct
+# use will also result in a TagBaseClassInTemplate exception being raised.
 #
-# *CCML::Tag* defines a constructor with an optional hash parameter called opts. The value of the opts parameter is assigned to an instance data member of the same name. If the opts parameter is missing or is not a Hash object the data member is set to an empty hash. Subclasses of Tag can always expect the opts data member to not be nil and to be a hash. *CCML::Tag* defines one instance method called index. The index method takes no parameters and returns a string.
+# *CCML::Tag* defines a constructor with an optional hash parameter called opts
+# The value of the opts parameter is assigned to an instance data member of the
+# same name. If the opts parameter is missing or is not a Hash object the data
+# member is set to an empty hash. Subclasses of Tag can always expect the opts
+# data member to not be nil and to be a hash. *CCML::Tag* defines one instance
+# method called index. The index method takes no parameters and returns a string.
 #
-# During the parsing process the parser replaces every instance of a valid tag with string data generated by an associated tag class instance. The parser does not examine the tag output, it simply injects it into the output stream in place of the tag. The general steps for processing a valid tag are:
+# During the parsing process the parser replaces every instance of a valid tag
+# with string data generated by an associated tag class instance. The parser
+# does not examine the tag output, it simply injects it into the output stream
+# in place of the tag. The general steps for processing a valid tag are:
 #
 # * Parse for tag pairs the single tags the malformed tags.
 # * Raise _MalformedTagError_ if a malformed tag is encountered.
@@ -45,8 +80,78 @@
 
 module CCML
 
- def CCML.parse(ccml)
-    return nil
- end
+  SINGLE_TAG_PATTERN = /\{ccml:(?<class>\w+)(:(?<method>\w+))?(?<opts>.*)?\s*}/
+  TAG_PAIR_PATTERN = //
+
+  OPTIONS_PATTERN = /\s+(\w+)='([^']*)'/
+    
+  ILLEGAL_TAGS = ['base', 'single_tag', 'tag_pair']
+
+  def CCML.parse(ccml)
+
+    # find and process tag pairs
+    ccml = CCML.parse_single_tags(ccml)
+
+    # find and process single tags
+
+    # find malformed tags and abend
+
+
+
+
+    return ccml
+  end
+
+  private
+
+  def CCML.tag_factory(clazz, method, opts={})
+    if ILLEGAL_TAGS.include?(clazz)
+      raise CCML::Error::TagBaseClassInTemplateError
+    end
+    begin
+      clazz = "CCML::Tag::#{clazz.classify}Tag"
+      tag = clazz.constantize.new(opts)
+    rescue
+      raise CCML::Error::TagClassNotFoundError, "Unable to initialize object for '#{clazz}' tag."
+    end
+    return tag
+  end
+
+  def CCML.parse_single_tags(ccml)
+
+    # find the first match
+    match = SINGLE_TAG_PATTERN.match(ccml)
+
+    # iterate until no more matches exist
+    while not match.nil?
+
+      # get the data from the matching string
+      clazz = match[:class]
+      method = ( match[:method].nil? ? 'index' : match[:method] )
+      opts = {}
+      if not match[:opts].blank?
+        options = match[:opts].scan(OPTIONS_PATTERN)
+        options.each do |opt|
+          opts[opt[0].to_sym] = opt[1]
+        end
+      end
+
+      # create an instance of the tag class
+      tag = CCML.tag_factory(clazz, method, opts)
+
+      # run the method and substitute the results into the ccml
+      #begin
+      sub = tag.send(method.to_sym)
+      ccml.sub!(match.to_s, sub)
+      #rescue
+      #raise CCML::Error::TagMethodNotFoundError, "Unable to find method '#{method}' of '#{clazz}' tag."
+      #end
+
+      # look for another match
+      match = SINGLE_TAG_PATTERN.match(ccml)
+    end
+
+    return ccml
+  end
 
 end
