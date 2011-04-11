@@ -312,6 +312,19 @@
   collapsedStyle += 'div.contribution-container.uncollapsed .comment {';
   collapsedStyle += 'cursor: pointer;';
   collapsedStyle += '}';
+  collapsedStyle += 'div.contribution-container.collapsed > .comment > .edit-contribution,';
+  collapsedStyle += 'div.contribution-container.collapsed > .comment > .convo-utility,';
+  collapsedStyle += 'div.contribution-container.collapsed > .comment > .content p,';
+  collapsedStyle += 'div.contribution-container.collapsed > .comment > .attached-file,';
+  collapsedStyle += 'div.contribution-container.collapsed > .comment > .link-title,';
+  collapsedStyle += 'div.contribution-container.collapsed > .comment > .embedded,';
+  collapsedStyle += 'div.contribution-container.collapsed > .comment > .link-title,';
+  collapsedStyle += 'div.contribution-container.collapsed > .comment > .link-quot {';
+  collapsedStyle += 'display: none;';
+  collapsedStyle += '}';
+  collapsedStyle += 'div.contribution-container.collapsed > .comment > .content p:nth-child(2) {';
+  collapsedStyle += 'display: block;';
+  collapsedStyle += '}';
   // By the time this file is included, the head element already exists in the DOM
   $("<style type='text/css'>" + collapsedStyle + "</style>").appendTo("head");
 

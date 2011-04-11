@@ -884,6 +884,19 @@ width: auto;
 div.contribution-container.uncollapsed .comment {
 cursor: pointer;
 }
+div.contribution-container.collapsed > .comment > .edit-contribution,
+div.contribution-container.collapsed > .comment > .convo-utility,
+div.contribution-container.collapsed > .comment > .content p,
+div.contribution-container.collapsed > .comment > .attached-file,
+div.contribution-container.collapsed > .comment > .link-title,
+div.contribution-container.collapsed > .comment > .embedded,
+div.contribution-container.collapsed > .comment > .link-title,
+div.contribution-container.collapsed > .comment > .link-quot {
+display: none;
+}
+div.contribution-container.collapsed > .comment > .content p:nth-child(2) {
+display: block;
+}
 */
 div.contribution-container.collapsed div.callout {
 width: 20px;
@@ -892,14 +905,10 @@ div.contribution-container.collapsed .callout img {
 width: 20px;
 height: 20px;
 }
-div.contribution-container.collapsed > .comment > .edit-contribution,
-div.contribution-container.collapsed > .comment > .convo-utility,
-div.contribution-container.collapsed > .comment > .content p {
-display: none;
+div.contribution-container.collapsed .expand-text {
+font-style: italic;
 }
-div.contribution-container.collapsed > .comment > .content p:nth-child(2) {
-display: block;
-}
+
 div.convo-divider {
 border-bottom: 3px solid #ddd;
 margin-bottom: 40px;
