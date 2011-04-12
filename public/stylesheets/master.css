@@ -40,10 +40,17 @@ margin-right: 10px;
 float: left;
 }
 .conversations {margin: 0;}
+.conversations.divided {
+padding-top: 20px;
+}
+.collapsed > .comment > .conversations.divided {
+padding-top: 0;
+margin-top: 15px;
+}
 .conversations.divided li {
 margin-bottom: 0;
 margin-top: 0;
-padding-top: 10px;
+padding-top: 15px;
 }
 .conversations.divided .input-with-options li {padding: 0;}
 .conversations.divided .input-with-options li a.button {margin: 5px 10px 5px 0;}
