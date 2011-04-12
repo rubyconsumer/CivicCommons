@@ -907,10 +907,10 @@ div.contribution-container.collapsed > .comment > .content p:nth-child(2) {
 display: block;
 }
 */
-div.contribution-container.collapsed div.callout {
+div.contribution-container.collapsed > div.callout {
 width: 20px;
 }
-div.contribution-container.collapsed .callout img {
+div.contribution-container.collapsed > .callout img {
 width: 20px;
 height: 20px;
 }
