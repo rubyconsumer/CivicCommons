@@ -13,6 +13,13 @@ GIT
     rack-test (0.5.7)
       rack (>= 1.0)
 
+GIT
+  remote: git://github.com/gkellogg/addressable.git
+  revision: a5ebbd9ad96d6c725be6cc8ae307c4e3e2cf0dd5
+  branch: frozen-uri
+  specs:
+    addressable (2.2.5)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -45,7 +52,6 @@ GEM
       activemodel (= 3.0.3)
       activesupport (= 3.0.3)
     activesupport (3.0.3)
-    addressable (2.2.4)
     archive-tar-minitar (0.5.2)
     arel (2.0.9)
     autotest (4.4.6)
@@ -254,7 +260,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  addressable (= 2.2.4)
+  addressable!
   autotest
   autotest-fsevent
   autotest-growl
