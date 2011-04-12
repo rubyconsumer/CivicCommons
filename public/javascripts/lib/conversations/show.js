@@ -219,7 +219,8 @@
       var responseId = hash[1],
           $onPage = $('#show-contribution-' + responseId);
 
-      $onPage.scrollTo();
+      $onPage.scrollTo()
+        .find('p').first().trigger('click'); // trigger click event to uncollapse contribution
     }
   };
 
