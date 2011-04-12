@@ -99,16 +99,17 @@ class ConversationsController < ApplicationController
   def preview_node_contribution
 
     errors = []
-    embedly = EmbedlyService.new
-
-    embedly.fetch_and_merge_params!(params)
+    if params[:contribution][:type].constantize == EmbedlyContribution
+      embedly = EmbedlyService.new
+      embedly.fetch_and_merge_params!(params)
+    end
     @contribution = Contribution.update_or_create_node_level_contribution(params[:contribution], current_person)
 
-    if not @contribution.valid?
+    if @contribution.invalid?
       errors = @contribution.errors.full_messages
-    elsif embedly.bad_request? or embedly.not_found?
+    elsif embedly and (embedly.bad_request? or embedly.not_found?)
       errors = ["There was a problem retrieving information for '#{params[:contribution][:url]}'"]
-    elsif not embedly.ok?
+    elsif embedly and not embedly.ok?
       errors = ['There was a problem with our system. Please try again.']
     end
     
