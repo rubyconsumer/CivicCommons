@@ -154,4 +154,8 @@ module ConversationsHelper
     text = contribution.content.gsub(/([^\n]\n)(?=[^\n])/, ' ') # 1 newline   -> space
     auto_link(simple_format(text))
   end
+
+  def respond_button_text(contribution)
+    current_person && contribution.person == current_person ? "Add More" : "Respond#{' to ' + contribution.person.first_name if contribution.person}"
+  end
 end
