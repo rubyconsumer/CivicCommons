@@ -130,4 +130,10 @@ module ConversationsHelper
     end
     raw(out.join(' '))
   end
+
+  def format_comment(contribution)
+    return '<p class="expand-text">(Click to expand)</p>'.html_safe if contribution.content.blank?
+    text = contribution.content.gsub(/([^\n]\n)(?=[^\n])/, ' ') # 1 newline   -> space
+    auto_link(simple_format(text))
+  end
 end

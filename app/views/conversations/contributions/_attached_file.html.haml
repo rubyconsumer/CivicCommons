@@ -1,9 +1,6 @@
 %div.content
   %span.contribution-person-name= person_display_name(contribution.person)
-  - unless contribution.content.blank?
-    =auto_link(simple_format(contribution.content))
-  - else
-    %p.expand-text (Click to expand)
+  =format_comment(contribution.content)
 - if contribution.attachment_content_type =~ /^image/
   %p.attached-file
     =link_to(image_tag(contribution.attachment.url(:medium)), contribution.attachment.url(:large), {'data-colorbox' => true})
