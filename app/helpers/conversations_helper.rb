@@ -27,8 +27,9 @@ module ConversationsHelper
     t.localtime.strftime("%b %e, %G") unless t.blank?
   end
   
-  def contribution_action_past_tense(contribution_type)
-    case contribution_type
+  def contribution_action_past_tense(contribution)
+    embedly_type = contribution.embedly_type if contribution.is_a?(EmbedlyContribution)
+    case contribution.type
     when "Answer"
       "answered a question"
     when "AttachedFile"
@@ -44,7 +45,20 @@ module ConversationsHelper
     when "SuggestedAction"
       "suggested an action"
     when "EmbedlyContribution"
-      "shared a link"
+      case contribution.embedly_type
+      when "image"
+        "shared an image"
+      when "video"
+        "shared a video"
+      when "audio"
+        "shared audio"
+      when "ppt"
+        "shared a presentation"
+      when "photo"
+        "shared a photo"
+      else
+        "shared a link"
+      end
     else
       "responded"
     end

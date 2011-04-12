@@ -1,29 +1,55 @@
-<% if contribution.person %>
-  <span class="item-person-name">
-    <%= person_display_name( contribution.person ) %>
-    -&nbsp;
-  </span>
-<% end %>
+<%
+#TODO: Sloppy, too much logic, needs refactored...
 
-<% unless contribution.content.blank? %>
-  <%= simple_format( truncate( Sanitize.clean( contribution.content ), :length => 100, :separator => ' ' ) ) %>
-<% else %>
-  <p>
-    <%= contribution_action_past_tense( contribution.type ) %><%= contribution.title.blank? ? '.' : ':' %>
-    <% unless contribution.title.blank? %>
-      <%= contribution.title %>
-    <% end %>
-  </p>
-<% end %>
+link_text = ''
+if contribution.person
+  link_text << contribution.person.name
+else
+  link_text << 'A member'
+end
+link_text << ' '
 
-<% if contribution.issue && ! ( controller.controller_name == 'issues' && controller.action_name == 'show' ) %>
+if contribution.content.blank?
+  if contribution.title.blank?
+    link_text << '.'
+  else
+    link_text << contribution_action_past_tense( contribution )
+    link_text << ': "'
+    link_text << contribution.title
+    link_text << '"'
+  end
+else
+  link_text << 'responded: "'
+  link_text << truncate( Sanitize.clean( contribution.content, Sanitize::Config::RESTRICTED ), :length => 100, :separator => ' ' )
+  link_text << '"'
+end
+
+link_url = ''
+posted_text = ''
+posted_url = ''
+
+if contribution.issue && ! ( controller.controller_name == 'issues' && controller.action_name == 'show' )
+  posted_text = contribution.issue.name
+  posted_url = issue_node_path( contribution )
+  link_url = issue_node_path( contribution )
+elsif contribution.conversation
+  if controller.controller_name == 'conversations' && controller.action_name == 'show'
+    posted_text = nil
+    posted_url = nil
+    link_url = conversation_node_path( contribution )
+  else
+    posted_text = contribution.conversation.title
+    posted_url = conversation_path( contribution.conversation )
+    link_url = conversation_node_path( contribution )
+  end
+end
+%>
+
+<p>
+<%= link_to(link_text, link_url) %>
+</p>
+<% unless posted_text.nil? %>
   <span class="posted">
-    Posted on:
-    <%= link_to( contribution.issue.name, issue_node_path( contribution ) ) %>
-  </span>
-<% elsif contribution.conversation && ! ( controller.controller_name == 'conversations' && controller.action_name == 'show' ) %>
-  <span class="posted">
-    Posted on:
-    <%= link_to( contribution.conversation.title, conversation_node_path( contribution ) ) %>
+    Posted on: <%= link_to(posted_text, posted_url) %>
   </span>
 <% end %>
