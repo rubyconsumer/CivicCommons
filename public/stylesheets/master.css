@@ -990,7 +990,8 @@ color: #fff;
 .issue p {padding-left: 80px;}
 
 /* Rating and Response Buttons */
-a.rating-button {
+a.rating-button,
+span.rating-button {
 	-moz-box-shadow:inset 0px 0px 0px 0px #ffffff;
 	-webkit-box-shadow:inset 0px 0px 0px 0px #ffffff;
 	box-shadow:inset 0px 0px 0px 0px #ffffff;
@@ -1029,7 +1030,8 @@ a.rating-button:active {
 	top:1px;
 }
 
-a.rating-button span.number {
+a.rating-button span.number,
+span.rating-button span.number {
   display: inline-block;
 	color:#9cb050;
 	margin: 0 -5px 0 5px;

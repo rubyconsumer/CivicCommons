@@ -188,7 +188,7 @@ class ConversationsController < ApplicationController
     @contribution = Contribution.find(params[:contribution_id])
     @rating_descriptor = RatingDescriptor.find_by_title(params[:rating_descriptor_title])
 
-    RatingGroup.toggle_rating!(current_person, @contribution, @rating_descriptor)
+    @rating_group = RatingGroup.toggle_rating!(current_person, @contribution, @rating_descriptor)
     respond_to do |format|
       format.js
     end
