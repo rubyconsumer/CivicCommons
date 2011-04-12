@@ -81,9 +81,9 @@ describe "module and class hierarchy" do
 
       @single_tag_with_method_no_opts = "{ccml:test_single:echo}"
 
-      @single_tag_no_method_with_opts = "{ccml:test_single text='Hello Again!' opt1='nothing' opt2='important'}"
+      @single_tag_no_method_with_opts = "{ccml:test_single text=\"Hello Again!\" opt1='nothing' opt2=\"important\"}"
 
-      @single_tag_with_method_with_opts = "{ccml:test_single:echo text='Hello Again!' opt1='nothing' opt2='important'}"
+      @single_tag_with_method_with_opts = "{ccml:test_single:echo text='Hello Again!' opt1=\"nothing\" opt2='important'}"
 
       # tag pair examples
 
@@ -95,11 +95,11 @@ describe "module and class hierarchy" do
         {property}
       {/ccml:test_pair}"
 
-      @tag_pair_no_method_with_opts = "{ccml:test_pair text='Hello Again!' opt1='nothing' opt2='important'}
+      @tag_pair_no_method_with_opts = "{ccml:test_pair text=\"Hello Again!\" opt1='nothing' opt2=\"important\"}
         {property}
       {/ccml:test_pair}"
 
-      @tag_pair_with_method_with_opts = "{ccml:test_pair:echo text='Hello Again!' opt1='nothing' opt2='important'}
+      @tag_pair_with_method_with_opts = "{ccml:test_pair:echo text='Hello Again!' opt1=\"nothing\" opt2='important'}
         {property}
       {/ccml:test_pair}"
 
@@ -110,6 +110,8 @@ describe "module and class hierarchy" do
       @single_tag_missing_method = "{ccml:test_single:bogus_method}"
 
       @single_tag_bad_syntax = "{ccml garbage}"
+
+      @single_tag_mixed_quotes_on_opts = "{ccml:test_single:echo text='Hello Again!\" opt1=\"nothing\" opt2='important'}"
 
       @tag_pair_bad_syntax = "{ccml:stuff garbage}some stuff in the middle{/ccml:stuff}"
 

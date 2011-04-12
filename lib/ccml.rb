@@ -83,7 +83,7 @@ module CCML
   SINGLE_TAG_PATTERN = /\{ccml:(?<class>\w+)(:(?<method>\w+))?(?<opts>[^}]*)?\s*}/
   TAG_PAIR_PATTERN = //
 
-  OPTIONS_PATTERN = /\s+(\w+)='([^']*)'/
+  OPTIONS_PATTERN = /\s+(\w+)=("([^"]*)"|'([^']*)')/
     
   ILLEGAL_TAGS = ['base', 'single_tag', 'tag_pair']
 
@@ -95,9 +95,6 @@ module CCML
     # find and process single tags
 
     # find malformed tags and abend
-
-
-
 
     return ccml
   end
@@ -131,7 +128,8 @@ module CCML
     if not match[:opts].blank?
       options = match[:opts].scan(OPTIONS_PATTERN)
       options.each do |opt|
-        opts[opt[0].to_sym] = opt[1]
+        opt.pop if opt.last.nil?
+        opts[opt.first.to_sym] = opt.last
       end
     end
     return opts
