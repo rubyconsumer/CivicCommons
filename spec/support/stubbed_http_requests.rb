@@ -6,8 +6,7 @@ module StubbedHttpRequests
   end
   
   def stub_amazon_s3_request
-    stub_request(:any, /http:\/\/s3\.amazonaws\.com\/cc-dev\/attachments/)
-    stub_request(:any, /http:\/\/s3\.amazonaws\.com/)
+    stub_request(:put, /s3\.amazonaws\.com.*/)
   end
 
   # This set can be used to mock Embedly calls, but the regex needs more work if we want to mock multiple requests

@@ -72,6 +72,7 @@ Rspec.configure do |config|
     DatabaseCleaner.start
     stub_contribution_urls
     stub_amazon_s3_request
+    stub_pro_embedly_request
   end
   config.after :all do
     DatabaseCleaner.clean

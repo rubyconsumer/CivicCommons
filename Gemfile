@@ -56,7 +56,7 @@ group :test do
   gem "factory_girl_rails", '~>1.0.1'
   gem "ruby-debug19"
   gem 'webmock'
-  gem 'addressable', '2.2.4' # required by WebMock but breaks everything at 2.2.5
+  gem 'addressable', '2.2.4' # required by WebMock but breaks everything at 2.2.5, see https://github.com/bblimke/webmock/issues/84
   gem 'linguistics'
   gem 'fuubar', '~>0.0.3'
   gem "cucumber-rails", "0.4.0.beta.1"
