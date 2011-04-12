@@ -220,7 +220,7 @@
           $onPage = $('#show-contribution-' + responseId);
 
       $onPage.scrollTo()
-        .find('p').first().trigger('click'); // trigger click event to uncollapse contribution
+        .find('.collapsed p').first().trigger('click'); // trigger click event to uncollapse contribution
     }
   };
 
