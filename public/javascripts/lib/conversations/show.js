@@ -310,8 +310,10 @@
   collapsedStyle += 'cursor: pointer;';
   collapsedStyle += 'width: auto;';
   collapsedStyle += '}';
-  collapsedStyle += 'div.contribution-container.uncollapsed .comment {';
+  collapsedStyle += 'div.contribution-container.collapsed .comment p:hover,';
+  collapsedStyle += 'div.contribution-container.uncollapsed .comment p:hover {';
   collapsedStyle += 'cursor: pointer;';
+  collapsedStyle += 'background-color: #c5d36a;';
   collapsedStyle += '}';
   collapsedStyle += 'div.contribution-container.collapsed > .comment > .edit-contribution,';
   collapsedStyle += 'div.contribution-container.collapsed > .comment > .convo-utility,';

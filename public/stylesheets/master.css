@@ -881,8 +881,10 @@ text-overflow: ellipsis;
 cursor: pointer;
 width: auto;
 }
-div.contribution-container.uncollapsed .comment {
+div.contribution-container.collapsed .comment p:hover,
+div.contribution-container.uncollapsed .comment p:hover {
 cursor: pointer;
+background-color: #c5d36a;
 }
 div.contribution-container.collapsed > .comment > .edit-contribution,
 div.contribution-container.collapsed > .comment > .convo-utility,
