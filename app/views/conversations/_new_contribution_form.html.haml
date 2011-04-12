@@ -23,7 +23,7 @@
       /YouTube Link:
       = f.text_field(:url, :type => "text", :class => "textbox link youtube", :placeholder => "www.youtube.com/watch?v=123456")
       .youtube-thumbnail
-  = f.text_area(:content, :rows => "3", :placeholder => contribution_form_placeholder_text_for(type))
+  = f.text_area(:content, :rows => "3", :placeholder => contribution_form_placeholder_text_for(type, subtype))
   %div.validation-error
   = hidden_field_tag(:preview, true)
   = hidden_field_tag(:div_id, div_id)

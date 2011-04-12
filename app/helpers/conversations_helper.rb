@@ -64,7 +64,7 @@ module ConversationsHelper
     end
   end
   
-  def contribution_form_placeholder_text_for(type)
+  def contribution_form_placeholder_text_for(type, subtype = nil)
     case type
     when :comment
       "Leave a Comment..."
@@ -81,7 +81,11 @@ module ConversationsHelper
     when :suggested_action
       "Suggest an action..."
     when :embedly_contribution
-      "Share a link..."
+      if subtype == :video
+        "Share a video..."
+      else
+        "Share a link..."
+      end
     else
       ""
     end

@@ -26,14 +26,14 @@
         %div{:id => "#{div_id}-preview", :class => "contribution-preview"}
           %a{:href => "##{div_id}-options", :class => 'button'} Respond
         %div{:id => "#{div_id}-new-comment" }
-          = render :partial => 'conversations/new_contribution_form', :locals => {:div_id => div_id, :type => :comment}
+          = render :partial => 'conversations/new_contribution_form', :locals => {:div_id => div_id, :type => :comment, :subtype => nil}
         %div{:id => "#{div_id}-new-question" }
-          = render :partial => 'conversations/new_contribution_form', :locals => {:div_id => div_id, :type => :question}
+          = render :partial => 'conversations/new_contribution_form', :locals => {:div_id => div_id, :type => :question, :subtype => nil}
         %div{:id => "#{div_id}-new-attached_file" }
-          = render :partial => 'conversations/new_contribution_form', :locals => {:div_id => div_id, :type => :attached_file}
+          = render :partial => 'conversations/new_contribution_form', :locals => {:div_id => div_id, :type => :attached_file, :subtype => nil}
         %div{:id => "#{div_id}-new-embedly_contribution" }
-          = render :partial => 'conversations/new_contribution_form', :locals => {:div_id => div_id, :type => :embedly_contribution}
+          = render :partial => 'conversations/new_contribution_form', :locals => {:div_id => div_id, :type => :embedly_contribution, :subtype => :link}
         %div{:id => "#{div_id}-new-embedded_snippet" }
-          = render :partial => 'conversations/new_contribution_form', :locals => {:div_id => div_id, :type => :embedly_contribution}
+          = render :partial => 'conversations/new_contribution_form', :locals => {:div_id => div_id, :type => :embedly_contribution, :subtype => :video}
         %div{:id => "#{div_id}-new-suggested_action" }
-          = render :partial => 'conversations/new_contribution_form', :locals => {:div_id => div_id, :type => :suggested_action}
+          = render :partial => 'conversations/new_contribution_form', :locals => {:div_id => div_id, :type => :suggested_action, :subtype => nil}
