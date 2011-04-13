@@ -1,7 +1,5 @@
-<table width="600px" border="0" cellspacing="0" cellpadding="0"><tr>
-  <td style="padding:20px 0 0 0;">
-    <h1 style="margin-top:0; color:#555; font-size:26px; letter-spacing:-1px;">Civic Commons account activation</h1>
-    <p style="line-height:1.4em;">Thanks for joining the Civic Commons. Your account is almost ready to go. Just confirm your email address by <%= link_to 'clicking this link.', confirmation_url(@resource, :confirmation_token => @resource.confirmation_token) %></p>
-  </td>
-</tr></table>
-
+<h1>Civic Commons account activation</h1>
+<p>
+  Thanks for joining the Civic Commons. Your account is almost ready to go. Just confirm your email address by
+  <%= link_to 'clicking this link.', confirmation_url(@resource, :confirmation_token => @resource.confirmation_token) %>
+</p>
