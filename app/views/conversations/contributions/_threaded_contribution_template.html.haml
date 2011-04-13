@@ -1,6 +1,6 @@
 %li.offset-1{:id => "show-contribution-#{contribution.id}"}
   %a{:name=>"contribution-#{contribution.id}"}
-  %div.contribution-container{:class => ('collapsed' unless controller.action_name == 'confirm_node_contribution' || contribution.parent.nil?)}
+  %div.contribution-container{:class => ('collapsed' unless controller.action_name == 'confirm_node_contribution' || contribution.parent.nil? || controller.action_name == 'preview_node_contribution')}
     - if contribution
       .callout
         - unless contribution.person.nil?
