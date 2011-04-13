@@ -22,6 +22,7 @@ class EmbedlyService
     clear_state
     begin
       opts[:url] = url
+      opts[:wmode] = 'opaque'
       objs = @embedly.objectify(opts)
       @properties = objs[0].marshal_dump
       raise @properties[:error_message] if @properties.has_key?(:error_message)
