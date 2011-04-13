@@ -109,6 +109,22 @@ class Person < ActiveRecord::Base
     where(:first_name => first, :last_name => last)
   end
 
+  def self.find_confirmed_order_by_recency
+    Person.order('confirmed_at DESC').where('confirmed_at IS NOT NULL').where('locked_at IS NULL')
+  end
+
+  def self.find_confirmed_order_by_last_name(letter = nil)
+    if letter.nil?
+      Person.find(:all,
+                  :select => "*, IF(last_name IS NULL OR last_name='' OR UCASE(SUBSTR(last_name, 1) NOT BETWEEN 'A' AND 'Z'), 1, 0) as blank_last_name",
+                  :conditions => 'confirmed_at IS NOT NULL and locked_at IS NULL',
+                  :order => 'blank_last_name, last_name, first_name ASC'
+                 )
+    else
+      Person.order('last_name, first_name ASC').where('confirmed_at IS NOT NULL').where("last_name like '#{letter}%'").where('locked_at IS NULL')
+    end
+  end
+
   # Takes a full name and return an array of first and last name
   # Examples
   #  "Wendy" => ["Wendy", ""]
