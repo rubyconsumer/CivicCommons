@@ -7,11 +7,11 @@
       Upload a file:
       <%= f.file_field(:attachment) %>
     </label>
-  <% elsif type == :link %>
+  <% elsif type == :embedly_contribution && link %>
     <label>
       <%= f.text_field(:url, :type => "text", :class => "textbox link", :placeholder => "http://www.example.com") %>
     </label>
-  <% elsif type == :embedded_snippet %>
+  <% elsif type == :embedly_contribution  %>
     <label>
       <%= f.text_field(:url, :type => "text", :class => "textbox link youtube", :placeholder => "www.youtube.com/watch?v=123456") %>
       <div class="youtube-thumbnail"></div>

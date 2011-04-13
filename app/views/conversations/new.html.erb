@@ -101,10 +101,10 @@
                     <%= render :partial => 'user_conversation_contribution_fields', :locals => {:conversation => conversation, :type => :attached_file} %>
                   </div>
                   <div id="new-link">
-                    <%= render :partial => 'user_conversation_contribution_fields', :locals => {:conversation => conversation, :type => :link} %>
+                    <%= render :partial => 'user_conversation_contribution_fields', :locals => {:conversation => conversation, :type => :embedly_contribution, :link => true} %>
                   </div>
                   <div id="new-embedded_snippet">
-                    <%= render :partial => 'user_conversation_contribution_fields', :locals => {:conversation => conversation, :type => :embedded_snippet} %>
+                    <%= render :partial => 'user_conversation_contribution_fields', :locals => {:conversation => conversation, :type => :embedly_contribution, :link => false } %>
                   </div>
                   <div id="new-suggested_action">
                     <%= render :partial => 'user_conversation_contribution_fields', :locals => {:conversation => conversation, :type => :suggested_action} %>

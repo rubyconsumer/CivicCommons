@@ -101,10 +101,16 @@ class Conversation < ActiveRecord::Base
     self.rejected_contributions = []
     attributes.each_value { |attr|
       attr.merge!(:item => self)
+      if attr[:type]  && attr[:type].constantize == EmbedlyContribution
+        attr_hash = {contribution: attr}
+        embedly = EmbedlyService.new
+        embedly.fetch_and_merge_params!(attr_hash)
+        attr.merge!(attr_hash[:contribution])
+      end
       # Rather than set contribution.person over and over, 
       # it will now be set from contribution#set_person_from_item before_validation hook
       contribution = Contribution.new_confirmed_node_level_contribution(attr, nil)
-      if Contribution.valid_attributes?(attr)
+      if contribution.valid?
         self.contributions << contribution
       else
         self.rejected_contributions << contribution
