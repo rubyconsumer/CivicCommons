@@ -13,7 +13,8 @@
                 <%= user_profile(person) %>
               </div>
               <div class="text-container" id="label_<%= person.id %>">
-                <h4><%= link_to person.name, user_path(person), title: person.name%></h4>
+                <% name = ( person.last_name.blank? ? person.name : person.last_name + ", " + person.first_name ) %>
+                <h4><%= link_to name, user_path(person), title: person.name%></h4>
               </div>
             </div>
           <% end %>
