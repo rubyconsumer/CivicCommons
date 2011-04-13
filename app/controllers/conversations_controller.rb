@@ -203,20 +203,4 @@ class ConversationsController < ApplicationController
     redirect_to(conversations_url)
   end
 
-  # Kludge to convert US date-time (mm/dd/yyyy hh:mm am) to an
-  # ISO-like date-time (yyyy-mm-ddThh:mm:ss).
-  # There is probably a better way to do this. Please refactor.
-  private
-  def convert_us_date_to_iso(input)
-    hour = input[11,2].to_i
-    if (hour == 12)
-      hour = 0
-    end
-    if (input[17,2] == "pm")
-      hour += 12
-    end
-    hour = sprintf("%02d",hour)
-    input[6,4]+"-"+input[0,2]+"-"+input[3,2]+"T"+hour+":"+input[14,2]+":00"
-  end
-
 end
