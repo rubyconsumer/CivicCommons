@@ -15,7 +15,7 @@ module CCML
       define_method(:http?) { return @http }
       define_method(:https?) { return @https }
 
-      def initialize(opts = {}, url = nil)
+      def initialize(opts, url = nil)
         parse_url(url)
         if opts.is_a?(Hash)
           @opts = opts

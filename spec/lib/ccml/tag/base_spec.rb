@@ -45,7 +45,7 @@ describe CCML::Tag::Base do
     context "no url" do
 
       before(:all) do
-        @tag = TestBaseTag.new
+        @tag = TestBaseTag.new(nil)
       end
 
       it "should set the url to blank" do

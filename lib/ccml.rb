@@ -87,10 +87,10 @@ module CCML
     
   ILLEGAL_TAGS = ['base', 'single_tag', 'tag_pair']
 
-  def CCML.parse(ccml)
+  def CCML.parse(ccml, url = nil)
 
     # find and process tag pairs
-    ccml = CCML.parse_single_tags(ccml)
+    ccml = CCML.parse_single_tags(ccml, url)
 
     # find and process single tags
 
@@ -101,7 +101,7 @@ module CCML
 
   private
 
-  def CCML.instanciate_tag(clazz, method, opts={})
+  def CCML.instanciate_tag(clazz, method, url, opts = {})
     if ILLEGAL_TAGS.include?(clazz)
       raise CCML::Error::TagBaseClassInTemplateError
     end
@@ -135,7 +135,7 @@ module CCML
     return opts
   end
 
-  def CCML.parse_single_tags(ccml)
+  def CCML.parse_single_tags(ccml, url)
 
     # find the first match
     match = SINGLE_TAG_PATTERN.match(ccml)
@@ -149,7 +149,7 @@ module CCML
       opts = CCML.parse_options(match)
 
       # create an instance of the tag class
-      tag = CCML.instanciate_tag(clazz, method, opts)
+      tag = CCML.instanciate_tag(clazz, method, url, opts)
 
       # run the method and substitute the results into the ccml
       sub = CCML.run_tag_method(tag, method)

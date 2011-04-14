@@ -23,12 +23,12 @@ describe CCML do
     context "tag classes" do
 
       it "should instance a single tag subclass" do
-        tag = CCML::Tag::TestSingleTag.new
+        tag = CCML::Tag::TestSingleTag.new(nil)
         tag.should be_a_kind_of CCML::Tag::SingleTag
       end
 
       it "should raise NotImplementedError when creating a TagPair subclass" do
-        lambda { tag = CCML::Tag::TestPairTag.new }.should raise_error CCML::Error::NotImplementedError
+        lambda { tag = CCML::Tag::TestPairTag.new(nil) }.should raise_error CCML::Error::NotImplementedError
       end
 
     end
