@@ -5,7 +5,7 @@ development:
     mailer_host: "development.somewhere.com"
     pepper: "somereallylongstringtoemcryptuserspasswords"
   facebook:
-    app_id: 'crazyfacebookid'
+    api_key: 'crazyfacebookid'
     app_secret: 'facebooksecretsauce'
   mailer:
     api_token: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-us1"
@@ -32,7 +32,7 @@ test:
     mailer_host: "test.somewhere.com"
     pepper: "somereallylongstringtoemcryptuserspasswords"
   facebook:
-    app_id: 'crazyfacebookid'
+    api_key: 'crazyfacebookid'
     app_secret: 'facebooksecretsauce'
   mailer:
     api_token: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-us1"
@@ -58,7 +58,7 @@ integration:
     mailer_host: "integration.somewhere.com"
     pepper: "somereallylongstringtoemcryptuserspasswords"
   facebook:
-    app_id: 'crazyfacebookid'
+    api_key: 'crazyfacebookid'
     app_secret: 'facebooksecretsauce'
   mailer:
     api_token: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-us1"
@@ -85,7 +85,7 @@ staging:
     mailer_host: "staging.somewhere.com"
     pepper: "somereallylongstringtoemcryptuserspasswords"
   facebook:
-    app_id: 'crazyfacebookid'
+    api_key: 'crazyfacebookid'
     app_secret: 'facebooksecretsauce'
   mailer:
     api_token: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-us1"
@@ -112,7 +112,7 @@ production:
     mailer_host: "production.somewhere.com"
     pepper: "somereallylongstringtoemcryptuserspasswords"
   facebook:
-    app_id: 'crazyfacebookid'
+    api_key: 'crazyfacebookid'
     app_secret: 'facebooksecretsauce'
   mailer:
     api_token: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-us1"
