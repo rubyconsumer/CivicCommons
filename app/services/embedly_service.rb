@@ -59,9 +59,13 @@ class EmbedlyService
 
   def fetch_and_update_attributes(contribution)
     fetch(contribution.url)
+    unless contribution.type == "EmbedlyContribution"
+      contribution.type = "EmbedlyContribution"
+    end
     unless properties.nil?
       if properties[:type] == 'html' and not properties[:oembed].empty?
         contribution.embedly_type = properties[:oembed][:type]
+        contribution.embed_target = nil
       else
         contribution.embedly_type = properties[:type]
       end
