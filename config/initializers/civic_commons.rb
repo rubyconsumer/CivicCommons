@@ -10,8 +10,8 @@ if !defined?(Civiccommons::Config)
         (class << self; self; end).class_eval do
           define_method key[0] do |*args|
             if key[1].is_a?(Hash)
-              key[1].default_proc = Proc.new do
-                raise Civiccommons::ConfigNotFoundError, "Configuration requested was not found."
+              key[1].default_proc = Proc.new do |value, key_called|
+                raise Civiccommons::ConfigNotFoundError, "Configuration not found. Make sure config/civic_commons.yml has settings for #{Rails.env} => #{key[0]} => #{key_called}."
               end
               key[1]
             else
