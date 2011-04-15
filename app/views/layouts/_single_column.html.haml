@@ -7,6 +7,6 @@
   - else
     %p
       %a
-        =link_to "Sign in with Facebook", person_omniauth_authorize_path(:facebook), :class => 'createacct-link facebook-auth fb-login-btn'
+        =facebook_sign_in_link
     or
     = link_to "login without Facebook", new_person_session_path
