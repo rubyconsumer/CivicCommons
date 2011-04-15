@@ -1,4 +1,4 @@
-class FacebookAuthPage
+class FacebookAuthPage < PageObject
   
   FACEBOOK_AUTH_HASH = { 
     'credentials' => {'token'=>"1234567890"}, 
@@ -7,10 +7,6 @@ class FacebookAuthPage
     'user_info' => { 'first_name' => 'John', 'last_name' => 'doe', 'name' => 'John Doe'},
     'extra' => { 'user_hash' => { 'email' => "johnd@test.com" } } 
   } 
-  
-  def initialize(page)
-    @page = page 
-  end
 
   def sign_in
     stub_omniauth

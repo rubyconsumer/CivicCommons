@@ -1,15 +1,11 @@
-class SuggestFacebookAuthPage
+class SuggestFacebookAuthPage < PageObject
   
-  DECLINE_FACEBOOK_AUTH = '/authentication/decline_fb_auth'
-  
-  attr_accessor :page
-    
-  def initialize(page)
-    @page = page 
+  def path
+    '/authentication/decline_fb_auth'
   end
   
   def click_decline
-    Capybara.current_session.driver.process :post, DECLINE_FACEBOOK_AUTH
+    Capybara.current_session.driver.process :post, path
   end
   
   def modal

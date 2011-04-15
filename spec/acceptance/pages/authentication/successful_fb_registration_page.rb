@@ -1,19 +1,11 @@
-class SuccessfulFbRegistrationPage
+class SuccessfulFbRegistrationPage < PageObject
   
-  SUCCESSFUL_FB_REGISTRATION_PATH = '/authentication/successful_fb_registration'
-  
-  attr_accessor :page
-    
-  def initialize(page)
-    @page = page 
+  def path
+    '/authentication/successful_fb_registration'
   end
   
   def click_submit
     page.click_button 'person_submit'
-  end
-  
-  def visit
-    page.visit SUCCESSFUL_FB_REGISTRATION_PATH
   end
   
   def fill_in_zip_code_with(zip)

@@ -1,15 +1,7 @@
-class ConflictingEmailPage
+class ConflictingEmailPage < PageObject
   
-  CONFLICTING_EMAIL_PATH = '/authentication/conflicting_email'
-  
-  attr_accessor :page
-    
-  def initialize(page)
-    @page = page 
-  end
-  
-  def visit
-    page.visit CONFLICTING_EMAIL_PATH
+  def path
+    '/authentication/conflicting_email'
   end
   
   def click_yes
