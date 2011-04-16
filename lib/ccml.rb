@@ -80,14 +80,20 @@
 
 module CCML
 
-  SINGLE_TAG_PATTERN = /\{ccml:(?<class>\w+)(:(?<method>\w+))?(?<opts>[^}]*)?}/
-  TAG_PAIR_PATTERN = /\{ccml:(?<class>\w+)(:(?<method>\w+))?(?<opts>[^}]*)?}(?<tag_data>.*?)\{\/ccml:(?<close>\w+)}/m
+  SINGLE_TAG_PATTERN = /\{ccml:(?<class>\w+)(:(?<method>\w+))?(?<opts>[^\{}]*)?}/
+  TAG_PAIR_PATTERN = /\{ccml:(?<class>\w+)(:(?<method>\w+))?(?<opts>[^}]*)?}(?<tag_data>.*?)\{\/ccml:\k<class>}/m
+  INVALID_TAGS_PATTERN = /(\{ccml)|(\{\/ccml)/
 
   OPTIONS_PATTERN = /\s+(\w+)=("([^"]*)"|'([^']*)')/
     
   ILLEGAL_TAGS = ['base', 'single_tag', 'tag_pair']
 
   def CCML.parse(ccml, url = nil)
+
+    # die if ccml data is not a string
+    if not ccml.is_a?(String)
+      raise CCML::Error::TemplateError, "CCML data is not a string."
+    end
 
     # find and process tag pairs
     ccml = CCML.parse_tag_pairs(ccml, url)
@@ -96,6 +102,9 @@ module CCML
     ccml = CCML.parse_single_tags(ccml, url)
 
     # find malformed tags and abend
+    if ccml =~ INVALID_TAGS_PATTERN
+      raise CCML::Error::TemplateError, "Template contains invalid CCML tags."
+    end
 
     return ccml
   end
@@ -136,6 +145,13 @@ module CCML
     return opts
   end
 
+  def CCML.parse_opening_tag(match)
+    clazz = match[:class]
+    method = ( match[:method].nil? ? 'index' : match[:method] )
+    opts = CCML.parse_options(match)
+    return clazz, method, opts
+  end
+
   def CCML.parse_tag_pairs(ccml, url)
 
     # find the first match
@@ -144,15 +160,8 @@ module CCML
     # iterate until no more matches exist
     while not match.nil?
 
-      # check for matching close tag
-      if match[:class] != match[:close]
-        raise CCML::Error::TemplateError, "Open tag '#{match[:class]}' does not match '#{match[:close]}' close tag."
-      end
-
       # get the data from the matching string
-      clazz = match[:class]
-      method = ( match[:method].nil? ? 'index' : match[:method] )
-      opts = CCML.parse_options(match)
+      clazz, method, opts = CCML.parse_opening_tag(match)
 
       # create an instance of the tag class and set tag data
       tag = CCML.instanciate_tag(clazz, method, url, opts)
@@ -178,9 +187,7 @@ module CCML
     while not match.nil?
 
       # get the data from the matching string
-      clazz = match[:class]
-      method = ( match[:method].nil? ? 'index' : match[:method] )
-      opts = CCML.parse_options(match)
+      clazz, method, opts = CCML.parse_opening_tag(match)
 
       # create an instance of the tag class
       tag = CCML.instanciate_tag(clazz, method, url, opts)
