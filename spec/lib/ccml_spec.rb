@@ -14,6 +14,12 @@ class CCML::Tag::TestSingleTag < CCML::Tag::SingleTag
 end
 
 class CCML::Tag::TestPairTag < CCML::Tag::TagPair
+  def index
+    return "Hello world!"
+  end
+  def echo
+    return @opts.to_s
+  end
 end
 
 describe CCML do
@@ -27,8 +33,9 @@ describe CCML do
         tag.should be_a_kind_of CCML::Tag::SingleTag
       end
 
-      it "should raise NotImplementedError when creating a TagPair subclass" do
-        lambda { tag = CCML::Tag::TestPairTag.new(nil) }.should raise_error CCML::Error::NotImplementedError
+      it "should instance a tag pair subclass" do
+        tag = CCML::Tag::TestPairTag.new(nil)
+        tag.should be_a_kind_of CCML::Tag::TagPair
       end
 
     end
@@ -90,32 +97,45 @@ describe CCML do
         # tag pair examples
 
         @tag_pair_no_method_no_opts = "{ccml:test_pair}
-        {property}
-      {/ccml:test_pair}"
+          {property}
+        {/ccml:test_pair}"
 
-      @tag_pair_with_method_no_opts = "{ccml:test_pair:echo}
-        {property}
-      {/ccml:test_pair}"
+        @tag_pair_with_method_no_opts = "{ccml:test_pair:echo}
+          {property}
+        {/ccml:test_pair}"
 
-      @tag_pair_no_method_with_opts = "{ccml:test_pair text=\"Hello Again!\" opt1='nothing' opt2=\"important\"}
-        {property}
-      {/ccml:test_pair}"
+        @tag_pair_no_method_with_opts = "{ccml:test_pair text=\"Hello Again!\" opt1='nothing' opt2=\"important\"}
+          {property}
+        {/ccml:test_pair}"
 
-      @tag_pair_with_method_with_opts = "{ccml:test_pair:echo text='Hello Again!' opt1=\"nothing\" opt2='important'}
-        {property}
-      {/ccml:test_pair}"
+        @tag_pair_with_method_with_opts = "{ccml:test_pair:echo text='Hello Again!' opt1=\"nothing\" opt2='important'}
+          {property}
+        {/ccml:test_pair}"
 
-      # incorrect syntax examples
+        # multiple tags
 
-      @single_tag_missing_class = "{ccml:bogus_class}"
+        @multiple_tags = "{ccml:test_pair:echo text='Hello Again!' opt1=\"nothing\" opt2='important'}
+          {property}
+        {/ccml:test_pair}
+        {ccml:test_single}
+        {ccml:test_single:echo text='Hello Again!' opt1=\"nothing\" opt2='important'}
+        {ccml:test_pair:echo}
+          {property1}
+          {property2}
+          {property3}
+          {property4}
+        {/ccml:test_pair}
+        "
 
-      @single_tag_missing_method = "{ccml:test_single:bogus_method}"
+        # incorrect syntax examples
 
-      @single_tag_bad_syntax = "{ccml garbage}"
+        @single_tag_missing_class = "{ccml:bogus_class}"
 
-      @single_tag_mixed_quotes_on_opts = "{ccml:test_single:echo text='Hello Again!\" opt1=\"nothing\" opt2='important'}"
+        @single_tag_missing_method = "{ccml:test_single:bogus_method}"
 
-      @tag_pair_bad_syntax = "{ccml:stuff garbage}some stuff in the middle{/ccml:stuff}"
+        @single_tag_mixed_quotes_on_opts = "{ccml:test_single:echo text='Hello Again!\" opt1=\"nothing\" opt2='important'}"
+
+        @tag_pair_mismatched_pair = "{ccml:stuff}some stuff in the middle{/ccml:other_stuff}"
 
       end
 
@@ -155,23 +175,28 @@ describe CCML do
       context "tag pair" do
 
         it "should parse a tag pair with no method and no options" do
-          pending
-          lambda { CCML.parse(@tag_pair_no_method_no_opts) }.should raise_error CCML::Error::NotImplementedError
+          CCML.parse(@tag_pair_no_method_no_opts).should == "Hello world!"
         end
 
         it "should parse a tag pair with method and no options" do
-          pending
-          lambda { CCML.parse(@tag_pair_with_method_no_opts) }.should raise_error CCML::Error::NotImplementedError
+          CCML.parse(@tag_pair_with_method_no_opts).should == '{}'
         end
 
         it "should parse a tag pair with no method and with options" do
-          pending
-          lambda { CCML.parse(@tag_pair_no_method_with_opts) }.should raise_error CCML::Error::NotImplementedError
+          CCML.parse(@tag_pair_no_method_no_opts).should == "Hello world!"
         end
 
         it "should parse a tag pair with method and with options" do
+          CCML.parse(@tag_pair_with_method_with_opts).should == '{:text=>"Hello Again!", :opt1=>"nothing", :opt2=>"important"}'
+        end
+
+      end
+
+      context "multiple tags" do
+
+        it "should correctly parse multiple tags" do
           pending
-          lambda { CCML.parse(@tag_pair_with_method_with_opts) }.should raise_error CCML::Error::NotImplementedError
+          CCML.parse(@multiple_tags).should == '{:text=>"Hello Again!", :opt1=>"nothing", :opt2=>"important"}'
         end
 
       end
@@ -196,9 +221,8 @@ describe CCML do
           lambda { CCML.parse(@single_tag_bad_syntax) }.should raise_error CCML::Error::TemplateError
         end
 
-        it "should raise TemplateError for a malformed tag pair" do
-          pending
-          lambda { CCML.parse(@tag_pair_bad_syntax) }.should raise_error CCML::Error::TemplateError
+        it "should raise TemplateError for a mismatched tag pair" do
+          lambda { CCML.parse(@tag_pair_mismatched_pair) }.should raise_error CCML::Error::TemplateError
         end
 
       end

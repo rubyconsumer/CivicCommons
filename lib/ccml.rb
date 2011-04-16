@@ -80,8 +80,8 @@
 
 module CCML
 
-  SINGLE_TAG_PATTERN = /\{ccml:(?<class>\w+)(:(?<method>\w+))?(?<opts>[^}]*)?\s*}/
-  TAG_PAIR_PATTERN = //
+  SINGLE_TAG_PATTERN = /\{ccml:(?<class>\w+)(:(?<method>\w+))?(?<opts>[^}]*)?}/
+  TAG_PAIR_PATTERN = /\{ccml:(?<class>\w+)(:(?<method>\w+))?(?<opts>[^}]*)?}(?<tag_data>.*?)\{\/ccml:(?<close>\w+)}/m
 
   OPTIONS_PATTERN = /\s+(\w+)=("([^"]*)"|'([^']*)')/
     
@@ -90,9 +90,10 @@ module CCML
   def CCML.parse(ccml, url = nil)
 
     # find and process tag pairs
-    ccml = CCML.parse_single_tags(ccml, url)
+    ccml = CCML.parse_tag_pairs(ccml, url)
 
     # find and process single tags
+    ccml = CCML.parse_single_tags(ccml, url)
 
     # find malformed tags and abend
 
@@ -133,6 +134,39 @@ module CCML
       end
     end
     return opts
+  end
+
+  def CCML.parse_tag_pairs(ccml, url)
+
+    # find the first match
+    match = TAG_PAIR_PATTERN.match(ccml)
+
+    # iterate until no more matches exist
+    while not match.nil?
+
+      # check for matching close tag
+      if match[:class] != match[:close]
+        raise CCML::Error::TemplateError, "Open tag '#{match[:class]}' does not match '#{match[:close]}' close tag."
+      end
+
+      # get the data from the matching string
+      clazz = match[:class]
+      method = ( match[:method].nil? ? 'index' : match[:method] )
+      opts = CCML.parse_options(match)
+
+      # create an instance of the tag class and set tag data
+      tag = CCML.instanciate_tag(clazz, method, url, opts)
+      tag.tag_data = match[:tag_data]
+
+      # run the method and substitute the results into the ccml
+      sub = CCML.run_tag_method(tag, method)
+      ccml = ccml.sub(match.to_s, sub)
+
+      # look for another match
+      match = TAG_PAIR_PATTERN.match(ccml)
+    end
+
+    return ccml
   end
 
   def CCML.parse_single_tags(ccml, url)
