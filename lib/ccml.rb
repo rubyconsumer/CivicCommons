@@ -172,7 +172,8 @@ module CCML
       ccml = ccml.sub(match.to_s, sub)
 
       # look for another match
-      match = TAG_PAIR_PATTERN.match(ccml)
+      pos = match.begin(0) + sub.length
+      match = TAG_PAIR_PATTERN.match(ccml, pos)
     end
 
     return ccml
@@ -197,7 +198,8 @@ module CCML
       ccml = ccml.sub(match.to_s, sub)
 
       # look for another match
-      match = SINGLE_TAG_PATTERN.match(ccml)
+      pos = match.begin(0) + sub.length
+      match = SINGLE_TAG_PATTERN.match(ccml, pos)
     end
 
     return ccml
