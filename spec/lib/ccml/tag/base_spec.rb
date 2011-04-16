@@ -22,21 +22,21 @@ describe CCML::Tag::Base do
 
     @url_no_path_formatted_qs_many_fields = 'http://www.theciviccommons.com?field1=value1&field2=value2&field3=value3'
 
-    @url_with_path_one_segment_no_qs = 'http://www.theciviccommons.com/segment1'
+    @url_with_path_one_segment_no_qs = 'http://www.theciviccommons.com/segment_0'
 
-    @url_with_path_one_segment_unformatted_qs = 'http://www.theciviccommons.com/segment1?unformatted_query_string'
+    @url_with_path_one_segment_unformatted_qs = 'http://www.theciviccommons.com/segment_0?unformatted_query_string'
 
-    @url_with_path_one_segment_qs_one_field = 'http://www.theciviccommons.com/segment1?field=value'
+    @url_with_path_one_segment_qs_one_field = 'http://www.theciviccommons.com/segment_0?field=value'
 
-    @url_with_path_one_segment_qs_many_fields = 'http://www.theciviccommons.com/segment1?field1=value1&field2=value2&field3=value3'
+    @url_with_path_one_segment_qs_many_fields = 'http://www.theciviccommons.com/segment_0?field1=value1&field2=value2&field3=value3'
 
-    @url_with_path_multiple_segments_no_qs = 'http://www.theciviccommons.com/segment1/segment2/segment3/'
+    @url_with_path_multiple_segments_no_qs = 'http://www.theciviccommons.com/segment_0/segment_1/segment_2/'
 
-    @url_with_path_multiple_segments_unformatted_qs = 'http://www.theciviccommons.com/segment1/segment2/segment3/?unformatted_query_string'
+    @url_with_path_multiple_segments_unformatted_qs = 'http://www.theciviccommons.com/segment_0/segment_1/segment_2/?unformatted_query_string'
 
-    @url_with_path_multiple_segments_qs_one_field = 'http://www.theciviccommons.com/segment1/segment2/segment3/?field=value'
+    @url_with_path_multiple_segments_qs_one_field = 'http://www.theciviccommons.com/segment_0/segment_1/segment_2/?field=value'
 
-    @url_with_path_multiple_segments_qs_many_fields = 'http://www.theciviccommons.com/segment1/segment2/segment3/?field1=value1&field2=value2&field3=value3'
+    @url_with_path_multiple_segments_qs_many_fields = 'http://www.theciviccommons.com/segment_0/segment_1/segment_2/?field1=value1&field2=value2&field3=value3'
 
   end
 
@@ -127,14 +127,14 @@ describe CCML::Tag::Base do
         TestBaseTag.new({}, @url_no_path_unformatted_qs).resource.should == '/?unformatted_query_string'
         TestBaseTag.new({}, @url_no_path_formatted_qs_one_field).resource.should == '?field=value'
         TestBaseTag.new({}, @url_no_path_formatted_qs_many_fields).resource.should == '?field1=value1&field2=value2&field3=value3'
-        TestBaseTag.new({}, @url_with_path_one_segment_no_qs).resource.should == '/segment1'
-        TestBaseTag.new({}, @url_with_path_one_segment_unformatted_qs).resource.should == '/segment1?unformatted_query_string'
-        TestBaseTag.new({}, @url_with_path_one_segment_qs_one_field).resource.should == '/segment1?field=value'
-        TestBaseTag.new({}, @url_with_path_one_segment_qs_many_fields).resource.should == '/segment1?field1=value1&field2=value2&field3=value3'
-        TestBaseTag.new({}, @url_with_path_multiple_segments_no_qs).resource.should == '/segment1/segment2/segment3/'
-        TestBaseTag.new({}, @url_with_path_multiple_segments_unformatted_qs).resource.should == '/segment1/segment2/segment3/?unformatted_query_string'
-        TestBaseTag.new({}, @url_with_path_multiple_segments_qs_one_field).resource.should == '/segment1/segment2/segment3/?field=value'
-        TestBaseTag.new({}, @url_with_path_multiple_segments_qs_many_fields).resource.should == '/segment1/segment2/segment3/?field1=value1&field2=value2&field3=value3'
+        TestBaseTag.new({}, @url_with_path_one_segment_no_qs).resource.should == '/segment_0'
+        TestBaseTag.new({}, @url_with_path_one_segment_unformatted_qs).resource.should == '/segment_0?unformatted_query_string'
+        TestBaseTag.new({}, @url_with_path_one_segment_qs_one_field).resource.should == '/segment_0?field=value'
+        TestBaseTag.new({}, @url_with_path_one_segment_qs_many_fields).resource.should == '/segment_0?field1=value1&field2=value2&field3=value3'
+        TestBaseTag.new({}, @url_with_path_multiple_segments_no_qs).resource.should == '/segment_0/segment_1/segment_2/'
+        TestBaseTag.new({}, @url_with_path_multiple_segments_unformatted_qs).resource.should == '/segment_0/segment_1/segment_2/?unformatted_query_string'
+        TestBaseTag.new({}, @url_with_path_multiple_segments_qs_one_field).resource.should == '/segment_0/segment_1/segment_2/?field=value'
+        TestBaseTag.new({}, @url_with_path_multiple_segments_qs_many_fields).resource.should == '/segment_0/segment_1/segment_2/?field1=value1&field2=value2&field3=value3'
       end
 
     end
@@ -148,14 +148,14 @@ describe CCML::Tag::Base do
         TestBaseTag.new({}, @url_no_path_unformatted_qs).path.should be_blank
         TestBaseTag.new({}, @url_no_path_formatted_qs_one_field).path.should be_blank
         TestBaseTag.new({}, @url_no_path_formatted_qs_many_fields).path.should be_blank
-        TestBaseTag.new({}, @url_with_path_one_segment_no_qs).path.should == '/segment1'
-        TestBaseTag.new({}, @url_with_path_one_segment_unformatted_qs).path.should == '/segment1'
-        TestBaseTag.new({}, @url_with_path_one_segment_qs_one_field).path.should == '/segment1'
-        TestBaseTag.new({}, @url_with_path_one_segment_qs_many_fields).path.should == '/segment1'
-        TestBaseTag.new({}, @url_with_path_multiple_segments_no_qs).path.should == '/segment1/segment2/segment3'
-        TestBaseTag.new({}, @url_with_path_multiple_segments_unformatted_qs).path.should == '/segment1/segment2/segment3'
-        TestBaseTag.new({}, @url_with_path_multiple_segments_qs_one_field).path.should == '/segment1/segment2/segment3'
-        TestBaseTag.new({}, @url_with_path_multiple_segments_qs_many_fields).path.should == '/segment1/segment2/segment3'
+        TestBaseTag.new({}, @url_with_path_one_segment_no_qs).path.should == '/segment_0'
+        TestBaseTag.new({}, @url_with_path_one_segment_unformatted_qs).path.should == '/segment_0'
+        TestBaseTag.new({}, @url_with_path_one_segment_qs_one_field).path.should == '/segment_0'
+        TestBaseTag.new({}, @url_with_path_one_segment_qs_many_fields).path.should == '/segment_0'
+        TestBaseTag.new({}, @url_with_path_multiple_segments_no_qs).path.should == '/segment_0/segment_1/segment_2'
+        TestBaseTag.new({}, @url_with_path_multiple_segments_unformatted_qs).path.should == '/segment_0/segment_1/segment_2'
+        TestBaseTag.new({}, @url_with_path_multiple_segments_qs_one_field).path.should == '/segment_0/segment_1/segment_2'
+        TestBaseTag.new({}, @url_with_path_multiple_segments_qs_many_fields).path.should == '/segment_0/segment_1/segment_2'
       end
 
     end
@@ -190,14 +190,14 @@ describe CCML::Tag::Base do
         TestBaseTag.new({}, @url_no_segments_unformatted_qs).segments.should be_empty
         TestBaseTag.new({}, @url_no_segments_formatted_qs_one_field).segments.should be_empty
         TestBaseTag.new({}, @url_no_segments_formatted_qs_many_fields).segments.should be_empty
-        TestBaseTag.new({}, @url_with_path_one_segment_no_qs).segments.should == [ 'segment1' ]
-        TestBaseTag.new({}, @url_with_path_one_segment_unformatted_qs).segments.should == [ 'segment1' ]
-        TestBaseTag.new({}, @url_with_path_one_segment_qs_one_field).segments.should == [ 'segment1' ]
-        TestBaseTag.new({}, @url_with_path_one_segment_qs_many_fields).segments.should == [ 'segment1' ]
-        TestBaseTag.new({}, @url_with_path_multiple_segments_no_qs).segments.should == [ 'segment1', 'segment2', 'segment3' ]
-        TestBaseTag.new({}, @url_with_path_multiple_segments_unformatted_qs).segments.should == [ 'segment1', 'segment2', 'segment3' ]
-        TestBaseTag.new({}, @url_with_path_multiple_segments_qs_one_field).segments.should == [ 'segment1', 'segment2', 'segment3' ]
-        TestBaseTag.new({}, @url_with_path_multiple_segments_qs_many_fields).segments.should == [ 'segment1', 'segment2', 'segment3' ]
+        TestBaseTag.new({}, @url_with_path_one_segment_no_qs).segments.should == [ 'segment_0' ]
+        TestBaseTag.new({}, @url_with_path_one_segment_unformatted_qs).segments.should == [ 'segment_0' ]
+        TestBaseTag.new({}, @url_with_path_one_segment_qs_one_field).segments.should == [ 'segment_0' ]
+        TestBaseTag.new({}, @url_with_path_one_segment_qs_many_fields).segments.should == [ 'segment_0' ]
+        TestBaseTag.new({}, @url_with_path_multiple_segments_no_qs).segments.should == [ 'segment_0', 'segment_1', 'segment_2' ]
+        TestBaseTag.new({}, @url_with_path_multiple_segments_unformatted_qs).segments.should == [ 'segment_0', 'segment_1', 'segment_2' ]
+        TestBaseTag.new({}, @url_with_path_multiple_segments_qs_one_field).segments.should == [ 'segment_0', 'segment_1', 'segment_2' ]
+        TestBaseTag.new({}, @url_with_path_multiple_segments_qs_many_fields).segments.should == [ 'segment_0', 'segment_1', 'segment_2' ]
       end
     end
 
@@ -218,6 +218,82 @@ describe CCML::Tag::Base do
         TestBaseTag.new({}, @url_with_path_multiple_segments_unformatted_qs).fields.should be_empty
         TestBaseTag.new({}, @url_with_path_multiple_segments_qs_one_field).fields.should == { :field => 'value' }
         TestBaseTag.new({}, @url_with_path_multiple_segments_qs_many_fields).fields.should == { :field1 => 'value1', :field2 => 'value2', :field3 => 'value3' }
+      end
+
+    end
+
+    context "updating options from url" do
+
+      before(:all) do
+        @url = 'http://www.theciviccommons.com/issues/flats-redevelopment/explore/?first_name=John&last_name=Doe&email=john@doe.com'
+      end
+
+      it "should correctly update options from url segments" do
+        opts = {
+          :s0 => 'segment_0',
+          :s1 => 'segment_1',
+          :s2 => 'segment_2',
+          :s3 => 'segment_3',
+          :ls => 'last_segment',
+        }
+        tag = TestBaseTag.new(opts, @url)
+        tag.opts[:s0].should == 'issues'
+        tag.opts[:s1].should == 'flats-redevelopment'
+        tag.opts[:s2].should == 'explore'
+        tag.opts[:s3].should be_blank
+        tag.opts[:ls].should == 'explore'
+      end
+
+      it "should correctly update options from query string fields" do
+        opts = {
+          :f0 => 'field_first_name',
+          :f1 => 'field_last_name',
+          :f2 => 'field_email',
+          :f3 => 'field_does_not_exist',
+          :qs => 'query_string',
+        }
+        tag = TestBaseTag.new(opts, @url)
+        tag.opts[:f0].should == 'John'
+        tag.opts[:f1].should == 'Doe'
+        tag.opts[:f2].should == 'john@doe.com'
+        tag.opts[:f3].should be_blank
+        tag.opts[:qs].should == 'first_name=John&last_name=Doe&email=john@doe.com'
+      end
+
+      it "should not change other options" do
+        opts = {
+          :s0 => 'not_segment_0',
+          :s1 => 'not_segment_1',
+          :s2 => 'not_segment_2',
+          :s3 => 'not_segment_3',
+          :f0 => 'not_field_first_name',
+          :f1 => 'not_field_last_name',
+          :f2 => 'not_field_email',
+          :f3 => 'not_field_does_not_exist',
+        }
+        tag = TestBaseTag.new(opts, @url)
+        tag.opts[:s0].should == 'not_segment_0'
+        tag.opts[:s1].should == 'not_segment_1'
+        tag.opts[:s2].should == 'not_segment_2'
+        tag.opts[:s3].should == 'not_segment_3'
+        tag.opts[:f0].should == 'not_field_first_name'
+        tag.opts[:f1].should == 'not_field_last_name'
+        tag.opts[:f2].should == 'not_field_email'
+        tag.opts[:f3].should == 'not_field_does_not_exist'
+      end
+
+      it "should correctly set segment and field variables when no segments or fields exist" do
+        opts = {
+          :s0 => 'segment_0',
+          :ls => 'last_segment',
+          :f0 => 'field_first_name',
+          :qs => 'query_string',
+        }
+        tag = TestBaseTag.new(opts, 'http://www.theciviccommons.com')
+        tag.opts[:s0].should be_blank
+        tag.opts[:ls].should be_blank
+        tag.opts[:f0].should be_blank
+        tag.opts[:qs].should be_blank
       end
 
     end
