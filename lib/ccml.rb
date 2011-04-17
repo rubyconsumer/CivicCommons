@@ -176,7 +176,7 @@
 module CCML
 
   SINGLE_TAG_PATTERN = /\{ccml:(?<class>\w+)(:(?<method>\w+))?(?<opts>[^\{}]*)?}/
-  TAG_PAIR_PATTERN = /\{ccml:(?<class>\w+)(:(?<method>\w+))?(?<opts>[^}]*)?}(?<tag_data>.*?)\{\/ccml:\k<class>}/m
+  TAG_PAIR_PATTERN = /\{ccml:(?<class>\w+)(:(?<method>\w+))?(?<opts>[^}]*)?}(?<tag_body>.*?)\{\/ccml:\k<class>}/m
   INVALID_TAGS_PATTERN = /(\{ccml)|(\{\/ccml)/
 
   OPTIONS_PATTERN = /\s+(\w+)=("([^"]*)"|'([^']*)')/
@@ -260,7 +260,7 @@ module CCML
 
       # create an instance of the tag class and set tag data
       tag = CCML.instanciate_tag(clazz, method, url, opts)
-      tag.tag_data = match[:tag_data]
+      tag.tag_body = match[:tag_body]
 
       # run the method and substitute the results into the ccml
       sub = CCML.run_tag_method(tag, method)

@@ -26,47 +26,21 @@ describe CCML::Tag::TagPair do
 
       @person = Factory.build(:registered_user, :id => 1, :first_name => 'John', :last_name => 'Doe')
 
-      @ccml_template = "
-        {ccml:test_pair id='1' first_name='John' last_name=\"Doe\"}
-          <h1>ID {id}</h1>
-          <p>Hello, {first_name} {last_name}!</p>
-        {/ccml:test_pair}
-      "
-
       @ccml_options = {
         :id => @person.id.to_s,
         :first_name => @person.first_name,
         :last_name => @person.last_name,
       }
 
-      @ccml_tag_body = "
-        <h1>ID {id}</h1>
-        <p>Hello, {first_name} {last_name}!</p>
-      "
+      @ccml_template = "{ccml:test_pair id='1' first_name='John' last_name=\"Doe\"}<h1>ID {id}</h1><p>Hello, {first_name} {last_name}!</p>{/ccml:test_pair}"
 
-      @ccml_processed_once = "
-        <h1>ID 1</h1>
-        <p>Hello, John Doe!</p>
-      "
+      @ccml_tag_body = "<h1>ID {id}</h1><p>Hello, {first_name} {last_name}!</p>"
 
-      @ccml_processed_twice = "
-        <h1>ID 1</h1>
-        <p>Hello, John Doe!</p>
+      @ccml_processed_once = "<h1>ID 1</h1><p>Hello, John Doe!</p>"
 
-        <h1>ID 1</h1>
-        <p>Hello, John Doe!</p>
-      "
+      @ccml_processed_twice = "<h1>ID 1</h1><p>Hello, John Doe!</p><h1>ID 1</h1><p>Hello, John Doe!</p>"
 
-      @ccml_processed_thrice = "
-        <h1>ID 1</h1>
-        <p>Hello, John Doe!</p>
-
-        <h1>ID 1</h1>
-        <p>Hello, John Doe!</p>
-
-        <h1>ID 1</h1>
-        <p>Hello, John Doe!</p>
-      "
+      @ccml_processed_thrice = "<h1>ID 1</h1><p>Hello, John Doe!</p><h1>ID 1</h1><p>Hello, John Doe!</p><h1>ID 1</h1><p>Hello, John Doe!</p>"
 
     end
 
