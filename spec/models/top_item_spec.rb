@@ -28,7 +28,6 @@ describe TopItem, "when retrieving the top items by date" do
   it "should merge top itemable items" do
     result = TopItem.newest_items.includes(:item)
     items = result.collect{ |ti| ti.item }
-    old_top_items = TopItem.order("item_created_at ASC").includes(:item).limit(TopItem.all.size - 10)
 
     items.include?(@today_conversation).should be_true
     items.include?(@today_contribution).should be_true
