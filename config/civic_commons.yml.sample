@@ -1,5 +1,6 @@
 development:
   default_email: "myemail@example.com"
+  support_email: "support@example.com"
   devise:
     email: "The Civic Commons <admin@somewhere.com>"
     mailer_host: "development.somewhere.com"
@@ -27,6 +28,7 @@ development:
 
 test:
   default_email: "myemail@example.com"
+  support_email: "support@example.com"
   devise:
     email: "The Civic Commons <admin@somewhere.com>"
     mailer_host: "test.somewhere.com"
@@ -53,6 +55,7 @@ test:
     full_host: 'http://test.com'
 integration:
   default_email: "myemail@example.com"
+  support_email: "support@example.com"
   devise:
     email: "The Civic Commons <admin@somewhere.com>"
     mailer_host: "integration.somewhere.com"
@@ -80,6 +83,7 @@ integration:
 
 staging:
   default_email: "myemail@example.com"
+  support_email: "support@example.com"
   devise:
     email: "The Civic Commons <admin@somewhere.com>"
     mailer_host: "staging.somewhere.com"
@@ -107,6 +111,7 @@ staging:
 
 production:
   default_email: "myemail@example.com"
+  support_email: "support@example.com"
   devise:
     email: "The Civic Commons <admin@somewhere.com>"
     mailer_host: "production.somewhere.com"

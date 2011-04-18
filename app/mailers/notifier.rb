@@ -2,6 +2,14 @@ class Notifier < Devise::Mailer
 
   layout 'mailer'
   add_template_helper(ConversationsHelper)
+  
+  def email_changed(old_email, new_email)
+    @old_email = old_email
+    @new_email = new_email
+    mail(:subject => "You've recently changed your Civic Commons email",
+         :from => Devise.mailer_sender,
+         :to => old_email)
+  end
 
   def welcome(record)
     @resource = record
@@ -40,5 +48,7 @@ class Notifier < Devise::Mailer
          :from => '"Curator of Conversation" <curator@theciviccommons.com>',
          :to => @person.email)
   end
+  
+  
 
 end

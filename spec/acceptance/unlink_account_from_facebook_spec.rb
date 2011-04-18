@@ -14,14 +14,17 @@ feature "Unlink Account From Facebook", %q{
   
   
   def given_a_registered_user_w_facebook_auth
-    @person = Factory.create(:registered_user)
+    @person = Factory.create(:registered_user, :email => 'johnd@example.com')
     @facebook_auth = Factory.build(:facebook_authentication)
     @person.link_with_facebook(@facebook_auth)
   end
 
-  scenario "Unlinking" do
+  scenario "Unlinking process" do
     # Given I am a registered Civic Commons user that have connected with Facebook
     given_a_registered_user_w_facebook_auth
+    
+    # And no email in the queue
+    Notifier.deliveries  = []
     
     # And I am on the home page
     page.visit(homepage)
@@ -48,7 +51,7 @@ feature "Unlink Account From Facebook", %q{
     before_facebook_unlinking_page.should be_visited
     
     # When I changed my email to a different email
-    before_facebook_unlinking_page.fill_in 'person_email', :with => 'test1@test.com'
+    before_facebook_unlinking_page.fill_in 'person_email', :with => 'johnd-new-email@example.com'
     
     # And I enter my password
     before_facebook_unlinking_page.fill_in 'person_password', :with => 'password123'
@@ -62,14 +65,37 @@ feature "Unlink Account From Facebook", %q{
     # Then I should see an unlink confirmation modal dialog
     fb_unlinking_success_page.should be_displayed
     
-    # And I should receive an email notification that I have change my email
+    # And I should receive an email notification that I have changed my email
+    Notifier.deliveries.length.should == 1
+    Notifier.deliveries.first.to.should contain 'johnd@example.com'
     
-  end
-  scenario "a notification email is sent to me when I change my email when unlinking" do
-    pending
+    # And the email should have the correct subject
+    Notifier.deliveries.first.subject.should contain "You've recently changed your Civic Commons email"
   end
   
-  context "failing" do
-    pending
+  scenario "Should throw validation error when user does not enter password" do
+    # Given I am a registered Civic Commons user that have connected with Facebook
+    given_a_registered_user_w_facebook_auth
+
+    # And I am on the home page
+    page.visit(homepage)
+    
+    # And I am logged in
+    facebook_auth_page.sign_in
+    
+    # When I go to the settings page
+    settings_page.visit(@person)
+    
+    # And I click on the Unlink from Facebook link
+    settings_page.click_unlink_from_facebook
+    
+    # And I click yes
+    confirm_facebook_unlinking_page.click_yes
+        
+    # And I click submit
+    before_facebook_unlinking_page.click_link_or_button('Submit')
+    
+    # And I should see an error on missing password
+    before_facebook_unlinking_page.should have_selector('.field-with-error input#person_password')
   end
 end

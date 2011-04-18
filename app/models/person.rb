@@ -11,7 +11,7 @@ class Person < ActiveRecord::Base
          :confirmable, :lockable,
          :omniauthable
 
-  attr_accessor :organization_name, :send_welcome, :create_from_auth, :facebook_unlinking
+  attr_accessor :organization_name, :send_welcome, :create_from_auth, :facebook_unlinking, :send_email_change_notification
   
   # Setup accessible (or protected) attributes for your model
   attr_accessible :name, :first_name, :last_name, :email, :password, :password_confirmation, :bio, :top, :zip_code, :admin, :validated,
@@ -66,7 +66,14 @@ class Person < ActiveRecord::Base
   after_create :notify_civic_commons
   before_save :check_to_send_welcome_email
   after_save :send_welcome_email, :if => :send_welcome?
-
+  
+  around_update :check_to_notify_email_change, :if => :send_email_change_notification?
+  
+  def check_to_notify_email_change
+    old_email, new_email = self.email_change
+    yield
+    Notifier.deliver_email_changed(old_email, new_email) if old_email && new_email
+  end
 
   def newly_confirmed?
     confirmed_at_changed? && confirmed_at_was.blank? && !confirmed_at.blank?
@@ -107,6 +114,10 @@ class Person < ActiveRecord::Base
 
   def send_welcome?
     @send_welcome
+  end
+  
+  def send_email_change_notification?
+    @send_email_change_notification || false
   end
 
   def send_welcome_email
@@ -164,6 +175,7 @@ class Person < ActiveRecord::Base
         self.password = person_hash[:password]
         self.password_confirmation = person_hash[:password_confirmation]
         self.facebook_unlinking = true
+        self.send_email_change_notification = true # sends email change notification
         save!
         self.facebook_authentication.destroy
       end    
@@ -254,7 +266,6 @@ class Person < ActiveRecord::Base
     recoverable.send_reset_password_instructions if recoverable.persisted? && !recoverable.facebook_authenticated?
     recoverable
   end
-  
 
 protected
 

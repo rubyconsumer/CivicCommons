@@ -397,8 +397,8 @@ describe Person do
       @person.encrypted_password.should be_blank
     end
     
-    def when_unlinking_from_facebook_successfully
-      @person.unlink_from_facebook(:email => 'johnd-new-email@example.com', :password => 'test123', :password_confirmation => 'test123')
+    def when_unlinking_from_facebook_successfully(email = 'johnd-new-email@example.com')
+      @person.unlink_from_facebook(:email => email, :password => 'test123', :password_confirmation => 'test123')
       @person.reload
     end
     
@@ -423,9 +423,28 @@ describe Person do
       when_unlinking_from_facebook_successfully
       @person.should be_an_instance_of(Person)
     end
-    
-    it "should send notification email to the previous email prior to changed if email is updated" do
-      pending
+    context "sending notification email" do
+      it "should be sent if email is updated" do
+        given_a_person_with_facebook_auth
+        Notifier.deliveries = []
+        when_unlinking_from_facebook_successfully
+        Notifier.deliveries.length.should == 1
+      end
+      
+      it "should be sent to the old email address, prior to update" do
+        given_a_person_with_facebook_auth
+        Notifier.deliveries = []
+        when_unlinking_from_facebook_successfully
+        Notifier.deliveries.first.to.should == ['johnd@example.com']
+      end
+      
+      it "should be not be sent if email is the same" do
+        given_a_person_with_facebook_auth
+        Notifier.deliveries = []
+        when_unlinking_from_facebook_successfully('johnd@example.com')
+        @person.should_not be_facebook_authenticated
+        Notifier.deliveries.length.should == 0
+      end
     end
     
     context "failure" do
