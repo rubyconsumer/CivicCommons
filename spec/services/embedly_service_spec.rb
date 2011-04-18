@@ -45,7 +45,7 @@ describe EmbedlyService do
         # These two lines use our internal mock
         json = fixture_content('embedly/youtube.json')
         embedly = EmbedlyService.new(MockEmbedly.new(json))
-        
+
         # This line uses WebMock
         #embedly = EmbedlyService.new
 
@@ -62,6 +62,50 @@ describe EmbedlyService do
         embedly.properties[:oembed].should be_instance_of Hash
       end
 
+      describe "EmbedlyService#fetch_and_merge_params!(params)" do
+
+        before(:each) do
+          @hash = {:contribution => {:url => 'http://www.youtube.com/watch?v=onUd7aZhu9g'}}
+          @embedly = EmbedlyService.new
+          @embedly.fetch_and_merge_params!(@hash)
+        end
+
+        it "sets embedly_type to type returned from embedly" do
+          @hash[:contribution][:embedly_type].should == 'video'
+        end
+
+        it "sets embedly_code to the raw json returned from embedly" do
+          @hash[:contribution][:embedly_code].should be_an_instance_of(String)
+        end
+
+        it "returns true if able to connect to embedly" do
+          @embedly.fetch_and_merge_params!(@hash).should be_true
+        end
+
+      end
+
+      describe "EmbedlyService#fetch_ane_update_attributes(contribution)" do
+
+        before(:each) do
+          @contribution = Factory.create(:contribution, type: 'Link', url: 'http://www.youtube.com/watch?v=ukuERsvfDMU')
+          @embedly = EmbedlyService.new
+          @boolean = @embedly.fetch_and_update_attributes(@contribution)
+        end
+
+        it "returns true if able to connect and retrieve information from embed.ly" do
+          @boolean.should be_true
+        end
+
+        it "converts the contribution type to EmbedlyContribution" do
+          @contribution.type.should == 'EmbedlyContribution'
+        end
+
+        it "sets the contribution.embedly_code attribute to embed.ly json string" do
+          @contribution.embedly_code.should be_an_instance_of(String)
+        end
+
+      end
+
     end
 
     context "Unsuccessful" do
@@ -71,7 +115,7 @@ describe EmbedlyService do
 
         mock_embedly = mock('embedly')
         mock_embedly.stub(:objectify).and_raise(Exception)
-        
+
         embedly = EmbedlyService.new(mock_embedly)
         embedly.fetch('http://www.youtube.com/watch?v=onUd7aZhu9g')
         embedly.properties.should be_nil
@@ -84,13 +128,13 @@ describe EmbedlyService do
         Civiccommons::Config.embedly['key'] = "garbage"
         mock_embedly = mock('embedly')
         mock_embedly.stub(:objectify).and_raise(Exception)
-        
+
         embedly = EmbedlyService.new(mock_embedly)
         embedly.fetch('http://www.youtube.com/watch?v=onUd7aZhu9g')
         embedly.properties.should be_nil
         embedly.error.should_not be_nil
       end
-      
+
       #TODO Figure out how to mock the logger and test it
       it "return an error if url is invalid" do
 
@@ -101,7 +145,7 @@ describe EmbedlyService do
         embedly.properties.should be_nil
         embedly.error.should_not be_nil
       end
-    
+
     end
 
     # This set of tests exists simply to verify the accuracy of our fixtures
