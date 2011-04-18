@@ -88,7 +88,7 @@ Civiccommons::Application.routes.draw do
   resources :invites, only: [:new, :create]
   resources :blog, only: [:index, :show]
   resources :radioshow, only: [:index, :show]
- 
+  resources :news, only: [:index, :show]
 
 #Namespaces
   namespace "admin" do
