@@ -4,31 +4,21 @@
       <h1>Blog</h1>
 
       <div class="main-content">
-        <table class="tablesorter" summary="List of Content Items">
-          <thead>
-            <tr>
-              <th>Content Item Title</th>
-              <th>Author</th>
-              <th>Created Date</th>
-              <th>Updated Date</th>
-            </tr>
-            <thead>
-              <tbody>
-                <% @blog_posts.each do |item| %>
-                  <tr>
-                    <td><%= link_to item.title, blog_path(item) %></td>
-                    <td><%= item.author.first_name + " " + item.author.last_name %></td>
-                    <td><%= item.created_at.strftime("%m-%d-%Y %I:%M %p") %></td>
-                    <td><%= item.updated_at.strftime("%m-%d-%Y %I:%M %p") %></td>
-                  </tr>
-                <% end %>
-              </tbody>
-            </table>
-          </div><!-- /.main-content -->     
+        <% @blog_posts.each do |item| %>
+          <div class="posts">
+            <div class="post">
+              <h3><%= link_to item.title, blog_path(item) %></h3>
+              <p class="author"><%= item.author.first_name + " " + item.author.last_name %></p>
+              <p class="time"><%= item.created_at.strftime("%m-%d-%Y %I:%M %p") %></p>
+              <div class="summary"><%= raw item.summary %></div>
+            </div>
+          </div>
+        <% end %>
+      </div><!-- /.main-content -->     
 
-          <div class='aside supplementary'>
-            <div>&nbsp;</div>
-          </div><!-- /.aside -->      
-        </div>
-      </div>
-    <% end %>
+      <div class='aside supplementary'>
+        <div>&nbsp;</div>
+      </div><!-- /.aside -->      
+    </div>
+  </div>
+<% end %>
