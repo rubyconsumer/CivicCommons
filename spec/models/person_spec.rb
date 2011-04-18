@@ -431,11 +431,11 @@ describe Person do
         Notifier.deliveries.length.should == 1
       end
       
-      it "should be sent to the old email address, prior to update" do
+      it "should be sent to the old email address, and the new email address" do
         given_a_person_with_facebook_auth
         Notifier.deliveries = []
         when_unlinking_from_facebook_successfully
-        Notifier.deliveries.first.to.should == ['johnd@example.com']
+        Notifier.deliveries.first.to.should == ["johnd@example.com", "johnd-new-email@example.com"]
       end
       
       it "should be not be sent if email is the same" do

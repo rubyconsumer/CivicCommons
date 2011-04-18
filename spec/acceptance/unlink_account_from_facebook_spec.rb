@@ -65,9 +65,14 @@ feature "Unlink Account From Facebook", %q{
     # Then I should see an unlink confirmation modal dialog
     fb_unlinking_success_page.should be_displayed
     
-    # And I should receive an email notification that I have changed my email
+    # And 1 email change confirmation should be sent
     Notifier.deliveries.length.should == 1
+    
+    # And the email should be sent to the old email
     Notifier.deliveries.first.to.should contain 'johnd@example.com'
+    
+    # And the email should also be sent to the new email
+    Notifier.deliveries.first.to.should contain 'johnd-new-email@example.com'
     
     # And the email should have the correct subject
     Notifier.deliveries.first.subject.should contain "You've recently changed your Civic Commons email"

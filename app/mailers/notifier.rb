@@ -8,7 +8,7 @@ class Notifier < Devise::Mailer
     @new_email = new_email
     mail(:subject => "You've recently changed your Civic Commons email",
          :from => Devise.mailer_sender,
-         :to => old_email)
+         :to => [old_email, new_email])
   end
 
   def welcome(record)
@@ -48,7 +48,5 @@ class Notifier < Devise::Mailer
          :from => '"Curator of Conversation" <curator@theciviccommons.com>',
          :to => @person.email)
   end
-  
-  
 
 end
