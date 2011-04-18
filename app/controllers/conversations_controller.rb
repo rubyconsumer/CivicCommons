@@ -167,6 +167,8 @@ class ConversationsController < ApplicationController
       if @conversation.save
         format.html { redirect_to(new_invite_path(:source_type => :conversations, :source_id => @conversation.id, :conversation_created => true), :notice => 'Your conversation has been created!') }
       else
+        #TODO: Find a better way to handle erros on submission
+        @contributions = [Contribution.new]
         format.html { render :new, :status => :unprocessable_entity  }
       end
     end
