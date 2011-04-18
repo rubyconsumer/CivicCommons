@@ -8,10 +8,6 @@ describe StaticPagesController do
       { get: "/about" }.should route_to(controller: "static_pages", action: "about")
     end
 
-    it "recognizes and generates #blog" do
-      { get: "/blog" }.should route_to(controller: "static_pages", action: "blog")
-    end
-
     it "recognizes and generates #buld_the_commons" do
       { get: "/build_the_commons" }.should route_to(controller: "static_pages", action: "build_the_commons")
     end
