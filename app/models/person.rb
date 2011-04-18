@@ -72,7 +72,7 @@ class Person < ActiveRecord::Base
   def check_to_notify_email_change
     old_email, new_email = self.email_change
     yield
-    Notifier.deliver_email_changed(old_email, new_email) if old_email && new_email
+    Notifier.email_changed(old_email, new_email).deliver if old_email && new_email
   end
 
   def newly_confirmed?
