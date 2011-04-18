@@ -16,15 +16,14 @@
               <tbody>
                 <% @blog_posts.each do |item| %>
                   <tr>
-                    <td><%= link_to item.title, blog_path(item) %></td>
-                    <td><%= item.person_id %></td>
+                    <td><%= link_to item.title, blog_show_path(item) %></td>
+                    <td><%= item.author.first_name + " " + item.author.last_name %></td>
                     <td><%= item.created_at.strftime("%m-%d-%Y %I:%M %p") %></td>
                     <td><%= item.updated_at.strftime("%m-%d-%Y %I:%M %p") %></td>
                   </tr>
                 <% end %>
               </tbody>
             </table>
-
           </div><!-- /.main-content -->     
 
           <div class='aside supplementary'>
