@@ -1,0 +1,24 @@
+<% content_for :main_body do %>
+  <div class="wrapper">
+    <div class="content-container">
+      <h1>Content</h1>
+
+      <div class="main-content">
+        <% @content_items.each do |item| %>
+          <div class="posts">
+            <div class="post">
+              <h3><%= link_to item.title, content_path(item) %></h3>
+              <p class="author"><%= item.author.first_name + " " + item.author.last_name %></p>
+              <p class="time"><%= item.created_at.strftime("%m-%d-%Y %I:%M %p") %></p>
+              <div class="summary"><%= raw item.summary %></div>
+            </div>
+          </div>
+        <% end %>
+      </div><!-- /.main-content -->     
+
+      <div class='aside supplementary'>
+        <div>&nbsp;</div>
+      </div><!-- /.aside -->      
+    </div>
+  </div>
+<% end %>
