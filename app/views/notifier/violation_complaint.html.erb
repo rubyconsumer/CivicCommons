@@ -1,0 +1,21 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="10"><tr>
+  <td style="padding:20px 0 0 0;">
+    <p style="line-height:1.4em;">Hi:</p>
+    <p style="line-height:1.4em;"><%= @user.name %> wants to inform Civic Commons about a potential TOS violation with the contribution content</b></p>
+    <p style="line-height:1.4em;">
+      <% if @contribution.issue -%>
+        Posted on:
+        <%= link_to( @contribution.issue.name, issue_node_path( @contribution ) ) -%>
+      <% elsif @contribution.conversation -%>
+        Posted on:
+        <%= link_to( @contribution.conversation.title, conversation_node_path( @contribution ) ) -%>
+      <% end -%>
+    </p>
+    <p style="line-height:1.4em;"></p>
+    <p style="line-height:1.4em;"><%= @contribution.content.html_safe %></p>
+    <p style="line-height:1.4em;"></p>
+    <p style="line-height:1.4em;">Here's the reason:</p>
+    <p style="line-height:1.4em;"><%=h @reason %></p>
+  </td>
+</tr></table>
+

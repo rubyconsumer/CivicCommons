@@ -1,0 +1,22 @@
+<div class='tos-form form-block' id="report-tos-violation">
+  <%= form_tag tos_url, :method => :post, :remote => request.xhr?, :id => 'tos-form' do %>
+    <h2>Report Violation</h2>
+
+    <div class="validation-error"></div>
+
+    <p>Do you think this post violates the Civic Commons terms of service (<%= link_to 'TOS', terms_url, :target => "_blank" %>)? If so, please give your reason why below and submit to us.</p>
+
+    <fieldset class="form-group">
+      <%= hidden_field_tag :contribution, "#{@contribution}" %>
+    </fieldset>
+
+    <fieldset class="form-group">
+      <%= text_area :tos, :reason, :rows => 5, :cols=>40, :style => "width:340px;height:85px;" %>
+    </fieldset>
+
+    <fieldset class="footer">
+      <%= submit_tag 'Report Violation', :class=> 'submit button' %>
+    </fieldset>
+  <% end %>
+</div>
+

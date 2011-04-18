@@ -34,6 +34,7 @@ Civiccommons::Application.routes.draw do
   
   #Contributions
   post '/contributions/create_confirmed_contribution', to: 'contributions#create_confirmed_contribution',    as: 'create_confirmed_contribution'
+  get  '/tos/tos_contribution',                        to: 'tos#tos_contribution',                           as: 'tos_contribution'
   delete '/contributions/moderate/:id',                to: 'contributions#moderate_contribution',            as: 'moderate_contribution'
   delete '/contributions/:id',                         to: 'contributions#destroy',                          as: 'contribution'
   #Conversations
@@ -102,6 +103,7 @@ Civiccommons::Application.routes.draw do
   resources :regions, only: [:index, :show]
   resources :links, only: [:new, :create]
   resources :invites, only: [:new, :create]
+  resources :tos, only: [:new, :create]
 
 #Namespaces
   namespace "admin" do

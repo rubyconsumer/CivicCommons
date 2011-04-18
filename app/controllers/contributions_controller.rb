@@ -24,4 +24,5 @@ class ContributionsController < ApplicationController
     redirect_to("#{contribution_parent_page(@contribution)}#contribution#{@contribution.id}",
                     :notice => 'Contribution was successfully created.')
   end
+
 end

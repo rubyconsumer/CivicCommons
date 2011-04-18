@@ -10,10 +10,34 @@
           %span.contribution-person-name= person_display_name(contribution.person)
           =auto_link(simple_format(contribution.content, {}, {:sanitize => false}))
         %div{:class => "convo-utility #{contribution.descendants_count > 0 ? 'response' : 'no-response'}"}
+          %p.respond-link
+            - if contribution.descendants_count > 0
+              = link_to(pluralize(contribution.descendants_count,'Response'),
+                          {:action => "node_conversation", :id => contribution.id, :div_id => "contribution-#{contribution.id}"},
+                          :class => "text conversation-responses",
+                          :id => "action-link-#{contribution.id}",
+                          :title => "View the conversation",
+                          'data-target' => "#thread-div-#{contribution.id}",
+                          :remote => true, 'data-type' => 'html')
+            - else
+              %span.conversation-responses No Responses
           .respond-container
+            %div.tos
+              Inappropriate?
+              = link_to("Alert us.",
+                          {:controller => "tos", :action => "tos_contribution", :contribution => contribution.id},
+                          :class => "text conversation-action top-level-contribution-action-button",
+                          :id => "action-link-#{contribution.id}",
+                          'data-colorbox' => true,
+                          :title => "Alert Us of Terms of Service Violations")
             = rating_buttons(contribution, @ratings)
             %span.respond
-              = link_to( respond_button_text(contribution), {:action => "new_node_contribution", :contribution_id => contribution.id, :id => contribution.conversation_id, :div_id => "contribution-#{contribution.id}"}, :class => "text conversation-action top-level-contribution-action-button rating-button", :id => "action-link-#{contribution.id}", :title => "Leave a comment here", 'data-target' => "#action-div-#{contribution.id}")
+              = link_to(respond_button_text(contribution),
+                          {:action => "new_node_contribution", :contribution_id => contribution.id, :id => contribution.conversation_id, :div_id => "contribution-#{contribution.id}"},
+                          :class => "text conversation-action top-level-contribution-action-button rating-button",
+                          :id => "action-link-#{contribution.id}",
+                          :title => "Leave a comment here",
+                          'data-target' => "#action-div-#{contribution.id}")
         %ol.conversations.divided.thread-list
           .top-level-contribution-action(id="action-div-#{contribution.id}")
           .contribution-thread-div(id="thread-div-#{contribution.id}")
