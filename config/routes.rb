@@ -60,7 +60,8 @@ Civiccommons::Application.routes.draw do
   get '/jobs',              to: 'static_pages#jobs'
   get '/careers',           to: 'static_pages#jobs'
 
-  get '/blog',              to: 'content_items#blog_index',           as: 'blog'
+  get '/blog/:id',          to: 'content_items#blog_show',           as: 'blog'
+  get '/blog',              to: 'content_items#blog_index',          as: 'blog'
  #Devise Routes
   devise_for :people,
              :controllers => { :registrations => 'registrations', :confirmations => 'confirmations', :sessions => 'sessions' },
