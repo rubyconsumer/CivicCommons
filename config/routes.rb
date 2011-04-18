@@ -60,8 +60,8 @@ Civiccommons::Application.routes.draw do
   get '/jobs',              to: 'static_pages#jobs'
   get '/careers',           to: 'static_pages#jobs'
 
-  get '/blog/:id',          to: 'content_items#blog_show',           as: 'blog_show'
-  get '/blog',              to: 'content_items#blog_index',          as: 'blog'
+#  get '/blog/:id',          to: 'content_items#blog_show',           as: 'blog_show'
+#  get '/blog',              to: 'content_items#blog_index',          as: 'blog'
 
  #Devise Routes
   devise_for :people,
@@ -89,6 +89,8 @@ Civiccommons::Application.routes.draw do
   resources :regions, only: [:index, :show]
   resources :links, only: [:new, :create]
   resources :invites, only: [:new, :create]
+  resources :blog, only: [:index, :show]
+ 
 
 #Namespaces
   namespace "admin" do
