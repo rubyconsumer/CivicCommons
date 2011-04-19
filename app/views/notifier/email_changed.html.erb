@@ -1,2 +1,2 @@
 <h1>You've recently changed your Civic Commons email</h1>
-<p>You've changed your Civic Commons email from <%= @old_email %> to <%= @new_email %>.<br/>If you did not do this on purpose please <%= mail_to Civiccommons::Config.support_email, 'let us know', :subject => 'Email Violation Alert' %>.</p>
+<p>You've changed your Civic Commons email from <%= @old_email %> to <%= @new_email %>.<br/>If you did not do this on purpose please <%= mail_to Civiccommons::Config.email["support_email"], 'let us know', :subject => 'Email Violation Alert' %>.</p>

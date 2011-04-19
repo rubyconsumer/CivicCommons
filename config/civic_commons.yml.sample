@@ -1,10 +1,13 @@
 development:
-  default_email: "myemail@example.com"
-  support_email: "support@example.com"
   devise:
     email: "The Civic Commons <admin@somewhere.com>"
     mailer_host: "development.somewhere.com"
     pepper: "somereallylongstringtoemcryptuserspasswords"
+  email:
+    default_email: "myemail@example.com"
+    support_email: "support@example.com"
+  embedly:
+    key: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   facebook:
     api_key: 'crazyfacebookid'
     app_secret: 'facebooksecretsauce'
@@ -13,6 +16,8 @@ development:
     list: "planetoftheapes"
     intercept: true
     intercept_email: "myemail@example.com"
+  omniauth:
+    full_host: 'http://localhost:3000'
   rails_secret_token: "randonStuffThatsAtLeast30CharachtersYo128DirtyWithTh"
   smtp:
     address: "smtp.sendsomemail.net"
@@ -21,18 +26,17 @@ development:
     password: "somethingsupercryptic"
   security:
     ssl_login: false
-  embedly:
-    key: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  omniauth:
-    full_host: 'http://localhost:3000'
 
 test:
-  default_email: "myemail@example.com"
-  support_email: "support@example.com"
   devise:
     email: "The Civic Commons <admin@somewhere.com>"
     mailer_host: "test.somewhere.com"
     pepper: "somereallylongstringtoemcryptuserspasswords"
+  email:
+    default_email: "myemail@example.com"
+    support_email: "support@example.com"
+  embedly:
+    key: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   facebook:
     api_key: 'crazyfacebookid'
     app_secret: 'facebooksecretsauce'
@@ -41,6 +45,8 @@ test:
     list: "planetoftheapes"
     intercept: false
     intercept_email: "myemail@example.com"
+  omniauth:
+    full_host: 'http://test.com'
   rails_secret_token: "randonStuffThatsAtLeast30CharachtersYo128DirtyWithTh"
   smtp:
     address: "smtp.sendsomemail.net"
@@ -49,17 +55,17 @@ test:
     password: "somethingsupercryptic"
   security:
     ssl_login: false
-  embedly:
-    key: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  omniauth:
-    full_host: 'http://test.com'
+
 integration:
-  default_email: "myemail@example.com"
-  support_email: "support@example.com"
   devise:
     email: "The Civic Commons <admin@somewhere.com>"
     mailer_host: "integration.somewhere.com"
     pepper: "somereallylongstringtoemcryptuserspasswords"
+  email:
+    default_email: "myemail@example.com"
+    support_email: "support@example.com"
+  embedly:
+    key: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   facebook:
     api_key: 'crazyfacebookid'
     app_secret: 'facebooksecretsauce'
@@ -68,6 +74,8 @@ integration:
     list: "planetoftheapes"
     intercept: true
     intercept_email: "myemail@example.com"
+  omniauth:
+    full_host: 'http://integration.com'
   rails_secret_token: "randonStuffThatsAtLeast30CharachtersYo128DirtyWithTh"
   smtp:
     address: "smtp.sendsomemail.net"
@@ -76,18 +84,17 @@ integration:
     password: "somethingsupercryptic"
   security:
     ssl_login: true
-  embedly:
-    key: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  omniauth:
-    full_host: 'http://integration.theciviccommons.com'
 
 staging:
-  default_email: "myemail@example.com"
-  support_email: "support@example.com"
   devise:
     email: "The Civic Commons <admin@somewhere.com>"
     mailer_host: "staging.somewhere.com"
     pepper: "somereallylongstringtoemcryptuserspasswords"
+  email:
+    default_email: "myemail@example.com"
+    support_email: "support@example.com"
+  embedly:
+    key: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   facebook:
     api_key: 'crazyfacebookid'
     app_secret: 'facebooksecretsauce'
@@ -96,6 +103,8 @@ staging:
     list: "planetoftheapes"
     intercept: true
     intercept_email: "myemail@example.com"
+  omniauth:
+    full_host: 'http://staging.com'
   rails_secret_token: "randonStuffThatsAtLeast30CharachtersYo128DirtyWithTh"
   smtp:
     address: "smtp.sendsomemail.net"
@@ -104,18 +113,17 @@ staging:
     password: "somethingsupercryptic"
   security:
     ssl_login: true
-  embedly:
-    key: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  omniauth:
-    full_host: 'http://staging.theciviccommons.com'
 
 production:
-  default_email: "myemail@example.com"
-  support_email: "support@example.com"
   devise:
     email: "The Civic Commons <admin@somewhere.com>"
     mailer_host: "production.somewhere.com"
     pepper: "somereallylongstringtoemcryptuserspasswords"
+  email:
+    default_email: "myemail@example.com"
+    support_email: "support@example.com"
+  embedly:
+    key: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   facebook:
     api_key: 'crazyfacebookid'
     app_secret: 'facebooksecretsauce'
@@ -124,6 +132,8 @@ production:
     list: "planetoftheapes"
     intercept: false
     intercept_email: "myemail@example.com"
+  omniauth:
+    full_host: 'http://production.com'
   rails_secret_token: "randonStuffThatsAtLeast30CharachtersYo128DirtyWithTh"
   smtp:
     address: "smtp.sendsomemail.net"
@@ -132,8 +142,4 @@ production:
     password: "somethingsupercryptic"
   security:
     ssl_login: true
-  embedly:
-    key: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  omniauth:
-    full_host: 'http://production.theciviccommons.com'
 
