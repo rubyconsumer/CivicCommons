@@ -45,7 +45,7 @@ module CCML
           datum = CCML::Tag::HashWrapper.new(datum) if datum.is_a?(Hash)
 
           # refresh the tag body
-          tag_body = @tag_body
+          tag_body = String.new(@tag_body.to_s)
 
           # iterate through all the conditionals in the tag body
           match = if_block_pattern.match(tag_body)

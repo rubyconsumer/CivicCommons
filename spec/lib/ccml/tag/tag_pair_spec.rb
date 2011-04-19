@@ -73,7 +73,11 @@ describe CCML::Tag::TagPair do
 
     context "with conditionals" do
 
-      let(:full_conditional) do
+      before(:all) do
+
+        @tag = TestPairTag.new({})
+
+      @full_conditional =
 "{if first_name == 'John'}
 <h1>I am the walrus.</h1>
 {if:elsif first_name == 'Paul'}
@@ -83,52 +87,68 @@ describe CCML::Tag::TagPair do
 {if:else}
 <h4>You must be {first_name}!</h4>
 {/if}"
-      end
 
-      let(:if_conditional) do
+      @if_conditional
 "{if first_name == 'John'}
+<h1>I am the walrus.</h1>
+{/if}"
+
+      @multiple_conditionals =
+"{if first_name == 'John'}
+<h1>I am the walrus.</h1>
+{if:elsif first_name == 'Paul'}
+<h2>Ebony and ivory.</h2>
+{if:elseif first_name == 'George'}
+<h3>{first_name}, you are the quiet one.</h3>
+{if:else}
+<h4>You must be {first_name}!</h4>
+{/if}
+
+{if first_name == 'John'}
 <h1>I am the walrus.</h1>
 {/if}"
       end
 
-      let(:tag) do
-        TestPairTag.new({})
-      end
-
       it "should handle an if conditional" do
-        tag.obj = Factory.build(:registered_user, :first_name => 'John')
-        tag.tag_body = full_conditional
-        tag.single_object.should == "\n<h1>I am the walrus.</h1>\n"
+        @tag.obj = Factory.build(:registered_user, :first_name => 'John')
+        @tag.tag_body = @full_conditional
+        @tag.single_object.should == "\n<h1>I am the walrus.</h1>\n"
       end
 
       it "should handle an elsif conditional (Ruby-style)" do
-        tag.obj = { 'first_name' => 'Paul' }
-        tag.tag_body = full_conditional
-        tag.single_object.should == "\n<h2>Ebony and ivory.</h2>\n"
+        @tag.obj = { 'first_name' => 'Paul' }
+        @tag.tag_body = @full_conditional
+        @tag.single_object.should == "\n<h2>Ebony and ivory.</h2>\n"
       end
 
       it "should handle an elseif conditional (ExpressionEngine-style)" do
-        tag.obj = { :first_name => 'George' }
-        tag.tag_body = full_conditional
-        tag.single_object.should == "\n<h3>George, you are the quiet one.</h3>\n"
+        @tag.obj = { :first_name => 'George' }
+        @tag.tag_body = @full_conditional
+        @tag.single_object.should == "\n<h3>George, you are the quiet one.</h3>\n"
       end
 
       it "should handle an else conditional" do
-        tag.obj = { :first_name => 'Ringo' }
-        tag.tag_body = full_conditional
-        tag.single_object.should == "\n<h4>You must be Ringo!</h4>\n"
+        @tag.obj = { :first_name => 'Ringo' }
+        @tag.tag_body = @full_conditional
+        @tag.single_object.should == "\n<h4>You must be Ringo!</h4>\n"
       end
 
       it "should handle a conditional expression against a non-existent property" do
-        tag.obj = { }
-        tag.tag_body = full_conditional
-        tag.single_object.should == "\n<h4>You must be !</h4>\n"
+        @tag.obj = { }
+        @tag.tag_body = @full_conditional
+        @tag.single_object.should == "\n<h4>You must be !</h4>\n"
       end
 
       it "should handle a conditional with no true branches" do
-        tag.obj = { }
-        tag.tag_body = if_conditional
-        tag.single_object.should be_blank
+        @tag.obj = { }
+        @tag.tag_body = @if_conditional
+        @tag.single_object.should be_blank
+      end
+
+      it "should handle an multiple conditionals" do
+        @tag.obj = Factory.build(:registered_user, :first_name => 'John')
+        @tag.tag_body = @multiple_conditionals
+        @tag.single_object.should == "\n<h1>I am the walrus.</h1>\n\n\n\n<h1>I am the walrus.</h1>\n"
       end
 
     end
