@@ -46,76 +46,89 @@ describe CCML::Tag::TagPair do
 
     context "without conditionals" do
 
+      before(:all) do
+        @tag = TestPairTag.new(@ccml_options)
+        @tag.tag_body = @ccml_tag_body
+      end
+
       it "should properly process a simple hash" do
-
-        tag = TestPairTag.new(@ccml_options)
-        tag.tag_body = @ccml_tag_body
-        tag.single_hash.should == @ccml_processed_once
-
+        @tag.single_hash.should == @ccml_processed_once
       end
 
       it "should properly process an array of simple hashes" do
-
-        tag = TestPairTag.new(@ccml_options)
-        tag.tag_body = @ccml_tag_body
-        tag.array_of_hashes.should == @ccml_processed_thrice
-
+        @tag.array_of_hashes.should == @ccml_processed_thrice
       end
 
       it "should properly process an object" do
-
-        tag = TestPairTag.new(@ccml_options)
-        tag.tag_body = @ccml_tag_body
-        tag.obj = @person
-        tag.single_object.should == @ccml_processed_once
-
+        @tag.obj = @person
+        @tag.single_object.should == @ccml_processed_once
       end
 
       it "should properly process an array of objects" do
-
-        tag = TestPairTag.new(@ccml_options)
-        tag.tag_body = @ccml_tag_body
-        tag.obj = @person
-        tag.array_of_objects.should == @ccml_processed_thrice
-
+        @tag.obj = @person
+        @tag.array_of_objects.should == @ccml_processed_thrice
       end
 
     end
 
     context "with conditionals" do
 
-      before(:all) do
-
-        @conditional = 
+      let(:full_conditional) do
 "{if first_name == 'John'}
 <h1>I am the walrus.</h1>
 {if:elsif first_name == 'Paul'}
-<h1>Ebony and ivory.</h1>
-{if:elsif first_name == 'George'}
-<h1>You are the quiet one.</h1>
+<h2>Ebony and ivory.</h2>
+{if:elseif first_name == 'George'}
+<h3>{first_name}, you are the quiet one.</h3>
 {if:else}
-<h1>You must be Ringo!</h1>
+<h4>You must be {first_name}!</h4>
 {/if}"
+      end
 
+      let(:if_conditional) do
+"{if first_name == 'John'}
+<h1>I am the walrus.</h1>
+{/if}"
+      end
+
+      let(:tag) do
+        TestPairTag.new({})
       end
 
       it "should handle an if conditional" do
-
-        @person.first_name = 'John'
-        tag = TestPairTag.new({})
-        tag.tag_body = @conditional
-        tag.obj = @person
-        #tag.single_object.should == @ccml_processed_thrice
-        tag.single_object
-
+        tag.obj = Factory.build(:registered_user, :first_name => 'John')
+        tag.tag_body = full_conditional
+        tag.single_object.should == "\n<h1>I am the walrus.</h1>\n"
       end
 
-      it "should handle an elsif conditional" do
-        pending
+      it "should handle an elsif conditional (Ruby-style)" do
+        tag.obj = { 'first_name' => 'Paul' }
+        tag.tag_body = full_conditional
+        tag.single_object.should == "\n<h2>Ebony and ivory.</h2>\n"
+      end
+
+      it "should handle an elseif conditional (ExpressionEngine-style)" do
+        tag.obj = { :first_name => 'George' }
+        tag.tag_body = full_conditional
+        tag.single_object.should == "\n<h3>George, you are the quiet one.</h3>\n"
       end
 
       it "should handle an else conditional" do
-        pending
+        tag.obj = { :first_name => 'Ringo' }
+        tag.tag_body = full_conditional
+        tag.single_object.should == "\n<h4>You must be Ringo!</h4>\n"
+      end
+
+      it "should handle a conditional expression against a non-existent property" do
+        tag.obj = { }
+        tag.tag_body = full_conditional
+        tag.single_object.should == "\n<h4>You must be !</h4>\n"
+      end
+
+      it "should handle a conditional with no true branches" do
+        tag.obj = { }
+        tag.tag_body = if_conditional
+        tag.single_object.should be_blank
       end
 
     end

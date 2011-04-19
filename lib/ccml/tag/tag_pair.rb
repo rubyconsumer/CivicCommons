@@ -1,10 +1,38 @@
 module CCML
   module Tag
+
+    private
+
+    #--
+    # A wrapper class for a Hash used in tag pair conditional processing.
+    #++
+    class HashWrapper
+      def initialize(hash)
+        @hash = hash
+      end
+      def method_missing(sym, *args, &block)
+        if @hash.has_key?(sym)
+          return @hash[sym]
+        elsif @hash.has_key?(sym.to_s)
+          return @hash[sym.to_s]
+        else
+          raise NameError, "undefined local variable or method '#{sym.to_s}' for #{@hash}"
+        end
+      end
+    end
+
+    public
+
     class TagPair < Base
 
       attr_writer :tag_body
 
       def process_tag_body(data)
+
+        if_block_pattern = /\{if\s+.+?}.*?(\{if:elsif\s+.+?}.+?)*?(\{if:else}.+?)??\{\/if}/im
+        if_pattern = /\{if\s+(?<cond>.+?)}(?<body>.+?)\{\/?if/im
+        elsif_pattern = /\{if:else?if\s+(?<cond>.+?)}(?<body>.+?)\{\/?if/im
+        else_pattern = /\{if:else}(?<body>.+?)\{\/if}/im
 
         # inputs and outputs
         return_data = ''
@@ -13,39 +41,67 @@ module CCML
         # iterate through all data items
         data.each do |datum|
 
-          # refrest the tag body
+          # wrap the hash for later evaluation
+          datum = CCML::Tag::HashWrapper.new(datum) if datum.is_a?(Hash)
+
+          # refresh the tag body
           tag_body = @tag_body
 
-          # get all variables from the tag data
-          #if_pattern = /\{if.*?}.*?\{\/if}/im
-          if_pattern = /\{if\s+.+?}.*?(\{if:elsif\s+.+?}.+?)*?(\{if:else}.+?)??\{\/if}/im
-
           # iterate through all the conditionals in the tag body
-          match = if_pattern.match(tag_body)
+          match = if_block_pattern.match(tag_body)
           while match
-#p match
-puts "!!!!! #{match.to_s} !!!!!"
+            
+            found = false
 
-            # process the 'if'
-            if_match = /\{if\s+(?<cond>.+?)}(?<body>.+?)\{\/?if/im.match(match.to_s)
-puts "IF (#{match.size})----->"
-p if_match
-
-            # process all 'elsif'
-            elsif_match = /\{if:elsif\s+(?<cond>.+?)}(?<body>.+?)\{\/?if/im.match(match.to_s)
-            while elsif_match
-puts "ELSIF (#{match.size})----->"
-p elsif_match
-              pos = elsif_match.end(2)
-              elsif_match = /\{if:elsif\s+(?<cond>.+?)}(?<body>.+?)\{\/?if/im.match(match.to_s, pos)
+            # process the 'if' conditional
+            if_match = if_pattern.match(match.to_s)
+            begin
+              if datum.instance_eval(if_match[:cond])
+                sub = if_match[:body]
+                tag_body.sub!(match.to_s, sub)
+                found = true
+              end
+            rescue
+              # continue
             end
+
+            # process all 'elsif' conditionals
+            if not found
+              if_match = elsif_pattern.match(match.to_s)
+              while if_match
+                begin
+                  if datum.instance_eval(if_match[:cond])
+                    sub = if_match[:body]
+                    tag_body.sub!(match.to_s, sub)
+                    found = true
+                    break
+                  end
+                rescue
+                  # continue
+                end
+                pos = if_match.end(2)
+                if_match = elsif_pattern.match(match.to_s, pos)
+              end
+            end
+
             # process the else
-            else_match = /\{if:else}(?<body>.+?)\{\/if}/im.match(match.to_s)
-puts "ELSE (#{match.size})----->"
-p else_match
+            if not found
+              if if_match = else_pattern.match(match.to_s)
+                sub = if_match[:body]
+                tag_body.sub!(match.to_s, sub)
+                found = true
+              end
+            end
+
+            # wipe the entire match if no conditional is true
+            if not found
+              sub = ''
+              tag_body.sub!(match.to_s, sub)
+            end
 
             # look for another match
-match = nil
+            pos = match.begin(0) + sub.length
+            match = if_block_pattern.match(tag_body, pos)
           end
 
           # iterate through all vars in the tag body
@@ -57,10 +113,10 @@ match = nil
             var = match[:var].to_sym
 
             # get the variable data
-            if datum.is_a?(Hash)
-              sub = datum[var]
-            elsif datum.respond_to?(var)
+            begin
               sub = datum.send(var)
+            rescue Exception => e
+              sub = nil
             end
 
             # make the substitution
@@ -78,16 +134,6 @@ match = nil
         end
 
         return return_data
-      end
-
-      private
-
-      def process_conditionals(datum, tag_body)
-
-        #if_pattern = /\{if\s+.+?}.+?\{\/if}/im
-        if_pattern = /\{if\s+(?<cond>.+?)}.+?\{\/if}/im
-        #match = /(\{if\s+(?<if_cond>.*?)})(?<if>.*?)(\{if:else})(?<else>.*?)(\{\/if})/im.match(c)
-
       end
 
     end
