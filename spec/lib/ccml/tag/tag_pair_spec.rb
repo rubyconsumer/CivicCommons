@@ -82,6 +82,44 @@ describe CCML::Tag::TagPair do
 
     end
 
+    context "with conditionals" do
+
+      before(:all) do
+
+        @conditional = 
+"{if first_name == 'John'}
+<h1>I am the walrus.</h1>
+{if:elsif first_name == 'Paul'}
+<h1>Ebony and ivory.</h1>
+{if:elsif first_name == 'George'}
+<h1>You are the quiet one.</h1>
+{if:else}
+<h1>You must be Ringo!</h1>
+{/if}"
+
+      end
+
+      it "should handle an if conditional" do
+
+        @person.first_name = 'John'
+        tag = TestPairTag.new({})
+        tag.tag_body = @conditional
+        tag.obj = @person
+        #tag.single_object.should == @ccml_processed_thrice
+        tag.single_object
+
+      end
+
+      it "should handle an elsif conditional" do
+        pending
+      end
+
+      it "should handle an else conditional" do
+        pending
+      end
+
+    end
+
   end
 
 end

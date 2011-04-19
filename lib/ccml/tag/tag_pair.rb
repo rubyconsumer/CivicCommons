@@ -17,10 +17,40 @@ module CCML
           tag_body = @tag_body
 
           # get all variables from the tag data
-          pattern = /\{(?<var>\w+)}/
-          match = pattern.match(tag_body)
+          #if_pattern = /\{if.*?}.*?\{\/if}/im
+          if_pattern = /\{if\s+.+?}.*?(\{if:elsif\s+.+?}.+?)*?(\{if:else}.+?)??\{\/if}/im
+
+          # iterate through all the conditionals in the tag body
+          match = if_pattern.match(tag_body)
+          while match
+#p match
+puts "!!!!! #{match.to_s} !!!!!"
+
+            # process the 'if'
+            if_match = /\{if\s+(?<cond>.+?)}(?<body>.+?)\{\/?if/im.match(match.to_s)
+puts "IF (#{match.size})----->"
+p if_match
+
+            # process all 'elsif'
+            elsif_match = /\{if:elsif\s+(?<cond>.+?)}(?<body>.+?)\{\/?if/im.match(match.to_s)
+            while elsif_match
+puts "ELSIF (#{match.size})----->"
+p elsif_match
+              pos = elsif_match.end(2)
+              elsif_match = /\{if:elsif\s+(?<cond>.+?)}(?<body>.+?)\{\/?if/im.match(match.to_s, pos)
+            end
+            # process the else
+            else_match = /\{if:else}(?<body>.+?)\{\/if}/im.match(match.to_s)
+puts "ELSE (#{match.size})----->"
+p else_match
+
+            # look for another match
+match = nil
+          end
 
           # iterate through all vars in the tag body
+          var_pattern = /\{(?<var>\w+)}/
+          match = var_pattern.match(tag_body)
           while match
 
             # get the variable name
@@ -39,8 +69,7 @@ module CCML
 
             # look for another match
             pos = match.begin(0) + sub.length
-            match = pattern.match(tag_body, pos)
-
+            match = var_pattern.match(tag_body, pos)
           end
 
           # append to the output buffer
@@ -49,6 +78,16 @@ module CCML
         end
 
         return return_data
+      end
+
+      private
+
+      def process_conditionals(datum, tag_body)
+
+        #if_pattern = /\{if\s+.+?}.+?\{\/if}/im
+        if_pattern = /\{if\s+(?<cond>.+?)}.+?\{\/if}/im
+        #match = /(\{if\s+(?<if_cond>.*?)})(?<if>.*?)(\{if:else})(?<else>.*?)(\{\/if})/im.match(c)
+
       end
 
     end
