@@ -242,9 +242,11 @@ class Person < ActiveRecord::Base
 
   # Add the email subscription signup as a delayed job
   def subscribe_to_marketing_email
-    Delayed::Job.enqueue Jobs::SubscribeToMarketingEmailJob.new(Civiccommons::Config.mailer['api_token'], Civiccommons::Config.mailer['list'], email, {:FNAME => first_name, :LNAME => last_name}, 'html')
-
-    Rails.logger.info("Success. Added #{name} with email #{email} to email queue.")
+    # Comment Out MailChimp Auto Subscribe Until We Can Stop The Confirmation Email From Being Sent To The User. (-Winston 2011.04.19)
+    # Delayed::Job.enqueue Jobs::SubscribeToMarketingEmailJob.new(Civiccommons::Config.mailer['api_token'], Civiccommons::Config.mailer['list'], email, {:FNAME => first_name, :LNAME => last_name}, 'html')
+    #
+    # Rails.logger.info("Success. Added #{name} with email #{email} to email queue.")
+    Rails.logger.info("Auto-Subscription to MailChimp is Inactive...")
   end
 
   def self.create_from_auth_hash(auth_hash)
