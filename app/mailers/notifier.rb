@@ -48,7 +48,7 @@ class Notifier < Devise::Mailer
     @contribution = @resource[:contribution]
     mail(:subject => "ALERT: Possible TOS Violation reported",
          :from => Devise.mailer_sender,
-         :to => Civiccommons::Config.default_email)
+         :to => Civiccommons::Config.email["default_email"])
   end
 
   def daily_digest(person, conversations)
