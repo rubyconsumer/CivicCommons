@@ -8,7 +8,7 @@
     -@issues.each do |issue|
       %tr
         %td= link_to issue.name, admin_issue_path(issue)
-        %td= issue.summary
+        %td= truncate(Sanitize.clean(issue.summary), :length => 200, :separator => ' ')
         %td= link_to 'Edit', edit_admin_issue_path(issue)
         %td= link_to 'Delete', admin_issue_path(issue), :confirm => "Are you sure?", :method => :delete
 

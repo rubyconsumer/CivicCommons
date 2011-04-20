@@ -4,6 +4,8 @@ class Issue < ActiveRecord::Base
   include Subscribable
   include Regionable 
   include GeometryForStyle
+
+  ALL_TYPES = ['Issue', 'ManagedIssue']
   
   belongs_to :person
 
