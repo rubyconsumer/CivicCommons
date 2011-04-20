@@ -33,6 +33,37 @@ module CCML
       ELSE_PATTERN = /\{if:else}(?<body>.+?)\{\/if}/im
       VAR_PATTERN = /\{(?<var>\w+)}/
 
+      def process_conditionals
+      end
+
+      def process_variables(datum, tag_body)
+
+        # iterate through all vars in the tag body
+        match = VAR_PATTERN.match(tag_body)
+        while match
+
+          # get the variable name
+          var = match[:var].to_sym
+
+          # get the variable data
+          begin
+            sub = datum.send(var)
+          rescue Exception => e
+            sub = nil
+          end
+
+          # make the substitution
+          sub = sub.to_s
+          tag_body = tag_body.sub(match.to_s, sub)
+
+          # look for another match
+          pos = match.begin(0) + sub.length
+          match = VAR_PATTERN.match(tag_body, pos)
+        end
+
+        return tag_body
+      end
+
       def process_tag_body(data)
 
         # inputs and outputs
@@ -105,28 +136,7 @@ module CCML
             match = IF_BLOCK_PATTERN.match(tag_body, pos)
           end
 
-          # iterate through all vars in the tag body
-          match = VAR_PATTERN.match(tag_body)
-          while match
-
-            # get the variable name
-            var = match[:var].to_sym
-
-            # get the variable data
-            begin
-              sub = datum.send(var)
-            rescue Exception => e
-              sub = nil
-            end
-
-            # make the substitution
-            sub = sub.to_s
-            tag_body = tag_body.sub(match.to_s, sub)
-
-            # look for another match
-            pos = match.begin(0) + sub.length
-            match = VAR_PATTERN.match(tag_body, pos)
-          end
+          tag_body = process_variables(datum, tag_body)
 
           # append to the output buffer
           return_data << tag_body
