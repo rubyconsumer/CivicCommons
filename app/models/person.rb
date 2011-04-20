@@ -12,7 +12,7 @@ class Person < ActiveRecord::Base
          :omniauthable
 
   attr_accessor :organization_name, :send_welcome, :create_from_auth, :facebook_unlinking, :send_email_change_notification
-  
+
   # Setup accessible (or protected) attributes for your model
   attr_accessible :name, :first_name, :last_name, :email, :password, :password_confirmation, :bio, :top, :zip_code, :admin, :validated,
                   :avatar, :remember_me, :daily_digest, :create_from_auth, :facebook_unlinking
@@ -28,15 +28,15 @@ class Person < ActiveRecord::Base
   has_many :contributed_conversations, :through => :contributions, :source => :conversation, :uniq => true
   has_many :contributed_issues, :through => :contributions, :source => :issue, :uniq => true
 
-  validates_length_of :email, :within => 6..255, :too_long => "please use a shorter email address", :too_short => "please use a longer email address"  
+  validates_length_of :email, :within => 6..255, :too_long => "please use a shorter email address", :too_short => "please use a longer email address"
   validates_length_of :zip_code, :within => (5..10), :allow_blank => true, :allow_nil => true, :if => :validate_zip_code?
   validates_presence_of :zip_code, :message => 'Please enter zipcode.', :if => :validate_zip_code?
   validates_presence_of :name
-  
+
 
   # Ensure format of salt
   # Commented out because devise 1.2.RC doesn't store password_salt column anymore, if it uses bcrypt
-  # validates_with PasswordSaltValidator 
+  # validates_with PasswordSaltValidator
 
   has_attached_file :avatar,
     :styles => {
@@ -66,9 +66,9 @@ class Person < ActiveRecord::Base
   after_create :notify_civic_commons
   before_save :check_to_send_welcome_email
   after_save :send_welcome_email, :if => :send_welcome?
-  
+
   around_update :check_to_notify_email_change, :if => :send_email_change_notification?
-  
+
   def check_to_notify_email_change
     old_email, new_email = self.email_change
     yield
@@ -82,11 +82,11 @@ class Person < ActiveRecord::Base
   def check_to_send_welcome_email
     @send_welcome = true if newly_confirmed?
   end
-  
+
   def create_from_auth?
     @create_from_auth || false
   end
-  
+
   def avatar_width_for_style(style)
     geometry_for_style(style, :avatar).width.to_i
   end
@@ -94,11 +94,11 @@ class Person < ActiveRecord::Base
   def avatar_height_for_style(style)
     geometry_for_style(style, :avatar).height.to_i
   end
-  
+
   def facebook_unlinking?
     @facebook_unlinking || false
   end
-  
+
   def name=(value)
     @name = value
     self.first_name, self.last_name = self.class.parse_name(value)
@@ -115,7 +115,7 @@ class Person < ActiveRecord::Base
   def send_welcome?
     @send_welcome
   end
-  
+
   def send_email_change_notification?
     @send_email_change_notification || false
   end
@@ -167,7 +167,7 @@ class Person < ActiveRecord::Base
   def subscriptions_include?(subscribable)
     subscriptions.map(&:subscribable).include?(subscribable)
   end
-  
+
   def unlink_from_facebook(person_hash)
     begin
       ActiveRecord::Base.transaction do
@@ -178,7 +178,7 @@ class Person < ActiveRecord::Base
         self.send_email_change_notification = true # sends email change notification
         save!
         self.facebook_authentication.destroy
-      end    
+      end
     rescue
       self
     end
@@ -194,28 +194,28 @@ class Person < ActiveRecord::Base
 
     newly_confirmed? ? true : false
   end
-  
+
   # https://graph.facebook.com/#{uid}/picture
   # optional params: type=small|square|large
   # square (50x50), small (50 pixels wide, variable height), and large (about 200 pixels wide, variable height):
   def facebook_profile_pic_url(type = :square)
     "https://graph.facebook.com/#{facebook_authentication.uid}/picture?type=#{type}" if facebook_authenticated?
   end
-  
+
   def facebook_authenticated?
     !facebook_authentication.blank?
   end
-  
+
   def link_with_facebook(authentication)
     ActiveRecord::Base.transaction do
-      self.facebook_authentication = authentication  
+      self.facebook_authentication = authentication
       self.encrypted_password = ''
       self.create_from_auth = true
       save!
       facebook_authentication.persisted?
     end
   end
-  
+
   def conflicting_email?(other_email)
     if other_email.blank? || (other_email.to_s.downcase.strip == email.to_s.downcase.strip)
       false
@@ -223,33 +223,32 @@ class Person < ActiveRecord::Base
       true
     end
   end
-  
+
   # Overiding Devise::Models::DatabaseAuthenticatable
   # due to needing to set encrypted_password to blank, so that it doesn't error out when it is set to nil
   def valid_password?(password)
     encrypted_password.blank? ? false : super
   end
-  
+
   def validate_zip_code?
-    if create_from_auth? 
+    if create_from_auth?
       false
-    elsif facebook_unlinking? 
+    elsif facebook_unlinking?
       false
-    else 
+    else
       true
     end
   end
-  
+
   # Add the email subscription signup as a delayed job
   def subscribe_to_marketing_email
     Delayed::Job.enqueue Jobs::SubscribeToMarketingEmailJob.new(Civiccommons::Config.mailer['api_token'], Civiccommons::Config.mailer['list'], email, {:FNAME => first_name, :LNAME => last_name}, 'html')
-
 
     Rails.logger.info("Success. Added #{name} with email #{email} to email queue.")
   end
 
   def self.create_from_auth_hash(auth_hash)
-    new_person = new(:name => auth_hash['user_info']['name'], 
+    new_person = new(:name => auth_hash['user_info']['name'],
         :email => Authentication.email_from_auth_hash(auth_hash),
         :encrypted_password => '',
         :create_from_auth => true
@@ -259,7 +258,7 @@ class Person < ActiveRecord::Base
     new_person.authentications << Authentication.new_from_auth_hash(auth_hash)
     new_person
   end
-  
+
   # overriding devise's recoverable
   def self.send_reset_password_instructions(attributes={})
     recoverable = find_or_initialize_with_errors(authentication_keys, attributes, :not_found)
@@ -270,10 +269,10 @@ class Person < ActiveRecord::Base
 protected
 
   def password_required?
-    if facebook_authenticated? 
+    if facebook_authenticated?
       facebook_unlinking? ? true : false
     else
-      (!persisted? && !create_from_auth?) || password.present? || password_confirmation.present? 
+      (!persisted? && !create_from_auth?) || password.present? || password_confirmation.present?
     end
   end
 
