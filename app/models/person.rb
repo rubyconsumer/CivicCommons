@@ -242,14 +242,18 @@ class Person < ActiveRecord::Base
 
   # Add the email subscription signup as a delayed job
   def subscribe_to_marketing_email
-    Delayed::Job.enqueue Jobs::SubscribeToMarketingEmailJob.new(Civiccommons::Config.mailer['api_token'],
-                                                                Civiccommons::Config.mailer['list'],
-                                                                email,
-                                                                {:FNAME => first_name, :LNAME => last_name},
-                                                                'html',
-                                                                false)
+    if Civiccommons::Config.mailer['mailchimp']
+      Delayed::Job.enqueue Jobs::SubscribeToMarketingEmailJob.new(Civiccommons::Config.mailer['api_token'],
+                                                                  Civiccommons::Config.mailer['list'],
+                                                                  email,
+                                                                  {:FNAME => first_name, :LNAME => last_name},
+                                                                  'html',
+                                                                  false)
 
-    Rails.logger.info("Success. Added #{name} with email #{email} to email queue.")
+      Rails.logger.info("Success. Added #{name} with email #{email} to email queue.")
+    else
+      Rails.logger.info("Auto-Subscription to MailChimp is off...")
+    end
   end
 
   def self.create_from_auth_hash(auth_hash)

@@ -12,6 +12,7 @@ development:
     api_key: 'crazyfacebookid'
     app_secret: 'facebooksecretsauce'
   mailer:
+    mailchimp: true
     api_token: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-us1"
     list: "planetoftheapes"
     intercept: true
@@ -41,6 +42,7 @@ test:
     api_key: 'crazyfacebookid'
     app_secret: 'facebooksecretsauce'
   mailer:
+    mailchimp: true
     api_token: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-us1"
     list: "planetoftheapes"
     intercept: false
@@ -70,6 +72,7 @@ integration:
     api_key: 'crazyfacebookid'
     app_secret: 'facebooksecretsauce'
   mailer:
+    mailchimp: true
     api_token: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-us1"
     list: "planetoftheapes"
     intercept: true
@@ -99,6 +102,7 @@ staging:
     api_key: 'crazyfacebookid'
     app_secret: 'facebooksecretsauce'
   mailer:
+    mailchimp: true
     api_token: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-us1"
     list: "planetoftheapes"
     intercept: true
@@ -128,6 +132,7 @@ production:
     api_key: 'crazyfacebookid'
     app_secret: 'facebooksecretsauce'
   mailer:
+    mailchimp: true
     api_token: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-us1"
     list: "planetoftheapes"
     intercept: false

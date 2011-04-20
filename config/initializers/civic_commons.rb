@@ -33,9 +33,17 @@ if !defined?(Civiccommons::Config)
         self.mailer['intercept_email'] = self.email["default_email"] unless self.mailer.key?('intercept_email')
       end
 
+      def self.setup_mailchimp
+        unless self.mailer.key?('mailchimp')
+          self.mailer['mailchimp'] = false
+          Rails.logger.info "Mailchimp default has been set to false"
+        end
+      end
+
       setup_default_email
       validate_intercept_config
       setup_intercept_email
+      setup_mailchimp
     end
   end
 
