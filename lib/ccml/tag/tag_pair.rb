@@ -27,12 +27,13 @@ module CCML
 
       attr_writer :tag_body
 
-      def process_tag_body(data)
+      IF_BLOCK_PATTERN = /\{if\s+.+?}.*?(\{if:elsif\s+.+?}.+?)*?(\{if:else}.+?)??\{\/if}/im
+      IF_PATTERN = /\{if\s+(?<cond>.+?)}(?<body>.+?)\{\/?if/im
+      ELSIF_PATTERN = /\{if:else?if\s+(?<cond>.+?)}(?<body>.+?)\{\/?if/im
+      ELSE_PATTERN = /\{if:else}(?<body>.+?)\{\/if}/im
+      VAR_PATTERN = /\{(?<var>\w+)}/
 
-        if_block_pattern = /\{if\s+.+?}.*?(\{if:elsif\s+.+?}.+?)*?(\{if:else}.+?)??\{\/if}/im
-        if_pattern = /\{if\s+(?<cond>.+?)}(?<body>.+?)\{\/?if/im
-        elsif_pattern = /\{if:else?if\s+(?<cond>.+?)}(?<body>.+?)\{\/?if/im
-        else_pattern = /\{if:else}(?<body>.+?)\{\/if}/im
+      def process_tag_body(data)
 
         # inputs and outputs
         return_data = ''
@@ -48,13 +49,13 @@ module CCML
           tag_body = String.new(@tag_body.to_s)
 
           # iterate through all the conditionals in the tag body
-          match = if_block_pattern.match(tag_body)
+          match = IF_BLOCK_PATTERN.match(tag_body)
           while match
             
             found = false
 
             # process the 'if' conditional
-            if_match = if_pattern.match(match.to_s)
+            if_match = IF_PATTERN.match(match.to_s)
             begin
               if datum.instance_eval(if_match[:cond])
                 sub = if_match[:body]
@@ -67,7 +68,7 @@ module CCML
 
             # process all 'elsif' conditionals
             if not found
-              if_match = elsif_pattern.match(match.to_s)
+              if_match = ELSIF_PATTERN.match(match.to_s)
               while if_match
                 begin
                   if datum.instance_eval(if_match[:cond])
@@ -80,13 +81,13 @@ module CCML
                   # continue
                 end
                 pos = if_match.end(2)
-                if_match = elsif_pattern.match(match.to_s, pos)
+                if_match = ELSIF_PATTERN.match(match.to_s, pos)
               end
             end
 
             # process the else
             if not found
-              if if_match = else_pattern.match(match.to_s)
+              if if_match = ELSE_PATTERN.match(match.to_s)
                 sub = if_match[:body]
                 tag_body.sub!(match.to_s, sub)
                 found = true
@@ -101,12 +102,11 @@ module CCML
 
             # look for another match
             pos = match.begin(0) + sub.length
-            match = if_block_pattern.match(tag_body, pos)
+            match = IF_BLOCK_PATTERN.match(tag_body, pos)
           end
 
           # iterate through all vars in the tag body
-          var_pattern = /\{(?<var>\w+)}/
-          match = var_pattern.match(tag_body)
+          match = VAR_PATTERN.match(tag_body)
           while match
 
             # get the variable name
@@ -125,7 +125,7 @@ module CCML
 
             # look for another match
             pos = match.begin(0) + sub.length
-            match = var_pattern.match(tag_body, pos)
+            match = VAR_PATTERN.match(tag_body, pos)
           end
 
           # append to the output buffer

@@ -20,7 +20,7 @@ end
 
 describe CCML::Tag::TagPair do
 
-  context "process_tag_body" do
+  context "process_tag" do
 
     before(:all) do
 
@@ -51,20 +51,20 @@ describe CCML::Tag::TagPair do
         @tag.tag_body = @ccml_tag_body
       end
 
-      it "should properly process a simple hash" do
+      it "processes a simple hash" do
         @tag.single_hash.should == @ccml_processed_once
       end
 
-      it "should properly process an array of simple hashes" do
+      it "processes an array of simple hashes" do
         @tag.array_of_hashes.should == @ccml_processed_thrice
       end
 
-      it "should properly process an object" do
+      it "processes an object" do
         @tag.obj = @person
         @tag.single_object.should == @ccml_processed_once
       end
 
-      it "should properly process an array of objects" do
+      it "processes an array of objects" do
         @tag.obj = @person
         @tag.array_of_objects.should == @ccml_processed_thrice
       end
@@ -109,43 +109,43 @@ describe CCML::Tag::TagPair do
 {/if}"
       end
 
-      it "should handle an if conditional" do
+      it "processes an 'if' phrase" do
         @tag.obj = Factory.build(:registered_user, :first_name => 'John')
         @tag.tag_body = @full_conditional
         @tag.single_object.should == "\n<h1>I am the walrus.</h1>\n"
       end
 
-      it "should handle an elsif conditional (Ruby-style)" do
+      it "processes an 'elsif' phrase (Ruby-style)" do
         @tag.obj = { 'first_name' => 'Paul' }
         @tag.tag_body = @full_conditional
         @tag.single_object.should == "\n<h2>Ebony and ivory.</h2>\n"
       end
 
-      it "should handle an elseif conditional (ExpressionEngine-style)" do
+      it "processes an 'elseif' phrase (ExpressionEngine-style)" do
         @tag.obj = { :first_name => 'George' }
         @tag.tag_body = @full_conditional
         @tag.single_object.should == "\n<h3>George, you are the quiet one.</h3>\n"
       end
 
-      it "should handle an else conditional" do
+      it "processes an 'else' phrase" do
         @tag.obj = { :first_name => 'Ringo' }
         @tag.tag_body = @full_conditional
         @tag.single_object.should == "\n<h4>You must be Ringo!</h4>\n"
       end
 
-      it "should handle a conditional expression against a non-existent property" do
+      it "processes an expression against a non-existent property" do
         @tag.obj = { }
         @tag.tag_body = @full_conditional
         @tag.single_object.should == "\n<h4>You must be !</h4>\n"
       end
 
-      it "should handle a conditional with no true branches" do
+      it "processes a conditional with no true branches" do
         @tag.obj = { }
         @tag.tag_body = @if_conditional
         @tag.single_object.should be_blank
       end
 
-      it "should handle an multiple conditionals" do
+      it "processes an multiple conditionals" do
         @tag.obj = Factory.build(:registered_user, :first_name => 'John')
         @tag.tag_body = @multiple_conditionals
         @tag.single_object.should == "\n<h1>I am the walrus.</h1>\n\n\n\n<h1>I am the walrus.</h1>\n"
