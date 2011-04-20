@@ -21,7 +21,7 @@ describe 'notifier/email_changed.html.erb' do
   end
 
   it "should display the correct mailto link" do
-    Civiccommons::Config.should_receive(:support_email).and_return('support@example.com')
+    Civiccommons::Config.should_receive(:email).and_return({"default_email"=>"myemail@example.com", "support_email"=>"support@example.com"})
     render
     rendered.should have_selector('a',:href => 'mailto:support@example.com?subject=Email%20Violation%20Alert')
   end
