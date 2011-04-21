@@ -3,13 +3,15 @@
     setTimeout(function(){ 
         var post_to_decline_path = function(){
           $.post('<%= decline_fb_auth_path %>')
-          $.colorbox.close();
           return false;
           };
         $.colorbox({opacity:0.5, 
             html:'<%= escape_javascript(render :partial => "/shared/suggest_facebook_auth.html") %>',
             onClosed: post_to_decline_path});
-        $('a.decline-facebook-auth').click(post_to_decline_path);
+        $('a.decline-facebook-auth').click(function(){
+            $.colorbox.close();
+            return false;
+          });
       }, 1000);
   });
 </script>
