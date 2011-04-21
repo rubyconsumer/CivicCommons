@@ -59,15 +59,23 @@ Rspec.configure do |config|
   end
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
-  config.use_transactional_fixtures = true
+  config.use_transactional_fixtures = false
+
+  config.before :suite do
+    DatabaseCleaner.strategy = :truncation
+  end
 
   config.before :each do
+    DatabaseCleaner.start
     stub_contribution_urls
     stub_amazon_s3_request
     stub_pro_embedly_request
   end
+
   config.after :each do
+    DatabaseCleaner.clean
   end
+
   config.before :all do
     DatabaseCleaner.start
     stub_contribution_urls
