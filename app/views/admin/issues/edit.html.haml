@@ -1,45 +1,5 @@
 %h2 Edit Issue
 
-=form_for @issue, :url => admin_issue_path(@issue), :html =>{ :method => :put, :multipart => true } do |f|
-  =show_errors @issue 
-  %p        
-    =f.label :name
-    %br
-    =f.text_field :name
-
-  %p        
-    =f.label :type
-    %br
-    =f.select :type, Issue::ALL_TYPES
-
-  -if @issue.image.exists?
-    = image_tag @issue.image.url(:normal)
-
-  %p
-    =f.label :image, "Attach an Image (looks best at 3:2 ratio)"
-    %br
-    =f.file_field :image
-    
-  %p
-    =f.label :summary
-    %br
-    =f.text_area :summary
-    
-  %p
-    =f.label :url, "Reference URL"
-    %br
-    =f.text_field :url
-    
-  %p
-    =f.label :url_title, "URL Title"
-    %br
-    =f.text_field :url_title
-
-  %p
-    =f.label :zip_code
-    =f.text_field :zip_code
-    
-  %p
-    =f.submit 
+=render :partial => 'form'
 
 =link_to "Back", admin_issues_path

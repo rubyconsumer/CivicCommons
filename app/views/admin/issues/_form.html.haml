@@ -1,9 +1,20 @@
-=form_for [:admin, @issue], :html =>{:multipart => true} do |f|
+-if @issue.id.nil?
+  -url = [ :admin, @issue ]
+  -method = :post
+-else
+  -url = admin_issue_path(@issue)
+  -method = :put
+=form_for @issue, :url => url, :html =>{ :method => method, :multipart => true } do |f|
   =show_errors @issue 
   %p        
     =f.label :name
     %br
     =f.text_field :name
+
+  %p        
+    =f.label :type
+    %br
+    =f.select :type, Issue::ALL_TYPES
 
   -if @issue.image.exists?
     = image_tag @issue.image.url(:normal)
@@ -33,4 +44,4 @@
     =f.text_field :zip_code
     
   %p
-    =f.submit 
+    =f.submit "Update Issue"

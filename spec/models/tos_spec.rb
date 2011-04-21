@@ -16,8 +16,8 @@ describe Tos do
 
     email.subject.should == "ALERT: Possible TOS Violation reported"
     email[:from].to_s.should == Devise.mailer_sender
-    email.to.should == [Civiccommons::Config.email["default_email"]]
-
+    Civiccommons::Config.email["default_email"].match(email.to.first).should be
+    
     email.should have_body_text(/Whistle Blower/)
     email.should have_body_text(/This comment is spam\./)
     email.should have_body_text(/spam spam spam/)
