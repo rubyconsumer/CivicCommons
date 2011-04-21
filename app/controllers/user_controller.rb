@@ -1,6 +1,6 @@
 class UserController < ApplicationController
 
-  before_filter :require_ssl, :only => [:edit, :update]
+  before_filter :require_ssl, :only => [:update]
   before_filter :verify_ownership?, :only => [:edit, :update, :destroy_avatar]
 
   def verify_ownership?
