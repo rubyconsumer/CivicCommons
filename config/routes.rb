@@ -1,4 +1,5 @@
 Civiccommons::Application.routes.draw do
+
   # ----------------------------------------
   #   ROUTES README
   # ----------------------------------------
@@ -30,7 +31,6 @@ Civiccommons::Application.routes.draw do
   get   '/authentication/confirm_facebook_unlinking',  to: 'authentication#confirm_facebook_unlinking',      as: 'confirm_facebook_unlinking'
   get   '/authentication/before_facebook_unlinking',   to: 'authentication#before_facebook_unlinking',       as: 'before_facebook_unlinking'
   delete '/authentication/process_facebook_unlinking', to: 'authentication#process_facebook_unlinking',      as: 'process_facebook_unlinking'
-
   
   #Contributions
   post '/contributions/create_confirmed_contribution', to: 'contributions#create_confirmed_contribution',    as: 'create_confirmed_contribution'
@@ -110,6 +110,7 @@ Civiccommons::Application.routes.draw do
     root      to: "dashboard#show"
     resources :articles
     resources :content_items #, only: [:index, :show, :new, :create, :update, :destroy]
+    resources :content_templates
     resources :conversations do
       put 'toggle_staff_pick', on: :member
       post 'update_order', on: :collection

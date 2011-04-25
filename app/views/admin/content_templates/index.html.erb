@@ -1,0 +1,30 @@
+<h1>Content Templates</h1>
+
+<table class="tablesorter" summary="List of Content Templates">
+  <thead>
+    <tr>
+      <th>Template Name</th>
+      <th>Author</th>
+      <th>Slug</th>
+      <th>Created At</th>
+      <th>Updated At</th>
+      <th></th>
+      <th></th>
+    </tr>
+    <thead>
+      <tbody>
+        <% @content_templates.each do |template| %>
+          <tr>
+            <td><%= link_to template.name, admin_content_template_path(template) %></td>
+            <td><%= template.author.name %></td>
+            <td><%= template.cached_slug %></td>
+            <td><%= template.created_at.strftime("%m-%d-%Y %I:%M %p") %></td>
+            <td><%= template.updated_at.strftime("%m-%d-%Y %I:%M %p") %></td>
+            <td><%= link_to "Edit", edit_admin_content_template_path(template) %></td>
+            <td><%= link_to "Delete", admin_content_template_path(template), method:  :delete, confirm: "Are you sure?" %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <br />
+    <%= link_to 'New Content Template', new_admin_content_template_path %>
