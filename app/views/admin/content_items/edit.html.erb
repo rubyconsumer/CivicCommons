@@ -29,6 +29,11 @@
   </p>
 
   <p>
+  <%= f.label :person_id, "Author" %><br>
+  <%= f.select :person_id, @authors.collect{|author| [author.first_name + " " + author.last_name, author.id]} %>
+  </p>
+
+  <p>
   <%= f.label :summary %><br>
   <%= f.text_area :summary %>
   </p>

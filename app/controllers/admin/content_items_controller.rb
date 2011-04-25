@@ -7,6 +7,8 @@ class Admin::ContentItemsController < Admin::DashboardController
 
   def new
     @content_item = ContentItem.new(params[:content_item])
+    @authors = Person.find_all_by_admin(true)
+    @content_item.author = current_person
   end
 
   def create
@@ -30,6 +32,7 @@ class Admin::ContentItemsController < Admin::DashboardController
 
   def edit
     @content_item = ContentItem.find(params[:id])
+    @authors = Person.find_all_by_admin(true)
   end
 
   def destroy
