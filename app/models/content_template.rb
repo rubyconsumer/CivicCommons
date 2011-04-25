@@ -1,4 +1,7 @@
 class ContentTemplate < ActiveRecord::Base
+
+  acts_as_revisionable :on_update => true
+
   belongs_to :author, :foreign_key => 'person_id', :class_name => 'Person'
 
   validates_presence_of :name, :template, :author
