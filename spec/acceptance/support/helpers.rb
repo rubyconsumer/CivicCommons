@@ -12,6 +12,14 @@ module HelperMethods
     click_button 'Login'
   end
 
+  def preview_comment(conversation, comment)
+    visit conversation_path(conversation)
+    click_link('Post to this Conversation')
+    page.has_css?('textarea#contribution_content', visible: true)
+    fill_in 'contribution_content', :with => comment
+    click_button('Preview')
+  end
+
 
   def should_be_on(path)
     page.current_url.should match(Regexp.new(path))

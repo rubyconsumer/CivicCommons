@@ -1,5 +1,4 @@
 require File.expand_path(File.dirname(__FILE__) + '/acceptance_helper')
-
 WebMock.allow_net_connect!
 
 feature "Add contribution", %q{
@@ -53,15 +52,28 @@ feature "Add contribution", %q{
     visit conversation_path(@conversation)
     click_link('Post to this Conversation')
     #When I fill in the comments text box with “the cat in the hat”
+    page.has_css?('textarea#contribution_content', visible: true)
     fill_in 'contribution_content', :with => "the cat in the hat"
     #And I click the preview button
     click_button('Preview')
     #Then I should see a preview modal with the content “the cat in the hat”
-    find(".content p").text.should == "the cat in the hat"
+    find("#cboxLoadedContent div.comment div.content p").should_not be_nil
+    page.should have_content "the cat in the hat"
     #And I should I should see a submit button
-    find('#contribution_submit').should_not be_nil
+    page.has_css?('#contribution_submit').should be_true
     #And I should I should see a cancel link
-    find('a.cancel').should_not be_nil
+    page.has_css?('a.cancel').should be_true
+  end
+
+  scenario "Posting a comment", :js => true do
+    #Given I have previewed a comment for a contribution
+    preview_comment(@conversation, "the cat in the hat")
+    #When I submit I should be back on the conversation page 
+    find('#contribution_submit', visible: true).click
+    #Then I should be directed back to the contribution
+    visit "#{conversation_path(@conversation)}#node-#{@conversation.contributions.last.id}"
+    #And this contribution should be on the conversation page
+    page.has_content?('the cat in the hat').should be_true
   end
 
 end
