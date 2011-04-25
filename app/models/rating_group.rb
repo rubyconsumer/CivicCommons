@@ -7,9 +7,11 @@ class RatingGroup < ActiveRecord::Base
   belongs_to :contribution
   has_many   :ratings, :dependent => :destroy
 
-  before_create :set_conversation_id
+  before_validation :set_conversation_id
 
+  validates :person_id, :contribution_id, :conversation_id, :presence => true
   validates_uniqueness_of :person_id, :scope => :contribution_id
+  validates_with RatingGroupValidator
 
   scope :group_by_contribution, lambda { |contribution|
     joins(:rating_descriptor).joins(:rating_group).
@@ -23,7 +25,8 @@ class RatingGroup < ActiveRecord::Base
 
   def self.add_rating!(person, contribution, descriptor, rg=nil)
     rg ||= RatingGroup.find_or_create_by_person_id_and_contribution_id(person.id, contribution.id)
-    rg.ratings.create(:rating_descriptor => descriptor)
+    rg.ratings.create(:rating_descriptor => descriptor) unless rg.new_record? # not saved
+    return rg
   end
 
   def self.remove_rating!(person, contribution, descriptor, rg=nil)
@@ -32,6 +35,7 @@ class RatingGroup < ActiveRecord::Base
       rating = rg.ratings.detect{|r| r.rating_descriptor_id == descriptor.id}
       rating && rg.ratings.size == 1 ? rg.destroy : rating.destroy
     end
+    return rg
   end
 
   def self.toggle_rating!(person, contribution, descriptor)

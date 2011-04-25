@@ -44,10 +44,10 @@
           </fieldset>
           <br class="clear" />
 
-          <p>Give us a short description of what you want to accomplish with this conversation.</p>
+          <p>Give us a short description of what you want to accomplish in this conversation. (By "short," we mean about 250 characters, or two sentences.)</p>
           <fieldset class="form-group">
             <%= conversation.label :summary %>
-            <%= conversation.text_area :summary %>
+            <%= conversation.text_area :summary, :rows => 5 %>
           </fieldset>
 
           <p>Just so we know where you are, what’s your zip code?</p>
@@ -92,22 +92,22 @@
                 </div>
                 <div class="panels">
                   <div id="new-comment">
-                    <%= render :partial => 'user_conversation_contribution_fields', :locals => {:conversation => conversation, :type => :comment} %>
+                    <%= render :partial => 'user_conversation_contribution_fields', :locals => {:conversation => conversation, :type => :comment, :subtype => nil} %>
                   </div>
                   <div id="new-question">
-                    <%= render :partial => 'user_conversation_contribution_fields', :locals => {:conversation => conversation, :type => :question} %>
+                    <%= render :partial => 'user_conversation_contribution_fields', :locals => {:conversation => conversation, :type => :question, :subtype => nil} %>
                   </div>
                   <div id="new-attached_file">
-                    <%= render :partial => 'user_conversation_contribution_fields', :locals => {:conversation => conversation, :type => :attached_file} %>
+                    <%= render :partial => 'user_conversation_contribution_fields', :locals => {:conversation => conversation, :type => :attached_file, :subtype => nil} %>
                   </div>
                   <div id="new-link">
-                    <%= render :partial => 'user_conversation_contribution_fields', :locals => {:conversation => conversation, :type => :link} %>
+                    <%= render :partial => 'user_conversation_contribution_fields', :locals => {:conversation => conversation, :type => :embedly_contribution, :subtype => :link} %>
                   </div>
                   <div id="new-embedded_snippet">
-                    <%= render :partial => 'user_conversation_contribution_fields', :locals => {:conversation => conversation, :type => :embedded_snippet} %>
+                    <%= render :partial => 'user_conversation_contribution_fields', :locals => {:conversation => conversation, :type => :embedly_contribution, :subtype => :video } %>
                   </div>
                   <div id="new-suggested_action">
-                    <%= render :partial => 'user_conversation_contribution_fields', :locals => {:conversation => conversation, :type => :suggested_action} %>
+                    <%= render :partial => 'user_conversation_contribution_fields', :locals => {:conversation => conversation, :type => :suggested_action, :subtype => nil} %>
                   </div>
                 </div>
               </div>

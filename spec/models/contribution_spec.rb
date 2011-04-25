@@ -193,9 +193,9 @@ describe Contribution do
         @person = Factory.create(:normal_person)
         @top_level_contribution = Factory.create(:top_level_contribution,{:conversation=>@conversation})
         @contribution = Factory.build(contribution_type.underscore.to_sym, {
-          :person=>@person, 
+          :person=>@person,
           :conversation=>@conversation,
-          :parent=>@top_level_contribution 
+          :parent=>@top_level_contribution
         } )
       end
 
@@ -228,7 +228,7 @@ describe Contribution do
           @contribution.person.should == @person
         end
 
-        it "should set the item to the conversation" do 
+        it "should set the item to the conversation" do
           @contribution.item.should == @conversation
         end
 
@@ -237,11 +237,11 @@ describe Contribution do
       describe "and using node level contribution methods" do
 
         before(:each) do
-          @attributes = Factory.attributes_for(contribution_type.underscore).merge({
-            :parent_id => @contribution.parent_id,
-            :type => contribution_type,
-            :conversation => @contribution.conversation
-          })
+          @attributes = Factory.attributes_for(contribution_type.underscore,
+                                               :conversation => @contribution.conversation,
+                                               :parent_id => @contribution.parent_id)
+                               .merge({:type => contribution_type}
+                        )
         end
 
         context "when using Contribution.new_node_level_contribution" do
@@ -281,7 +281,7 @@ describe Contribution do
 
         describe "dealing with preview functionality" do
 
-          before(:each) do 
+          before(:each) do
             @contribution.save!
           end
 

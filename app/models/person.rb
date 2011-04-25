@@ -8,14 +8,17 @@ class Person < ActiveRecord::Base
   # :token_authenticatable, :confirmable, and :timeoutable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
-         :confirmable, :lockable
+         :confirmable, :lockable,
+         :omniauthable
 
-  attr_accessor :organization_name, :send_welcome
+  attr_accessor :organization_name, :send_welcome, :create_from_auth, :facebook_unlinking, :send_email_change_notification
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :name, :first_name, :last_name, :email, :password, :password_confirmation, :bio, :top, :zip_code, :admin, :validated,
-                  :avatar, :remember_me, :daily_digest
+                  :avatar, :remember_me, :daily_digest, :create_from_auth, :facebook_unlinking
 
+  has_one :facebook_authentication, :class_name => 'Authentication', :conditions => {:provider => 'facebook'}
+  has_many :authentications, :dependent => :destroy
   has_many :content_items, :foreign_key => 'author'
   has_many :contributions, :foreign_key => 'owner', :uniq => true
   has_many :ratings
@@ -26,11 +29,14 @@ class Person < ActiveRecord::Base
   has_many :contributed_issues, :through => :contributions, :source => :issue, :uniq => true
 
   validates_length_of :email, :within => 6..255, :too_long => "please use a shorter email address", :too_short => "please use a longer email address"
-  validates_length_of :zip_code, :within => (5..10), :allow_empty => false, :allow_nil => false
+  validates_length_of :zip_code, :within => (5..10), :allow_blank => true, :allow_nil => true, :if => :validate_zip_code?
+  validates_presence_of :zip_code, :message => 'Please enter zipcode.', :if => :validate_zip_code?
   validates_presence_of :name
 
+
   # Ensure format of salt
-  validates_with PasswordSaltValidator
+  # Commented out because devise 1.2.RC doesn't store password_salt column anymore, if it uses bcrypt
+  # validates_with PasswordSaltValidator
 
   has_attached_file :avatar,
     :styles => {
@@ -48,10 +54,6 @@ class Person < ActiveRecord::Base
                                     :message => "Not a valid image file."
   process_in_background :avatar
 
-  def avatar_exists
-    self.avatar.exists?
-  end
-
   scope :participants_of_issue, lambda{ |issue|
       joins(:conversations => :issues).where(['issue_id = ?',issue.id]).select('DISTINCT(people.id),people.*') if issue
     }
@@ -65,6 +67,13 @@ class Person < ActiveRecord::Base
   before_save :check_to_send_welcome_email
   after_save :send_welcome_email, :if => :send_welcome?
 
+  around_update :check_to_notify_email_change, :if => :send_email_change_notification?
+
+  def check_to_notify_email_change
+    old_email, new_email = self.email_change
+    yield
+    Notifier.email_changed(old_email, new_email).deliver if old_email && new_email
+  end
 
   def newly_confirmed?
     confirmed_at_changed? && confirmed_at_was.blank? && !confirmed_at.blank?
@@ -74,12 +83,20 @@ class Person < ActiveRecord::Base
     @send_welcome = true if newly_confirmed?
   end
 
+  def create_from_auth?
+    @create_from_auth || false
+  end
+
   def avatar_width_for_style(style)
     geometry_for_style(style, :avatar).width.to_i
   end
 
   def avatar_height_for_style(style)
     geometry_for_style(style, :avatar).height.to_i
+  end
+
+  def facebook_unlinking?
+    @facebook_unlinking || false
   end
 
   def name=(value)
@@ -99,6 +116,10 @@ class Person < ActiveRecord::Base
     @send_welcome
   end
 
+  def send_email_change_notification?
+    @send_email_change_notification || false
+  end
+
   def send_welcome_email
     Notifier.welcome(self).deliver
     @send_welcome = false
@@ -107,6 +128,22 @@ class Person < ActiveRecord::Base
   def self.find_all_by_name(name)
     first, last = parse_name(name)
     where(:first_name => first, :last_name => last)
+  end
+
+  def self.find_confirmed_order_by_recency
+    Person.order('confirmed_at DESC').where('confirmed_at IS NOT NULL').where('locked_at IS NULL')
+  end
+
+  def self.find_confirmed_order_by_last_name(letter = nil)
+    if letter.nil?
+      Person.find(:all,
+                  :select => "*, IF(last_name IS NULL OR last_name='' OR UCASE(SUBSTR(last_name, 1) NOT BETWEEN 'A' AND 'Z'), 1, 0) as blank_last_name",
+                  :conditions => 'confirmed_at IS NOT NULL and locked_at IS NULL',
+                  :order => 'blank_last_name, last_name, first_name ASC'
+                 )
+    else
+      Person.order('last_name, first_name ASC').where('confirmed_at IS NOT NULL').where("last_name like '#{letter}%'").where('locked_at IS NULL')
+    end
   end
 
   # Takes a full name and return an array of first and last name
@@ -131,6 +168,22 @@ class Person < ActiveRecord::Base
     subscriptions.map(&:subscribable).include?(subscribable)
   end
 
+  def unlink_from_facebook(person_hash)
+    begin
+      ActiveRecord::Base.transaction do
+        self.email = person_hash[:email]
+        self.password = person_hash[:password]
+        self.password_confirmation = person_hash[:password_confirmation]
+        self.facebook_unlinking = true
+        self.send_email_change_notification = true # sends email change notification
+        save!
+        self.facebook_authentication.destroy
+      end
+    rescue
+      self
+    end
+  end
+
   def avatar_path(style='')
     self.avatar.path(style)
   end
@@ -142,16 +195,94 @@ class Person < ActiveRecord::Base
     newly_confirmed? ? true : false
   end
 
+  # https://graph.facebook.com/#{uid}/picture
+  # optional params: type=small|square|large
+  # square (50x50), small (50 pixels wide, variable height), and large (about 200 pixels wide, variable height):
+  def facebook_profile_pic_url(type = :square)
+    "https://graph.facebook.com/#{facebook_authentication.uid}/picture?type=#{type}" if facebook_authenticated?
+  end
+
+  def facebook_authenticated?
+    !facebook_authentication.blank?
+  end
+
+  def link_with_facebook(authentication)
+    ActiveRecord::Base.transaction do
+      self.facebook_authentication = authentication
+      self.encrypted_password = ''
+      self.create_from_auth = true
+      save!
+      facebook_authentication.persisted?
+    end
+  end
+
+  def conflicting_email?(other_email)
+    if other_email.blank? || (other_email.to_s.downcase.strip == email.to_s.downcase.strip)
+      false
+    else
+      true
+    end
+  end
+
+  # Overiding Devise::Models::DatabaseAuthenticatable
+  # due to needing to set encrypted_password to blank, so that it doesn't error out when it is set to nil
+  def valid_password?(password)
+    encrypted_password.blank? ? false : super
+  end
+
+  def validate_zip_code?
+    if create_from_auth?
+      false
+    elsif facebook_unlinking?
+      false
+    else
+      true
+    end
+  end
+
   # Add the email subscription signup as a delayed job
   def subscribe_to_marketing_email
-    Delayed::Job.enqueue Jobs::SubscribeToMarketingEmailJob.new(Civiccommons::Config.mailer['api_token'], Civiccommons::Config.mailer['list'], email, {:FNAME => first_name, :LNAME => last_name}, 'html')
-    Rails.logger.info("Success. Added #{name} with email #{email} to email queue.")
+    if Civiccommons::Config.mailer['mailchimp']
+      Delayed::Job.enqueue Jobs::SubscribeToMarketingEmailJob.new(Civiccommons::Config.mailer['api_token'],
+                                                                  Civiccommons::Config.mailer['list'],
+                                                                  email,
+                                                                  {:FNAME => first_name, :LNAME => last_name},
+                                                                  'html',
+                                                                  false)
+
+      Rails.logger.info("Success. Added #{name} with email #{email} to email queue.")
+    else
+      Rails.logger.info("Auto-Subscription to MailChimp is off...")
+    end
+  end
+
+  def self.create_from_auth_hash(auth_hash)
+    new_person = new(:name => auth_hash['user_info']['name'],
+        :email => Authentication.email_from_auth_hash(auth_hash),
+        :encrypted_password => '',
+        :create_from_auth => true
+      )
+    new_person.save
+    new_person.confirm! if new_person.persisted?
+    new_person.authentications << Authentication.new_from_auth_hash(auth_hash)
+    new_person
+  end
+
+  # overriding devise's recoverable
+  def self.send_reset_password_instructions(attributes={})
+    recoverable = find_or_initialize_with_errors(authentication_keys, attributes, :not_found)
+    recoverable.send_reset_password_instructions if recoverable.persisted? && !recoverable.facebook_authenticated?
+    recoverable
   end
 
 protected
 
   def password_required?
-    !persisted? || password.present? || password_confirmation.present?
+    if facebook_authenticated?
+      facebook_unlinking? ? true : false
+    else
+      (!persisted? && !create_from_auth?) || password.present? || password_confirmation.present?
+    end
   end
 
 end

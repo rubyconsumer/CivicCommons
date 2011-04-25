@@ -1,21 +1,15 @@
 <% contribution = @contributions.detect{ |c| c.type == type.to_s.camelcase } || @contributions.first %>
 <%= conversation.fields_for :contributions, contribution do |f| %>
   <%= f.hidden_field(:type, :value => type.to_s.camelcase) %>
-  <%= f.text_area(:content, :rows => "3", :placeholder => contribution_form_placeholder_text_for(type)) %>
   <% if type == :attached_file %>
-    <label>
       Upload a file:
       <%= f.file_field(:attachment) %>
-    </label>
-  <% elsif type == :link %>
-    <label>
+  <% elsif type == :embedly_contribution %>
       <%= f.text_field(:url, :type => "text", :class => "textbox link", :placeholder => "http://www.example.com") %>
-    </label>
-  <% elsif type == :embedded_snippet %>
-    <label>
+  <% elsif type == :embedly_contribution  %>
       <%= f.text_field(:url, :type => "text", :class => "textbox link youtube", :placeholder => "www.youtube.com/watch?v=123456") %>
       <div class="youtube-thumbnail"></div>
-    </label>
   <% end %>
+  <%= f.text_area(:content, :rows => "3", :placeholder => contribution_form_placeholder_text_for(type, subtype)) %>
   <div class="validation-error"></div>
 <% end %>

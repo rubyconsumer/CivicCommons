@@ -1,10 +1,9 @@
 require File.expand_path(File.dirname(__FILE__) + '/page_object')
 
 class RegistrationPage < PageObject
-
-  def visit
-    @page.visit '/people/register/new'
-    @page
+  
+  def path
+    '/people/register/new'
   end
 
   def fill_registration_form_and_submit(person)

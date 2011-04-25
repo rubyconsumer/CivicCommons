@@ -1,6 +1,6 @@
 class UserController < ApplicationController
 
-  before_filter :require_ssl, :only => [:edit, :update]
+  before_filter :require_ssl, :only => [:update]
   before_filter :verify_ownership?, :only => [:edit, :update, :destroy_avatar]
 
   def verify_ownership?
@@ -11,6 +11,7 @@ class UserController < ApplicationController
 
   def edit
     @person = Person.find(params[:id])
+    @person.valid?(:update) #did this So that there is a validation error on the view.
   end
 
   def show
@@ -46,11 +47,11 @@ class UserController < ApplicationController
   @person.avatar = nil
   if @person.save
     respond_to do |format|
-      format.js { render :json => { :avatarUrl => @person.avatar.url } }
+      format.js { render :json => { :avatarUrl => ( @person.facebook_authenticated? && !@person.avatar? ? @person.facebook_profile_pic_url : @person.avatar.url )} }
     end
   else
     respond_to do |format|
-      format.js { render :status => 500 }
+      format.js { render :nothing => true, :status => 500 }
     end
   end
  end

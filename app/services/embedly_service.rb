@@ -22,6 +22,7 @@ class EmbedlyService
     clear_state
     begin
       opts[:url] = url
+      opts[:wmode] = 'opaque'
       objs = @embedly.objectify(opts)
       @properties = objs[0].marshal_dump
       raise @properties[:error_message] if @properties.has_key?(:error_message)
@@ -56,8 +57,30 @@ class EmbedlyService
     return (not properties.nil?)
   end
 
+  def fetch_and_update_attributes(contribution)
+    fetch(contribution.url)
+    unless contribution.type == "EmbedlyContribution"
+      contribution.type = "EmbedlyContribution"
+    end
+    unless properties.nil?
+      if properties[:type] == 'html' and not properties[:oembed].empty?
+        contribution.embedly_type = properties[:oembed][:type]
+        contribution.embed_target = nil
+      else
+        contribution.embedly_type = properties[:type]
+      end
+      contribution.embedly_code = raw
+      contribution.url = properties[:url]
+      contribution.title = properties[:title] unless properties[:title].blank?
+      unless  properties[:title].blank?
+        contribution.description = properties[:description]
+      end
+    end
+    return (not properties.nil?)
+  end
+
   ### Error Code Convenience Methods
-  
+
   def ok?
     @error_code == 200
   end
@@ -94,7 +117,7 @@ class EmbedlyService
   end
 
   def self.parse_raw(data)
-    
+
     if not data.is_a?(Hash)
       data = data.embedly_code if data.is_a?(EmbedlyContribution)
       begin
@@ -103,7 +126,7 @@ class EmbedlyService
         data = {}
       end
     end
-    
+
     data.keys.each do |key|
       if not key.is_a?(Symbol)
         new_key = key.to_sym
@@ -130,9 +153,13 @@ class EmbedlyService
 
     html = nil
     code = self.parse_raw(code) 
-    
+
+    # link type always generates linked thumbnail
+    if code[:type] == 'link' or code[:oembed][:type] == 'link'
+      html = self.to_linked_thumbnail(code, max_embed_width)
+
     # only show full embed if the width is less than max
-    if !max_embed_width.nil? && !code[:oembed].empty? && code[:oembed].has_key?(:html)
+    elsif !max_embed_width.nil? && !code[:oembed].empty? && code[:oembed].has_key?(:html)
       match = code[:oembed][:html].match(/width="(?<width>\d+)"/i) 
       if !match.nil?
         width = match[:width].to_i
@@ -164,7 +191,7 @@ class EmbedlyService
         html = code[:oembed][:html]
       elsif code[:oembed][:type] == 'photo'
         html = self.generate_img_html(code[:oembed])
-      elsif code[:oembed][:type] == 'link'
+      elsif code[:oembed][:type] == 'link' || code[:type] == 'link'
         html = self.generate_link_html(code[:oembed][:url], code[:oembed][:title])
       else
         html = self.generate_link_html(code[:url], code[:title])
@@ -172,6 +199,11 @@ class EmbedlyService
     end
 
     return html
+  end
+
+  def self.to_linked_thumbnail(code, maxwidth = nil)
+    thumb = self.to_thumbnail(code, maxwidth)
+    return self.generate_link_html(code[:url], code[:title], thumb)
   end
 
   def to_thumbnail(maxwidth = nil)
@@ -311,14 +343,15 @@ class EmbedlyService
     return html
   end
 
-  def self.generate_link_html(url, title)
+  def self.generate_link_html(url, title, link_body = nil)
     html = ''
+    link_body = title if link_body.nil?
     if not url.nil? and not title.nil?
       html << '<a'
       html << " href=\"#{url}\""
       html << " title=\"#{title}\""
       html << '>'
-      html << title
+      html << link_body
       html << '</a>'
     end
     return html

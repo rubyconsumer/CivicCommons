@@ -1,0 +1,30 @@
+<% content_for :main_body do %>
+
+  <% if flash[:notice] -%>
+    <div class="flash-notice">
+      <%=flash[:notice] %>
+    </div>
+  <% end -%>
+
+  <% if @conversation %>
+    <div class="feature-mast">
+      <div class="wrapper">
+        <div class="content-container">
+          <div class="main-content">
+            <h1><%= @message %></h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="wrapper">
+    <div class="content-container">
+      <div class="main-content">
+        <%#= render :partial => 'form' %>
+      </div>
+    </div>
+  </div>
+
+<% end %>
+Hi

@@ -55,12 +55,11 @@ end
 
 describe "TopLevelContribution", "When working with top items" do
   before(:each) do
-    @person = Factory.create(:normal_person)
     @item = Factory.create(:top_level_contribution, {:created_at=>(Time.now-7.days), :recent_visits => 201})
   end
   context "and creating a TopLevelContribution" do
-    it "adds a top item, since TLC is confirmed by default" do
-      @item.top_item.should be_an_instance_of(TopItem)
+    it "does not add a top_item" do
+      @item.top_item.should be_nil
     end
   end
 end

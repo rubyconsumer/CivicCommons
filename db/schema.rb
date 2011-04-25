@@ -34,6 +34,20 @@ ActiveRecord::Schema.define(:version => 20110411012717) do
     t.string   "youtube_id"
   end
 
+  create_table "authentications", :force => true do |t|
+    t.string   "provider"
+    t.string   "uid"
+    t.string   "token"
+    t.string   "secret"
+    t.integer  "person_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "authentications", ["person_id"], :name => "index_authentications_on_person_id"
+  add_index "authentications", ["provider"], :name => "index_authentications_on_provider"
+  add_index "authentications", ["uid"], :name => "index_authentications_on_uid"
+
   create_table "content_items", :force => true do |t|
     t.integer  "person_id"
     t.string   "content_type"
@@ -208,6 +222,7 @@ ActiveRecord::Schema.define(:version => 20110411012717) do
     t.datetime "marketable_at"
     t.text     "bio"
     t.boolean  "daily_digest",                        :default => true,  :null => false
+    t.boolean  "declined_fb_auth"
   end
 
   add_index "people", ["email"], :name => "index_people_on_email", :unique => true

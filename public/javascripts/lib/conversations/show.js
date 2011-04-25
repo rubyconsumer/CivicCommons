@@ -219,7 +219,8 @@
       var responseId = hash[1],
           $onPage = $('#show-contribution-' + responseId);
 
-      $onPage.scrollTo();
+      $onPage.scrollTo()
+        .find('.collapsed p').first().trigger('click'); // trigger click event to uncollapse contribution
     }
   };
 
@@ -267,7 +268,6 @@
       transition: 'fade', // needed to fix colorbox bug with jquery 1.4.4
       href: $this.attr('href'),
       width: '600px',
-      height: '340px',
       onComplete: function(){
         var divId = $this.attr('href').match(/div_id=([^&]+)/)[1],
             $tabStrip = $('.tab-strip#' + divId),
@@ -309,8 +309,10 @@
   collapsedStyle += 'cursor: pointer;';
   collapsedStyle += 'width: auto;';
   collapsedStyle += '}';
-  collapsedStyle += 'div.contribution-container.uncollapsed .comment {';
+  collapsedStyle += 'div.contribution-container.collapsed .comment p:hover,';
+  collapsedStyle += 'div.contribution-container.uncollapsed .comment p:hover {';
   collapsedStyle += 'cursor: pointer;';
+  collapsedStyle += 'background-color: #c5d36a;';
   collapsedStyle += '}';
   collapsedStyle += 'div.contribution-container.collapsed > .comment > .edit-contribution,';
   collapsedStyle += 'div.contribution-container.collapsed > .comment > .convo-utility,';

@@ -38,6 +38,12 @@ describe RatingGroup do
         @rgs.size.should == 1
         @rgs.first.ratings.size.should == 2
       end
+
+      it "does not allow a user to rate their own contribution" do
+        user_contribution = Factory.create(:contribution, :person => @current_person)
+        rg = RatingGroup.add_rating!(@current_person, user_contribution, @descriptor)
+        rg.should have_validation_error(:person, /cannot rate own/)
+      end
     end
 
     context "remove_rating!" do

@@ -107,7 +107,7 @@ describe Conversation do
       Contribution.where(:id => contribution_ids).count.should == 0
     end
     it "destroys all top_items from nested contributions" do
-      item_ids = @conversation.contributions.includes(:top_item).collect{ |c| c.top_item.id }
+      item_ids = @conversation.contributions.includes(:top_item).collect{ |c| c.top_item.id unless c.top_item.blank? }
       @conversation.destroy
       TopItem.where(:id => item_ids).count.should == 0
     end

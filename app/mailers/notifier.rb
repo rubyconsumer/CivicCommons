@@ -2,6 +2,14 @@ class Notifier < Devise::Mailer
 
   layout 'mailer'
   add_template_helper(ConversationsHelper)
+  
+  def email_changed(old_email, new_email)
+    @old_email = old_email
+    @new_email = new_email
+    mail(:subject => "You've recently changed your Civic Commons email",
+         :from => Devise.mailer_sender,
+         :to => [old_email, new_email])
+  end
 
   def welcome(record)
     @resource = record
@@ -31,6 +39,16 @@ class Notifier < Devise::Mailer
     mail(:subject => @user.name + " wants to invite you to a conversation at The Civic Commons",
          :from => Devise.mailer_sender,
          :to => @resource[:emails])
+  end
+
+  def violation_complaint(resource)
+    @resource = resource
+    @user = @resource[:user]
+    @reason = @resource[:reason]
+    @contribution = @resource[:contribution]
+    mail(:subject => "ALERT: Possible TOS Violation reported",
+         :from => Devise.mailer_sender,
+         :to => Civiccommons::Config.email["default_email"])
   end
 
   def daily_digest(person, conversations)

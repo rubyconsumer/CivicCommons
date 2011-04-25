@@ -14,6 +14,10 @@ Please login to continue. If you don't have an account, please <%= link_to 'regi
       <%= f.label :password, 'Password:' %>
       <%= f.password_field :password %>
     </div>
+    <p>
+      <%= f.check_box :remember_me, class: 'checkbox' %>
+      <%= f.label :remember_me, 'Remember me on this computer', class: 'checkbox' %>
+    </p>
   </fieldset>
   <fieldset class="footer">
     <%= f.submit 'Login', :class => 'submit' %>
@@ -21,4 +25,8 @@ Please login to continue. If you don't have an account, please <%= link_to 'regi
     <%= link_to 'cancel', '', :onclick => '$.colorbox.close(); return false;', :class => 'cancel' %>
   </fieldset>
 <% end %>
+<p id="facebook">
+  Or login using Facebook <%= facebook_sign_in_link %>
+</p>
+
 </div>

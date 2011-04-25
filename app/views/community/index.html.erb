@@ -4,8 +4,19 @@
     <div class="main-content">
       <div class="wide_content">
         <h1>Community</h1>
-        <%= link_to "View by Name", community_path %> |
-        <%= link_to "Recently Joined", community_path(:order => 'recent') %>
+
+        <p>
+          <%= link_to "View by Name", community_path %> |
+          <%= link_to "Recently Joined", community_path(:order => 'recent') %>
+        </p>
+
+        <p>
+          Last Name |
+          <% ('A'..'Z').each do |letter| %>
+            <%= link_to letter, community_path(:order => 'alpha', :letter => letter) %> |
+          <% end %>
+        </p>
+        
         <div class="community">
           <% @people.each do |person| %>
             <div id="<%=person.id %>" class ="buddyimg">
@@ -13,7 +24,8 @@
                 <%= user_profile(person) %>
               </div>
               <div class="text-container" id="label_<%= person.id %>">
-                <h4><%= link_to person.name, user_path(person), title: person.name%></h4>
+                <% name = ( person.last_name.blank? ? person.name : person.last_name + ", " + person.first_name ) %>
+                <h4><%= link_to name, user_path(person), title: person.name%></h4>
               </div>
             </div>
           <% end %>

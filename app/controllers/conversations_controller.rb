@@ -9,7 +9,7 @@ class ConversationsController < ApplicationController
     @recommended = Conversation.includes(:participants).recommended.limit(3)
 
     @regions = Region.all
-    @recent_items = TopItem.newest_items(3).for(:conversation).collect(&:item)
+    @recent_items = TopItem.newest_items(3).with_items_and_associations.collect(&:item)
     render :index
   end
 
@@ -18,7 +18,7 @@ class ConversationsController < ApplicationController
     @conversations = Conversation.includes(:participants).filtered(@filter).paginate(:page => params[:page], :per_page => 12)
 
     @regions = Region.all
-    @recent_items = TopItem.newest_items(3).for(:conversation).collect(&:item)
+    @recent_items = TopItem.newest_items(3).with_items_and_associations.collect(&:item)
     render :filter
   end
 
@@ -167,6 +167,8 @@ class ConversationsController < ApplicationController
       if @conversation.save
         format.html { redirect_to(new_invite_path(:source_type => :conversations, :source_id => @conversation.id, :conversation_created => true), :notice => 'Your conversation has been created!') }
       else
+        #TODO: Find a better way to handle erros on submission
+        @contributions = [Contribution.new]
         format.html { render :new, :status => :unprocessable_entity  }
       end
     end
@@ -188,7 +190,7 @@ class ConversationsController < ApplicationController
     @contribution = Contribution.find(params[:contribution_id])
     @rating_descriptor = RatingDescriptor.find_by_title(params[:rating_descriptor_title])
 
-    RatingGroup.toggle_rating!(current_person, @contribution, @rating_descriptor)
+    @rating_group = RatingGroup.toggle_rating!(current_person, @contribution, @rating_descriptor)
     respond_to do |format|
       format.js
     end
@@ -201,22 +203,6 @@ class ConversationsController < ApplicationController
     @conversation.destroy
 
     redirect_to(conversations_url)
-  end
-
-  # Kludge to convert US date-time (mm/dd/yyyy hh:mm am) to an
-  # ISO-like date-time (yyyy-mm-ddThh:mm:ss).
-  # There is probably a better way to do this. Please refactor.
-  private
-  def convert_us_date_to_iso(input)
-    hour = input[11,2].to_i
-    if (hour == 12)
-      hour = 0
-    end
-    if (input[17,2] == "pm")
-      hour += 12
-    end
-    hour = sprintf("%02d",hour)
-    input[6,4]+"-"+input[0,2]+"-"+input[3,2]+"T"+hour+":"+input[14,2]+":00"
   end
 
 end

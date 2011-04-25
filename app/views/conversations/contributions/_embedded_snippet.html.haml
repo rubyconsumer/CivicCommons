@@ -1,9 +1,6 @@
 %div.content
   %span.contribution-person-name= person_display_name(contribution.person)
-  - unless contribution.content.blank?
-    =auto_link(simple_format(contribution.content))
-  - else
-    %p.expand-text (Click to expand)
+  = format_comment(contribution)
 %p.link-title
   = link_to(contribution.title, contribution.url)
   %br

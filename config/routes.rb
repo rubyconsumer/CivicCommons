@@ -17,9 +17,24 @@ Civiccommons::Application.routes.draw do
   #Application Root
   root to: "homepage#show"
 
- #Custom Matchers
+#Custom Matchers
+  #authentication
+  post '/authentication/decline_fb_auth',              to: 'authentication#decline_fb_auth',                 as: 'decline_fb_auth'
+  get  '/authentication/conflicting_email',            to: 'authentication#conflicting_email',               as: 'conflicting_email'
+  post '/authentication/conflicting_email',            to: 'authentication#update_conflicting_email',        as: 'update_conflicting_email'
+  get   '/authentication/fb_linking_success',          to: 'authentication#fb_linking_success',              as: 'fb_linking_success'
+  get   '/authentication/registering_email_taken',     to: 'authentication#registering_email_taken',         as: 'registering_email_taken'
+  get   '/authentication/successful_registration',     to: 'authentication#successful_registration',         as: 'successful_registration'
+  get   '/authentication/successful_fb_registration',  to: 'authentication#successful_fb_registration',      as: 'successful_fb_registration'
+  put   '/authentication/update_account',              to: 'authentication#update_account',                  as: 'auth_update_account'
+  get   '/authentication/confirm_facebook_unlinking',  to: 'authentication#confirm_facebook_unlinking',      as: 'confirm_facebook_unlinking'
+  get   '/authentication/before_facebook_unlinking',   to: 'authentication#before_facebook_unlinking',       as: 'before_facebook_unlinking'
+  delete '/authentication/process_facebook_unlinking', to: 'authentication#process_facebook_unlinking',      as: 'process_facebook_unlinking'
+
+  
   #Contributions
   post '/contributions/create_confirmed_contribution', to: 'contributions#create_confirmed_contribution',    as: 'create_confirmed_contribution'
+  get  '/tos/tos_contribution',                        to: 'tos#tos_contribution',                           as: 'tos_contribution'
   delete '/contributions/moderate/:id',                to: 'contributions#moderate_contribution',            as: 'moderate_contribution'
   delete '/contributions/:id',                         to: 'contributions#destroy',                          as: 'contribution'
   #Conversations
@@ -60,13 +75,15 @@ Civiccommons::Application.routes.draw do
   get '/jobs',              to: 'static_pages#jobs'
   get '/careers',           to: 'static_pages#jobs'
 
- #Devise Routes
+#Devise Routes
   devise_for :people,
-             :controllers => { :registrations => 'registrations', :confirmations => 'confirmations', :sessions => 'sessions' },
+             :controllers => { :registrations => 'registrations', :confirmations => 'confirmations', :sessions => 'sessions', :omniauth_callbacks => "registrations/omniauth_callbacks", :passwords => 'passwords'},
              :path_names => { :sign_in => 'login', :sign_out => 'logout', :password => 'secret', :confirmation => 'verification', :registration => 'register', :sign_up => 'new' }
 
   devise_scope :person do
     match '/people/ajax_login', :to=>'sessions#ajax_create', :via=>[:post]
+    get '/people/secret/fb_auth_forgot_password', to: 'passwords#fb_auth_forgot_password', as: 'fb_auth_forgot_password'
+    get "/registrations/omniauth_callbacks/failure", to: "registrations/omniauth_callbacks#failure"
   end
 
   #Sort and Filters
@@ -86,10 +103,13 @@ Civiccommons::Application.routes.draw do
   resources :regions, only: [:index, :show]
   resources :links, only: [:new, :create]
   resources :invites, only: [:new, :create]
+
   resources :blog, only: [:index, :show]
   resources :content, only: [:index, :show]
   resources :news, only: [:index, :show]
   resources :radioshow, only: [:index, :show]
+
+  resources :tos, only: [:new, :create]
 
 #Namespaces
   namespace "admin" do

@@ -1,13 +1,13 @@
 <p>
-  <%= person_display_name( rating_group.person ) %> rated a response as <i><%= rating_group.ratings_titles.to_sentence %></i>:
+  <%= rating_group.person.name %> rated a response from <%= rating_group.contribution.person.name %> as <strong><%= rating_group.ratings_titles.to_sentence %></strong>:
 </p>
 
-<blockquote>
-  <%= simple_format( truncate( rating_group.contribution.content, :length => 100, :separator => ' ' ) ) %>
-</blockquote>
+<p>
+  <%= link_to( "\"#{truncate( rating_group.contribution.content, :length => 100, :separator => ' ' )}\"", conversation_node_path(rating_group.contribution) ) %>
+</p>
 
 <% unless controller.controller_name == 'conversations' && controller.action_name == 'show' %>
   <span class="posted">
-    In <%= link_to( rating_group.conversation.title, conversation_node_path(rating_group.contribution)) %>
+    Posted on: <%= link_to( rating_group.conversation.title, conversation_path(rating_group.contribution.conversation) ) %>
   </span>
 <% end %>
