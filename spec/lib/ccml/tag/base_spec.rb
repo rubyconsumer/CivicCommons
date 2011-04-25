@@ -10,31 +10,31 @@ describe CCML::Tag::Base do
 
   before(:all) do
 
-    @http_url = 'http://www.theciviccommons.com'
+    @http_url = 'http://www.theciviccommons.com:3000'
 
-    @https_url = 'https://www.theciviccommons.com'
+    @https_url = 'https://www.theciviccommons.com:3000'
 
     @url_no_path_no_qs = 'http://www.theciviccommons.com'
 
-    @url_no_path_unformatted_qs = 'http://www.theciviccommons.com/?unformatted_query_string'
+    @url_no_path_unformatted_qs = 'http://www.theciviccommons.com:3000/?unformatted_query_string'
 
     @url_no_path_formatted_qs_one_field = 'http://www.theciviccommons.com?field=value'
 
-    @url_no_path_formatted_qs_many_fields = 'http://www.theciviccommons.com?field1=value1&field2=value2&field3=value3'
+    @url_no_path_formatted_qs_many_fields = 'http://www.theciviccommons.com:3000?field1=value1&field2=value2&field3=value3'
 
-    @url_with_path_one_segment_no_qs = 'http://www.theciviccommons.com/segment_0'
+    @url_with_path_one_segment_no_qs = 'http://www.theciviccommons.com:3000/segment_0'
 
     @url_with_path_one_segment_unformatted_qs = 'http://www.theciviccommons.com/segment_0?unformatted_query_string'
 
-    @url_with_path_one_segment_qs_one_field = 'http://www.theciviccommons.com/segment_0?field=value'
+    @url_with_path_one_segment_qs_one_field = 'http://www.theciviccommons.com:3000/segment_0?field=value'
 
     @url_with_path_one_segment_qs_many_fields = 'http://www.theciviccommons.com/segment_0?field1=value1&field2=value2&field3=value3'
 
-    @url_with_path_multiple_segments_no_qs = 'http://www.theciviccommons.com/segment_0/segment_1/segment_2/'
+    @url_with_path_multiple_segments_no_qs = 'http://www.theciviccommons.com:3000/segment_0/segment_1/segment_2/'
 
     @url_with_path_multiple_segments_unformatted_qs = 'http://www.theciviccommons.com/segment_0/segment_1/segment_2/?unformatted_query_string'
 
-    @url_with_path_multiple_segments_qs_one_field = 'http://www.theciviccommons.com/segment_0/segment_1/segment_2/?field=value'
+    @url_with_path_multiple_segments_qs_one_field = 'http://www.theciviccommons.com:3000/segment_0/segment_1/segment_2/?field=value'
 
     @url_with_path_multiple_segments_qs_many_fields = 'http://www.theciviccommons.com/segment_0/segment_1/segment_2/?field1=value1&field2=value2&field3=value3'
 
@@ -48,33 +48,37 @@ describe CCML::Tag::Base do
         @tag = TestBaseTag.new(nil)
       end
 
-      it "should set the url to blank" do
+      it "sets the url to blank" do
         @tag.url.should be_blank
       end
 
-      it "should set all protocol accessors to false" do
+      it "sets all protocol accessors to false" do
         @tag.http?.should be_false
         @tag.https?.should be_false
       end
 
-      it "should set the host to blank" do
+      it "sets the host to blank" do
         @tag.host.should be_blank
       end
 
-      it "should set the path to blank" do
+      it "sets the port to blank" do
+        @tag.port.should be_blank
+      end
+
+      it "sets the path to blank" do
         @tag.path.should be_blank
       end
 
-      it "should set the query string to blank" do
+      it "sets the query string to blank" do
         @tag.query_string.should be_blank
       end
 
-      it "should return an empty array for the segment collection" do
+      it "returns an empty array for the segment collection" do
         @tag.segments.should be_kind_of Array
         @tag.segments.should be_empty
       end
 
-      it "should return an empty hash for the query field collection" do
+      it "returns an empty hash for the query field collection" do
         @tag.fields.should be_kind_of Hash
         @tag.fields.should be_empty
       end
@@ -83,13 +87,13 @@ describe CCML::Tag::Base do
 
     context "protocol" do
 
-      it "should recognize an http url" do
+      it "recognizes an http url" do
         tag = TestBaseTag.new({}, @http_url)
         tag.http?.should be_true
         tag.https?.should be_false
       end
 
-      it "should recognize an https url" do
+      it "recognizes an https url" do
         tag = TestBaseTag.new({}, @https_url)
         tag.http?.should be_false
         tag.https?.should be_true
@@ -99,7 +103,7 @@ describe CCML::Tag::Base do
 
     context "host" do
 
-      it "should correctly extract the host" do
+      it "correctly extracts the host" do
         TestBaseTag.new({}, @http_url).host.should == 'www.theciviccommons.com'
         TestBaseTag.new({}, @https_url).host.should == 'www.theciviccommons.com'
         TestBaseTag.new({}, @url_no_path_no_qs).host.should == 'www.theciviccommons.com'
@@ -118,9 +122,30 @@ describe CCML::Tag::Base do
 
     end
 
+    context "port" do
+
+      it "correctly extracts the port" do
+        TestBaseTag.new({}, @http_url).port.should == '3000'
+        TestBaseTag.new({}, @https_url).port.should == '3000'
+        TestBaseTag.new({}, @url_no_path_no_qs).port.should be_blank
+        TestBaseTag.new({}, @url_no_path_unformatted_qs).port.should == '3000'
+        TestBaseTag.new({}, @url_no_path_formatted_qs_one_field).port.should be_blank
+        TestBaseTag.new({}, @url_no_path_formatted_qs_many_fields).port.should == '3000'
+        TestBaseTag.new({}, @url_with_path_one_segment_no_qs).port.should == '3000'
+        TestBaseTag.new({}, @url_with_path_one_segment_unformatted_qs).port.should be_blank
+        TestBaseTag.new({}, @url_with_path_one_segment_qs_one_field).port.should == '3000'
+        TestBaseTag.new({}, @url_with_path_one_segment_qs_many_fields).port.should be_blank
+        TestBaseTag.new({}, @url_with_path_multiple_segments_no_qs).port.should == '3000'
+        TestBaseTag.new({}, @url_with_path_multiple_segments_unformatted_qs).port.should be_blank
+        TestBaseTag.new({}, @url_with_path_multiple_segments_qs_one_field).port.should == '3000'
+        TestBaseTag.new({}, @url_with_path_multiple_segments_qs_many_fields).port.should be_blank
+      end
+
+    end
+
     context "resource" do
 
-      it "should correctly extract the resource" do
+      it "correctly extracts the resource" do
         TestBaseTag.new({}, @http_url).resource.should be_blank
         TestBaseTag.new({}, @https_url).resource.should be_blank
         TestBaseTag.new({}, @url_no_path_no_qs).resource.should be_blank
@@ -141,7 +166,7 @@ describe CCML::Tag::Base do
 
     context "path" do
 
-      it "should correctly extract the path" do
+      it "correctly extracts the path" do
         TestBaseTag.new({}, @http_url).path.should be_blank
         TestBaseTag.new({}, @https_url).path.should be_blank
         TestBaseTag.new({}, @url_no_path_no_qs).path.should be_blank
@@ -162,7 +187,7 @@ describe CCML::Tag::Base do
 
     context "query string" do
 
-      it "should correctly extract the query string" do
+      it "correctly extracts the query string" do
         TestBaseTag.new({}, @http_url).query_string.should be_blank
         TestBaseTag.new({}, @https_url).query_string.should be_blank
         TestBaseTag.new({}, @url_no_path_no_qs).query_string.should be_blank
@@ -183,7 +208,7 @@ describe CCML::Tag::Base do
 
     context "segments" do
 
-      it "should extract the correct segment values" do
+      it "correctly extracts the correct segment values" do
         TestBaseTag.new({}, @http_url).segments.should be_empty
         TestBaseTag.new({}, @https_url).segments.should be_empty
         TestBaseTag.new({}, @url_no_segments_no_qs).segments.should be_empty
@@ -203,7 +228,7 @@ describe CCML::Tag::Base do
 
     context "fields" do
 
-      it "should extract the correct key/value pairs" do
+      it "correctly extracts the correct key/value pairs" do
         TestBaseTag.new({}, @http_url).fields.should be_empty
         TestBaseTag.new({}, @https_url).fields.should be_empty
         TestBaseTag.new({}, @url_no_path_no_qs).fields.should be_empty
@@ -228,7 +253,7 @@ describe CCML::Tag::Base do
         @url = 'http://www.theciviccommons.com/issues/flats-redevelopment/explore/?first_name=John&last_name=Doe&email=john@doe.com'
       end
 
-      it "should correctly update options from url segments" do
+      it "correctly updates options from url segments" do
         opts = {
           :s0 => 'segment_0',
           :s1 => 'segment_1',
@@ -244,7 +269,7 @@ describe CCML::Tag::Base do
         tag.opts[:ls].should == 'explore'
       end
 
-      it "should correctly update options from query string fields" do
+      it "correctly updates options from query string fields" do
         opts = {
           :f0 => 'field_first_name',
           :f1 => 'field_last_name',
@@ -260,7 +285,7 @@ describe CCML::Tag::Base do
         tag.opts[:qs].should == 'first_name=John&last_name=Doe&email=john@doe.com'
       end
 
-      it "should not change other options" do
+      it "does not change other options" do
         opts = {
           :s0 => 'not_segment_0',
           :s1 => 'not_segment_1',
@@ -282,7 +307,7 @@ describe CCML::Tag::Base do
         tag.opts[:f3].should == 'not_field_does_not_exist'
       end
 
-      it "should correctly set segment and field variables when no segments or fields exist" do
+      it "correctly sets segment and field variables when no segments or fields exist" do
         opts = {
           :s0 => 'segment_0',
           :ls => 'last_segment',

@@ -5,6 +5,7 @@ module CCML
 
       attr_reader :url
       attr_reader :host
+      attr_reader :port
       attr_reader :resource
       attr_reader :path
       attr_reader :query_string
@@ -16,6 +17,14 @@ module CCML
       define_method(:qs) { return @query_string }
       define_method(:http?) { return @http }
       define_method(:https?) { return @https }
+
+      URL_PATTERN = /^(?<protocol>http[s]?):\/\/(?<host>(\w|[^\?\/:])+)(:(?<port>\d+))?(?<resource>.*)$/i
+      PATH_AND_QS_PATTERN = /(?<path>^\/[^\?]*)?\/?(\?(?<qs>\S*$))?/
+      FIELD_AND_VALUE_PATTERN = /(?<field>[^=]+)=(?<value>[^&]+)\&?/
+      SEGMENT_INDEX_PATTERN =/^segment_(?<index>\d+)$/i 
+      LAST_SEGMENT_PATTERN = /^last_segment$/i 
+      FIELD_INDEX_PATTERN = /^field_(?<index>\w+)$/i
+      QUERY_STRING_PATTERN = /^query_string$/i
 
       def initialize(opts, url = nil)
         if opts.is_a?(Hash)
@@ -40,17 +49,18 @@ module CCML
         @fields = {}
 
         # parse the url or die
-        match = /^(?<protocol>http[s]?):\/\/(?<host>(\w|[^\?\/])+)(?<resource>.*)$/i.match(url)
+        match = URL_PATTERN.match(url)
         return if match.nil?
 
         # get the main pieces
         @http = ( match[:protocol] == 'http' )
         @https = ! @http
         @host = match[:host]
+        @port = match[:port]
         @resource = match[:resource]
 
         # get the path and query string
-        match = /(?<path>^\/[^\?]*)?\/?(\?(?<qs>\S*$))?/.match(@resource)
+        match = PATH_AND_QS_PATTERN.match(@resource)
         @path = ( match[:path] =~ /^\/$/ ? nil : match[:path] )
         @path = @path[0, @path.size-1] if @path =~ /\/$/
         @query_string = match[:qs]
@@ -61,7 +71,7 @@ module CCML
 
         # parse the query string fields
         unless @query_string.blank?
-          matches = @query_string.scan(/(?<field>[^=]+)=(?<value>[^&]+)\&?/)
+          matches = @query_string.scan(FIELD_AND_VALUE_PATTERN)
           matches.each do |match|
             @fields[match.first.to_sym] = match.last
           end
@@ -71,10 +81,10 @@ module CCML
 
       def update_opts_from_url_segments
         @opts.each do |key, value|
-          match = /^segment_(?<index>\d+)$/i.match(value)
+          match = SEGMENT_INDEX_PATTERN.match(value)
           if match
             @opts[key] = @segments[match[:index].to_i]
-          elsif value =~ /^last_segment$/i
+          elsif value =~ LAST_SEGMENT_PATTERN
             @opts[key] = @segments.last
           end
         end
@@ -82,10 +92,10 @@ module CCML
 
       def update_opts_from_url_fields
         @opts.each do |key, value|
-          match = /^field_(?<index>\w+)$/i.match(value)
+          match = FIELD_INDEX_PATTERN.match(value)
           if match
             @opts[key] = @fields[match[:index].to_sym]
-          elsif value =~ /^query_string$/i
+          elsif value =~ QUERY_STRING_PATTERN
             @opts[key] = @query_string
           end
         end

@@ -171,6 +171,85 @@
 # 
 # The special field variable 'query_string' will always map to the entire
 # query string, whether or not it is formatted in key/value pairs.
+#
+# == Tag Pair Variable Processing
+#
+# CCML tag pair processing is very robust and supports several advanced
+# processing features. These features allow for very granular control of the
+# tag output without the need to write complex processing login within the
+# tag class itself.
+#
+# The magic occurs in the *CCML::Tag::TagPair#process_tag_body* method. Any
+# tag pair subclass can pass a hash, an object with attribute readers, an
+# array of hashes, and array of objects, an ActiveRecord object, or an
+# ActiveRecord collection to this method and method will return the tag
+# body parsed against the object(s). Tags needing more complex processing
+# can access the *CCML:Tag::TagPair#tag_body* reader (*@tag_body* instance
+# variable) and process it directly. This approach is not recommended.
+#
+# === Conditional Processing
+#
+# CCML tag pair variables support ExpressionEngine-style conditional processing.
+# Conditional expressions allow very granular control of the tag output.
+# Conditional expressions operate on one variable value and process the output
+# based on the result of the conditional. An example conditional expression is
+#
+# <code>
+#   {if id == 1}
+#     <h1>The ID is {id}
+#   {/if}
+# </code>
+#
+# Conditional expressions in CCML follow the same format as ExpressionEngine
+# with one difference. ExpressionEngine uses 'elseif' but Ruby uses 'elsif'.
+# CCML supports both syntaxes so both
+#
+# <code>{if:elseif author}</code>
+# 
+# and
+#
+# <code>{if:elsif author}</code>
+#
+# are legal.
+#
+# For more information on ExpressionEngine conditional processing see
+# http://expressionengine.com/user_guide/templates/globals/conditionals.html
+#
+# NOTE: CCML conditionals are processed using Ruby's 'eval' method so the
+# conditional itself should work with any valid Ruby statement. Your mileage
+# may very so test thoroughly if you get fancy.
+#
+# === Date and Time Formatting
+#
+# CCML tag pair variables support ExpressionEngine-style date and time formatting.
+# Any variable within a tag pair may include a 'format' option. The value of the
+# 'format' option is a Ruby date/time format string. When the 'format' option is
+# present the parser will assume the value of the variable is a valid Ruby date
+# or time object and will format it according to the provided format string.
+# Formatting occurs at the final substitution, well after conditional processing
+# has occurred. Subsequently, conditional expressions operate on the raw
+# date/time value, not the formatted value.
+#
+# An example of a formatted date variable is:
+#
+# <code>{created_at format="%m-%d-%Y %I:%M %p"}</code>
+#
+# For more infotmation on ExpressionEngine date/time formatting see
+# http://expressionengine.com/user_guide/templates/date_variable_formatting.html
+#
+# For more information on Ruby date/time formatting see
+# http://www.ruby-doc.org/core/classes/Time.html#M000392
+#
+# === ActiveRecord Associations
+#
+# CCML tag pairs are ActiveRecord aware and will process tag variables through
+# singular associations. Subsequently, the following variable is legal and will
+# work as expected:
+#
+# <code>{author.name}</code>
+#
+# CCML tag variable processing only supports singular associations. It will not
+# work if the association is a collection.
 #++
 
 module CCML
@@ -206,13 +285,13 @@ module CCML
 
   private
 
-  def CCML.instanciate_tag(clazz, method, url, opts = {})
+  def CCML.instanciate_tag(clazz, url, opts = {})
     if ILLEGAL_TAGS.include?(clazz)
       raise CCML::Error::TagBaseClassInTemplateError
     end
     begin
       clazz = "CCML::Tag::#{clazz.classify}Tag"
-      tag = clazz.constantize.new(opts)
+      tag = clazz.constantize.new(opts, url)
     rescue
       raise CCML::Error::TagClassNotFoundError, "Unable to initialize object for '#{clazz}' tag."
     end
@@ -264,7 +343,7 @@ module CCML
       clazz, method, opts = CCML.parse_opening_tag(match)
 
       # create an instance of the tag class and set tag data
-      tag = CCML.instanciate_tag(clazz, method, url, opts)
+      tag = CCML.instanciate_tag(clazz, url, opts)
       tag.tag_body = match[:tag_body]
 
       # run the method and substitute the results into the ccml
@@ -291,7 +370,7 @@ module CCML
       clazz, method, opts = CCML.parse_opening_tag(match)
 
       # create an instance of the tag class
-      tag = CCML.instanciate_tag(clazz, method, url, opts)
+      tag = CCML.instanciate_tag(clazz, url, opts)
 
       # run the method and substitute the results into the ccml
       sub = CCML.run_tag_method(tag, method)

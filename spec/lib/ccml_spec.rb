@@ -11,6 +11,9 @@ class CCML::Tag::TestSingleTag < CCML::Tag::SingleTag
       return @opts[:text]
     end
   end
+  def url_host
+    return @host
+  end
 end
 
 class CCML::Tag::TestPairTag < CCML::Tag::TagPair
@@ -19,6 +22,9 @@ class CCML::Tag::TestPairTag < CCML::Tag::TagPair
   end
   def echo
     return @opts.to_s
+  end
+  def url_host
+    return @host
   end
 end
 
@@ -94,6 +100,8 @@ describe CCML do
 
         @single_tag_with_method_with_opts = "{ccml:test_single:echo text='Hello Again!' opt1=\"nothing\" opt2='important'}"
 
+        @single_tag_with_url_parsing = "{ccml:test_single:url_host}"
+
         # tag pair examples
 
         @tag_pair_no_method_no_opts = "{ccml:test_pair}
@@ -111,6 +119,10 @@ describe CCML do
         @tag_pair_with_method_with_opts = "{ccml:test_pair:echo text='Hello Again!' opt1=\"nothing\" opt2='important'}
           {property}
         {/ccml:test_pair:echo}"
+
+        @tag_pair_with_url_parsing = "{ccml:test_pair:url_host}
+          {host}
+        {/ccml:test_pair:url_host}"
 
         # multiple tags
 
@@ -161,6 +173,18 @@ describe CCML do
         @tag_pair_mismatched_close_method = "{ccml:test_pair:echo}some stuff in the middle{/ccml:test_pair:mismatch}"
 
         @tag_pair_missing_close_method = "{ccml:test_pair:echo}some stuff in the middle{/ccml:test_pair}"
+
+      end
+
+      context "setup" do
+
+        it "passes the URL to the single tag constructor" do
+          CCML.parse(@single_tag_with_url_parsing, 'http://localhost:3000/blogs').should == 'localhost'
+        end
+
+        it "passes the URL to the tag pair constructor" do
+          CCML.parse(@tag_pair_with_url_parsing, 'http://localhost:3000/blogs').should == 'localhost'
+        end
 
       end
 
