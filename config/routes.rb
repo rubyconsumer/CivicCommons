@@ -61,7 +61,7 @@ Civiccommons::Application.routes.draw do
 
   #Static Pages
   get '/about',             to: 'static_pages#about'
-  get '/blog',              to: 'static_pages#blog',                as: 'blog'
+#  get '/blog',              to: 'static_pages#blog',                as: 'blog'
   get '/build_the_commons', to: 'static_pages#build_the_commons'
   get '/contact_us',        to: 'static_pages#contact'
   get '/faq',               to: 'static_pages#faq'
@@ -104,6 +104,10 @@ Civiccommons::Application.routes.draw do
   resources :links, only: [:new, :create]
   resources :invites, only: [:new, :create]
   resources :tos, only: [:new, :create]
+  resources :blog, only: [:index, :show]
+  resources :content, only: [:index, :show]
+  resources :news, only: [:index, :show]
+  resources :radioshow, only: [:index, :show]
 
 #Namespaces
   namespace "admin" do

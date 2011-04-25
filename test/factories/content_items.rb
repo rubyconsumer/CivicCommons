@@ -1,5 +1,5 @@
 Factory.define :content_item do |f|
-  f.association :person, :factory => :admin_person
+  f.association :author, :factory => :admin_person
   f.content_type "Untyped"
   f.title "Untyped post 1"
   f.cached_slug "post-1"

@@ -1,0 +1,20 @@
+<% content_for :main_body do %>
+  <div class="wrapper">
+    <div class="content-container">
+      <h1>Radio Show</h1>
+
+      <div class="main-content">
+        <div class="post">
+          <h2><%= link_to @radio_show.title, radioshow_path(@radio_show) %></h2>
+          <p class="author"><%= @radio_show.author.first_name + " " + @radio_show.author.last_name %></p>
+          <p class="time"><%= @radio_show.created_at.strftime("%m-%d-%Y %I:%M %p") %></p>
+          <div class="body"><%= raw @radio_show.body %></div>
+        </div>
+      </div><!-- /.main-content -->     
+
+      <div class='aside supplementary'>
+        <div>&nbsp;</div>
+      </div><!-- /.aside -->      
+    </div>
+  </div>
+<% end %>

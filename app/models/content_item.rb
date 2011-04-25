@@ -1,8 +1,9 @@
 class ContentItem < ActiveRecord::Base
   attr_accessor :url_slug
 
-  CONTENT_TYPES = ["BlogPost", "NewsItem", "RadioShow", "Event", "Untyped"]
-  belongs_to :person, :foreign_key => "author"
+  CONTENT_TYPES = ["BlogPost", "NewsItem", "RadioShow", "Untyped"]
+
+  belongs_to :author, :class_name => "Person", :foreign_key => "person_id"
 
   validates_presence_of :title, :body
   validates_uniqueness_of :title
