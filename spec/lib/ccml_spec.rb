@@ -102,7 +102,7 @@ describe CCML do
 
         @tag_pair_with_method_no_opts = "{ccml:test_pair:echo}
           {property}
-        {/ccml:test_pair}"
+        {/ccml:test_pair:echo}"
 
         @tag_pair_no_method_with_opts = "{ccml:test_pair text=\"Hello Again!\" opt1='nothing' opt2=\"important\"}
           {property}
@@ -110,19 +110,19 @@ describe CCML do
 
         @tag_pair_with_method_with_opts = "{ccml:test_pair:echo text='Hello Again!' opt1=\"nothing\" opt2='important'}
           {property}
-        {/ccml:test_pair}"
+        {/ccml:test_pair:echo}"
 
         # multiple tags
 
         @multiple_tag_pairs = "{ccml:test_pair:echo text='Hello Again!' opt1=\"nothing\" opt2='important'}
           {property}
-        {/ccml:test_pair}
+        {/ccml:test_pair:echo}
         {ccml:test_pair:echo}
           {property1}
           {property2}
           {property3}
           {property4}
-        {/ccml:test_pair}
+        {/ccml:test_pair:echo}
         {ccml:test_pair}
           Lorem ipsum...
         {/ccml:test_pair}
@@ -130,7 +130,7 @@ describe CCML do
 
         @multiple_tags_both_types = "{ccml:test_pair:echo text='Hello Again!' opt1=\"nothing\" opt2='important'}
           {property}
-        {/ccml:test_pair}
+        {/ccml:test_pair:echo}
         {ccml:test_single}
         {ccml:test_single:echo text='Hello Again!' opt1=\"nothing\" opt2='important'}
         {ccml:test_pair:echo}
@@ -138,7 +138,7 @@ describe CCML do
           {property2}
           {property3}
           {property4}
-        {/ccml:test_pair}
+        {/ccml:test_pair:echo}
         {ccml:test_pair}
           Lorem ipsum...
         {/ccml:test_pair}
