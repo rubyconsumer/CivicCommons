@@ -21,7 +21,7 @@
 # Tag pairs have two tags: an open tag and a close tag. The open tag follows
 # the same format as a single tag. The close tag has the following syntax:
 #
-# <code>{/ccml:tag_class}</code>
+# <code>{/ccml:tag_class:method}</code>
 #
 # An example of a single tag with no method name and a parameter list is:
 #
@@ -176,7 +176,7 @@
 module CCML
 
   SINGLE_TAG_PATTERN = /\{ccml:(?<class>\w+)(:(?<method>\w+))?(?<opts>[^\{}]*)?}/
-  TAG_PAIR_PATTERN = /\{ccml:(?<class>\w+)(:(?<method>\w+))?(?<opts>[^}]*)?}(?<tag_body>.*?)\{\/ccml:\k<class>}/m
+  TAG_PAIR_PATTERN = /\{ccml:(?<class>\w+)(:(?<method>\w+))?(?<opts>[^}]*)?}(?<tag_body>.*?)\{\/ccml:\k<class>(:(?<close_method>\k<method>))?}/m
   INVALID_TAGS_PATTERN = /(\{ccml)|(\{\/ccml)/
 
   OPTIONS_PATTERN = /\s+(\w+)=("([^"]*)"|'([^']*)')/
@@ -254,6 +254,11 @@ module CCML
 
     # iterate until no more matches exist
     while not match.nil?
+
+      # check for matching open/close method
+      if match[:method] != match[:close_method]
+        raise CCML::Error::TemplateError, "Open tag method '#{match[:method]}' does not match close tag '#{match[:close_method]}' method."
+      end
 
       # get the data from the matching string
       clazz, method, opts = CCML.parse_opening_tag(match)

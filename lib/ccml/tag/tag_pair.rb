@@ -9,13 +9,13 @@ module CCML
       IF_PATTERN = /\{if\s+(?<cond>.+?)}(?<body>.+?)\{\/?if/im
       ELSIF_PATTERN = /\{if:else?if\s+(?<cond>.+?)}(?<body>.+?)\{\/?if/im
       ELSE_PATTERN = /\{if:else}(?<body>.+?)\{\/if}/im
-      VAR_PATTERN = /\{(?<var>\w+)}/
+      VAR_PATTERN = /\{(?<vars>[\w-_\.]+)}/
 
       def process_tag_body(data)
 
         # inputs and outputs
         return_data = ''
-        data = [ data ] unless data.is_a?(Array)
+        data = [ data ] unless data.is_a?(Array) or data.is_a?(ActiveRecord::Relation)
 
         # iterate through all data items
         data.each do |datum|
@@ -95,12 +95,17 @@ module CCML
         pos = 0
         while match = VAR_PATTERN.match(tag_body, pos)
 
-          # get the variable name
-          var = match[:var].to_sym
+          # get the variable call string
+          vars = match[:vars]
 
           # get the variable data
           begin
-            sub = datum.send(var)
+            methods = vars.split('.')
+            object = datum
+            (0 .. methods.size-2).each do |i|
+              object = object.send(methods[i].to_sym)
+            end
+            sub = object.send(methods.last.to_sym)
           rescue Exception => e
             sub = nil
           end
