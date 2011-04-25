@@ -32,7 +32,9 @@ describe CCML::Tag::TagPair do
 
     before(:all) do
 
-      @person = Factory.build(:admin_person, :id => 1, :first_name => 'John', :last_name => 'Doe')
+      @test_date = Time.utc(2011, 4, 5, 23, 58, 00)
+
+      @person = Factory.build(:admin_person, :id => 1, :first_name => 'John', :last_name => 'Doe', :confirmed_at => @test_date)
 
       @ccml_options = {
         :id => @person.id.to_s,
@@ -188,6 +190,36 @@ describe CCML::Tag::TagPair do
         @tag.obj = Factory.build(:registered_user, :first_name => 'John')
         @tag.tag_body = @multiple_conditionals
         @tag.single_object.should == "\n<h1>I am the walrus.</h1>\n\n\n\n<h1>I am the walrus.</h1>\n"
+      end
+
+    end
+
+    context "with date variable formatting" do
+
+      before(:all) do
+
+        @tag = TestPairTag.new({})
+
+        @tag_pair_with_date_var_formatting = "{ccml:test_pair:single_hash}{date format='%m-%d-%Y %I:%M %p'}{/ccml:test_pair:single_hash}"
+        @tag_body_with_date_var_formatting = "{date format='%m-%d-%Y %I:%M %p'}"
+      end
+
+      it "properly formats a date variable" do
+        @tag.obj = { :date => @test_date }
+        @tag.tag_body = @tag_body_with_date_var_formatting
+        @tag.single_object.should == '04-05-2011 11:58 PM'
+      end
+
+      it "properly formats an ActiveRecord date variable" do
+        @tag.obj = { :date => @person.confirmed_at }
+        @tag.tag_body = @tag_body_with_date_var_formatting
+        @tag.single_object.should == '04-05-2011 11:58 PM'
+      end
+
+      it "ignores format for non-date variable" do
+        @tag.obj = { :date => 'garbage' }
+        @tag.tag_body = @tag_body_with_date_var_formatting
+        @tag.single_object.should == 'garbage'
       end
 
     end

@@ -9,7 +9,7 @@ module CCML
       IF_PATTERN = /\{if\s+(?<cond>.+?)}(?<body>.+?)\{\/?if/im
       ELSIF_PATTERN = /\{if:else?if\s+(?<cond>.+?)}(?<body>.+?)\{\/?if/im
       ELSE_PATTERN = /\{if:else}(?<body>.+?)\{\/if}/im
-      VAR_PATTERN = /\{(?<vars>[\w-_\.]+)}/
+      VAR_PATTERN = /\{(?<vars>\S+?)(\s+format=['"](?<format>.*?)['"])?}/i
 
       def process_tag_body(data)
 
@@ -108,6 +108,16 @@ module CCML
             sub = object.send(methods.last.to_sym)
           rescue Exception => e
             sub = nil
+          end
+
+          # check for date format
+          if match[:format]
+            begin
+              sub = Time.parse(sub) unless sub.is_a?(Time)
+              sub = sub.strftime(match[:format])
+            rescue Exception => e
+              #continue
+            end
           end
 
           # make the substitution
