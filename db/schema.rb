@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110414235826) do
+ActiveRecord::Schema.define(:version => 20110425152135) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -60,6 +60,17 @@ ActiveRecord::Schema.define(:version => 20110414235826) do
   end
 
   add_index "content_items", ["cached_slug"], :name => "index_content_items_on_cached_slug", :unique => true
+
+  create_table "content_templates", :force => true do |t|
+    t.string   "name"
+    t.text     "template"
+    t.integer  "person_id"
+    t.string   "cached_slug"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "content_templates", ["cached_slug"], :name => "index_content_templates_on_cached_slug", :unique => true
 
   create_table "contributions", :force => true do |t|
     t.datetime "datetime"
@@ -188,16 +199,6 @@ ActiveRecord::Schema.define(:version => 20110414235826) do
 
   add_index "issues", ["cached_slug"], :name => "index_issues_on_cached_slug", :unique => true
 
-  create_table "managed_issue_page_histories", :force => true do |t|
-    t.integer  "issue_page_id", :null => false
-    t.integer  "created_by",    :null => false
-    t.text     "content",       :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "managed_issue_page_histories", ["issue_page_id"], :name => "index_managed_issue_page_histories_on_issue_page_id"
-
   create_table "managed_issue_pages", :force => true do |t|
     t.integer  "issue_id",    :null => false
     t.string   "name",        :null => false
@@ -283,6 +284,16 @@ ActiveRecord::Schema.define(:version => 20110414235826) do
     t.integer  "image_file_size"
     t.text     "description"
   end
+
+  create_table "revision_records", :force => true do |t|
+    t.string   "revisionable_type", :limit => 100, :null => false
+    t.integer  "revisionable_id",                  :null => false
+    t.integer  "revision",                         :null => false
+    t.binary   "data"
+    t.datetime "created_at",                       :null => false
+  end
+
+  add_index "revision_records", ["revisionable_type", "revisionable_id", "revision"], :name => "revisionable", :unique => true
 
   create_table "slugs", :force => true do |t|
     t.string   "name"

@@ -100,6 +100,8 @@ GEM
       activemodel (= 3.0.3)
       activesupport (= 3.0.3)
     activesupport (3.0.3)
+    acts_as_revisionable (1.0.6)
+      activerecord (>= 2.2)
     archive-tar-minitar (0.5.2)
     arel (2.0.9)
     autotest (4.4.6)
@@ -330,6 +332,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  acts_as_revisionable
   addressable!
   autotest
   autotest-fsevent

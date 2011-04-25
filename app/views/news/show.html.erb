@@ -1,0 +1,19 @@
+<% content_for :main_body do %>
+  <div class="wrapper">
+    <div class="content-container">
+      <h1><%= link_to @news_item.title, news_path(@news_item) %></h1>
+
+      <div class="main-content">
+        <div class="post">
+          <p class="author"><%= @news_item.author.first_name + " " + @news_item.author.last_name %></p>
+          <p class="time"><%= @news_item.created_at.strftime("%m-%d-%Y %I:%M %p") %></p>
+          <div class="body"><%= raw @news_item.body %></div>
+        </div>
+      </div><!-- /.main-content -->     
+
+      <div class='aside supplementary'>
+        <div>&nbsp;</div>
+      </div><!-- /.aside -->      
+    </div>
+  </div>
+<% end %>

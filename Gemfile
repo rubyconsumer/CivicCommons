@@ -17,6 +17,7 @@ gem 'httparty'
 gem 'geokit'
 
 gem "friendly_id", "~> 3.2.1"
+gem 'acts_as_revisionable'
 gem 'embedly'
 
 gem 'gibbon'

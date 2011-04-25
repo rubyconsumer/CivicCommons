@@ -1,0 +1,38 @@
+<%
+  if @content_template.id.nil?
+    url = [ :admin, @content_template ]
+    method = :post
+  else
+    url = admin_content_template_path(@content_template)
+    method = :put
+  end
+%>
+
+<%= form_for @content_template, :url => url, :html => { :method => method } do |f| %>
+  <% if @content_template.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@content_template.errors.count, "error") %> prohibited this content_template from being saved:</h2>
+
+      <ul>
+      <% @content_template.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </p>
+  <% end %>
+
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+
+  <p>
+    <%= f.label :template %><br />
+    <%= f.text_area :template, :cols => 95, :rows => 40 %>
+  </p>
+  
+  <div class="actions">
+    <%= f.submit %>
+  </p>
+
+<% end %>
