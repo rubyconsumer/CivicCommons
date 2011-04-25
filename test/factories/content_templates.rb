@@ -1,5 +1,5 @@
 Factory.define :content_template do |f|
-  f.association :person, :factory => :admin_person
+  f.association :author, :factory => :admin_person
   f.name "Blog Post Template"
   f.template "Lorem ipsum..."
   f.person_id 1

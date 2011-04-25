@@ -1,15 +1,22 @@
 require 'spec_helper'
 
-# Specs in this file have access to a helper object that includes
-# the ContentTemplatesHelper. For example:
-#
-# describe ContentTemplatesHelper do
-#   describe "string concat" do
-#     it "concats two strings with spaces" do
-#       helper.concat_strings("this","that").should == "this that"
-#     end
-#   end
-# end
 describe ContentTemplatesHelper do
-  pending "add some examples to (or delete) #{__FILE__}"
+
+  context "parse_content_template" do
+
+    let(:template) do
+      Factory.create(:content_template)
+    end
+
+    it "returns the parsed template when found" do
+      parse_content_template(template.id).should == template.template
+      parse_content_template(template.cached_slug).should == template.template
+    end
+
+    it "returns blank when template not found" do
+      parse_content_template('does not exist').should be_blank
+    end
+
+  end
+
 end

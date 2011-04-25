@@ -2,16 +2,11 @@
   <div class="wrapper">
     <div class="content-container">
 
-      <%
-        template = ContentTemplate.find('blog-index')
-        parsed = CCML.parse(template.template, request.url) unless template.nil?
-      %>
-
-      <%= raw parsed %>
+      <%= parse_content_template('blog-index') %>
 
       <div class='aside supplementary'>
         <div>&nbsp;</div>
-      </div><!-- /.aside -->      
+      </div>
     </div>
   </div>
 <% end %>
