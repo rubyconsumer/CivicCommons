@@ -37,4 +37,31 @@ feature "Add contribution", %q{
     find('.tab-active').text.should == 'Comment'
   end
 
+  scenario "Modal pops up when responding to contribution", :js => true do
+    #Given that I am on a conversation permalink page
+    visit conversation_path(@conversation)
+    #And I am on a conversation node
+    visit "#{conversation_path(@conversation)}#node-#{@contribution.id}"
+    #When I click on the respond to contribution link
+    click_link("Respond to #{Person.find(@contribution.owner).first_name}")
+    #Then I should see the contribution modal overlay appear
+    find('#cboxContent').should_not be_nil
+  end
+
+  scenario "Previewing a comment", :js => true do
+    #Given that I am at the contribution modal
+    visit conversation_path(@conversation)
+    click_link('Post to this Conversation')
+    #When I fill in the comments text box with “the cat in the hat”
+    fill_in 'contribution_content', :with => "the cat in the hat"
+    #And I click the preview button
+    click_button('Preview')
+    #Then I should see a preview modal with the content “the cat in the hat”
+    find(".content p").text.should == "the cat in the hat"
+    #And I should I should see a submit button
+    find('#contribution_submit').should_not be_nil
+    #And I should I should see a cancel link
+    find('a.cancel').should_not be_nil
+  end
+
 end
