@@ -9,7 +9,8 @@
     = javascript_include_tag 'lib/chosen_issues'
     :plain
       <!--[if gte IE 7]><!-->
-      <link media="screen, projection" rel="stylesheet" href="/stylesheets/poster.css" type="text/css" />
+    = stylesheet_link_tag('poster', :media => 'screen, projection')
+    :plain
       <!--<![endif]-->
     :javascript
       /* Google Analytics */

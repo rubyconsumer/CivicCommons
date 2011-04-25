@@ -4,6 +4,15 @@ module HelperMethods
   ###################################################################
   # http://blog.areacriacoes.com.br/2010/8/20/helpers-para-steak
 
+  def logged_in_user
+    user = Factory.create(:registered_user)
+    visit new_person_session_path
+    fill_in 'Email', with: user.email
+    fill_in 'Password', with: user.password
+    click_button 'Login'
+  end
+
+
   def should_be_on(path)
     page.current_url.should match(Regexp.new(path))
   end
