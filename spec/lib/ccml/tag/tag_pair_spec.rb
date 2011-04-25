@@ -16,6 +16,14 @@ class TestPairTag < CCML::Tag::TagPair
     objs = [ @obj, @obj, @obj ]
     return process_tag_body(objs)
   end
+  def active_record_set
+    objs = Person.all
+    return process_tag_body(objs)
+  end
+  def active_record_assoc
+    objs = ContentItem.all
+    return process_tag_body(objs)
+  end
 end
 
 describe CCML::Tag::TagPair do
@@ -24,7 +32,7 @@ describe CCML::Tag::TagPair do
 
     before(:all) do
 
-      @person = Factory.build(:registered_user, :id => 1, :first_name => 'John', :last_name => 'Doe')
+      @person = Factory.build(:admin_person, :id => 1, :first_name => 'John', :last_name => 'Doe')
 
       @ccml_options = {
         :id => @person.id.to_s,
@@ -41,6 +49,14 @@ describe CCML::Tag::TagPair do
       @ccml_processed_twice = "<h1>ID 1</h1><p>Hello, John Doe!</p><h1>ID 1</h1><p>Hello, John Doe!</p>"
 
       @ccml_processed_thrice = "<h1>ID 1</h1><p>Hello, John Doe!</p><h1>ID 1</h1><p>Hello, John Doe!</p><h1>ID 1</h1><p>Hello, John Doe!</p>"
+
+      @ccml_people = "{ccml:test_pair:active_record_set}<h1>ID {id}</h1><p>Hello, {first_name} {last_name}!</p>{/ccml:test_pair:active_record_set}"
+
+      @ccml_people_processed = /<h1>ID \d+<\/h1><p>Hello, \w+ \w+!<\/p><h1>ID \d+<\/h1><p>Hello, \w+ \w+!<\/p><h1>ID \d+<\/h1><p>Hello, \w+ \w+!<\/p>/
+
+      @ccml_content = "{ccml:test_pair:active_record_assoc}<h1>{title}</h1><p>Author: {author.name}</p>{/ccml:test_pair:active_record_assoc}"
+
+      @ccml_content_processed = /<h1>.+<\/h1><p>Author: \w+ \w+<\/p>/
 
     end
 
@@ -67,6 +83,29 @@ describe CCML::Tag::TagPair do
       it "processes an array of objects" do
         @tag.obj = @person
         @tag.array_of_objects.should == @ccml_processed_thrice
+      end
+
+      context "using ActiveRecord" do
+
+        before(:each) do
+          (1..4).each do
+            Factory.create(:admin_person)
+          end
+          Factory.create(:content_item, :author => Person.first)
+        end
+
+        it "processes an active record set" do
+          @tag = TestPairTag.new(nil)
+          @tag.tag_body = @ccml_people
+          @tag.active_record_set.should =~ @ccml_people_processed
+        end
+
+        it "processes an active record property through an association" do
+          @tag = TestPairTag.new(nil)
+          @tag.tag_body = @ccml_content
+          @tag.active_record_assoc.should =~ @ccml_content_processed
+        end
+
       end
 
     end

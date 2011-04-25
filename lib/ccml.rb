@@ -257,7 +257,7 @@ module CCML
 
       # check for matching open/close method
       if match[:method] != match[:close_method]
-        raise CCML::Error::TemplateError, "Open tag method '#{match[:method]}' does not match close tag '#{match[:close_method]}' method."
+        raise CCML::Error::TemplateError, "Open tag '#{match[:method]}' method does not match close tag '#{match[:close_method]}' method."
       end
 
       # get the data from the matching string

@@ -28,12 +28,12 @@ describe CCML do
 
     context "tag classes" do
 
-      it "should instance a single tag subclass" do
+      it "instances a single tag subclass" do
         tag = CCML::Tag::TestSingleTag.new(nil)
         tag.should be_a_kind_of CCML::Tag::SingleTag
       end
 
-      it "should instance a tag pair subclass" do
+      it "instances a tag pair subclass" do
         tag = CCML::Tag::TestPairTag.new(nil)
         tag.should be_a_kind_of CCML::Tag::TagPair
       end
@@ -42,37 +42,37 @@ describe CCML do
 
     context "exception classes" do
 
-      it "should recognize MalformedTagError" do
+      it "recognizes MalformedTagError" do
         error = CCML::Error::MalformedTagError.new
         error.should be_a_kind_of CCML::Error::Base
         error.should be_a_kind_of CCML::Error::MalformedTagError
       end
 
-      it "should recognize NotImplementedError" do
+      it "recognizes NotImplementedError" do
         error = CCML::Error::NotImplementedError.new
         error.should be_a_kind_of CCML::Error::Base
         error.should be_a_kind_of CCML::Error::NotImplementedError
       end
 
-      it "should recognize TagBaseClassInTemplateError" do
+      it "recognizes TagBaseClassInTemplateError" do
         error = CCML::Error::TagBaseClassInTemplateError.new
         error.should be_a_kind_of CCML::Error::Base
         error.should be_a_kind_of CCML::Error::TagBaseClassInTemplateError
       end
 
-      it "should recognize TagClassNotFoundError" do
+      it "recognizes TagClassNotFoundError" do
         error = CCML::Error::TagClassNotFoundError.new
         error.should be_a_kind_of CCML::Error::Base
         error.should be_a_kind_of CCML::Error::TagClassNotFoundError
       end
 
-      it "should recognize TagMethodNotFoundError" do
+      it "recognizes TagMethodNotFoundError" do
         error = CCML::Error::TagMethodNotFoundError.new
         error.should be_a_kind_of CCML::Error::Base
         error.should be_a_kind_of CCML::Error::TagMethodNotFoundError
       end
 
-      it "should recognize TemplateError" do
+      it "recognizes TemplateError" do
         error = CCML::Error::TemplateError.new
         error.should be_a_kind_of CCML::Error::Base
         error.should be_a_kind_of CCML::Error::TemplateError
@@ -158,23 +158,27 @@ describe CCML do
 
         @tag_pair_mismatched_pair = "{ccml:test_pair}some stuff in the middle{/ccml:mismatch}"
 
+        @tag_pair_mismatched_close_method = "{ccml:test_pair:echo}some stuff in the middle{/ccml:test_pair:mismatch}"
+
+        @tag_pair_missing_close_method = "{ccml:test_pair:echo}some stuff in the middle{/ccml:test_pair}"
+
       end
 
       context "single tag" do
 
-        it "should parse a single tag with no method and no options" do
+        it "parses a single tag with no method and no options" do
           CCML.parse(@single_tag_no_method_no_opts).should == "Hello World!"
         end
 
-        it "should parse a single tag with method and no options" do
+        it "parses a single tag with method and no options" do
           CCML.parse(@single_tag_with_method_no_opts).should == "Hello World!"
         end
 
-        it "should parse a single tag with no method and with options" do
+        it "parses a single tag with no method and with options" do
           CCML.parse(@single_tag_no_method_with_opts).should == "Hello Again!"
         end
 
-        it "should parse a single tag with method and with options" do
+        it "parses a single tag with method and with options" do
           CCML.parse(@single_tag_with_method_with_opts).should == "Hello Again!"
         end
 
@@ -182,19 +186,19 @@ describe CCML do
 
       context "tag pair" do
 
-        it "should parse a tag pair with no method and no options" do
+        it "parses a tag pair with no method and no options" do
           CCML.parse(@tag_pair_no_method_no_opts).should == "Hello world!"
         end
 
-        it "should parse a tag pair with method and no options" do
+        it "parses a tag pair with method and no options" do
           CCML.parse(@tag_pair_with_method_no_opts).should == '{}'
         end
 
-        it "should parse a tag pair with no method and with options" do
+        it "parses a tag pair with no method and with options" do
           CCML.parse(@tag_pair_no_method_no_opts).should == "Hello world!"
         end
 
-        it "should parse a tag pair with method and with options" do
+        it "parses a tag pair with method and with options" do
           CCML.parse(@tag_pair_with_method_with_opts).should == '{:text=>"Hello Again!", :opt1=>"nothing", :opt2=>"important"}'
         end
 
@@ -202,7 +206,7 @@ describe CCML do
 
       context "multiple tags" do
 
-        it "should correctly parse multiple single tags" do
+        it "correctly parses multiple single tags" do
           ccml = "BEGIN > "
           ccml << @single_tag_no_method_no_opts
           ccml << " ... "
@@ -215,11 +219,11 @@ describe CCML do
           CCML.parse(ccml).should == "BEGIN > Hello World! ... Hello World! ... Hello Again! ... Hello Again! < END"
         end
 
-        it "should correctly parse multiple tag pairs" do
+        it "correctly parses multiple tag pairs" do
           CCML.parse(@multiple_tag_pairs).should == "{:text=>\"Hello Again!\", :opt1=>\"nothing\", :opt2=>\"important\"}\n        {}\n        Hello world!\n        "
         end
 
-        it "should correctly parse multiple single tags and tag pairs" do
+        it "correctly parses multiple single tags and tag pairs" do
           CCML.parse(@multiple_tags_both_types).should == "{:text=>\"Hello Again!\", :opt1=>\"nothing\", :opt2=>\"important\"}\n        Hello World!\n        Hello Again!\n        {}\n        Hello world!\n        "
         end
 
@@ -227,32 +231,40 @@ describe CCML do
 
       context "incorrect tag syntax" do
 
-        it "should raise TemplateError when ccml data is not a string" do
+        it "raises TemplateError when ccml data is not a string" do
           lambda { CCML.parse(1234567890) }.should raise_error CCML::Error::TemplateError
         end
 
-        it "should raise TagClassNotFoundError when tag class does not exist" do
+        it "raises TagClassNotFoundError when tag class does not exist" do
           lambda { CCML.parse(@single_tag_missing_class) }.should raise_error CCML::Error::TagClassNotFoundError
         end
 
-        it "should raise TagMethodNotFoundError when tag method does not exist" do
+        it "raises TagMethodNotFoundError when tag method does not exist" do
           lambda { CCML.parse(@single_tag_missing_method) }.should raise_error CCML::Error::TagMethodNotFoundError
         end
 
-        it "should raise TemplateError for incomplete single tag" do
+        it "raises TemplateError for incomplete single tag" do
           lambda { CCML.parse(@single_tag_incomplete) }.should raise_error CCML::Error::TemplateError
         end
 
-        it "should raise TemplateError for incomplete tag pair open tag" do
+        it "raises TemplateError for incomplete tag pair open tag" do
           lambda { CCML.parse(@tag_pair_incomplete_open) }.should raise_error CCML::Error::TemplateError
         end
 
-        it "should raise TemplateError for incomplete tag pair close tag" do
+        it "raises TemplateError for incomplete tag pair close tag" do
           lambda { CCML.parse(@tag_pair_incomplete_close) }.should raise_error CCML::Error::TemplateError
         end
 
-        it "should raise TemplateError for a mismatched tag pair" do
+        it "raises TemplateError for a mismatched tag pair" do
           lambda { CCML.parse(@tag_pair_mismatched_pair) }.should raise_error CCML::Error::TemplateError
+        end
+
+        it "raises TemplateError for a mismatched close tag mathod" do
+          lambda { CCML.parse(@tag_pair_mismatched_close_method) }.should raise_error CCML::Error::TemplateError
+        end
+
+        it "raises TemplateError for a missing close tag method" do
+          lambda { CCML.parse(@tag_pair_missing_close_method) }.should raise_error CCML::Error::TemplateError
         end
 
       end
