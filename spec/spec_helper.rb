@@ -48,6 +48,7 @@ Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
 
 Rspec.configure do |config|
   config.mock_with :rspec
+  config.filter_run_excluding :js => true
   config.include CustomMatchers
   config.include WebMock::API
   config.include StubbedHttpRequests
