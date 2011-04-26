@@ -1,5 +1,5 @@
 # example -- http://timelessrepo.com/bdd-with-rspec-and-steak
-#save_and_open_page
+# save_and_open_page
 
 require File.expand_path(File.dirname(__FILE__) + '/acceptance_helper')
 
@@ -16,6 +16,10 @@ feature "Post Content Item", %q{
     end
 
     let :admin do
+      Factory :admin_person
+    end
+
+    let :second_admin do 
       Factory :admin_person
     end
 
@@ -73,7 +77,6 @@ feature "Post Content Item", %q{
       click_button('Create Content item')
       page.should have_content("still missing some important information:")
 
-#      should_be_on new_admin_content_item_path
     end
     scenario "Create a new content item" do
       # Given I am on the content item creation page
@@ -93,15 +96,18 @@ feature "Post Content Item", %q{
       page.should have_content("Your content item has been created!")
     end
 
-    scenario "New content item is associated with a user" do
-      # Given I am on the content item creation page
+    scenario "New content item is associated with the currently logged in author" do
+      # Given there is a second author
+      # And I am on the content item creation page
       # And I have entered required content item fields
+      # And I have left the Author selection as the default option
       # When I press the “Create Content item” button
       # Then the content item should be created
       # And I should be on the view content item page
       # And I should see the success message
       # And I should see my name as the author
 
+      second_admin
       visit new_admin_content_item_path
       select('RadioShow', :from => 'content_item_content_type')
       fill_in('content_item_title', :with => 'First Radio Show')
@@ -110,7 +116,31 @@ feature "Post Content Item", %q{
       click_button('Create Content item')
       should_be_on admin_content_item_path(ContentItem.last)
       page.should have_content("Your content item has been created!")
-      page.should have_content("John")
+      page.should have_content(admin.first_name + " " + admin.last_name)
+    end
+
+    scenario "New content item is associated with the selected author" do
+      # Given there is a second author
+      # And I am on the content item creation page
+      # And I have entered required content item fields
+      # And I have selected an author other than me
+      # When I press the “Create Content item” button
+      # Then the content item should be created
+      # And I should be on the view content item page
+      # And I should see the success message
+      # And I should see my name as the author
+
+      second_admin
+      visit new_admin_content_item_path
+      select('RadioShow', :from => 'content_item_content_type')
+      select(second_admin.first_name + " " + second_admin.last_name, :from => 'content_item_person_id')
+      fill_in('content_item_title', :with => 'First Radio Show')
+      fill_in('content_item_url_slug', :with => 'first-radio-show')
+      fill_in('content_item_body', :with => 'This radio show is about that radio show')
+      click_button('Create Content item')
+      should_be_on admin_content_item_path(ContentItem.last)
+      page.should have_content("Your content item has been created!")
+      page.should have_content(second_admin.last_name)
     end
 
     scenario "Title field must be unique" do

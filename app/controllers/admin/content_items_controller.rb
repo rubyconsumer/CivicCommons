@@ -12,8 +12,8 @@ class Admin::ContentItemsController < Admin::DashboardController
   end
 
   def create
-    params[:content_item][:person_id] = current_person[:id]
     @content_item = ContentItem.new(params[:content_item])
+    @authors = Person.find_all_by_admin(true)
     if @content_item.save
       respond_to do |format|
         format.html { redirect_to(admin_content_item_path(@content_item), :notice => "Your content item has been created!") }
