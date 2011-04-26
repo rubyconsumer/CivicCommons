@@ -49,6 +49,6 @@ class Admin::ContentTemplatesController < Admin::DashboardController
   def destroy
     @content_template = ContentTemplate.find(params[:id])
     @content_template.destroy
-    redirect_to(content_templates_url)
+    redirect_to(admin_content_templates_url)
   end
 end
