@@ -34,8 +34,8 @@ test:
     mailer_host: "test.somewhere.com"
     pepper: "somereallylongstringtoemcryptuserspasswords"
   email:
-    default_email: "myemail@example.com"
-    support_email: "support@example.com"
+    default_email: "my_default_email@example.com"
+    support_email: "my_support_email@example.com"
   embedly:
     key: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   facebook:
@@ -46,7 +46,7 @@ test:
     api_token: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-us1"
     list: "planetoftheapes"
     intercept: false
-    intercept_email: "myemail@example.com"
+    intercept_email: "my_intercept_email@example.com"
   omniauth:
     full_host: 'http://test.com'
   rails_secret_token: "randonStuffThatsAtLeast30CharachtersYo128DirtyWithTh"
