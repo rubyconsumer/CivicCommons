@@ -1,5 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/acceptance_helper')
 WebMock.allow_net_connect!
+Capybara.default_wait_time = 10
 
 feature "Add contribution", %q{
   As a Civic Commons registered user
@@ -82,7 +83,8 @@ feature "Add contribution", %q{
     #When I click on the cancel link
     find('a.cancel', visible: true).click
     #Then I should see the contribution modal with the words “the cat in the hat”
-    find('textarea#contribution_content').text.should == "the cat in the hat"
+    find('textarea#contribution_content').should_not be_nil
+    page.should have_content('the cat in the hat')
   end
 
 end
