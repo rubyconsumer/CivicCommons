@@ -1,5 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/acceptance_helper')
 WebMock.allow_net_connect!
+Capybara.default_wait_time = 10
 
 feature "Add contribution", %q{
   As a Civic Commons registered user
@@ -74,6 +75,16 @@ feature "Add contribution", %q{
     visit "#{conversation_path(@conversation)}#node-#{@conversation.contributions.last.id}"
     #And this contribution should be on the conversation page
     page.has_content?('the cat in the hat').should be_true
+  end
+
+  scenario "Canceling a comment", :js => true do
+    #Given I am previewing my comment "the cat in the hat"
+    preview_comment(@conversation, "the cat in the hat")
+    #When I click on the cancel link
+    find('a.cancel', visible: true).click
+    #Then I should see the contribution modal with the words “the cat in the hat”
+    find('textarea#contribution_content').should_not be_nil
+    page.should have_content('the cat in the hat')
   end
 
 end
