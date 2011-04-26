@@ -76,4 +76,13 @@ feature "Add contribution", %q{
     page.has_content?('the cat in the hat').should be_true
   end
 
+  scenario "Canceling a comment", :js => true do
+    #Given I am previewing my comment "the cat in the hat"
+    preview_comment(@conversation, "the cat in the hat")
+    #When I click on the cancel link
+    find('a.cancel', visible: true).click
+    #Then I should see the contribution modal with the words “the cat in the hat”
+    find('textarea#contribution_content').text.should == "the cat in the hat"
+  end
+
 end
