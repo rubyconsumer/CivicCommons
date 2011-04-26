@@ -1,5 +1,4 @@
-#--
-# = CCML (Civic Commons Markup Language)
+# = Civic Commons Markup Language
 #
 # CCML is a minimal markup language based on ExpressionEngine tag syntax. It is
 # intended to allow web designers on the Civic Commons project easily embed
@@ -250,8 +249,6 @@
 #
 # CCML tag variable processing only supports singular associations. It will not
 # work if the association is a collection.
-#++
-
 module CCML
 
   SINGLE_TAG_PATTERN = /\{ccml:(?<class>\w+)(:(?<method>\w+))?(?<opts>[^\{}]*)?}/
