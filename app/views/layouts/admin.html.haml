@@ -59,9 +59,12 @@
             =link_to "Content Items", admin_content_items_path
             %ul
               %li
-                =link_to "Content Templates", admin_content_templates_path
-              %li
                 =link_to "Add Content Item", new_admin_content_item_path
+          %li
+            =link_to "Static Pages", admin_content_templates_path
+            %ul
+              %li
+                =link_to "Add Static Page", new_admin_content_template_path
       %div#main
         =yield
 

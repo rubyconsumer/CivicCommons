@@ -11,7 +11,7 @@
 <%= form_for @content_template, :url => url, :html => { :method => method } do |f| %>
   <% if @content_template.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@content_template.errors.count, "error") %> prohibited this content_template from being saved:</h2>
+      <h2><%= pluralize(@content_template.errors.count, "error") %> prohibited this static page from being saved:</h2>
 
       <ul>
       <% @content_template.errors.full_messages.each do |msg| %>
@@ -32,7 +32,7 @@
   </p>
   
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "Save Static Page" %>
   </p>
 
 <% end %>

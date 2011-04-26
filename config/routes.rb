@@ -53,8 +53,6 @@ Civiccommons::Application.routes.draw do
   #UnsubscribeDigest
   get '/unsubscribe-me/:id',                           to: 'unsubscribe_digest#unsubscribe_me',              as: 'unsubscribe_confirmation'
   put '/unsubscribe-me/:id',                           to: 'unsubscribe_digest#remove_from_digest'
-  #ContentTemplates
-  get '/pages/:id',                                    to: 'templates#show',                                 as: 'page'
 
   #Community
   get '/community',                                    to: 'community#index',                                as: 'community'
@@ -62,20 +60,21 @@ Civiccommons::Application.routes.draw do
   get '/widget',                                       to: 'widget#index'
 
   #Static Pages
-  get '/about',             to: 'static_pages#about'
-#  get '/blog',              to: 'static_pages#blog',                as: 'blog'
-  get '/build_the_commons', to: 'static_pages#build_the_commons'
-  get '/contact_us',        to: 'static_pages#contact'
-  get '/faq',               to: 'static_pages#faq'
-  get '/partners',          to: 'static_pages#partners'
-  get '/poster',            to: 'static_pages#poster'
-  get '/posters',           to: 'static_pages#poster'
-  get '/press',             to: 'static_pages#in_the_news'
-  get '/principles',        to: 'static_pages#principles'
-  get '/team',              to: 'static_pages#team'
-  get '/terms',             to: 'static_pages#terms'
-  get '/jobs',              to: 'static_pages#jobs'
-  get '/careers',           to: 'static_pages#jobs'
+  match '/about'             => redirect('/pages/about')
+  match '/build_the_commons' => redirect('/pages/build-the-commons')
+  match '/build-the-commons' => redirect('/pages/build-the-commons')
+  match '/careers'           => redirect('/pages/jobs')
+  match '/contact_us'        => redirect('/pages/contact')
+  match '/faq'               => redirect('/pages/faq')
+  match '/in-the-news'       => redirect('/pages/in-the-news')
+  match '/jobs'              => redirect('/pages/jobs')
+  match '/partners'          => redirect('/pages/partners')
+  match '/poster'            => redirect('/pages/poster')
+  match '/posters'           => redirect('/pages/poster')
+  match '/press'             => redirect('/pages/in-the-news')
+  match '/principles'        => redirect('/pages/principles')
+  match '/team'              => redirect('/pages/team')
+  match '/terms'             => redirect('/pages/terms')
 
 #Devise Routes
   devise_for :people,
@@ -106,6 +105,7 @@ Civiccommons::Application.routes.draw do
   resources :links, only: [:new, :create]
   resources :invites, only: [:new, :create]
   resources :tos, only: [:new, :create]
+  resources :pages, only: [:show]
   resources :blog, only: [:index, :show]
   resources :content, only: [:index, :show]
   resources :news, only: [:index, :show]
