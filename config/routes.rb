@@ -53,6 +53,8 @@ Civiccommons::Application.routes.draw do
   #UnsubscribeDigest
   get '/unsubscribe-me/:id',                           to: 'unsubscribe_digest#unsubscribe_me',              as: 'unsubscribe_confirmation'
   put '/unsubscribe-me/:id',                           to: 'unsubscribe_digest#remove_from_digest'
+  #ContentTemplates
+  get '/pages/:id',                                    to: 'templates#show',                                 as: 'page'
 
   #Community
   get '/community',                                    to: 'community#index',                                as: 'community'
