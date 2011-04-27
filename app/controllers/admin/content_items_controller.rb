@@ -47,6 +47,7 @@ class Admin::ContentItemsController < Admin::DashboardController
 
   def update
     @content_item = ContentItem.find(params[:id])
+    @authors = Person.find_all_by_admin(true)
     respond_to do |format|
       if @content_item.update_attributes(params[:content_item])
         flash[:notice] = "Successfully edited your Content Item"
