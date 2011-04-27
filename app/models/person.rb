@@ -229,6 +229,29 @@ class Person < ActiveRecord::Base
       return false
     end
 
+    # Forcibly log out the FROM
+    # Lock the FROM
+    person_to_merge.confirmed_at = nil
+    return false unless person_to_merge.save # bail out if person_to_merge cannot be locked out
+
+    # Update the all contributions
+    person_to_merge.contributions.map do |contribution|
+      contribution.owner = id
+      contribution.save
+    end
+
+    # ratings
+    RatingGroup.where('person_id = ?', person_to_merge.id).map do |rating_group|
+      rating_group.person_id = id
+      rating_group.save
+    end
+    
+    # etc of the FROM account to point to the TO account
+    
+    # Make the TO account follow all the same conversations/issues as the FROM account
+    # Remove all follows from the FROM account
+    # Keep the digest setting of the TO account
+    # Delete the FROM account
     return true
   end
 

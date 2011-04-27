@@ -509,20 +509,14 @@ describe Person do
 
   context "when merging another account" do
     def given_a_person_with_email(email)
-      person = Factory.create(:registered_user)
-      person.avatar = nil
-      person.name = "name"
-      person.password = "password"
-      person.email = email
-      person.save!
-      person
+      person = Factory.create(:registered_user, :avatar => nil, :email => email)
     end
 
-    after(:all) do
+    after(:each) do
       Person.delete_all
     end
 
-    before(:all) do
+    before(:each) do
       @person = given_a_person_with_email "test1@example.com"
       @person_to_merge = given_a_person_with_email "test2@example.com"
     end
@@ -536,7 +530,60 @@ describe Person do
     end
 
     it "will return true if the merge succeeds" do
-      @person.merge_account(@person).should == true
+      @person.merge_account(@person_to_merge).should == true
+    end
+
+    it "will unconfirm the person_to_merge" do
+      @person.merge_account(@person_to_merge)
+      Person.find(@person_to_merge.id).confirmed_at.should be_nil
+    end
+
+    it "will associate contributions to the person being merged into" do
+      contribution = Factory.create(:top_level_contribution, person: @person_to_merge)
+      conversation = contribution.conversation
+      Factory.create(:contribution, person: @person_to_merge)
+      Factory.create(:issue_contribution, person: @person_to_merge)
+      Factory.create(:comment, person: @person_to_merge)
+      Factory.create(:comment_with_unique_content, person: @person_to_merge)
+      Factory.create(:suggested_action, person: @person_to_merge)
+      Factory.create(:question,
+        conversation: conversation,
+        person: @person_to_merge
+      )
+      Factory.create(:question_without_parent,
+        conversation: conversation,
+        person: @person_to_merge
+      )
+      Factory.create(:answer, person: @person_to_merge)
+      Factory.create(:attached_file, person: @person_to_merge)
+      Factory.create(:link, person: @person_to_merge)
+      Factory.create(:embedded_snippet, person: @person_to_merge)
+      Factory.create(:embedly_contribution, person: @person_to_merge)
+
+      # create an array of the contribution IDs attributed to person_to_merge
+      contribution_ids = @person_to_merge.contributions.collect do |contribution|
+        contribution.id
+      end
+
+      @person.merge_account(@person_to_merge)
+
+      # check the original contributions to see if the owner was updated correctly
+      Contribution.find(contribution_ids).each do |contribution|
+        contribution.owner.should == @person.id
+      end
+
+      Contribution.delete_all
+    end
+
+    it "will associate ratings to the person being merged into" do
+      @contribution = Factory.create(:comment)
+      @descriptor = Factory.create(:rating_descriptor)
+      @rg = Factory.create(:rating_group, :contribution => @contribution, :person => @person_to_merge)
+      @rating = Factory.create(:rating, :rating_group => @rg, :rating_descriptor => @descriptor)
+
+      @rating.person.should == @person_to_merge
+      @person.merge_account(@person_to_merge)
+      Rating.find(@rating.id).person.should == @person
     end
 
   end
