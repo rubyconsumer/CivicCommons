@@ -506,4 +506,38 @@ describe Person do
       @person.send(:password_required?).should be_true
     end
   end
+
+  context "when merging another account" do
+    def given_a_person_with_email(email)
+      person = Factory.create(:registered_user)
+      person.avatar = nil
+      person.name = "name"
+      person.password = "password"
+      person.email = email
+      person.save!
+      person
+    end
+
+    after(:all) do
+      Person.delete_all
+    end
+
+    before(:all) do
+      @person = given_a_person_with_email "test1@example.com"
+      @person_to_merge = given_a_person_with_email "test2@example.com"
+    end
+
+    it "will respond to merge_account" do
+      @person.should respond_to(:merge_account)
+    end
+
+    it "will return false if the account is the same" do
+      @person.merge_account(@person).should == false
+    end
+
+    it "will return true if the merge succeeds" do
+      @person.merge_account(@person).should == true
+    end
+
+  end
 end

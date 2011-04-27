@@ -224,6 +224,14 @@ class Person < ActiveRecord::Base
     end
   end
 
+  def merge_account(person_to_merge)
+    if person_to_merge.class.name == 'Person' && id == person_to_merge.id
+      return false
+    end
+
+    return true
+  end
+
   # Overiding Devise::Models::DatabaseAuthenticatable
   # due to needing to set encrypted_password to blank, so that it doesn't error out when it is set to nil
   def valid_password?(password)
