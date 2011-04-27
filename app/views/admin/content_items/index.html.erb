@@ -6,6 +6,7 @@
       <th>Content Item Title</th>
       <th>Author</th>
       <th>Type</th>
+      <th>Published Date</th>
       <th>Created Date</th>
       <th>Updated Date</th>
       <th colspan="2"></th>
@@ -17,6 +18,7 @@
       <td><%= link_to item.title, admin_content_item_path(item) %></td>
       <td><%= item.author.first_name + " " + item.author.last_name %></td>
       <td><%= item.content_type %></td>
+      <td><%= item.published.blank? ? '' : item.published.strftime("%m-%d-%Y %I:%M %p") %></td>
       <td><%= item.created_at.strftime("%m-%d-%Y %I:%M %p") %></td>
       <td><%= item.updated_at.strftime("%m-%d-%Y %I:%M %p") %></td>
       <td><%= link_to "Edit", edit_admin_content_item_path(item) %></td>

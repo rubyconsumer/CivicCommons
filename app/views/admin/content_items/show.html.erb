@@ -2,6 +2,7 @@
   <header>
     <h1><%= link_to(@content_item.title, @content_item.cached_slug) %></h1>
     <p>Author: <%= @person.first_name + ' ' +  @person.last_name %></p>
+    <p>Published: <%= @content_item.published.strftime("%B %d, %Y") %></p>
   </header>
   <p>Content Type: <%= @content_item.content_type %>
   <p>Summary: </p>

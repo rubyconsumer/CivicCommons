@@ -7,6 +7,7 @@ class ContentItem < ActiveRecord::Base
 
   validates_presence_of :title, :body
   validates_uniqueness_of :title
+  validates :published, :date => {:after => Proc.new { Time.now - 1.year} }
 
   has_friendly_id :url_slug_or_title, :use_slug => true, :strip_non_ascii => true
 

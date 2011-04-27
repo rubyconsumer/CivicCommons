@@ -24,6 +24,12 @@
   </p>
 
   <p>
+  <%= f.label :published, "Publish On (mm/dd/yyyy)" %><br>
+  <%= f.text_field :published, :value => (@content_item.published.blank? ? '' : @content_item.published.strftime('%m/%d/%Y'))%>
+  </p>
+
+
+  <p>
   <%= f.label :content_type %><br>
   <%= f.select :content_type, ContentItem::CONTENT_TYPES %>
   </p>
@@ -49,5 +55,6 @@
 <script type="text/javascript">
   $().ready(function() {
     init_tiny_mce('#content_item_summary, #content_item_body');
+    $('#content_item_published').datepicker();
 	});
 </script>

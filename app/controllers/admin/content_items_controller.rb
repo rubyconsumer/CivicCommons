@@ -9,10 +9,13 @@ class Admin::ContentItemsController < Admin::DashboardController
     @content_item = ContentItem.new(params[:content_item])
     @authors = Person.find_all_by_admin(true)
     @content_item.author = current_person
+    @content_item.published = Date.today
   end
 
   def create
+
     @content_item = ContentItem.new(params[:content_item])
+    @content_item.published = params[:published] ? Date.parse(params[:published]) : Date.today 
     @authors = Person.find_all_by_admin(true)
     if @content_item.save
       respond_to do |format|
