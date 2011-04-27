@@ -146,7 +146,7 @@ feature "Post Content Item", %q{
     scenario "New content item must be created with today's publish date as the default" do
       # Given I am on the content item creation page
       # And I have entered required content item fields
-      # And I have not edited the publish date
+      # And I have not edited the publish date (default value)
       # When I press the “Create Content item” button
       # Then the content item should be created
       # And I should be on the view content item page
@@ -159,7 +159,6 @@ feature "Post Content Item", %q{
       fill_in('content_item_body', :with => 'This radio show is about that radio show')
       click_button('Create Content item')
       should_be_on admin_content_item_path(ContentItem.last)
-print Date.parse(Date.today.to_s).strftime("%B %d, %Y")
       page.should have_content(Date.parse(Date.today.to_s).strftime("%B %d, %Y"))
     end
 
