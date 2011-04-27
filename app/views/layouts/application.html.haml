@@ -81,34 +81,49 @@
     = yield :main_body
     #footer.footer
       #footer-inner
-        %ul.sub-nav
-          %li
-            = link_to 'Blog', blog_url
-          %li 
-            = link_to 'About Us', about_url
-          %li 
-            = link_to 'FAQ', faq_url
-          %li
-            = link_to 'Mission & Principles', principles_url
-          %li
-            = link_to 'Team', team_url
-          %li
-            = link_to 'Partners', partners_url
-          %li
-            = link_to 'In The News', press_url
-          %li
-            = link_to 'Contact us', contact_us_url
+        .four-col
+          .cols
+            %h3 About the Commons
+            %ul.sub-nav
+              %li 
+                = link_to 'About Us', about_url
+              %li
+                = link_to 'Team', team_url
+              %li
+                = link_to 'Mission & Principles', principles_url
+              %li 
+                = link_to 'FAQ', faq_url
+          .cols
+            %h3 Keep Up with the Commons
+            %ul.sub-nav
+              %li
+                = link_to 'Blog', blog_url
+              %li
+                = link_to 'In The News', press_url
+              %li
+                = link_to 'Podcast', #
+          .cols
+            %h3 Work with the Commons
+            %ul.sub-nav
+              %li
+                = link_to 'Contact Us', contact_us_url
+              %li
+                = link_to 'Partners', partners_url
+              %li
+                = link_to 'Terms of Use', terms_url
+          .cols
+            %h3 Civic Commons Elsewhere
+            %ul.social-media
+              %li
+                %a{ :href => 'http://www.facebook.com/pages/Civic-Commons/143930632284131', :id => 'facebook'} Facebook
+              %li
+                %a{ :href => 'http://twitter.com/civiccommons', :id => 'twitter'} Twitter
+              %li
+                %a{ :href => 'http://www.youtube.com/user/neociviccommons', :id => 'youtube'} YouTube
+              %li
+                %a{ :href => '#', :id => 'rss'} RSS
+              
         = render :partial => 'layouts/creative_commons'
-        %p 
-          = link_to 'Terms of Use', terms_url
-        %ul.social-media
-          %li
-            %a{ :href => 'http://www.facebook.com/pages/Civic-Commons/143930632284131', :id => 'facebook'} Facebook
-          %li
-            %a{ :href => 'http://twitter.com/civiccommons', :id => 'twitter'} Twitter
-          %li
-            %a{ :href => 'http://www.youtube.com/user/neociviccommons', :id => 'youtube'} YouTube
-          %li
-            %a{ :href => '#', :id => 'rss'} RSS
+
 = render :partial => '/shared/suggest_facebook_auth.js' if signed_in? && !current_person.declined_fb_auth? && !current_person.facebook_authenticated?
 = render :partial => '/shared/show_colorbox.js', :locals => {:path => successful_fb_registration_path} if flash[:successful_fb_registration_modal]
