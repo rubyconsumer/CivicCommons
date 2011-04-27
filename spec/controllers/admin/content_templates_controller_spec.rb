@@ -3,23 +3,21 @@ require 'spec_helper'
 module Admin
   describe ContentTemplatesController do
 
-    before(:all) do
-      @content_templates = {}
-      (1..5).each do 
-        template = Factory.create(:content_template)
-        @content_templates[template.id] = template
-      end
-    end
-
-    after(:all) do
-      ContentTemplate.delete_all
-      Person.delete_all
+    before(:each) do
+      sign_in Factory.create(:admin_person)
     end
 
     describe "GET index" do
 
+      before(:each) do
+        @content_templates = {}
+        (1..5).each do 
+          template = Factory.create(:content_template)
+          @content_templates[template.id] = template
+        end
+      end
+
       it "assigns all content_templates as @content_templates" do
-        pending
         get :index
         assigns[:content_templates].size.should == @content_templates.size
       end
@@ -28,9 +26,11 @@ module Admin
 
     describe "GET show" do
 
+      let(:template) do
+        Factory.create(:content_template)
+      end
+
       it "assigns the requested content_template as @content_template" do
-        pending
-        template = @content_templates[@content_templates.keys.first]
         get :show, :id => template.id.to_s
         assigns[:content_template].should eq template
       end
@@ -40,7 +40,6 @@ module Admin
     describe "GET new" do
 
       it "assigns a new content_template as @content_template" do
-        pending
         get :new
         assigns[:content_template].should_not be_nil
       end
@@ -49,9 +48,11 @@ module Admin
 
     describe "GET edit" do
 
+      let(:template) do
+        Factory.create(:content_template)
+      end
+
       it "assigns the requested content_template as @content_template" do
-        pending
-        template = @content_templates[@content_templates.keys.first]
         get :edit, :id => template.id.to_s
         assigns[:content_template].should eq template
       end
@@ -62,43 +63,43 @@ module Admin
 
       describe "with valid params" do
 
+        let(:params) do
+          Factory.attributes_for(:content_template)
+        end
+
         before(:each) do
-          params = Factory.attributes_for(:content_template)
-          post :create, :params => params
+          post :create, :content_template => params
         end
 
         it "assigns a newly created content_template as @content_template" do
-          pending
-          assigns[:content_template].name.should eq template.name
-          assigns[:content_template].cached_slug.should eq template.cached_slug
-          assigns[:content_template].template.should eq template.template
+          assigns[:content_template].name.should eq params[:name]
+          assigns[:content_template].cached_slug.should eq params[:cached_slug]
+          assigns[:content_template].template.should eq params[:template]
         end
 
         it "redirects to the created content_template" do
-          pending
-          response.should redirect_to admin_content_template_path(assigns[:content_template])
+          response.should redirect_to admin_content_template_path(assigns[:content_template].cached_slug)
         end
 
       end
 
       describe "with invalid params" do
 
+        let(:params) do
+          Factory.attributes_for(:content_template)
+        end
+
         before(:each) do
-          params = Factory.attributes_for(:content_template)
           params.delete(:name)
-          post :create, :params => params
+          post :create, :content_template => params
         end
 
         it "assigns a newly created but unsaved content_template as @content_template" do
-          pending
-          assigns[:content_template].name.should eq params[:name]
-          assigns[:content_template].cached_slug.should eq params[:cached_slug]
           assigns[:content_template].template.should eq params[:template]
         end
 
         it "re-renders the 'new' template" do
-          pending
-          response.should render_template("new")
+          response.should render_template('new')
         end
 
       end
@@ -107,37 +108,62 @@ module Admin
 
     describe "PUT update" do
 
+      let(:template) do
+        Factory.create(:content_template)
+      end
+
+      let(:new_name) do
+        "Some completely different but valid name"
+      end
+
+      let(:new_slug) do
+        "some-completely-different-but-valid-name"
+      end
+
+      let(:params) do
+        template.attributes
+      end
+
       describe "with valid params" do
 
-        before(:all) do
-          @params = @content_templates[@content_templates.keys.first].attributes
-          @params[:name] = "Some completely different but valid name"
-          put :update, :id => @params['id'], :params => @params
+        before(:each) do
+          params['name'] = new_name
+          put :update, :id => params['id'], :content_template => params
         end
 
         it "updates the requested content_template" do
-          pending
-          ContentTemplate.find_by_id(@params['id']).name.should eq @params['name']
+          ContentTemplate.find_by_id(params['id']).name.should eq new_name
         end
 
         it "assigns the requested content_template as @content_template" do
-          pending
+          assigns[:content_template].id.should eq params['id']
+          assigns[:content_template].name.should eq new_name
+          assigns[:content_template].template.should eq params['template']
+          assigns[:content_template].cached_slug.should eq new_slug
         end
 
-        it "redirects to the content_template" do
-          pending
+        it "redirects to the 'GET show' page" do
+          response.should redirect_to admin_content_template_path(new_slug)
         end
 
       end
 
       describe "with invalid params" do
 
+        before(:each) do
+          params['name'] = ''
+          put :update, :id => params['id'], :content_template => params
+        end
+
         it "assigns the content_template as @content_template" do
-          pending
+          assigns[:content_template].id.should eq params['id']
+          assigns[:content_template].name.should eq params['name']
+          assigns[:content_template].template.should eq params['template']
+          assigns[:content_template].cached_slug.should eq params['cached_slug']
         end
 
         it "re-renders the 'edit' template" do
-          pending
+          response.should render_template('edit')
         end
 
       end
@@ -146,12 +172,20 @@ module Admin
 
     describe "DELETE destroy" do
 
+      let(:template) do
+        Factory.create(:content_template)
+      end
+
+      before(:each) do
+        delete :destroy, :id => template.id
+      end
+
       it "destroys the requested content_template" do
-        pending
+        ContentTemplate.find_by_id(template.id).should be_nil
       end
 
       it "redirects to the content_templates list" do
-        pending
+        response.should redirect_to(admin_content_templates_url)
       end
 
     end

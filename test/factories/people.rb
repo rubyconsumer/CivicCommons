@@ -33,7 +33,7 @@ Factory.define :people do |f|
     u.password 'password'
     u.sequence(:email) {|n| "test.admin.account#{n}@mysite.com" }
     u.admin true
-    u.avatar File.new(Rails.root + 'test/fixtures/images/test_image.jpg')
+    u.avatar nil
     u.skip_email_marketing true
 
     # since this is an admin, assume they are confirmed
