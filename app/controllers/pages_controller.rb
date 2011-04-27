@@ -1,4 +1,5 @@
 class PagesController < ApplicationController
+
   def show
     begin
       @template = ContentTemplate.find(params[:id])
@@ -7,4 +8,5 @@ class PagesController < ApplicationController
       redirect_to root_path
     end
   end
+
 end
