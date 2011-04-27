@@ -16,25 +16,26 @@ feature "Add contribution", %q{
 
   scenario "Modal pops up when user responds to a conversation", :js => true do
     #Given I am on a conversation permalink page
-    visit conversation_path(@conversation)
+    @conversation_page = ConversationPage.new(page)
+    @conversation_page.visit_page(@conversation)
     #When I click on the contribute to conversation button
-    click_link('Post to this Conversation')
+    @conversation_page.click_post_to_the_conversation
     #Then I should see a contribution modal overlay appear
-    find('#cboxContent').should_not be_nil
+    @conversation_page.should have_contribution_modal_present
     #And I should see links to comment
-    find_link('Comment').should_not be_nil
+    @conversation_page.should have_link('Comment')
     #And I should see links to suggest action
-    find_link('Suggest Action').should_not be_nil
+    @conversation_page.should have_link('Suggest Action')
     #And I should see links to question
-    find_link('Question').should_not be_nil
+    @conversation_page.should have_link('Question')
     #And I should see links to attach
-    find_link('Attach').should_not be_nil
+    @conversation_page.should have_link('Attach')
     #And I should see links to link 
-    find_link('Link').should_not be_nil
+    @conversation_page.should have_link('Link')
     #And I should see links to video
-    find_link('Video').should_not be_nil
+    @conversation_page.should have_link('Video')
     #And I should see comments selected
-    find('.tab-active').text.should == 'Comment'
+    @conversation_page.should have_active_tab('Comment')
   end
 
   scenario "Modal pops up when responding to contribution", :js => true do
