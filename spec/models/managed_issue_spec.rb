@@ -4,9 +4,16 @@ describe ManagedIssue do
 
   context "validations" do
 
-    let(:attributes) {
+    let(:attributes) do
       Factory.attributes_for(:managed_issue)
-    }
+    end
+
+    before(:each) do
+      issue = Factory.create(:managed_issue)
+      page = Factory.create(:managed_issue_page, issue: issue)
+      issue.index = page
+      issue.save
+    end
 
     it "validates a valid object" do
       ManagedIssue.new(attributes).should be_valid
@@ -37,13 +44,6 @@ describe ManagedIssue do
     end
 
     context "pages collection" do
-
-      before(:each) do
-        issue = Factory.create(:managed_issue)
-        page = Factory.create(:managed_issue_page, issue: issue)
-        issue.index = page
-        issue.save
-      end
 
       it "limits the pages collection to be read only" do
         lambda {

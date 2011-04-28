@@ -19,6 +19,7 @@ class IssuesController < ApplicationController
 
     if @issue.is_a?(ManagedIssue) and @issue.index
 
+      @page = @issue.index
       render 'managed_issue_pages/show'
 
     else
