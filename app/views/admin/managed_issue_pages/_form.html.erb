@@ -1,0 +1,43 @@
+<%
+  if @managed_issue_page.id.nil?
+    url = admin_issue_pages_path
+    method = :post
+  else
+    url = admin_issue_page_path(@managed_issue_page)
+    method = :put
+  end
+%>
+
+<%= form_for @managed_issue_page, :url => url, :html => { :method => method } do |f| %>
+  <% if @managed_issue_page.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@managed_issue_page.errors.count, "error") %> prohibited this static page from being saved:</h2>
+
+      <ul>
+      <% @managed_issue_page.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </p>
+  <% end %>
+
+  <p>
+    <%= f.label :name %>:
+    <%= f.text_field :name %>
+  </p>
+
+  <p>
+    <%= f.label :issue %>: '<%= @issue.name %>'
+    <%= f.hidden_field :issue_id %>
+  </p>
+
+  <p>
+    <%= f.label :template %><br />
+    <%= f.text_area :template, :cols => 95, :rows => 40 %>
+  </p>
+  
+  <div class="actions">
+    <%= f.submit "Save Issue Page" %>
+  </p>
+
+<% end %>

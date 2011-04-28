@@ -99,6 +99,7 @@ Civiccommons::Application.routes.draw do
   end
   resources :issues, only: [:index, :show] do
     post 'create_contribution', on: :member
+    resources :pages, controller: :managed_issue_pages, only: [:show]
   end
   resources :conversations, only: [:index, :show, :new, :create]
   resources :regions, only: [:index, :show]
@@ -121,7 +122,10 @@ Civiccommons::Application.routes.draw do
       put 'toggle_staff_pick', on: :member
       post 'update_order', on: :collection
     end
-    resources :issues
+    resources :issues, do
+      resources :pages, controller: :managed_issue_pages
+    end
+    get '/issues/pages/all', to: 'managed_issue_pages#all'
     resources :regions
     resources :people do
       get 'proxies',       on: :collection

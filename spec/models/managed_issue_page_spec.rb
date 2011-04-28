@@ -34,6 +34,10 @@ describe ManagedIssuePage do
       ManagedIssuePage.new(@attr).should_not be_valid
     end
 
+    it "validates that the issue is a managed issue" do
+      pending
+    end
+
     it "validates the presence of author" do
       @attr.delete(:author)
       ManagedIssuePage.new(@attr).should_not be_valid

@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @managed_issue_page.name %>
+</p>
+
+<p>
+  <b>Issue:</b>
+  <%= @managed_issue_page.issue.name %>
+</p>
+
+<p>
+  <b>Author:</b>
+  <%= @managed_issue_page.author.name %>
+</p>
+
+<p>
+  <b>Slug:</b>
+  <%= @managed_issue_page.cached_slug %>
+</p>
+
+<p>
+  <b>Created At:</b>
+  <%= @managed_issue_page.created_at.strftime("%m-%d-%Y %I:%M %p") %>
+</p>
+
+<p>
+  <b>Updated At:</b>
+  <%= @managed_issue_page.updated_at.strftime("%m-%d-%Y %I:%M %p") %>
+</p>
+
+<p>
+  <b>Template:</b>
+  <br />
+  <%= text_area(:managed_issue_page, :template, :cols => 95, :rows => 40, :disabled => 'disabled') %>
+</p>
+
+
+<%= link_to 'Edit', edit_admin_issue_page_path(@managed_issue_page) %> |
+<%= link_to 'Back', admin_issue_pages_path %>

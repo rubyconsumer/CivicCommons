@@ -16,6 +16,12 @@
     %br
     =f.select :type, Issue::ALL_TYPES
 
+  -if @issue.is_a?(ManagedIssue)
+    %p        
+      =f.label :index
+      %br
+      =f.collection_select :managed_issue_page_id, ManagedIssuePage.where(issue_id: @issue.id), :id, :name
+
   -if @issue.image.exists?
     = image_tag @issue.image.url(:normal)
 

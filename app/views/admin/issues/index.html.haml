@@ -12,7 +12,7 @@
       %tr
         %td= link_to issue.name, admin_issue_path(issue)
         %td= truncate(Sanitize.clean(issue.summary), :length => 200, :separator => ' ')
-        %td= issue.is_a?(ManagedIssue) ? link_to('Pages', edit_admin_issue_path(issue)) : nil
+        %td= issue.is_a?(ManagedIssue) ? link_to('Pages', admin_issue_pages_path(issue)) : nil
         %td= link_to 'Edit', edit_admin_issue_path(issue)
         %td= link_to 'Delete', admin_issue_path(issue), :confirm => "Are you sure?", :method => :delete
 
