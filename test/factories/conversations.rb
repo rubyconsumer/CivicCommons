@@ -10,6 +10,7 @@ Factory.define :conversation do |f|
 end
 
 Factory.define :user_generated_conversation, :parent => :conversation do |f|
+  f.contributions { |c| [c.association(:contribution, override_confirmed: true)] }
   f.user_generated true
   f.association :person, :factory => :normal_person
 end
