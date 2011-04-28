@@ -40,13 +40,14 @@ feature "Add contribution", %q{
 
   scenario "Modal pops up when responding to contribution", :js => true do
     #Given that I am on a conversation permalink page
-    visit conversation_path(@conversation)
+    @conversation_page = ConversationPage.new(page)
+    @conversation_page.visit_page(@conversation)
     #And I am on a conversation node
-    visit "#{conversation_path(@conversation)}#node-#{@contribution.id}"
+    @conversation_page.visit_node(@conversation, @contribution)
     #When I click on the respond to contribution link
-    click_link("Respond to #{Person.find(@contribution.owner).first_name}")
+    @conversation_page.respond_to_contribution(@contribution)
     #Then I should see the contribution modal overlay appear
-    find('#cboxContent').should_not be_nil
+    @conversation_page.should have_contribution_modal_present
   end
 
   scenario "Previewing a comment", :js => true do

@@ -8,12 +8,20 @@ class ConversationPage < PageObject
     visit conversation_path(conversation)
   end
 
+  def visit_node(conversation, contribution)
+    visit "#{conversation_path(conversation)}#node-#{contribution.id}"
+  end
+
   def post_to_the_conversation
     find_link 'Post to this Conversation'
   end
 
   def click_post_to_the_conversation
     post_to_the_conversation.click
+  end
+
+  def respond_to_contribution(contribution)
+    click_link("Respond to #{Person.find(contribution.owner).first_name}")
   end
 
   def has_contribution_modal_present?
