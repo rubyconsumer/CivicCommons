@@ -58,14 +58,13 @@ feature "Add contribution", %q{
     #When I fill in the comments text box with “the cat in the hat”
     @conversation_page.add_content_to_contribution('the cat in the hat')
     #And I click the preview button
-    click_button('Preview')
+    @conversation_page.click_preview
     #Then I should see a preview modal with the content “the cat in the hat”
-    find("#cboxLoadedContent div.comment div.content p").should_not be_nil
-    page.should have_content "the cat in the hat"
+    @conversation_page.should have_preview_contribution_text('the cat in the hat')
     #And I should I should see a submit button
-    page.has_css?('#contribution_submit').should be_true
+    @conversation_page.should have_submit_contribution_button
     #And I should I should see a cancel link
-    page.has_css?('a.cancel').should be_true
+    @conversation_page.should have_cancel_contribution_link
   end
 
   scenario "Posting a comment", :js => true do

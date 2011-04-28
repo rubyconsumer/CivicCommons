@@ -25,8 +25,36 @@ class ConversationPage < PageObject
     post_to_the_conversation.click
   end
 
+  def click_preview
+    click_button('Preview')
+  end
+
   def respond_to_contribution(contribution)
     click_link("Respond to #{Person.find(contribution.owner).first_name}")
+  end
+
+  def has_preview_contribution_text?(content)
+    if find("#cboxLoadedContent div.comment div.content p") && page.has_content?(content)
+      return true
+    else
+      false
+    end
+  end
+
+  def has_submit_contribution_button?
+    if has_css?('#contribution_submit')
+      return true
+    else
+      false
+    end
+  end
+
+  def has_cancel_contribution_link?
+    if has_css?('a.cancel')
+      return true
+    else
+      false
+    end
   end
 
   def has_contribution_modal_present?
