@@ -1213,7 +1213,7 @@ margin-bottom: 20px;
 hr, .hide {display: none;}
 a img {border: none;}
 div.call-out {
-background: #eee url(/images/simple_grad.gif) repeat-x top;
+background: #fff;
 border: 4px solid #979daa;
 min-height: 280px;
 padding: 5px;
