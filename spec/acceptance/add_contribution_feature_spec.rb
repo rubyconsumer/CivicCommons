@@ -56,8 +56,7 @@ feature "Add contribution", %q{
     @conversation_page.visit_page(@conversation)
     @conversation_page.click_post_to_the_conversation
     #When I fill in the comments text box with “the cat in the hat”
-    page.has_css?('textarea#contribution_content', visible: true)
-    fill_in 'contribution_content', :with => "the cat in the hat"
+    @conversation_page.add_content_to_contribution('the cat in the hat')
     #And I click the preview button
     click_button('Preview')
     #Then I should see a preview modal with the content “the cat in the hat”

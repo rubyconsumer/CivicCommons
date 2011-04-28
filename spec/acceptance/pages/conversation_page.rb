@@ -16,6 +16,11 @@ class ConversationPage < PageObject
     find_link 'Post to this Conversation'
   end
 
+  def add_content_to_contribution(content)
+    has_css?('textarea#contribution_content', visible: true)
+    fill_in 'contribution_content', :with => content
+  end
+
   def click_post_to_the_conversation
     post_to_the_conversation.click
   end
