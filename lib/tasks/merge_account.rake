@@ -1,7 +1,7 @@
 require "highline/import"
 
 desc "Merge two user accounts by passing in their email addresses: from=email1@example.com to=email2@example.com"
-task :account_merge, :needs => :environment do
+task :merge_account, :needs => :environment do
   begin
     from = get_email('from')
   end while not from_person = Person.find_by_email(from)
