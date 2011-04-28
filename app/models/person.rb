@@ -23,8 +23,8 @@ class Person < ActiveRecord::Base
   has_many :content_templates, :foreign_key => 'person_id', :dependent => :restrict 
   has_many :contributions, :foreign_key => 'owner', :uniq => true, :dependent => :restrict 
   has_many :managed_issue_pages, :foreign_key => 'person_id', :dependent => :restrict 
-  has_many :rating_groups, :dependent => :restrict 
-  has_many :subscriptions, :dependent => :restrict 
+  has_many :rating_groups, :dependent => :restrict
+  has_many :subscriptions, :dependent => :destroy
   has_and_belongs_to_many :conversations, :join_table => 'conversations_guides', :foreign_key => :guide_id
 
   has_many :contributed_conversations, :through => :contributions, :source => :conversation, :uniq => true, :dependent => :restrict 

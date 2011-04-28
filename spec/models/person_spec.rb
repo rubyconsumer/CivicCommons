@@ -507,6 +507,34 @@ describe Person do
     end
   end
 
+  context "when deleting an account" do
+    after(:each) do
+      Person.delete_all
+    end
+
+    before(:each) do
+      @person = Factory.create(:normal_person)
+    end
+
+    it "will delete all subscriptions" do
+      Factory.create(:conversation_subscription, person: @person)
+      Factory.create(:issue_subscription, person: @person)
+
+      Subscription.find(:all).length.should == 2
+      @person.destroy
+      Subscription.find(:all).length.should == 0
+    end
+
+    it "will delete any authentications" do
+      Factory.create(:facebook_authentication, person: @person)
+
+      Authentication.find(:all).length.should == 1
+      @person.destroy
+      Authentication.find(:all).length.should == 0
+    end
+
+  end
+
   context "when merging another account" do
     def given_a_person_with_email(email)
       person = Factory.create(:registered_user, :avatar => nil, :email => email)
