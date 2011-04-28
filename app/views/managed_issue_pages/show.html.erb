@@ -2,7 +2,7 @@
   <div class="wrapper">
     <div class="content-container">
       <div class="main-content">
-        <%= raw CCML.parse(@issue.index.template, controller.request.url) %>
+        <%= raw CCML.parse(@page.template, controller.request.url) %>
       </div>
     </div>
   </div>

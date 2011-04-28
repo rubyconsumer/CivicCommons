@@ -2,10 +2,6 @@ require 'spec_helper'
 
 describe IssuesController do
 
-  def mock_issue(stubs={})
-    @mock_issue ||= mock_model(Issue)
-  end
-
   describe "GET index" do
 
     before(:each) do
@@ -59,22 +55,46 @@ describe IssuesController do
 
   describe "GET show" do
 
-    before(:each) do
-      @user = Factory.create(:registered_user)
-      sign_in @user
-      @issue = Factory.create(:issue)
+    context "with standard issues" do
+
+      before(:each) do
+        @user = Factory.create(:registered_user)
+        sign_in @user
+        @issue = Factory.create(:issue)
+      end
+
+      it "assigns the requested issue as @issue" do
+        get :show, :id => @issue.id
+        assigns(:issue).should == @issue
+      end
+
+      it "records a visit to the issue passing the current user" do
+        count_before = Visit.where(:person_id => @user.id).where(:visitable_id => @issue.id).where(:visitable_type => "Issue").size
+        get :show, :id => @issue.id
+        count_after = Visit.where(:person_id => @user.id).where(:visitable_id => @issue.id).where(:visitable_type => "Issue").size
+        count_after.should == count_before + 1
+      end
+
     end
 
-    it "assigns the requested issue as @issue" do
-      get :show, :id => @issue.id
-      assigns(:issue).should == @issue
-    end
+    context "with managed issues" do
 
-    it "records a visit to the issue passing the current user" do
-      count_before = Visit.where(:person_id => @user.id).where(:visitable_id => @issue.id).where(:visitable_type => "Issue").size
-      get :show, :id => @issue.id
-      count_after = Visit.where(:person_id => @user.id).where(:visitable_id => @issue.id).where(:visitable_type => "Issue").size
-      count_after.should == count_before + 1
+      let(:issue) do
+        Factory.create(:managed_issue)
+      end
+
+      it "renders the index managed issue page when set" do
+        issue.index = Factory.create(:managed_issue_page, issue: issue)
+        issue.save
+        get :show, :id => issue.id
+        response.should render_template 'managed_issue_pages/show'
+      end
+
+      it "renders the standard show page when index page not set" do
+        get :show, :id => issue.id
+        response.should render_template 'show'
+      end
+
     end
 
   end
