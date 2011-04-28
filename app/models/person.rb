@@ -256,6 +256,9 @@ class Person < ActiveRecord::Base
     end
 
     # Make the TO account follow all the same conversations/issues as the FROM account
+    Subscription.where(person_id: person_to_merge.id).each do |subscription|
+      Subscription.create_unless_exists(self, subscription.subscribable)
+    end
 
     # content_templates?
 

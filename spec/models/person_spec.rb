@@ -625,5 +625,14 @@ describe Person do
       Conversation.find(conversation.id).person.should == @person
     end
 
+    it "will associate subscriptions to the person being merged into" do
+      @conversation_subscription = Factory.create(:conversation_subscription, person_id: @person_to_merge.id)
+      @conversation_subscription.person.should == @person_to_merge
+
+      @person.merge_account(@person_to_merge)
+      subscription = Subscription.find_by_person_id(@person.id)
+      subscription.subscribable.should == @conversation_subscription.subscribable
+    end
+
   end
 end
