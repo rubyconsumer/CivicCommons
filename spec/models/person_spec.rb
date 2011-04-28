@@ -634,5 +634,14 @@ describe Person do
       subscription.subscribable.should == @conversation_subscription.subscribable
     end
 
+    it "will associate visits to the person being merged into" do
+      item = Factory.create(:issue, {:total_visits=>0, :recent_visits=>0, :last_visit_date=>nil})
+      item.visit(@person_to_merge.id)
+      item.total_visits.should == 1
+      @person.merge_account(@person_to_merge)
+      Visit.where('person_id = ?', @person_to_merge.id).should be_empty
+      Visit.where('person_id = ?', @person.id).length.should == 1
+    end
+
   end
 end

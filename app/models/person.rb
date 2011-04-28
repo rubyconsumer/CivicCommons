@@ -260,18 +260,18 @@ class Person < ActiveRecord::Base
       Subscription.create_unless_exists(self, subscription.subscribable)
     end
 
-    # content_templates?
+    # what about Visits table?
+    Visit.where('person_id = ?', person_to_merge.id).map do |visit|
+      visit.person_id = id
+      visit.save
+    end
 
+    # content_templates?
     # content_items?
 
     # etc of the FROM account to point to the TO account
     # should this interactively allow selection of different values?
 
-    # Remove all follows from the FROM account - is this necessary?  what if it was just taken care of upon deletion?
-    # what about Visits table?
-    # do I have to worry about DelayedJobs?
-    # Keep the digest setting of the TO account
-    # Delete the FROM account
     return true
   end
 
