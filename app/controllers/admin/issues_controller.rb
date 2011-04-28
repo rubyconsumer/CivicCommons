@@ -16,6 +16,7 @@ class Admin::IssuesController < Admin::DashboardController
     @issue = Issue.new(attributes)
     # manually manage single table inheritance since Rails won't do it automatically
     @issue.type = attributes['type'] if attributes.has_key?('type') and Issue::ALL_TYPES.include?(attributes['type'])
+    @issue.type = attributes[:type] if attributes.has_key?(:type) and Issue::ALL_TYPES.include?(attributes[:type])
     if @issue.save
       redirect_to admin_issues_path
       flash[:notice] = "Thank you for submitting an issue"
@@ -36,6 +37,7 @@ class Admin::IssuesController < Admin::DashboardController
     attributes = params[@issue.type.underscore.to_sym]
     @issue.attributes = attributes
     @issue.type = attributes['type'] if attributes.has_key?('type') and Issue::ALL_TYPES.include?(attributes['type'])
+    @issue.type = attributes[:type] if attributes.has_key?(:type) and Issue::ALL_TYPES.include?(attributes[:type])
     if @issue.save
       redirect_to admin_issues_path
       flash[:notice] = "Thank you for updating the issue"

@@ -104,6 +104,26 @@ module Admin
 
       end
 
+      describe "with subclasses" do
+
+        it "creates issues" do
+          params = Factory.attributes_for(:issue)
+          params[:type] = 'Issue'
+          post :create, :issue => params
+          assigns[:issue].should be_kind_of Issue
+          assigns[:issue].type.should == 'Issue'
+        end
+
+        it "creates managed issues" do
+          params = Factory.attributes_for(:managed_issue)
+          params[:type] = 'ManagedIssue'
+          post :create, :issue => params
+          assigns[:issue].should be_kind_of Issue
+          assigns[:issue].type.should == 'ManagedIssue'
+        end
+
+      end
+
     end
 
     describe "PUT update" do
@@ -164,6 +184,28 @@ module Admin
 
         it "re-renders the 'edit' issue" do
           response.should render_template('edit')
+        end
+
+      end
+
+      describe "with subclasses" do
+
+        it "converts an issue to a managed issue" do
+          issue = Factory.create(:issue)
+          params = issue.attributes
+          params[:type] = 'ManagedIssue'
+          put :update, :id => params['id'], :issue => params
+          assigns[:issue].should be_kind_of Issue
+          assigns[:issue].type.should == 'ManagedIssue'
+        end
+
+        it "converts a managed issue to an issue" do
+          issue = Factory.create(:managed_issue)
+          params = issue.attributes
+          params[:type] = 'Issue'
+          put :update, :id => params['id'], :managed_issue => params
+          assigns[:issue].should be_kind_of Issue
+          assigns[:issue].type.should == 'Issue'
         end
 
       end
