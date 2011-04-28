@@ -1,5 +1,6 @@
 Factory.define :issue do |f|
   f.sequence(:name) {|n| "Important Stuff #{n}" }
+  f.sequence(:cached_slug) {|n| "important-stuff-#{n}" }
   f.created_at 3.months.ago
   f.updated_at 3.months.ago
   f.summary "All the important stuff happening in our region."

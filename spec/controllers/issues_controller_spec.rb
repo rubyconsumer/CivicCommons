@@ -8,24 +8,20 @@ describe IssuesController do
 
   describe "GET index" do
 
-    before(:all) do
+    before(:each) do
 
-      (1..3).each do
+      (1..2).each do
         Factory.create(:issue)
       end
 
-      (1..3).each do
+      (1..2).each do
         Factory.create(:region)
       end
 
       @main_article = Factory.create(:article, :current => true, :issue_article => true, :main => true)
       @sub_articles = []
-      (1..5).each do
+      (1..2).each do
         @sub_articles << Factory.create(:article, :current => true, :issue_article => true, :main => false)
-      end
-
-      (1..3).each do
-        Factory.create(:conversation)
       end
 
     end
@@ -45,18 +41,18 @@ describe IssuesController do
       assigns(:main_article).should == @main_article
     end
 
-    it "assigns 3 articles to @sub_articles" do
+    it "assigns all articles to @sub_articles" do
       get :index
       assigns(:sub_articles).collect # because of active record lazy loading
       assigns(:sub_articles).first.should be_instance_of Article
-      assigns(:sub_articles).size.should == 3
+      assigns(:sub_articles).size.should == @sub_articles.size
     end
 
-    it "assigns 3 top items to @recent_items" do
+    it "assigns all top items to @recent_items" do
       get :index
       assigns(:recent_items).collect # because of active record lazy loading
       assigns(:recent_items).first.should be_kind_of TopItemable
-      assigns(:recent_items).size.should == 3
+      assigns(:recent_items).should_not be_empty
     end
 
   end
