@@ -52,8 +52,9 @@ feature "Add contribution", %q{
 
   scenario "Previewing a comment", :js => true do
     #Given that I am at the contribution modal
-    visit conversation_path(@conversation)
-    click_link('Post to this Conversation')
+    @conversation_page = ConversationPage.new(page)
+    @conversation_page.visit_page(@conversation)
+    @conversation_page.click_post_to_the_conversation
     #When I fill in the comments text box with “the cat in the hat”
     page.has_css?('textarea#contribution_content', visible: true)
     fill_in 'contribution_content', :with => "the cat in the hat"
