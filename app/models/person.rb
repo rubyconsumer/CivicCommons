@@ -231,6 +231,7 @@ class Person < ActiveRecord::Base
 
     # Forcibly log out the FROM
     # Lock the FROM
+    # TODO: remove any Facebook authentications?
     person_to_merge.confirmed_at = nil
     return false unless person_to_merge.save # bail out if person_to_merge cannot be locked out
 
@@ -247,9 +248,18 @@ class Person < ActiveRecord::Base
     end
     
     # etc of the FROM account to point to the TO account
-    
+    #Conversations table?
+    # content_templates?
+    # content_items?
+
+    # should this interactively allow selection of different values
+
     # Make the TO account follow all the same conversations/issues as the FROM account
-    # Remove all follows from the FROM account
+    
+
+    # Remove all follows from the FROM account - is this necessary?  what if it was just taken care of upon deletion?
+    # what about Visits table?
+    # do I have to worry about DelayedJobs?
     # Keep the digest setting of the TO account
     # Delete the FROM account
     return true
