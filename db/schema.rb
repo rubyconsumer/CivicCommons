@@ -200,10 +200,10 @@ ActiveRecord::Schema.define(:version => 20110425152135) do
   add_index "issues", ["cached_slug"], :name => "index_issues_on_cached_slug", :unique => true
 
   create_table "managed_issue_pages", :force => true do |t|
-    t.integer  "issue_id",    :null => false
     t.string   "name",        :null => false
-    t.integer  "created_by",  :null => false
-    t.text     "content",     :null => false
+    t.integer  "issue_id",    :null => false
+    t.integer  "person_id",   :null => false
+    t.text     "template",    :null => false
     t.string   "cached_slug"
     t.datetime "created_at"
     t.datetime "updated_at"

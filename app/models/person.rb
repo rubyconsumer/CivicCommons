@@ -19,14 +19,16 @@ class Person < ActiveRecord::Base
 
   has_one :facebook_authentication, :class_name => 'Authentication', :conditions => {:provider => 'facebook'}
   has_many :authentications, :dependent => :destroy
-  has_many :content_items, :foreign_key => 'author'
-  has_many :contributions, :foreign_key => 'owner', :uniq => true
-  has_many :ratings
-  has_many :subscriptions
+  has_many :content_items, :foreign_key => 'person_id', :dependent => :restrict 
+  has_many :content_templates, :foreign_key => 'person_id', :dependent => :restrict 
+  has_many :contributions, :foreign_key => 'owner', :uniq => true, :dependent => :restrict 
+  has_many :managed_issue_pages, :foreign_key => 'person_id', :dependent => :restrict 
+  has_many :ratings, :dependent => :restrict 
+  has_many :subscriptions, :dependent => :restrict 
   has_and_belongs_to_many :conversations, :join_table => 'conversations_guides', :foreign_key => :guide_id
 
-  has_many :contributed_conversations, :through => :contributions, :source => :conversation, :uniq => true
-  has_many :contributed_issues, :through => :contributions, :source => :issue, :uniq => true
+  has_many :contributed_conversations, :through => :contributions, :source => :conversation, :uniq => true, :dependent => :restrict 
+  has_many :contributed_issues, :through => :contributions, :source => :issue, :uniq => true, :dependent => :restrict 
 
   validates_length_of :email, :within => 6..255, :too_long => "please use a shorter email address", :too_short => "please use a longer email address"
   validates_length_of :zip_code, :within => (5..10), :allow_blank => true, :allow_nil => true, :if => :validate_zip_code?

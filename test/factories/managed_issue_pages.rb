@@ -1,7 +1,6 @@
 Factory.define :managed_issue_page do |f|
+  f.name "Big, Important Issue"
+  f.template "Big honkin' blob of HTML..."
   f.association :issue, :factory => :managed_issue
-  f.title "Big, Important Issue"
-  f.url_title "big_important_id"
-  f.association :created_by, :factory => :admin_person
-  f.content "Big honkin' blob of HTML..."
+  f.association :author, :factory => :admin_person
 end
