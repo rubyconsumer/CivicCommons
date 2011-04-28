@@ -35,7 +35,8 @@ describe ManagedIssuePage do
     end
 
     it "validates that the issue is a managed issue" do
-      pending
+      @attr[:issue] = Factory.build(:issue)
+      lambda { ManagedIssuePage.new(@attr) }.should raise_error
     end
 
     it "validates the presence of author" do
