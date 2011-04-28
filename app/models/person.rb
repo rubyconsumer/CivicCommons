@@ -231,7 +231,7 @@ class Person < ActiveRecord::Base
 
     # Forcibly log out the FROM
     # Lock the FROM
-    # TODO: remove any Facebook authentications?
+    # TODO: do we want this? http://rubydoc.info/github/plataformatec/devise/master/Devise/Models/Lockable
     person_to_merge.confirmed_at = nil
     return false unless person_to_merge.save # bail out if person_to_merge cannot be locked out
 
@@ -242,20 +242,27 @@ class Person < ActiveRecord::Base
     end
 
     # ratings
+    # TODO: talk to Winston to make sure this is handled correctly
     RatingGroup.where('person_id = ?', person_to_merge.id).map do |rating_group|
       rating_group.person_id = id
       rating_group.save
     end
-    
-    # etc of the FROM account to point to the TO account
-    #Conversations table?
-    # content_templates?
-    # content_items?
 
-    # should this interactively allow selection of different values
+    # Conversations table?
+    # TODO: talk to Winston to make sure this is handled correctly
+    Conversation.where('owner = ?', person_to_merge.id).map do |conversation|
+      conversation.owner = id
+      conversation.save
+    end
 
     # Make the TO account follow all the same conversations/issues as the FROM account
-    
+
+    # content_templates?
+
+    # content_items?
+
+    # etc of the FROM account to point to the TO account
+    # should this interactively allow selection of different values?
 
     # Remove all follows from the FROM account - is this necessary?  what if it was just taken care of upon deletion?
     # what about Visits table?
