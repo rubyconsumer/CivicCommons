@@ -48,10 +48,16 @@ class Admin::ContentItemsController < Admin::DashboardController
     @content_item = ContentItem.find(params[:id])
     @authors = Person.find_all_by_admin(true)
 
-    params[:content_item][:published] = params[:content_item][:published] ? Date.strptime(params[:content_item][:published], "%m/%d/%Y") : Date.today 
+    begin
+      params[:content_item][:published] = params[:content_item][:published] ? Date.strptime(params[:content_item][:published], "%m/%d/%Y") : Date.today 
+      error = false
+    rescue
+      error = true
+      @content_item.errors.add :published, "invalid date"
+    end
 
     respond_to do |format|
-      if @content_item.update_attributes(params[:content_item])
+      if !error && @content_item.update_attributes(params[:content_item])
         flash[:notice] = "Successfully edited your Content Item"
         format.html { redirect_to admin_content_items_path }
       else
