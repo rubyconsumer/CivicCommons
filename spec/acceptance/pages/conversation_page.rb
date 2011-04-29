@@ -29,12 +29,24 @@ class ConversationPage < PageObject
     click_button('Preview')
   end
 
+  def click_submit_contribution
+    has_css?('#contribution_submit').click
+  end
+
   def respond_to_contribution(contribution)
     click_link("Respond to #{Person.find(contribution.owner).first_name}")
   end
 
   def has_preview_contribution_text?(content)
     if find("#cboxLoadedContent div.comment div.content p") && page.has_content?(content)
+      return true
+    else
+      false
+    end
+  end
+
+  def has_contribution?(content)
+    if has_content?(content)
       return true
     else
       false
@@ -79,6 +91,14 @@ class ConversationPage < PageObject
     else
       false
     end
+  end
+
+  def preview_comment(conversation, comment)
+    visit conversation_path(conversation)
+    click_link('Post to this Conversation')
+    has_css?('textarea#contribution_content', visible: true)
+    fill_in 'contribution_content', :with => comment
+    click_button('Preview')
   end
 
 end

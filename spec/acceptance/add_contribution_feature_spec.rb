@@ -69,13 +69,13 @@ feature "Add contribution", %q{
 
   scenario "Posting a comment", :js => true do
     #Given I have previewed a comment for a contribution
-    preview_comment(@conversation, "the cat in the hat")
+    @conversation_page.preview_comment(@conversation, "the cat in the hat")
     #When I submit I should be back on the conversation page 
-    find('#contribution_submit', visible: true).click
+    @conversation_page.click_submit_contribution
     #Then I should be directed back to the contribution
-    visit "#{conversation_path(@conversation)}#node-#{@conversation.contributions.last.id}"
+    @conversation_page.visit_node(@conversation, @conversation.contributions.last)
     #And this contribution should be on the conversation page
-    page.has_content?('the cat in the hat').should be_true
+    @conversation_page.should have_contribution('the cat in the hat')
   end
 
   scenario "Canceling a comment", :js => true do
