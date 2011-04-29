@@ -48,8 +48,7 @@ class Admin::ContentItemsController < Admin::DashboardController
     @content_item = ContentItem.find(params[:id])
     @authors = Person.find_all_by_admin(true)
 
-#    params[:content_item][:published] = params[:content_item][:published] ? Date.parse(params[:content_item][:published]) : Date.parse(Date.today.to_s)
-    params[:content_item][:published] = Date.parse(Date.today.to_s)
+    params[:content_item][:published] = params[:content_item][:published] ? Date.strptime(params[:content_item][:published], "%m/%d/%Y") : Date.today 
 
     respond_to do |format|
       if @content_item.update_attributes(params[:content_item])
