@@ -32,6 +32,8 @@
 <%- if @issue %>
   <%= link_to "Back", admin_issue_path(@issue) %>
   |
+  <%= link_to "Edit Issue", edit_admin_issue_path(@issue) %>
+  |
   <%= link_to "Add Page", new_admin_issue_page_path(@issue) %>
 <%- else %>
   <%= link_to "Issues", admin_issues_path %>
