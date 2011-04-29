@@ -14,9 +14,18 @@ class Admin::ContentItemsController < Admin::DashboardController
 
   def create
     @content_item = ContentItem.new(params[:content_item])
-    @content_item.published = params[:content_item][:published] ? Date.strptime(params[:content_item][:published], "%m/%d/%Y") : Date.today 
+
+    begin
+      error = false
+      @content_item.published = params[:content_item][:published] ? Date.strptime(params[:content_item][:published], "%m/%d/%Y") : Date.today 
+    rescue
+      error = true
+      @content_item.errors.add :published, "invalid date"
+    end
+
     @authors = Person.find_all_by_admin(true)
-    if @content_item.save
+
+    if !error && @content_item.save
       respond_to do |format|
         format.html { redirect_to(admin_content_item_path(@content_item), :notice => "Your content item has been created!") }
       end
