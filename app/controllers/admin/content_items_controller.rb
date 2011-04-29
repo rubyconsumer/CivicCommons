@@ -13,9 +13,8 @@ class Admin::ContentItemsController < Admin::DashboardController
   end
 
   def create
-
     @content_item = ContentItem.new(params[:content_item])
-    @content_item.published = params[:published] ? Date.parse(params[:published]) : Date.today 
+    @content_item.published = params[:content_item][:published] ? Date.strptime(params[:content_item][:published], "%m/%d/%Y") : Date.today 
     @authors = Person.find_all_by_admin(true)
     if @content_item.save
       respond_to do |format|
@@ -48,6 +47,10 @@ class Admin::ContentItemsController < Admin::DashboardController
   def update
     @content_item = ContentItem.find(params[:id])
     @authors = Person.find_all_by_admin(true)
+
+#    params[:content_item][:published] = params[:content_item][:published] ? Date.parse(params[:content_item][:published]) : Date.parse(Date.today.to_s)
+    params[:content_item][:published] = Date.parse(Date.today.to_s)
+
     respond_to do |format|
       if @content_item.update_attributes(params[:content_item])
         flash[:notice] = "Successfully edited your Content Item"
