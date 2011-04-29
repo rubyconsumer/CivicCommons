@@ -163,7 +163,7 @@ module Admin
         end
 
         it "redirects to the 'GET show' page" do
-          response.should redirect_to admin_issue_page_path(new_slug)
+          response.should redirect_to admin_issue_page_path(issue, new_slug)
         end
 
       end
@@ -205,7 +205,7 @@ module Admin
       end
 
       it "redirects to the managed_issue_pages list" do
-        response.should redirect_to(admin_issue_pages_url)
+        response.should redirect_to(admin_issue_pages_path(issue))
       end
 
     end

@@ -262,7 +262,7 @@ module CCML
   def CCML.parse(ccml, url = nil)
 
     # die if ccml data is not a string
-    if not ccml.is_a?(String)
+    unless ccml.is_a?(String)
       raise CCML::Error::TemplateError, "CCML data is not a string."
     end
 
@@ -306,7 +306,7 @@ module CCML
 
   def CCML.parse_options(match)
     opts = {}
-    if not match[:opts].blank?
+    unless match[:opts].blank?
       options = match[:opts].scan(OPTIONS_PATTERN)
       options.each do |opt|
         opt.pop if opt.last.nil?

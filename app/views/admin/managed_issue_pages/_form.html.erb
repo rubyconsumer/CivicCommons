@@ -1,9 +1,9 @@
 <%
   if @managed_issue_page.id.nil?
-    url = admin_issue_pages_path
+    url = admin_issue_pages_path(@issue)
     method = :post
   else
-    url = admin_issue_page_path(@managed_issue_page)
+    url = admin_issue_page_path(@issue, @managed_issue_page)
     method = :put
   end
 %>

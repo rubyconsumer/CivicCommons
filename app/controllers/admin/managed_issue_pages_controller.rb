@@ -52,7 +52,7 @@ class Admin::ManagedIssuePagesController < Admin::DashboardController
     @managed_issue_page.author = current_person
 
     if @managed_issue_page.save
-      redirect_to(admin_issue_page_path(@managed_issue_page), :notice => 'Content template was successfully updated.')
+      redirect_to(admin_issue_page_path(@issue, @managed_issue_page), :notice => 'Content template was successfully updated.')
     else
       render "edit"
     end
@@ -63,6 +63,6 @@ class Admin::ManagedIssuePagesController < Admin::DashboardController
     @issue = ManagedIssue.find(params[:issue_id])
     @managed_issue_page = ManagedIssuePage.find(params[:id])
     @managed_issue_page.destroy
-    redirect_to(admin_issue_pages_url)
+    redirect_to(admin_issue_pages_path(@issue))
   end
 end

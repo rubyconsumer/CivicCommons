@@ -8,7 +8,7 @@
   <thead>
     <tr>
       <th>Page Name</th>
-      <th>Issue</th>
+      <th>Index?</th>
       <th>Author</th>
       <th>Slug</th>
       <th></th>
@@ -19,7 +19,7 @@
     <% @managed_issue_pages.each do |page| %>
       <tr>
         <td><%= link_to page.name, admin_issue_page_path(page.issue, page) %></td>
-        <td><%= link_to page.issue.name, admin_issue_path(page.issue) %></td>
+        <td><%= (@issue.index == page) ? 'Yes' : nil %></td>
         <td><%= page.author.name %></td>
         <td><%= page.cached_slug %></td>
         <td><%= link_to "Edit", edit_admin_issue_page_path(page.issue, page) %></td>

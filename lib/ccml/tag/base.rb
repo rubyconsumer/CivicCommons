@@ -81,7 +81,7 @@ module CCML
 
       def update_opts_from_url_segments
         @opts.each do |key, value|
-          match = SEGMENT_INDEX_PATTERN.match(value)
+          match = SEGMENT_INDEX_PATTERN.match(value.to_s)
           if match
             @opts[key] = @segments[match[:index].to_i]
           elsif value =~ LAST_SEGMENT_PATTERN
@@ -92,7 +92,7 @@ module CCML
 
       def update_opts_from_url_fields
         @opts.each do |key, value|
-          match = FIELD_INDEX_PATTERN.match(value)
+          match = FIELD_INDEX_PATTERN.match(value.to_s)
           if match
             @opts[key] = @fields[match[:index].to_sym]
           elsif value =~ QUERY_STRING_PATTERN
