@@ -143,7 +143,7 @@ feature "Post Content Item", %q{
       page.should have_content(second_admin.last_name)
     end
 
-    scenario "New content item must be created with today's publish date as the default" do
+    scenario "New content item is created with today's publish date as the default" do
       # Given I am on the content item creation page
       # And I have entered required content item fields
       # And I have not edited the publish date (default value)
@@ -160,6 +160,26 @@ feature "Post Content Item", %q{
       click_button('Create Content item')
       should_be_on admin_content_item_path(ContentItem.last)
       page.should have_content(Date.parse(Date.today.to_s).strftime("%B %d, %Y"))
+    end
+
+    scenario "Author can set the publish date of the content item" do
+      # Given I am on the content item creation page
+      # And I have entered required content item fields
+      # And I have edited the publish date to be tomorrow
+      # When I press the “Create Content item” button
+      # Then the content item should be created
+      # And I should be on the view content item page
+      # And I should see tomorrow's date as the publish date
+
+      visit new_admin_content_item_path
+      select('RadioShow', :from => 'content_item_content_type')
+      fill_in('content_item_title', :with => 'First Radio Show')
+      fill_in('content_item_url_slug', :with => 'first-radio-show')
+      fill_in('content_item_published', :with => Date.tomorrow.strftime("%m/%d/%Y"))
+      fill_in('content_item_body', :with => 'This radio show is about that radio show')
+      click_button('Create Content item')
+      should_be_on admin_content_item_path(ContentItem.last)
+      page.should have_content(Date.parse(Date.tomorrow.to_s).strftime("%B %d, %Y"))
     end
 
     scenario "Title field must be unique" do
