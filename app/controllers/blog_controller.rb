@@ -5,6 +5,6 @@ class BlogController < ApplicationController
 
   # GET /blog
   def index
-    @blog_posts = ContentItem.find_all_by_content_type("BlogPost");
+    @blog_posts = ContentItem.where("content_type = 'BlogPost' AND (published <= curdate() OR DAY(published) = DAY(curdate()))");
   end
 end
