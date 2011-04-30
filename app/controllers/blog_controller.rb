@@ -5,6 +5,6 @@ class BlogController < ApplicationController
 
   # GET /blog
   def index
-    @blog_posts = ContentItem.where("content_type = 'BlogPost' AND (published <= curdate() OR DAY(published) = DAY(curdate()))");
+    @blog_posts = ContentItem.where("content_type = 'BlogPost' AND (published <= curdate() OR DAY(published) = DAY(curdate())) ").order("published desc");
   end
 end
