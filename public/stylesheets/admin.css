@@ -235,3 +235,8 @@ table.conversations td.handle:hover {
 	background: transparent url('../images/icons/star_full.png') 0 0 no-repeat;
 }
 textarea.tinymce{width:695px;}
+
+/* There's a bug in jquery ui datepicker. On page init the datepicker shows up even though it should be hidden
+ * see: http://forum.jquery.com/topic/jquery-ui-datepicker-initial-display-none-fixup
+ * */
+#ui-datepicker-div { display: none; }
