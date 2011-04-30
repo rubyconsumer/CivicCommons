@@ -15,13 +15,13 @@ module CCML
 
         # inputs and outputs
         return_data = ''
-        data = [ data ] unless data.is_a?(Array) or data.is_a?(ActiveRecord::Relation)
+        data = [ data ] unless data.respond_to?(:each) and not data.is_a?(Hash)
 
         # iterate through all data items
         data.each do |datum|
 
           # wrap the hash for later evaluation
-          datum = HashWrapper.new(datum) if datum.is_a?(Hash)
+          datum = OpenStruct.new(datum) if datum.is_a?(Hash)
 
           # process the tag body
           tag_body = String.new(@tag_body.to_s)
@@ -129,24 +129,6 @@ module CCML
         end
 
         return tag_body
-      end
-
-      #--
-      # A wrapper class for a Hash used in tag pair conditional processing.
-      #++
-      class HashWrapper
-        def initialize(hash)
-          @hash = hash
-        end
-        def method_missing(sym, *args, &block)
-          if @hash.has_key?(sym)
-            return @hash[sym]
-          elsif @hash.has_key?(sym.to_s)
-            return @hash[sym.to_s]
-          else
-            raise NameError, "undefined local variable or method '#{sym.to_s}' for #{@hash}"
-          end
-        end
       end
     end
 
