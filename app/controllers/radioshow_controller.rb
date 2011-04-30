@@ -5,6 +5,6 @@ class RadioshowController < ApplicationController
 
   # GET /blog
   def index
-    @radio_shows = ContentItem.find_all_by_content_type("RadioShow");
+    @radio_shows = ContentItem.where("content_type = 'RadioShow' AND (published <= curdate() OR DAY(published) = DAY(curdate())) ").order("published desc");
   end
 end
