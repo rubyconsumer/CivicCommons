@@ -1,56 +1,6 @@
 <h2>New Content Item</h2>
-<%= form_for [:admin, @content_item], :html =>{:multipart => true} do |f| %>
-  <% if @content_item.errors.any? %>
-    <div id="error_explanation">
-      <h2>
-        It looks like we’re still missing some important information:
-      </h2>
-      <ul>
-        <% @content_item.errors.each do |attr,msg| %>
-          <li><%= msg %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
 
-  <p>
-  <%= f.label :title %><br>
-  <%= f.text_field :title %>
-  </p>
-
-  <p>
-  <%= f.label :url_slug, "URL" %><br>
-  <%= f.text_field :url_slug %>
-  </p>
-
-  <p>
-  <%= f.label :published, "Publish On (mm/dd/yyyy)" %><br>
-  <%= f.text_field :published, :value => (@content_item.published.blank? ? '' : @content_item.published.strftime('%m/%d/%Y'))%>
-  </p>
-
-
-  <p>
-  <%= f.label :content_type %><br>
-  <%= f.select :content_type, ContentItem::CONTENT_TYPES %>
-  </p>
-
-  <p>
-  <%= f.label :person_id, "Author" %><br>
-  <%= f.select :person_id, @authors.collect{|author| [author.first_name + " " + author.last_name, author.id]} %>
-  </p>
-
-  <p>
-  <%= f.label :summary %><br>
-  <%= f.text_area :summary, :class => 'tinymce' %>
-  </p>
-
-  <p>
-  <%= f.label :body %><br>
-  <%= f.text_area :body, :class => 'tinymce' %>
-  </p>
-
-  <%= f.submit %>
-<% end %>
+<%= render 'form' %>
 
 <script type="text/javascript">
   $().ready(function() {
