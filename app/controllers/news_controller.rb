@@ -5,6 +5,6 @@ class NewsController < ApplicationController
 
   # GET /blog
   def index
-    @news_items = ContentItem.find_all_by_content_type("NewsItem");
+    @news_items = ContentItem.where("content_type = 'NewsItem' AND (published <= curdate() OR DAY(published) = DAY(curdate())) ").order("published desc");
   end
 end
