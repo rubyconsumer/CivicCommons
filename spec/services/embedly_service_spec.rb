@@ -114,7 +114,7 @@ describe EmbedlyService do
       it "return nil properties and log if embedly is down" do
 
         mock_embedly = mock('embedly')
-        mock_embedly.stub(:objectify).and_raise(Exception)
+        mock_embedly.stub(:objectify).and_raise(StandardError)
 
         embedly = EmbedlyService.new(mock_embedly)
         embedly.fetch('http://www.youtube.com/watch?v=onUd7aZhu9g')
@@ -127,7 +127,7 @@ describe EmbedlyService do
 
         Civiccommons::Config.embedly['key'] = "garbage"
         mock_embedly = mock('embedly')
-        mock_embedly.stub(:objectify).and_raise(Exception)
+        mock_embedly.stub(:objectify).and_raise(StandardError)
 
         embedly = EmbedlyService.new(mock_embedly)
         embedly.fetch('http://www.youtube.com/watch?v=onUd7aZhu9g')

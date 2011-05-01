@@ -296,12 +296,10 @@ module CCML
   end
 
   def CCML.run_tag_method(tag, method)
-    begin
-      sub = tag.send(method.to_sym)
-    rescue
-      raise CCML::Error::TagMethodNotFoundError, "Unable to find method '#{method}' of '#{tag.class}' object."
-    end
+    sub = tag.send(method.to_sym)
     return sub
+  rescue
+    raise CCML::Error::TagMethodNotFoundError, "Unable to find method '#{method}' of '#{tag.class}' object."
   end
 
   def CCML.parse_options(match)

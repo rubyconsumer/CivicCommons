@@ -106,7 +106,7 @@ module CCML
               object = object.send(methods[i].to_sym)
             end
             sub = object.send(methods.last.to_sym)
-          rescue Exception => e
+          rescue => error
             sub = nil
           end
 
@@ -115,7 +115,7 @@ module CCML
             begin
               sub = Time.parse(sub) unless sub.is_a?(Time)
               sub = sub.strftime(match[:format])
-            rescue Exception => e
+            rescue => error
               #continue
             end
           end

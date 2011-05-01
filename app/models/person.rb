@@ -171,19 +171,17 @@ class Person < ActiveRecord::Base
   end
 
   def unlink_from_facebook(person_hash)
-    begin
-      ActiveRecord::Base.transaction do
-        self.email = person_hash[:email]
-        self.password = person_hash[:password]
-        self.password_confirmation = person_hash[:password_confirmation]
-        self.facebook_unlinking = true
-        self.send_email_change_notification = true # sends email change notification
-        save!
-        self.facebook_authentication.destroy
-      end
-    rescue
-      self
+    ActiveRecord::Base.transaction do
+      self.email = person_hash[:email]
+      self.password = person_hash[:password]
+      self.password_confirmation = person_hash[:password_confirmation]
+      self.facebook_unlinking = true
+      self.send_email_change_notification = true # sends email change notification
+      save!
+      self.facebook_authentication.destroy
     end
+  rescue
+    self
   end
 
   def avatar_path(style='')

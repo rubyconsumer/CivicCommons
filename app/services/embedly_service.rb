@@ -20,23 +20,21 @@ class EmbedlyService
 
   def fetch(url, opts = {})
     clear_state
-    begin
-      opts[:url] = url
-      opts[:wmode] = 'opaque'
-      objs = @embedly.objectify(opts)
-      @properties = objs[0].marshal_dump
-      raise @properties[:error_message] if @properties.has_key?(:error_message)
-    rescue Exception => e
-      @error = e.message
-      if not @properties.nil? and @properties.has_key?(:error_code)
-        @error_code = @properties[:error_code].to_i
-      else
-        @error_code = 500
-        @error = "Server Issues"
-      end
-      @properties = nil
-      Rails.logger.error e.message
+    opts[:url] = url
+    opts[:wmode] = 'opaque'
+    objs = @embedly.objectify(opts)
+    @properties = objs[0].marshal_dump
+    raise @properties[:error_message] if @properties.has_key?(:error_message)
+  rescue => error
+    @error = error.message
+    if not @properties.nil? and @properties.has_key?(:error_code)
+      @error_code = @properties[:error_code].to_i
+    else
+      @error_code = 500
+      @error = "Server Issues"
     end
+    @properties = nil
+    Rails.logger.error error.message
   end
 
   def fetch_and_merge_params!(params)

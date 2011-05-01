@@ -35,12 +35,10 @@ module CCML
       # {/ccml:issue}
       def index
         @opts[:id] = @segments[1] unless @opts.has_key?(:id)
-        begin
-          @issue = Issue.includes(:conversations, :participants).find(@opts[:id])
-          return process_tag_body(@issue)
-        rescue ActiveRecord::RecordNotFound => e
-          return nil
-        end
+        @issue = Issue.includes(:conversations, :participants).find(@opts[:id])
+        return process_tag_body(@issue)
+      rescue ActiveRecord::RecordNotFound => e
+        return nil
       end
 
       # 'pages' method with no opts grabs issue id from segment_1
@@ -59,12 +57,10 @@ module CCML
       # {/ccml:issue:pages}
       def pages
         @opts[:id] = @segments[1] unless @opts.has_key?(:id)
-        begin
-          @issue = ManagedIssue.find(@opts[:id])
-          return process_tag_body(@issue.pages)
-        rescue ActiveRecord::RecordNotFound => e
-          return nil
-        end
+        @issue = ManagedIssue.find(@opts[:id])
+        return process_tag_body(@issue.pages)
+      rescue ActiveRecord::RecordNotFound => e
+        return nil
       end
 
       # <h1>Conversations</h1>
@@ -100,12 +96,10 @@ module CCML
       # {/ccml:issue:convos}
       def conversations
         @opts[:id] = @segments[1] unless @opts.has_key?(:id)
-        begin
-          @issue = Issue.find(@opts[:id])
-          return process_tag_body(@issue.conversations)
-        rescue ActiveRecord::RecordNotFound => e
-          return nil
-        end
+        @issue = Issue.find(@opts[:id])
+        return process_tag_body(@issue.conversations)
+      rescue ActiveRecord::RecordNotFound => e
+        return nil
       end
 
       def convos
