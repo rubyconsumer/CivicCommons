@@ -262,7 +262,7 @@ module CCML
   def CCML.parse(ccml, url = nil)
 
     # die if ccml data is not a string
-    if not ccml.is_a?(String)
+    unless ccml.is_a?(String)
       raise CCML::Error::TemplateError, "CCML data is not a string."
     end
 
@@ -296,17 +296,15 @@ module CCML
   end
 
   def CCML.run_tag_method(tag, method)
-    begin
-      sub = tag.send(method.to_sym)
-    rescue
-      raise CCML::Error::TagMethodNotFoundError, "Unable to find method '#{method}' of '#{tag.class}' object."
-    end
+    sub = tag.send(method.to_sym)
     return sub
+  rescue
+    raise CCML::Error::TagMethodNotFoundError, "Unable to find method '#{method}' of '#{tag.class}' object."
   end
 
   def CCML.parse_options(match)
     opts = {}
-    if not match[:opts].blank?
+    unless match[:opts].blank?
       options = match[:opts].scan(OPTIONS_PATTERN)
       options.each do |opt|
         opt.pop if opt.last.nil?

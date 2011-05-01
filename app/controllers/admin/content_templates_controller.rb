@@ -1,26 +1,26 @@
 class Admin::ContentTemplatesController < Admin::DashboardController
 
-  # GET /content_templates
+  # GET /admin/content_templates
   def index
     @content_templates = ContentTemplate.all
   end
 
-  # GET /content_templates/1
+  # GET /admin/content_templates/1
   def show
     @content_template = ContentTemplate.find(params[:id])
   end
 
-  # GET /content_templates/new
+  # GET /admin/content_templates/new
   def new
     @content_template = ContentTemplate.new
   end
 
-  # GET /content_templates/1/edit
+  # GET /admin/content_templates/1/edit
   def edit
     @content_template = ContentTemplate.find(params[:id])
   end
 
-  # POST /content_templates
+  # POST /admin/content_templates
   def create
     @content_template = ContentTemplate.new(params[:content_template])
     @content_template.author = current_person
@@ -28,11 +28,11 @@ class Admin::ContentTemplatesController < Admin::DashboardController
     if @content_template.save
       redirect_to(admin_content_template_path(@content_template), :notice => 'Content template was successfully created.')
     else
-      render :action => "new"
+      render "new"
     end
   end
 
-  # PUT /content_templates/1
+  # PUT /admin/content_templates/1
   def update
     @content_template = ContentTemplate.find(params[:id])
     @content_template.attributes = params[:content_template]
@@ -41,14 +41,14 @@ class Admin::ContentTemplatesController < Admin::DashboardController
     if @content_template.save
       redirect_to(admin_content_template_path(@content_template), :notice => 'Content template was successfully updated.')
     else
-      render :action => "edit"
+      render "edit"
     end
   end
 
-  # DELETE /content_templates/1
+  # DELETE /admin/content_templates/1
   def destroy
     @content_template = ContentTemplate.find(params[:id])
     @content_template.destroy
-    redirect_to(content_templates_url)
+    redirect_to(admin_content_templates_url)
   end
 end

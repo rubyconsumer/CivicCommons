@@ -1,7 +1,8 @@
 # A custom Devise strategy for CivicCommons
 module Devise
   module Strategies
-    class CivicCommonsAuthenticatable < Authenticatable 
+    class CivicCommonsAuthenticatable < Authenticatable
+
       def authenticate!
         resource = valid_password? && mapping.to.find_for_database_authentication(authentication_hash)
 
@@ -13,8 +14,8 @@ module Devise
         else
           fail!(:invalid)
         end
-        
       end
+
     end
   end
 end

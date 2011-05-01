@@ -194,9 +194,24 @@ ActiveRecord::Schema.define(:version => 20110427000518) do
     t.string   "url"
     t.string   "url_title"
     t.string   "cached_slug"
+    t.string   "type",                  :default => "Issue", :null => false
+    t.integer  "managed_issue_page_id"
   end
 
   add_index "issues", ["cached_slug"], :name => "index_issues_on_cached_slug", :unique => true
+
+  create_table "managed_issue_pages", :force => true do |t|
+    t.string   "name",        :null => false
+    t.integer  "issue_id",    :null => false
+    t.integer  "person_id",   :null => false
+    t.text     "template",    :null => false
+    t.string   "cached_slug"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "managed_issue_pages", ["cached_slug"], :name => "index_managed_issue_pages_on_cached_slug", :unique => true
+  add_index "managed_issue_pages", ["issue_id"], :name => "index_managed_issue_pages_on_issue_id"
 
   create_table "people", :force => true do |t|
     t.string   "first_name"
