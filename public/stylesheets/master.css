@@ -1621,8 +1621,8 @@ width: 428px;
 =In The News styles
 -----------------------------------------------*/
 .in-the-news-post {
-border-bottom: 1px solid #CDCDCD;
-margin-bottom: 0.6em;
+border-bottom: 2px solid #CDCDCD;
+margin:1em 0 2em;
 }
 
 .in-the-news-post .decoration {
@@ -1638,7 +1638,6 @@ font-size: 1.1em;
 .in-the-news-post .date {
 border-bottom: 1px solid #CDCDCD;
 font-size: 1.1em;
-font-weight: bold;
 margin-bottom: 0.8em;
 padding-bottom: 0.5em;
 }
