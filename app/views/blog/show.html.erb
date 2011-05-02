@@ -1,20 +1,19 @@
 <% content_for :main_body do %>
   <div class="wrapper">
     <div class="content-container">
-      <h1>Blog</h1>
+      <h1><%= link_to 'Common Blog', blog_index_path %></h1>
 
       <div class="main-content">
-        <div class="post">
-          <h2><%= link_to @blog_post.title, blog_path(@blog_post) %></h2>
-          <p class="author"><%= @blog_post.author.first_name + " " + @blog_post.author.last_name %></p>
-          <p class="time"><%= @blog_post.created_at.strftime("%m-%d-%Y %I:%M %p") %></p>
-          <div class="body"><%= raw @blog_post.body %></div>
+        <div class="blog" id="outer_block_1"> 
+          <h2><%= @blog_post.title %></h2>
+          <p><%= link_to @blog_post.author.name, user_path(@blog_post.author) %><%= user_profile(@blog_post.author) %></p>
+          <div class='blog_inner'> 
+            <div class="body"><%= raw @blog_post.body %></div>
+            <p>&nbsp;</p>
+            <p>Posted by <%= link_to @blog_post.author.name, user_path(@blog_post.author) %> on <%= @blog_post.published.strftime('%B %d, %Y') %></p> 
+          </div>
         </div>
-      </div><!-- /.main-content -->
-
-      <div class='aside supplementary'>
-        <div>&nbsp;</div>
-      </div><!-- /.aside -->
+      </div>
     </div>
   </div>
 <% end %>

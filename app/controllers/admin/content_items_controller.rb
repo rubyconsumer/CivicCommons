@@ -7,7 +7,7 @@ class Admin::ContentItemsController < Admin::DashboardController
 
   def new
     @content_item = ContentItem.new(params[:content_item])
-    @authors = Person.find_all_by_admin(true)
+    @authors = Person.find_all_by_admin(true, :order => 'first_name, last_name ASC')
     @content_item.author = current_person
     @content_item.published = Date.today
   end
@@ -23,7 +23,7 @@ class Admin::ContentItemsController < Admin::DashboardController
       @content_item.errors.add :published, "invalid date"
     end
 
-    @authors = Person.find_all_by_admin(true)
+    @authors = Person.find_all_by_admin(true, :order => 'first_name, last_name ASC')
 
     if !error && @content_item.save
       respond_to do |format|
@@ -43,7 +43,7 @@ class Admin::ContentItemsController < Admin::DashboardController
 
   def edit
     @content_item = ContentItem.find(params[:id])
-    @authors = Person.find_all_by_admin(true)
+    @authors = Person.find_all_by_admin(true, :order => 'first_name, last_name ASC')
     @content_item.url_slug = @content_item.cached_slug
   end
 
@@ -56,7 +56,7 @@ class Admin::ContentItemsController < Admin::DashboardController
 
   def update
     @content_item = ContentItem.find(params[:id])
-    @authors = Person.find_all_by_admin(true)
+    @authors = Person.find_all_by_admin(true, :order => 'first_name, last_name ASC')
 
     begin
       params[:content_item][:published] = params[:content_item][:published] ? Date.strptime(params[:content_item][:published], "%m/%d/%Y") : Date.today 

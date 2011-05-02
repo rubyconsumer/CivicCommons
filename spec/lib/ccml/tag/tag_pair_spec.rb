@@ -17,7 +17,7 @@ class TestPairTag < CCML::Tag::TagPair
     return process_tag_body(objs)
   end
   def active_record_set
-    objs = Person.all
+    objs = Person.find(:all, limit: 3)
     return process_tag_body(objs)
   end
   def active_record_assoc
@@ -91,7 +91,7 @@ describe CCML::Tag::TagPair do
 
         before(:each) do
           (1..4).each do
-            Factory.create(:admin_person)
+            Factory.create(:admin_person, first_name: 'John', last_name: 'Doe')
           end
           Factory.create(:content_item, :author => Person.first)
         end

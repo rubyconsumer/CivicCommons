@@ -89,7 +89,6 @@ feature "Post Content Item", %q{
       visit new_admin_content_item_path
       select('RadioShow', :from => 'content_item_content_type')
       fill_in('content_item_title', :with => 'First Radio Show')
-      fill_in('content_item_url_slug', :with => 'first-radio-show')
       fill_in('content_item_body', :with => 'This radio show is about that radio show')
       click_button('Create Content item')
       should_be_on admin_content_item_path(ContentItem.last)
@@ -111,7 +110,6 @@ feature "Post Content Item", %q{
       visit new_admin_content_item_path
       select('RadioShow', :from => 'content_item_content_type')
       fill_in('content_item_title', :with => 'First Radio Show')
-      fill_in('content_item_url_slug', :with => 'first-radio-show')
       fill_in('content_item_body', :with => 'This radio show is about that radio show')
       click_button('Create Content item')
       should_be_on admin_content_item_path(ContentItem.last)
@@ -135,7 +133,6 @@ feature "Post Content Item", %q{
       select('RadioShow', :from => 'content_item_content_type')
       select(second_admin.first_name + " " + second_admin.last_name, :from => 'content_item_person_id')
       fill_in('content_item_title', :with => 'First Radio Show')
-      fill_in('content_item_url_slug', :with => 'first-radio-show')
       fill_in('content_item_body', :with => 'This radio show is about that radio show')
       click_button('Create Content item')
       should_be_on admin_content_item_path(ContentItem.last)
@@ -155,7 +152,6 @@ feature "Post Content Item", %q{
       visit new_admin_content_item_path
       select('RadioShow', :from => 'content_item_content_type')
       fill_in('content_item_title', :with => 'First Radio Show')
-      fill_in('content_item_url_slug', :with => 'first-radio-show')
       fill_in('content_item_body', :with => 'This radio show is about that radio show')
       click_button('Create Content item')
       should_be_on admin_content_item_path(ContentItem.last)
@@ -174,7 +170,6 @@ feature "Post Content Item", %q{
       visit new_admin_content_item_path
       select('RadioShow', :from => 'content_item_content_type')
       fill_in('content_item_title', :with => 'First Radio Show')
-      fill_in('content_item_url_slug', :with => 'first-radio-show')
       fill_in('content_item_published', :with => Date.tomorrow.strftime("%m/%d/%Y"))
       fill_in('content_item_body', :with => 'This radio show is about that radio show')
       click_button('Create Content item')
@@ -195,7 +190,6 @@ feature "Post Content Item", %q{
       content
       select('RadioShow', :from => 'content_item_content_type')
       fill_in('content_item_title', :with => 'Untyped post 1')
-      fill_in('content_item_url_slug', :with => 'first-radio-show')
       fill_in('content_item_body', :with => 'This radio show is about that radio show')
       click_button('Create Content item')
       page.should have_content("has already been taken")
@@ -222,7 +216,6 @@ feature "Post Content Item", %q{
       visit edit_admin_content_item_path(content)
       select('RadioShow', :from => 'content_item_content_type')
       fill_in('content_item_title', :with => 'First Radio Show')
-      fill_in('content_item_url_slug', :with => 'first-radio-show')
       fill_in('content_item_body', :with => 'This radio show is about that radio show')
       click_button('Update Content item')
       should_be_on admin_content_items_path
@@ -241,7 +234,6 @@ feature "Post Content Item", %q{
       visit edit_admin_content_item_path(content)
       select('RadioShow', :from => 'content_item_content_type')
       fill_in('content_item_title', :with => 'asdsadasd')
-      fill_in('content_item_url_slug', :with => 'first-radio-show')
       fill_in('content_item_body', :with => 'This radio show is about that radio show')
 save_and_open_page
       click_button('Update Content item')
@@ -260,7 +252,6 @@ save_and_open_page
       visit new_admin_content_item_path
       select('RadioShow', :from => 'content_item_content_type')
       fill_in('content_item_title', :with => 'First Radio Show')
-      fill_in('content_item_url_slug', :with => 'first radio show')
       fill_in('content_item_body', :with => 'This radio show is about that radio show')
       click_button('Create Content item')
       should_be_on admin_content_item_path(ContentItem.last)

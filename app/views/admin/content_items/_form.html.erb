@@ -19,11 +19,6 @@
   </p>
 
   <p>
-  <%= f.label :url_slug, "URL" %><br>
-  <%= f.text_field :url_slug %>
-  </p>
-
-  <p>
   <%= f.label :published, "Publish On (mm/dd/yyyy)" %><br>
   <%= f.text_field :published, :value => (@content_item.published.blank? ? '' : @content_item.published.strftime('%m/%d/%Y'))%>
   </p>
