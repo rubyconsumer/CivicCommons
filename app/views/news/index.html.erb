@@ -4,16 +4,21 @@
       <h1>News</h1>
 
       <div class="main-content">
-        <% @news_items.each do |item| %>
-          <div class="posts">
-            <div class="post">
-              <h3><%= link_to item.title, news_path(item) %></h3>
-              <p class="author"><%= item.author.first_name + " " + item.author.last_name %></p>
-              <p class="time"><%= item.created_at.strftime("%m-%d-%Y %I:%M %p") %></p>
-              <div class="summary"><%= raw item.summary %></div>
-            </div>
+
+        <% @news_items.each do |news_item| %>
+
+          <div class="in-the-news-post">
+            <p class="date"><%= news_item.published.strftime('%B %d, %Y') %></p>
+            <h2>
+              <%= link_to news_item.title, news_item.external_link, :title => news_item.title, :target => "blank" %>
+            </h2>
+            <p><%= raw news_item.body %></p>
           </div>
+
         <% end %>
+
+        <%= will_paginate @news_items, :inner_window => 3, :previous_label => "Previous", :next_label => "Next" %>
+
       </div><!-- /.main-content -->     
 
       <div class='aside supplementary'>
