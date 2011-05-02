@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110427000518) do
+ActiveRecord::Schema.define(:version => 20110502163852) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -51,13 +51,14 @@ ActiveRecord::Schema.define(:version => 20110427000518) do
   create_table "content_items", :force => true do |t|
     t.integer  "person_id"
     t.string   "content_type"
-    t.string   "title",        :null => false
+    t.string   "title",         :null => false
     t.text     "summary"
     t.text     "body"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "cached_slug"
     t.datetime "published"
+    t.string   "external_link"
   end
 
   add_index "content_items", ["cached_slug"], :name => "index_content_items_on_cached_slug", :unique => true
