@@ -267,7 +267,22 @@ class Person < ActiveRecord::Base
     end
 
     # content_templates?
+    person_to_merge.content_templates.map do |content_template|
+      content_template.person_id = id
+      content_template.save
+    end
+
     # content_items?
+    person_to_merge.content_items.map do |content_item|
+      content_item.person_id = id
+      content_item.save
+    end
+
+    # managed_issue_page
+    person_to_merge.managed_issue_pages.map do |managed_issue_page|
+      managed_issue_page.person_id = id
+      managed_issue_page.save
+    end
 
     # etc of the FROM account to point to the TO account
     # should this interactively allow selection of different values?

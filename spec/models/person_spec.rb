@@ -643,5 +643,75 @@ describe Person do
       Visit.where('person_id = ?', @person.id).length.should == 1
     end
 
+    it "will associate content_items to the person being merged into" do
+      @attr = Factory.attributes_for(:content_item)
+      @attr[:author] = @person_to_merge
+      content_item = ContentItem.new(@attr)
+      content_item.should be_valid
+      content_item.save
+
+      # create an array of the content_item IDs attributed to person_to_merge
+      content_item_ids = @person_to_merge.content_items.collect do |content_item|
+        content_item.id
+      end
+      content_item_ids.length.should == 1
+
+      @person.merge_account(@person_to_merge)
+
+      # check the original content_items to see if the owner was updated correctly
+      ContentItem.find(content_item_ids).each do |content_item|
+        content_item.person_id.should == @person.id
+      end
+
+      ContentItem.delete_all
+    end
+
+    it "will associate content_templates to the person being merged into" do
+      @attr = Factory.attributes_for(:content_template)
+      @attr[:author] = @person_to_merge
+      content_template = ContentTemplate.new(@attr)
+      content_template.should be_valid
+      content_template.save
+
+      # create an array of the content_template IDs attributed to person_to_merge
+      content_template_ids = @person_to_merge.content_templates.collect do |content_template|
+        content_template.id
+      end
+      content_template_ids.length.should == 1
+
+      @person.merge_account(@person_to_merge)
+
+      # check the original content_templates to see if the owner was updated correctly
+      ContentTemplate.find(content_template_ids).each do |content_template|
+        content_template.person_id.should == @person.id
+      end
+
+      ContentTemplate.delete_all
+    end
+
+    it "will associate managed_issue_pages to the person being merged into" do
+      @attr = Factory.attributes_for(:managed_issue_page)
+      @attr[:issue] = Factory.build(:managed_issue)
+      @attr[:author] = @person_to_merge
+      managed_issue_page = ManagedIssuePage.new(@attr)
+      managed_issue_page.should be_valid
+      managed_issue_page.save
+
+      # create an array of the managed_issue_page IDs attributed to person_to_merge
+      managed_issue_page_ids = @person_to_merge.managed_issue_pages.collect do |managed_issue_page|
+        managed_issue_page.id
+      end
+      managed_issue_page_ids.length.should == 1
+
+      @person.merge_account(@person_to_merge)
+
+      # check the original managed_issue_pages to see if the owner was updated correctly
+      ManagedIssuePage.find(managed_issue_page_ids).each do |managed_issue_page|
+        managed_issue_page.person_id.should == @person.id
+      end
+
+      ManagedIssuePage.delete_all
+    end
+
   end
 end
