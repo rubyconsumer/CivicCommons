@@ -78,6 +78,39 @@ feature "Post Content Item", %q{
       page.should have_content("still missing some important information:")
     end
 
+    scenario "External link is a required field for a content item type that is NewsItems" do
+      # Given I am on the content item creation page
+      # And I have entered required content item fields
+      # And I have not entered an external url
+      # When I press the “Create Content item” button
+      # Then I should see an error message
+
+      visit new_admin_content_item_path
+      select('NewsItem', :from => 'content_item_content_type')
+      fill_in('content_item_title', :with => 'First Radio Show')
+      fill_in('content_item_body', :with => 'This radio show is about that radio show')
+      click_button('Create Content item')
+      page.should have_content("still missing some important information:")
+    end
+
+    scenario "External link is not a required field for a content item types other than NewsItem" do
+      # Given I am on the content item creation page
+      # And I have entered required content item fields
+      # And I have not entered an external url
+      # When I press the “Create Content item” button
+      # Then the content item should be created
+      # And I should be on the view content item page
+      # And I should see the success message
+
+      visit new_admin_content_item_path
+      select('RadioShow', :from => 'content_item_content_type')
+      fill_in('content_item_title', :with => 'First Radio Show')
+      fill_in('content_item_body', :with => 'This radio show is about that radio show')
+      click_button('Create Content item')
+      should_be_on admin_content_item_path(ContentItem.last)
+      page.should have_content("Your content item has been created!")
+    end
+
     scenario "Create a new content item" do
       # Given I am on the content item creation page
       # And I have entered required content item fields
@@ -138,6 +171,41 @@ feature "Post Content Item", %q{
       should_be_on admin_content_item_path(ContentItem.last)
       page.should have_content("Your content item has been created!")
       page.should have_content(second_admin.last_name)
+    end
+
+    scenario "New content item is saved with an external link" do
+      # Given I am on the content item creation page
+      # And I have entered required content item fields
+      # And I have entered a valid url in the external link field
+      # When I press the “Create Content item” button
+      # Then the content item should be created
+      # And I should be on the view content item page
+      # And I should see the url I entered into the external link field
+
+      visit new_admin_content_item_path
+      select('NewsItem', :from => 'content_item_content_type')
+      fill_in('content_item_external_link', :with => 'http://www.yahoo.com')
+      fill_in('content_item_title', :with => 'First Radio Show')
+      fill_in('content_item_body', :with => 'This radio show is about that radio show')
+      click_button('Create Content item')
+      should_be_on admin_content_item_path(ContentItem.last)
+      page.should have_content("http://www.yahoo.com")
+    end
+
+    scenario "Content item is not saved when external link is invalid" do
+      # Given I am on the content item creation page
+      # And I have entered required content item fields
+      # And I have entered an invalid value for external url
+      # When I press the “Create Content item” button
+      # Then I should see an error message
+
+      visit new_admin_content_item_path
+      select('NewsItem', :from => 'content_item_content_type')
+      fill_in('content_item_external_link', :with => 'my-invalid url ')
+      fill_in('content_item_title', :with => 'First Radio Show')
+      fill_in('content_item_body', :with => 'This radio show is about that radio show')
+      click_button('Create Content item')
+      page.should have_content("still missing some important information:")
     end
 
     scenario "New content item is created with today's publish date as the default" do
