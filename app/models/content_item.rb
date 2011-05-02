@@ -5,7 +5,7 @@ class ContentItem < ActiveRecord::Base
 
   belongs_to :author, :class_name => "Person", :foreign_key => "person_id"
 
-  validates_presence_of :title, :body
+  validates_presence_of :title, :body, :author
   validates_uniqueness_of :title
   validates :published, :date => {:after => Proc.new { Time.now - 1.year} }
 
