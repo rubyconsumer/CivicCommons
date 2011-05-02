@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe ContentItem do
+
   before(:all) do
     @author = Factory.build(:admin_person)
   end
