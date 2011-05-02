@@ -1,7 +1,7 @@
 class ContentItem < ActiveRecord::Base
   attr_accessor :url_slug
 
-  CONTENT_TYPES = ["BlogPost", "NewsItem", "RadioShow", "Untyped"]
+  CONTENT_TYPES = ["BlogPost", "NewsItem", "RadioShow"]
 
   belongs_to :author, :class_name => "Person", :foreign_key => "person_id"
 
