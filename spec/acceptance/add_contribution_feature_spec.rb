@@ -69,7 +69,8 @@ feature "Add contribution", %q{
 
   scenario "Posting a comment", :js => true do
     #Given I have previewed a comment for a contribution
-    @conversation_page.preview_comment(@conversation, "the cat in the hat")
+    @conversation_page = ConversationPage.new(page)
+    @conversation_page.preview_contribution(@conversation, "the cat in the hat")
     #When I submit I should be back on the conversation page 
     @conversation_page.click_submit_contribution
     #Then I should be directed back to the contribution
@@ -80,7 +81,8 @@ feature "Add contribution", %q{
 
   scenario "Canceling a comment", :js => true do
     #Given I am previewing my comment "the cat in the hat"
-    preview_comment(@conversation, "the cat in the hat")
+    @conversation_page = ConversationPage.new(page)
+    @conversation_page.preview_contribution(@conversation, "the cat in the hat")
     #When I click on the cancel link
     find('a.cancel', visible: true).click
     #Then I should see the contribution modal with the words “the cat in the hat”

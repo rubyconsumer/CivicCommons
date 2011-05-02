@@ -17,8 +17,9 @@ class ConversationPage < PageObject
   end
 
   def add_content_to_contribution(content)
-    has_css?('textarea#contribution_content', visible: true)
-    fill_in 'contribution_content', :with => content
+    if has_css?('textarea#contribution_content', visible: true)
+      fill_in 'contribution_content', :with => content
+    end
   end
 
   def click_post_to_the_conversation
@@ -30,7 +31,9 @@ class ConversationPage < PageObject
   end
 
   def click_submit_contribution
-    has_css?('#contribution_submit').click
+    if has_css?('#contribution_submit')
+      find('#submit_contribution').click
+    end
   end
 
   def respond_to_contribution(contribution)
@@ -93,12 +96,11 @@ class ConversationPage < PageObject
     end
   end
 
-  def preview_comment(conversation, comment)
-    visit conversation_path(conversation)
-    click_link('Post to this Conversation')
-    has_css?('textarea#contribution_content', visible: true)
-    fill_in 'contribution_content', :with => comment
-    click_button('Preview')
+  def preview_contribution(conversation, content)
+    visit_page(conversation)
+    click_post_to_the_conversation
+    add_content_to_contribution(content)
+    click_preview
   end
 
 end
