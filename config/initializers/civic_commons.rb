@@ -10,7 +10,7 @@ if !defined?(Civiccommons::Config)
       require_config :config => {:email => :default_email}, :description => "default email config"
       require_config :config => {:mailer => :intercept}, :description => "mailer intercept config"
       default_config :of => {:mailer => :intercept_email}, :to => {:email => :default_email}
-      default_config :of => {:mailer => :mail_chimp}, :to => false
+      default_config :of => {:mailer => :mailchimp}, :to => false
 
     end
 
