@@ -13,7 +13,7 @@
           <p><%= link_to blog_post.author.name, user_path(blog_post.author) %><%= user_profile(blog_post.author) %></p>
           <div class='blog_inner'> 
             <%= raw blog_post.summary %>
-            <p><%= link_to "Read more...", blog_path(blog_post), html: { title: blog_post.title } %></p>
+            <p><%= link_to "Read more...", blog_path(blog_post), :title => blog_post.title %></p>
             <p>Posted by <%= link_to blog_post.author.name, user_path(blog_post.author) %> on <%= blog_post.published.strftime('%B %d, %Y') %></p> 
           </div>
         </div>

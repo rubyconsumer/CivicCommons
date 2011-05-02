@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe ContentItem do
+
   before(:all) do
     @author = Factory.build(:admin_person)
   end
@@ -40,6 +41,12 @@ describe ContentItem do
       ContentItem.new(@attr).save
       @attr[:author] = Factory.build(:admin_person, :id => @author.id+1)
       @attr[:title] = 'Untyped post 1'
+      ContentItem.new(@attr).should_not be_valid
+    end
+
+    it "validates the presence of an external link for a news item" do
+      @attr[:content_type] = 'NewsItem'
+      @attr.delete(:external_link)
       ContentItem.new(@attr).should_not be_valid
     end
 

@@ -29,6 +29,12 @@
   </p>
 
   <p>
+  <%= f.label :external_link, "External Link (Only required for News Item)" %><br>
+  <%= f.text_field :external_link %>
+  </p>
+
+
+  <p>
   <%= f.label :person_id, "Author" %><br>
   <%= f.select :person_id, @authors.collect{|author| [author.first_name + " " + author.last_name, author.id]} %>
   </p>

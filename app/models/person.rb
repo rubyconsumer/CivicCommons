@@ -23,8 +23,8 @@ class Person < ActiveRecord::Base
   has_many :content_templates, :foreign_key => 'person_id', :dependent => :restrict 
   has_many :contributions, :foreign_key => 'owner', :uniq => true, :dependent => :restrict 
   has_many :managed_issue_pages, :foreign_key => 'person_id', :dependent => :restrict 
-  has_many :rating_groups, :dependent => :restrict 
-  has_many :subscriptions, :dependent => :restrict 
+  has_many :rating_groups, :dependent => :restrict
+  has_many :subscriptions, :dependent => :destroy
   has_and_belongs_to_many :conversations, :join_table => 'conversations_guides', :foreign_key => :guide_id
 
   has_many :contributed_conversations, :through => :contributions, :source => :conversation, :uniq => true, :dependent => :restrict 
@@ -222,6 +222,72 @@ class Person < ActiveRecord::Base
     else
       true
     end
+  end
+
+  def merge_account(person_to_merge)
+    if person_to_merge.class.name == 'Person' && id == person_to_merge.id
+      return false
+    end
+
+    # Forcibly log out the FROM
+    # Lock the FROM
+    # TODO: do we want this? http://rubydoc.info/github/plataformatec/devise/master/Devise/Models/Lockable
+    person_to_merge.confirmed_at = nil
+    return false unless person_to_merge.save # bail out if person_to_merge cannot be locked out
+
+    # Update the all contributions
+    person_to_merge.contributions.map do |contribution|
+      contribution.owner = id
+      contribution.save
+    end
+
+    # ratings
+    # TODO: talk to Winston to make sure this is handled correctly
+    RatingGroup.where('person_id = ?', person_to_merge.id).map do |rating_group|
+      rating_group.person_id = id
+      rating_group.save
+    end
+
+    # Conversations table?
+    # TODO: talk to Winston to make sure this is handled correctly
+    Conversation.where('owner = ?', person_to_merge.id).map do |conversation|
+      conversation.owner = id
+      conversation.save
+    end
+
+    # Make the TO account follow all the same conversations/issues as the FROM account
+    Subscription.where(person_id: person_to_merge.id).each do |subscription|
+      Subscription.create_unless_exists(self, subscription.subscribable)
+    end
+
+    # what about Visits table?
+    Visit.where('person_id = ?', person_to_merge.id).map do |visit|
+      visit.person_id = id
+      visit.save
+    end
+
+    # content_templates?
+    person_to_merge.content_templates.map do |content_template|
+      content_template.person_id = id
+      content_template.save
+    end
+
+    # content_items?
+    person_to_merge.content_items.map do |content_item|
+      content_item.person_id = id
+      content_item.save
+    end
+
+    # managed_issue_page
+    person_to_merge.managed_issue_pages.map do |managed_issue_page|
+      managed_issue_page.person_id = id
+      managed_issue_page.save
+    end
+
+    # etc of the FROM account to point to the TO account
+    # should this interactively allow selection of different values?
+
+    return true
   end
 
   # Overiding Devise::Models::DatabaseAuthenticatable
