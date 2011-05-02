@@ -26,6 +26,20 @@ class ConversationPage < PageObject
     post_to_the_conversation.click
   end
 
+  def select_suggest_action
+    find('a#suggested_action_tab', visible: true).click
+  end
+
+  def preview_suggest_action(conversation, content)
+    visit_page(conversation)
+    click_post_to_the_conversation
+    select_suggest_action
+    if has_css?('textarea#contribution_content', visible: true)
+      fill_in 'contribution_content', :with => content
+    end
+    click_preview
+  end
+
   def click_preview
     click_button('Preview')
   end
