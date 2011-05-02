@@ -1,10 +1,18 @@
 class RadioshowController < ApplicationController
+
+  # GET /radioshow/1
   def show
-    @radio_show = ContentItem.find(params[:id])
+    @radioshow = ContentItem.find(params[:id])
   end
 
-  # GET /blog
+  # GET /radioshow
   def index
-    @radio_shows = ContentItem.where("content_type = 'RadioShow' AND (published <= curdate() OR DAY(published) = DAY(curdate())) ").order("published desc");
+    @radioshows = ContentItem.where("content_type = 'RadioShow' AND (published <= curdate() OR DAY(published) = DAY(curdate())) ").order("published desc").paginate(:page => params[:page], :per_page => 5)
+  end
+
+  # GET /podcast
+  def podcast
+    @radioshows = ContentItem.where("content_type = 'RadioShow' AND (published <= curdate() OR DAY(published) = DAY(curdate())) ").order("published desc").paginate(:page => params[:page], :per_page => 5)
   end
 end
+

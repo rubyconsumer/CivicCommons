@@ -1,24 +1,29 @@
 <% content_for :main_body do %>
   <div class="wrapper">
     <div class="content-container">
-      <h1>Radio Show</h1>
+      <h1>The Civic Commons Radio Show</h1>
 
-      <div class="main-content">
-        <% @radio_shows.each do |item| %>
-          <div class="posts">
-            <div class="post">
-              <h3><%= link_to item.title, radioshow_path(item) %></h3>
-              <p class="author"><%= item.author.first_name + " " + item.author.last_name %></p>
-              <p class="time"><%= item.created_at.strftime("%m-%d-%Y %I:%M %p") %></p>
-              <div class="summary"><%= raw item.summary %></div>
-            </div>
+      <%= render partial: 'description' %>
+
+      <%- @radioshows.each do |radioshow| %>
+
+        <div class="radioshow" id="outer_block_1"> 
+          <div class="in-the-news-post">
+            <p class="decoration">&nbsp;</p>
           </div>
-        <% end %>
-      </div><!-- /.main-content -->     
+          <h2><%= link_to radioshow.title, radioshow_path(radioshow) %></h2> 
+          <div class='radioshow_inner'> 
+            <%= raw radioshow.summary %>
+            <p><%= link_to "Listen to the podcast...", radioshow_path(radioshow), html: { title: radioshow.title } %></p>
+            <p>Aired on <%= radioshow.published.strftime('%B %d, %Y') %></p> 
+          </div>
+        </div>
 
-      <div class='aside supplementary'>
-        <div>&nbsp;</div>
-      </div><!-- /.aside -->      
+      <%- end %>
+
+      <%= will_paginate @radioshows, :inner_window => 3, :previous_label => "Previous", :next_label => "Next" %>
+
     </div>
   </div>
 <% end %>
+

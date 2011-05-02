@@ -43,6 +43,12 @@ describe ContentItem do
       ContentItem.new(@attr).should_not be_valid
     end
 
+    it "validates the presence of an embed code for a radio show" do
+      @attr[:content_type] = 'RadioShow'
+      @attr.delete(:embed_code)
+      ContentItem.new(@attr).should_not be_valid
+    end
+
   end
 
 end

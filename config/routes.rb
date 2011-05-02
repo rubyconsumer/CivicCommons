@@ -19,6 +19,7 @@ Civiccommons::Application.routes.draw do
   root to: "homepage#show"
 
 #Custom Matchers
+
   #authentication
   post '/authentication/decline_fb_auth',              to: 'authentication#decline_fb_auth',                 as: 'decline_fb_auth'
   get  '/authentication/conflicting_email',            to: 'authentication#conflicting_email',               as: 'conflicting_email'
@@ -37,6 +38,7 @@ Civiccommons::Application.routes.draw do
   get  '/tos/tos_contribution',                        to: 'tos#tos_contribution',                           as: 'tos_contribution'
   delete '/contributions/moderate/:id',                to: 'contributions#moderate_contribution',            as: 'moderate_contribution'
   delete '/contributions/:id',                         to: 'contributions#destroy',                          as: 'contribution'
+
   #Conversations
   match '/conversations/preview_node_contribution',    to: 'conversations#preview_node_contribution'
   get '/conversations/node_conversation',              to: 'conversations#node_conversation'
@@ -47,15 +49,21 @@ Civiccommons::Application.routes.draw do
   put '/conversations/confirm_node_contribution',      to: 'conversations#confirm_node_contribution'
   get '/conversations/responsibilities',               to: 'conversations#responsibilities',                 as: 'conversation_responsibilities'
   post '/conversations/toggle_rating',                 to: 'conversations#toggle_rating',                    as: 'conversation_contribution_toggle_rating'
+  
   #Subscriptions
   post '/subscriptions/subscribe',                     to: 'subscriptions#subscribe'
   post '/subscriptions/unsubscribe',                   to: 'subscriptions#unsubscribe'
+  
   #UnsubscribeDigest
   get '/unsubscribe-me/:id',                           to: 'unsubscribe_digest#unsubscribe_me',              as: 'unsubscribe_confirmation'
   put '/unsubscribe-me/:id',                           to: 'unsubscribe_digest#remove_from_digest'
 
   #Community
   get '/community',                                    to: 'community#index',                                as: 'community'
+  
+  #Content
+  get '/podcast',                                      to: 'radioshow#podcast',                              as: 'podcast'
+
   #Widget
   get '/widget',                                       to: 'widget#index'
 

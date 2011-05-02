@@ -23,7 +23,6 @@
   <%= f.text_field :published, :value => (@content_item.published.blank? ? '' : @content_item.published.strftime('%m/%d/%Y'))%>
   </p>
 
-
   <p>
   <%= f.label :content_type %><br>
   <%= f.select :content_type, ContentItem::CONTENT_TYPES %>
@@ -42,6 +41,11 @@
   <p>
   <%= f.label :body %><br>
   <%= f.text_area :body, :class => 'tinymce' %>
+  </p>
+
+  <p>
+  <%= f.label :embed_code %> <em>(Required for a Radio Show)</em><br>
+  <%= f.text_area :embed_code, cols: 95, rows: 10 %>
   </p>
 
   <%= f.submit %>
