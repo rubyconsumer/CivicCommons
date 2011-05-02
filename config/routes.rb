@@ -117,6 +117,7 @@ Civiccommons::Application.routes.draw do
     root      to: "dashboard#show"
     resources :articles
     resources :content_items #, only: [:index, :show, :new, :create, :update, :destroy]
+    get '/content_items/type/:type', to: 'content_items#index', as: 'content_items_type'
     resources :content_templates
     resources :conversations do
       put 'toggle_staff_pick', on: :member
