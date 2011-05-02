@@ -20,6 +20,10 @@ describe Invite do
       emails = "alpha@example.com\nbravo@example.com\ncharlie@example.com"
       email_results = Invite.parse_emails(emails)
       email_results.should == valid_results
+
+      emails = "alpha@example.com\rbravo@example.com\rcharlie@example.com"
+      email_results = Invite.parse_emails(emails)
+      email_results.should == valid_results
     end
   end
 

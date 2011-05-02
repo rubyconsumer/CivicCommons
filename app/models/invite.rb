@@ -3,6 +3,7 @@ class Invite
     cleaned_emails = emails.to_s.gsub(/ /, '')
     cleaned_emails.gsub!(/\r\n/, ',')
     cleaned_emails.gsub!(/\n/, ',')
+    cleaned_emails.gsub!(/\r/, ',')
     cleaned_emails.split(',')
   end
 
