@@ -84,10 +84,9 @@ feature "Add contribution", %q{
     @conversation_page = ConversationPage.new(page)
     @conversation_page.preview_contribution(@conversation, "the cat in the hat")
     #When I click on the cancel link
-    find('a.cancel', visible: true).click
+    @conversation_page.click_cancel_contribution
     #Then I should see the contribution modal with the words “the cat in the hat”
-    find('textarea#contribution_content').should_not be_nil
-    page.should have_content('the cat in the hat')
+    @conversation_page.should have_preview_contribution_text('the cat in the hat')
   end
 
 end

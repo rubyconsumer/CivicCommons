@@ -32,8 +32,12 @@ class ConversationPage < PageObject
 
   def click_submit_contribution
     if has_css?('#contribution_submit')
-      find('#submit_contribution').click
+      find('#contribution_submit', visible: true).click
     end
+  end
+
+  def click_cancel_contribution
+    find('a.cancel', visible: true).click
   end
 
   def respond_to_contribution(contribution)
