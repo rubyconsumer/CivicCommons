@@ -58,6 +58,7 @@ ActiveRecord::Schema.define(:version => 20110502163852) do
     t.datetime "updated_at"
     t.string   "cached_slug"
     t.datetime "published"
+    t.text     "embed_code"
     t.string   "external_link"
   end
 
