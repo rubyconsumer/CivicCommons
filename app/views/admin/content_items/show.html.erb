@@ -5,6 +5,9 @@
     <p>Published: <%= @content_item.published.strftime("%B %d, %Y") %></p>
   </header>
   <p>Content Type: <%= @content_item.content_type %>
+  <% if @content_item.external_link %>
+    <p>External Link: <%= link_to(@content_item.external_link, @content_item.external_link) %>
+  <% end %>
   <p>Summary: </p>
   <blockquote>
     <%= raw (@content_item.summary) %>
