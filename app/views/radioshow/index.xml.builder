@@ -7,6 +7,14 @@ xml.rss :version => "2.0", 'xmlns:atom' => "http://www.w3.org/2005/Atom" do
     xml.copyright "(c) Copyright #{Date.today.strftime('%Y')} The Civic Commons"
     xml.link radioshow_index_url(:format => :xml)
     xml.language "en-us"
+    xml.image do
+      xml.url "#{root_url}images/cc_podcast.jpg"
+      xml.title 'The Civic Commons Radio Show'
+      xml.link root_url
+    end
+    xml.language 'en-us'
+    xml.pubDate Time.now.rfc822
+    xml.lastBuildDate Time.now.rfc822
     for show in @radioshows
       xml.item do
         xml.title show.title

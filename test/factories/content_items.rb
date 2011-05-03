@@ -25,6 +25,7 @@ end
 Factory.define :radio_show, :parent => :content_item do |f|
   f.content_type "RadioShow"
   f.embed_code "Embed this, baby!"
+  f.external_link "http://www.theciviccommons.com/podcast.mp3"
   f.sequence(:title) {|n| "Radio Show #{n}" }
   f.sequence(:cached_slug) {|n| "radio-show-#{n}" }
 end
