@@ -1,29 +1,24 @@
 <% content_for :main_body do %>
   <div class="wrapper">
     <div class="content-container">
-      <h1>News</h1>
+      <h1>In The News</h1>
 
       <div class="main-content">
-
         <% @news_items.each do |news_item| %>
 
-          <div class="in-the-news-post">
-            <p class="date"><%= news_item.published.strftime('%B %d, %Y') %></p>
-            <h2>
+          <div class="in-the-news-post"> 
+            <h2> 
               <%= link_to news_item.title, news_item.external_link, :title => news_item.title, :target => "blank" %>
-            </h2>
+            </h2> 
+            <p><%= news_item.published.strftime('%B %d, %Y') %></p> 
             <p><%= raw news_item.body %></p>
-          </div>
+            <p><%= link_to 'Read more...', news_item.external_link, :title => news_item.title, :target => "blank" %></p> 
+          </div> 
 
         <% end %>
-
         <%= will_paginate @news_items, :inner_window => 3, :previous_label => "Previous", :next_label => "Next" %>
+      </div>
 
-      </div><!-- /.main-content -->     
-
-      <div class='aside supplementary'>
-        <div>&nbsp;</div>
-      </div><!-- /.aside -->      
     </div>
   </div>
 <% end %>

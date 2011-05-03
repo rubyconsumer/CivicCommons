@@ -1,9 +1,4 @@
-# example -- http://timelessrepo.com/bdd-with-rspec-and-steak
-# save_and_open_page
-
 require File.expand_path(File.dirname(__FILE__) + '/acceptance_helper')
-
-require 'pp'
 
 feature "Post Content Item", %q{
   As an administrator,
@@ -50,7 +45,7 @@ feature "Post Content Item", %q{
       visit admin_root_path(admin)
       visit admin_content_items_path(content)
       should_be_on admin_content_items_path
-      page.should have_content('Untyped post 1')
+      page.should have_content(content.title)
     end
 
     scenario "Delete a content item" do
@@ -106,9 +101,10 @@ feature "Post Content Item", %q{
       select('RadioShow', :from => 'content_item_content_type')
       fill_in('content_item_title', :with => 'First Radio Show')
       fill_in('content_item_body', :with => 'This radio show is about that radio show')
+      fill_in('content_item_embed_code', :with => 'SoundCloud Embed')
       click_button('Create Content item')
       should_be_on admin_content_item_path(ContentItem.last)
-      page.should have_content("Your content item has been created!")
+      page.should have_content("has been created")
     end
 
     scenario "Create a new content item" do
@@ -120,12 +116,12 @@ feature "Post Content Item", %q{
       # And I should see the success message
 
       visit new_admin_content_item_path
-      select('RadioShow', :from => 'content_item_content_type')
-      fill_in('content_item_title', :with => 'First Radio Show')
-      fill_in('content_item_body', :with => 'This radio show is about that radio show')
+      select('BlogPost', :from => 'content_item_content_type')
+      fill_in('content_item_title', :with => 'First Blog Post')
+      fill_in('content_item_body', :with => 'This blog post is about that radio show')
       click_button('Create Content item')
       should_be_on admin_content_item_path(ContentItem.last)
-      page.should have_content("Your content item has been created!")
+      page.should have_content("has been created")
     end
 
     scenario "New content item is associated with the currently logged in author" do
@@ -141,12 +137,12 @@ feature "Post Content Item", %q{
 
       second_admin
       visit new_admin_content_item_path
-      select('RadioShow', :from => 'content_item_content_type')
-      fill_in('content_item_title', :with => 'First Radio Show')
-      fill_in('content_item_body', :with => 'This radio show is about that radio show')
+      select('BlogPost', :from => 'content_item_content_type')
+      fill_in('content_item_title', :with => 'First Blog Post')
+      fill_in('content_item_body', :with => 'This blog post is about that radio show')
       click_button('Create Content item')
       should_be_on admin_content_item_path(ContentItem.last)
-      page.should have_content("Your content item has been created!")
+      page.should have_content("has been created")
       page.should have_content(admin.first_name + " " + admin.last_name)
     end
 
@@ -163,13 +159,12 @@ feature "Post Content Item", %q{
 
       second_admin
       visit new_admin_content_item_path
-      select('RadioShow', :from => 'content_item_content_type')
+      select('BlogPost', :from => 'content_item_content_type')
       select(second_admin.first_name + " " + second_admin.last_name, :from => 'content_item_person_id')
-      fill_in('content_item_title', :with => 'First Radio Show')
-      fill_in('content_item_body', :with => 'This radio show is about that radio show')
+      fill_in('content_item_title', :with => 'First Blog Post')
+      fill_in('content_item_body', :with => 'This blog post is about that radio show')
       click_button('Create Content item')
-      should_be_on admin_content_item_path(ContentItem.last)
-      page.should have_content("Your content item has been created!")
+      page.should have_content("has been created")
       page.should have_content(second_admin.last_name)
     end
 
@@ -218,9 +213,9 @@ feature "Post Content Item", %q{
       # And I should see todays date as the publish date
 
       visit new_admin_content_item_path
-      select('RadioShow', :from => 'content_item_content_type')
-      fill_in('content_item_title', :with => 'First Radio Show')
-      fill_in('content_item_body', :with => 'This radio show is about that radio show')
+      select('BlogPost', :from => 'content_item_content_type')
+      fill_in('content_item_title', :with => 'First Blog Post')
+      fill_in('content_item_body', :with => 'This blog post is about that radio show')
       click_button('Create Content item')
       should_be_on admin_content_item_path(ContentItem.last)
       page.should have_content(Date.parse(Date.today.to_s).strftime("%B %d, %Y"))
@@ -236,10 +231,10 @@ feature "Post Content Item", %q{
       # And I should see tomorrow's date as the publish date
 
       visit new_admin_content_item_path
-      select('RadioShow', :from => 'content_item_content_type')
-      fill_in('content_item_title', :with => 'First Radio Show')
+      select('BlogPost', :from => 'content_item_content_type')
+      fill_in('content_item_title', :with => 'First Blog Post')
+      fill_in('content_item_body', :with => 'This blog post is about that radio show')
       fill_in('content_item_published', :with => Date.tomorrow.strftime("%m/%d/%Y"))
-      fill_in('content_item_body', :with => 'This radio show is about that radio show')
       click_button('Create Content item')
       should_be_on admin_content_item_path(ContentItem.last)
       page.should have_content(Date.parse(Date.tomorrow.to_s).strftime("%B %d, %Y"))
@@ -255,10 +250,9 @@ feature "Post Content Item", %q{
       # Then I should see an error message
 
       visit new_admin_content_item_path
-      content
-      select('RadioShow', :from => 'content_item_content_type')
-      fill_in('content_item_title', :with => 'Untyped post 1')
-      fill_in('content_item_body', :with => 'This radio show is about that radio show')
+      select('BlogPost', :from => 'content_item_content_type')
+      fill_in('content_item_title', :with => content.title)
+      fill_in('content_item_body', :with => 'This blog post is about that radio show')
       click_button('Create Content item')
       page.should have_content("has already been taken")
     end
@@ -289,8 +283,6 @@ feature "Post Content Item", %q{
       should_be_on admin_content_items_path
     end
 
-=begin
-## Capybara doesn't seem to want to "unfill" fields -- TODO: fix this problem and the test will work
     scenario "Edit content item without required fields" do
       # Given: I am on the edit content item page
       # And I have not populated
@@ -301,13 +293,11 @@ feature "Post Content Item", %q{
 
       visit edit_admin_content_item_path(content)
       select('RadioShow', :from => 'content_item_content_type')
-      fill_in('content_item_title', :with => 'asdsadasd')
-      fill_in('content_item_body', :with => 'This radio show is about that radio show')
-save_and_open_page
+      fill_in('content_item_title', :with => '    ')
+      fill_in('content_item_body', :with => '    ')
       click_button('Update Content item')
-      should_be_on edit_admin_content_item_path(content)
+      page.should have_content("still missing some important information")
     end
-=end
 
     scenario "URL field is slugged" do
       # Given I am on the content item creation page
@@ -321,6 +311,7 @@ save_and_open_page
       select('RadioShow', :from => 'content_item_content_type')
       fill_in('content_item_title', :with => 'First Radio Show')
       fill_in('content_item_body', :with => 'This radio show is about that radio show')
+      fill_in('content_item_embed_code', :with => 'SoundCloun Embed')
       click_button('Create Content item')
       should_be_on admin_content_item_path(ContentItem.last)
       page.should have_link("First Radio Show", :href => "first-radio-show")
@@ -339,6 +330,7 @@ save_and_open_page
       select('RadioShow', :from => 'content_item_content_type')
       fill_in('content_item_title', :with => 'First Radio Show')
       fill_in('content_item_body', :with => 'This radio show is about that radio show')
+      fill_in('content_item_embed_code', :with => 'SoundCloun Embed')
       click_button('Create Content item')
       should_be_on admin_content_item_path(ContentItem.last)
       page.should have_link("First Radio Show", :href => "first-radio-show")

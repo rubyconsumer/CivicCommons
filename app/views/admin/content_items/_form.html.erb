@@ -15,7 +15,7 @@
 
   <p>
   <%= f.label :title %><br>
-  <%= f.text_field :title %>
+  <%= f.text_field :title, :size => 100 %>
   </p>
 
   <p>
@@ -29,14 +29,13 @@
   </p>
 
   <p>
-  <%= f.label :external_link, "External Link (Only required for News Item)" %><br>
-  <%= f.text_field :external_link %>
-  </p>
-
-
-  <p>
   <%= f.label :person_id, "Author" %><br>
   <%= f.select :person_id, @authors.collect{|author| [author.first_name + " " + author.last_name, author.id]} %>
+  </p>
+
+  <p>
+  <%= f.label :external_link %> <em>(Required for News Item)</em><br>
+  <%= f.text_field :external_link, :size => 100 %>
   </p>
 
   <p>
@@ -50,7 +49,7 @@
   </p>
 
   <p>
-  <%= f.label :embed_code %> <em>(Required for a Radio Show)</em><br>
+  <%= f.label :embed_code %> <em>(Required for Radio Show)</em><br>
   <%= f.text_area :embed_code, cols: 95, rows: 10 %>
   </p>
 

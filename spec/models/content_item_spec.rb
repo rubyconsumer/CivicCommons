@@ -39,8 +39,6 @@ describe ContentItem do
 
     it "validates the uniqueness of the title" do
       ContentItem.new(@attr).save
-      @attr[:author] = Factory.build(:admin_person, :id => @author.id+1)
-      @attr[:title] = 'Untyped post 1'
       ContentItem.new(@attr).should_not be_valid
     end
 

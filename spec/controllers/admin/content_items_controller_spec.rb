@@ -3,12 +3,204 @@ require 'spec_helper'
 module Admin
   describe ContentItemsController do
 
-    before :each do
-      @content_item = Factory.create();
+    before(:each) do
+      sign_in Factory.create(:admin_person)
     end
 
-    describe "ContentItemsController#index" do
-      
+    describe "GET index" do
+
+      before(:each) do
+        @content_items = {}
+        (1..5).each do 
+          content_item = Factory.create(:content_item)
+          @content_items[content_item.id] = content_item
+        end
+      end
+
+      it "assigns all content_items as @content_items" do
+        get :index
+        assigns[:content_items].size.should == @content_items.size
+      end
+
     end
+
+    describe "GET show" do
+
+      let(:content_item) do
+        Factory.create(:content_item)
+      end
+
+      it "assigns the requested content_item as @content_item" do
+        get :show, :id => content_item.id.to_s
+        assigns[:content_item].should eq content_item
+      end
+
+    end
+
+    describe "GET new" do
+
+      it "assigns a new content_item as @content_item" do
+        get :new
+        assigns[:content_item].should_not be_nil
+      end
+
+    end
+
+    describe "GET edit" do
+
+      let(:content_item) do
+        Factory.create(:content_item)
+      end
+
+      it "assigns the requested content_item as @content_item" do
+        get :edit, :id => content_item.id.to_s
+        assigns[:content_item].should eq content_item
+      end
+
+    end
+
+    describe "POST create" do
+
+      describe "with valid params" do
+
+        let(:author) do
+          Factory.create(:admin_person)
+        end
+
+        let(:params) do
+          Factory.attributes_for(:content_item)
+        end
+
+        before(:each) do
+          params[:author] = author
+          post :create, :content_item => params
+        end
+
+        it "assigns a newly created content_item as @content_item" do
+          assigns[:content_item].title.should eq params[:title]
+          assigns[:content_item].cached_slug.should eq params[:cached_slug]
+          assigns[:content_item].summary.should eq params[:summary]
+        end
+
+        it "redirects to the created content_item" do
+          response.should redirect_to admin_content_item_path(assigns[:content_item].cached_slug)
+        end
+
+      end
+
+      describe "with invalid params" do
+
+        let(:author) do
+          Factory.create(:admin_person)
+        end
+
+        let(:params) do
+          Factory.attributes_for(:content_item)
+        end
+
+        before(:each) do
+          params[:author] = author
+          params.delete(:title)
+          post :create, :content_item => params
+        end
+
+        it "assigns a newly created but unsaved content_item as @content_item" do
+          assigns[:content_item].summary.should eq params[:summary]
+        end
+
+        it "re-renders the 'new' content_item" do
+          response.should render_template('new')
+        end
+
+      end
+
+    end
+
+    describe "PUT update" do
+
+      let(:content_item) do
+        Factory.create(:content_item)
+      end
+
+      let(:new_title) do
+        "Some completely different but valid title"
+      end
+
+      let(:new_slug) do
+        "some-completely-different-but-valid-title"
+      end
+
+      let(:params) do
+        content_item.attributes
+      end
+
+      describe "with valid params" do
+
+        before(:each) do
+          params.delete('published')
+          params['title'] = new_title
+          put :update, :id => params['id'], :content_item => params
+        end
+
+        it "updates the requested content_item" do
+          ContentItem.find_by_id(params['id']).title.should eq new_title
+        end
+
+        it "assigns the requested content_item as @content_item" do
+          assigns[:content_item].id.should eq params['id']
+          assigns[:content_item].title.should eq new_title
+          assigns[:content_item].summary.should eq params['summary']
+          assigns[:content_item].cached_slug.should eq new_slug
+        end
+
+        it "redirects to the 'GET show' page" do
+          response.should redirect_to admin_content_item_path(new_slug)
+        end
+
+      end
+
+      describe "with invalid params" do
+
+        before(:each) do
+          params.delete('published')
+          params['title'] = ''
+          put :update, :id => params['id'], :content_item => params
+        end
+
+        it "assigns the content_item as @content_item" do
+          assigns[:content_item].id.should eq params['id']
+          assigns[:content_item].title.should eq params['title']
+          assigns[:content_item].summary.should eq params['summary']
+          assigns[:content_item].cached_slug.should eq params['cached_slug']
+        end
+
+        it "re-renders the 'edit' content_item" do
+          response.should render_template('edit')
+        end
+
+      end
+
+    end
+
+    describe "DELETE destroy" do
+
+      let(:content_item) do
+        Factory.create(:content_item)
+      end
+
+      before(:each) do
+        delete :destroy, :id => content_item.id
+      end
+
+      it "destroys the requested content_item" do
+        ContentItem.find_by_id(content_item.id).should be_nil
+      end
+
+      it "redirects to the content_items list" do
+        response.should redirect_to(admin_content_items_url)
+      end
+
+    end
+
   end
 end

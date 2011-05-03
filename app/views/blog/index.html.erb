@@ -6,20 +6,18 @@
       <%- @blog_posts.each do |blog_post| %>
 
         <div class="blog" id="outer_block_1"> 
-          <div class="in-the-news-post">
-            <p class="decoration">&nbsp;</p>
-          </div>
+          <div class="in-the-news-post"></div>
           <h2><%= link_to blog_post.title, blog_path(blog_post) %></h2> 
-          <p><%= link_to blog_post.author.name, user_path(blog_post.author) %><%= user_profile(blog_post.author) %></p>
+          <p><%= user_profile(blog_post.author) %><%= link_to blog_post.author.name, user_path(blog_post.author) %></p>
           <div class='blog_inner'> 
             <%= raw blog_post.summary %>
             <p><%= link_to "Read more...", blog_path(blog_post), :title => blog_post.title %></p>
             <p>Posted by <%= link_to blog_post.author.name, user_path(blog_post.author) %> on <%= blog_post.published.strftime('%B %d, %Y') %></p> 
           </div>
         </div>
+        <p>&nbsp;</p>
 
       <%- end %>
-
       <%= will_paginate @blog_posts, :inner_window => 3, :previous_label => "Previous", :next_label => "Next" %>
 
     </div>

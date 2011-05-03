@@ -1,10 +1,11 @@
 class NewsController < ApplicationController
-  def show
-    @news_item = ContentItem.find(params[:id])
+
+  # GET /news
+  def index
+    respond_to do |format|
+      format.xml { @news_items = ContentItem.where("content_type = 'NewsItem' AND (published <= curdate() OR DAY(published) = DAY(curdate())) ").order("published desc").limit(25) }
+      format.html { @news_items = ContentItem.where("content_type = 'NewsItem' AND (published <= curdate() OR DAY(published) = DAY(curdate())) ").order("published desc").paginate(:page => params[:page], :per_page => 5) }
+    end
   end
 
-  # GET /blog
-  def index
-    @news_items = ContentItem.where("content_type = 'NewsItem' AND (published <= curdate() OR DAY(published) = DAY(curdate())) ").order("published desc").paginate(:page => params[:page], :per_page => 10)
-  end
 end

@@ -1,5 +1,5 @@
 class Admin::ContentItemsController < Admin::DashboardController
-  
+
   #GET admin/content_items
   def index
     if params[:type]
@@ -32,13 +32,10 @@ class Admin::ContentItemsController < Admin::DashboardController
     @authors = Person.find_all_by_admin(true, :order => 'first_name, last_name ASC')
 
     if !error && @content_item.save
-      respond_to do |format|
-        format.html { redirect_to(admin_content_item_path(@content_item), :notice => "Your content item has been created!") }
-      end
+      flash[:notice] = "Your #{@content_item.content_type} has been created!"
+      redirect_to admin_content_item_path(@content_item)
     else
-      respond_to do |format|
-        format.html { render :new }
-      end
+      render :new
     end
   end
 
@@ -72,13 +69,11 @@ class Admin::ContentItemsController < Admin::DashboardController
       @content_item.errors.add :published, "invalid date"
     end
 
-    respond_to do |format|
-      if !error && @content_item.update_attributes(params[:content_item])
-        flash[:notice] = "Successfully edited your Content Item"
-        format.html { redirect_to admin_content_items_path }
-      else
-        format.html { render :action => "edit" }
-      end
+    if !error && @content_item.update_attributes(params[:content_item])
+      flash[:notice] = "Successfully edited your #{@content_item.content_type}"
+      redirect_to admin_content_item_path(@content_item)
+    else
+      render "edit"
     end
   end
 end

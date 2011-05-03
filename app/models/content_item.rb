@@ -14,19 +14,19 @@ class ContentItem < ActiveRecord::Base
 
   validates :published, :date => {:after => Proc.new { Time.now - 1.year} }
 
-  has_friendly_id :url_slug_or_title, :use_slug => true, :strip_non_ascii => true
+  has_friendly_id :title, :use_slug => true, :strip_non_ascii => true
 
 private
 
-  def content_type_is_radio_show?
-    content_type == "RadioShow"
+  def content_type_is_blog_post?
+    content_type == "BlogPost"
   end
 
   def content_type_is_news_item?
     content_type == "NewsItem"
   end
 
-  def url_slug_or_title
-    url_slug.blank? ? title : url_slug
+  def content_type_is_radio_show?
+    content_type == "RadioShow"
   end
 end

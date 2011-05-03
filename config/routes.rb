@@ -74,12 +74,12 @@ Civiccommons::Application.routes.draw do
   match '/careers'           => redirect('/pages/jobs')
   match '/contact_us'        => redirect('/pages/contact')
   match '/faq'               => redirect('/pages/faq')
-  match '/in-the-news'       => redirect('/pages/in-the-news')
+  match '/in-the-news'       => redirect('/news')
   match '/jobs'              => redirect('/pages/jobs')
   match '/partners'          => redirect('/pages/partners')
   match '/poster'            => redirect('/pages/poster')
   match '/posters'           => redirect('/pages/poster')
-  match '/press'             => redirect('/pages/in-the-news')
+  match '/press'             => redirect('/news')
   match '/principles'        => redirect('/pages/principles')
   match '/team'              => redirect('/pages/team')
   match '/terms'             => redirect('/pages/terms')
@@ -117,7 +117,7 @@ Civiccommons::Application.routes.draw do
   resources :pages, only: [:show]
   resources :blog, only: [:index, :show]
   resources :content, only: [:index, :show]
-  resources :news, only: [:index, :show]
+  resources :news, only: [:index]
   resources :radioshow, only: [:index, :show]
 
 #Namespaces
