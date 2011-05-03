@@ -1,7 +1,7 @@
 xml.instruct! :xml, :version => "1.0"
 xml.rss :version => "2.0", 'xmlns:atom' => "http://www.w3.org/2005/Atom" do
   xml.channel do
-    xml.tag!('atom:link', :href => blog_index_url, :rel => "self", :type => "application/rss+xml")
+    xml.tag!('atom:link', :href => blog_index_url(:format => :xml), :rel => "self", :type => "application/rss+xml")
     xml.title "The Civic Commons: Common Blog"
     xml.description "The Civic Commons is a new way to bring communities together with conversation and emerging technology. We’re focused on building conversations and connections that have the power to become informed, productive collective civic action."
     xml.copyright "(c) Copyright #{Date.today.strftime('%Y')} The Civic Commons"

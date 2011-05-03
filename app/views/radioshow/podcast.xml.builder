@@ -1,7 +1,7 @@
 xml.instruct! :xml, :version => '1.0', :encoding => 'UTF-8'
 xml.rss :version => '2.0', 'xmlns:itunes' => 'http://www.itunes.com/dtds/podcast-1.0.dtd', 'xmlns:atom' => "http://www.w3.org/2005/Atom" do
   xml.channel do
-    xml.tag!('atom:link', :href => radioshow_index_url, :rel => "self", :type => "application/rss+xml")
+    xml.tag!('atom:link', :href => podcast_url(:format => :xml), :rel => "self", :type => "application/rss+xml")
     xml.title 'The Civic Commons Podcast'
     xml.link radioshow_index_url
     xml.description 'The Civic Commons podcast is a dynamic half-hour public affairs program airing Saturday mornings on 88.7 FM, WJCU, featuring citizen voices more than talking heads, citizen commentaries instead of expert drones and hosts who are always looking for different ways to set the stage for discussion.'
