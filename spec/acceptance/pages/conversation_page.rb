@@ -26,20 +26,6 @@ class ConversationPage < PageObject
     post_to_the_conversation.click
   end
 
-  def select_suggest_action
-    find('a#suggested_action_tab', visible: true).click
-  end
-
-  def preview_suggest_action(conversation, content)
-    visit_page(conversation)
-    click_post_to_the_conversation
-    select_suggest_action
-    if has_css?('textarea#contribution_content', visible: true)
-      fill_in 'contribution_content', :with => content
-    end
-    click_preview
-  end
-
   def click_preview
     click_button('Preview')
   end
@@ -52,6 +38,14 @@ class ConversationPage < PageObject
 
   def click_cancel_contribution
     find('a.cancel', visible: true).click
+  end
+
+  def respond_with_suggestion(conversation)
+    find('#suggested_action_tab', visible: true).click
+    within "#conversation-#{conversation.id}-new-suggested_action" do
+      find('#contribution_content', visible: true)
+      fill_in('contribution_content', with: 'We should do...')
+    end
   end
 
   def respond_to_contribution(contribution)
