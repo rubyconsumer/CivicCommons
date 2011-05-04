@@ -13,6 +13,9 @@
             <p><%= news_item.published.strftime('%B %d, %Y') %></p> 
             <p><%= raw news_item.body %></p>
             <p><%= link_to 'Read more...', news_item.external_link, :title => news_item.title, :target => "blank" %></p> 
+            <% unless news_item.embed_code.blank? %>
+              <p><%= raw news_item.embed_code %></p>
+            <% end %>
           </div> 
 
         <% end %>

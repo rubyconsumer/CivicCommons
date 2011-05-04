@@ -143,8 +143,16 @@ class EmbedlyService
     return data
   end
 
+  def self.get_simple_embed(url, max_embed_width = nil)
+    embed = nil
+    service = EmbedlyService.new
+    service.fetch(url)
+    embed = service.to_embed_or_fancybox(max_embed_width) if service.ok?
+    return embed
+  end
+
   def to_embed_or_fancybox(max_embed_width = nil)
-    EmbedlyService.to_embed(properties, max_embed_width)
+    EmbedlyService.to_embed_or_fancybox(properties, max_embed_width)
   end
 
   def self.to_embed_or_fancybox(code, max_embed_width = nil)

@@ -29,6 +29,8 @@ class Admin::ContentItemsController < Admin::DashboardController
       @content_item.errors.add :published, "invalid date"
     end
 
+    @content_item.embed_code = get_embed_code_from_embedly(@content_item.external_link, @content_item.embed_code) unless error
+
     @authors = Person.find_all_by_admin(true, :order => 'first_name, last_name ASC')
 
     if !error && @content_item.save
@@ -69,6 +71,8 @@ class Admin::ContentItemsController < Admin::DashboardController
       @content_item.errors.add :published, "invalid date"
     end
 
+    params[:content_item][:embed_code] = get_embed_code_from_embedly(params[:content_item][:external_link], params[:content_item][:embed_code]) unless error
+
     if !error && @content_item.update_attributes(params[:content_item])
       flash[:notice] = "Successfully edited your #{@content_item.content_type}"
       redirect_to admin_content_item_path(@content_item)
@@ -76,4 +80,14 @@ class Admin::ContentItemsController < Admin::DashboardController
       render "edit"
     end
   end
+
+  private
+
+  def get_embed_code_from_embedly(external_link, embed_code = nil)
+    if embed_code.blank? and not external_link.blank?
+      embed_code = EmbedlyService.get_simple_embed(external_link)
+    end
+    return embed_code
+  end
+
 end

@@ -4,6 +4,10 @@ module Admin
   describe ContentItemsController do
 
     before(:each) do
+      EmbedlyService.stub!(:get_simple_embed).and_return(nil)
+    end
+
+    before(:each) do
       sign_in Factory.create(:admin_person)
     end
 
@@ -110,6 +114,48 @@ module Admin
 
         it "re-renders the 'new' content_item" do
           response.should render_template('new')
+        end
+
+      end
+
+      describe "with valid Embedly integration" do
+
+        let(:author) do
+          Factory.create(:admin_person)
+        end
+
+        let(:params) do
+          Factory.attributes_for(:content_item)
+        end
+
+        before(:each) do
+          params[:author] = author
+        end
+
+        it "does not call Embedly when no external link is given" do
+          params.delete(:external_link)
+          params[:embed_code] = "Some Embed Code"
+          EmbedlyService.should_not_receive(:get_simple_embed)
+          post :create, :content_item => params
+          assigns[:content_item].embed_code.should eq params[:embed_code]
+        end
+
+        it "gets Embedly embed code when given an external link and no embed code" do
+          params[:external_link] = "http://www.theciviccommons.com"
+          params.delete(:embed_code)
+          EmbedlyService.should_receive(:get_simple_embed).once.and_return("embed")
+          post :create, :content_item => params
+          assigns[:content_item].external_link.should eq params[:external_link]
+          assigns[:content_item].embed_code.should eq "embed"
+        end
+
+        it "does not get Embedly embed code when given an external link and an embed code" do
+          params[:external_link] = "http://www.theciviccommons.com"
+          params[:embed_code] = "Some Embed Code"
+          EmbedlyService.should_not_receive(:get_simple_embed)
+          post :create, :content_item => params
+          assigns[:content_item].external_link.should eq params[:external_link]
+          assigns[:content_item].embed_code.should eq params[:embed_code]
         end
 
       end

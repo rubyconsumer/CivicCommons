@@ -23,6 +23,7 @@ feature "Post Content Item", %q{
     end
 
     background do
+      #EmbedlyService.stub!(:get_simple_embed).and_return(nil)
       # Given I am logged in as an administrator
       LoginPage.new(page).sign_in(admin)
     end
@@ -88,7 +89,7 @@ feature "Post Content Item", %q{
       page.should have_content("still missing some important information:")
     end
 
-    scenario "External link is not a required field for a content item types other than NewsItem" do
+    scenario "External link is not a required field for a BlogPost" do
       # Given I am on the content item creation page
       # And I have entered required content item fields
       # And I have not entered an external url
@@ -98,10 +99,9 @@ feature "Post Content Item", %q{
       # And I should see the success message
 
       visit new_admin_content_item_path
-      select('RadioShow', :from => 'content_item_content_type')
-      fill_in('content_item_title', :with => 'First Radio Show')
-      fill_in('content_item_body', :with => 'This radio show is about that radio show')
-      fill_in('content_item_embed_code', :with => 'SoundCloud Embed')
+      select('BlogPost', :from => 'content_item_content_type')
+      fill_in('content_item_title', :with => 'First Blog Post')
+      fill_in('content_item_body', :with => 'This blog post is about that blog post')
       click_button('Create Content item')
       should_be_on admin_content_item_path(ContentItem.last)
       page.should have_content("has been created")
@@ -299,25 +299,7 @@ feature "Post Content Item", %q{
       page.should have_content("still missing some important information")
     end
 
-    scenario "URL field is slugged" do
-      # Given I am on the content item creation page
-      # And I have entered required content item fields including a URL with whitespaces
-      # When I press the “Create Content item” button
-      # Then the content item should be created
-      # And I should be on the view content item page
-      # And I should see the whitespaces replaced by dashes in the url field
-
-      visit new_admin_content_item_path
-      select('RadioShow', :from => 'content_item_content_type')
-      fill_in('content_item_title', :with => 'First Radio Show')
-      fill_in('content_item_body', :with => 'This radio show is about that radio show')
-      fill_in('content_item_embed_code', :with => 'SoundCloun Embed')
-      click_button('Create Content item')
-      should_be_on admin_content_item_path(ContentItem.last)
-      page.should have_link("First Radio Show", :href => "first-radio-show")
-    end
-
-    scenario "Title is used as slug when url slug is blank" do
+    scenario "Title is used as slug" do
       # Given I am on the content item creation page
       # And I have entered required content item fields
       # And the url field is blank
@@ -325,14 +307,17 @@ feature "Post Content Item", %q{
       # Then the content item should be created
       # And I should be on the view content item page
       # And I should see the title field with slugs in for the url
+      
+      title = 'First Blog Post'
+      body = 'This blog post is about that blog post'
+      slug = 'first-blog-post'
 
       visit new_admin_content_item_path
-      select('RadioShow', :from => 'content_item_content_type')
-      fill_in('content_item_title', :with => 'First Radio Show')
-      fill_in('content_item_body', :with => 'This radio show is about that radio show')
-      fill_in('content_item_embed_code', :with => 'SoundCloun Embed')
+      select('BlogPost', :from => 'content_item_content_type')
+      fill_in('content_item_title', :with => title)
+      fill_in('content_item_body', :with => body)
       click_button('Create Content item')
       should_be_on admin_content_item_path(ContentItem.last)
-      page.should have_link("First Radio Show", :href => "first-radio-show")
+      page.should have_link(title, :href => slug)
     end
 end

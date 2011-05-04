@@ -10,6 +10,9 @@
           <p><%= link_to @blog_post.author.name, user_path(@blog_post.author) %><%= user_profile(@blog_post.author) %></p>
           <div class='blog_inner'> 
             <div class="body"><%= raw @blog_post.body %></div>
+            <% unless @blog_post.embed_code.blank? %>
+              <p><%= raw @blog_post.embed_code %></p>
+            <% end %>
             <p>&nbsp;</p>
             <p>Posted by <%= link_to @blog_post.author.name, user_path(@blog_post.author) %> on <%= @blog_post.published.strftime('%B %d, %Y') %></p> 
           </div>
