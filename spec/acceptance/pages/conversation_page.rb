@@ -46,10 +46,25 @@ class ConversationPage < PageObject
     end
   end
 
+  def respond_with_question(conversation, content)
+    find('#question_tab', visible: true).click
+    within("#conversation-#{conversation.id}-new-question") do
+      find('#contribution_content', visible: true)
+      fill_in('contribution_content', with: content)
+    end
+  end
+
   def preview_suggestion(conversation, content)
     visit_page(conversation)
     click_post_to_the_conversation
     respond_with_suggestion(conversation, content)
+    click_preview
+  end
+
+  def preview_question(conversation, content)
+    visit_page(conversation)
+    click_post_to_the_conversation
+    respond_with_question(conversation, content)
     click_preview
   end
 
