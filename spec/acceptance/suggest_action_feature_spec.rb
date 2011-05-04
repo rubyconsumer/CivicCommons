@@ -21,7 +21,7 @@ feature "Suggest an action", %q{
     @conversation_page.visit_page(@conversation)
     @conversation_page.click_post_to_the_conversation
     #And I have suggested the action to "We should do..."
-    @conversation_page.respond_with_suggestion(@conversation)
+    @conversation_page.respond_with_suggestion(@conversation, 'We should do...')
     @conversation_page.click_submit_contribution
     #Then I should see a preview modal with the content “We should do...”
     @conversation_page.should have_content('We should do...')
@@ -32,19 +32,11 @@ feature "Suggest an action", %q{
   end
 
   scenario "Posting the suggested action", :js => true do
-    pending
     #Given I have previewed a comment for a contribution
-    visit conversation_path(@conversation)
-    click_link('Post to this Conversation')
-    find('#suggested_action_tab', visible: true).click
-    within "#conversation-#{@conversation.id}-new-suggested_action" do
-      find('#contribution_content', visible: true)
-      fill_in('contribution_content', with: 'We should do...')
-    end
-    find('#contribution_submit', visible: true).click
+    @conversation_page = ConversationPage.new(page)
+    @conversation_page.preview_suggestion(@conversation, 'We should do...')
     #Then I should see a preview modal with the content “We should do...”
-    page.should have_css('#cboxLoadedContent')
-
+    @conversation_page.should have_preview_contribution_text('We should do...')
     #When I submit I should be back on the conversation page 
     @conversation_page.click_submit_contribution
     #Then I should be directed back to the contribution
@@ -54,10 +46,9 @@ feature "Suggest an action", %q{
   end
 
   scenario "Canceling a suggested action", :js => true do
-    pending
     #Given I am previewing my comment "the cat in the hat"
     @conversation_page = ConversationPage.new(page)
-    @conversation_page.preview_suggest_action(@conversation, 'We should do...')
+    @conversation_page.preview_suggestion(@conversation, 'We should do...')
     #When I click on the cancel link
     @conversation_page.click_cancel_contribution
     #Then I should see the contribution modal with the words “the cat in the hat”

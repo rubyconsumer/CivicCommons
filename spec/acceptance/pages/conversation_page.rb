@@ -27,25 +27,30 @@ class ConversationPage < PageObject
   end
 
   def click_preview
-    click_button('Preview')
+    find('#contribution_submit', visible: true).click
   end
 
   def click_submit_contribution
-    if has_css?('#contribution_submit')
-      find('#contribution_submit', visible: true).click
-    end
+    find('#contribution_submit', visible: true).click
   end
 
   def click_cancel_contribution
     find('a.cancel', visible: true).click
   end
 
-  def respond_with_suggestion(conversation)
+  def respond_with_suggestion(conversation, content)
     find('#suggested_action_tab', visible: true).click
-    within "#conversation-#{conversation.id}-new-suggested_action" do
+    within("#conversation-#{conversation.id}-new-suggested_action") do
       find('#contribution_content', visible: true)
-      fill_in('contribution_content', with: 'We should do...')
+      fill_in('contribution_content', with: content)
     end
+  end
+
+  def preview_suggestion(conversation, content)
+    visit_page(conversation)
+    click_post_to_the_conversation
+    respond_with_suggestion(conversation, content)
+    click_preview
   end
 
   def respond_to_contribution(contribution)
