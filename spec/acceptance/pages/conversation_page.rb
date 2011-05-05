@@ -38,6 +38,15 @@ class ConversationPage < PageObject
     find('a.cancel', visible: true).click
   end
 
+  def respond_with_attachment(conversation, content)
+    find('#image_tab', visible: true).click
+    within("#conversation-#{conversation.id}-new-attached_file") do
+      attach_file('contribution_attachment', File.expand_path('test/fixtures/cc_logos.pdf'))
+      find('#contribution_content', visible: true)
+      fill_in('contribution_content', with: content)
+    end
+  end
+
   def respond_with_suggestion(conversation, content)
     find('#suggested_action_tab', visible: true).click
     within("#conversation-#{conversation.id}-new-suggested_action") do
@@ -52,6 +61,13 @@ class ConversationPage < PageObject
       find('#contribution_content', visible: true)
       fill_in('contribution_content', with: content)
     end
+  end
+
+  def preview_attachment(conversation, content)
+    visit_page(conversation)
+    click_post_to_the_conversation
+    respond_with_attachment(conversation, content)
+    click_preview
   end
 
   def preview_suggestion(conversation, content)
