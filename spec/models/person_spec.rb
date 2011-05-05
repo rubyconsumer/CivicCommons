@@ -561,6 +561,34 @@ describe Person do
       @person.merge_account(@person_to_merge).should == true
     end
 
+    it "will rollback if a transaction fails" do
+      Factory.create(:top_level_contribution, person: @person_to_merge)
+      Factory.create(:contribution, person: @person_to_merge)
+      Factory.create(:issue_contribution, person: @person_to_merge)
+      Factory.create(:comment, person: @person_to_merge)
+      @person_to_merge.contributions.length.should == 4
+
+      # run a portion of the merge_account code to check that transactions work as expected
+      # @person.merge_account(@person_to_merge)
+      @person_to_merge.transaction do
+        @person_to_merge.confirmed_at = nil
+        @person_to_merge.save!
+
+        @person_to_merge.contributions.each_with_index do |contribution, i|
+          contribution.owner = @person.id
+          contribution.save!
+          if i == 1
+            raise ActiveRecord::Rollback
+          end
+        end
+      end # transaction
+
+      Person.find(@person_to_merge.id).confirmed_at.should_not be_nil
+      Person.find(@person.id).contributions.length.should == 0
+
+      Contribution.delete_all
+    end
+
     it "will unconfirm the person_to_merge" do
       @person.merge_account(@person_to_merge)
       Person.find(@person_to_merge.id).confirmed_at.should be_nil
