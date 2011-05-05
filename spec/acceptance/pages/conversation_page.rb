@@ -47,6 +47,24 @@ class ConversationPage < PageObject
     end
   end
 
+  def respond_with_link(conversation, content)
+    find('#link_tab', visible: true).click
+    within("#conversation-#{conversation.id}-new-embedly_contribution") do
+      find('#contribution_content', visible: true)
+      fill_in('contribution_url', with: 'http://www.theciviccommons.com')
+      fill_in('contribution_content', with: content)
+    end
+  end
+
+  def respond_with_video(conversation, content)
+    find('#video_tab', visible: true).click
+    within("#conversation-#{conversation.id}-new-embedded_snippet") do
+      find('#contribution_content', visible: true)
+      fill_in('contribution_url', with: 'http://www.youtube.com/watch?v=7jV8Nez4Z8I')
+      fill_in('contribution_content', with: content)
+    end
+  end
+
   def respond_with_suggestion(conversation, content)
     find('#suggested_action_tab', visible: true).click
     within("#conversation-#{conversation.id}-new-suggested_action") do
@@ -61,6 +79,20 @@ class ConversationPage < PageObject
       find('#contribution_content', visible: true)
       fill_in('contribution_content', with: content)
     end
+  end
+
+  def preview_link(conversation, content)
+    visit_page(conversation)
+    click_post_to_the_conversation
+    respond_with_link(conversation, content)
+    click_preview
+  end
+
+  def preview_video(conversation, content)
+    visit_page(conversation)
+    click_post_to_the_conversation
+    respond_with_video(conversation, content)
+    click_preview
   end
 
   def preview_attachment(conversation, content)
