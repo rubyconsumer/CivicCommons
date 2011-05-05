@@ -32,7 +32,7 @@ feature "Suggest an action", %q{
   end
 
   scenario "Posting the suggested action", :js => true do
-    #Given I have previewed a comment for a contribution
+    #Given I have previewed a suggested action for a contribution
     @conversation_page = ConversationPage.new(page)
     @conversation_page.preview_suggestion(@conversation, 'We should do...')
     #Then I should see a preview modal with the content “We should do...”
