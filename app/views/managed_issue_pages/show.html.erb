@@ -1,0 +1,9 @@
+<% content_for :main_body do %>
+  <div class="wrapper">
+    <div class="content-container">
+      <div class="main-content">
+        <%= raw CCML.parse(@page.template, controller.request.url) %>
+      </div>
+    </div>
+  </div>
+<% end %>

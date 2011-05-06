@@ -37,11 +37,9 @@ class PageObject
   end
 
   def parse_json_body
-    begin
-      JSON.parse(@page.body.strip)
-    rescue
-      nil
-    end
+    JSON.parse(@page.body.strip)
+  rescue
+    nil
   end
 
 end

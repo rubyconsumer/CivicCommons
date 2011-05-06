@@ -26,7 +26,9 @@
         <div class='feature group'>
           <%= image_tag @issue.image.url(:normal), :alt => @issue.name, :width => 300, :height => 200, :class => 'float featured main-img' %>
           <p><%= raw (@issue.summary) %></p>
-          <p><strong><%= link_to @issue.url_title, source_url(@issue) %></strong></p>
+          <%- if @issue.url and @issue.url_title %>
+            <p><strong><%= link_to @issue.url_title, source_url(@issue) %></strong></p>
+          <%- end %>
           <p><strong>Created On:</strong> <%= @issue.created_at.strftime("%m/%d/%Y") %></p>
        </div>
 

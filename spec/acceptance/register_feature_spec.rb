@@ -26,9 +26,10 @@ feature "Register Feature", %q{
     Person.where(email: person[:email]).count.should == 1
 
     # And a confirmation email should be sent
+    email, subject = mask_with_intercept_email(person[:email], 'Confirmation instructions')
     should_send_an_email({
-      'To' => person[:email],
-      'Subject' => 'Confirmation instructions'
+      'To' => email,
+      'Subject' => subject
     })
 
   end

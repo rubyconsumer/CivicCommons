@@ -2,8 +2,12 @@
   <header>
     <h1><%= link_to(@content_item.title, @content_item.cached_slug) %></h1>
     <p>Author: <%= @person.first_name + ' ' +  @person.last_name %></p>
+    <p>Published: <%= @content_item.published.strftime("%B %d, %Y") %></p>
   </header>
   <p>Content Type: <%= @content_item.content_type %>
+  <% if @content_item.external_link %>
+    <p>External Link: <%= link_to(@content_item.external_link, @content_item.external_link) %>
+  <% end %>
   <p>Summary: </p>
   <blockquote>
     <%= raw (@content_item.summary) %>
@@ -12,5 +16,10 @@
   <blockquote>
     <%= raw (@content_item.body) %>
   </blockquote>
+  <p>Embed: </p>
+  <blockquote>
+    <%= raw (@content_item.embed_code) %>
+  </blockquote>
 </article>
 
+<%= link_to 'Edit', edit_admin_content_item_path(@content_item) %>

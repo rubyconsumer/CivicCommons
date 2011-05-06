@@ -4,6 +4,8 @@ class Issue < ActiveRecord::Base
   include Subscribable
   include Regionable 
   include GeometryForStyle
+
+  ALL_TYPES = ['Issue', 'ManagedIssue']
   
   belongs_to :person
 
@@ -35,6 +37,7 @@ class Issue < ActiveRecord::Base
   has_friendly_id :name, :use_slug => true, :strip_non_ascii => true
 
   validates :name, :presence => true, :length => { :minimum => 5 }  
+  validates_uniqueness_of :name
   
   scope(:most_active, :select =>
         'count(1) as contribution_count, issues.*',

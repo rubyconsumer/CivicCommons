@@ -1,0 +1,27 @@
+<% content_for :main_body do %>
+  <div class="wrapper">
+    <div class="content-container">
+      <h1>The Civic Commons Radio Show</h1>
+
+      <%= render partial: 'description' %>
+
+      <%- @radioshows.each do |radioshow| %>
+
+        <div class="blog" id="outer_block_1"> 
+          <div class="in-the-news-post"></div>
+          <h2><%= link_to radioshow.title, radioshow_path(radioshow) %></h2> 
+          <div class='blog_inner'> 
+            <%= raw radioshow.summary %>
+            <p><%= link_to "Listen to the podcast...", radioshow_path(radioshow), html: { title: radioshow.title } %></p>
+            <p>Aired on <%= radioshow.published.strftime('%B %d, %Y') %></p> 
+          </div>
+        </div>
+        <p>&nbsp;</p>
+
+      <%- end %>
+      <%= will_paginate @radioshows, :inner_window => 3, :previous_label => "Previous", :next_label => "Next" %>
+
+    </div>
+  </div>
+<% end %>
+

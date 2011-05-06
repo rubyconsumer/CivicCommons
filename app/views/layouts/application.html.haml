@@ -86,7 +86,9 @@
             = link_to 'About Us', about_url
             %ul
               %li 
-                = link_to 'Blog', blog_url
+                = link_to 'Blog', blog_index_path
+              %li 
+                = link_to 'Radio Show', radioshow_index_path
               %li 
                 = link_to 'FAQ', faq_url
               %li
@@ -96,7 +98,7 @@
               %li
                 = link_to 'Partners', partners_url
               %li
-                = link_to 'In The News', press_url
+                = link_to 'In The News', news_index_url
               %li
                 = link_to 'Careers', jobs_url
               %li
@@ -106,7 +108,9 @@
       #footer-inner
         %ul.sub-nav
           %li
-            = link_to 'Blog', blog_url
+            = link_to 'Blog', blog_index_path
+          %li
+            = link_to 'Radio Show', radioshow_index_path
           %li 
             = link_to 'About Us', about_url
           %li 
@@ -118,7 +122,7 @@
           %li
             = link_to 'Partners', partners_url
           %li
-            = link_to 'In The News', press_url
+            = link_to 'In The News', news_index_url
           %li
             = link_to 'Contact us', contact_us_url
         = render :partial => 'layouts/creative_commons'

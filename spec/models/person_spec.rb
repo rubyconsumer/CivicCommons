@@ -506,4 +506,212 @@ describe Person do
       @person.send(:password_required?).should be_true
     end
   end
+
+  context "when deleting an account" do
+    after(:each) do
+      Person.delete_all
+    end
+
+    before(:each) do
+      @person = Factory.create(:normal_person)
+    end
+
+    it "will delete all subscriptions" do
+      Factory.create(:conversation_subscription, person: @person)
+      Factory.create(:issue_subscription, person: @person)
+
+      Subscription.find(:all).length.should == 2
+      @person.destroy
+      Subscription.find(:all).length.should == 0
+    end
+
+    it "will delete any authentications" do
+      Factory.create(:facebook_authentication, person: @person)
+
+      Authentication.find(:all).length.should == 1
+      @person.destroy
+      Authentication.find(:all).length.should == 0
+    end
+
+  end
+
+  context "when merging another account" do
+    def given_a_person_with_email(email)
+      person = Factory.create(:registered_user, :avatar => nil, :email => email)
+    end
+
+    after(:each) do
+      Person.delete_all
+    end
+
+    before(:each) do
+      @person = given_a_person_with_email "test1@example.com"
+      @person_to_merge = given_a_person_with_email "test2@example.com"
+    end
+
+    it "will respond to merge_account" do
+      @person.should respond_to(:merge_account)
+    end
+
+    it "will return false if the account is the same" do
+      @person.merge_account(@person).should == false
+    end
+
+    it "will return true if the merge succeeds" do
+      @person.merge_account(@person_to_merge).should == true
+    end
+
+    it "will unconfirm the person_to_merge" do
+      @person.merge_account(@person_to_merge)
+      Person.find(@person_to_merge.id).confirmed_at.should be_nil
+    end
+
+    it "will associate contributions to the person being merged into" do
+      contribution = Factory.create(:top_level_contribution, person: @person_to_merge)
+      conversation = contribution.conversation
+      Factory.create(:contribution, person: @person_to_merge)
+      Factory.create(:issue_contribution, person: @person_to_merge)
+      Factory.create(:comment, person: @person_to_merge)
+      Factory.create(:comment_with_unique_content, person: @person_to_merge)
+      Factory.create(:suggested_action, person: @person_to_merge)
+      Factory.create(:question,
+        conversation: conversation,
+        person: @person_to_merge
+      )
+      Factory.create(:question_without_parent,
+        conversation: conversation,
+        person: @person_to_merge
+      )
+      Factory.create(:answer, person: @person_to_merge)
+      Factory.create(:attached_file, person: @person_to_merge)
+      Factory.create(:link, person: @person_to_merge)
+      Factory.create(:embedded_snippet, person: @person_to_merge)
+      Factory.create(:embedly_contribution, person: @person_to_merge)
+
+      # create an array of the contribution IDs attributed to person_to_merge
+      contribution_ids = @person_to_merge.contributions.collect do |contribution|
+        contribution.id
+      end
+
+      @person.merge_account(@person_to_merge)
+
+      # check the original contributions to see if the owner was updated correctly
+      Contribution.find(contribution_ids).each do |contribution|
+        contribution.owner.should == @person.id
+      end
+
+      Contribution.delete_all
+    end
+
+    it "will associate ratings to the person being merged into" do
+      @contribution = Factory.create(:comment)
+      @descriptor = Factory.create(:rating_descriptor)
+      @rg = Factory.create(:rating_group, :contribution => @contribution, :person => @person_to_merge)
+      @rating = Factory.create(:rating, :rating_group => @rg, :rating_descriptor => @descriptor)
+
+      @rating.person.should == @person_to_merge
+      @person.merge_account(@person_to_merge)
+      Rating.find(@rating.id).person.should == @person
+    end
+
+    it "will associate conversations to the person being merged into" do
+      conversation = Factory.build(:user_generated_conversation, person: @person_to_merge)
+      conversation.should be_valid
+      conversation.save
+
+      conversation.person.should == @person_to_merge
+      Conversation.find(conversation.id).person.should == @person_to_merge
+      @person.merge_account(@person_to_merge)
+      Conversation.find(conversation.id).person.should == @person
+    end
+
+    it "will associate subscriptions to the person being merged into" do
+      @conversation_subscription = Factory.create(:conversation_subscription, person_id: @person_to_merge.id)
+      @conversation_subscription.person.should == @person_to_merge
+
+      @person.merge_account(@person_to_merge)
+      subscription = Subscription.find_by_person_id(@person.id)
+      subscription.subscribable.should == @conversation_subscription.subscribable
+    end
+
+    it "will associate visits to the person being merged into" do
+      item = Factory.create(:issue, {:total_visits=>0, :recent_visits=>0, :last_visit_date=>nil})
+      item.visit(@person_to_merge.id)
+      item.total_visits.should == 1
+      @person.merge_account(@person_to_merge)
+      Visit.where('person_id = ?', @person_to_merge.id).should be_empty
+      Visit.where('person_id = ?', @person.id).length.should == 1
+    end
+
+    it "will associate content_items to the person being merged into" do
+      @attr = Factory.attributes_for(:content_item)
+      @attr[:author] = @person_to_merge
+      content_item = ContentItem.new(@attr)
+      content_item.should be_valid
+      content_item.save
+
+      # create an array of the content_item IDs attributed to person_to_merge
+      content_item_ids = @person_to_merge.content_items.collect do |content_item|
+        content_item.id
+      end
+      content_item_ids.length.should == 1
+
+      @person.merge_account(@person_to_merge)
+
+      # check the original content_items to see if the owner was updated correctly
+      ContentItem.find(content_item_ids).each do |content_item|
+        content_item.person_id.should == @person.id
+      end
+
+      ContentItem.delete_all
+    end
+
+    it "will associate content_templates to the person being merged into" do
+      @attr = Factory.attributes_for(:content_template)
+      @attr[:author] = @person_to_merge
+      content_template = ContentTemplate.new(@attr)
+      content_template.should be_valid
+      content_template.save
+
+      # create an array of the content_template IDs attributed to person_to_merge
+      content_template_ids = @person_to_merge.content_templates.collect do |content_template|
+        content_template.id
+      end
+      content_template_ids.length.should == 1
+
+      @person.merge_account(@person_to_merge)
+
+      # check the original content_templates to see if the owner was updated correctly
+      ContentTemplate.find(content_template_ids).each do |content_template|
+        content_template.person_id.should == @person.id
+      end
+
+      ContentTemplate.delete_all
+    end
+
+    it "will associate managed_issue_pages to the person being merged into" do
+      @attr = Factory.attributes_for(:managed_issue_page)
+      @attr[:issue] = Factory.build(:managed_issue)
+      @attr[:author] = @person_to_merge
+      managed_issue_page = ManagedIssuePage.new(@attr)
+      managed_issue_page.should be_valid
+      managed_issue_page.save
+
+      # create an array of the managed_issue_page IDs attributed to person_to_merge
+      managed_issue_page_ids = @person_to_merge.managed_issue_pages.collect do |managed_issue_page|
+        managed_issue_page.id
+      end
+      managed_issue_page_ids.length.should == 1
+
+      @person.merge_account(@person_to_merge)
+
+      # check the original managed_issue_pages to see if the owner was updated correctly
+      ManagedIssuePage.find(managed_issue_page_ids).each do |managed_issue_page|
+        managed_issue_page.person_id.should == @person.id
+      end
+
+      ManagedIssuePage.delete_all
+    end
+
+  end
 end

@@ -4,6 +4,23 @@ module HelperMethods
   ###################################################################
   # http://blog.areacriacoes.com.br/2010/8/20/helpers-para-steak
 
+  def logged_in_user
+    user = Factory.create(:registered_user, declined_fb_auth: true)
+    visit new_person_session_path
+    fill_in 'Email', with: user.email
+    fill_in 'Password', with: user.password
+    click_button 'Login'
+  end
+
+  def preview_comment(conversation, comment)
+    visit conversation_path(conversation)
+    click_link('Post to this Conversation')
+    page.has_css?('textarea#contribution_content', visible: true)
+    fill_in 'contribution_content', :with => comment
+    click_button('Preview')
+  end
+
+
   def should_be_on(path)
     page.current_url.should match(Regexp.new(path))
   end

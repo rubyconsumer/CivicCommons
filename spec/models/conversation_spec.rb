@@ -135,21 +135,16 @@ describe Conversation do
         "5" => SuggestedAction.new.attributes
       }
 
-      build_conversation(@contributions)
+      @conversation = Factory.build(:user_generated_conversation, :person => @person)
     end
 
-    def build_conversation(attributes)
-      # Need to deep clone @contributions so we can preserve original hash of attributes above
-      # when Contribution.setup_node_level_contribution modifies the attribute objects in the hash
-      # (i.e. shallow cloning with #clone or #dup won't suffice
-      attributes = Marshal::load(Marshal.dump(attributes))
-      @conversation = Factory.build(:user_generated_conversation, :person => @person, :contributions_attributes => attributes)
+    it "default user_generated_conversation factory should be valid" do
+      @conversation.should be_valid
     end
 
     it "raises an error if conversation created without owner" do
       @conversation.person = nil
-      @conversation.save
-      @conversation.should have_validation_error(:person)
+      @conversation.should_not be_valid
     end
 
     it "filters out all invalid contributions (i.e. blank contributions from contribution form) before save" do
@@ -159,15 +154,17 @@ describe Conversation do
     end
 
     it "raises an error if conversation created with multiple contributions" do
-      @contributions["1"] = Factory.build(:question, :conversation => nil, :parent => nil).attributes
-      build_conversation(@contributions)
+      @contributions[1] = Factory.build(:question, :conversation => nil, :parent => nil).attributes
+      @conversation = Factory.build(:user_generated_conversation,
+        :person => @person,
+        :contributions => [],
+        :contributions_attributes => Marshal::load(Marshal.dump(@contributions)))
       @conversation.save
       @conversation.should have_validation_error(:contributions)
     end
 
     it "raises error if conversation created with no contributions" do
-      @contributions["0"] = Comment.new.attributes
-      build_conversation(@contributions)
+      @conversation.contributions = []
       @conversation.save
       @conversation.should have_validation_error(:contributions)
     end

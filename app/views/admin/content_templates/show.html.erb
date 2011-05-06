@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @content_template.name %>
+</p>
+<p>
+  <b>Author:</b>
+  <%= @content_template.author.name %>
+</p>
+
+<p>
+  <b>Slug:</b>
+  <%= @content_template.cached_slug %>
+</p>
+
+<p>
+  <b>Created At:</b>
+  <%= @content_template.created_at.strftime("%m-%d-%Y %I:%M %p") %>
+</p>
+
+<p>
+  <b>Updated At:</b>
+  <%= @content_template.updated_at.strftime("%m-%d-%Y %I:%M %p") %>
+</p>
+
+<p>
+  <b>Template:</b>
+  <br />
+  <%= text_area(:content_template, :template, :cols => 95, :rows => 40, :disabled => 'disabled') %>
+</p>
+
+
+<%= link_to 'Edit', edit_admin_content_template_path(@content_template) %> |
+<%= link_to 'Back', admin_content_templates_path %>

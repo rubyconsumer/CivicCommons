@@ -32,21 +32,23 @@ describe SecureUrlHelper do
 
   end
 
-  # Doesn't work because the Devise registration_url helper isn't available
   describe "secure_registration_url" do
+
+    # mock Devise's registration_url method
+    def registration_url(resource_name)
+      return "http://test.host/people/register/new"
+    end
 
     before(:all) do
       @resource = Person.new
     end
 
     it "should return the correct URL when SSL is enabled" do
-      pending
       turn_ssl_on
       secure_registration_url(@resource).should == "https://test.host/people/register/new"
     end
 
     it "should return the correct URL when SSL is disabled" do
-      pending
       turn_ssl_off
       secure_registration_url(@resource).should == "http://test.host/people/register/new"
     end
@@ -89,21 +91,23 @@ describe SecureUrlHelper do
 
   end
 
-  # Doesn't work because the Devise session_url helper isn't available
   describe "secure_session_url" do
+
+    # mock Devise's session_url method
+    def session_url(resource_name)
+      return "http://test.host/people/login?format="
+    end
 
     before(:all) do
       @resource = Contribution.new
     end
 
     it "should return the correct URL when SSL is enabled and a valid resource is supplied" do
-      pending
       turn_ssl_on
       secure_session_url(@resource).should == "https://test.host/people/login?format="
     end
 
     it "should return the correct URL when SSL is disabled and a valid resource is supplied" do
-      pending
       turn_ssl_off
       secure_session_url(@resource).should == "http://test.host/people/login?format="
     end

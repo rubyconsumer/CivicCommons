@@ -8,7 +8,6 @@ Factory.define :people do |f|
     u.zip_code '44313'
     u.password 'password'
     u.email ''
-    u.avatar File.new(Rails.root + 'test/fixtures/images/test_image.jpg')
     u.skip_email_marketing true
   end
 
@@ -18,32 +17,31 @@ Factory.define :people do |f|
     u.zip_code '44313'
     u.password 'password'
     u.sequence(:email) {|n| "test.account#{n}@mysite.com" }
-    u.avatar File.new(Rails.root + 'test/fixtures/images/test_image.jpg')
     u.skip_email_marketing true
     u.daily_digest false
   end
 
   Factory.define :registered_user, :parent => :normal_person do |u|
     u.confirmed_at { Time.now }
-    u.avatar {File.new(Rails.root + 'test/fixtures/images/test_image.jpg')}
     u.skip_email_marketing true
+  end
+
+  Factory.define :registered_user_with_avatar, :parent => :registered_user do |u|
+    u.avatar File.new(Rails.root + 'test/fixtures/images/test_image.jpg')
   end
 
   Factory.define :admin_person, :parent => :registered_user do |u|
     u.password 'password'
     u.sequence(:email) {|n| "test.admin.account#{n}@mysite.com" }
+    u.sequence(:last_name) {|n| "Doe #{n}" }
     u.admin true
-    u.avatar File.new(Rails.root + 'test/fixtures/images/test_image.jpg')
     u.skip_email_marketing true
-
-    # since this is an admin, assume they are confirmed
     u.confirmed_at '2011-03-04 15:33:33'
   end
 
   Factory.define :marketable_person, :parent => :registered_user do |u|
     u.password 'password'
     u.sequence(:email) {|n| "test.account#{n}@mysite.com" }
-    u.avatar File.new(Rails.root + 'test/fixtures/images/test_image.jpg')
     u.skip_email_marketing false
     u.marketable ""
   end

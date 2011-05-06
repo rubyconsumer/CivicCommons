@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110414235826) do
+ActiveRecord::Schema.define(:version => 20110502163852) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -51,15 +51,29 @@ ActiveRecord::Schema.define(:version => 20110414235826) do
   create_table "content_items", :force => true do |t|
     t.integer  "person_id"
     t.string   "content_type"
-    t.string   "title",        :null => false
+    t.string   "title",         :null => false
     t.text     "summary"
     t.text     "body"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "cached_slug"
+    t.datetime "published"
+    t.text     "embed_code"
+    t.string   "external_link"
   end
 
   add_index "content_items", ["cached_slug"], :name => "index_content_items_on_cached_slug", :unique => true
+
+  create_table "content_templates", :force => true do |t|
+    t.string   "name"
+    t.text     "template"
+    t.integer  "person_id"
+    t.string   "cached_slug"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "content_templates", ["cached_slug"], :name => "index_content_templates_on_cached_slug", :unique => true
 
   create_table "contributions", :force => true do |t|
     t.datetime "datetime"
@@ -182,9 +196,24 @@ ActiveRecord::Schema.define(:version => 20110414235826) do
     t.string   "url"
     t.string   "url_title"
     t.string   "cached_slug"
+    t.string   "type",                  :default => "Issue", :null => false
+    t.integer  "managed_issue_page_id"
   end
 
   add_index "issues", ["cached_slug"], :name => "index_issues_on_cached_slug", :unique => true
+
+  create_table "managed_issue_pages", :force => true do |t|
+    t.string   "name",        :null => false
+    t.integer  "issue_id",    :null => false
+    t.integer  "person_id",   :null => false
+    t.text     "template",    :null => false
+    t.string   "cached_slug"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "managed_issue_pages", ["cached_slug"], :name => "index_managed_issue_pages_on_cached_slug", :unique => true
+  add_index "managed_issue_pages", ["issue_id"], :name => "index_managed_issue_pages_on_issue_id"
 
   create_table "people", :force => true do |t|
     t.string   "first_name"
@@ -258,6 +287,16 @@ ActiveRecord::Schema.define(:version => 20110414235826) do
     t.integer  "image_file_size"
     t.text     "description"
   end
+
+  create_table "revision_records", :force => true do |t|
+    t.string   "revisionable_type", :limit => 100, :null => false
+    t.integer  "revisionable_id",                  :null => false
+    t.integer  "revision",                         :null => false
+    t.binary   "data"
+    t.datetime "created_at",                       :null => false
+  end
+
+  add_index "revision_records", ["revisionable_type", "revisionable_id", "revision"], :name => "revisionable", :unique => true
 
   create_table "slugs", :force => true do |t|
     t.string   "name"

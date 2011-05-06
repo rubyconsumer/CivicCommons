@@ -17,6 +17,7 @@ gem 'httparty'
 gem 'geokit'
 
 gem "friendly_id", "~> 3.2.1"
+gem 'acts_as_revisionable'
 gem 'embedly'
 
 gem 'gibbon'
@@ -35,6 +36,10 @@ gem 'delayed_paperclip'
 gem 'aws-s3'
 gem 'nokogiri'
 gem 'sanitize'
+gem 'highline'
+
+# for testing, but needed globally because it add rake tasks
+gem 'single_test'
 
 group :development do
   gem "rails3-generators"

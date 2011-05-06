@@ -1,15 +1,33 @@
 class ContentItem < ActiveRecord::Base
   attr_accessor :url_slug
 
-  CONTENT_TYPES = ["BlogPost", "NewsItem", "RadioShow", "Event", "Untyped"]
-  belongs_to :person, :foreign_key => "author"
+  CONTENT_TYPES = ["BlogPost", "NewsItem", "RadioShow"]
 
-  validates_presence_of :title, :body
+  belongs_to :author, :class_name => "Person", :foreign_key => "person_id"
+
+  validates_presence_of :title, :body, :author
   validates_uniqueness_of :title
 
-  has_friendly_id :url_slug_or_title, :use_slug => true, :strip_non_ascii => true
+  validates_format_of :external_link, :with => /^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/ix, :allow_blank => true
+  validates_presence_of :external_link, :if => :content_type_is_news_item?
+  validates_presence_of :external_link, :if => :content_type_is_radio_show?
+  validates_presence_of :embed_code, :if => :content_type_is_radio_show?
 
-  def url_slug_or_title
-    url_slug.blank? ? title : url_slug
+  validates :published, :date => {:after => Proc.new {Time.now - 1.year} }
+
+  has_friendly_id :title, :use_slug => true, :strip_non_ascii => true
+
+private
+
+  def content_type_is_blog_post?
+    content_type == "BlogPost"
+  end
+
+  def content_type_is_news_item?
+    content_type == "NewsItem"
+  end
+
+  def content_type_is_radio_show?
+    content_type == "RadioShow"
   end
 end

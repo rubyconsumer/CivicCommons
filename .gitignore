@@ -5,6 +5,7 @@ db/*.sql
 log/*.log
 tmp/*
 tmp/**/*
+doc/**/*
 coverage
 rake/**/*
 config/amazon_s3.yml
