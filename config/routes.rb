@@ -81,6 +81,7 @@ Civiccommons::Application.routes.draw do
   match '/posters'           => redirect('/pages/poster')
   match '/press'             => redirect('/news')
   match '/principles'        => redirect('/pages/principles')
+  match '/radio'             => redirect('/radioshow')
   match '/team'              => redirect('/pages/team')
   match '/terms'             => redirect('/pages/terms')
 
