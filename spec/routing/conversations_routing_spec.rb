@@ -7,6 +7,10 @@ describe ConversationsController do
       { get: "/conversations" }.should route_to(controller: "conversations", action: "index")
     end
 
+    it "recognizes and generates #rss" do
+      { get: "/conversations/rss" }.should route_to(controller: "conversations", action: "rss")
+    end
+
     it "recognizes and generates #show" do
       pending "BUG IN RAILS PREVENTS THIS FROM PASSING, BUG ONLY AFFECTS TESTS, NOT ACTUAL APP...
       Should be re-enabled when bug is fixed. Bug described:

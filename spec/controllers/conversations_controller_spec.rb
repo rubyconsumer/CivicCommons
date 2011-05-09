@@ -41,6 +41,36 @@ describe ConversationsController do
 
   end
 
+  describe "GET rss" do
+ 
+    before(:each) do
+      (1..5).each do |i|
+        Factory.create(:conversation)
+      end
+        @old_convo = Factory.create(:conversation, created_at: 2.months.ago)
+    end
+
+    it "assigns conversations as @conversations" do
+      get :rss, format: 'xml'
+      assigns(:conversations).should_not be_empty
+    end
+
+    it "does not retrieve conversations more than 1 month old" do
+      get :rss, format: 'xml'
+      assigns(:conversations).should_not include @old_convo 
+    end
+
+    it "sorts conversations by created_at, descending" do
+      get :rss, format: 'xml'
+      last_date = nil
+      assigns(:conversations).each do |convo|
+        convo.created_at.should >= last_date unless last_date.nil?
+        last_date = convo.created_at
+      end
+    end
+
+ end
+
   describe "GET show" do
     before(:each) do
       @person = Factory.create(:registered_user)

@@ -13,6 +13,11 @@ class ConversationsController < ApplicationController
     render :index
   end
 
+  # GET /conversations/rss
+  def rss
+    @conversations = Conversation.where("created_at >= '#{1.month.ago}'").order(:created_at => :desc)
+  end
+
   def filter
     @filter = params[:filter]
     @conversations = Conversation.includes(:participants).filtered(@filter).paginate(:page => params[:page], :per_page => 12)
