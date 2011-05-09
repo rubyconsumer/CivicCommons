@@ -1,3 +1,7 @@
+<% content_for :header do %>
+  <%= auto_discovery_link_tag(:rss, "http://feeds.theciviccommons.com/civiccommonsnews", { :title => "The Civic Commons In The News" } ) %>
+<% end %>
+
 <% content_for :main_body do %>
   <div class="wrapper">
     <div class="content-container">
