@@ -11,14 +11,15 @@
 <%= form_for @content_template, :url => url, :html => { :method => method } do |f| %>
   <% if @content_template.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@content_template.errors.count, "error") %> prohibited this static page from being saved:</h2>
-
+      <h2>
+        It looks like we’re still missing some important information:
+      </h2>
       <ul>
-      <% @content_template.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
+        <% @content_template.errors.each do |attr,msg| %>
+          <li><%= msg %></li>
+        <% end %>
       </ul>
-    </p>
+    </div>
   <% end %>
 
   <p>
@@ -28,7 +29,7 @@
 
   <p>
     <%= f.label :template %><br />
-    <%= f.text_area :template, :cols => 95, :rows => 40 %>
+    <%= f.text_area :template, :class => 'tinymce' %>
   </p>
   
   <div class="actions">
@@ -36,3 +37,9 @@
   </p>
 
 <% end %>
+
+<script type="text/javascript">
+  $().ready(function() {
+    init_tiny_mce('#content_template_template');
+  });
+</script>
