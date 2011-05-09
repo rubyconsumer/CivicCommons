@@ -20,7 +20,7 @@ if contribution.content.blank?
   end
 else
   link_text << 'responded: "'
-  link_text << truncate( Sanitize.clean( contribution.content, Sanitize::Config::RESTRICTED ), :length => 100, :separator => ' ' )
+  link_text << truncate( Sanitize.clean( contribution.content ), :length => 100, :separator => ' ' )
   link_text << '"'
 end
 
