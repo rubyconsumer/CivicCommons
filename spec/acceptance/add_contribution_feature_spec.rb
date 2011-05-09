@@ -16,75 +16,77 @@ feature "Add contribution", %q{
 
   scenario "Modal pops up when user responds to a conversation", :js => true do
     #Given I am on a conversation permalink page
-    visit conversation_path(@conversation)
+    @conversation_page = ConversationPage.new(page)
+    @conversation_page.visit_page(@conversation)
     #When I click on the contribute to conversation button
-    click_link('Post to this Conversation')
+    @conversation_page.click_post_to_the_conversation
     #Then I should see a contribution modal overlay appear
-    find('#cboxContent').should_not be_nil
+    @conversation_page.should have_contribution_modal_present
     #And I should see links to comment
-    find_link('Comment').should_not be_nil
+    @conversation_page.should have_link('Comment')
     #And I should see links to suggest action
-    find_link('Suggest Action').should_not be_nil
+    @conversation_page.should have_link('Suggest Action')
     #And I should see links to question
-    find_link('Question').should_not be_nil
+    @conversation_page.should have_link('Question')
     #And I should see links to attach
-    find_link('Attach').should_not be_nil
+    @conversation_page.should have_link('Attach')
     #And I should see links to link 
-    find_link('Link').should_not be_nil
+    @conversation_page.should have_link('Link')
     #And I should see links to video
-    find_link('Video').should_not be_nil
+    @conversation_page.should have_link('Video')
     #And I should see comments selected
-    find('.tab-active').text.should == 'Comment'
+    @conversation_page.should have_active_tab('Comment')
   end
 
   scenario "Modal pops up when responding to contribution", :js => true do
     #Given that I am on a conversation permalink page
-    visit conversation_path(@conversation)
+    @conversation_page = ConversationPage.new(page)
+    @conversation_page.visit_page(@conversation)
     #And I am on a conversation node
-    visit "#{conversation_path(@conversation)}#node-#{@contribution.id}"
+    @conversation_page.visit_node(@conversation, @contribution)
     #When I click on the respond to contribution link
-    click_link("Respond to #{Person.find(@contribution.owner).first_name}")
+    @conversation_page.respond_to_contribution(@contribution)
     #Then I should see the contribution modal overlay appear
-    find('#cboxContent').should_not be_nil
+    @conversation_page.should have_contribution_modal_present
   end
 
   scenario "Previewing a comment", :js => true do
     #Given that I am at the contribution modal
-    visit conversation_path(@conversation)
-    click_link('Post to this Conversation')
+    @conversation_page = ConversationPage.new(page)
+    @conversation_page.visit_page(@conversation)
+    @conversation_page.click_post_to_the_conversation
     #When I fill in the comments text box with “the cat in the hat”
-    page.has_css?('textarea#contribution_content', visible: true)
-    fill_in 'contribution_content', :with => "the cat in the hat"
+    @conversation_page.add_content_to_contribution('the cat in the hat')
     #And I click the preview button
-    click_button('Preview')
+    @conversation_page.click_preview
     #Then I should see a preview modal with the content “the cat in the hat”
-    find("#cboxLoadedContent div.comment div.content p").should_not be_nil
-    page.should have_content "the cat in the hat"
+    @conversation_page.should have_preview_contribution_text('the cat in the hat')
     #And I should I should see a submit button
-    page.has_css?('#contribution_submit').should be_true
+    @conversation_page.should have_submit_contribution_button
     #And I should I should see a cancel link
-    page.has_css?('a.cancel').should be_true
+    @conversation_page.should have_cancel_contribution_link
   end
 
   scenario "Posting a comment", :js => true do
     #Given I have previewed a comment for a contribution
-    preview_comment(@conversation, "the cat in the hat")
+    @conversation_page = ConversationPage.new(page)
+    @conversation_page.preview_contribution(@conversation, "the cat in the hat")
     #When I submit I should be back on the conversation page 
-    find('#contribution_submit', visible: true).click
+    @conversation_page.click_submit_contribution
     #Then I should be directed back to the contribution
-    visit "#{conversation_path(@conversation)}#node-#{@conversation.contributions.last.id}"
+    @conversation_page.visit_node(@conversation, @conversation.contributions.last)
     #And this contribution should be on the conversation page
-    page.has_content?('the cat in the hat').should be_true
+    @conversation_page.should have_contribution('the cat in the hat')
   end
 
   scenario "Canceling a comment", :js => true do
     #Given I am previewing my comment "the cat in the hat"
-    preview_comment(@conversation, "the cat in the hat")
+    @conversation_page = ConversationPage.new(page)
+    @conversation_page.preview_contribution(@conversation, "the cat in the hat")
     #When I click on the cancel link
-    find('a.cancel', visible: true).click
+    @conversation_page.click_cancel_contribution
     #Then I should see the contribution modal with the words “the cat in the hat”
-    find('textarea#contribution_content').should_not be_nil
-    page.should have_content('the cat in the hat')
+    @conversation_page.should have_preview_contribution_text('the cat in the hat')
   end
 
 end

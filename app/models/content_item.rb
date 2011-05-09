@@ -10,8 +10,6 @@ class ContentItem < ActiveRecord::Base
 
   validates_format_of :external_link, :with => /^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/ix, :allow_blank => true
   validates_presence_of :external_link, :if => :content_type_is_news_item?
-  validates_presence_of :external_link, :if => :content_type_is_radio_show?
-  validates_presence_of :embed_code, :if => :content_type_is_radio_show?
 
   validates :published, :date => {:after => Proc.new {Time.now - 1.year} }
 
