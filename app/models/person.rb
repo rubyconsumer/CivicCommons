@@ -229,51 +229,57 @@ class Person < ActiveRecord::Base
       return false
     end
 
-    transaction do
-      person_to_merge.confirmed_at = nil
-      person_to_merge.save!
+    begin
+      transaction do
+        person_to_merge.confirmed_at = nil
+        person_to_merge.save!
 
-      person_to_merge.contributions.map do |contribution|
-        contribution.owner = id
-        contribution.save!
-      end
+        person_to_merge.contributions.map do |contribution|
+          contribution.owner = id
+          contribution.save!
+        end
 
-      RatingGroup.where('person_id = ?', person_to_merge.id).map do |rating_group|
-        rating_group.person_id = id
-        rating_group.save!
-      end
+        RatingGroup.where('person_id = ?', person_to_merge.id).map do |rating_group|
+          rating_group.person_id = id
+          rating_group.save!
+        end
 
-      Conversation.where('owner = ?', person_to_merge.id).map do |conversation|
-        conversation.owner = id
-        conversation.save!
-      end
+        Conversation.where('owner = ?', person_to_merge.id).map do |conversation|
+          conversation.owner = id
+          conversation.save!
+        end
 
-      # Make the TO account follow all the same conversations/issues as the FROM account
-      Subscription.where(person_id: person_to_merge.id).each do |subscription|
-        Subscription.create_unless_exists(self, subscription.subscribable)
-      end
+        # Make the TO account follow all the same conversations/issues as the FROM account
+        Subscription.where(person_id: person_to_merge.id).each do |subscription|
+          Subscription.create_unless_exists(self, subscription.subscribable)
+        end
 
-      Visit.where('person_id = ?', person_to_merge.id).map do |visit|
-        visit.person_id = id
-        visit.save!
-      end
+        Visit.where('person_id = ?', person_to_merge.id).map do |visit|
+          visit.person_id = id
+          visit.save!
+        end
 
-      person_to_merge.content_templates.map do |content_template|
-        content_template.person_id = id
-        content_template.save!
-      end
+        person_to_merge.content_templates.map do |content_template|
+          content_template.person_id = id
+          content_template.save!
+        end
 
-      person_to_merge.content_items.map do |content_item|
-        content_item.person_id = id
-        content_item.save!
-      end
+        person_to_merge.content_items.map do |content_item|
+          content_item.person_id = id
+          content_item.save!
+        end
 
-      person_to_merge.managed_issue_pages.map do |managed_issue_page|
-        managed_issue_page.person_id = id
-        managed_issue_page.save!
-      end
+        person_to_merge.managed_issue_pages.map do |managed_issue_page|
+          managed_issue_page.person_id = id
+          managed_issue_page.save!
+        end
 
-    end # transaction
+      end # transaction
+
+    rescue ActiveRecord::RecordInvalid => exception
+      say exception.message
+      say exception.backtrace.join("\n")
+    end # begin
 
     return Person.find(person_to_merge.id).confirmed_at.nil?
   end
