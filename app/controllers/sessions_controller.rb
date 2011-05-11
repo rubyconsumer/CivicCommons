@@ -4,19 +4,9 @@ class SessionsController < Devise::SessionsController
 
   def new
     super
-
-    # only set the previous page url if it is not a devise route
-    match = false
-    Devise.mappings.each_key do |mapping|
-      scoped_path = Devise.mappings[mapping].scoped_path
-      Devise.mappings[mapping].path_names.each_pair do |path_key, path_name|
-        path = scoped_path + '/' + path_name
-        if !request.headers['Referer'].nil? && request.headers['Referer'].match("#{path}")
-          match = true 
-        end
-      end
+    if RedirectHelper.valid?(request.headers['Referer'])
+      session[:previous] = request.headers['Referer']
     end
-    session[:previous] = request.headers['Referer'] unless match
   end
 
   def create
