@@ -1036,6 +1036,18 @@ div.productive a.button {margin-right: 0;}
 position: relative;
 padding: 0px;
 }
+div.link-meta p.link-title, div.link-meta p.link-quot {
+  float: right;
+  width: 60%;
+}
+div.link-meta p.embedded {
+  float: left;
+  margin-top: -25px;
+  width: 35%;
+}
+div.link-meta p.link-title a:hover, div.link-meta p.link-quot a:hover, div.link-meta p.embedded a:hover {
+  cursor: pointer;
+}
 .issue .date {
 top: 0;
 position: absolute;
@@ -1081,7 +1093,9 @@ span.rating-button {
   text-decoration:none;
   text-shadow:1px 1px 0px #ffffff;
 }
-
+div.respond-container {
+  clear: both;
+}
 a.rating-button:hover, a.rating-button.active {
   -moz-box-shadow:inset 0px 1px 0px 0px #dfdfdf;
   -webkit-box-shadow:inset 0px 1px 0px 0px #dfdfdf;
