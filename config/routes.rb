@@ -121,12 +121,12 @@ Civiccommons::Application.routes.draw do
   resources :issues, only: [:index, :show] do
     post 'create_contribution', on: :member
     resources :pages, controller: :managed_issue_pages, only: [:show]
-    resource :vote, controller: :surveys, :type => 'vote'
+    resource :vote, controller: :surveys
   end
 
   resources :conversations, only: [:index, :show, :new, :create] do
     resources :contributions, only: [:create, :edit, :show, :update, :destroy] do
-    resource :vote, controller: :surveys, :type => 'vote'
+    resource :vote, controller: :surveys
       get '/moderate', to: 'contributions#moderate', on: :member
       put '/moderate', to: 'contributions#moderated', on: :member
     end
