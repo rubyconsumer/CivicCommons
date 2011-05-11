@@ -1036,13 +1036,14 @@ div.productive a.button {margin-right: 0;}
 position: relative;
 padding: 0px;
 }
+div.link-meta {overflow:hidden;}
 div.link-meta p.link-title, div.link-meta p.link-quot {
   float: right;
   width: 60%;
 }
 div.link-meta p.embedded {
   float: left;
-  margin-top: -25px;
+  margin-top: -30px;
   width: 35%;
 }
 div.link-meta p.link-title a:hover, div.link-meta p.link-quot a:hover, div.link-meta p.embedded a:hover {
