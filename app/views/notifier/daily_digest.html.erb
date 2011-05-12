@@ -1,24 +1,38 @@
-<h1>Here’s a quick update on what’s going on at the Commons.</h1>
-<% @conversations.each do |conversation| %>
-  <h2><%= conversation.first.title %></h2>
-  <% conversation.last.each do |contribution| %>
-    <% if contribution.parent and contribution.parent.person.id != contribution.person.id %>
-      <%  contributer = (@person == contribution.person ? 'you' : contribution.person.name)  %>
-      <p><%= "In response to #{contribution.parent.person.name}, #{contributer}" %> added:
-      <blockquote>
-        <%= contribution.content %>
-      </blockquote>
-      <%= link_to 'Check it out', "#{conversation_url(conversation.first)}#node-#{contribution.id}" %>
-      </p>
-    <% else %>
-      <%  contributer = (@person == contribution.person ? 'You' : contribution.person.name)  %>
-      <p><%= "#{contributer}" %> added:
-      <blockquote>
-        <%= contribution.content %>
-      </blockquote>
-      <%= link_to 'Check it out', "#{conversation_url(conversation.first)}#node-#{contribution.id}" %>
-      </p>
+<% unless @conversations.empty? %>
+  <h1>Here’s a quick update on what’s going on at the Commons.</h1>
+  <% @conversations.each do |conversation| %>
+    <h2><%= conversation.first.title %></h2>
+    <% conversation.last.each do |contribution| %>
+      <% if contribution.parent and contribution.parent.person.id != contribution.person.id %>
+        <%  contributer = (@person == contribution.person ? 'you' : contribution.person.name)  %>
+        <p><%= "In response to #{contribution.parent.person.name}, #{contributer}" %> added:
+        <blockquote>
+          <%= contribution.content %>
+        </blockquote>
+        <%= link_to 'Check it out', "#{conversation_url(conversation.first)}#node-#{contribution.id}" %>
+        </p>
+      <% else %>
+        <%  contributer = (@person == contribution.person ? 'You' : contribution.person.name)  %>
+        <p><%= "#{contributer}" %> added:
+        <blockquote>
+          <%= contribution.content %>
+        </blockquote>
+        <%= link_to 'Check it out', "#{conversation_url(conversation.first)}#node-#{contribution.id}" %>
+        </p>
+      <% end %>
     <% end %>
+  <% end %>
+<% end %>
+<% unless @new_conversations.empty? %>
+  <% if @conversations.empty? %>
+    <h1>There are some new conversations you might be interested in:</h1>
+  <% else %>
+    <h1>And there are some new conversations you might be interested in:</h1>
+  <% end %>
+  <% @new_conversations.each do |conversation| %>
+    <h2><%= conversation.title %></h1>
+    <p><%= conversation.summary.html_safe %></p>
+    <p>Started by <%= conversation.person.name %> <%= link_to 'Check it out', "#{conversation_url(conversation)}" %></p>
   <% end %>
 <% end %>
 <h3>Too much information?</h3>

@@ -1,7 +1,7 @@
 class DigestService
 
   attr_reader :digest_recipients, :updated_contributions, :updated_conversations,
-              :digest_set
+              :digest_set, :new_conversations
 
   def initialize
     @digest_set = { }
@@ -22,12 +22,13 @@ class DigestService
 
     # get the set of people receiving the digest email
     set = self.generate_digest_set if set.nil?
-
     # for each person
     set.each do |person, conversations|
 
-      # send the email
-      Notifier.daily_digest(person, conversations).deliver
+      unless new_conversations.empty? && set[person].empty?
+        # send the email
+        Notifier.daily_digest(person, conversations, new_conversations).deliver
+      end
 
     end
 
@@ -67,7 +68,7 @@ class DigestService
         end
       end
 
-      digest_set[person] = digest unless digest.empty?
+      digest_set[person] = digest
 
     end
 
@@ -96,5 +97,9 @@ class DigestService
     digest.process_daily_digest(set)
   end
 
+  def new_conversations
+    time_range = (Time.now.midnight - 1.day)..(Time.now.midnight - 1.second)
+    @new_conversation = Conversation.where(created_at: time_range)
+  end
 
 end
