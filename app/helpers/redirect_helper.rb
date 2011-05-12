@@ -13,7 +13,7 @@ module RedirectHelper
       scoped_path = Devise.mappings[mapping].scoped_path
       Devise.mappings[mapping].path_names.each_pair do |path_key, path_name|
         path = scoped_path + '/' + path_name
-        if !redirect_link.nil? && redirect_link.match("#{path}")
+        if redirect_link.match("#{path}")
           match = true
         end
       end
