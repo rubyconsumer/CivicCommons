@@ -31,8 +31,8 @@
   <% end %>
   <% @new_conversations.each do |conversation| %>
     <h2><%= conversation.title %></h1>
-    <%= raw(conversation.summary) %>
-    <p>Started by <%= conversation.owner.name %> <%= link_to 'Check it out', {conversation_url(conversation) %></p>
+    <p><%= conversation.summary.html_safe %></p>
+    <p>Started by <%= conversation.person.name %> <%= link_to 'Check it out', "#{conversation_url(conversation)}" %></p>
   <% end %>
 <% end %>
 <h3>Too much information?</h3>

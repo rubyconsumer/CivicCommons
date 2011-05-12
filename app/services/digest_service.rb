@@ -26,8 +26,6 @@ class DigestService
     set.each do |person, conversations|
 
       unless new_conversations.empty? && set[person].empty?
-
-
         # send the email
         Notifier.daily_digest(person, conversations, new_conversations).deliver
       end
