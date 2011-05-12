@@ -214,12 +214,12 @@ describe CCML::Tag::RssTag do
 
     let(:tag_body) do
       <<-tag_body
-      {ccml:rss}
+      {ccml:rss:items}
         Title: {title}<br />
         Link: {link}<br />
         Description: {description}<br />
         Publication Date: {date format='%m-%d-%Y %I:%M %p'}<br />
-      {/ccml:rss}
+      {/ccml:rss:items}
       tag_body
     end
 

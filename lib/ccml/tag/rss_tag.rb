@@ -137,24 +137,25 @@ class CCML::Tag::RssTag < CCML::Tag::TagPair
   end
 
   def parse_channel(rss, prefix = '')
-    channel = {
-      "rss_version" => rss.version,
-      "rss_feed_version" => rss.feed_version,
-      "rss_feed_type" => rss.feed_type,
-      "#{prefix}title" => rss.channel.title,
-      "#{prefix}description" => rss.channel.description,
-      "#{prefix}copyright" => rss.channel.copyright,
-      "#{prefix}link" => rss.channel.link,
-      "#{prefix}language" => rss.channel.language,
-      "#{prefix}date" => rss.channel.date,
-      "#{prefix}image_title" => rss.channel.image.title,
-      "#{prefix}image_url" => rss.channel.image.url,
-      "#{prefix}image_link" => rss.channel.image.link,
-      "#{prefix}image_description" => rss.channel.image.description,
-      "#{prefix}image_height" => rss.channel.image.width,
-      "#{prefix}image_width" => rss.channel.image.height,
-      "#{prefix}item_count" => rss.channel.items.size,
-    }
+    channel = { }
+    channel["rss_version"] = rss.version
+    channel["rss_feed_version"] = rss.feed_version
+    channel["rss_feed_type"] = rss.feed_type
+    channel["#{prefix}title"] = rss.channel.title
+    channel["#{prefix}description"] = rss.channel.description
+    channel["#{prefix}copyright"] = rss.channel.copyright
+    channel["#{prefix}link"] = rss.channel.link
+    channel["#{prefix}language"] = rss.channel.language
+    channel["#{prefix}date"] = rss.channel.date
+    if rss.channel.image
+      channel["#{prefix}image_title"] = rss.channel.image.title
+      channel["#{prefix}image_url"] = rss.channel.image.url
+      channel["#{prefix}image_link"] = rss.channel.image.link
+      channel["#{prefix}image_description"] = rss.channel.image.description
+      channel["#{prefix}image_height"] = rss.channel.image.width
+      channel["#{prefix}image_width"] = rss.channel.image.height
+    end
+    channel["#{prefix}item_count"] = rss.channel.items.size
     return channel
   end
 
