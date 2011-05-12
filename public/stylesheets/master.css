@@ -1038,12 +1038,16 @@ padding: 0px;
 }
 div.link-meta {overflow:hidden;}
 div.embed-content {
+word-break: break-word;
 display: table-cell;
 }
 div.link-meta p.embedded {
   display: inline;
   float: left;
   margin-right: 10px;
+}
+p.link-quot {
+color: #636363;
 }
 div.link-meta p.link-title a:hover, div.link-meta p.link-quot a:hover, div.link-meta p.embedded a:hover {
   cursor: pointer;
