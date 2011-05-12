@@ -1037,14 +1037,13 @@ position: relative;
 padding: 0px;
 }
 div.link-meta {overflow:hidden;}
-div.link-meta p.link-title, div.link-meta p.link-quot {
-  float: right;
-  width: 60%;
+div.embed-content {
+display: table-cell;
 }
 div.link-meta p.embedded {
+  display: inline;
   float: left;
-  margin-top: -30px;
-  width: 35%;
+  margin-right: 10px;
 }
 div.link-meta p.link-title a:hover, div.link-meta p.link-quot a:hover, div.link-meta p.embedded a:hover {
   cursor: pointer;

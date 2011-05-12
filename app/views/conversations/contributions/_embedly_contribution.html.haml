@@ -2,10 +2,6 @@
   %span.contribution-person-name= person_display_name(contribution.person)
   = format_comment(contribution)
 %div.link-meta
-  %p.link-title
-    = link_to(contribution.title, contribution.url)
-  %p.content.link-quot
-    = raw contribution.description
   %p.content.embedded
     -if !contribution.confirmed?
       = raw EmbedlyService.to_thumbnail(contribution, 100)
@@ -13,3 +9,8 @@
       = raw EmbedlyService.to_fancybox(contribution, 200)
     -else
       = raw EmbedlyService.to_embed_or_fancybox(contribution, 200)
+  %div.embed-content
+    %p.link-title
+      = link_to(contribution.title, contribution.url)
+    %p.content.link-quot
+      = raw contribution.description
