@@ -704,33 +704,30 @@ text-decoration: none;
 text-transform: uppercase;
 text-shadow: 0 1px 1px rgba(255,255,255,1);
 }
-ul#main-nav li a span {
-background-position: 0 0;
-background-repeat: no-repeat;
-display: block;
-}
-ul#main-nav li a span span {
-background-image: none;
+ul#main-nav li a div {overflow: hidden;}
+ul#main-nav li a:hover div {cursor: pointer;}
+ul#main-nav li a div span {
 color: #666;
+display: block;
 font-size: .916em;
 line-height: 1em;
 text-transform: none;
 }
 ul#main-nav li a:hover {background: url(/images/top_arrow.png) no-repeat 50% 0;}
-ul#main-nav li span#conversations {
-background-image: url(../images/nav_convo.png);
+ul#main-nav li div#conversations {
+background: url(../images/nav_convo.png) no-repeat 0 0;
 padding-left: 27px;
 }
-ul#main-nav li span#issues {
-background-image: url(../images/nav_issues.png);
+ul#main-nav li div#issues {
+background: url(../images/nav_issues.png) no-repeat 0 0;
 padding-left: 23px;
 }
-ul#main-nav li span#community {
-background-image: url(../images/nav_comm.png);
+ul#main-nav li div#community {
+background: url(../images/nav_comm.png) no-repeat 0 0;
 padding-left: 32px;
 }
-ul#main-nav li span#commons {
-background-image: url(../images/nav_build.png);
+ul#main-nav li div#commons {
+background: url(../images/nav_build.png) no-repeat 0 0;
 padding-left: 26px;
 }
 
@@ -1031,7 +1028,6 @@ filter: progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorStr
 border: 1px solid #94A647;
 color: #f3f3f3;
 text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
-
 }
 a.rating-button span.number,
 span.rating-button span.number {
@@ -1058,8 +1054,13 @@ padding: 0;
 vertical-align: top;
 line-height: 0;
 }
+*:first-child+html a.rating-button {
+position: relative;
+top: 28px;
+}
+*:first-child+html span.respond a.rating-button {top: 0;}
 
-/*- Convesation Ticker ----------*/
+/*- Conrelativeesation Ticker ----------*/
 
 .conversation-ticker {
 background-color: #fff;
