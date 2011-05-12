@@ -2,84 +2,99 @@ require 'spec_helper'
 
 describe IssuesController do
 
-  def mock_issue(stubs={})
-    @mock_issue ||= mock_model(Issue)
-  end
-
   describe "GET index" do
-    it "assigns all issues as @issues" do
-      issues = [mock_issue]
-      search = mock("search")
-      Issue.should_receive(:sort).and_return(search)
-      search.should_receive(:paginate).and_return(issues)
 
+    before(:each) do
+
+      (1..2).each do
+        Factory.create(:issue)
+      end
+
+      (1..2).each do
+        Factory.create(:region)
+      end
+
+      @main_article = Factory.create(:article, :current => true, :issue_article => true, :main => true)
+      @sub_articles = []
+      (1..2).each do
+        @sub_articles << Factory.create(:article, :current => true, :issue_article => true, :main => false)
+      end
+
+    end
+
+    it "assigns all issues as @issues" do
       get :index
-      assigns(:issues).should == issues
+      assigns(:issues).should == Issue.all
     end
 
     it "assigns all regions to @regions" do
-      regions = [mock_model(Region)]
-      Region.should_receive(:all).and_return(regions)
-
       get :index
-      assigns(:regions).should == regions
+      assigns(:regions).should == Region.all
     end
 
     it "assigns the first main article to @main_article" do
-      article = mock_model(Article)
-      article_collection = [article]
-      Article.should_receive(:issue_main_article).and_return(article_collection)
-      article_collection.should_receive(:first).and_return(article)
-
       get :index
-      assigns(:main_article).should == article 
+      assigns(:main_article).should == @main_article
     end
 
-    it "assigns  3 articles to @sub_articles" do
-      article1, article2, article3 = mock_model(Article), mock_model(Article), mock_model(Article)
-      articles = []
-      article_collection = [article1, article2, article3]
-      Article.should_receive(:issue_sub_articles).and_return(articles)
-      articles.should_receive(:limit).with(3).and_return(article_collection)
-
+    it "assigns all articles to @sub_articles" do
       get :index
-      assigns(:sub_articles).should == article_collection
+      assigns(:sub_articles).collect # because of active record lazy loading
+      assigns(:sub_articles).first.should be_instance_of Article
+      assigns(:sub_articles).size.should == @sub_articles.size
     end
 
-    it "assigns 3 top items to @recent_items" do
-      item1, item2, item3 = mock_model(TopItem), mock_model(TopItem), mock_model(TopItem)
-      recent_items_collection = [item1, item2, item3]
-      TopItem.should_receive(:newest_items).with(3).and_return(recent_items_collection)
-      recent_items_collection.should_receive(:for).with(:issue).and_return(recent_items_collection)
-      recent_items_collection.should_receive(:collect).at_least(:once).and_return(recent_items_collection)
-
+    it "assigns all top items to @recent_items" do
       get :index
-      assigns(:recent_items).should == recent_items_collection
+      assigns(:recent_items).collect # because of active record lazy loading
+      assigns(:recent_items).first.should be_kind_of TopItemable
+      assigns(:recent_items).should_not be_empty
     end
 
   end
 
   describe "GET show" do
 
-    before(:each) do
-      @person = Factory.create(:normal_person)
-      @controller.stub(:current_person).and_return(@person)
+    context "with standard issues" do
+
+      before(:each) do
+        @user = Factory.create(:registered_user)
+        sign_in @user
+        @issue = Factory.create(:issue)
+      end
+
+      it "assigns the requested issue as @issue" do
+        get :show, :id => @issue.id
+        assigns(:issue).should == @issue
+      end
+
+      it "records a visit to the issue passing the current user" do
+        count_before = Visit.where(:person_id => @user.id).where(:visitable_id => @issue.id).where(:visitable_type => "Issue").size
+        get :show, :id => @issue.id
+        count_after = Visit.where(:person_id => @user.id).where(:visitable_id => @issue.id).where(:visitable_type => "Issue").size
+        count_after.should == count_before + 1
+      end
+
     end
 
-    it "assigns the requested issue as @issue" do
-      pending
-      issue = mock('issue')
-      issue.stub!(:find).with("37").and_return(@issue)
-      get :show, :id => "37"
-      assigns(:issue).should be @issue
-    end
+    context "with managed issues" do
 
-    it "records a visit to the issue passing the current user" do
-      pending
-      issue = mock('issue')
-      issue.stub!(:find).with("37") {mock_issue}
-      mock_issue.should_receive(:visit!).with(@person.id)
-      get :show, :id => "37"
+      let(:issue) do
+        Factory.create(:managed_issue)
+      end
+
+      it "renders the index managed issue page when set" do
+        issue.index = Factory.create(:managed_issue_page, issue: issue)
+        issue.save
+        get :show, :id => issue.id
+        response.should render_template 'managed_issue_pages/show'
+      end
+
+      it "renders the standard show page when index page not set" do
+        get :show, :id => issue.id
+        response.should render_template 'show'
+      end
+
     end
 
   end

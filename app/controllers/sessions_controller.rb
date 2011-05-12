@@ -3,9 +3,10 @@ class SessionsController < Devise::SessionsController
   before_filter :require_ssl, :only => [:new, :create]
 
   def new
-    session[:previous] = request.headers["Referer"]
-    clean_up_passwords(build_resource)
-    render_with_scope :new
+    super
+    if RedirectHelper.valid?(request.headers['Referer'])
+      session[:previous] = request.headers['Referer']
+    end
   end
 
   def create

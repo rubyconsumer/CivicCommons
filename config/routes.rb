@@ -1,4 +1,5 @@
 Civiccommons::Application.routes.draw do
+
   # ----------------------------------------
   #   ROUTES README
   # ----------------------------------------
@@ -18,6 +19,7 @@ Civiccommons::Application.routes.draw do
   root to: "homepage#show"
 
 #Custom Matchers
+
   #authentication
   post '/authentication/decline_fb_auth',              to: 'authentication#decline_fb_auth',                 as: 'decline_fb_auth'
   get  '/authentication/conflicting_email',            to: 'authentication#conflicting_email',               as: 'conflicting_email'
@@ -30,13 +32,13 @@ Civiccommons::Application.routes.draw do
   get   '/authentication/confirm_facebook_unlinking',  to: 'authentication#confirm_facebook_unlinking',      as: 'confirm_facebook_unlinking'
   get   '/authentication/before_facebook_unlinking',   to: 'authentication#before_facebook_unlinking',       as: 'before_facebook_unlinking'
   delete '/authentication/process_facebook_unlinking', to: 'authentication#process_facebook_unlinking',      as: 'process_facebook_unlinking'
-
   
   #Contributions
   post '/contributions/create_confirmed_contribution', to: 'contributions#create_confirmed_contribution',    as: 'create_confirmed_contribution'
   get  '/tos/tos_contribution',                        to: 'tos#tos_contribution',                           as: 'tos_contribution'
   delete '/contributions/moderate/:id',                to: 'contributions#moderate_contribution',            as: 'moderate_contribution'
   delete '/contributions/:id',                         to: 'contributions#destroy',                          as: 'contribution'
+
   #Conversations
   match '/conversations/preview_node_contribution',    to: 'conversations#preview_node_contribution'
   get '/conversations/node_conversation',              to: 'conversations#node_conversation'
@@ -46,34 +48,46 @@ Civiccommons::Application.routes.draw do
   put '/conversations/update_node_contribution',       to: 'conversations#update_node_contribution'
   put '/conversations/confirm_node_contribution',      to: 'conversations#confirm_node_contribution'
   get '/conversations/responsibilities',               to: 'conversations#responsibilities',                 as: 'conversation_responsibilities'
+  get '/conversations/rss',                            to: 'conversations#rss',                              as: 'conversation_rss'
   post '/conversations/toggle_rating',                 to: 'conversations#toggle_rating',                    as: 'conversation_contribution_toggle_rating'
+  
   #Subscriptions
   post '/subscriptions/subscribe',                     to: 'subscriptions#subscribe'
   post '/subscriptions/unsubscribe',                   to: 'subscriptions#unsubscribe'
+  
   #UnsubscribeDigest
   get '/unsubscribe-me/:id',                           to: 'unsubscribe_digest#unsubscribe_me',              as: 'unsubscribe_confirmation'
   put '/unsubscribe-me/:id',                           to: 'unsubscribe_digest#remove_from_digest'
 
   #Community
   get '/community',                                    to: 'community#index',                                as: 'community'
+  
+  #Content
+  get '/podcast',                                      to: 'radioshow#podcast',                              as: 'podcast'
+
   #Widget
   get '/widget',                                       to: 'widget#index'
 
   #Static Pages
-  get '/about',             to: 'static_pages#about'
-  get '/blog',              to: 'static_pages#blog',                as: 'blog'
-  get '/build_the_commons', to: 'static_pages#build_the_commons'
-  get '/contact_us',        to: 'static_pages#contact'
-  get '/faq',               to: 'static_pages#faq'
-  get '/partners',          to: 'static_pages#partners'
-  get '/poster',            to: 'static_pages#poster'
-  get '/posters',           to: 'static_pages#poster'
-  get '/press',             to: 'static_pages#in_the_news'
-  get '/principles',        to: 'static_pages#principles'
-  get '/team',              to: 'static_pages#team'
-  get '/terms',             to: 'static_pages#terms'
-  get '/jobs',              to: 'static_pages#jobs'
-  get '/careers',           to: 'static_pages#jobs'
+  match '/about'             => redirect('/pages/about')
+  match '/build_the_commons' => redirect('/pages/build-the-commons')
+  match '/careers'           => redirect('/pages/jobs')
+  match '/contact_us'        => redirect('/pages/contact')
+  match '/faq'               => redirect('/pages/faq')
+  match '/feeds'             => redirect('/pages/feeds')
+  match '/help'              => redirect('/pages/build-the-commons')
+  match '/in-the-news'       => redirect('/news')
+  match '/jobs'              => redirect('/pages/jobs')
+  match '/partners'          => redirect('/pages/partners')
+  match '/poster'            => redirect('/pages/poster')
+  match '/posters'           => redirect('/pages/poster')
+  match '/press'             => redirect('/news')
+  match '/principles'        => redirect('/pages/principles')
+  match '/privacy'           => redirect('/pages/privacy')
+  match '/radio'             => redirect('/radioshow')
+  match '/team'              => redirect('/pages/team')
+  match '/terms'             => redirect('/pages/terms')
+  match '/volunteer'         => redirect('/pages/build-the-commons')
 
 #Devise Routes
   devise_for :people,
@@ -98,23 +112,34 @@ Civiccommons::Application.routes.draw do
   end
   resources :issues, only: [:index, :show] do
     post 'create_contribution', on: :member
+    resources :pages, controller: :managed_issue_pages, only: [:show]
   end
   resources :conversations, only: [:index, :show, :new, :create]
   resources :regions, only: [:index, :show]
   resources :links, only: [:new, :create]
   resources :invites, only: [:new, :create]
   resources :tos, only: [:new, :create]
+  resources :pages, only: [:show]
+  resources :blog, only: [:index, :show]
+  resources :content, only: [:index, :show]
+  resources :news, only: [:index]
+  resources :radioshow, only: [:index, :show]
 
 #Namespaces
   namespace "admin" do
     root      to: "dashboard#show"
     resources :articles
     resources :content_items #, only: [:index, :show, :new, :create, :update, :destroy]
+    get '/content_items/type/:type', to: 'content_items#index', as: 'content_items_type'
+    resources :content_templates
     resources :conversations do
       put 'toggle_staff_pick', on: :member
       post 'update_order', on: :collection
     end
-    resources :issues
+    resources :issues, do
+      resources :pages, controller: :managed_issue_pages
+    end
+    get '/issues/pages/all', to: 'managed_issue_pages#all'
     resources :regions
     resources :people do
       get 'proxies',       on: :collection

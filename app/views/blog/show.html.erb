@@ -1,0 +1,27 @@
+<% content_for :header do %>
+  <%= auto_discovery_link_tag(:rss, "http://feeds.theciviccommons.com/civiccommonsblog", { :title => "The Civic Commons: Common Blog" } ) %>
+<% end %>
+
+<% content_for :main_body do %>
+  <div class="wrapper">
+    <div class="content-container">
+      <h1><%= link_to 'Common Blog', blog_index_path %></h1>
+      <div class="in-the-news-post"></div>
+
+      <div class="main-content">
+        <div class="blog" id="outer_block_1"> 
+          <h2><%= @blog_post.title %></h2>
+          <p><%= link_to @blog_post.author.name, user_path(@blog_post.author) %><%= user_profile(@blog_post.author) %></p>
+          <div class='blog_inner'> 
+            <div class="body"><%= raw @blog_post.body %></div>
+            <% unless @blog_post.embed_code.blank? %>
+              <p><%= raw @blog_post.embed_code %></p>
+            <% end %>
+            <p>&nbsp;</p>
+            <p>Posted by <%= link_to @blog_post.author.name, user_path(@blog_post.author) %> on <%= @blog_post.published.strftime('%B %d, %Y') %></p> 
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

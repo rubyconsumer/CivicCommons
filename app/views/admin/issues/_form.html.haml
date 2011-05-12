@@ -1,9 +1,26 @@
-=form_for [:admin, @issue], :html =>{:multipart => true} do |f|
+-if @issue.id.nil?
+  -url = [ :admin, @issue ]
+  -method = :post
+-else
+  -url = admin_issue_path(@issue)
+  -method = :put
+=form_for @issue, :url => url, :html =>{ :method => method, :multipart => true } do |f|
   =show_errors @issue 
   %p        
     =f.label :name
     %br
     =f.text_field :name
+
+  %p        
+    =f.label :type
+    %br
+    =f.select :type, Issue::ALL_TYPES
+
+  -if @issue.is_a?(ManagedIssue)
+    %p        
+      =f.label :index
+      %br
+      =f.collection_select :managed_issue_page_id, ManagedIssuePage.where(issue_id: @issue.id), :id, :name
 
   -if @issue.image.exists?
     = image_tag @issue.image.url(:normal)
@@ -16,7 +33,7 @@
   %p
     =f.label :summary
     %br
-    =f.text_area :summary
+    =f.text_area :summary, :class => 'tinymce'
     
   %p
     =f.label :url, "Reference URL"
@@ -33,4 +50,11 @@
     =f.text_field :zip_code
     
   %p
-    =f.submit 
+    =f.submit "Update Issue"
+
+:plain
+  <script type="text/javascript">
+    $().ready(function() {
+      init_tiny_mce('#issue_summary');
+    });
+  </script>

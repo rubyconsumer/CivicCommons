@@ -1,0 +1,27 @@
+<% content_for :header do %>
+  <%= auto_discovery_link_tag(:rss, "http://feeds.theciviccommons.com/civiccommonsradio", { :title => "The Civic Commons Radio Show" } ) %>
+<% end %>
+
+<% content_for :main_body do %>
+  <div class="wrapper">
+    <div class="content-container">
+      <h1><%= link_to 'The Civic Commons Radio Show', radioshow_index_path %></h1>
+      <div class="in-the-news-post"></div>
+
+      <%= render partial: 'description' %>
+
+      <div class="main-content">
+        <div class="radioshow" id="outer_block_1"> 
+          <h2><%= @radioshow.title %></h2>
+          <div class='radioshow_inner'> 
+            <div class="body"><%= raw @radioshow.body %></div>
+            <p>&nbsp;</p>
+            <p>Aired on <%= @radioshow.published.strftime('%B %d, %Y') %></p> 
+          </div>
+          <%= render partial: 'embed', radioshow: @radioshow %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+

@@ -17,6 +17,7 @@ gem 'httparty'
 gem 'geokit'
 
 gem "friendly_id", "~> 3.2.1"
+gem 'acts_as_revisionable'
 gem 'embedly'
 
 gem 'gibbon'
@@ -25,7 +26,7 @@ gem 'delayed_job', ">= 2.1.2"
 
 gem 'hoptoad_notifier'
 
-gem 'remotipart', :git => 'git://github.com/CivicCommons/remotipart.git', :branch => 'more-flexible'
+gem 'remotipart'
 
 gem 'whenever', :require => false
 
@@ -35,6 +36,10 @@ gem 'delayed_paperclip'
 gem 'aws-s3'
 gem 'nokogiri'
 gem 'sanitize'
+gem 'highline'
+
+# for testing, but needed globally because it add rake tasks
+gem 'single_test'
 
 group :development do
   gem "rails3-generators"
@@ -79,7 +84,7 @@ group :development, :test do
   gem 'webrat', "~> 0.7.3"
 end
 
-gem 'devise', '~>1.2', :git => 'git://github.com/plataformatec/devise.git'
+gem 'devise', :git => 'git://github.com/plataformatec/devise.git', :branch => 'v1.3'
 gem "oa-oauth", :require => "omniauth/oauth"
 gem 'omniauth', '~>0.2.0', :git => 'git://github.com/intridea/omniauth.git'
 

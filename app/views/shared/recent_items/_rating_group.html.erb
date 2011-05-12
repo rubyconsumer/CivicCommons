@@ -3,7 +3,7 @@
 </p>
 
 <p>
-  <%= link_to( "\"#{truncate( rating_group.contribution.content, :length => 100, :separator => ' ' )}\"", conversation_node_path(rating_group.contribution) ) %>
+  <%= link_to( "\"#{truncate( Sanitize.clean( rating_group.contribution.content ), :length => 100, :separator => ' ' )}\"", conversation_node_path(rating_group.contribution) ) %>
 </p>
 
 <% unless controller.controller_name == 'conversations' && controller.action_name == 'show' %>

@@ -1,0 +1,40 @@
+<h1>Issue Pages
+  <%- if @issue %>
+    for '<%= @issue.name %>'
+  <%- end %>
+</h1>
+
+<table class="tablesorter" summary="List of Issue Pages">
+  <thead>
+    <tr>
+      <th>Page Name</th>
+      <th>Index?</th>
+      <th>Author</th>
+      <th>Slug</th>
+      <th></th>
+      <th></th>
+    </tr>
+  <thead>
+  <tbody>
+    <% @managed_issue_pages.each do |page| %>
+      <tr>
+        <td><%= link_to page.name, admin_issue_page_path(page.issue, page) %></td>
+        <td><%= (@issue.index == page) ? 'Yes' : nil %></td>
+        <td><%= page.author.name %></td>
+        <td><%= page.cached_slug %></td>
+        <td><%= link_to "Edit", edit_admin_issue_page_path(page.issue, page) %></td>
+        <td><%= link_to "Delete", admin_issue_page_path(page.issue, page), method: :delete, confirm: "Are you sure?" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%- if @issue %>
+  <%= link_to "Back", admin_issue_path(@issue) %>
+  |
+  <%= link_to "Edit Issue", edit_admin_issue_path(@issue) %>
+  |
+  <%= link_to "Add Page", new_admin_issue_page_path(@issue) %>
+<%- else %>
+  <%= link_to "Issues", admin_issues_path %>
+<%- end %>

@@ -1,0 +1,45 @@
+<%
+  if @content_template.id.nil?
+    url = [ :admin, @content_template ]
+    method = :post
+  else
+    url = admin_content_template_path(@content_template)
+    method = :put
+  end
+%>
+
+<%= form_for @content_template, :url => url, :html => { :method => method } do |f| %>
+  <% if @content_template.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        It looks like we’re still missing some important information:
+      </h2>
+      <ul>
+        <% @content_template.errors.each do |attr,msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+
+  <p>
+    <%= f.label :template %><br />
+    <%= f.text_area :template, :class => 'tinymce' %>
+  </p>
+  
+  <div class="actions">
+    <%= f.submit "Save Static Page" %>
+  </p>
+
+<% end %>
+
+<script type="text/javascript">
+  $().ready(function() {
+    init_tiny_mce('#content_template_template');
+  });
+</script>

@@ -19,7 +19,7 @@
         <% @issues.each do |issue| %>
 	<tr>
 	  <th scope="row">
-            <%= link_to issue.name, issue %>
+            <%= link_to issue.name, issue_path(issue) %>
           </th>
 	  <td>
             <%= pluralize(issue.contributions.size, "Contribution") %>

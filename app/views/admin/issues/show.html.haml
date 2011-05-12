@@ -1,11 +1,36 @@
 %h2= @issue.name
 
-%p= @issue.summary
+%p        
+  %b Type:
+  =@issue.type
 
-%p= image_tag @issue.image.url(:normal) 
+-if @issue.is_a?(ManagedIssue)
+  %p
+    %b Index Page:
+    =@issue.index.try(:name)
 
+-if @issue.image.exists?
+  = image_tag @issue.image.url(:normal)
 
+%p
+  %b Summary:
+  %br
+  =raw @issue.summary
+
+%p
+  %b Reference URL:
+  =@issue.url
+  =link_to @issue.url_title, @issue.url
+
+%p
+  %b Zip Code:
+  =@issue.zip_code
 
 =link_to "Edit", edit_admin_issue_path(@issue)
+-if @issue.is_a?(ManagedIssue)
+  |
+  =link_to "Page List", admin_issue_pages_path(@issue)
+  |
+  =link_to "Add Page", new_admin_issue_page_path(@issue)
 |
 =link_to "Back", admin_issues_path

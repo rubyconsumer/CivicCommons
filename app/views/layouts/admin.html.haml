@@ -5,6 +5,8 @@
     =javascript_include_tag 'lib/rails'
     =javascript_include_tag 'lib/master'
     =stylesheet_link_tag 'admin.css'
+    =stylesheet_link_tag 'ui-lightness/jquery-ui-1.8.2.custom.css'
+
     =javascript_include_tag 'vendor/jquery.tablesorter.min'
     =javascript_include_tag 'lib/admin/sort_table'
     =javascript_include_tag 'lib/admin/apply_tiny_mce'
@@ -48,6 +50,8 @@
             %ul
               %li
                 =link_to "Add Issue", new_admin_issue_path
+              %li
+                =link_to "Managed Issue Pages", admin_issues_pages_all_path
           %li
             =link_to "People", admin_people_path
             %ul
@@ -56,10 +60,24 @@
               %li
                 =link_to "Add Proxy Account", new_admin_person_path
           %li
-            =link_to "Content Items", admin_content_items_path
+            Content Items
+            %ul
+              %li
+                =link_to "Blog Posts", admin_content_items_type_path('blog_post')
+            %ul
+              %li
+                =link_to "News Items", admin_content_items_type_path('news_items')
+            %ul
+              %li
+                =link_to "Radio Shows", admin_content_items_type_path('radio_shows')
             %ul
               %li
                 =link_to "Add Content Item", new_admin_content_item_path
+          %li
+            =link_to "Static Pages", admin_content_templates_path
+            %ul
+              %li
+                =link_to "Add Static Page", new_admin_content_template_path
       %div#main
         =yield
 

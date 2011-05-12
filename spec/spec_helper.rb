@@ -1,33 +1,33 @@
-if ENV['__test_coverage__']
-  require 'simplecov'
-  SimpleCov.start do
-    add_filter '/autotest/'
-    add_filter '/config/'
-    add_filter '/db/'
-    add_filter '/deploy/'
-    add_filter '/doc/'
-    add_filter '/features/'
-    add_filter '/lib/jobs/'
-    add_filter '/lib/tasks/'
-    add_filter '/log/'
-    add_filter '/public/'
-    add_filter '/script/'
-    add_filter '/spec/'
-    add_filter '/test/'
-    add_filter '/tmp/'
-    add_filter '/vendor/'
-    add_group 'Concerns', 'app/concerns'
-    add_group 'Controllers', 'app/controllers'
-    add_group 'Helpers', 'app/helpers'
-    add_group 'Libraries', 'lib'
-    add_group 'Mailers', 'app/mailers'
-    add_group 'Models', 'app/models'
-    add_group 'Presenters', 'app/presenters'
-    add_group 'Observers', 'app/observers'
-    add_group 'Services', 'app/services'
-    #add_group 'Views', 'app/views'
-  end
-end
+#if ENV['__test_coverage__']
+  #require 'simplecov'
+  #SimpleCov.start do
+    #add_filter '/autotest/'
+    #add_filter '/config/'
+    #add_filter '/db/'
+    #add_filter '/deploy/'
+    #add_filter '/doc/'
+    #add_filter '/features/'
+    #add_filter '/lib/jobs/'
+    #add_filter '/lib/tasks/'
+    #add_filter '/log/'
+    #add_filter '/public/'
+    #add_filter '/script/'
+    #add_filter '/spec/'
+    #add_filter '/test/'
+    #add_filter '/tmp/'
+    #add_filter '/vendor/'
+    #add_group 'Concerns', 'app/concerns'
+    #add_group 'Controllers', 'app/controllers'
+    #add_group 'Helpers', 'app/helpers'
+    #add_group 'Libraries', 'lib'
+    #add_group 'Mailers', 'app/mailers'
+    #add_group 'Models', 'app/models'
+    #add_group 'Presenters', 'app/presenters'
+    #add_group 'Observers', 'app/observers'
+    #add_group 'Services', 'app/services'
+    ##add_group 'Views', 'app/views'
+  #end
+#end
 
 # This file is copied to ~/spec when you run 'ruby script/generate rspec'
 # from the project root directory.
@@ -35,6 +35,7 @@ ENV["RAILS_ENV"] ||= 'test'
 require File.dirname(__FILE__) + "/../config/environment" unless defined?(Rails)
 require 'rspec/rails'
 require 'webmock/rspec'
+require 'capybara/rspec'
 require 'email_spec'
 require 'ostruct'
 require 'paperclip/matchers'
@@ -47,6 +48,7 @@ Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
 
 Rspec.configure do |config|
   config.mock_with :rspec
+  config.filter_run_excluding :js => true
   config.include CustomMatchers
   config.include WebMock::API
   config.include StubbedHttpRequests

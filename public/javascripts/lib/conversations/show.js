@@ -268,6 +268,7 @@
       transition: 'fade', // needed to fix colorbox bug with jquery 1.4.4
       href: $this.attr('href'),
       width: '600px',
+      height: '340px',
       onComplete: function(){
         var divId = $this.attr('href').match(/div_id=([^&]+)/)[1],
             $tabStrip = $('.tab-strip#' + divId),

@@ -19,14 +19,16 @@ class Person < ActiveRecord::Base
 
   has_one :facebook_authentication, :class_name => 'Authentication', :conditions => {:provider => 'facebook'}
   has_many :authentications, :dependent => :destroy
-  has_many :content_items, :foreign_key => 'author'
-  has_many :contributions, :foreign_key => 'owner', :uniq => true
-  has_many :ratings
-  has_many :subscriptions
+  has_many :content_items, :foreign_key => 'person_id', :dependent => :restrict 
+  has_many :content_templates, :foreign_key => 'person_id', :dependent => :restrict 
+  has_many :contributions, :foreign_key => 'owner', :uniq => true, :dependent => :restrict 
+  has_many :managed_issue_pages, :foreign_key => 'person_id', :dependent => :restrict 
+  has_many :rating_groups, :dependent => :restrict
+  has_many :subscriptions, :dependent => :destroy
   has_and_belongs_to_many :conversations, :join_table => 'conversations_guides', :foreign_key => :guide_id
 
-  has_many :contributed_conversations, :through => :contributions, :source => :conversation, :uniq => true
-  has_many :contributed_issues, :through => :contributions, :source => :issue, :uniq => true
+  has_many :contributed_conversations, :through => :contributions, :source => :conversation, :uniq => true, :dependent => :restrict 
+  has_many :contributed_issues, :through => :contributions, :source => :issue, :uniq => true, :dependent => :restrict 
 
   validates_length_of :email, :within => 6..255, :too_long => "please use a shorter email address", :too_short => "please use a longer email address"
   validates_length_of :zip_code, :within => (5..10), :allow_blank => true, :allow_nil => true, :if => :validate_zip_code?
@@ -169,19 +171,17 @@ class Person < ActiveRecord::Base
   end
 
   def unlink_from_facebook(person_hash)
-    begin
-      ActiveRecord::Base.transaction do
-        self.email = person_hash[:email]
-        self.password = person_hash[:password]
-        self.password_confirmation = person_hash[:password_confirmation]
-        self.facebook_unlinking = true
-        self.send_email_change_notification = true # sends email change notification
-        save!
-        self.facebook_authentication.destroy
-      end
-    rescue
-      self
+    ActiveRecord::Base.transaction do
+      self.email = person_hash[:email]
+      self.password = person_hash[:password]
+      self.password_confirmation = person_hash[:password_confirmation]
+      self.facebook_unlinking = true
+      self.send_email_change_notification = true # sends email change notification
+      save!
+      self.facebook_authentication.destroy
     end
+  rescue
+    self
   end
 
   def avatar_path(style='')
@@ -222,6 +222,66 @@ class Person < ActiveRecord::Base
     else
       true
     end
+  end
+
+  def merge_account(person_to_merge)
+    if person_to_merge.class.name == 'Person' && id == person_to_merge.id
+      return false
+    end
+
+    begin
+      transaction do
+        person_to_merge.confirmed_at = nil
+        person_to_merge.save!
+
+        person_to_merge.contributions.map do |contribution|
+          contribution.owner = id
+          contribution.save!
+        end
+
+        RatingGroup.where('person_id = ?', person_to_merge.id).map do |rating_group|
+          rating_group.person_id = id
+          rating_group.save!
+        end
+
+        Conversation.where('owner = ?', person_to_merge.id).map do |conversation|
+          conversation.owner = id
+          conversation.save!
+        end
+
+        # Make the TO account follow all the same conversations/issues as the FROM account
+        Subscription.where(person_id: person_to_merge.id).each do |subscription|
+          Subscription.create_unless_exists(self, subscription.subscribable)
+        end
+
+        Visit.where('person_id = ?', person_to_merge.id).map do |visit|
+          visit.person_id = id
+          visit.save!
+        end
+
+        person_to_merge.content_templates.map do |content_template|
+          content_template.person_id = id
+          content_template.save!
+        end
+
+        person_to_merge.content_items.map do |content_item|
+          content_item.person_id = id
+          content_item.save!
+        end
+
+        person_to_merge.managed_issue_pages.map do |managed_issue_page|
+          managed_issue_page.person_id = id
+          managed_issue_page.save!
+        end
+
+      end # transaction
+
+    rescue ActiveRecord::RecordInvalid => exception
+      say exception.message
+      say exception.backtrace.join("\n")
+    end # begin
+
+    return Person.find(person_to_merge.id).confirmed_at.nil?
   end
 
   # Overiding Devise::Models::DatabaseAuthenticatable
