@@ -45,7 +45,7 @@ protected
   end
 
   def after_sign_in_path_for(resource_or_scope)
-    if session[:previous] and RedirectHelper.valid?(session[:previous])
+    if RedirectHelper.valid?(session[:previous])
       session[:previous]
     elsif session[:link]
       new_link_path

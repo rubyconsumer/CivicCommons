@@ -953,6 +953,22 @@ div.productive a.button {margin-right: 0;}
 position: relative;
 padding: 0px;
 }
+div.link-meta {overflow:hidden;}
+div.embed-content {
+word-break: break-word;
+display: table-cell;
+}
+div.link-meta p.embedded {
+  display: inline;
+  float: left;
+  margin-right: 10px;
+}
+p.link-quot {
+color: #636363;
+}
+div.link-meta p.link-title a:hover, div.link-meta p.link-quot a:hover, div.link-meta p.embedded a:hover {
+  cursor: pointer;
+}
 .issue .date {
 top: 0;
 position: absolute;
@@ -998,6 +1014,9 @@ border-radius: 4px;
 -moz-box-shadow: 0 1px 1px rgba(255,255,255,1), 0 0 1px rgba(255,255,255,1) inset;
 -o-box-shadow: 0 1px 1px rgba(255,255,255,1), 0 0 1px rgba(255,255,255,1) inset;
 box-shadow: 0 1px 1px rgba(255,255,255,1), 0 0 1px rgba(255,255,255,1) inset;
+}
+div.respond-container {
+  clear: both;
 }
 a.rating-button:hover, a.rating-button.active {
 background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#a2af5d), to(#7b893b));

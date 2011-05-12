@@ -68,6 +68,7 @@ group :test do
   gem "database_cleaner", "~> 0.6.0"
   gem 'email_spec'
   gem 'simplecov'
+  gem 'timecop'
 end
 
 # On non-osx platforms, use: bundle install --without osx_test
