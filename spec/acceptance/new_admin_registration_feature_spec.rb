@@ -20,10 +20,14 @@ feature "Admin User Registration Tool", %q{
   end
 
   scenario "admin registers a new user manually" do
-    pending
     #Given I am on the new person registration page
+    visit new_admin_user_registration_path
     #When I fill in the form with valid person information
+    fill_in "Name", with: 'Jane Doe'
+    fill_in "Email", with: 'jdoe@testaccount.com'
+    fill_in "Zip Code", with: '44114'
     #And I click the submit button
+    click_button "Save Person"
     #Then I should be on the admin people page
     #And I should see a message saying the user was successfully created
     #And the user should have received the Civic Commons Welcome email
