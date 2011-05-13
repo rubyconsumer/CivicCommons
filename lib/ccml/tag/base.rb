@@ -35,6 +35,7 @@ module CCML
         parse_url(url)
         update_opts_from_url_segments
         update_opts_from_url_fields
+        @renderer = MyRenderer.new(@host)
       end
 
       def index
@@ -98,6 +99,32 @@ module CCML
           elsif value =~ QUERY_STRING_PATTERN
             @opts[key] = @query_string
           end
+        end
+      end
+
+      private
+
+      # http://amberbit.com/blog/render-views-partials-outside-controllers-rails-3
+      class MyRenderer < AbstractController::Base
+        # include Rails modules
+        include AbstractController::Rendering
+        include AbstractController::Layouts
+        include AbstractController::Helpers
+        include AbstractController::Translation
+        include AbstractController::AssetPaths
+        include ActionController::UrlWriter
+
+        # include local helpers
+        Dir["#{Rails.root}/app/helpers/*_helper.rb"].each do |file|
+          helper File.basename(file, '_helper.rb').to_sym
+        end
+
+        # set required Rails configuration values
+        self.view_paths = "app/views"
+        self.config.assets_dir = ''
+
+        def initialize(host)
+          default_url_options[:host] = (host.nil? ? '/' : host)
         end
       end
 

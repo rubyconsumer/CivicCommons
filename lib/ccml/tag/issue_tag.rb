@@ -1,6 +1,7 @@
 class CCML::Tag::IssueTag < CCML::Tag::TagPair
 
   # 'index' method with no opts grabs issue id from segment_1
+  #
   # {ccml:issue}
   # <h1>Managed Issue: '{name}'</h1>
   # <ul>
@@ -39,7 +40,8 @@ class CCML::Tag::IssueTag < CCML::Tag::TagPair
   end
 
   # 'pages' method with no opts grabs issue id from segment_1
-  # {ccml:issue:pages id='id or cached-slug or segment'}
+  #
+  # {ccml:issue:pages id='<id or cached-slug or segment>'}
   # <h2>Issue Page: '{name}'</h2>
   # <ul>
   #   <li>ID: {id}</li>
@@ -60,8 +62,10 @@ class CCML::Tag::IssueTag < CCML::Tag::TagPair
     return nil
   end
 
+  # 'conversations' method with no opts grabs issue id from segment_1
+  #
   # <h1>Conversations</h1>
-  # {ccml:issue:convos}
+  # {ccml:issue:conversations}
   # <h2>Conversation: '{title}'</h2>
   # <ul>
   #   <li>ID: {id}</li>
@@ -90,7 +94,7 @@ class CCML::Tag::IssueTag < CCML::Tag::TagPair
   #   {if person}<li>Leader Email: {person.email} </li>{/if}
   #   <li>Summary: {summary} </li>
   # </ul>
-  # {/ccml:issue:convos}
+  # {/ccml:issue:conversations}
   def conversations
     @opts[:id] = @segments[1] unless @opts.has_key?(:id)
     @issue = Issue.find(@opts[:id])
@@ -101,6 +105,36 @@ class CCML::Tag::IssueTag < CCML::Tag::TagPair
 
   def convos
     return conversations
+  end
+
+  # 'conversation_band' method with no opts grabs issue id from segment_1
+  #
+  # {ccml:issue:conversation_band id='<id or cached-slug or segment>'}
+  # {ccml:issue:conversation_band id='<id or cached-slug or segment>'}{/ccml:issue:conversation_band}
+  def conversation_band
+    issue = get_issue
+    if issue
+      limit = @opts[:limit].to_i
+      if limit > 0
+        conversations = issue.conversations.slice(0, limit)
+      else
+        conversations = issue.conversations
+      end
+      return @renderer.render :partial => '/conversations/conversation_band', :locals => {:conversations => conversations}
+    else
+      return nil
+    end
+  end
+
+  private
+
+  def get_issue
+    @opts[:id] = @segments[1] unless @opts.has_key?(:id)
+    issue = Issue.find(@opts[:id])
+  rescue ActiveRecord::RecordNotFound => e
+    issue = nil
+  ensure
+    return issue
   end
 
 end

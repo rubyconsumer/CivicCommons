@@ -38,7 +38,7 @@ class CCML::Tag::RouteTag < CCML::Tag::SingleTag
     include ActionController::UrlWriter
 
     def initialize(host)
-      default_url_options[:host] = host
+      default_url_options[:host] = (host.nil? ? host : '')
     end
 
     def url(route, id)
