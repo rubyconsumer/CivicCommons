@@ -26,6 +26,10 @@ describe Conversation do
       @conversation.issues = []
       @conversation.should have_validation_error(:issues)
     end
+    it "is invalid with no owner" do
+      @conversation.owner = nil
+      @conversation.should have_validation_error(:issues)
+    end
   end
 
   describe "when retrieving all of the issues associated with a conversation" do

@@ -40,6 +40,7 @@ class Conversation < ActiveRecord::Base
   validates_length_of :issues, :minimum => 1, :on => :create,
     :message => "Please choose at least one issue that best relates to your conversation."
 
+  validates_presence_of :person
   validates_presence_of :title, :message => "Please choose a title for your conversation."
   validates_presence_of :summary, :message => "Please give us a short summary."
   validates_presence_of :zip_code, :message => "Please give us a zip code for a little geographic context."
@@ -70,13 +71,6 @@ class Conversation < ActiveRecord::Base
   def self.filtered(filter)
     raise "Undefined Filter :#{filter}" unless available_filter_names.include?(filter)
     scoped & self.send(available_filters[filter.to_sym])
-  end
-
-  def self.new_user_generated_conversation(params,person)
-    params.merge!(:person => person)
-    returning self.new(params) do |convo|
-      convo.user_generated = true
-    end
   end
 
   def self.sort
@@ -129,7 +123,7 @@ class Conversation < ActiveRecord::Base
   end
 
   def user_generated?
-    user_generated || person
+    from_community
   end
 
   # Return a comma-and-space-delimited list of the Issues
@@ -156,7 +150,7 @@ class Conversation < ActiveRecord::Base
   end
 
   def start_month_text
-    if started_at == nil
+    if started_at.nil?
       "?"
     else
       started_at.strftime("%B")
@@ -164,7 +158,7 @@ class Conversation < ActiveRecord::Base
   end
 
   def start_day
-    if started_at == nil
+    if started_at.nil?
       "?"
     else
       started_at.mday
