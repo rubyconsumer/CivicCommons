@@ -14,6 +14,8 @@ module CCML
 
       attr_reader :opts
 
+      attr_reader :renderer
+
       define_method(:qs) { return @query_string }
       define_method(:http?) { return @http }
       define_method(:https?) { return @https }
@@ -35,7 +37,7 @@ module CCML
         parse_url(url)
         update_opts_from_url_segments
         update_opts_from_url_fields
-        @renderer = MyRenderer.new(@host)
+        @renderer = MyRenderer.new(url)
       end
 
       def index
@@ -112,7 +114,11 @@ module CCML
         include AbstractController::Helpers
         include AbstractController::Translation
         include AbstractController::AssetPaths
-        include ActionController::UrlWriter
+        include Rails.application.routes.url_helpers
+
+        include ActionView::Helpers::AssetTagHelper
+        include ActionView::Helpers::TagHelper
+        include ERB::Util
 
         # include local helpers
         Dir["#{Rails.root}/app/helpers/*_helper.rb"].each do |file|
@@ -123,9 +129,11 @@ module CCML
         self.view_paths = "app/views"
         self.config.assets_dir = ''
 
-        def initialize(host)
-          default_url_options[:host] = (host.nil? ? '/' : host)
+        def initialize(url)
+          match = /^http[s]?:\/\/(?<host>(\w|[^\?\/:])+(:\d+)?).*$/i.match(url)
+          default_url_options[:host] = (match.nil? ? '/' : match[:host])
         end
+
       end
 
     end
