@@ -146,6 +146,7 @@ Civiccommons::Application.routes.draw do
       put 'lock_access',   on: :member
       put 'unlock_access', on: :member
     end
+    resources :user_registrations, only: [:new, :create]
   end
 
   namespace "api" do

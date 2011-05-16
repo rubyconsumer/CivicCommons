@@ -163,7 +163,11 @@ class ConversationsController < ApplicationController
 
   # POST /conversations
   def create
-    @conversation = Conversation.new_user_generated_conversation(params[:conversation], current_person)
+    params[:conversation].merge!({
+      :person => current_person,
+      :from_community => true
+    })
+    @conversation = Conversation.new(params[:conversation])
     @conversation.started_at = Time.now
     # Load @contributions to populate re-rendered :new form if save is unsuccessful
     @contributions = @conversation.contributions | @conversation.rejected_contributions

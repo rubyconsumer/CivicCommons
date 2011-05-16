@@ -14,6 +14,10 @@ class Admin::ConversationsController < Admin::DashboardController
   #POST admin/conversations/
   def create
     ActiveRecord::Base.transaction do
+      params[:conversation].merge!({
+        :person => current_person,
+        :from_community => false
+      })
       @conversation = Conversation.new(params[:conversation])
       @presenter = IngestPresenter.new(@conversation, params[:transcript_file])
 
