@@ -1,4 +1,5 @@
 module HelperMethods
+
   # Put helper methods you need to be available in all tests here.
 
   ###################################################################
@@ -12,6 +13,13 @@ module HelperMethods
     click_button 'Login'
   end
 
+  def logged_in_as_admin
+    user = Factory.create(:admin_person, declined_fb_auth: true)
+    visit new_person_session_path
+    fill_in 'Email', with: user.email
+    fill_in 'Password', with: user.password
+    click_button 'Login'
+  end
 
   def should_be_on(path)
     page.current_url.should match(Regexp.new(path))

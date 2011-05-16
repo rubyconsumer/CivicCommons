@@ -31,6 +31,11 @@
 </p>
 
 <p>
+  <b>Stylesheet Path:</b>
+  <%= link_to(@managed_issue_page.stylesheet_path, @managed_issue_page.stylesheet_path) unless @managed_issue_page.stylesheet_path.blank?%>
+</p>
+
+<p>
   <b>Template:</b>
   <br />
   <%= text_area(:managed_issue_page, :template, :cols => 95, :rows => 40, :disabled => 'disabled') %>

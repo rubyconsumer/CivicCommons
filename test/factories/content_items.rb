@@ -5,7 +5,7 @@ Factory.define :content_item do |f|
   f.summary "This is a post about this and that"
   f.body "This is a post about this and that and this where that is now and this is then."
   f.created_at 10.days.ago
-  f.published 1.day.ago.strftime("%m/%d/%Y")
+  f.published 1.day.ago
   f.association :author, :factory => :admin_person
 end
 
