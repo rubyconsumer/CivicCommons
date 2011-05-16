@@ -1,3 +1,4 @@
+<% contribution = ContributionPresenter.new(contribution) %>
 <div class='<%= classes(contribution) %>'>
   <% unless contribution.title.nil? %>
     <%= link_to contribution.title, contribution.url %>
@@ -10,9 +11,5 @@
     <% end %>
   <% end %>
   <p><%= contribution.content.html_safe %></p>
-  <% if contribution.issue && ! ( controller.controller_name == 'issues' && controller.action_name == 'show' ) %>
-  <p class="profile-meta">Contributed to <%= link_to( contribution.issue.name, issue_node_path( contribution ) ) %> on <%= contribution.created_at.strftime("%B %e, %Y") %></p>
-  <% elsif contribution.conversation %>
-  <p class="profile-meta">Contributed to <%= link_to( contribution.conversation.title, conversation_node_path( contribution ) ) %> on <%= contribution.created_at.strftime("%B %e, %Y") %></p>
-  <% end %>
+  <p class="profile-meta">Contributed to <%= link_to(contribution.parent_title, contribution.node_path) %> on <%= contribution.created_at.strftime("%B %e, %Y") %></p>
 </div>
