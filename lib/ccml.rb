@@ -299,6 +299,8 @@ module CCML
     sub = tag.send(method.to_sym)
     return sub
   rescue => e
+    #puts "========================>"
+    #puts "#{e.class} - #{e.message}"
     raise CCML::Error::TagMethodNotFoundError, "Unable to find method '#{method}' of '#{tag.class}' object."
   end
 
