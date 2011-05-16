@@ -44,8 +44,17 @@ module AvatarHelper
     else
       local_profile_image(person, size, options)
     end
-  end  
-  
+  end
+
+  def profile_image_url(person, size=20, options = {})
+    if person.facebook_authenticated? && !person.avatar?
+      type = options.delete(:type) || :square
+      person.facebook_profile_pic_url(type)
+    else
+      person.avatar.url(:standard)
+    end
+  end
+
   # Gets image from facebook graph
   # https://graph.facebook.com/#{uid}/picture
   # optional params: type=small|square|large
