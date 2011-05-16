@@ -107,6 +107,10 @@ module ConversationsHelper
     conversation_path(contribution.conversation) + "#node-#{contribution.id}"
   end
 
+  def conversation_node_url(contribution)
+    conversation_url(contribution.conversation, :anchor => "node-#{contribution.id}", :host => 'localhost:3000')
+  end
+
   def filter_title(filter, suffix = nil)
     case filter.to_sym
     when :active

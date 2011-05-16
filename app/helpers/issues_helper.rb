@@ -34,4 +34,8 @@ module IssuesHelper
   def issue_node_path(contribution)
     issue_path(contribution.issue) + "#node-#{contribution.id}"
   end
+
+  def issue_node_url(contribution)
+    issue_url(contribution.issue, :anchor => "node-#{contribution.id}", :host => 'localhost:3000')
+  end
 end
