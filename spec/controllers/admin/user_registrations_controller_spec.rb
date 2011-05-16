@@ -63,7 +63,7 @@ module Admin
           person.should_not be_valid
         end
 
-        it "renders the new template" do
+        it "Renders the new template" do
           person = Person.new
           person.stub(:confirm!).and_return(false)
 

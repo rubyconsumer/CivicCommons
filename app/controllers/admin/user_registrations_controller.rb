@@ -7,6 +7,7 @@ class Admin::UserRegistrationsController < Admin::DashboardController
   def create
     @person = Person.new(params[:person])
     if @person.confirm!
+      flash[:notice] = 'Thank you for registering with the Civic Commons'
       redirect_to admin_people_path
     else
       render :new

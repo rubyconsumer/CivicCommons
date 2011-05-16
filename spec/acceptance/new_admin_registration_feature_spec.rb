@@ -8,6 +8,7 @@ feature "Admin User Registration Tool", %q{
 
   before(:each) do
     logged_in_as_admin
+    ActionMailer::Base.deliveries.clear
   end
 
   scenario "admin wants to register a user manually" do
@@ -29,8 +30,11 @@ feature "Admin User Registration Tool", %q{
     #And I click the submit button
     click_button "Save Person"
     #Then I should be on the admin people page
-    #And I should see a message saying the user was successfully created
+    current_url.should include('/admin/people')
+    #And I should see a message thanking the user for registering
+    page.should have_content('Thank you for registering with the Civic Commons')
     #And the user should have received the Civic Commons Welcome email
+    ActionMailer::Base.deliveries.length.should == 2
   end
 
   scenario "an admin wants to be able to confirm users that have signed up but have not received or completed the confirmation letter process" do
