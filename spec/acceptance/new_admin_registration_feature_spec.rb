@@ -27,6 +27,7 @@ feature "Admin User Registration Tool", %q{
     fill_in "Name", with: 'Jane Doe'
     fill_in "Email", with: 'jdoe@testaccount.com'
     fill_in "Zip Code", with: '44114'
+    fill_in "Password", with: 'abc123'
     #And I click the submit button
     click_button "Save Person"
     #Then I should be on the admin people page

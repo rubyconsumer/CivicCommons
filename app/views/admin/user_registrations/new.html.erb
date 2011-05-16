@@ -13,6 +13,12 @@
   </div>
 
   <div>
+    <%= person.label :password %>
+    <br />
+    <%= person.password_field :password %>
+  </div>
+
+  <div>
     <%= person.label :zip_code, 'Zip Code' %>
     <br />
     <%= person.text_field :zip_code %>
