@@ -3,10 +3,10 @@ class ConversationsController < ApplicationController
 
   # GET /conversations
   def index
-    @active = Conversation.includes(:participants).latest_updated.limit(3)
-    @popular = Conversation.includes(:participants).get_top_visited(3)
-    @recent = Conversation.includes(:participants).latest_created.limit(3)
-    @recommended = Conversation.includes(:participants).recommended.limit(3)
+    @active = Conversation.latest_updated.limit(3)
+    @popular = Conversation.get_top_visited(3)
+    @recent = Conversation.latest_created.limit(3)
+    @recommended = Conversation.recommended.limit(3)
 
     @regions = Region.all
     @recent_items = TopItem.newest_items(3).with_items_and_associations.collect(&:item)
@@ -20,7 +20,7 @@ class ConversationsController < ApplicationController
 
   def filter
     @filter = params[:filter]
-    @conversations = Conversation.includes(:participants).filtered(@filter).paginate(:page => params[:page], :per_page => 12)
+    @conversations = Conversation.filtered(@filter).paginate(:page => params[:page], :per_page => 12)
 
     @regions = Region.all
     @recent_items = TopItem.newest_items(3).with_items_and_associations.collect(&:item)
