@@ -28,7 +28,7 @@ describe Conversation do
     end
     it "is invalid with no owner" do
       @conversation.owner = nil
-      @conversation.should have_validation_error(:issues)
+      @conversation.should have_validation_error(:owner)
     end
   end
 
@@ -139,7 +139,7 @@ describe Conversation do
         "5" => SuggestedAction.new.attributes
       }
 
-      @conversation = Factory.build(:user_generated_conversation, :person => @person)
+      @conversation = Factory.build(:user_generated_conversation, :owner => @person)
     end
 
     it "default user_generated_conversation factory should be valid" do
@@ -147,7 +147,7 @@ describe Conversation do
     end
 
     it "raises an error if conversation created without owner" do
-      @conversation.person = nil
+      @conversation.owner = nil
       @conversation.should_not be_valid
     end
 
@@ -160,7 +160,7 @@ describe Conversation do
     it "raises an error if conversation created with multiple contributions" do
       @contributions[1] = Factory.build(:question, :conversation => nil, :parent => nil).attributes
       @conversation = Factory.build(:user_generated_conversation,
-        :person => @person,
+        :owner => @person,
         :contributions => [],
         :contributions_attributes => Marshal::load(Marshal.dump(@contributions)))
       @conversation.save

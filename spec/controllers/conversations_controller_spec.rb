@@ -126,7 +126,7 @@ describe ConversationsController do
 
     describe "with valid params" do
       before(:each) do
-        Conversation.stub(:new_user_generated_conversation).with({}, @person) { mock_conversation(:save => true) }
+        Conversation.stub(:new) { mock_conversation(:save => true) }
       end
 
       it "assigns created conversation to @conversation" do
@@ -135,8 +135,11 @@ describe ConversationsController do
       end
 
       it "creates conversation with checked issue_ids" do
-        Conversation.should_receive(:new_user_generated_conversation).with({'issue_ids' => ["5","10"]}, @person)
+        #Conversation.should_receive(:new).with({'issue_ids' => ["5","10"]})
         post :create, :conversation => {:issue_ids => ["5", "10"]}
+        assigns(:conversation).issues.each do |issue|
+          [5, 10].should include issue.id
+        end
       end
 
       it "redirects to invite page to Send Invitations" do
@@ -148,7 +151,7 @@ describe ConversationsController do
 
     describe "with invalid params" do
       before(:each) do
-        Conversation.stub(:new_user_generated_conversation) { mock_conversation(:save => false) }
+        Conversation.stub(:new) { mock_conversation(:save => false) }
       end
 
       it "renders :new template" do

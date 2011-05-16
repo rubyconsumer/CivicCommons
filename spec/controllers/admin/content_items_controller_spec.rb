@@ -77,6 +77,7 @@ module Admin
 
         before(:each) do
           params[:author] = author
+          params.delete(:published)
           post :create, :content_item => params
         end
 
@@ -130,6 +131,7 @@ module Admin
 
         before(:each) do
           params[:author] = author
+          params.delete(:published)
         end
 
         it "does not call Embedly when no external link is given" do

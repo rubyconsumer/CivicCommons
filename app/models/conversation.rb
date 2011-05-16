@@ -23,7 +23,7 @@ class Conversation < ActiveRecord::Base
 
   belongs_to :person, :foreign_key => "owner"
 
-  attr_accessor :user_generated, :rejected_contributions
+  attr_accessor :rejected_contributions
 
   has_attached_file :image,
     :styles => {
@@ -34,13 +34,13 @@ class Conversation < ActiveRecord::Base
     :path => IMAGE_ATTACHMENT_PATH,
     :default_url => '/images/convo_img_:style.gif'
 
-  validates :person, :must_be_logged_in => true, :if => :user_generated?
-  validates_length_of :contributions, :is => 1, :on => :create, :if => :user_generated?,
+  validates :owner, :must_be_logged_in => true
+  validates_length_of :contributions, :is => 1, :on => :create, :if => :from_community?,
     :message => "Please get the ball rolling with the first comment, question, or contribution of some sort."
   validates_length_of :issues, :minimum => 1, :on => :create,
     :message => "Please choose at least one issue that best relates to your conversation."
 
-  validates_presence_of :person
+  validates_presence_of :owner
   validates_presence_of :title, :message => "Please choose a title for your conversation."
   validates_presence_of :summary, :message => "Please give us a short summary."
   validates_presence_of :zip_code, :message => "Please give us a zip code for a little geographic context."
@@ -87,6 +87,10 @@ class Conversation < ActiveRecord::Base
     end
   end
 
+  def user_generated?
+    from_community
+  end
+
   # Define our own method for allowing fields_for :contribution, rather
   # than using accepts_nested_association :contributions.
   # We need to use our custom Contribution builder to create contributions
@@ -120,10 +124,6 @@ class Conversation < ActiveRecord::Base
 
   def staff_pick?
     staff_pick
-  end
-
-  def user_generated?
-    from_community
   end
 
   # Return a comma-and-space-delimited list of the Issues
