@@ -30,7 +30,7 @@
     <h1>And there are some new conversations you might be interested in:</h1>
   <% end %>
   <% @new_conversations.each do |conversation| %>
-    <h2><%= conversation.title %></h1>
+    <h2><%= conversation.title %></h2>
     <p><%= conversation.summary.html_safe %></p>
     <p>Started by <%= conversation.person.name %> <%= link_to 'Check it out', "#{conversation_url(conversation)}" %></p>
   <% end %>
