@@ -5,7 +5,7 @@ class Admin::PeopleController < Admin::DashboardController
   def index
     @people = Person.all
   end
-  
+
   #GET admin/proxies
   def proxies
     @people = Person.proxy_accounts
@@ -26,14 +26,14 @@ class Admin::PeopleController < Admin::DashboardController
       redirect_to admin_people_path
     else
       render new_admin_person_path
-    end  
-  end  
-  
+    end
+  end
+
   #GET admin/people/1/edit
   def edit
     @person = Person.find(params[:id])
   end
-  
+
   #PUT admin/people/1
   def update
     @person = Person.find(params[:id])
@@ -57,7 +57,7 @@ class Admin::PeopleController < Admin::DashboardController
   def show
     @person = Person.find(params[:id])
   end
-  
+
   #DELETE admin/people/1
   def destroy
     @person = Person.find(params[:id])
@@ -66,6 +66,12 @@ class Admin::PeopleController < Admin::DashboardController
       format.html { redirect_to(admin_people_path) }
       format.json { redirect_to (admin_people_path)}
     end
+  end
+
+  def confirm
+    @person = Person.find(params[:id])
+    @person.confirm!
+    redirect_to admin_people_path
   end
 
   protected
