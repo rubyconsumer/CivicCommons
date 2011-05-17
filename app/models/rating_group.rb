@@ -1,6 +1,6 @@
 class RatingGroup < ActiveRecord::Base
 
-  include TopItemable
+  #include TopItemable
 
   belongs_to :person
   belongs_to :conversation
