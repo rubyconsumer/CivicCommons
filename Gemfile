@@ -57,6 +57,7 @@ group :test do
   gem 'autotest-fsevent'
   gem 'cucumber', '~>0.10.0'
   gem "factory_girl_rails", '~>1.0.1'
+  gem 'no_peeping_toms', :git => 'git://github.com/alindeman/no_peeping_toms.git'
   gem "ruby-debug19"
   gem 'webmock'
   # Required by WebMock but breaks everything at 2.2.5
