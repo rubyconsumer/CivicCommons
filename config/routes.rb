@@ -145,6 +145,7 @@ Civiccommons::Application.routes.draw do
       get 'proxies',       on: :collection
       put 'lock_access',   on: :member
       put 'unlock_access', on: :member
+      put 'confirm',       on: :member
     end
     resources :user_registrations, only: [:new, :create]
   end
