@@ -39,18 +39,25 @@ feature "Admin User Registration Tool", %q{
   end
 
   scenario "an admin wants to be able to confirm users that have signed up but have not received or completed the confirmation letter process" do
-    pending
+    #Given there is an unconfirmed user
+    Factory.create(:normal_person)
     #When I visit the current people page
+    visit admin_people_path
     #Then I should see a confirm button for each user
+    page.should have_link('Confirm')
   end
 
   scenario "an admin wants to be able to confirm users that have signed up but have not received or completed the confirmation letter process" do
-    pending
-    #Given I am on the current people page
-    #And There is a user named John Doe that is not confirmed
+    #Given There is a user named Jose Doe that is not confirmed
+    jose = Factory.create(:normal_person, name: 'Jose Doe')
+    #And I am on the current people page
+    visit admin_people_path
     #When I click on the confirm button for John Doe
+    click_link('Confirm')
     #Then I should be on the current people page
-    #And John Doe should now be confirmed
+    visit admin_people_path
+    #And Jose Doe should now be confirmed
+    jose.confirmed?
   end
 
 end
