@@ -34,9 +34,18 @@ describe ActivityObserver do
 
   end
 
-  context "On update" do
-    it 'creates a new activity record when a contribution is confirmed'
-    it 'creates a new activity record when a rating group is updated'
+  context "after saving" do
+
+    it 'creates a new activity record when a contribution is confirmed' do
+      contribution = Factory.create(:contribution)
+      a = Activity.last
+      a.item_id.should == contribution.id
+      a.item_type.should == 'Contribution'
+    end
+
+    it 'does not create a new activity record for contributions on preview'
+    it 'does not create a new activity record on update for contribution'
+
   end
 
   context "On destroy" do
