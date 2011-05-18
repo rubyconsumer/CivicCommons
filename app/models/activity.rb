@@ -10,7 +10,8 @@ class Activity < ActiveRecord::Base
 
   def initialize(attributes = nil)
 
-    if valid_type?(attributes)
+    if Activity.valid_type?(attributes)
+      attributes = attributes.becomes(Contribution) if attributes.is_a?(Contribution)
       attributes = {
         item_id: attributes.id,
         item_type: attributes.class.to_s,
@@ -21,7 +22,7 @@ class Activity < ActiveRecord::Base
     super(attributes)
   end
 
-  def valid_type?(item)
+  def self.valid_type?(item)
     ok = false
     VALID_TYPES.each do |type|
       if item.is_a?(type) && item.class != TopLevelContribution
@@ -30,6 +31,24 @@ class Activity < ActiveRecord::Base
       end
     end
     return ok
+  end
+
+  def self.delete(id)
+    if Activity.valid_type?(id)
+      id = id.becomes(Contribution) if id.is_a?(Contribution)
+      Activity.delete_all("item_id = #{id.id} and item_type like '#{id.class}'")
+    else
+      super(id)
+    end
+  end
+
+  def self.destroy(id)
+    if Activity.valid_type?(id)
+      id = id.becomes(Contribution) if id.is_a?(Contribution)
+      Activity.destroy_all("item_id = #{id.id} and item_type like '#{id.class}'")
+    else
+      super(id)
+    end
   end
 
 end
