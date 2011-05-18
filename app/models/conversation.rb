@@ -65,8 +65,16 @@ class Conversation < ActiveRecord::Base
   end
 
   def self.most_active
-    contributions = Contribution.where("conversation_id IS NOT NULL").where("type != 'TopLevelContributions'").where("created_at < ?", Time.now - 60.days).group(:conversation_id).size
-    
+    conversation_hash = Contribution.where("conversation_id IS NOT NULL").
+      where("type != 'TopLevelContributions'").
+      where("created_at < ?", Time.now - 60.days).
+      group(:conversation_id).order('count_all DESC').count
+
+    conversation_ids = conversation_hash.each_key.map do |key|
+      key
+    end
+
+    Conversation.find(conversation_ids)
   end
 
   def self.recommended
