@@ -65,22 +65,12 @@ class Conversation < ActiveRecord::Base
   end
 
   def self.most_active
-    conversation_hash = Contribution.where("conversation_id IS NOT NULL").
-      where("type != 'TopLevelContributions'").
-      where("created_at < ?", Time.now - 60.days).
-      group(:conversation_id).order('count_all DESC').count
-
-    conversation_ids = conversation_hash.each_key.map { |conversation_id| conversation_id }
-    conversations = Conversation.where(:id => conversation_ids)
-
-    # reorder the conversations to follow the most_active requirements
-    # TODO needs fixed to return an Arel object that can be limited still
-    new_array = []
-    conversations.each do |conversation|
-      new_array[conversation_ids.index(conversation.id)] = conversation
-    end
-
-    new_array
+    Conversation.select('conversations.*, COUNT(*) AS count_all').
+      joins(:contributions).
+      where("contributions.type != 'TopLevelContributions'").
+      where("contributions.created_at < ?", Time.now - 60.days).
+      group('conversations.id').
+      order('count_all DESC')
   end
 
   def self.recommended
