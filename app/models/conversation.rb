@@ -70,11 +70,8 @@ class Conversation < ActiveRecord::Base
       where("created_at < ?", Time.now - 60.days).
       group(:conversation_id).order('count_all DESC').count
 
-    conversation_ids = conversation_hash.each_key.map do |key|
-      key
-    end
-
-    Conversation.find(conversation_ids)
+    conversation_ids = conversation_hash.each_key.map { |conversation_id| conversation_id }
+    Conversation.where(:id => conversation_ids)
   end
 
   def self.recommended
