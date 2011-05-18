@@ -30,13 +30,67 @@ describe Activity do
 
   end
 
-  context "Creating new activity records" do
+  context "Creates new activity object from existing active record object" do
 
-    it "Creates a new activity from valid observerd object"
-    it "Returns true when new activity record is successfully created"
-    it "Returns false if observed object was nil"
-    it "Returns false if activity fails validation"
-    it "Does not create a new acivity object on failed validation"
+    it "Creates a new activity from valid conversation object" do
+      obj = Factory.build(:conversation, id: 1, created_at: Time.now)
+      Activity.new(obj).should be_valid
+    end
+
+    it "Creates a new activity from valid comment object" do
+      obj = Factory.build(:comment, id: 1, created_at: Time.now)
+      Activity.new(obj).should be_valid
+    end
+
+    it "Creates a new activity from valid question object" do
+      obj = Factory.build(:question, id: 1, created_at: Time.now)
+      Activity.new(obj).should be_valid
+    end
+
+    it "Creates a new activity from valid suggested action object" do
+      obj = Factory.build(:suggested_action, id: 1, created_at: Time.now)
+      Activity.new(obj).should be_valid
+    end
+
+    it "Creates a new activity from valid link object" do
+      obj = Factory.build(:link, id: 1, created_at: Time.now)
+      Activity.new(obj).should be_valid
+    end
+
+    it "Creates a new activity from valid answer object" do
+      obj = Factory.build(:answer, id: 1, created_at: Time.now)
+      Activity.new(obj).should be_valid
+    end
+
+    it "Creates a new activity from valid ebmedly object object" do
+      obj = Factory.build(:embedly_contribution, id: 1, created_at: Time.now)
+      Activity.new(obj).should be_valid
+    end
+
+    it "Creates a new activity from valid attached file object" do
+      obj = Factory.build(:attached_file, id: 1, created_at: Time.now)
+      Activity.new(obj).should be_valid
+    end
+
+    it "Creates a new activity from valid issue object" do
+      obj = Factory.build(:issue, id: 1, created_at: Time.now)
+      Activity.new(obj).should be_valid
+    end
+
+    it "Creates a new activity from valid rating group object" do
+      obj = Factory.build(:rating_group, id: 1, created_at: Time.now)
+      Activity.new(obj).should be_valid
+    end
+
+    it "Does not create a new acivity on top level contribution" do
+      obj = Factory.build(:top_level_contribution, id: 1, created_at: Time.now)
+      Activity.new(obj).should_not be_valid
+    end
+
+    it "Does not create a new acivity on non supported active record type" do
+      obj = Factory.build(:normal_person, id: 1, created_at: Time.now)
+      Activity.new(obj).should_not be_valid
+    end
 
   end
 

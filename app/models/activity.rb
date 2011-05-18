@@ -8,25 +8,28 @@ class Activity < ActiveRecord::Base
 
   VALID_TYPES = [ Conversation, Contribution, Issue, RatingGroup ]
 
-  def initialze(attributes = nil)
-    if is_valid_type?(attributes)
-      @item_id = attributes.id
-      @item_type = attributes.class.to_s
-      @item_created_at = attributes.created_at
-    else
-      return super(attributes)
+  def initialize(attributes = nil)
+
+    if valid_type?(attributes)
+      attributes = {
+        item_id: attributes.id,
+        item_type: attributes.class.to_s,
+        item_created_at: attributes.created_at
+      }
     end
+
+    super(attributes)
   end
 
-  def is_valid_type?(item)
+  def valid_type?(item)
     ok = false
     VALID_TYPES.each do |type|
-      if item.is_a?(type)
+      if item.is_a?(type) && item.class != TopLevelContribution
         ok = true
         break
       end
-      return ok
     end
+    return ok
   end
 
 end
