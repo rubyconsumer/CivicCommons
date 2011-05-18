@@ -9,4 +9,8 @@ class ActivityObserver < ActiveRecord::Observer
     end
   end
 
+  def before_destroy(model)
+    Activity.destroy(model)
+  end
+
 end

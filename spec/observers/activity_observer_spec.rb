@@ -40,10 +40,31 @@ describe ActivityObserver do
   end
 
   context "On destroy" do
-    it 'removes activity records when a conversation is deleted/destroyed'
-    it 'removes activity records when a issue is deleted/destroyed'
-    it 'removes activity records when a contribution is deleted/destroyed'
-    it 'removes activity records when a rating group is deleted/destroyed'
+
+    it 'removes activity records when a conversation is deleted/destroyed' do
+      conversation = Factory.create(:conversation)
+      Conversation.destroy(conversation)
+      Activity.where(item_id: conversation.id, item_type: 'Conversation').should be_empty
+    end
+
+    it 'removes activity records when an issue is deleted/destroyed' do
+      issue = Factory.create(:issue)
+      Issue.destroy(issue)
+      Activity.where(item_id: issue.id, item_type: 'Issue').should be_empty
+    end
+
+    it 'removes activity records when a contribution is deleted/destroyed' do
+      contribution = Factory.create(:contribution)
+      Contribution.destroy(contribution)
+      Activity.where(item_id: contribution.id, item_type: 'Contribution').should be_empty
+    end
+
+    it 'removes activity records when a rating group is deleted/destroyed' do
+      rating_group = Factory.create(:rating_group)
+      RatingGroup.destroy(rating_group)
+      Activity.where(item_id: rating_group.id, item_type: 'RatingGroup').should be_empty
+    end
+
   end
 
 end
