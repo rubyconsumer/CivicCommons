@@ -1,6 +1,14 @@
 require 'spec_helper'
 
 describe RatingGroup do
+
+  before(:all) do
+    ActiveRecord::Observer.disable_observers
+  end
+  after(:all) do
+    ActiveRecord::Observer.enable_observers
+  end
+
   describe "toggle rating methods" do
     before(:each) do
       @current_person = Factory.create(:normal_person)

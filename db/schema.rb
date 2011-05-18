@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110520173225) do
+ActiveRecord::Schema.define(:version => 20110523175337) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -117,7 +117,6 @@ ActiveRecord::Schema.define(:version => 20110520173225) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "title"
-    t.binary   "image"
     t.string   "image_file_name"
     t.string   "image_content_type"
     t.integer  "image_file_size"
@@ -206,6 +205,16 @@ ActiveRecord::Schema.define(:version => 20110520173225) do
   end
 
   add_index "issues", ["cached_slug"], :name => "index_issues_on_cached_slug", :unique => true
+
+  create_table "managed_issue_page_histories", :force => true do |t|
+    t.integer  "issue_page_id", :null => false
+    t.integer  "created_by",    :null => false
+    t.text     "content",       :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "managed_issue_page_histories", ["issue_page_id"], :name => "index_managed_issue_page_histories_on_issue_page_id"
 
   create_table "managed_issue_pages", :force => true do |t|
     t.string   "name",            :null => false
@@ -332,9 +341,15 @@ ActiveRecord::Schema.define(:version => 20110520173225) do
     t.integer  "item_id"
     t.string   "item_type"
     t.datetime "item_created_at"
-    t.decimal  "recent_rating",   :precision => 3, :scale => 2
-    t.integer  "recent_visits"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "conversation_id"
+    t.integer  "issue_id"
+    t.text     "activity_cache"
   end
+
+  add_index "top_items", ["conversation_id"], :name => "conversations_index"
+  add_index "top_items", ["issue_id"], :name => "issues_index"
 
   create_table "visits", :force => true do |t|
     t.integer  "person_id"

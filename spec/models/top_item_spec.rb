@@ -1,6 +1,7 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe TopItem, "when retrieving the top items by date" do
+pending 'To be removed after ActivityObserver complete'
 
   before(:each) do
     @seven_day_contribution = Factory.create(:top_level_contribution, {:created_at=>(Time.now - 7.days), :title => "Seven Day Contribution"})

@@ -1,7 +1,14 @@
 require 'spec_helper'
 
 describe Issue do
-  
+
+  before(:all) do
+    ActiveRecord::Observer.disable_observers
+  end
+  after(:all) do
+    ActiveRecord::Observer.enable_observers
+  end
+
   def given_3_issues
     @issue1 = Factory.create(:issue, {:created_at => (Time.now - 3.seconds), :updated_at => (Time.now - 3.seconds), :name => 'A first issue'})
     @issue2 = Factory.create(:issue, {:created_at => (Time.now - 2.seconds), :updated_at => (Time.now - 2.seconds), :name => 'Before I had a problem'})
