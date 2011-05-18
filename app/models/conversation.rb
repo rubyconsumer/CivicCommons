@@ -71,7 +71,16 @@ class Conversation < ActiveRecord::Base
       group(:conversation_id).order('count_all DESC').count
 
     conversation_ids = conversation_hash.each_key.map { |conversation_id| conversation_id }
-    Conversation.where(:id => conversation_ids)
+    conversations = Conversation.where(:id => conversation_ids)
+
+    # reorder the conversations to follow the most_active requirements
+    # TODO needs fixed to return an Arel object that can be limited still
+    new_array = []
+    conversations.each do |conversation|
+      new_array[conversation_ids.index(conversation.id)] = conversation
+    end
+
+    new_array
   end
 
   def self.recommended
