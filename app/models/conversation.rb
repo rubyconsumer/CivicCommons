@@ -54,7 +54,7 @@ class Conversation < ActiveRecord::Base
   def self.available_filters
     {
       :recommended => :recommended,
-      :active => :latest_updated,
+      :active => :most_active,
       :popular => :get_top_visited,
       :recent => :latest_created
     }
@@ -62,6 +62,11 @@ class Conversation < ActiveRecord::Base
 
   def self.available_filter_names
     available_filters.keys.collect(&:to_s)
+  end
+
+  def self.most_active
+    contributions = Contribution.where("conversation_id IS NOT NULL").where("type != 'TopLevelContributions'").where("created_at < ?", Time.now - 60.days).group(:conversation_id).size
+    
   end
 
   def self.recommended
