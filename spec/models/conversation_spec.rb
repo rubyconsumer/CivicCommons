@@ -2,13 +2,6 @@ require 'spec_helper'
 
 describe Conversation do
 
-  before(:all) do
-    ActiveRecord::Observer.disable_observers
-  end
-  after(:all) do
-    ActiveRecord::Observer.enable_observers
-  end
-
   context "Associations" do
     it { should have_many :contributions  }
     it { should have_attached_file :image }

@@ -2,13 +2,6 @@ require 'spec_helper'
 
 describe Contribution do
 
-  before(:all) do
-    ActiveRecord::Observer.disable_observers
-  end
-  after(:all) do
-    ActiveRecord::Observer.enable_observers
-  end
-
   describe "when creating a TopLevelContribution for a conversation" do
 
     before(:each) do
