@@ -68,7 +68,7 @@ class Conversation < ActiveRecord::Base
     Conversation.select('conversations.*, COUNT(*) AS count_all').
       joins(:contributions).
       where("contributions.type != 'TopLevelContributions'").
-      where("contributions.created_at < ?", Time.now - 60.days).
+      where("contributions.created_at > ?", Time.now - 60.days).
       group('conversations.id').
       order('count_all DESC')
   end
