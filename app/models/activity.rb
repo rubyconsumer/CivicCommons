@@ -2,6 +2,8 @@ class Activity < ActiveRecord::Base
 
   set_table_name "top_items"
 
+  belongs_to :item, :polymorphic => true
+
   validates :item_id, presence: true
   validates :item_type, presence: true
   validates :item_created_at, presence: true
