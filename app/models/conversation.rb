@@ -65,12 +65,12 @@ class Conversation < ActiveRecord::Base
   end
 
   def self.most_active
-    Conversation.select('conversations.*, COUNT(*) AS count_all').
+    Conversation.select('conversations.*, COUNT(*) AS count_all, MAX(contributions.created_at) AS max_contributions_created_at').
       joins(:contributions).
-      where("contributions.type != 'TopLevelContributions'").
+      where("contributions.type != 'TopLevelContribution'").
       where("contributions.created_at > ?", Time.now - 60.days).
       group('conversations.id').
-      order('count_all DESC')
+      order('count_all DESC, max_contributions_created_at DESC')
   end
 
   def self.recommended

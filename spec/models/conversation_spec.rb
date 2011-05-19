@@ -126,14 +126,52 @@ describe Conversation do
     end
 
     describe 'most_active filter' do
-      it 'will return conversations ordered by total non-TopLevelContributions descending from past 60 days' do
-        @conversation = Factory.create(:conversation)
-        @contribution = Factory.create(:contribution, :conversation => @conversation, :parent => nil)
-        @top_level_contribution = Factory.create(:top_level_contribution, :conversation => @conversation)
-        @nested_contribution = Factory.create(:contribution, :parent => @top_level_contribution, :conversation => @conversation)
+      it 'will not return conversations if they have no contributions' do
+        Factory.create(:conversation, :contributions => [])
+        Conversation.filtered('active').all.should be_empty
+        Conversation.most_active.all.should be_empty
+      end
 
-        Conversation.filtered('active').all.first.should == @conversation
-        Conversation.most_active.all.first.should == @conversation
+      it 'will not return conversations if they are only of type TopLevelContribution' do
+        conversation = Factory.create(:conversation)
+        Factory.create(:top_level_contribution, :conversation => conversation)
+        Conversation.filtered('active').all.should be_empty
+        Conversation.most_active.all.should be_empty
+      end
+
+      it 'will return conversations with any contributions that are within 60 days' do
+        conversation = Factory.create(:conversation, :contributions => [])
+        top_level_contribution = Factory.create(:top_level_contribution, :conversation => conversation)
+        Factory.create(:contribution, :parent => top_level_contribution, :conversation => conversation,
+          :created_at => (Time.now - 59.days), :updated_at => (Time.now - 30.seconds))
+        Conversation.filtered('active').all.first.should == conversation
+        Conversation.most_active.all.first.should == conversation
+      end
+
+      it 'will not return conversations with contributions that are all older than 60 days' do
+        conversation = Factory.create(:conversation, :contributions => [])
+        top_level_contribution = Factory.create(:top_level_contribution, :conversation => conversation)
+        Factory.create(:contribution, :parent => top_level_contribution, :conversation => conversation,
+          :created_at => (Time.now - 61.days), :updated_at => (Time.now - 30.seconds))
+        Conversation.filtered('active').all.should be_empty
+        Conversation.most_active.all.should be_empty
+      end
+
+      it 'will return the conversation ordered by newest contribution descending if number of contributions is the same' do
+        old_conversation = Factory.create(:conversation, :contributions => [])
+        top_level_contribution = Factory.create(:top_level_contribution, :conversation => old_conversation)
+        Factory.create(:contribution, :parent => top_level_contribution, :conversation => old_conversation,
+          :created_at => (Time.now - 59.days), :updated_at => (Time.now - 30.seconds))
+
+        new_conversation = Factory.create(:conversation, :contributions => [])
+        top_level_contribution = Factory.create(:top_level_contribution, :conversation => new_conversation)
+        Factory.create(:contribution, :parent => top_level_contribution, :conversation => new_conversation,
+          :created_at => (Time.now - 1.days), :updated_at => (Time.now - 30.seconds))
+
+        Conversation.filtered('active').all.first.should == new_conversation
+        Conversation.most_active.all.first.should == new_conversation
+        Conversation.filtered('active').all.last.should == old_conversation
+        Conversation.most_active.all.last.should == old_conversation
       end
     end
   end
