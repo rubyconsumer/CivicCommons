@@ -45,9 +45,9 @@ class ContributionPresenter < PresenterBase
 
   def node_url
     if parent_conversation?
-      conversation_node_url( @object )
+      conversation_node_url( @object, host: request.host )
     elsif parent_issue?
-      issue_node_url( @object )
+      issue_node_url( @object, host: request.host )
     end
   end
 

@@ -15,7 +15,7 @@ xml.rss :version => "2.0", 'xmlns:atom' => "http://www.w3.org/2005/Atom" do
     xml.pubDate Time.now.rfc822
     xml.lastBuildDate Time.now.rfc822
     for contribution in @contributions
-      contribution = ContributionPresenter.new(contribution)
+      contribution = ContributionPresenter.new(contribution, request)
       xml.item do
         xml.title contribution.parent_title
         xml.link contribution.node_url

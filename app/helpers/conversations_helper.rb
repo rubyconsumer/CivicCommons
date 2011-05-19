@@ -104,11 +104,15 @@ module ConversationsHelper
   end
 
   def conversation_node_path(contribution)
-    conversation_path(contribution.conversation) + "#node-#{contribution.id}"
+    conversation_path(contribution.conversation, anchor: "node-#{contribution.id}")
   end
 
-  def conversation_node_url(contribution)
-    conversation_url(contribution.conversation, :anchor => "node-#{contribution.id}", :host => 'localhost:3000')
+  def conversation_node_url(contribution, options = {})
+    options ||= {}
+    if Hash === options
+      options[:anchor] ||= "node-#{contribution.id}"
+    end
+    conversation_url(contribution.conversation, options)
   end
 
   def filter_title(filter, suffix = nil)
