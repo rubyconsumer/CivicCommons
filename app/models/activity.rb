@@ -2,7 +2,7 @@ class Activity < ActiveRecord::Base
 
   set_table_name "top_items"
 
-  belongs_to :item, :polymorphic => true
+  belongs_to :item, polymorphic: true
 
   validates :item_id, presence: true
   validates :item_type, presence: true
@@ -50,6 +50,14 @@ class Activity < ActiveRecord::Base
       Activity.destroy_all("item_id = #{id.id} and item_type like '#{id.class}'")
     else
       super(id)
+    end
+  end
+
+  def self.most_recent_activity(limit = nil)
+    if limit.nil?
+      Activity.order('created_at desc')
+    else
+      Activity.order('created_at desc').limit(limit)
     end
   end
 
