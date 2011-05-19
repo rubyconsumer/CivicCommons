@@ -124,6 +124,18 @@ describe Conversation do
         lambda { Conversation.filtered(filter_name) }.should_not raise_error
       end
     end
+
+    describe 'most_active filter' do
+      it 'will return conversations ordered by total non-TopLevelContributions descending from past 60 days' do
+        @conversation = Factory.create(:conversation)
+        @contribution = Factory.create(:contribution, :conversation => @conversation, :parent => nil)
+        @top_level_contribution = Factory.create(:top_level_contribution, :conversation => @conversation)
+        @nested_contribution = Factory.create(:contribution, :parent => @top_level_contribution, :conversation => @conversation)
+
+        Conversation.filtered('active').all.first.should == @conversation
+        Conversation.most_active.all.first.should == @conversation
+      end
+    end
   end
 
   describe "when creating a user-generated conversation" do

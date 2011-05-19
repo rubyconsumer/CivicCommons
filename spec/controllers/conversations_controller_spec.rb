@@ -31,8 +31,7 @@ describe ConversationsController do
 
     it "assigns all conversations as @active, @popular, and @recent" do
       get :index
-      assigns(:active).first.should == @new_conversation
-      assigns(:active).last.should  == @old_conversation
+      assigns(:active).length.should == 0 # since no contributions were made that were not TopLevelContribution
       assigns(:popular).first.should == @old_conversation
       assigns(:popular).last.should == @new_conversation
       assigns(:recent).first.should == @new_conversation
