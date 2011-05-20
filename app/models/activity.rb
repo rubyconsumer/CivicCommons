@@ -10,6 +10,10 @@ class Activity < ActiveRecord::Base
 
   VALID_TYPES = [ Conversation, Contribution, Issue, RatingGroup ]
 
+  ############################################################
+  # construction/destruction
+  
+  # Will accept an AR object of valid type
   def initialize(attributes = nil)
 
     if Activity.valid_type?(attributes)
@@ -34,6 +38,29 @@ class Activity < ActiveRecord::Base
     super(attributes)
   end
 
+  # Will accept an AR object of valid type
+  def self.delete(id)
+    if Activity.valid_type?(id)
+      id = id.becomes(Contribution) if id.is_a?(Contribution)
+      Activity.delete_all("item_id = #{id.id} and item_type like '#{id.class}'")
+    else
+      super(id)
+    end
+  end
+
+  # Will accept an AR object of valid type
+  def self.destroy(id)
+    if Activity.valid_type?(id)
+      id = id.becomes(Contribution) if id.is_a?(Contribution)
+      Activity.destroy_all("item_id = #{id.id} and item_type like '#{id.class}'")
+    else
+      super(id)
+    end
+  end
+
+  ############################################################
+  # class utility methods
+
   def self.valid_type?(item)
     ok = false
     VALID_TYPES.each do |type|
@@ -45,23 +72,28 @@ class Activity < ActiveRecord::Base
     return ok
   end
 
-  def self.delete(id)
-    if Activity.valid_type?(id)
-      id = id.becomes(Contribution) if id.is_a?(Contribution)
-      Activity.delete_all("item_id = #{id.id} and item_type like '#{id.class}'")
-    else
-      super(id)
+  def self.encode(item)
+    obj = nil
+
+    if Activity.valid_type?(item)
+      if item.is_a? Conversation
+        obj = ActiveSupport::JSON.encode(item, include: [:person])
+      elsif item.is_a? Contribution
+        obj = ActiveSupport::JSON.encode(item, include: [:person, :conversation])
+      elsif item.is_a? RatingGroup
+        obj = ActiveSupport::JSON.encode(item, include: [:person, :ratings, :conversation])
+      end
     end
+
+    return obj
   end
 
-  def self.destroy(id)
-    if Activity.valid_type?(id)
-      id = id.becomes(Contribution) if id.is_a?(Contribution)
-      Activity.destroy_all("item_id = #{id.id} and item_type like '#{id.class}'")
-    else
-      super(id)
-    end
+  def self.decode(item)
+    ActiveSupport::JSON.decode(item)
   end
+
+  ############################################################
+  # custom finders
 
   def self.most_recent_activity(limit = nil)
     if limit.nil?
