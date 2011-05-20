@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110516150155) do
+ActiveRecord::Schema.define(:version => 20110520173225) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -137,7 +137,10 @@ ActiveRecord::Schema.define(:version => 20110516150155) do
     t.boolean  "staff_pick",              :default => false, :null => false
     t.integer  "position"
     t.boolean  "from_community",          :default => false
+    t.string   "cached_slug"
   end
+
+  add_index "conversations", ["cached_slug"], :name => "index_conversations_on_cached_slug", :unique => true
 
   create_table "conversations_events", :id => false, :force => true do |t|
     t.integer "conversation_id"
