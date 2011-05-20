@@ -6,7 +6,6 @@
       = link_to "Logout", destroy_person_session_path
   - else
     %p
-      %a
-        =facebook_sign_in_link
+      =facebook_sign_in_link
     or
     = link_to "login without Facebook", new_person_session_path

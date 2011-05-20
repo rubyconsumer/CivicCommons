@@ -68,6 +68,7 @@ group :test do
   gem "database_cleaner", "~> 0.6.0"
   gem 'email_spec'
   gem 'simplecov'
+  gem 'timecop'
 end
 
 # On non-osx platforms, use: bundle install --without osx_test
@@ -84,7 +85,7 @@ group :development, :test do
   gem 'webrat', "~> 0.7.3"
 end
 
-gem 'devise', '~>1.2', :git => 'git://github.com/plataformatec/devise.git'
+gem 'devise', :git => 'git://github.com/plataformatec/devise.git', :branch => 'v1.3'
 gem "oa-oauth", :require => "omniauth/oauth"
 gem 'omniauth', '~>0.2.0', :git => 'git://github.com/intridea/omniauth.git'
 

@@ -3,78 +3,80 @@
   <%= javascript_include_tag('lib/subscriptions/show') %>
 <% end %>
 
-  <div class="feature-mast">
-    <div class="wrapper">
-      <div class="content-container">
-        <div class="main-content">
-          <h1><%= @issue.name %></h1>
-        </div>
-        <div class="aside supplementary">
-          <div id="subscription">
-            <p>
-            <%= render :partial => 'subscriptions/subscription', :locals => {:subscribable => @issue} %>
-            </p>
-          </div>
+<div class="feature-mast">
+  <div class="wrapper">
+    <div class="content-container">
+      <div class="main-content">
+        <h1><%= @issue.name %></h1>
+      </div>
+      <div class="aside supplementary">
+        <div id="subscription">
+          <p>
+          <%= render :partial => 'subscriptions/subscription', :locals => {:subscribable => @issue} %>
+          </p>
         </div>
       </div>
     </div>
   </div>
+</div>
 
-  <div class="wrapper">
-    <div class="content-container">
-      <div class='main-content'>
-        <div class='feature group'>
-          <%= image_tag @issue.image.url(:normal), :alt => @issue.name, :width => 300, :height => 200, :class => 'float featured main-img' %>
-          <p><%= raw (@issue.summary) %></p>
-          <%- if @issue.url and @issue.url_title %>
-            <p><strong><%= link_to @issue.url_title, source_url(@issue) %></strong></p>
-          <%- end %>
-          <p><strong>Created On:</strong> <%= @issue.created_at.strftime("%m/%d/%Y") %></p>
-       </div>
+<div class="wrapper">
+  <div class="content-container">
+    <div class='main-content'>
+      <div class='feature group'>
+        <%= image_tag @issue.image.url(:normal), :alt => @issue.name, :width => 300, :height => 200, :class => 'float featured main-img' %>
+        <p><%= raw (@issue.summary) %></p>
+        <%- if @issue.url and @issue.url_title %>
+          <p><strong><%= link_to @issue.url_title, source_url(@issue) %></strong></p>
+        <%- end %>
+        <p><strong>Created On:</strong> <%= @issue.created_at.strftime("%m/%d/%Y") %></p>
+      </div>
 
-        <h3>Conversations about this issue:</h3>
-        <%= render :partial => '/conversations/conversation_pager' %>
+      <h3>Conversations about this issue:</h3>
+      <%= render :partial => '/conversations/conversation_pager' %>
+      <div style='margin-top: 60px'>
         <%= render :partial => 'layouts/create_conversation' %>
-      </div><!-- /.main-content -->
-      <div id='media-contributions' class='aside supplementary'>
-        <%= render :partial => "issues/contributions/media_contribution", :collection => @media_contributions, :as => :contribution %>
-        <div id="media-contribution-form-container">
-          <p id="resource-contributions"><a href="#" class="file-link button">File</a><a class="file-link button" href="#">Image</a><a class="video-link button" href="#">Video</a><a class="url-link button" href="#">Link</a></p>
-          <%= render :partial => "new_file_contribution" %>
-          <%= render :partial => "new_url_contribution" %>
-          <%= render :partial => "new_embedded_snippet_contribution" %>
-        </div>
+      </div>
+    </div><!-- /.main-content -->
+    <div id='media-contributions' class='aside supplementary'>
+      <%= render :partial => "issues/contributions/media_contribution", :collection => @media_contributions, :as => :contribution %>
+      <div id="media-contribution-form-container">
+        <p id="resource-contributions"><a href="#" class="file-link button">File</a><a class="file-link button" href="#">Image</a><a class="video-link button" href="#">Video</a><a class="url-link button" href="#">Link</a></p>
+        <%= render :partial => "new_file_contribution" %>
+        <%= render :partial => "new_url_contribution" %>
+        <%= render :partial => "new_embedded_snippet_contribution" %>
+      </div>
 
-        <div class="mod">
-          <h3>People active in this issue</h3>
-          <div class="mod-content">
-            <div class="photobank">
-              <% @people.each do |person| %>
-                <%= featured_profile(person).html_safe %>
-              <% end %>
-            </div>
+      <div class="mod">
+        <h3>People active in this issue</h3>
+        <div class="mod-content">
+          <div class="photobank">
+            <% @people.each do |person| %>
+              <%= featured_profile(person).html_safe %>
+            <% end %>
           </div>
         </div>
+      </div>
 
-        <div class="mod">
-          <h3>Suggest Action</h3>
-          <div class="mod-content">
-            <div id='suggested-action-form-container'>
-              <%= render :partial => "new_suggested_action_contribution" %>
-            </div>
-            <ol id='suggested-actions' class='conversations divided'>
-              <%= render :partial => 'issues/contributions/suggested_action', :collection => @suggested_actions, :as => :contribution %>
-            </ol>
+      <div class="mod">
+        <h3>Suggest Action</h3>
+        <div class="mod-content">
+          <div id='suggested-action-form-container'>
+            <%= render :partial => "new_suggested_action_contribution" %>
           </div>
+          <ol id='suggested-actions' class='conversations divided'>
+            <%= render :partial => 'issues/contributions/suggested_action', :collection => @suggested_actions, :as => :contribution %>
+          </ol>
         </div>
+      </div>
 
-      </div><!-- /.aside -->
-    </div><!-- /.content-container -->
-    <div class="content-container">
-      <div class="main-content">
-      </div><!-- /.main-content -->
-      <div class="aside supplementary">
-      </div><!-- /.aside -->
-    </div><!-- /.content-container -->
-  </div>
+    </div><!-- /.aside -->
+  </div><!-- /.content-container -->
+  <div class="content-container">
+    <div class="main-content">
+    </div><!-- /.main-content -->
+    <div class="aside supplementary">
+    </div><!-- /.aside -->
+  </div><!-- /.content-container -->
+</div>
 

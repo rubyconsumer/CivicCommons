@@ -1,0 +1,31 @@
+<% content_for(:main_body) do %>
+  <div class="feature-mast">
+    <div class="wrapper">
+      <div class="content-container">
+        <div class="main-content">
+          <h1>Resend confirmation instructions</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="wrapper">
+    <div class="content-container">
+      <div class="main-content">
+        <%= form_for(resource, :as => resource_name, :url => confirmation_path(resource_name)) do |f| %>
+          <%= devise_error_messages! %>
+
+          <fieldset class="form-group">
+            <div class="form-block">
+              <%= f.label :email %>
+              <%= f.text_field :email, :placeholder => 'me@johnnyappleseed.com',  :class => 'textbox small' %>
+            </div>
+          </fieldset>
+
+          <fieldset class="footer">
+            <%= f.submit "Resend confirmation instructions", :class => 'submit' %> <%= link_to "cancel", new_session_path(resource_name) %>
+          </fieldset>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>

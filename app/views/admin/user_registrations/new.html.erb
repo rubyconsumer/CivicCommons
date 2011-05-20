@@ -1,0 +1,31 @@
+<h1>New User Registration</h1>
+<%= form_for :person, url: admin_user_registrations_path, html: {multipart: true } do |person| %>
+  <div>
+    <%= person.label :name %>
+    <br />
+    <%= person.text_field :name %>
+  </div>
+
+  <div>
+    <%= person.label :email %>
+    <br />
+    <%= person.text_field :email %>
+  </div>
+
+  <div>
+    <%= person.label :password %>
+    <br />
+    <%= person.password_field :password %>
+  </div>
+
+  <div>
+    <%= person.label :zip_code, 'Zip Code' %>
+    <br />
+    <%= person.text_field :zip_code %>
+  </div>
+
+  <div>
+    <%= person.submit %>
+  </div>
+
+<% end %>

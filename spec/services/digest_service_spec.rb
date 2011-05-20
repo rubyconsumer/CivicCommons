@@ -24,7 +24,7 @@ describe DigestService do
     context "When users have opted out of the digest" do
 
       before(:each) do
-        @person_unsubscribed_from_digest = Factory.create(:registered_user, :name => 'No Subscriptions', :avatar => nil)
+        @person_unsubscribed_from_digest = Factory.create(:registered_user, :daily_digest => false,  :name => 'No Subscriptions', :avatar => nil)
       end
 
       it "Generates an empty set" do
@@ -50,10 +50,10 @@ describe DigestService do
 
       context "No new contributions added yesterday" do
 
-        it "should generate an empty set when no contributions were added during the time range" do
+        it "should generate a digest set with a person but no contribution data" do
           set = @service.generate_digest_set
           set.should be_instance_of Hash
-          set.should be_empty
+          @service.digest_set[@person_with_subs].should == []
         end
 
       end

@@ -50,6 +50,7 @@
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
       })();
     = yield :header
+    = auto_discovery_link_tag(:rss, "http://feeds.theciviccommons.com/civiccommons_new_conversations", { :title => "The Civic Commons: Conversations" } )
     = auto_discovery_link_tag(:rss, "http://feeds.theciviccommons.com/civiccommonsblog", { :title => "The Civic Commons: Common Blog" } )
     = auto_discovery_link_tag(:rss, "http://feeds.theciviccommons.com/civiccommonsradio", { :title => "The Civic Commons Radio Show" } )
     = auto_discovery_link_tag(:rss, "http://feeds.theciviccommons.com/civiccommonsnews", { :title => "The Civic Commons In The News" } )
@@ -63,6 +64,15 @@
     #header-wrapper
       #header
         = link_to 'Civic Commons', root_url, :id => 'logo', :title => 'Civic Commons'
+        %ul#main-nav
+          %li
+            <a href="/conversations" title="Explore Conversations"><span id="conversations"><span>Explore </span> Conversations</span></a>
+          %li
+            <a href="/issues" title="Find an Issue"><span id="issues"><span>Find an </span> Issue</span></a>
+          %li
+            <a href="/community" title="Meet the Community"><span id="community"><span>Meet the </span>Community</span></a>
+          %li
+            <a href="/build_the_commons" title="Build the Commons"><span id="commons"><span>Build the </span>Commons</span></a>
         #header-utility
           - if current_person
             #login-status
@@ -72,73 +82,54 @@
               .offset-2
                 = render :partial => 'layouts/single_column'
           .important
-            %p
-              = link_to 'Help build the Commons', build_the_commons_url
-    #nav-wrapper
-      #nav
-        %ul#main-nav
-          %li
-            = link_to 'Home', root_url, :title => 'Home'
-          %li
-            = link_to 'Conversations', conversations_url, :title => 'Conversations'
-          %li
-            = link_to 'Issues', issues_url, :title => 'Issues'
-          %li
-            = link_to 'Community', community_url, :title => 'Community'
-          %li.drop
-            = link_to 'About Us', about_url
-            %ul
-              %li 
-                = link_to 'Blog', blog_index_path
-              %li 
-                = link_to 'Radio Show', radioshow_index_path
-              %li 
-                = link_to 'FAQ', faq_url
-              %li
-                = link_to 'Mission & Principles', principles_url
-              %li
-                = link_to 'Team', team_url
-              %li
-                = link_to 'Partners', partners_url
-              %li
-                = link_to 'In The News', news_index_url
-              %li
-                = link_to 'Careers', jobs_url
-              %li
-                = link_to 'Contact us', contact_us_url
     = yield :main_body
     #footer.footer
       #footer-inner
-        %ul.sub-nav
-          %li
-            = link_to 'Blog', blog_index_path
-          %li
-            = link_to 'Radio Show', radioshow_index_path
-          %li 
-            = link_to 'About Us', about_url
-          %li 
-            = link_to 'FAQ', faq_url
-          %li
-            = link_to 'Mission & Principles', principles_url
-          %li
-            = link_to 'Team', team_url
-          %li
-            = link_to 'Partners', partners_url
-          %li
-            = link_to 'In The News', news_index_url
-          %li
-            = link_to 'Contact us', contact_us_url
+        .four-col
+          .cols
+            %h3 About the Commons
+            %ul.sub-nav
+              %li 
+                = link_to 'About Us', about_url
+              %li
+                = link_to 'Team', team_url
+              %li
+                = link_to 'Mission & Principles', principles_url
+              %li 
+                = link_to 'FAQ', faq_url
+          .cols
+            %h3 Keep Up with the Commons
+            %ul.sub-nav
+              %li
+                = link_to 'Blog', blog_index_url
+              %li
+                = link_to 'In The News', press_url
+              %li
+                = link_to 'Radio Show', radioshow_index_url
+          .cols
+            %h3 Work with the Commons
+            %ul.sub-nav
+              %li
+                = link_to 'Contact Us', contact_us_url
+              %li
+                = link_to 'Partners', partners_url
+              %li
+                = link_to 'Terms of Use', terms_url
+              %li
+                = link_to 'Privacy Policy', privacy_url
+          .cols
+            %h3 Civic Commons Elsewhere
+            %ul.social-media
+              %li
+                %a{ :href => 'http://www.facebook.com/pages/Civic-Commons/143930632284131', :id => 'facebook'} Facebook
+              %li
+                %a{ :href => 'http://twitter.com/civiccommons', :id => 'twitter'} Twitter
+              %li
+                %a{ :href => 'http://www.youtube.com/user/neociviccommons', :id => 'youtube'} YouTube
+              %li
+                %a{ :href => feeds_url, :id => 'rss'} RSS
+              
         = render :partial => 'layouts/creative_commons'
-        %p 
-          = link_to 'Terms of Use', terms_url
-        %ul.social-media
-          %li
-            %a{ :href => 'http://www.facebook.com/pages/Civic-Commons/143930632284131', :id => 'facebook'} Facebook
-          %li
-            %a{ :href => 'http://twitter.com/civiccommons', :id => 'twitter'} Twitter
-          %li
-            %a{ :href => 'http://www.youtube.com/user/neociviccommons', :id => 'youtube'} YouTube
-          %li
-            %a{ :href => 'http://feeds.theciviccommons.com/civiccommonsblog', :id => 'rss'} RSS
+
 = render :partial => '/shared/suggest_facebook_auth.js' if signed_in? && !current_person.declined_fb_auth? && !current_person.facebook_authenticated?
 = render :partial => '/shared/show_colorbox.js', :locals => {:path => successful_fb_registration_path} if flash[:successful_fb_registration_modal]

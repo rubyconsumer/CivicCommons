@@ -25,6 +25,11 @@
 </p>
 
 <p>
+  <b>Stylesheet Path:</b>
+  <%= link_to(@content_template.stylesheet_path, @content_template.stylesheet_path) unless @content_template.stylesheet_path.blank?%>
+</p>
+
+<p>
   <b>Template:</b>
   <br />
   <%= text_area(:content_template, :template, :cols => 95, :rows => 40, :disabled => 'disabled') %>

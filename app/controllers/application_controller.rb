@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   include ApplicationHelper
   include SecureUrlHelper
+  include RedirectHelper
 
   protect_from_forgery
   include AvatarHelper
@@ -44,7 +45,7 @@ protected
   end
 
   def after_sign_in_path_for(resource_or_scope)
-    if session[:previous] && session[:previous].match(%r[register/new|people/login]).nil?
+    if RedirectHelper.valid?(session[:previous])
       session[:previous]
     elsif session[:link]
       new_link_path

@@ -23,7 +23,7 @@ class Conversation < ActiveRecord::Base
 
   belongs_to :person, :foreign_key => "owner"
 
-  attr_accessor :user_generated, :rejected_contributions
+  attr_accessor :rejected_contributions
 
   has_attached_file :image,
     :styles => {
@@ -34,12 +34,13 @@ class Conversation < ActiveRecord::Base
     :path => IMAGE_ATTACHMENT_PATH,
     :default_url => '/images/convo_img_:style.gif'
 
-  validates :person, :must_be_logged_in => true, :if => :user_generated?
-  validates_length_of :contributions, :is => 1, :on => :create, :if => :user_generated?,
+  validates :owner, :must_be_logged_in => true
+  validates_length_of :contributions, :is => 1, :on => :create, :if => :from_community?,
     :message => "Please get the ball rolling with the first comment, question, or contribution of some sort."
   validates_length_of :issues, :minimum => 1, :on => :create,
     :message => "Please choose at least one issue that best relates to your conversation."
 
+  validates_presence_of :owner
   validates_presence_of :title, :message => "Please choose a title for your conversation."
   validates_presence_of :summary, :message => "Please give us a short summary."
   validates_presence_of :zip_code, :message => "Please give us a zip code for a little geographic context."
@@ -72,13 +73,6 @@ class Conversation < ActiveRecord::Base
     scoped & self.send(available_filters[filter.to_sym])
   end
 
-  def self.new_user_generated_conversation(params,person)
-    params.merge!(:person => person)
-    returning self.new(params) do |convo|
-      convo.user_generated = true
-    end
-  end
-
   def self.sort
     conversations = Conversation.order('staff_pick DESC, position ASC, id ASC')
     staff_picks = conversations.select { |c| c.staff_pick? }
@@ -91,6 +85,10 @@ class Conversation < ActiveRecord::Base
     others.each_with_index do |conversation, i|
       conversation.update_attribute(:position, i + staff_picks.length)
     end
+  end
+
+  def user_generated?
+    from_community
   end
 
   # Define our own method for allowing fields_for :contribution, rather
@@ -128,10 +126,6 @@ class Conversation < ActiveRecord::Base
     staff_pick
   end
 
-  def user_generated?
-    user_generated || person
-  end
-
   # Return a comma-and-space-delimited list of the Issues
   # relevant to this Conversation, e.g., "Jobs, Sports, Religion"
   def issues_text
@@ -156,7 +150,7 @@ class Conversation < ActiveRecord::Base
   end
 
   def start_month_text
-    if started_at == nil
+    if started_at.nil?
       "?"
     else
       started_at.strftime("%B")
@@ -164,7 +158,7 @@ class Conversation < ActiveRecord::Base
   end
 
   def start_day
-    if started_at == nil
+    if started_at.nil?
       "?"
     else
       started_at.mday

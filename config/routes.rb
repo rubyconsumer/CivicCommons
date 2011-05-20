@@ -48,6 +48,7 @@ Civiccommons::Application.routes.draw do
   put '/conversations/update_node_contribution',       to: 'conversations#update_node_contribution'
   put '/conversations/confirm_node_contribution',      to: 'conversations#confirm_node_contribution'
   get '/conversations/responsibilities',               to: 'conversations#responsibilities',                 as: 'conversation_responsibilities'
+  get '/conversations/rss',                            to: 'conversations#rss',                              as: 'conversation_rss'
   post '/conversations/toggle_rating',                 to: 'conversations#toggle_rating',                    as: 'conversation_contribution_toggle_rating'
   
   #Subscriptions
@@ -70,10 +71,11 @@ Civiccommons::Application.routes.draw do
   #Static Pages
   match '/about'             => redirect('/pages/about')
   match '/build_the_commons' => redirect('/pages/build-the-commons')
-  match '/build-the-commons' => redirect('/pages/build-the-commons')
   match '/careers'           => redirect('/pages/jobs')
   match '/contact_us'        => redirect('/pages/contact')
   match '/faq'               => redirect('/pages/faq')
+  match '/feeds'             => redirect('/pages/feeds')
+  match '/help'              => redirect('/pages/build-the-commons')
   match '/in-the-news'       => redirect('/news')
   match '/jobs'              => redirect('/pages/jobs')
   match '/partners'          => redirect('/pages/partners')
@@ -81,9 +83,11 @@ Civiccommons::Application.routes.draw do
   match '/posters'           => redirect('/pages/poster')
   match '/press'             => redirect('/news')
   match '/principles'        => redirect('/pages/principles')
+  match '/privacy'           => redirect('/pages/privacy')
   match '/radio'             => redirect('/radioshow')
   match '/team'              => redirect('/pages/team')
   match '/terms'             => redirect('/pages/terms')
+  match '/volunteer'         => redirect('/pages/build-the-commons')
 
 #Devise Routes
   devise_for :people,
@@ -141,7 +145,9 @@ Civiccommons::Application.routes.draw do
       get 'proxies',       on: :collection
       put 'lock_access',   on: :member
       put 'unlock_access', on: :member
+      put 'confirm',       on: :member
     end
+    resources :user_registrations, only: [:new, :create]
   end
 
   namespace "api" do

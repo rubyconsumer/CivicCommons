@@ -24,7 +24,7 @@
     %tr.even
       %td
       %td
-        Real: 
+        Real:
       %td
         #{@stats[:unconfirmed_real]}
     %tr.odd
@@ -53,7 +53,10 @@
         %td=person.email
         %td=person.admin?
         %td=person.proxy?
-        %td=person.confirmed_at? ? "#{person.confirmed_at.to_s(:yyyymmdd)}" : "-"
+        - if person.confirmed_at?
+          %td=person.confirmed_at.to_s(:yyyymmdd)
+        -else
+          %td=link_to "Confirm", confirm_admin_person_path(person), method: :put
         - if locked
           %td.locked Locked
         - else

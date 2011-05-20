@@ -41,6 +41,36 @@ describe ConversationsController do
 
   end
 
+  describe "GET rss" do
+ 
+    before(:each) do
+      (1..5).each do |i|
+        Factory.create(:conversation)
+      end
+        @old_convo = Factory.create(:conversation, created_at: 2.months.ago)
+    end
+
+    it "assigns conversations as @conversations" do
+      get :rss, format: 'xml'
+      assigns(:conversations).should_not be_empty
+    end
+
+    it "does not retrieve conversations more than 1 month old" do
+      get :rss, format: 'xml'
+      assigns(:conversations).should_not include @old_convo 
+    end
+
+    it "sorts conversations by created_at, descending" do
+      get :rss, format: 'xml'
+      last_date = nil
+      assigns(:conversations).each do |convo|
+        convo.created_at.should >= last_date unless last_date.nil?
+        last_date = convo.created_at
+      end
+    end
+
+ end
+
   describe "GET show" do
     before(:each) do
       @person = Factory.create(:registered_user)
@@ -96,7 +126,7 @@ describe ConversationsController do
 
     describe "with valid params" do
       before(:each) do
-        Conversation.stub(:new_user_generated_conversation).with({}, @person) { mock_conversation(:save => true) }
+        Conversation.stub(:new) { mock_conversation(:save => true) }
       end
 
       it "assigns created conversation to @conversation" do
@@ -105,8 +135,11 @@ describe ConversationsController do
       end
 
       it "creates conversation with checked issue_ids" do
-        Conversation.should_receive(:new_user_generated_conversation).with({'issue_ids' => ["5","10"]}, @person)
+        #Conversation.should_receive(:new).with({'issue_ids' => ["5","10"]})
         post :create, :conversation => {:issue_ids => ["5", "10"]}
+        assigns(:conversation).issues.each do |issue|
+          [5, 10].should include issue.id
+        end
       end
 
       it "redirects to invite page to Send Invitations" do
@@ -118,7 +151,7 @@ describe ConversationsController do
 
     describe "with invalid params" do
       before(:each) do
-        Conversation.stub(:new_user_generated_conversation) { mock_conversation(:save => false) }
+        Conversation.stub(:new) { mock_conversation(:save => false) }
       end
 
       it "renders :new template" do

@@ -2,7 +2,7 @@ class Notifier < Devise::Mailer
 
   layout 'mailer'
   add_template_helper(ConversationsHelper)
-  
+
   def email_changed(old_email, new_email)
     @old_email = old_email
     @new_email = new_email
@@ -51,9 +51,10 @@ class Notifier < Devise::Mailer
          :to => Civiccommons::Config.email["default_email"])
   end
 
-  def daily_digest(person, conversations)
+  def daily_digest(person, conversations, new_conversations)
     @person = person
     @conversations = conversations
+    @new_conversations = new_conversations
     mail(:subject => "Civic Commons Daily Digest",
          :from => '"Curator of Conversation" <curator@theciviccommons.com>',
          :to => @person.email)
