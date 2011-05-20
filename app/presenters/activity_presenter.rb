@@ -1,19 +1,47 @@
-class ActivityPresenter < PresenterBase
+class ActivityPresenter
   include Enumerable
 
-  def initialize(object, request=nil)
-    super(object, request)
+  def initialize(collection)
+    @collection = collection
     load_activity
   end
 
   def [](index)
-    item = @object[index]
-    item = @data[item.item_type][item.item_id]
+    return self.at(index)
+  end
+
+  def at(index)
+    item = @collection[index]
+    unless item.nil?
+      item = @data[item.item_type][item.item_id]
+    end
     return item
   end
 
   def each
-    (0 .. self.size-1).each { |i| yield self[i] }
+    (0 .. self.size-1).each { |i| yield self.at(i) }
+  end
+
+  def empty?
+    return @collection.empty?
+  end
+
+  def first
+    return self.at(0)
+  end
+
+  def last
+    return self.at(self.size-1)
+  end
+
+  def size
+    return @collection.size
+  end
+
+  def type_at(index)
+    return @collection[index].item_type
+  rescue
+    return nil
   end
 
   private
@@ -23,11 +51,10 @@ class ActivityPresenter < PresenterBase
     # sort the activity items for eager loading
     @data = { }
     Activity::VALID_TYPES.each { |type| @data[type.to_s] = [] }
-    @object.each { |obj| @data[obj.item_type] << obj.item_id }
+    @collection.each { |obj| @data[obj.item_type] << obj.item_id }
 
     # load the item data
-    Activity::VALID_TYPES.each do |type|
-      type = type.to_s
+    @data.each do |type, items|
       case type
       when "Contribution"
         unless @data[type].empty?
@@ -37,13 +64,13 @@ class ActivityPresenter < PresenterBase
         unless @data[type].empty?
           @data[type] = type.constantize.includes([:person, :ratings]).where(id: @data[type])
         end
-      when "Issue"
+      when "Conversation"
         unless @data[type].empty?
-          @data[type] = type.constantize.where(id: @data[type])
+          @data[type] = type.constantize.includes([:person]).where(id: @data[type])
         end
       else
         unless @data[type].empty?
-          @data[type] = type.constantize.includes([:person]).where(id: @data[type])
+          @data[type] = type.constantize.where(id: @data[type])
         end
       end
     end
