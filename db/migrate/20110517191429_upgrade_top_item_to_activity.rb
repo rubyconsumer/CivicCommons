@@ -14,7 +14,7 @@ class UpgradeTopItemToActivity < ActiveRecord::Migration
 
     #Populate conversation_id column
 
-    top_items = TopItem.all
+    top_items = Activity.all
     top_items.each do |top_item|
       top_item.created_at = top_item.item_created_at
       if top_item.item.respond_to?(:conversation_id) && !top_item.item.conversation_id.nil?
