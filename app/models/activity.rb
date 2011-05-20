@@ -14,11 +14,21 @@ class Activity < ActiveRecord::Base
 
     if Activity.valid_type?(attributes)
       attributes = attributes.becomes(Contribution) if attributes.is_a?(Contribution)
-      attributes = {
+      attr = {
         item_id: attributes.id,
         item_type: attributes.class.to_s,
         item_created_at: attributes.created_at
       }
+      if attributes.respond_to?(:conversation_id) && !attributes.conversation_id.nil?
+        attr[:conversation_id] = attributes.conversation_id
+      elsif attributes.respond_to?(:issue_id) && !attributes.issue_id.nil?
+        attr[:issue_id] = attributes.issue_id
+      elsif attributes.is_a?(Conversation)
+        attr[:conversation_id] = attributes.id
+      end
+
+      attributes = attr
+
     end
 
     super(attributes)
@@ -62,7 +72,19 @@ class Activity < ActiveRecord::Base
   end
 
   def self.most_recent_activity_for_issue(issue, limit = nil)
-    
+    if limit.nil?
+      Activity.where(issue_id: issue.id).order('created_at DESC')
+    else
+      Activity.where(issue_id: issue.id).limit(limit).order('created_at DESC')
+    end
+  end
+
+  def self.most_recent_activity_for_conversation(conversation, limit = nil)
+    if limit.nil?
+      Activity.where(conversation_id: conversation.id).order('created_at DESC')
+    else
+      Activity.where(conversation_id: conversation.id).limit(limit).order('created_at DESC')
+    end
   end
 
 end
