@@ -32,7 +32,7 @@ class IssuesController < ApplicationController
       @suggested_actions = @issue.suggested_actions.most_recent
       @media_contributions = @issue.media_contributions.most_recent
 
-      @recent_items = TopItem.newest_items(3).for(:issue => @issue.id).collect(&:item)
+      @recent_items = Activity.most_recent_activity_for_issue(@issue, 5)
     end
   end
 
