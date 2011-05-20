@@ -18,13 +18,6 @@ describe ActivityObserver do
       a.item_type.should == 'Conversation'
     end
 
-    it 'creates a new activity record when a issue is created' do
-      issue = Factory.create(:issue)
-      a = Activity.last
-      a.item_id.should == issue.id
-      a.item_type.should == 'Issue'
-    end
-
     it 'creates a new activity record when a rating group is created' do
       rating_group = Factory.create(:rating_group)
       a = Activity.last
@@ -54,12 +47,6 @@ describe ActivityObserver do
       conversation = Factory.create(:conversation)
       Conversation.destroy(conversation)
       Activity.where(item_id: conversation.id, item_type: 'Conversation').should be_empty
-    end
-
-    it 'removes activity records when an issue is deleted/destroyed' do
-      issue = Factory.create(:issue)
-      Issue.destroy(issue)
-      Activity.where(item_id: issue.id, item_type: 'Issue').should be_empty
     end
 
     it 'removes activity records when a contribution is deleted/destroyed' do
