@@ -44,11 +44,12 @@ describe IssuesController do
       assigns(:sub_articles).size.should == @sub_articles.size
     end
 
-    it "assigns all top items to @recent_items" do
+    it "assigns activity items to @recent_items" do
+      activity = mock_model(Activity)
+      Activity.should_receive(:most_recent_activity).and_return([activity])
       get :index
-      assigns(:recent_items).collect # because of active record lazy loading
-      assigns(:recent_items).first.should be_kind_of TopItemable
-      assigns(:recent_items).should_not be_empty
+
+      assigns(:recent_items).should == [activity]
     end
 
   end
