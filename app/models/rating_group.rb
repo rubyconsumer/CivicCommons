@@ -1,7 +1,5 @@
 class RatingGroup < ActiveRecord::Base
 
-  #include TopItemable
-
   belongs_to :person
   belongs_to :conversation
   belongs_to :contribution

@@ -2,9 +2,7 @@ require 'parent_validator'
 
 class Contribution < ActiveRecord::Base
   include Visitable
-  #include TopItemable
 
-  # Needs :dependent => :destroy on nested_set to ensure top_items for
   # nested contributions are destroyed via callbacks
   acts_as_nested_set :exclude_unless => {:confirmed => true}, :dependent => :destroy
   profanity_filter :content, :method => 'hollow'
