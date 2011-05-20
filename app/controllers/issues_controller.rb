@@ -9,7 +9,6 @@ class IssuesController < ApplicationController
     @regions = Region.all
     @main_article = Article.issue_main_article.first
     @sub_articles = Article.issue_sub_articles.limit(3)
-    #@recent_items = TopItem.newest_items(3).for(:issue).collect(&:item)
     @recent_items = Activity.most_recent_activity(3)
   end
 

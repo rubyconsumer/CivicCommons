@@ -8,7 +8,6 @@ class HomepageController < ApplicationController
     @sub_articles = Article.homepage_sub_articles.limit(3)
     @regions = Region.all
 
-    #@recent_items = TopItem.newest_items(3).with_items_and_associations.collect(&:item)
     @recent_items = Activity.most_recent_activity(3)
   end
 end
