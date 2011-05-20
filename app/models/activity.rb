@@ -61,7 +61,7 @@ class Activity < ActiveRecord::Base
     end
   end
 
-  def self.most_recent_activity_for_issue(limit = nil)
+  def self.most_recent_activity_for_issue(issue, limit = nil)
     
   end
 
