@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110516150155) do
+ActiveRecord::Schema.define(:version => 20110520161144) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -255,8 +255,10 @@ ActiveRecord::Schema.define(:version => 20110516150155) do
     t.text     "bio"
     t.boolean  "daily_digest",                        :default => true,  :null => false
     t.boolean  "declined_fb_auth"
+    t.string   "cached_slug"
   end
 
+  add_index "people", ["cached_slug"], :name => "index_people_on_cached_slug", :unique => true
   add_index "people", ["email"], :name => "index_people_on_email", :unique => true
   add_index "people", ["reset_password_token"], :name => "index_people_on_reset_password_token", :unique => true
 
