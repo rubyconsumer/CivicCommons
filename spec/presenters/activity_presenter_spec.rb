@@ -24,6 +24,12 @@ describe ActivityPresenter do
       lambda { ActivityPresenter.new(@activity) }.should_not raise_error
     end
 
+    it "does not change the order of the collection" do
+      @activity.each_with_index do |item, index|
+        item.item_id.should == @presenter[index].id
+      end
+    end
+
   end
 
   context "enumeration" do
@@ -37,6 +43,14 @@ describe ActivityPresenter do
     it "returns the real item (not the activity record)" do
       @presenter.each do |item|
         Activity.valid_type?(item).should be_true
+      end
+    end
+
+    it "returns the correct type when calling #each_with_type" do
+      index = 0
+      @presenter.each_with_type do |item, type|
+        type.should == @activity[index].item_type
+        index += 1
       end
     end
 

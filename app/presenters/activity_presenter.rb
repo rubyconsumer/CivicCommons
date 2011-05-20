@@ -22,6 +22,10 @@ class ActivityPresenter
     (0 .. self.size-1).each { |i| yield self.at(i) }
   end
 
+  def each_with_type
+    (0 .. self.size-1).each { |i| yield [self.at(i), @collection[i].item_type] }
+  end
+
   def empty?
     return @collection.empty?
   end
