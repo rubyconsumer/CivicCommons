@@ -48,6 +48,8 @@ class Conversation < ActiveRecord::Base
   after_create :set_initial_position
   before_destroy :destroy_root_contributions # since non-root contributions will be destroyed internally be awesome_nested_set
 
+  has_friendly_id :title, :use_slug => true, :strip_non_ascii => true
+
   scope :latest_updated, :order => 'updated_at DESC'
   scope :latest_created, :order => 'created_at DESC'
 

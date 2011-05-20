@@ -4,7 +4,8 @@ Factory.define :conversation do |f|
   f.started_at ""
   f.finished_at ""
   f.summary "MyString"
-  f.title "Some Randon Title"
+  f.sequence(:title) {|n| "Some Random Title #{n}" }
+  f.sequence(:cached_slug) {|n| "some-random-title-#{n}" }
   f.zip_code "48105"
   f.issues { |c| [c.association(:issue)] }
   f.from_community false
