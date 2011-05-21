@@ -13,7 +13,7 @@ class Activity < ActiveRecord::Base
   ############################################################
   # construction/destruction
   
-  # will accept an AR object of valid type
+  # will accept an active record object of valid type
   def initialize(attributes = nil)
 
     if Activity.valid_type?(attributes)
@@ -38,7 +38,7 @@ class Activity < ActiveRecord::Base
     super(attributes)
   end
 
-  # will accept an AR object of valid type
+  # will accept an active record object of valid type
   def self.delete(id)
     if Activity.valid_type?(id)
       id = id.becomes(Contribution) if id.is_a?(Contribution)
@@ -48,7 +48,7 @@ class Activity < ActiveRecord::Base
     end
   end
 
-  # will accept an AR object of valid type
+  # will accept an active record object of valid type
   def self.destroy(id)
     if Activity.valid_type?(id)
       id = id.becomes(Contribution) if id.is_a?(Contribution)
@@ -88,23 +88,9 @@ class Activity < ActiveRecord::Base
   end
 
   def self.decode(item)
-    return self.to_struct(ActiveSupport::JSON.decode(item).values.first)
-  end
-
-  def self.to_struct(item)
-    struct = OpenStruct.new(item)
-    item.each do |key, value|
-      if value.is_a? Hash
-        obj = self.to_struct(value)
-        struct.send("#{key}=".to_sym, obj)
-      elsif value.is_a? Array
-        value = struct.send(key.to_sym)
-        (0 .. value.size-1).each do |i|
-          value[i] = self.to_struct(value[i]) if value[i].is_a? Hash
-        end
-      end
-    end
-    return struct
+    #return self.to_open_struct(ActiveSupport::JSON.decode(item).values.first)
+    hash = ActiveSupport::JSON.decode(item)
+    return self.to_active_record(hash.keys.first, hash.values.first)
   end
 
   ############################################################
@@ -132,6 +118,43 @@ class Activity < ActiveRecord::Base
     else
       Activity.where(conversation_id: conversation.id).limit(limit).order('created_at DESC')
     end
+  end
+
+  private
+
+  ############################################################
+  # encode/decode helpers
+
+  def self.to_active_record(clazz, data)
+    clazz = clazz.classify.constantize
+    data.each do |key, value|
+      if value.is_a? Hash
+        data[key] = self.to_active_record(key, value)
+      elsif value.is_a? Array
+        value.each_with_index do |data, index|
+          value[index] = self.to_active_record(key, data) if value[index].is_a? Hash
+        end
+      end
+    end
+    obj = clazz.new(data)
+    obj.id = data['id']
+    return obj
+  end
+
+  def self.to_open_struct(item)
+    struct = OpenStruct.new(item)
+    item.each do |key, value|
+      if value.is_a? Hash
+        obj = self.to_open_struct(value)
+        struct.send("#{key}=".to_sym, obj)
+      elsif value.is_a? Array
+        value = struct.send(key.to_sym)
+        (0 .. value.size-1).each do |i|
+          value[i] = self.to_open_struct(value[i]) if value[i].is_a? Hash
+        end
+      end
+    end
+    return struct
   end
 
 end
