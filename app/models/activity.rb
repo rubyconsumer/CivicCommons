@@ -13,7 +13,7 @@ class Activity < ActiveRecord::Base
   ############################################################
   # construction/destruction
   
-  # Will accept an AR object of valid type
+  # will accept an AR object of valid type
   def initialize(attributes = nil)
 
     if Activity.valid_type?(attributes)
@@ -38,7 +38,7 @@ class Activity < ActiveRecord::Base
     super(attributes)
   end
 
-  # Will accept an AR object of valid type
+  # will accept an AR object of valid type
   def self.delete(id)
     if Activity.valid_type?(id)
       id = id.becomes(Contribution) if id.is_a?(Contribution)
@@ -48,7 +48,7 @@ class Activity < ActiveRecord::Base
     end
   end
 
-  # Will accept an AR object of valid type
+  # will accept an AR object of valid type
   def self.destroy(id)
     if Activity.valid_type?(id)
       id = id.becomes(Contribution) if id.is_a?(Contribution)
@@ -74,22 +74,37 @@ class Activity < ActiveRecord::Base
 
   def self.encode(item)
     obj = nil
-
     if Activity.valid_type?(item)
       if item.is_a? Conversation
         obj = ActiveSupport::JSON.encode(item, include: [:person])
       elsif item.is_a? Contribution
         obj = ActiveSupport::JSON.encode(item, include: [:person, :conversation])
       elsif item.is_a? RatingGroup
+        # need to load rating descriptors
         obj = ActiveSupport::JSON.encode(item, include: [:person, :ratings, :conversation])
       end
     end
-
     return obj
   end
 
   def self.decode(item)
-    ActiveSupport::JSON.decode(item)
+    return self.to_struct(ActiveSupport::JSON.decode(item).values.first)
+  end
+
+  def self.to_struct(item)
+    struct = OpenStruct.new(item)
+    item.each do |key, value|
+      if value.is_a? Hash
+        obj = self.to_struct(value)
+        struct.send("#{key}=".to_sym, obj)
+      elsif value.is_a? Array
+        value = struct.send(key.to_sym)
+        (0 .. value.size-1).each do |i|
+          value[i] = self.to_struct(value[i]) if value[i].is_a? Hash
+        end
+      end
+    end
+    return struct
   end
 
   ############################################################
