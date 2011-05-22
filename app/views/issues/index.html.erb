@@ -7,37 +7,31 @@
 </div>
 
 <div class="wrapper">
-  <div class="content-container">
-    <h1>Issues</h1>
-    <div class="main-content">
-      <h3>Most Recent Issues</h3>
-      <table class="data-table">
-        <colgroup class="issue-title"></colgroup>
-        <colgroup class="contrib-count"></colgroup>
-        <colgroup class="convo-count"></colgroup>
-        <tbody>
-          <% @issues.each do |issue| %>
-            <tr>
-              <th scope="row">
-                <%= link_to issue.name, issue_path(issue) %>
-              </th>
-              <td>
-                <%= pluralize(issue.contributions.size, "Contribution") %>
-              </td>
-              <td>
-                <%= pluralize(issue.conversations.size, "Conversation") %>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-      <div class="pagination">
-        <%= will_paginate @issues, :inner_window => 3, :previous_label => "Previous", :next_label => "Next" %>
-      </div>
-    </div><!-- /.main-content -->			
-    <div class='aside supplementary'>
-      <%= render_recent_items_sidebar %>
-      <%= render :partial => '/regions/index' %>
-    </div><!-- /.aside -->			
-  </div><!-- /.content-container -->
+<div class="content-container">
+  <h1>Issues</h1>
+  <div class="main-content">
+    <h3>Most Recent Issues</h3>
+        <% @issues.each do |issue| %>
+	<div class="issue-container">
+		<div class="issue-details">
+	  		<img src="http://placehold.it/200x125">
+            <h4><%= link_to issue.name, issue %></h4>
+            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin augue nisi, fermentum vitae, imperdiet a, auctor eu, mi. Nulla imperdiet molestie purus. Duis arcu dui, pretium in, molestie id, convallis eget, orci.</p>
+		</div>
+		<div class="issue-meta">
+			<p class="issue-contrib"><%= pluralize(issue.contributions.size, "Contribution") %></p>
+			<p class="issue-conv"><%= pluralize(issue.conversations.size, "Conversation") %></p>
+		</div>
+	</div>
+        <% end %>
+    <div class="pagination">
+      <%= will_paginate @issues, :inner_window => 3, :previous_label => "Previous", :next_label => "Next" %>
+    </div>
+  </div><!-- /.main-content -->			
+  <div class='aside supplementary'>
+    <%= render_recent_items_sidebar %>
+    <%= render :partial => '/regions/index' %>
+  </div><!-- /.aside -->			
+</div><!-- /.content-container -->
+</div>
 </div>
