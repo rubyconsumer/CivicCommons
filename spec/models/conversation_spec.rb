@@ -1,11 +1,12 @@
 require 'spec_helper'
 
 describe Conversation do
-  it { should have_many :contributions  }
-  it { should have_attached_file :image }
-end
 
-describe Conversation do
+  context "Associations" do
+    it { should have_many :contributions  }
+    it { should have_attached_file :image }
+  end
+
   describe "a valid conversation" do
     before :each do
       @conversation = Factory.build(:conversation)
@@ -111,6 +112,7 @@ describe Conversation do
       Contribution.where(:id => contribution_ids).count.should == 0
     end
     it "destroys all top_items from nested contributions" do
+      pending 'To be removed after ActivityObserver complete'
       item_ids = @conversation.contributions.includes(:top_item).collect{ |c| c.top_item.id unless c.top_item.blank? }
       @conversation.destroy
       TopItem.where(:id => item_ids).count.should == 0
@@ -210,9 +212,9 @@ describe Conversation do
     it "raises an error if conversation created with multiple contributions" do
       @contributions[1] = Factory.build(:question, :conversation => nil, :parent => nil).attributes
       @conversation = Factory.build(:user_generated_conversation,
-        :owner => @person,
-        :contributions => [],
-        :contributions_attributes => Marshal::load(Marshal.dump(@contributions)))
+                                    :owner => @person,
+                                    :contributions => [],
+                                    :contributions_attributes => Marshal::load(Marshal.dump(@contributions)))
       @conversation.save
       @conversation.should have_validation_error(:contributions)
     end

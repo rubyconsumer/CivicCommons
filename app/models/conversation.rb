@@ -1,6 +1,6 @@
 class Conversation < ActiveRecord::Base
   include Visitable
-  include TopItemable
+  #include TopItemable
   include Subscribable
   include Regionable
   include GeometryForStyle

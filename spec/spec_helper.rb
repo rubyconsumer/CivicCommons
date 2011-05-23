@@ -88,7 +88,7 @@ Rspec.configure do |config|
     DatabaseCleaner.clean
   end
 end
-
+ActiveRecord::Observer.disable_observers
 def fixture_content(path)
   File.open(File.dirname(__FILE__) + '/../test/fixtures/' + path, 'rb') { |f| f.read }
 end
