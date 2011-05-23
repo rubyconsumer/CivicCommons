@@ -74,7 +74,7 @@ Civiccommons::Application.routes.draw do
   match '/careers'           => redirect('/pages/jobs')
   match '/contact_us'        => redirect('/pages/contact')
   match '/faq'               => redirect('/pages/faq')
-  match '/feeds'             => redirect('/pages/feeds')
+  match '/feeds'             => redirect('/pages/rss-feeds')
   match '/help'              => redirect('/pages/build-the-commons')
   match '/in-the-news'       => redirect('/news')
   match '/jobs'              => redirect('/pages/jobs')
