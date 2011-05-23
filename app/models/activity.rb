@@ -25,13 +25,14 @@ class Activity < ActiveRecord::Base
       }
       if attributes.respond_to?(:conversation_id) && !attributes.conversation_id.nil?
         attr[:conversation_id] = attributes.conversation_id
+        attr[:activity_cache] = Activity.encode(attributes)
       elsif attributes.respond_to?(:issue_id) && !attributes.issue_id.nil?
         attr[:issue_id] = attributes.issue_id
+        attr[:activity_cache] = Activity.encode(attributes)
       elsif attributes.is_a?(Conversation)
         attr[:conversation_id] = attributes.id
+        attr[:activity_cache] = Activity.encode(attributes)
       end
-
-      attr[:activity_cache] = Activity.encode(attributes)
 
       attributes = attr
 
@@ -41,14 +42,17 @@ class Activity < ActiveRecord::Base
   end
 
   #Updating cache data on update
+
   def self.update(model)
 
     model = model.becomes(Contribution) if model.is_a?(Contribution)
 
     if Activity.valid_type?(model)
       item = Activity.where(item_id: model.id, item_type: model.class.to_s).first
-      item.activity_cache = Activity.encode(model)
-      item.save
+      unless item.nil?
+        item.activity_cache = Activity.encode(model)
+        item.save
+      end
     end
 
   end

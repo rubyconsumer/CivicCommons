@@ -11,11 +11,13 @@ describe ActivityObserver do
   end
 
   context "On create" do
+
     it 'creates a new activity record when a conversation is created' do
       conversation = Factory.create(:conversation)
       a = Activity.last
       a.item_id.should == conversation.id
       a.item_type.should == 'Conversation'
+      a.activity_cache.should_not be_nil
     end
 
     it 'creates a new activity record when a rating group is created' do
@@ -23,6 +25,7 @@ describe ActivityObserver do
       a = Activity.last
       a.item_id.should == rating_group.id
       a.item_type.should == 'RatingGroup'
+      a.activity_cache.should_not be_nil
     end
 
   end
@@ -31,9 +34,10 @@ describe ActivityObserver do
 
     it 'creates a new activity record when a contribution is confirmed' do
       contribution = Factory.create(:contribution)
-      a = Activity.last
+      a = Activity.where(item_type: 'Contribution', item_id: contribution.id).first
       a.item_id.should == contribution.id
       a.item_type.should == 'Contribution'
+      a.activity_cache.should_not be_nil
     end
 
     it 'does not create a new activity record for contributions on preview'
