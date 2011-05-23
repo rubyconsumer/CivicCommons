@@ -1,0 +1,18 @@
+<!--
+<a href="http://twitter.com/share" class="twitter-share-button" data-text="Check out '<%= title %>' at The Civic Commons" data-count="horizontal" data-via="civiccommons">Tweet</a>
+<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+-->
+
+<a href="http://twitter.com/share" class="twitter-share-button" data-text="Check out '<%= title %>' at The Civic Commons" data-count="horizontal" data-via="civiccommons">Tweet</a>
+<span id="twitter-share"></span>
+
+<script type="text/javascript">
+(function($){
+  $(window).load(function(){
+    var tw = document.createElement('script'); tw.type = 'text/javascript'; tw.async = true;
+    tw.src = (document.location.protocol + '//platform.twitter.com/widgets.js');
+    document.getElementsByTagName('head')[0].appendChild(tw);
+    $('#twitter-share').replaceWith('<tw:share href="<%= request.url %>"></tw:share>');
+  });
+})(jQuery);
+</script>

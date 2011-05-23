@@ -11,14 +11,16 @@
       <div class="main-content">
         <div class="blog" id="outer_block_1"> 
           <h2><%= @blog_post.title %></h2>
-          <p><%= link_to @blog_post.author.name, user_path(@blog_post.author) %><%= user_profile(@blog_post.author) %></p>
+          <h3><%= link_to @blog_post.author.name, user_path(@blog_post.author) %><%= user_profile(@blog_post.author) %></h3>
           <div class='blog_inner'> 
+            <p class="convo-meta"><%= render :partial => 'shared/facebook_like' %></p>
+            <p class="convo-meta"><%= render :partial => 'shared/twitter_share', locals: { title: @blog_post.title} %></p>
             <div class="body"><%= raw @blog_post.body %></div>
             <% unless @blog_post.embed_code.blank? %>
               <p><%= raw @blog_post.embed_code %></p>
             <% end %>
             <p>&nbsp;</p>
-            <p>Posted by <%= link_to @blog_post.author.name, user_path(@blog_post.author) %> on <%= @blog_post.published.strftime('%B %d, %Y') %></p> 
+            <h4>Posted by <%= link_to @blog_post.author.name, user_path(@blog_post.author) %> on <%= @blog_post.published.strftime('%B %d, %Y') %></h4>
           </div>
         </div>
       </div>

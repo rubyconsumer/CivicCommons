@@ -28,7 +28,9 @@
               engaged, last activity
               %strong= time_ago_in_words(@latest_contribution ? @latest_contribution.created_at : @conversation.created_at ) + " ago"
             %p.convo-meta
-              =render :partial => 'layouts/facebook_like'
+              =render :partial => 'shared/facebook_like'
+            %p.convo-meta
+              =render :partial => 'shared/twitter_share', locals: { title: @conversation.title}
           %p.convo-summary
             %strong
               = format_date @conversation.created_at
