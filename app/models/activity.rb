@@ -12,7 +12,7 @@ class Activity < ActiveRecord::Base
 
   ############################################################
   # construction/destruction
-  
+
   # will accept an active record object of valid type
   def initialize(attributes = nil)
 
@@ -21,7 +21,7 @@ class Activity < ActiveRecord::Base
       attr = {
         item_id: attributes.id,
         item_type: attributes.class.to_s,
-        item_created_at: attributes.created_at
+        item_created_at: attributes.created_at,
       }
       if attributes.respond_to?(:conversation_id) && !attributes.conversation_id.nil?
         attr[:conversation_id] = attributes.conversation_id
@@ -31,11 +31,26 @@ class Activity < ActiveRecord::Base
         attr[:conversation_id] = attributes.id
       end
 
+      attr[:activity_cache] = Activity.encode(attributes)
+
       attributes = attr
 
     end
 
     super(attributes)
+  end
+
+  #Updating cache data on update
+  def self.update(model)
+
+    model = model.becomes(Contribution) if model.is_a?(Contribution)
+
+    if Activity.valid_type?(model)
+      item = Activity.where(item_id: model.id, item_type: model.class.to_s).first
+      item.activity_cache = Activity.encode(model)
+      item.save
+    end
+
   end
 
   # will accept an active record object of valid type
@@ -88,7 +103,6 @@ class Activity < ActiveRecord::Base
   end
 
   def self.decode(item)
-    #return self.to_open_struct(ActiveSupport::JSON.decode(item).values.first)
     hash = ActiveSupport::JSON.decode(item)
     return self.to_active_record(hash.keys.first, hash.values.first)
   end
@@ -139,22 +153,6 @@ class Activity < ActiveRecord::Base
     obj = clazz.new(data)
     obj.id = data['id']
     return obj
-  end
-
-  def self.to_open_struct(item)
-    struct = OpenStruct.new(item)
-    item.each do |key, value|
-      if value.is_a? Hash
-        obj = self.to_open_struct(value)
-        struct.send("#{key}=".to_sym, obj)
-      elsif value.is_a? Array
-        value = struct.send(key.to_sym)
-        (0 .. value.size-1).each do |i|
-          value[i] = self.to_open_struct(value[i]) if value[i].is_a? Hash
-        end
-      end
-    end
-    return struct
   end
 
 end

@@ -15,8 +15,12 @@ class ActivityObserver < ActiveRecord::Observer
         if Activity.where(item_id: model.id, item_type: 'Contribution').empty?
           a = Activity.new(model)
           a.save
+        else
+          Activity.update(model)
         end
       end
+    else
+      Activity.update(model)
     end
   end
 
