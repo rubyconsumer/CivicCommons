@@ -351,6 +351,7 @@ ActiveRecord::Schema.define(:version => 20110524145805) do
 
   add_index "top_items", ["conversation_id"], :name => "conversations_index"
   add_index "top_items", ["issue_id"], :name => "issues_index"
+  add_index "top_items", ["person_id"], :name => "person_index"
 
   create_table "visits", :force => true do |t|
     t.integer  "person_id"
