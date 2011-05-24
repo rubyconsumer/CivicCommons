@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110523152208) do
+ActiveRecord::Schema.define(:version => 20110524145805) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -346,6 +346,7 @@ ActiveRecord::Schema.define(:version => 20110523152208) do
     t.integer  "conversation_id"
     t.integer  "issue_id"
     t.text     "activity_cache"
+    t.integer  "person_id"
   end
 
   add_index "top_items", ["conversation_id"], :name => "conversations_index"
