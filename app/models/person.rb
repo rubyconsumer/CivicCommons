@@ -230,50 +230,95 @@ class Person < ActiveRecord::Base
       return false
     end
 
+    puts 'beginning rake task'
     begin
       transaction do
+        puts 'begin:   updating FROM account confirmed_at'
         person_to_merge.confirmed_at = nil
         person_to_merge.save!
+        puts 'updated: ' + pluralize(1, 'record')
+        puts 'end:     updating FROM account confirmed_at'
 
+        puts 'begin:   updating contributions'
+        updated_record_count = 0
         person_to_merge.contributions.map do |contribution|
           contribution.owner = id
           contribution.save!
+          updated_record_count += 1
         end
+        puts 'updated: ' + pluralize(updated_record_count, 'record')
+        puts 'end:     updating contributions'
 
+        puts 'begin:   updating rating groups'
+        # this will fail if the user has ratings for both accounts
+        updated_record_count = 0
         RatingGroup.where('person_id = ?', person_to_merge.id).map do |rating_group|
           rating_group.person_id = id
           rating_group.save!
+          updated_record_count += 1
         end
+        puts 'updated: ' + pluralize(updated_record_count, 'record')
+        puts 'end:     updating rating groups'
 
+        puts 'begin:   updating conversation owners'
+        updated_record_count = 0
         Conversation.where('owner = ?', person_to_merge.id).map do |conversation|
           conversation.owner = id
           conversation.save!
+          updated_record_count += 1
         end
+        puts 'updated: ' + pluralize(updated_record_count, 'record')
+        puts 'end:     updating conversation owners'
 
+        puts 'begin:   updating subscriptions'
+        updated_record_count = 0
         # Make the TO account follow all the same conversations/issues as the FROM account
         Subscription.where(person_id: person_to_merge.id).each do |subscription|
           Subscription.create_unless_exists(self, subscription.subscribable)
+          updated_record_count += 1
         end
+        puts 'updated: ' + pluralize(updated_record_count, 'record')
+        puts 'end:     updating subscriptions'
 
+        puts 'begin:   updating visits'
+        updated_record_count = 0
         Visit.where('person_id = ?', person_to_merge.id).map do |visit|
           visit.person_id = id
           visit.save!
+          updated_record_count += 1
         end
+        puts 'updated: ' + pluralize(updated_record_count, 'record')
+        puts 'end:     updating visits'
 
+        puts 'begin:   updating content_templates'
+        updated_record_count = 0
         person_to_merge.content_templates.map do |content_template|
           content_template.person_id = id
           content_template.save!
+          updated_record_count += 1
         end
+        puts 'updated: ' + pluralize(updated_record_count, 'record')
+        puts 'end:     updating content_templates'
 
+        puts 'begin:   updating content_items'
+        updated_record_count = 0
         person_to_merge.content_items.map do |content_item|
           content_item.person_id = id
           content_item.save!
+          updated_record_count += 1
         end
+        puts 'updated: ' + pluralize(updated_record_count, 'record')
+        puts 'end:     updating content_items'
 
+        puts 'begin:   updating managed_issue_pages'
+        updated_record_count = 0
         person_to_merge.managed_issue_pages.map do |managed_issue_page|
           managed_issue_page.person_id = id
           managed_issue_page.save!
+          updated_record_count += 1
         end
+        puts 'updated: ' + pluralize(updated_record_count, 'record')
+        puts 'end:     updating managed_issue_pages'
 
       end # transaction
 
@@ -282,6 +327,7 @@ class Person < ActiveRecord::Base
       say exception.backtrace.join("\n")
     end # begin
 
+    puts 'ending rake task'
     return Person.find(person_to_merge.id).confirmed_at.nil?
   end
 
