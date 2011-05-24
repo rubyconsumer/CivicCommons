@@ -15,18 +15,21 @@
 <div class="wrapper">
 
   <div class="content-container">
-    
+
     <div class="main-content">
       <div class="wide_content" id="UserContributionsModule">
-        <h2>Contributions</h2>
-        <% if @contributions.empty? %>
+        <h2>Recent Activity</h2>
+        <% if @recent_items.empty? %>
           <p><%= @user.name %> is just getting started</p>
         <% else %>
           <div class="divided">
-            <%= render :partial => "contribution", :collection => @contributions %>
+            <% collection = ActivityPresenter.new(@recent_items) %>
+            <% collection.each_with_type do |item, type| %>
+              <%= render :partial => "/shared/recent_item", locals: { recent_item: item, type: type } %>
+            <% end %>
           </div>
           <div class="pagination">
-            <%= will_paginate @contributions, :inner_window => 3, previous_label: 'Previous', next_label: 'Next' %>
+            <%= will_paginate @recent_items, :inner_window => 3, previous_label: 'Previous', next_label: 'Next' %>
           </div>
         <% end %>
       </div>

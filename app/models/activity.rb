@@ -138,6 +138,14 @@ class Activity < ActiveRecord::Base
     end
   end
 
+  def self.recent_items_for_person(person, limit = nil)
+    if limit.nil?
+      Activity.where(person_id: person.id).order('created_at DESC')
+    else
+      Activity.where(person_id: person.id).limit(limit).order('created_at DESC')
+    end
+  end
+
   private
 
   ############################################################
