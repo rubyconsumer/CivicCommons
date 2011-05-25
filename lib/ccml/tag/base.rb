@@ -130,7 +130,7 @@ module CCML
         self.config.assets_dir = ''
 
         def initialize(url)
-          match = /^http[s]?:(?<host>\/\/(\w|[^\?\/:])+(:\d+)?).*$/i.match(url)
+          match = /^http[s]?:\/\/(?<host>(\w|[^\?\/:])+(:\d+)?).*$/i.match(url)
           default_url_options[:host] = (match.nil? ? '/' : match[:host])
         end
 

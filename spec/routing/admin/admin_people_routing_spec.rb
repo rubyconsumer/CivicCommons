@@ -42,4 +42,8 @@ describe Admin::PeopleController do
     { put: 'admin/people/1/unlock_access' }.should route_to(controller: 'admin/people', action: 'unlock_access', id: '1')
   end
 
+  it "generates and recognizes #confirm" do
+    { put: 'admin/people/1/confirm' }.should route_to(controller: 'admin/people', action: 'confirm', id: '1')
+  end
+
 end

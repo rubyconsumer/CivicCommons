@@ -126,6 +126,10 @@ class CCML::Tag::IssueTag < CCML::Tag::TagPair
     end
   end
 
+  def convo_band
+    return conversation_band
+  end
+
   private
 
   def get_issue

@@ -74,7 +74,7 @@ Civiccommons::Application.routes.draw do
   match '/careers'           => redirect('/pages/jobs')
   match '/contact_us'        => redirect('/pages/contact')
   match '/faq'               => redirect('/pages/faq')
-  match '/feeds'             => redirect('/pages/feeds')
+  match '/feeds'             => redirect('/pages/rss-feeds')
   match '/help'              => redirect('/pages/build-the-commons')
   match '/in-the-news'       => redirect('/news')
   match '/jobs'              => redirect('/pages/jobs')
@@ -145,6 +145,7 @@ Civiccommons::Application.routes.draw do
       get 'proxies',       on: :collection
       put 'lock_access',   on: :member
       put 'unlock_access', on: :member
+      put 'confirm',       on: :member
     end
     resources :user_registrations, only: [:new, :create]
   end

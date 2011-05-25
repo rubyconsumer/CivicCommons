@@ -1,5 +1,3 @@
-# Read about factories at http://github.com/thoughtbot/factory_girl
-
 Factory.define :people do |f|
 
   Factory.define :invalid_person, :class=>Person do |u|
@@ -17,6 +15,7 @@ Factory.define :people do |f|
     u.zip_code '44313'
     u.password 'password'
     u.sequence(:email) {|n| "test.account#{n}@mysite.com" }
+    f.sequence(:cached_slug) {|n| "john-doe--#{n}" }
     u.skip_email_marketing true
     u.daily_digest false
   end

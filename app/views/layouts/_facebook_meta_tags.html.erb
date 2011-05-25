@@ -4,12 +4,24 @@
   <% if not @conversation.image.nil? %>
     <link rel="image_src" href="<%= @conversation.image.url(:panel) %>" />
   <% end %>
-  <meta name="medium" content="blog" />
 <% elsif not @issue.nil? %>
   <meta name="title" content="<%=h @issue.name %>" />
   <meta name="description" content="<%=h @issue.summary %>" />
   <% if not @issue.image.nil? %>
     <link rel="image_src" href="<%= @issue.image.url(:panel) %>" />
   <% end %>
+<% elsif not @blog_post.nil? %>
+  <meta name="title" content="The Common Blog: <%=h @blog_post.title %>" />
+  <meta name="description" content="<%=h @blog_post.summary %>" />
+  <link rel="image_src" href="<%= "/images/cc_podcast_small.jpg" %>" />
+<% elsif not @radioshow.nil? %>
+  <meta name="title" content="The Civic Commons Radio Show: <%=h @radioshow.title %>" />
+  <meta name="description" content="<%=h @radioshow.summary %>" />
+  <link rel="image_src" href="<%= "/images/cc_podcast_small.jpg" %>" />
+<% else %>
+  <meta name="title" content="The Civic Commons" />
+  <meta name="description" content="The Civic Commons is a new way to bring communities together with conversation and emerging technology. We’re focused on building conversations and connections that have the power to become informed, productive collective civic action." />
+    <link rel="image_src" href="<%= "/images/cc_podcast_small.jpg" %>" />
   <meta name="medium" content="blog" />
 <% end %>
+  <meta name="medium" content="blog" />

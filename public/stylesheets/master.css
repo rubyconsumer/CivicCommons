@@ -966,6 +966,11 @@ div.link-meta p.embedded {
 p.link-quot {
 color: #636363;
 }
+
+div.link-meta p.link-title a, div.link-meta p.link-quot a{
+  text-decoration: none;
+  font-weight: bold;
+}
 div.link-meta p.link-title a:hover, div.link-meta p.link-quot a:hover, div.link-meta p.embedded a:hover {
   cursor: pointer;
 }
@@ -1452,6 +1457,7 @@ display: block;
 height: 135px;
 margin-bottom: 8px;
 width: 405px;
+clear: both;
 }
 div.convo-entry input.textbox,  div#cboxLoadedContent .input-with-options label, div.convo-entry p.help-text {width: 310px;}
 div.convo-entry a.button, div#cboxLoadedContent input#contribution_submit {margin-top: 5px;}

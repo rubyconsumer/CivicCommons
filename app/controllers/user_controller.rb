@@ -16,18 +16,17 @@ class UserController < ApplicationController
 
   def show
     @user = Person.includes(:contributions, :subscriptions).find(params[:id])
-
-    @contributions = @user.contributions.order('contributions.created_at DESC')
-    @contributions = @contributions.paginate(page: params[:page], per_page: 6)
-    @contributions.collect do |contribution|
-      ContributionPresenter.new(contribution)
-    end
+    @recent_items = Activity.recent_items_for_person(@user).paginate(page: params[:page], per_page: 10)
 
     @issue_subscriptions = @user.subscriptions.select do |subscription|
       subscription.subscribable_type == "Issue"
     end
 
     @conversation_subscriptions = @user.subscriptions - @issue_subscriptions
+    respond_to do |format|
+      format.html
+      format.xml { @user }
+    end
   end
 
   def update

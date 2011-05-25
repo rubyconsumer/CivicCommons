@@ -1,16 +1,19 @@
 class Region < ActiveRecord::Base
 
   before_save :create_zip_codes
-  class << self
-    def default_name
-      "National"
-    end
 
-    def default
-      rv = new(:name=>self.default_name)
-      rv.id = 0
-      rv
-    end
+  def self.default_name
+    "National"
+  end
+
+  def self.default
+    rv = new(:name=>self.default_name)
+    rv.id = 0
+    rv
+  end
+
+  def self.find_by_zip_code(zip_code)
+    Region.joins(:zip_codes).where("zip_codes.zip_code = #{zip_code}").first
   end
 
   def issues

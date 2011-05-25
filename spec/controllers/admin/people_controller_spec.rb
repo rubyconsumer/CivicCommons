@@ -1,12 +1,13 @@
 require 'spec_helper'
 
 describe Admin::PeopleController, "locking/unlocking" do
+
   before(:each) do
     @admin = Factory.create(:admin_person)
     controller.stub!(:current_person).and_return(@admin)
     @person = Factory.create(:normal_person)
   end
-  
+
   it "should allow locking of a person" do
     put 'lock_access', {:id => @person.id}
 
@@ -18,7 +19,7 @@ describe Admin::PeopleController, "locking/unlocking" do
 
   it "should allow unlocking of a person" do
     @person.lock_access!
-    
+
     put 'unlock_access', {:id => @person.id}
 
     response.should be_redirect
@@ -26,5 +27,26 @@ describe Admin::PeopleController, "locking/unlocking" do
     @person.reload
     @person.locked_at.should be_nil
   end
-  
+
+  describe "PUT: confirm" do
+
+    it "Confirms user" do
+      person = mock_model(Person)
+      Person.stub(:find).with('1').and_return(person)
+      person.should_receive(:confirm!)
+
+      put :confirm, id: '1'
+    end
+
+    it "redirects to the admin people page" do
+      person = mock_model(Person)
+      Person.stub(:find).with('1').and_return(person)
+      person.should_receive(:confirm!)
+
+      put :confirm, id: '1'
+      controller.should redirect_to(admin_people_path)
+    end
+
+  end
+
 end

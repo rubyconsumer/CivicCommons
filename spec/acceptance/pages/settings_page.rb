@@ -5,6 +5,6 @@ class SettingsPage < PageObject
   end
   
   def visit(user)
-    @page.visit "/user/#{user.id}/edit" if user
+    @page.visit edit_user_path(user)
   end
 end

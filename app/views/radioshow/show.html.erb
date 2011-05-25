@@ -14,6 +14,8 @@
         <div class="radioshow" id="outer_block_1"> 
           <h2><%= @radioshow.title %></h2>
           <div class='radioshow_inner'> 
+            <p class="convo-meta"><%= render :partial => 'shared/facebook_like' %></p>
+            <p class="convo-meta"><%= render :partial => 'shared/twitter_share', locals: { title: @radioshow.title} %></p>
             <div class="body"><%= raw @radioshow.body %></div>
             <p>&nbsp;</p>
             <p>Aired on <%= @radioshow.published.strftime('%B %d, %Y') %></p> 

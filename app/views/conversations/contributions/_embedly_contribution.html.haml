@@ -12,5 +12,7 @@
   %div.embed-content
     %p.link-title
       = link_to(contribution.title, contribution.url)
+    %p
+      = link_to(contribution.base_url.sub(/https?:\/\//i, ''), contribution.base_url)
     %p.content.link-quot
       = raw contribution.description

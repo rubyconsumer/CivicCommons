@@ -1,11 +1,12 @@
 require 'spec_helper'
 
 describe Conversation do
-  it { should have_many :contributions  }
-  it { should have_attached_file :image }
-end
 
-describe Conversation do
+  context "Associations" do
+    it { should have_many :contributions  }
+    it { should have_attached_file :image }
+  end
+
   describe "a valid conversation" do
     before :each do
       @conversation = Factory.build(:conversation)
@@ -111,6 +112,7 @@ describe Conversation do
       Contribution.where(:id => contribution_ids).count.should == 0
     end
     it "destroys all top_items from nested contributions" do
+      pending 'To be removed after ActivityObserver complete'
       item_ids = @conversation.contributions.includes(:top_item).collect{ |c| c.top_item.id unless c.top_item.blank? }
       @conversation.destroy
       TopItem.where(:id => item_ids).count.should == 0
@@ -122,6 +124,56 @@ describe Conversation do
       it "filters by :#{filter_name} by grabbing the appropriate named scope and doesn't raise error" do
         Conversation.should_receive(Conversation.available_filters[filter_name.to_sym])
         lambda { Conversation.filtered(filter_name) }.should_not raise_error
+      end
+    end
+
+    describe 'most_active filter' do
+      it 'will not return conversations if they have no contributions' do
+        Factory.create(:conversation, :contributions => [])
+        Conversation.filtered('active').all.should be_empty
+        Conversation.most_active.all.should be_empty
+      end
+
+      it 'will not return conversations if they are only of type TopLevelContribution' do
+        conversation = Factory.create(:conversation)
+        Factory.create(:top_level_contribution, :conversation => conversation)
+        Conversation.filtered('active').all.should be_empty
+        Conversation.most_active.all.should be_empty
+      end
+
+      it 'will return conversations with any contributions that are within 60 days' do
+        conversation = Factory.create(:conversation, :contributions => [])
+        top_level_contribution = Factory.create(:top_level_contribution, :conversation => conversation)
+        Factory.create(:contribution, :parent => top_level_contribution, :conversation => conversation,
+          :created_at => (Time.now - 59.days), :updated_at => (Time.now - 30.seconds))
+        Conversation.filtered('active').all.first.should == conversation
+        Conversation.most_active.all.first.should == conversation
+      end
+
+      it 'will not return conversations with contributions that are all older than 60 days' do
+        conversation = Factory.create(:conversation, :contributions => [])
+        top_level_contribution = Factory.create(:top_level_contribution, :conversation => conversation)
+        Factory.create(:contribution, :parent => top_level_contribution, :conversation => conversation,
+          :created_at => (Time.now - 61.days), :updated_at => (Time.now - 30.seconds))
+        Conversation.filtered('active').all.should be_empty
+        Conversation.most_active.all.should be_empty
+      end
+
+      it 'will return the conversation ordered by newest contribution descending if number of contributions is the same' do
+        old_conversation = Factory.create(:conversation, :contributions => [])
+        top_level_contribution = Factory.create(:top_level_contribution, :conversation => old_conversation)
+        Factory.create(:contribution, :parent => top_level_contribution, :conversation => old_conversation,
+          :created_at => (Time.now - 59.days), :updated_at => (Time.now - 30.seconds))
+
+        new_conversation = Factory.create(:conversation, :contributions => [])
+        top_level_contribution = Factory.create(:top_level_contribution, :conversation => new_conversation)
+        Factory.create(:contribution, :parent => top_level_contribution, :conversation => new_conversation,
+          :created_at => (Time.now - 1.days), :updated_at => (Time.now - 30.seconds))
+
+        Conversation.filtered('active').all.first.should == new_conversation
+        Conversation.most_active.all.first.should == new_conversation
+        Conversation.filtered('active').all.last.should == old_conversation
+        Conversation.most_active.all.last.should == old_conversation
       end
     end
   end
@@ -160,9 +212,9 @@ describe Conversation do
     it "raises an error if conversation created with multiple contributions" do
       @contributions[1] = Factory.build(:question, :conversation => nil, :parent => nil).attributes
       @conversation = Factory.build(:user_generated_conversation,
-        :owner => @person,
-        :contributions => [],
-        :contributions_attributes => Marshal::load(Marshal.dump(@contributions)))
+                                    :owner => @person,
+                                    :contributions => [],
+                                    :contributions_attributes => Marshal::load(Marshal.dump(@contributions)))
       @conversation.save
       @conversation.should have_validation_error(:contributions)
     end

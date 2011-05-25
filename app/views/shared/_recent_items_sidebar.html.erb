@@ -2,7 +2,10 @@
   <div class="mod">
     <h3>Recent Activity</h3>
     <div class='mod-content'>
-      <%= render :partial => 'shared/recent_item', :collection => recent_items, :as => :recent_item %>
+      <% collection = ActivityPresenter.new(recent_items) %>
+      <% collection.each_with_type do |item, type| %>
+        <%= render :partial => 'shared/recent_item', locals: { recent_item: item, type: type } %>
+      <% end %>
     </div>
   </div>
 <% end %>

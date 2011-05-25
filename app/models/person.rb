@@ -35,6 +35,7 @@ class Person < ActiveRecord::Base
   validates_presence_of :zip_code, :message => 'Please enter zipcode.', :if => :validate_zip_code?
   validates_presence_of :name
 
+  has_friendly_id :name, :use_slug => true, :strip_non_ascii => true
 
   # Ensure format of salt
   # Commented out because devise 1.2.RC doesn't store password_salt column anymore, if it uses bcrypt
