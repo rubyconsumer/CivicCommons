@@ -24,6 +24,32 @@ class TestPairTag < CCML::Tag::TagPair
     objs = ContentItem.all
     return process_tag_body(objs)
   end
+  def associations
+    objs = {
+      props: {
+        first: "Jerry",
+        last: "D'Antonio"
+      }
+    }
+    return process_tag_body(objs)
+  end
+  def arrays
+    objs = {
+      props: [1, 2, 3, 4, 5]
+    }
+    return process_tag_body(objs)
+  end
+  def array_associations
+    objs = {
+      props: {
+        inner: [
+          { first: "Jerry"},
+          { last: "D'Antonio" }
+        ]
+      }
+    }
+    return process_tag_body(objs)
+  end
 end
 
 describe CCML::Tag::TagPair do
@@ -106,6 +132,28 @@ describe CCML::Tag::TagPair do
           @tag = TestPairTag.new(nil)
           @tag.tag_body = @ccml_content
           @tag.active_record_assoc.should =~ @ccml_content_processed
+        end
+
+      end
+
+      context "complext object models" do
+
+        it "processes attributes through associations" do
+          @tag = TestPairTag.new(nil)
+          @tag.tag_body = "{props.first} {props.last}"
+          @tag.associations.should =~ /Jerry D'Antonio/
+        end
+
+        it "process array attributes" do
+          @tag = TestPairTag.new(nil)
+          @tag.tag_body = "{props[0]}, {props[1]}, {props[2]}, {props[3]}, {props[4]}"
+          @tag.arrays.should =~ /1, 2, 3, 4, 5/
+        end
+
+        it "processes array attributes through associations" do
+          @tag = TestPairTag.new(nil)
+          @tag.tag_body = "{props.inner[0].first} {props.inner[1].last}"
+          @tag.array_associations.should =~ /Jerry D'Antonio/
         end
 
       end

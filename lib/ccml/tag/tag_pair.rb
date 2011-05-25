@@ -10,6 +10,7 @@ module CCML
       ELSIF_PATTERN = /\{if:else?if\s+(?<cond>.+?)}(?<body>.+?)\{\/?if/im
       ELSE_PATTERN = /\{if:else}(?<body>.+?)\{\/if}/im
       VAR_PATTERN = /\{(?<vars>\S+?)(\s+format=['"](?<format>.*?)['"])?}/i
+      ARRAY_PATTERN = /(?<method>\w+)(\[(?<index>\d+)\])/i
 
       def process_tag_body(data)
 
@@ -21,7 +22,7 @@ module CCML
         data.each do |datum|
 
           # wrap the hash for later evaluation
-          datum = OpenStruct.new(datum) if datum.is_a?(Hash)
+          datum = to_struct(datum) if datum.is_a?(Hash)
 
           # process the tag body
           tag_body = String.new(@tag_body.to_s)
@@ -45,8 +46,8 @@ module CCML
             sub = if_match[:body]
             tag_body = tag_body.sub(match.to_s, sub)
           end
-        rescue
-          # continue
+        rescue => error
+          #puts "#{error.class} - #{error.message}"
         end
         return sub, tag_body
       end
@@ -97,16 +98,22 @@ module CCML
 
           # get the variable call string
           vars = match[:vars]
-
           # get the variable data
           begin
             methods = vars.split('.')
             object = datum
-            (0 .. methods.size-2).each do |i|
-              object = object.send(methods[i].to_sym)
+            (0 .. methods.size-1).each do |i|
+              arymtch = ARRAY_PATTERN.match(methods[i])
+              if arymtch.nil?
+                object = object.send(methods[i].to_sym)
+              else
+                object = object.send(arymtch[:method].to_sym)
+                object = object[arymtch[:index].to_i]
+              end
             end
-            sub = object.send(methods.last.to_sym)
+            sub = object
           rescue => error
+            #puts "#{error.class} - #{error.message}"
             sub = nil
           end
 
@@ -116,7 +123,7 @@ module CCML
               sub = Time.parse(sub) unless sub.is_a?(Time)
               sub = sub.strftime(match[:format])
             rescue => error
-              #continue
+              #puts "#{error.class} - #{error.message}"
             end
           end
 
@@ -129,6 +136,22 @@ module CCML
         end
 
         return tag_body
+      end
+
+      def to_struct(item)
+        struct = OpenStruct.new(item)
+        item.each do |key, value|
+          if value.is_a? Hash
+            obj = to_struct(value)
+            struct.send("#{key}=".to_sym, obj)
+          elsif value.is_a? Array
+            value = struct.send(key.to_sym)
+            (0 .. value.size-1).each do |i|
+              value[i] = to_struct(value[i]) if value[i].is_a? Hash
+            end
+          end
+        end
+        return struct
       end
     end
 
