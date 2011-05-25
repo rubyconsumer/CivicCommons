@@ -1,3 +1,4 @@
+include ActionView::Helpers::TextHelper
 require "highline/import"
 
 desc "Merge two user accounts by passing in their email addresses: from=email1@example.com to=email2@example.com"
