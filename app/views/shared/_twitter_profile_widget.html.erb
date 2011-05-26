@@ -1,31 +1,50 @@
+<% 
+  # set defaults
+  twitter_username ||= 'CivicCommons' 
+  interval ||= 6000
+  width ||= 'auto'
+  height ||= 200
+  shell_bg ||= '#6a707e'
+  shell_color ||= '#ffffff'
+  tweets_bg ||= '#ffffff'
+  tweets_color ||= '#444444'
+  tweets_links ||= '#c8d458'
+  scrollbar ||= true
+  looping ||= false
+  live ||= true
+  hashtags ||= true
+  timestamp ||= true
+  avatars ||= false
+  behavior ||= 'all'
+%>
 <script src="http://widgets.twimg.com/j/2/widget.js"></script>
 <script>
 new TWTR.Widget({
   version: 2,
   type: 'profile',
   rpp: 5,
-  interval: 6000,
-  width: 'auto',
-  height: 200,
+  interval: <%= interval %>,
+  width: '<%= width %>',
+  height: '<%= height %>',
   theme: {
     shell: {
-      background: '#6a707e',
-      color: '#ffffff'
+      background: '<%= shell_bg %>',
+      color: '<%= shell_color %>'
     },
     tweets: {
-      background: '#ffffff',
-      color: '#444444',
-      links: '#c8d458'
+      background: '<%= tweets_bg %>',
+      color: '<%= tweets_color %>',
+      links: '<%= tweets_links %>'
     }
   },
   features: {
-    scrollbar: true,
-    loop: false,
-    live: true,
-    hashtags: true,
-    timestamp: true,
-    avatars: false,
-    behavior: 'all'
+    scrollbar: <%= scrollbar %>,
+    loop: <%= looping %>,
+    live: <%= live %>,
+    hashtags: <%= hashtags %>,
+    timestamp: <%= timestamp %>,
+    avatars: <%= avatars %>,
+    behavior: '<%= behavior %>'
   }
 }).render().setUser('<%= twitter_username %>').start();
 </script>
