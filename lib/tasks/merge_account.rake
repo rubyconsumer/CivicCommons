@@ -11,7 +11,7 @@ task :merge_account, :needs => :environment do
   end while not to_person = Person.find_by_email(to)
 
   return unless agree("Merging #{from} to #{to}. Correct?")
-  if to_person.merge_account(from_person)
+  if Utilities::PersonUtilities.merge_account(to_person, from_person)
     from_person.destroy
     say 'Merge successful'
   else
