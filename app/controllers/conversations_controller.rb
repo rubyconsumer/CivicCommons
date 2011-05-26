@@ -163,14 +163,15 @@ class ConversationsController < ApplicationController
 
   # POST /conversations
   def create
-    params[:conversation].merge!({
-      :person => current_person,
-      :from_community => true
-    })
-    @conversation = Conversation.new(params[:conversation])
-    @conversation.started_at = Time.now
-    # Load @contributions to populate re-rendered :new form if save is unsuccessful
-    @contributions = @conversation.contributions | @conversation.rejected_contributions
+    prep_convo(params)
+    #params[:conversation].merge!({
+      #:person => current_person,
+      #:from_community => true
+    #})
+    #@conversation = Conversation.new(params[:conversation])
+    #@conversation.started_at = Time.now
+    ## Load @contributions to populate re-rendered :new form if save is unsuccessful
+    #@contributions = @conversation.contributions | @conversation.rejected_contributions
 
     respond_to do |format|
       if @conversation.save
@@ -196,11 +197,34 @@ class ConversationsController < ApplicationController
 
   # PUT /conversations/blog/:id
   def create_from_blog_post
-    @blog_post = ContentItems.find(:id)
+    @blog_post = ContentItem.find(params[:id])
+    params[:conversation][:summary] = "<em>This is a conversation about a blog post from #{@blog_post.author.name}: <a href=\"#{blog_url(@blog_post)}\">#{@blog_post.title}</a></em><br/><br/>#{@blog_post.summary}"
+    params[:conversation][:title] = "Blog Post: #{@blog_post.title}"
+    params[:conversation][:zip_code] = "ALL"
+    prep_convo(params)
+    if @conversation.save
+      @blog_post.conversation = @conversation
+      @blog_post.save
+      redirect_to conversation_path(@conversation)
+    else
+      render 'blog/show'
+    end
   end
 
   # PUT /conversations/radio/:id
   def create_from_radioshow
+    @radioshow = ContentItem.find(params[:id])
+    params[:conversation][:summary] = "<em>This is a conversation about Civic Commons Radio <a href=\"#{radioshow_url(@radioshow)}\">#{@radioshow.title}</a></em><br/><br/>#{@radioshow.summary}"
+    params[:conversation][:title] = "Civic Commons Radio #{@radioshow.title}"
+    params[:conversation][:zip_code] = "ALL"
+    prep_convo(params)
+    if @conversation.save
+      @radioshow.conversation = @conversation
+      @radioshow.save
+      redirect_to conversation_path(@conversation)
+    else
+      render 'radioshow/show'
+    end
   end
 
   # PUT /conversations/1

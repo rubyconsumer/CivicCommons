@@ -8,9 +8,10 @@
       <h1><%= link_to 'The Civic Commons Radio Show', radioshow_index_path %></h1>
       <div class="in-the-news-post"></div>
 
-      <%= render partial: 'description' %>
-
       <div class="main-content">
+
+        <%= render partial: 'description' %>
+
         <div class="radioshow" id="outer_block_1"> 
           <h2><%= @radioshow.title %></h2>
           <div class='radioshow_inner'> 
@@ -21,9 +22,26 @@
             <p>Aired on <%= @radioshow.published.strftime('%B %d, %Y') %></p> 
           </div>
           <%= render partial: 'embed', radioshow: @radioshow %>
+
         </div>
+
+        <div>&nbsp;</div>
+
+        <% if @radioshow.conversation %>
+          <h2>Join the conversation about this radioshow</h2>
+          <div class="three-col-sm">
+            <%= render :partial => 'conversations/conversation_tile', locals: { conversation: @radioshow.conversation } %>
+          </div>
+        <% else %>
+          <h2>Start a conversation about this radio show</h2>
+          <%= render partial: 'conversations/short_form', locals: { url: start_conversation_from_radioshow_path(@radioshow) } %>
+        <% end %>
+
       </div>
+
+      <div class="aside supplementary">
+      </div>
+
     </div>
   </div>
 <% end %>
-

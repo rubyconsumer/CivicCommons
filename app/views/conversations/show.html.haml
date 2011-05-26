@@ -34,8 +34,7 @@
           %p.convo-summary
             %strong
               = format_date @conversation.created_at
-            \-
-            = @conversation.user_generated? ? @conversation.summary : raw(@conversation.summary)
+            = raw(@conversation.summary)
           -#%p.convo-summary
             -#=render :partial => 'layouts/facebook_like'
         .aside.supplementary.convo-mast-buttons

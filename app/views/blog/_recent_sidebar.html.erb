@@ -1,0 +1,11 @@
+<div class="mod"> 
+  <h3>Recent Blog Posts <%= "By #{author.first_name}" if defined? author %></h3> 
+  <div class='mod-content'> 
+    <% blog_posts.each do |post| %>
+      <div class='recent-item'> 
+        <p><%= link_to post.title, blog_path(post) %></p> 
+        <span class="posted">Posted on <%= post.published %></span> 
+      </div> 
+    <% end %>
+  </div> 
+</div> 

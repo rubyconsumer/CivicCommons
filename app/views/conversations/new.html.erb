@@ -30,6 +30,8 @@
               </ul>
             </div>
           <% end %>
+          <% @conversation.errors.clear %>
+          <% @contributions.each { |c| c.errors.clear } %>
 
           <p>Choose a title for your conversation (Make it descriptive, maybe provocative, but most of all, it should make sense)</p>
           <fieldset class="form-group">
