@@ -176,11 +176,31 @@ class ConversationsController < ApplicationController
       if @conversation.save
         format.html { redirect_to(new_invite_path(:source_type => :conversations, :source_id => @conversation.id, :conversation_created => true), :notice => 'Your conversation has been created!') }
       else
-        #TODO: Find a better way to handle erros on submission
+        #TODO: Find a better way to handle errors on submission
         @contributions = [Contribution.new]
         format.html { render :new, :status => :unprocessable_entity  }
       end
     end
+  end
+
+  def prep_convo(params)
+    params[:conversation].merge!({
+      :person => current_person,
+      :from_community => true
+    })
+    @conversation = Conversation.new(params[:conversation])
+    @conversation.started_at = Time.now
+    # Load @contributions to populate re-rendered :new form if save is unsuccessful
+    @contributions = @conversation.contributions | @conversation.rejected_contributions
+  end
+
+  # PUT /conversations/blog/:id
+  def create_from_blog_post
+    @blog_post = ContentItems.find(:id)
+  end
+
+  # PUT /conversations/radio/:id
+  def create_from_radioshow
   end
 
   # PUT /conversations/1
