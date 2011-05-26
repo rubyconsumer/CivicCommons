@@ -3,7 +3,7 @@ require 'spec_helper'
 describe CuratedFeedItem do
 
   let(:params) do
-    Factory.attributes_for(:curated_feed_item)
+    Factory.attributes_for(:curated_feed_item, curated_feed_id: 1)
   end
 
   context "validation" do
@@ -12,38 +12,55 @@ describe CuratedFeedItem do
       CuratedFeedItem.new(params).should be_valid
     end
 
-    it "validates presence of url" do
-      params.delete(:url)
+    it "requires a original_url" do
+      params.delete(:original_url)
       CuratedFeedItem.new(params).should_not be_valid
     end
 
-  end
-
-  context "on save" do
-
-    it "does not call Embedly if objectify is set" do
-      pending
+    it "requires a curated_feed_id" do
+      params.delete(:curated_feed_id)
+      CuratedFeedItem.new(params).should_not be_valid
     end
 
-    it "calls Embedly when objectify is blank" do
-      pending
-    end
-
-    it "sets the pub_date to now when pub_date is blank" do
-      pending
+    it "sets pub_date when not provided" do
+      params.delete(:pub_date)
+      item = CuratedFeedItem.new(params)
+      item.should be_valid
+      item.pub_date.should_not be_blank
     end
 
   end
 
-  context "#update_objectify" do
+  context "objectify" do
+
+    it "builds the raw data into an object model" do
+      pending
+    end
 
   end
 
-  context "#reset" do
+  context "Embedly" do
 
-  end
+    before(:each) do
+      @item = CuratedFeedItem.new
+      @item.original_url = params[:original_url]
+      @item.curated_feed_id = params[:curated_feed_id]
+    end
 
-  context "#struct" do
+    it "updates attributes on save" do
+      stub_request(:get, /http:\/\/pro\.embed\.ly/).to_return(:body => fixture_content('curated_feed_objectify.json'), :status => 200)
+      @item.save
+      @item.provider_url.should_not be_blank
+      @item.title.should_not be_blank
+      @item.description.should_not be_blank
+      @item.raw.should_not be_blank
+    end
+
+    it "prevents save on error" do
+      stub_request(:get, /http:\/\/pro\.embed\.ly/).to_return(:body => fixture_content('curated_feed_error.json'), :status => 200)
+      @item.save.should == false
+      @item.errors.should_not be_empty
+    end
 
   end
 

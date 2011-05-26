@@ -7,26 +7,24 @@ class CuratedFeedItem < ActiveRecord::Base
   alias_attribute :url, :original_url
   alias_attribute :feed, :curated_feed
   
-  validates_presence_of :url
+  validates_presence_of :original_url
+  validates_presence_of :curated_feed_id
 
-  def reset(url = nil)
-    self.original_url = url unless url.nil?
-    self.provider_url = nil
-    self.title = nil
-    self.description = nil
-    self.raw = nil
-    self.update_raw
-  end
+  before_validation :set_pub_date
+  before_save :update_embedly
 
-  def update_raw
+  def update_embedly
     embedly = EmbedlyService.new
     embedly.fetch(self.original_url)
     if embedly.ok?
       self.raw = embedly.raw
-      self.provider_url = embedly.properties[:provider_url] if self.provider_url.blank?
-      self.title = embedly.properties[:title] if self.title.blank?
-      self.description = embedly.properties[:description] if self.description.blank?
+      self.provider_url = embedly.properties[:provider_url]
+      self.title = embedly.properties[:title]
+      self.description = embedly.properties[:description]
+    else
+      errors.add(:objectify, embedly.error)
     end
+    return embedly.ok?
   end
 
   def objectify
@@ -36,9 +34,9 @@ class CuratedFeedItem < ActiveRecord::Base
     
   private
 
-  def before_save
+  def set_pub_date
     self.pub_date = DateTime.now if self.pub_date.blank?
-    self.update_raw if self.raw.blank?
+    return true
   end
 
   def structify(item)

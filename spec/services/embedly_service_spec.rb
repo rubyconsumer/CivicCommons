@@ -20,6 +20,10 @@ end
 
 describe EmbedlyService do
 
+  before(:each) do
+    stub_request(:get, /http:\/\/pro\.embed\.ly/).to_return(:body => File.open("#{Rails.root}/test/fixtures/embedly/youtube.json"), :status => 200)
+  end
+
   describe "EmbedlyService#fetch(url)" do
 
     context "Success" do

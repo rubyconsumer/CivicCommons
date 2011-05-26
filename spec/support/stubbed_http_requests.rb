@@ -8,9 +8,4 @@ module StubbedHttpRequests
   def stub_amazon_s3_request
     stub_request(:any, /s3\.amazonaws\.com.*/)
   end
-
-  # This set can be used to mock Embedly calls, but the regex needs more work if we want to mock multiple requests
-  def stub_pro_embedly_request
-    stub_request(:get, /http:\/\/pro\.embed\.ly/).to_return(:body => File.open("#{Rails.root}/test/fixtures/embedly/youtube.json"), :status => 200)
-  end
 end
