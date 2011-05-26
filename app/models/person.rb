@@ -1,5 +1,6 @@
 class Person < ActiveRecord::Base
 
+  include ActionView::Helpers::TextHelper
   include Regionable
   include GeometryForStyle
   include Marketable
@@ -260,26 +261,26 @@ class Person < ActiveRecord::Base
       return false
     end
 
-    puts 'beginning rake task'
+    puts 'beginning rake task' unless Rails.env.test?
     begin
       transaction do
-        puts 'begin:   updating FROM account confirmed_at'
+        puts 'begin:   updating FROM account confirmed_at' unless Rails.env.test?
         person_to_merge.confirmed_at = nil
         person_to_merge.save!
-        puts 'updated: ' + pluralize(1, 'record')
-        puts 'end:     updating FROM account confirmed_at'
+        puts 'updated: ' + pluralize(1, 'record') unless Rails.env.test?
+        puts 'end:     updating FROM account confirmed_at' unless Rails.env.test?
 
-        puts 'begin:   updating contributions'
+        puts 'begin:   updating contributions' unless Rails.env.test?
         updated_record_count = 0
         person_to_merge.contributions.map do |contribution|
           contribution.owner = id
           contribution.save!
           updated_record_count += 1
         end
-        puts 'updated: ' + pluralize(updated_record_count, 'record')
-        puts 'end:     updating contributions'
+        puts 'updated: ' + pluralize(updated_record_count, 'record') unless Rails.env.test?
+        puts 'end:     updating contributions' unless Rails.env.test?
 
-        puts 'begin:   updating rating groups'
+        puts 'begin:   updating rating groups' unless Rails.env.test?
         # this will fail if the user has ratings for both accounts
         updated_record_count = 0
         RatingGroup.where('person_id = ?', person_to_merge.id).map do |rating_group|
@@ -287,77 +288,77 @@ class Person < ActiveRecord::Base
           rating_group.save!
           updated_record_count += 1
         end
-        puts 'updated: ' + pluralize(updated_record_count, 'record')
-        puts 'end:     updating rating groups'
+        puts 'updated: ' + pluralize(updated_record_count, 'record') unless Rails.env.test?
+        puts 'end:     updating rating groups' unless Rails.env.test?
 
-        puts 'begin:   updating conversation owners'
+        puts 'begin:   updating conversation owners' unless Rails.env.test?
         updated_record_count = 0
         Conversation.where('owner = ?', person_to_merge.id).map do |conversation|
           conversation.owner = id
           conversation.save!
           updated_record_count += 1
         end
-        puts 'updated: ' + pluralize(updated_record_count, 'record')
-        puts 'end:     updating conversation owners'
+        puts 'updated: ' + pluralize(updated_record_count, 'record') unless Rails.env.test?
+        puts 'end:     updating conversation owners' unless Rails.env.test?
 
-        puts 'begin:   updating subscriptions'
+        puts 'begin:   updating subscriptions' unless Rails.env.test?
         updated_record_count = 0
         # Make the TO account follow all the same conversations/issues as the FROM account
         Subscription.where(person_id: person_to_merge.id).each do |subscription|
           Subscription.create_unless_exists(self, subscription.subscribable)
           updated_record_count += 1
         end
-        puts 'updated: ' + pluralize(updated_record_count, 'record')
-        puts 'end:     updating subscriptions'
+        puts 'updated: ' + pluralize(updated_record_count, 'record') unless Rails.env.test?
+        puts 'end:     updating subscriptions' unless Rails.env.test?
 
-        puts 'begin:   updating visits'
+        puts 'begin:   updating visits' unless Rails.env.test?
         updated_record_count = 0
         Visit.where('person_id = ?', person_to_merge.id).map do |visit|
           visit.person_id = id
           visit.save!
           updated_record_count += 1
         end
-        puts 'updated: ' + pluralize(updated_record_count, 'record')
-        puts 'end:     updating visits'
+        puts 'updated: ' + pluralize(updated_record_count, 'record') unless Rails.env.test?
+        puts 'end:     updating visits' unless Rails.env.test?
 
-        puts 'begin:   updating content_templates'
+        puts 'begin:   updating content_templates' unless Rails.env.test?
         updated_record_count = 0
         person_to_merge.content_templates.map do |content_template|
           content_template.person_id = id
           content_template.save!
           updated_record_count += 1
         end
-        puts 'updated: ' + pluralize(updated_record_count, 'record')
-        puts 'end:     updating content_templates'
+        puts 'updated: ' + pluralize(updated_record_count, 'record') unless Rails.env.test?
+        puts 'end:     updating content_templates' unless Rails.env.test?
 
-        puts 'begin:   updating content_items'
+        puts 'begin:   updating content_items' unless Rails.env.test?
         updated_record_count = 0
         person_to_merge.content_items.map do |content_item|
           content_item.person_id = id
           content_item.save!
           updated_record_count += 1
         end
-        puts 'updated: ' + pluralize(updated_record_count, 'record')
-        puts 'end:     updating content_items'
+        puts 'updated: ' + pluralize(updated_record_count, 'record') unless Rails.env.test?
+        puts 'end:     updating content_items' unless Rails.env.test?
 
-        puts 'begin:   updating managed_issue_pages'
+        puts 'begin:   updating managed_issue_pages' unless Rails.env.test?
         updated_record_count = 0
         person_to_merge.managed_issue_pages.map do |managed_issue_page|
           managed_issue_page.person_id = id
           managed_issue_page.save!
           updated_record_count += 1
         end
-        puts 'updated: ' + pluralize(updated_record_count, 'record')
-        puts 'end:     updating managed_issue_pages'
+        puts 'updated: ' + pluralize(updated_record_count, 'record') unless Rails.env.test?
+        puts 'end:     updating managed_issue_pages' unless Rails.env.test?
 
       end # transaction
 
     rescue ActiveRecord::RecordInvalid => exception
-      say exception.message
-      say exception.backtrace.join("\n")
+      puts exception.message unless Rails.env.test?
+      puts exception.backtrace.join("\n") unless Rails.env.test?
     end # begin
 
-    puts 'ending rake task'
+    puts 'ending rake task' unless Rails.env.test?
     return Person.find(person_to_merge.id).confirmed_at.nil?
   end
 
