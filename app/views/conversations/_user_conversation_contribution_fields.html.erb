@@ -4,12 +4,11 @@
   <% if type == :attached_file %>
       Upload a file:
       <%= f.file_field(:attachment) %>
-  <% elsif type == :embedly_contribution %>
+  <% elsif type == :embedly_contribution && subtype == :link %>
       <%= f.text_field(:url, :type => "text", :class => "textbox link", :placeholder => "http://www.example.com") %>
-  <% elsif type == :embedly_contribution  %>
+  <% elsif type == :embedly_contribution && subtype == :video %>
       <%= f.text_field(:url, :type => "text", :class => "textbox link youtube", :placeholder => "www.youtube.com/watch?v=123456") %>
-      <div class="youtube-thumbnail"></div>
   <% end %>
-  <%= f.text_area(:content, :rows => "3", :placeholder => contribution_form_placeholder_text_for(type, subtype)) %>
+  <div><%= f.text_area(:content, :placeholder => contribution_form_placeholder_text_for(type, subtype)) %></div>
   <div class="validation-error"></div>
 <% end %>
