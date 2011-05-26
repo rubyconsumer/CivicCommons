@@ -6,17 +6,45 @@ class Person < ActiveRecord::Base
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable, and :timeoutable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable,
-         :confirmable, :lockable,
+  devise :database_authenticatable,
+         :registerable,
+         :recoverable,
+         :rememberable,
+         :trackable,
+         :validatable,
+         :confirmable,
+         :lockable,
          :omniauthable
 
-  attr_accessor :organization_name, :send_welcome, :create_from_auth, :facebook_unlinking, :send_email_change_notification
+  attr_accessor :organization_name,
+                :send_welcome,
+                :create_from_auth,
+                :facebook_unlinking,
+                :send_email_change_notification
 
-  # Setup accessible (or protected) attributes for your model
-  attr_accessible :name, :first_name, :last_name, :email, :password, :password_confirmation, :bio, :top, :zip_code, :admin, :validated,
-                  :avatar, :remember_me, :daily_digest, :create_from_auth, :facebook_unlinking
+  # Setup accessible attributes
+  attr_accessible :name,
+                  :first_name,
+                  :last_name,
+                  :email,
+                  :password,
+                  :password_confirmation,
+                  :bio,
+                  :website,
+                  :twitter_username,
+                  :top,
+                  :zip_code,
+                  :admin,
+                  :validated,
+                  :avatar,
+                  :remember_me,
+                  :daily_digest,
+                  :create_from_auth,
+                  :facebook_unlinking
 
+  # Setup protected attributes
+  attr_protected :admin
+  
   has_one :facebook_authentication, :class_name => 'Authentication', :conditions => {:provider => 'facebook'}
   has_many :authentications, :dependent => :destroy
   has_many :content_items, :foreign_key => 'person_id', :dependent => :restrict 
@@ -34,6 +62,7 @@ class Person < ActiveRecord::Base
   validates_length_of :zip_code, :within => (5..10), :allow_blank => true, :allow_nil => true, :if => :validate_zip_code?
   validates_presence_of :zip_code, :message => 'Please enter zipcode.', :if => :validate_zip_code?
   validates_presence_of :name
+  validate :check_twitter_username_format
 
   has_friendly_id :name, :use_slug => true, :strip_non_ascii => true
 
@@ -66,6 +95,7 @@ class Person < ActiveRecord::Base
   scope :confirmed_accounts, where("confirmed_at is not null")
   scope :unconfirmed_accounts, where(:confirmed_at => nil)
 
+  # All these emails could be moved to an observer - Jerry
   after_create :notify_civic_commons
   before_save :check_to_send_welcome_email
   after_save :send_welcome_email, :if => :send_welcome?
@@ -383,6 +413,11 @@ class Person < ActiveRecord::Base
   end
 
 protected
+
+  def check_twitter_username_format
+    match = /^@?(?<username>.*)$/.match(self.twitter_username)
+    self.twitter_username = match[:username] unless match.nil?
+  end
 
   def password_required?
     if facebook_authenticated?

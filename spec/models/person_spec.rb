@@ -57,6 +57,13 @@ describe Person do
         @person.valid?
         @person.errors.should_not have_key(:zip_code)
       end
+
+      it "strips the @ symbol from the front of the Twitter username" do
+        @person.twitter_username = '@SomeTwitterUser'
+        @person.twitter_username.should == '@SomeTwitterUser'
+        @person.should be_valid
+        @person.twitter_username.should == 'SomeTwitterUser'
+      end
       
     end
 

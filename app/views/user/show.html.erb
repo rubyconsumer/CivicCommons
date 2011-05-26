@@ -3,92 +3,105 @@
 <% end %>
 
 <%= content_for :main_body do %>
-<div class="feature-mast">
-	<div class="wrapper">
-		<div class="content-container">
-			<div class="main-content">
-				<div class="offset-1 profile-mast">
-          <%= profile_image(@user, 70, class: 'callout', type: :square) %>
-          <h1><%= @user.name %></h1>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-
-<div class="wrapper">
-
-  <div class="content-container">
-
-    <div class="main-content">
-      <div class="wide_content" id="UserContributionsModule">
-        <h2>Recent Activity</h2>
-        <% if @recent_items.empty? %>
-          <p><%= @user.name %> is just getting started</p>
-        <% else %>
-          <div class="divided">
-            <% collection = ActivityPresenter.new(@recent_items) %>
-            <% collection.each_with_type do |item, type| %>
-              <%= render :partial => "/shared/recent_item", locals: { recent_item: item, type: type } %>
+  <div class="feature-mast">
+    <div class="wrapper">
+      <div class="content-container">
+        <div class="main-content">
+          <div class="offset-1 profile-mast">
+            <%= profile_image(@user, 70, class: 'callout', type: :square) %>
+            <h1><%= @user.name %></h1>
+            <% if @user.website %>
+              <p>Website: <%= link_to @user.website, @user.website %></p>
+            <% end %>
+            <% if @user.twitter_username %>
+              <p>Twitter: <%= link_to "@#{@user.twitter_username}", "http://twitter.com/#!/#{@user.twitter_username}" %></p>
             <% end %>
           </div>
-          <div class="pagination">
-            <%= will_paginate @recent_items, :inner_window => 3, previous_label: 'Previous', next_label: 'Next' %>
-          </div>
-        <% end %>
+        </div>
       </div>
     </div>
-
-    <div class="aside supplementary">
-      <% unless @user.bio.nil? %>
-      <div class="mod" id="AboutUserModule">
-        <h3>About <%= @user.name %></h3>
-        <div class="mod-content">
-          <p>
-            <%= @user.bio %>
-            <br />
-          </p>
-	      </div>
-      </div>
-      <% end %>
-
-      <div class="mod" id="UserFollowingIssuesModule">
-        <h3>Issues I am Following</h3> 
-        <div class="mod-content">
-          <ul class='link-list'>
-          <% if @issue_subscriptions.empty? %>
-            <li><%= @user.name %> is just getting started</li>
-          <% else %>
-            <% @issue_subscriptions.each do |issue| %>
-              <li>
-                <%= link_to issue.display_name, issue_path(issue.subscribable_id) %>
-              </li>
-            <% end %>
-          <% end %>
-          </ul>
-        </div>
-      </div>
-
-      <div class="mod" id="UserFollowingConversationsModule">
-        <h3>Conversations I am Following</h3> 
-        <div class="mod-content">
-          <ul class='link-list'>
-            <% if @conversation_subscriptions.empty? %>
-              <li><%= @user.name%> is just getting started</li>
-            <% else %>
-              <% @conversation_subscriptions.each do |conversation| %>
-                <li>
-                  <%= link_to conversation.display_name, conversation_path(conversation.subscribable_id) %>
-                </li>
-              <% end %>
-            <% end %>
-			    </ul>
-        </div>
-      </div>
-
-    </div>			
-
   </div>
 
-</div>
+  <div class="wrapper">
+
+    <div class="content-container">
+
+      <div class="main-content">
+        <div class="wide_content" id="UserContributionsModule">
+          <h2>Recent Activity</h2>
+          <% if @recent_items.empty? %>
+            <p><%= @user.name %> is just getting started</p>
+          <% else %>
+            <div class="divided">
+              <% collection = ActivityPresenter.new(@recent_items) %>
+              <% collection.each_with_type do |item, type| %>
+                <%= render :partial => "/shared/recent_item", locals: { recent_item: item, type: type } %>
+              <% end %>
+            </div>
+            <div class="pagination">
+              <%= will_paginate @recent_items, :inner_window => 3, previous_label: 'Previous', next_label: 'Next' %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="aside supplementary">
+
+        <% unless @user.bio.nil? %>
+          <div class="mod" id="AboutUserModule">
+            <h3>About <%= @user.name %></h3>
+            <div class="mod-content">
+              <p>
+              <%= @user.bio %>
+              <br />
+              </p>
+            </div>
+          </div>
+        <% end %>
+
+        <% unless @user.twitter_username.nil? %>
+          <div class="mod" id="TwitterProfileModule">
+            <%= render :partial => 'shared/twitter_profile_widget', :locals => { :twitter_username => @user.twitter_username } %>
+          </div>
+        <% end %>
+
+        <div class="mod" id="UserFollowingIssuesModule">
+          <h3>Issues I am Following</h3> 
+          <div class="mod-content">
+            <ul class='link-list'>
+              <% if @issue_subscriptions.empty? %>
+                <li><%= @user.name %> is just getting started</li>
+              <% else %>
+                <% @issue_subscriptions.each do |issue| %>
+                  <li>
+                  <%= link_to issue.display_name, issue_path(issue.subscribable_id) %>
+                  </li>
+                <% end %>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+
+        <div class="mod" id="UserFollowingConversationsModule">
+          <h3>Conversations I am Following</h3> 
+          <div class="mod-content">
+            <ul class='link-list'>
+              <% if @conversation_subscriptions.empty? %>
+                <li><%= @user.name%> is just getting started</li>
+              <% else %>
+                <% @conversation_subscriptions.each do |conversation| %>
+                  <li>
+                  <%= link_to conversation.display_name, conversation_path(conversation.subscribable_id) %>
+                  </li>
+                <% end %>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+
+      </div>			
+
+    </div>
+
+  </div>
 <% end %>
