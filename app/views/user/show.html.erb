@@ -65,23 +65,6 @@
           </div>
         <% end %>
 
-        <div class="mod" id="UserFollowingIssuesModule">
-          <h3>Issues I am Following</h3> 
-          <div class="mod-content">
-            <ul class='link-list'>
-              <% if @issue_subscriptions.empty? %>
-                <li><%= @user.name %> is just getting started</li>
-              <% else %>
-                <% @issue_subscriptions.each do |issue| %>
-                  <li>
-                  <%= link_to issue.display_name, issue_path(issue.subscribable_id) %>
-                  </li>
-                <% end %>
-              <% end %>
-            </ul>
-          </div>
-        </div>
-
         <div class="mod" id="UserFollowingConversationsModule">
           <h3>Conversations I am Following</h3> 
           <div class="mod-content">
@@ -92,6 +75,23 @@
                 <% @conversation_subscriptions.each do |conversation| %>
                   <li>
                   <%= link_to conversation.display_name, conversation_path(conversation.subscribable_id) %>
+                  </li>
+                <% end %>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+
+        <div class="mod" id="UserFollowingIssuesModule">
+          <h3>Issues I am Following</h3> 
+          <div class="mod-content">
+            <ul class='link-list'>
+              <% if @issue_subscriptions.empty? %>
+                <li><%= @user.name %> is just getting started</li>
+              <% else %>
+                <% @issue_subscriptions.each do |issue| %>
+                  <li>
+                  <%= link_to issue.display_name, issue_path(issue.subscribable_id) %>
                   </li>
                 <% end %>
               <% end %>

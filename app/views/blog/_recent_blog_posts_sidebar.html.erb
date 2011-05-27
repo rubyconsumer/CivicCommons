@@ -4,7 +4,11 @@
     <% blog_posts.each do |post| %>
       <div class='recent-item'> 
         <p><%= link_to post.title, blog_path(post) %></p> 
-        <span class="posted">Posted on <%= post.published %></span> 
+        <% if defined? author %>
+          <span class="posted">Posted on <%= format_publish_date(post) %></span> 
+        <% else %>
+          <span class="posted">Posted by <%= link_to(post.author.name, user_url(post.author)) %> on <%= format_publish_date(post) %></span> 
+        <% end %>
       </div> 
     <% end %>
   </div> 

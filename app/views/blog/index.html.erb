@@ -7,22 +7,37 @@
     <div class="content-container">
       <h1>Common Blog</h1>
 
-      <%- @blog_posts.each do |blog_post| %>
+      <div class="main-content">
 
-        <div class="blog" id="outer_block_1"> 
-          <div class="in-the-news-post"></div>
-          <h2><%= link_to blog_post.title, blog_path(blog_post) %></h2> 
-          <p><%= user_profile(blog_post.author) %><%= link_to blog_post.author.name, user_path(blog_post.author) %></p>
-          <div class='blog_inner'> 
-            <%= raw blog_post.summary %>
-            <p><%= link_to "Read more...", blog_path(blog_post), :title => blog_post.title %></p>
-            <p>Posted by <%= link_to blog_post.author.name, user_path(blog_post.author) %> on <%= blog_post.published.strftime('%B %d, %Y') %></p> 
+        <%- @blog_posts.each do |blog_post| %>
+
+          <div class="blog" id="outer_block_1"> 
+            <h2><%= link_to blog_post.title, blog_path(blog_post) %></h2> 
+            <p><%= user_profile(blog_post.author) %><%= link_to blog_post.author.name, user_path(blog_post.author) %></p>
+            <div class='blog_inner'> 
+              <%= raw blog_post.summary %>
+              <p><%= link_to "Read more...", blog_path(blog_post), :title => blog_post.title %></p>
+              <p>Posted by <%= link_to blog_post.author.name, user_path(blog_post.author) %> on <%= format_publish_date(blog_post) %></p> 
+            </div>
           </div>
-        </div>
-        <p>&nbsp;</p>
+          <p>&nbsp;</p>
 
-      <%- end %>
-      <%= will_paginate @blog_posts, :inner_window => 3, :previous_label => "Previous", :next_label => "Next" %>
+        <%- end %>
+        <%= will_paginate @blog_posts, :inner_window => 3, :previous_label => "Previous", :next_label => "Next" %>
+
+      </div>
+
+      <div class="aside supplementary">
+
+        <div class="mod" id="TwitterProfileModule">
+          <%= render :partial => 'shared/twitter_profile_widget' %>
+        </div>
+
+        <div class="mod" id="FacebookActivityModule">
+          <%= render :partial => 'shared/facebook_activity_widget' %>
+        </div>
+
+      </div>
 
     </div>
   </div>

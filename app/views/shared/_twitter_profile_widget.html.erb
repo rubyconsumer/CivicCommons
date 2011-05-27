@@ -1,6 +1,6 @@
 <% 
   # set defaults
-  twitter_username ||= 'CivicCommons' 
+  twitter_username ||= Civiccommons::Config.twitter['username'] 
   interval ||= 6000
   width ||= 'auto'
   height ||= 200

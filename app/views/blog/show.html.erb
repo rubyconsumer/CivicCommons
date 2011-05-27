@@ -6,7 +6,6 @@
   <div class="wrapper">
     <div class="content-container">
       <h1><%= link_to 'Common Blog', blog_index_path %></h1>
-      <div class="in-the-news-post"></div>
 
       <div class="main-content">
 
@@ -18,15 +17,13 @@
             <p class="convo-meta"><%= render :partial => 'shared/twitter_share', locals: { title: @blog_post.title} %></p>
             <div class="body"><%= raw @blog_post.body %></div>
             <p>&nbsp;</p>
-            <h4>Posted by <%= link_to @blog_post.author.name, user_path(@blog_post.author) %> on <%= @blog_post.published.strftime('%B %d, %Y') %></h4>
+            <h4>Posted by <%= link_to @blog_post.author.name, user_path(@blog_post.author) %> on <%= format_publish_date(@blog_post) %></h4>
           </div>
         </div>
 
         <% if @blog_post.conversation %>
           <h2>Join the conversation about this blog post</h2>
-          <div class="three-col-sm">
-            <%= render :partial => 'conversations/conversation_tile', locals: { conversation: @blog_post.conversation } %>
-          </div>
+          <%= render :partial => 'conversations/conversation_band', locals: { conversations: [@blog_post.conversation] } %>
         <% else %>
           <h2>Start a conversation about this blog post</h2>
           <%= render partial: 'conversations/short_form', locals: { url: start_conversation_from_blog_post_path(@blog_post) } %>
@@ -36,14 +33,13 @@
 
       <div class="aside supplementary">
 
-        <% twitter_username = @blog_post.author.twitter_username || 'CivicCommons' %>
         <div class="mod" id="TwitterProfileModule">
-          <%= render :partial => 'shared/twitter_profile_widget', :locals => { :twitter_username => twitter_username } %>
+          <%= render :partial => 'shared/twitter_profile_widget', :locals => { :twitter_username => @blog_post.author.twitter_username } %>
         </div>
 
         <div>&nbsp;</div>
         <% blog_posts = ContentItem.where(content_type: 'BlogPost', person_id: @blog_post.author).order('published DESC').limit(5) %>
-        <%= render partial: 'blog/recent_sidebar', locals: { author: @blog_post.author, blog_posts: blog_posts } %>
+        <%= render partial: 'blog/recent_blog_posts_sidebar', locals: { author: @blog_post.author, blog_posts: blog_posts } %>
 
         <div>&nbsp;</div>
         <% recent_items = Activity.recent_items_for_person(@blog_post.author).limit(3) %>
