@@ -10,7 +10,7 @@
 
       <div class="main-content">
 
-        <%= render partial: 'description' %>
+        <%= render partial: 'radioshow/description' %>
 
         <div class="radioshow" id="outer_block_1"> 
           <h2><%= @radioshow.title %></h2>
@@ -21,7 +21,7 @@
             <p>&nbsp;</p>
             <p>Aired on <%= @radioshow.published.strftime('%B %d, %Y') %></p> 
           </div>
-          <%= render partial: 'embed', radioshow: @radioshow %>
+          <%= render partial: 'radioshow/embed', radioshow: @radioshow %>
 
         </div>
 
@@ -40,6 +40,20 @@
       </div>
 
       <div class="aside supplementary">
+
+        <div class="mod" id="TwitterProfileModule">
+          <%= render :partial => 'shared/twitter_profile_widget', :locals => { :twitter_username => 'CivicCommons' } %>
+        </div>
+      
+        <div>&nbsp;</div>
+        <% if @radioshow.conversation %>
+          <% @recent_items = Activity.most_recent_activity_for_conversation(@radioshow.conversation, 5) %>
+          <%= render_recent_items_sidebar %>
+        <% end %>
+
+        <div>&nbsp;</div>
+        <style type='text/css'>a.soundcloud-badge:hover {background-position: bottom left !important;} *html a.soundcloud-badge {background-image: none !important; filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='(http://a1.sndcdn.com/images/badges/imonsc/square/white.png?0ce1d7f)', sizingMethod='crop') !important;}</style><!-- if you want to have valid HTML, please be so kind and put the style part in the head of your page --><a href='http://soundcloud.com/theciviccommons' style='text-align: left; display: block; margin: 0 auto; width: 160px; height: 92px; font-size: 11px; padding: 68px 0 0 0; background: transparent url(http://a1.sndcdn.com/images/badges/imonsc/square/white.png?0ce1d7f) top left no-repeat; color: #2681C5; text-decoration: none; font-family: "Lucida Grande", Helvetica, Arial, sans-serif; line-height: 1.3em; text-align: center; outline: 0;' class='soundcloud-badge'>http://soundcloud.com<span style="display: block; width: 137px; height: 20px; margin: 0px 0 0 12px; overflow: hidden; -o-text-overflow: ellipsis; text-overflow: ellipsis">The Civic Commons</span></a>
+
       </div>
 
     </div>
