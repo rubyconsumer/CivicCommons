@@ -198,6 +198,7 @@ class ConversationsController < ApplicationController
   # PUT /conversations/blog/:id
   def create_from_blog_post
     @blog_post = ContentItem.find(params[:id])
+    redirect_to conversation_url(@blog_post.conversation) if @blog_post.conversation
     params[:conversation][:summary] = "<em>This is a conversation about a blog post from #{@blog_post.author.name}: <a href=\"#{blog_url(@blog_post)}\">#{@blog_post.title}</a></em><br/><br/>#{@blog_post.summary}"
     params[:conversation][:title] = "Blog Post: #{@blog_post.title}"
     params[:conversation][:zip_code] = "ALL"
@@ -214,6 +215,7 @@ class ConversationsController < ApplicationController
   # PUT /conversations/radio/:id
   def create_from_radioshow
     @radioshow = ContentItem.find(params[:id])
+    redirect_to conversation_url(@radioshow.conversation) if @radioshow.conversation
     params[:conversation][:summary] = "<em>This is a conversation about Civic Commons Radio <a href=\"#{radioshow_url(@radioshow)}\">#{@radioshow.title}</a></em><br/><br/>#{@radioshow.summary}"
     params[:conversation][:title] = "Civic Commons Radio #{@radioshow.title}"
     params[:conversation][:zip_code] = "ALL"
