@@ -26,21 +26,20 @@ describe Subscription do
     subscription.subscribable.summary.should == 'Civic Commons'
   end
 
-  describe "Subscription#display_name" do
-
+  describe "name" do
     context "Subscribable type is an Issue" do
       it "returns the issue's name" do
         issue = Issue.create(name: "Cleveland Rocks")
         subscription = Subscription.create(subscribable_type: issue.class.to_s, subscribable_id: issue.id)
-        subscription.display_name == "Cleveland Rocks"
+        subscription.name == "Cleveland Rocks"
       end
     end
 
-    context "Subscribably type is a Conversation" do
+    context "Subscribable type is a Conversation" do
       it "returns the conversation's title" do
         conversation = Factory.create(:conversation, title: "How to improve Cleveland")
         subscription = Subscription.create(subscribable_type: conversation.class.to_s, subscribable_id: conversation.id)
-        subscription.display_name == "How to improve Cleveland"
+        subscription.name == "How to improve Cleveland"
       end
     end
 

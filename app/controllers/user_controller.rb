@@ -18,11 +18,9 @@ class UserController < ApplicationController
     @user = Person.includes(:contributions, :subscriptions).find(params[:id])
     @recent_items = Activity.recent_items_for_person(@user).paginate(page: params[:page], per_page: 10)
 
-    @issue_subscriptions = @user.subscriptions.select do |subscription|
-      subscription.subscribable_type == "Issue"
-    end
+    @issue_subscriptions = @user.subscriptions.where(:subscribable_type => 'Issue')
+    @conversation_subscriptions = @user.subscriptions.where(:subscribable_type => 'Conversation')
 
-    @conversation_subscriptions = @user.subscriptions - @issue_subscriptions
     respond_to do |format|
       format.html
       format.xml { @user }

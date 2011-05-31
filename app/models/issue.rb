@@ -63,5 +63,5 @@ class Issue < ActiveRecord::Base
   def conversation_comments 
     Comment.joins(:conversation).where({:conversations => {:id => self.conversation_ids}})
   end
-  
+
 end
