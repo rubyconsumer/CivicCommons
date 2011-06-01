@@ -5,6 +5,7 @@ gem 'rack', '1.2.1'
 gem 'mysql2'
 
 gem 'rails', "3.0.3"
+gem 'jquery-rails', '>= 1.0.3'
 
 gem 'sqlite3-ruby', :require => 'sqlite3'
 

@@ -28,9 +28,9 @@ jQuery(function ($) {
   });
 
   $('#ajax-login-form')
-  .live('ajax:failure', function(evt, xhr, status, error){
+  .live('ajax:error', function(evt, xhr, status, error){
     alert('Login failed!');
-  })
+  });
 
   $.fn.extend({
     scrollTo: function(){

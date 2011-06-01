@@ -20,7 +20,7 @@
           //  But for this action, successes always return HTML and failures return JSON of the error messages, so we'll test if response is JSON and trigger failure if so
           try{
             $.parseJSON(data); // throws error if data is not JSON
-            return $(this).trigger('ajax:complete').trigger('ajax:failure', xhr, status, data); // only gets to here if JSON parsing was successful, meaning data is error messages
+            return $(this).trigger('ajax:complete').trigger('ajax:error', xhr, status, data); // only gets to here if JSON parsing was successful, meaning data is error messages
           }catch(err){
             // do nothing
           }
@@ -126,7 +126,7 @@
       },
 
       bindValidationErrorOnAjaxFailure: function() {
-        this.bind("ajax:failure", function(evt, xhr, status, error){
+        this.bind("ajax:error", function(evt, xhr, status, error){
           try{
             var errors = $.parseJSON(xhr.responseText);
           }catch(err){
@@ -146,7 +146,7 @@
       },
 
       liveAlertOnAjaxFailure: function() {
-        this.live("ajax:failure", function(evt, xhr, status, error){
+        this.live("ajax:error", function(evt, xhr, status, error){
           try{
             var errors = $.parseJSON(xhr.responseText);
           }catch(err){

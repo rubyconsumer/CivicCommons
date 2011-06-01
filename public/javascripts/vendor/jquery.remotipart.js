@@ -42,7 +42,7 @@ jQuery(function ($) {
 	                        el.trigger('ajax:complete', xhr);
 	                    },
 	                    error: function (xhr, status, error) {
-	                        el.trigger('ajax:failure', [xhr, status, error]);
+	                        el.trigger('ajax:error', [xhr, status, error]);
 	                    }
 	                });
 	            }
