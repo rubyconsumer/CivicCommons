@@ -7,6 +7,7 @@ class Activity < ActiveRecord::Base
   validates :item_id, presence: true
   validates :item_type, presence: true
   validates :item_created_at, presence: true
+  validates :person_id, presence: true
 
   VALID_TYPES = [ Conversation, Contribution, Issue, RatingGroup ]
 
@@ -22,6 +23,7 @@ class Activity < ActiveRecord::Base
         item_id: attributes.id,
         item_type: attributes.class.to_s,
         item_created_at: attributes.created_at,
+        person_id: attributes.person.id
       }
       if attributes.respond_to?(:conversation_id) && !attributes.conversation_id.nil?
         attr[:conversation_id] = attributes.conversation_id

@@ -15,11 +15,11 @@ Given /^a conversation:$/ do |table|
                    id:    conversation['ID'],
                    title: conversation['Title'],
                    image: attachment,
+                   owner: admin_person.id,
                    summary: conversation['Summary'],
                    zip_code: conversation['Zip Code'])
 
-  Factory.create(:top_level_contribution,
-                 conversation: @conversation)
+  Factory.create(:top_level_contribution, conversation: @conversation)
 
 end
 
@@ -52,3 +52,12 @@ Given /^I am following the conversation:$/ do |table|
   sleep(2)
 end
 
+When /am on the conversation page$/ do
+
+  @conversation = Factory.create(:conversation)
+  Factory.create(:top_level_contribution,
+                 conversation: @conversation)
+
+  visit '/conversations/%s' % @conversation.id
+
+end
