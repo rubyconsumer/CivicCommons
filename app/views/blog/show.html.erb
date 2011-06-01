@@ -18,6 +18,11 @@
             <div class="body"><%= raw @blog_post.body %></div>
             <p>&nbsp;</p>
             <h4>Posted by <%= link_to @blog_post.author.name, user_path(@blog_post.author) %> on <%= format_publish_date(@blog_post) %></h4>
+            <% if @blog_post.embed_code %>
+              <p>&nbsp;</p>
+              <p style="text-align: center"><%= raw @blog_post.embed_code %></p>
+              <p>&nbsp;</p>
+            <% end %>
           </div>
         </div>
 
