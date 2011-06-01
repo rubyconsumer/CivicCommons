@@ -32,9 +32,14 @@
           <div class="three-col-sm">
             <%= render :partial => 'conversations/conversation_band', locals: { conversations: [@radioshow.conversation] } %>
           </div>
-        <% else %>
+        <% elsif current_person %>
           <h2>Start a conversation about this radio show</h2>
           <%= render partial: 'conversations/short_form', locals: { url: start_conversation_from_radioshow_path(@radioshow) } %>
+        <% else %>
+          <div class="convo-create">
+            <p>It's your <strong>Civic Commons</strong>, so you get to start a conversation about <em><%= @radioshow.title %></em></p>
+            <%= link_to "Start a Conversation from this Radio Show", start_conversation_from_radioshow_path(@radioshow), :class => 'convo-create-btn', 'data-remote' => true, 'data-method' => :post %>
+          </div>
         <% end %>
 
       </div>
