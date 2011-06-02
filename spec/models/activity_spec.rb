@@ -28,6 +28,11 @@ describe Activity do
       Activity.new(params).should_not be_valid
     end
 
+    it "Requires person_id" do
+      params.delete(:person_id)
+      Activity.new(params).should_not be_valid
+    end
+
   end
 
   context "Creates new activity object from existing active record object" do
@@ -86,13 +91,6 @@ describe Activity do
       a = Activity.new(obj)
       a.should be_valid
       a.item_type.should == 'Contribution'
-    end
-
-    it "Creates a new activity from valid issue object" do
-      obj = Factory.build(:issue, id: 1, created_at: Time.now)
-      a = Activity.new(obj)
-      a.should be_valid
-      a.item_type.should == 'Issue'
     end
 
     it "Creates a new activity from valid rating group object" do

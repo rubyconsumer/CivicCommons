@@ -50,6 +50,8 @@ Civiccommons::Application.routes.draw do
   get '/conversations/responsibilities',               to: 'conversations#responsibilities',                 as: 'conversation_responsibilities'
   get '/conversations/rss',                            to: 'conversations#rss',                              as: 'conversation_rss'
   post '/conversations/toggle_rating',                 to: 'conversations#toggle_rating',                    as: 'conversation_contribution_toggle_rating'
+  post 'conversations/blog/:id',                       to: 'conversations#create_from_blog_post',            as: 'start_conversation_from_blog_post'
+  post 'conversations/radio/:id',                      to: 'conversations#create_from_radioshow',            as: 'start_conversation_from_radioshow'
   
   #Subscriptions
   post '/subscriptions/subscribe',                     to: 'subscriptions#subscribe'

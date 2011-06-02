@@ -1,0 +1,104 @@
+<% content_for :document_ready do %>
+  $('.tab-strip').easytabs({
+  tabActiveClass: 'tab-active',
+  tabActivePanel: 'panel-active',
+  tabs: '> .tab-area > .tab-strip-options > ul > li',
+  defaultTab: '.default-tab',
+  animationSpeed: 250,
+  updateHash: false
+  })
+  .closest('form').bind('submit', function(){
+  $(this).scrubPlaceholderText();
+  });
+<% end %>
+
+<% @conversation ||= Conversation.new %>
+<% @contributions ||= [Contribution.new] %>
+
+<%= form_for @conversation, url: url, :html =>{:multipart => true} do |conversation| %>
+  <% if @conversation.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        It looks like we’re still missing some important information:
+      </h2>
+      <ul>
+        <% @conversation.errors.each do |attr,msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <% @conversation.errors.clear %>
+  <% @contributions.each { |c| c.errors.clear } %>
+
+  <br class="clear" />
+
+  <p>Which issues is this conversation related to?</p>
+  <fieldset class="form-group">
+    <%= conversation.label :issues, "Issue(s)" %>
+    <table>
+      <% Issue.alphabetical.each_slice(2) do |slice| %>
+        <tr>
+          <% slice.each do |issue| %>
+            <td>
+              <%= check_box_tag "conversation[issue_ids][]", issue.id, @conversation.issues.include?(issue) %>
+              <%= issue.name %>
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
+    </table>
+  </fieldset>
+
+  <br class="clear" />
+
+  <p>Get the ball rolling with a comment, question, or maybe a thought-provoking video you’ve already uploaded to YouTube.</p>
+  <fieldset class="form-group">
+    <div id="new-convo-contribution" class="tab-strip">
+      <div class="tab-area input-with-options">
+        <div class="tab-strip-options">
+          <ul>
+            <li class="default-tab">
+            <%= link_to "Comment", "#new-comment" %>
+            </li>
+            <li><%= link_to "Suggest Action", "#new-suggested_action" %></li>
+            <li><%= link_to "Question", "#new-question" %></li>
+            <li><%= link_to "Attach", "#new-attached_file" %></li>
+            <li><%= link_to "Link", "#new-link" %></li>
+            <li><%= link_to "Video", "#new-embedded_snippet" %></li>
+          </ul>
+        </div>
+        <div class="panels">
+          <div id="new-comment">
+            <%= render :partial => 'conversations/user_conversation_contribution_fields', :locals => {:conversation => conversation, :type => :comment, :subtype => nil} %>
+          </div>
+          <div id="new-question">
+            <%= render :partial => 'conversations/user_conversation_contribution_fields', :locals => {:conversation => conversation, :type => :question, :subtype => nil} %>
+          </div>
+          <div id="new-attached_file">
+            <%= render :partial => 'conversations/user_conversation_contribution_fields', :locals => {:conversation => conversation, :type => :attached_file, :subtype => nil} %>
+          </div>
+          <div id="new-link">
+            <%= render :partial => 'conversations/user_conversation_contribution_fields', :locals => {:conversation => conversation, :type => :embedly_contribution, :subtype => :link} %>
+          </div>
+          <div id="new-embedded_snippet">
+            <%= render :partial => 'conversations/user_conversation_contribution_fields', :locals => {:conversation => conversation, :type => :embedly_contribution, :subtype => :video } %>
+          </div>
+          <div id="new-suggested_action">
+            <%= render :partial => 'conversations/user_conversation_contribution_fields', :locals => {:conversation => conversation, :type => :suggested_action, :subtype => nil} %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </fieldset>
+
+  <fieldset class="footer">
+    <%= render partial: 'conversations/responsibilities_verbiage' %>
+  </fieldset>
+
+  <fieldset class="footer">
+    <%= conversation.submit 'Start My Conversation', :class => 'submit' %>
+    <%= link_to "Cancel", root_url %>
+  </fieldset>
+
+<% end %>

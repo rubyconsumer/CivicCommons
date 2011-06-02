@@ -56,6 +56,7 @@ Feature:
     | link          | This site is amazing                                                   |                                                                    |                                                                                        | Yahoo!                                                      | http://www.yahoo.com                       |
 
 
+  @wip
   Scenario: Requesting for a user that does not exist
     When I ask for contributions for the person with ID 1000321
     Then I should receive a 404 Not Found response

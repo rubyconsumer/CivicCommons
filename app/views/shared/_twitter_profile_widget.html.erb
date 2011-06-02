@@ -1,0 +1,50 @@
+<% 
+  # set defaults
+  twitter_username ||= Civiccommons::Config.twitter['username'] 
+  interval ||= 6000
+  width ||= 'auto'
+  height ||= 200
+  shell_bg ||= '#6a707e'
+  shell_color ||= '#ffffff'
+  tweets_bg ||= '#ffffff'
+  tweets_color ||= '#444444'
+  tweets_links ||= '#c8d458'
+  scrollbar ||= true
+  looping ||= false
+  live ||= true
+  hashtags ||= true
+  timestamp ||= true
+  avatars ||= false
+  behavior ||= 'all'
+%>
+<script src="http://widgets.twimg.com/j/2/widget.js"></script>
+<script>
+new TWTR.Widget({
+  version: 2,
+  type: 'profile',
+  rpp: 5,
+  interval: <%= interval %>,
+  width: '<%= width %>',
+  height: '<%= height %>',
+  theme: {
+    shell: {
+      background: '<%= shell_bg %>',
+      color: '<%= shell_color %>'
+    },
+    tweets: {
+      background: '<%= tweets_bg %>',
+      color: '<%= tweets_color %>',
+      links: '<%= tweets_links %>'
+    }
+  },
+  features: {
+    scrollbar: <%= scrollbar %>,
+    loop: <%= looping %>,
+    live: <%= live %>,
+    hashtags: <%= hashtags %>,
+    timestamp: <%= timestamp %>,
+    avatars: <%= avatars %>,
+    behavior: '<%= behavior %>'
+  }
+}).render().setUser('<%= twitter_username %>').start();
+</script>

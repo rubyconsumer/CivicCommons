@@ -14,17 +14,17 @@ Given /^I am (?:signed|logged) in$/ do
   visit(new_person_session_url)
   fill_in 'person_email', :with => user.email
   fill_in 'person_password', :with => 'password'
-  
+
   stub_request(:post, "http://civiccommons.digitalcitymechanics.com/api/json.php/peopleaggregator/login").
     to_return(:status => 200, :body => "", :headers => {})
-  
+
   # SKIP PA (People Aggregator) LOGIN
   class ApplicationController
     def after_sign_in_path_for(resource)
       "/"
     end
   end
-  
+
   click_button 'Login'
 end
 
@@ -52,4 +52,7 @@ Given /^that I am not logged in$/ do
   visit(destroy_person_session_url)
 end
 
+Then /^the user should be logged in$/ do
+  find("#login-status").text.should =~ /#{@current_person.name}/
+end
 

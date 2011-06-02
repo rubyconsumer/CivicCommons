@@ -13,6 +13,7 @@ describe 'user/show.html.erb' do
     @issue_subscriptions = []
     @conversation_subscription = stub_model(Subscription)
     @conversation_subscriptions = []
+    @recent_items = []
   end
   
   it "should display profile image" do

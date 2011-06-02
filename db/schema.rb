@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110525163638) do
+ActiveRecord::Schema.define(:version => 20110526205506) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -51,7 +51,7 @@ ActiveRecord::Schema.define(:version => 20110525163638) do
   create_table "content_items", :force => true do |t|
     t.integer  "person_id"
     t.string   "content_type"
-    t.string   "title",         :null => false
+    t.string   "title",           :null => false
     t.text     "summary"
     t.text     "body"
     t.datetime "created_at"
@@ -60,6 +60,7 @@ ActiveRecord::Schema.define(:version => 20110525163638) do
     t.datetime "published"
     t.text     "embed_code"
     t.string   "external_link"
+    t.integer  "conversation_id"
   end
 
   add_index "content_items", ["cached_slug"], :name => "index_content_items_on_cached_slug", :unique => true
@@ -113,7 +114,7 @@ ActiveRecord::Schema.define(:version => 20110525163638) do
   create_table "conversations", :force => true do |t|
     t.datetime "started_at"
     t.datetime "finished_at"
-    t.string   "summary"
+    t.text     "summary"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "title"
@@ -280,6 +281,8 @@ ActiveRecord::Schema.define(:version => 20110525163638) do
     t.boolean  "daily_digest",                        :default => true,  :null => false
     t.boolean  "declined_fb_auth"
     t.string   "cached_slug"
+    t.string   "twitter_username"
+    t.string   "website"
   end
 
   add_index "people", ["cached_slug"], :name => "index_people_on_cached_slug", :unique => true

@@ -22,8 +22,11 @@ Given /^an issue:$/ do |table|
                    summary: issue['Summary'],
                    zip_code: issue['Zip Code'])
 
-  Factory.create(:top_level_contribution,
-                 issue: @issue)
+  @contributor = Factory.create(:registered_user)
+
+  Factory.create(:issue_contribution,
+                 issue: @issue,
+                 owner: @contributor.id)
 
 end
 
