@@ -20,7 +20,7 @@ feature "Unlink Account From Facebook", %q{
   end
 
   scenario "Unlinking process" do
-    # Given I am a registered Civic Commons user that have connected with Facebook
+    # Given I am a registered user at The Civic Commons that has connected with Facebook
     given_a_registered_user_w_facebook_auth
     
     # And no email in the queue
@@ -75,11 +75,11 @@ feature "Unlink Account From Facebook", %q{
     Notifier.deliveries.first.to.should contain 'johnd-new-email@example.com'
     
     # And the email should have the correct subject
-    Notifier.deliveries.first.subject.should contain "You've recently changed your Civic Commons email"
+    Notifier.deliveries.first.subject.should contain "You've recently changed your email with The Civic Commons"
   end
   
   scenario "Should throw validation error when user does not enter password" do
-    # Given I am a registered Civic Commons user that have connected with Facebook
+    # Given I am a registered user at The Civic Commons that has connected with Facebook
     given_a_registered_user_w_facebook_auth
 
     # And I am on the home page

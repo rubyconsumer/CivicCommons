@@ -13,7 +13,7 @@ describe Notifier do
     
     it "should have the correct subject subject" do
       given_sending_a_changed_email_notification
-      @notification.subject.should contain "You've recently changed your Civic Commons email"
+      @notification.subject.should contain "You've recently changed your email with The Civic Commons"
     end
     
   end

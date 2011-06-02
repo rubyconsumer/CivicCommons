@@ -214,8 +214,8 @@ class ConversationsController < ApplicationController
     elsif @radioshow.conversation
       redirect_to conversation_url(@radioshow.conversation)
     else
-      params[:conversation][:summary] = "<em>This is a conversation about Civic Commons Radio <a href=\"#{radioshow_url(@radioshow)}\">#{@radioshow.title}</a></em><br/><br/>#{@radioshow.summary}"
-      params[:conversation][:title] = "Civic Commons Radio #{@radioshow.title}"
+      params[:conversation][:summary] = "<em>This is a conversation about The Civic Commons Radio <a href=\"#{radioshow_url(@radioshow)}\">#{@radioshow.title}</a></em><br/><br/>#{@radioshow.summary}"
+      params[:conversation][:title] = "The Civic Commons Radio #{@radioshow.title}"
       params[:conversation][:zip_code] = "ALL"
       prep_convo(params)
       if @conversation.save
