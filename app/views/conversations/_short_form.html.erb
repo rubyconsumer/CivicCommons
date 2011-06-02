@@ -15,7 +15,7 @@
 <% @conversation ||= Conversation.new %>
 <% @contributions ||= [Contribution.new] %>
 
-<%= form_for @conversation, url: url do |conversation| %>
+<%= form_for @conversation, url: url, :html =>{:multipart => true} do |conversation| %>
   <% if @conversation.errors.any? %>
     <div id="error_explanation">
       <h2>
