@@ -1,0 +1,44 @@
+xml.instruct! :xml, :version => "1.0"
+xml.rss :version => "2.0", 'xmlns:atom' => "http://www.w3.org/2005/Atom" do
+  xml.channel do
+    xml.tag!('atom:link', :href => user_url(@user, :format => :xml), :rel => "self", :type => "application/rss+xml")
+    xml.title "The Civic Commons: #{@user.name}"
+    xml.description "Bio: #{@user.bio}"
+    xml.copyright "(c) Copyright #{Date.today.strftime('%Y')} The Civic Commons"
+    xml.link user_url(@user)
+    xml.image do
+      xml.url profile_image_url(@user, 70)
+      xml.title "The Civic Commons: #{@user.name}"
+      xml.link user_url(@user)
+    end
+    xml.language "en-us"
+    xml.pubDate Time.now.rfc822
+    xml.lastBuildDate Time.now.rfc822
+    for recent_item in ActivityPresenter.new(@recent_items)
+      xml.item do
+        if recent_item.is_a?(Conversation)
+          xml.title recent_item.title
+          xml.link conversation_url(recent_item)
+          xml.guid conversation_url(recent_item)
+          xml.description recent_item.summary
+        elsif recent_item.is_a?(RatingGroup)
+          xml.title "#{recent_item.person.name} rated a response from #{recent_item.contribution.person.name} as #{recent_item.ratings_titles.to_sentence}"
+          xml.link conversation_url(recent_item.contribution.conversation)
+          xml.guid conversation_url(recent_item.contribution.conversation)
+          xml.description "#{recent_item.contribution.person.name} said '#{recent_item.contribution.content}'"
+        elsif recent_item.is_a?(Contribution)
+          xml.title "#{@user.name} responded to the conversation '#{recent_item.conversation.title}'"
+          xml.link conversation_node_url(recent_item)
+          xml.guid conversation_node_url(recent_item)
+          xml.description Sanitize.clean(recent_item.content)
+        else
+          xml.title "#{@user} participated in a conversation at The Civic Commons"
+          xml.link user_url(@user)
+          xml.guid user_url(@user)
+          xml.description "#{@user} participated in a conversation at The Civic Commons"
+        end
+        xml.pubDate recent_item.created_at.to_s(:rfc822)
+      end
+    end
+  end
+end

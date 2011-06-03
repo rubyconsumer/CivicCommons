@@ -1,6 +1,5 @@
 class Conversation < ActiveRecord::Base
   include Visitable
-  include TopItemable
   include Subscribable
   include Regionable
   include GeometryForStyle
@@ -48,13 +47,15 @@ class Conversation < ActiveRecord::Base
   after_create :set_initial_position
   before_destroy :destroy_root_contributions # since non-root contributions will be destroyed internally be awesome_nested_set
 
+  has_friendly_id :title, :use_slug => true, :strip_non_ascii => true
+
   scope :latest_updated, :order => 'updated_at DESC'
   scope :latest_created, :order => 'created_at DESC'
 
   def self.available_filters
     {
       :recommended => :recommended,
-      :active => :latest_updated,
+      :active => :most_active,
       :popular => :get_top_visited,
       :recent => :latest_created
     }
@@ -62,6 +63,15 @@ class Conversation < ActiveRecord::Base
 
   def self.available_filter_names
     available_filters.keys.collect(&:to_s)
+  end
+
+  def self.most_active
+    Conversation.select('conversations.*, COUNT(*) AS count_all, MAX(contributions.created_at) AS max_contributions_created_at').
+      joins(:contributions).
+      where("contributions.type != 'TopLevelContribution'").
+      where("contributions.created_at > ?", Time.now - 60.days).
+      group('conversations.id').
+      order('count_all DESC, max_contributions_created_at DESC')
   end
 
   def self.recommended

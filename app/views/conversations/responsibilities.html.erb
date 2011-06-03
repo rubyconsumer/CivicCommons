@@ -3,14 +3,7 @@
     <div class="content-container">
       <div class="main-content">
         <h1>Start a Conversation</h1>
-        <p>
-        We’re glad you want to start a conversation! Remember, you’re in charge and conversations at the Civic Commons are a little different than elswehere because we keep our principles in mind (We strive to be diverse, credible, transparent, civil, entrepreneurial, participatory and optimistic). That’s not a huge deal, but it comes with a few responsibilities.
-        </p>
-        <ol>
-          <li>Invite people to participate.</li>
-          <li>Check in regularly, and stay engaged with people who are participating.</li>
-          <li>If there are any problems, let us know. You can always reach us through Help Build the Commons, just under your name in the top right of the screen.</li>
-        </ol>
+        <%= render partial: 'conversations/responsibilities_verbiage' %>
         <p>
           <%= link_to "I agree, continue", new_conversation_path(:accept => true), :class => 'button' %>
           or

@@ -27,6 +27,8 @@ development:
     password: "somethingsupercryptic"
   security:
     ssl_login: false
+  twitter:
+    username: "CivicCommons"
 
 test:
   devise:
@@ -57,6 +59,8 @@ test:
     password: "somethingsupercryptic"
   security:
     ssl_login: false
+  twitter:
+    username: "CivicCommons"
 
 integration:
   devise:
@@ -87,6 +91,8 @@ integration:
     password: "somethingsupercryptic"
   security:
     ssl_login: true
+  twitter:
+    username: "CivicCommons"
 
 staging:
   devise:
@@ -117,6 +123,8 @@ staging:
     password: "somethingsupercryptic"
   security:
     ssl_login: true
+  twitter:
+    username: "CivicCommons"
 
 production:
   devise:
@@ -147,4 +155,6 @@ production:
     password: "somethingsupercryptic"
   security:
     ssl_login: true
+  twitter:
+    username: "CivicCommons"
 

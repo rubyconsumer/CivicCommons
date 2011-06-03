@@ -32,6 +32,14 @@ module IssuesHelper
   end
 
   def issue_node_path(contribution)
-    issue_path(contribution.issue) + "#node-#{contribution.id}"
+    issue_path(contribution.issue, anchor: "node-#{contribution.id}")
+  end
+
+  def issue_node_url(contribution, options = {})
+    options ||= {}
+    if Hash === options
+      options[:anchor] ||= "node-#{contribution.id}"
+    end
+    issue_url(contribution.issue, options)
   end
 end

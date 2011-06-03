@@ -4,6 +4,7 @@ class ContentItem < ActiveRecord::Base
   CONTENT_TYPES = ["BlogPost", "NewsItem", "RadioShow"]
 
   belongs_to :author, :class_name => "Person", :foreign_key => "person_id"
+  belongs_to :conversation
 
   validates_presence_of :title, :body, :author
   validates_uniqueness_of :title

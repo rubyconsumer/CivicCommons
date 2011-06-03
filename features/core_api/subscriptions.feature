@@ -41,13 +41,13 @@ Feature:
       {
         "id": 3,
         "title": "Obamacare Pushes on Through Despite Antagonists",
-        "url": "http://www.example.com/conversations/3",
+        "url": "http://www.example.com/conversations/obamacare-pushes-on-through-despite-antagonists",
         "type": "conversation"
       },
       {
         "id": 2,
         "title": "Understanding The Latest Health Care Changes",
-        "url": "http://www.example.com/conversations/2",
+        "url": "http://www.example.com/conversations/understanding-the-latest-health-care-changes",
         "type": "conversation"
       }
     ]
@@ -61,12 +61,12 @@ Feature:
       {
         "id": 3,
         "title": "Obamacare Pushes on Through Despite Antagonists",
-        "url": "http://www.example.com/conversations/3"
+        "url": "http://www.example.com/conversations/obamacare-pushes-on-through-despite-antagonists"
       },
       {
         "id": 2,
         "title": "Understanding The Latest Health Care Changes",
-        "url": "http://www.example.com/conversations/2"
+        "url": "http://www.example.com/conversations/understanding-the-latest-health-care-changes"
       }
     ]
     """

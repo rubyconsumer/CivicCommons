@@ -6,22 +6,57 @@
   <div class="wrapper">
     <div class="content-container">
       <h1><%= link_to 'Common Blog', blog_index_path %></h1>
-      <div class="in-the-news-post"></div>
 
       <div class="main-content">
+
         <div class="blog" id="outer_block_1"> 
           <h2><%= @blog_post.title %></h2>
-          <p><%= link_to @blog_post.author.name, user_path(@blog_post.author) %><%= user_profile(@blog_post.author) %></p>
+          <h3><%= link_to @blog_post.author.name, user_path(@blog_post.author) %><%= user_profile(@blog_post.author) %></h3>
           <div class='blog_inner'> 
+            <p class="convo-meta"><%= render :partial => 'shared/facebook_like' %></p>
+            <p class="convo-meta"><%= render :partial => 'shared/twitter_share', locals: { title: @blog_post.title} %></p>
             <div class="body"><%= raw @blog_post.body %></div>
-            <% unless @blog_post.embed_code.blank? %>
-              <p><%= raw @blog_post.embed_code %></p>
-            <% end %>
             <p>&nbsp;</p>
-            <p>Posted by <%= link_to @blog_post.author.name, user_path(@blog_post.author) %> on <%= @blog_post.published.strftime('%B %d, %Y') %></p> 
+            <h4>Posted by <%= link_to @blog_post.author.name, user_path(@blog_post.author) %> on <%= format_publish_date(@blog_post) %></h4>
+            <% if @blog_post.embed_code %>
+              <p>&nbsp;</p>
+              <p style="text-align: center"><%= raw @blog_post.embed_code %></p>
+              <p>&nbsp;</p>
+            <% end %>
           </div>
         </div>
+
+        <% if @blog_post.conversation %>
+          <h2>Join the conversation about this blog post</h2>
+          <%= render :partial => 'conversations/conversation_band', locals: { conversations: [@blog_post.conversation] } %>
+        <% elsif current_person %>
+          <h2>Start a conversation about this blog post</h2>
+          <%= render partial: 'conversations/short_form', locals: { url: start_conversation_from_blog_post_path(@blog_post) } %>
+        <% else %>
+          <div class="convo-create">
+            <p>It's your <strong>Civic Commons</strong>, so you get to start a conversation about <em><%= @blog_post.title %></em></p>
+            <%= link_to "Start a Conversation from this Blog Post", start_conversation_from_blog_post_path(@blog_post), :class => 'convo-create-btn', 'data-remote' => true, 'data-method' => :post %>
+          </div>
+        <% end %>
+
       </div>
+
+      <div class="aside supplementary">
+
+        <div class="mod" id="TwitterProfileModule">
+          <%= render :partial => 'shared/twitter_profile_widget', :locals => { :twitter_username => @blog_post.author.twitter_username } %>
+        </div>
+
+        <div>&nbsp;</div>
+        <% blog_posts = ContentItem.where(content_type: 'BlogPost', person_id: @blog_post.author).order('published DESC').limit(3) %>
+        <%= render partial: 'blog/recent_blog_posts_sidebar', locals: { author: @blog_post.author, blog_posts: blog_posts } %>
+
+        <div>&nbsp;</div>
+        <% recent_items = Activity.recent_items_for_person(@blog_post.author).limit(3) %>
+        <%= render partial: 'shared/recent_items_sidebar', locals: { recent_items: recent_items, person: @blog_post.author } %>
+
+      </div>
+
     </div>
   </div>
 <% end %>

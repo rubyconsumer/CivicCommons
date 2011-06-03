@@ -1,22 +1,51 @@
 class Person < ActiveRecord::Base
 
+  include ActionView::Helpers::TextHelper
   include Regionable
   include GeometryForStyle
   include Marketable
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable, and :timeoutable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable,
-         :confirmable, :lockable,
+  devise :database_authenticatable,
+         :registerable,
+         :recoverable,
+         :rememberable,
+         :trackable,
+         :validatable,
+         :confirmable,
+         :lockable,
          :omniauthable
 
-  attr_accessor :organization_name, :send_welcome, :create_from_auth, :facebook_unlinking, :send_email_change_notification
+  attr_accessor :organization_name,
+                :send_welcome,
+                :create_from_auth,
+                :facebook_unlinking,
+                :send_email_change_notification
 
-  # Setup accessible (or protected) attributes for your model
-  attr_accessible :name, :first_name, :last_name, :email, :password, :password_confirmation, :bio, :top, :zip_code, :admin, :validated,
-                  :avatar, :remember_me, :daily_digest, :create_from_auth, :facebook_unlinking
+  # Setup accessible attributes
+  attr_accessible :name,
+                  :first_name,
+                  :last_name,
+                  :email,
+                  :password,
+                  :password_confirmation,
+                  :bio,
+                  :website,
+                  :twitter_username,
+                  :top,
+                  :zip_code,
+                  :admin,
+                  :validated,
+                  :avatar,
+                  :remember_me,
+                  :daily_digest,
+                  :create_from_auth,
+                  :facebook_unlinking
 
+  # Setup protected attributes
+  attr_protected :admin
+  
   has_one :facebook_authentication, :class_name => 'Authentication', :conditions => {:provider => 'facebook'}
   has_many :authentications, :dependent => :destroy
   has_many :content_items, :foreign_key => 'person_id', :dependent => :restrict 
@@ -34,7 +63,9 @@ class Person < ActiveRecord::Base
   validates_length_of :zip_code, :within => (5..10), :allow_blank => true, :allow_nil => true, :if => :validate_zip_code?
   validates_presence_of :zip_code, :message => 'Please enter zipcode.', :if => :validate_zip_code?
   validates_presence_of :name
+  validate :check_twitter_username_format
 
+  has_friendly_id :name, :use_slug => true, :strip_non_ascii => true
 
   # Ensure format of salt
   # Commented out because devise 1.2.RC doesn't store password_salt column anymore, if it uses bcrypt
@@ -65,6 +96,7 @@ class Person < ActiveRecord::Base
   scope :confirmed_accounts, where("confirmed_at is not null")
   scope :unconfirmed_accounts, where(:confirmed_at => nil)
 
+  # All these emails could be moved to an observer - Jerry
   after_create :notify_civic_commons
   before_save :check_to_send_welcome_email
   after_save :send_welcome_email, :if => :send_welcome?
@@ -229,58 +261,104 @@ class Person < ActiveRecord::Base
       return false
     end
 
+    puts 'beginning rake task' unless Rails.env.test?
     begin
       transaction do
+        puts 'begin:   updating FROM account confirmed_at' unless Rails.env.test?
         person_to_merge.confirmed_at = nil
         person_to_merge.save!
+        puts 'updated: ' + pluralize(1, 'record') unless Rails.env.test?
+        puts 'end:     updating FROM account confirmed_at' unless Rails.env.test?
 
+        puts 'begin:   updating contributions' unless Rails.env.test?
+        updated_record_count = 0
         person_to_merge.contributions.map do |contribution|
           contribution.owner = id
           contribution.save!
+          updated_record_count += 1
         end
+        puts 'updated: ' + pluralize(updated_record_count, 'record') unless Rails.env.test?
+        puts 'end:     updating contributions' unless Rails.env.test?
 
+        puts 'begin:   updating rating groups' unless Rails.env.test?
+        # this will fail if the user has ratings for both accounts
+        updated_record_count = 0
         RatingGroup.where('person_id = ?', person_to_merge.id).map do |rating_group|
           rating_group.person_id = id
           rating_group.save!
+          updated_record_count += 1
         end
+        puts 'updated: ' + pluralize(updated_record_count, 'record') unless Rails.env.test?
+        puts 'end:     updating rating groups' unless Rails.env.test?
 
+        puts 'begin:   updating conversation owners' unless Rails.env.test?
+        updated_record_count = 0
         Conversation.where('owner = ?', person_to_merge.id).map do |conversation|
           conversation.owner = id
           conversation.save!
+          updated_record_count += 1
         end
+        puts 'updated: ' + pluralize(updated_record_count, 'record') unless Rails.env.test?
+        puts 'end:     updating conversation owners' unless Rails.env.test?
 
+        puts 'begin:   updating subscriptions' unless Rails.env.test?
+        updated_record_count = 0
         # Make the TO account follow all the same conversations/issues as the FROM account
         Subscription.where(person_id: person_to_merge.id).each do |subscription|
           Subscription.create_unless_exists(self, subscription.subscribable)
+          updated_record_count += 1
         end
+        puts 'updated: ' + pluralize(updated_record_count, 'record') unless Rails.env.test?
+        puts 'end:     updating subscriptions' unless Rails.env.test?
 
+        puts 'begin:   updating visits' unless Rails.env.test?
+        updated_record_count = 0
         Visit.where('person_id = ?', person_to_merge.id).map do |visit|
           visit.person_id = id
           visit.save!
+          updated_record_count += 1
         end
+        puts 'updated: ' + pluralize(updated_record_count, 'record') unless Rails.env.test?
+        puts 'end:     updating visits' unless Rails.env.test?
 
+        puts 'begin:   updating content_templates' unless Rails.env.test?
+        updated_record_count = 0
         person_to_merge.content_templates.map do |content_template|
           content_template.person_id = id
           content_template.save!
+          updated_record_count += 1
         end
+        puts 'updated: ' + pluralize(updated_record_count, 'record') unless Rails.env.test?
+        puts 'end:     updating content_templates' unless Rails.env.test?
 
+        puts 'begin:   updating content_items' unless Rails.env.test?
+        updated_record_count = 0
         person_to_merge.content_items.map do |content_item|
           content_item.person_id = id
           content_item.save!
+          updated_record_count += 1
         end
+        puts 'updated: ' + pluralize(updated_record_count, 'record') unless Rails.env.test?
+        puts 'end:     updating content_items' unless Rails.env.test?
 
+        puts 'begin:   updating managed_issue_pages' unless Rails.env.test?
+        updated_record_count = 0
         person_to_merge.managed_issue_pages.map do |managed_issue_page|
           managed_issue_page.person_id = id
           managed_issue_page.save!
+          updated_record_count += 1
         end
+        puts 'updated: ' + pluralize(updated_record_count, 'record') unless Rails.env.test?
+        puts 'end:     updating managed_issue_pages' unless Rails.env.test?
 
       end # transaction
 
     rescue ActiveRecord::RecordInvalid => exception
-      say exception.message
-      say exception.backtrace.join("\n")
+      puts exception.message unless Rails.env.test?
+      puts exception.backtrace.join("\n") unless Rails.env.test?
     end # begin
 
+    puts 'ending rake task' unless Rails.env.test?
     return Person.find(person_to_merge.id).confirmed_at.nil?
   end
 
@@ -336,6 +414,11 @@ class Person < ActiveRecord::Base
   end
 
 protected
+
+  def check_twitter_username_format
+    match = /^@?(?<username>.*)$/.match(self.twitter_username)
+    self.twitter_username = match[:username] unless match.nil?
+  end
 
   def password_required?
     if facebook_authenticated?

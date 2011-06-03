@@ -1,15 +1,24 @@
 class ConversationsController < ApplicationController
-  before_filter :require_user, :only=>[:new, :create, :new_node_contribution, :preview_node_contribution, :confirm_node_contribution, :toggle_rating]
+  before_filter :require_user, :only => [
+    :new,
+    :create,
+    :new_node_contribution,
+    :preview_node_contribution,
+    :confirm_node_contribution,
+    :toggle_rating,
+    :create_from_blog_post,
+    :create_from_radioshow,
+  ]
 
   # GET /conversations
   def index
-    @active = Conversation.latest_updated.limit(3)
-    @popular = Conversation.get_top_visited(3)
-    @recent = Conversation.latest_created.limit(3)
-    @recommended = Conversation.recommended.limit(3)
+    @active = Conversation.includes(:participants).most_active.limit(3)
+    @popular = Conversation.includes(:participants).get_top_visited(3)
+    @recent = Conversation.includes(:participants).latest_created.limit(3)
+    @recommended = Conversation.includes(:participants).recommended.limit(3)
 
     @regions = Region.all
-    @recent_items = TopItem.newest_items(3).with_items_and_associations.collect(&:item)
+    @recent_items = Activity.most_recent_activity(3)
     render :index
   end
 
@@ -23,7 +32,7 @@ class ConversationsController < ApplicationController
     @conversations = Conversation.filtered(@filter).paginate(:page => params[:page], :per_page => 12)
 
     @regions = Region.all
-    @recent_items = TopItem.newest_items(3).with_items_and_associations.collect(&:item)
+    @recent_items = Activity.most_recent_activity(3)
     render :filter
   end
 
@@ -47,7 +56,7 @@ class ConversationsController < ApplicationController
 
     @latest_contribution = @conversation.confirmed_contributions.most_recent.first
 
-    @recent_items = TopItem.newest_items(5).for(:conversation => @conversation.id).collect(&:item)
+    @recent_items = Activity.most_recent_activity_for_conversation(@conversation, 5)
 
     render :show
   end
@@ -163,22 +172,58 @@ class ConversationsController < ApplicationController
 
   # POST /conversations
   def create
-    params[:conversation].merge!({
-      :person => current_person,
-      :from_community => true
-    })
-    @conversation = Conversation.new(params[:conversation])
-    @conversation.started_at = Time.now
-    # Load @contributions to populate re-rendered :new form if save is unsuccessful
-    @contributions = @conversation.contributions | @conversation.rejected_contributions
-
+    prep_convo(params)
     respond_to do |format|
       if @conversation.save
         format.html { redirect_to(new_invite_path(:source_type => :conversations, :source_id => @conversation.id, :conversation_created => true), :notice => 'Your conversation has been created!') }
       else
-        #TODO: Find a better way to handle erros on submission
+        #TODO: Find a better way to handle errors on submission
         @contributions = [Contribution.new]
         format.html { render :new, :status => :unprocessable_entity  }
+      end
+    end
+  end
+
+  # PUT /conversations/blog/:id
+  def create_from_blog_post
+    @blog_post = ContentItem.find(params[:id])
+    if request.xhr?
+      render partial: 'shared/redirect_after_xhr', locals: { url: blog_url(@blog_post) }
+    elsif @blog_post.conversation
+      redirect_to conversation_url(@blog_post.conversation)
+    else
+      params[:conversation][:summary] = "<em>This is a conversation about a blog post from #{@blog_post.author.name}: <a href=\"#{blog_url(@blog_post)}\">#{@blog_post.title}</a></em><br/><br/>#{@blog_post.summary}"
+      params[:conversation][:title] = "Blog Post: #{@blog_post.title}"
+      params[:conversation][:zip_code] = "ALL"
+      prep_convo(params)
+      if @conversation.save
+        @blog_post.conversation = @conversation
+        @blog_post.save
+        redirect_to conversation_path(@conversation)
+      else
+        render 'blog/show'
+      end
+    end
+  end
+
+  # PUT /conversations/radio/:id
+  def create_from_radioshow
+    @radioshow = ContentItem.find(params[:id])
+    if request.xhr?
+      render partial: 'shared/redirect_after_xhr', locals: { url: radioshow_url(@radioshow) }
+    elsif @radioshow.conversation
+      redirect_to conversation_url(@radioshow.conversation)
+    else
+      params[:conversation][:summary] = "<em>This is a conversation about Civic Commons Radio <a href=\"#{radioshow_url(@radioshow)}\">#{@radioshow.title}</a></em><br/><br/>#{@radioshow.summary}"
+      params[:conversation][:title] = "Civic Commons Radio #{@radioshow.title}"
+      params[:conversation][:zip_code] = "ALL"
+      prep_convo(params)
+      if @conversation.save
+        @radioshow.conversation = @conversation
+        @radioshow.save
+        redirect_to conversation_path(@conversation)
+      else
+        render 'radioshow/show'
       end
     end
   end
@@ -212,6 +257,19 @@ class ConversationsController < ApplicationController
     @conversation.destroy
 
     redirect_to(conversations_url)
+  end
+
+  private
+
+  def prep_convo(params)
+    params[:conversation].merge!({
+      :person => current_person,
+      :from_community => true
+    })
+    @conversation = Conversation.new(params[:conversation])
+    @conversation.started_at = Time.now
+    # Load @contributions to populate re-rendered :new form if save is unsuccessful
+    @contributions = @conversation.contributions | @conversation.rejected_contributions
   end
 
 end

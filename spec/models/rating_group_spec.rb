@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe RatingGroup do
+
   describe "toggle rating methods" do
     before(:each) do
       @current_person = Factory.create(:normal_person)

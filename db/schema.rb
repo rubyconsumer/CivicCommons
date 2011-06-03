@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110516150155) do
+ActiveRecord::Schema.define(:version => 20110526205506) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -51,7 +51,7 @@ ActiveRecord::Schema.define(:version => 20110516150155) do
   create_table "content_items", :force => true do |t|
     t.integer  "person_id"
     t.string   "content_type"
-    t.string   "title",         :null => false
+    t.string   "title",           :null => false
     t.text     "summary"
     t.text     "body"
     t.datetime "created_at"
@@ -60,6 +60,7 @@ ActiveRecord::Schema.define(:version => 20110516150155) do
     t.datetime "published"
     t.text     "embed_code"
     t.string   "external_link"
+    t.integer  "conversation_id"
   end
 
   add_index "content_items", ["cached_slug"], :name => "index_content_items_on_cached_slug", :unique => true
@@ -113,11 +114,10 @@ ActiveRecord::Schema.define(:version => 20110516150155) do
   create_table "conversations", :force => true do |t|
     t.datetime "started_at"
     t.datetime "finished_at"
-    t.string   "summary"
+    t.text     "summary"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "title"
-    t.binary   "image"
     t.string   "image_file_name"
     t.string   "image_content_type"
     t.integer  "image_file_size"
@@ -137,7 +137,10 @@ ActiveRecord::Schema.define(:version => 20110516150155) do
     t.boolean  "staff_pick",              :default => false, :null => false
     t.integer  "position"
     t.boolean  "from_community",          :default => false
+    t.string   "cached_slug"
   end
+
+  add_index "conversations", ["cached_slug"], :name => "index_conversations_on_cached_slug", :unique => true
 
   create_table "conversations_events", :id => false, :force => true do |t|
     t.integer "conversation_id"
@@ -255,8 +258,12 @@ ActiveRecord::Schema.define(:version => 20110516150155) do
     t.text     "bio"
     t.boolean  "daily_digest",                        :default => true,  :null => false
     t.boolean  "declined_fb_auth"
+    t.string   "cached_slug"
+    t.string   "twitter_username"
+    t.string   "website"
   end
 
+  add_index "people", ["cached_slug"], :name => "index_people_on_cached_slug", :unique => true
   add_index "people", ["email"], :name => "index_people_on_email", :unique => true
   add_index "people", ["reset_password_token"], :name => "index_people_on_reset_password_token", :unique => true
 
@@ -327,9 +334,17 @@ ActiveRecord::Schema.define(:version => 20110516150155) do
     t.integer  "item_id"
     t.string   "item_type"
     t.datetime "item_created_at"
-    t.decimal  "recent_rating",   :precision => 3, :scale => 2
-    t.integer  "recent_visits"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "conversation_id"
+    t.integer  "issue_id"
+    t.text     "activity_cache"
+    t.integer  "person_id"
   end
+
+  add_index "top_items", ["conversation_id"], :name => "conversations_index"
+  add_index "top_items", ["issue_id"], :name => "issues_index"
+  add_index "top_items", ["person_id"], :name => "person_index"
 
   create_table "visits", :force => true do |t|
     t.integer  "person_id"

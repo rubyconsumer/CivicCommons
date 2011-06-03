@@ -7,25 +7,42 @@
     <div class="content-container">
       <h1>The Civic Commons Radio Show</h1>
 
-      <%= render partial: 'description' %>
+      <div class="main-content">
 
-      <%- @radioshows.each do |radioshow| %>
+        <%= render partial: 'description' %>
 
-        <div class="blog" id="outer_block_1"> 
-          <div class="in-the-news-post"></div>
-          <h2><%= link_to radioshow.title, radioshow_path(radioshow) %></h2> 
-          <div class='blog_inner'> 
-            <%= raw radioshow.summary %>
-            <p><%= link_to "Listen to the podcast...", radioshow_path(radioshow), html: { title: radioshow.title } %></p>
-            <p>Aired on <%= radioshow.published.strftime('%B %d, %Y') %></p> 
+        <%- @radioshows.each do |radioshow| %>
+
+          <div class="blog" id="outer_block_1"> 
+            <h2><%= link_to radioshow.title, radioshow_path(radioshow) %></h2> 
+            <div class='blog_inner'> 
+              <%= raw radioshow.summary %>
+              <p><%= link_to "Listen to the podcast...", radioshow_path(radioshow), html: { title: radioshow.title } %></p>
+              <p>Aired on <%= radioshow.published.strftime('%B %d, %Y') %></p> 
+            </div>
           </div>
-        </div>
-        <p>&nbsp;</p>
+          <p>&nbsp;</p>
 
-      <%- end %>
-      <%= will_paginate @radioshows, :inner_window => 3, :previous_label => "Previous", :next_label => "Next" %>
+        <%- end %>
+        <%= will_paginate @radioshows, :inner_window => 3, :previous_label => "Previous", :next_label => "Next" %>
+
+      </div>
+
+      <div class="aside supplementary">
+
+        <div class="mod" id="TwitterProfileModule">
+          <%= render :partial => 'shared/twitter_profile_widget' %>
+        </div>
+
+        <div class="mod" id="FacebookActivityModule">
+          <%= render :partial => 'shared/facebook_activity_widget' %>
+        </div>
+
+        <div>&nbsp;</div>
+        <style type='text/css'>a.soundcloud-badge:hover {background-position: bottom left !important;} *html a.soundcloud-badge {background-image: none !important; filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='(http://a1.sndcdn.com/images/badges/imonsc/square/white.png?0ce1d7f)', sizingMethod='crop') !important;}</style><!-- if you want to have valid HTML, please be so kind and put the style part in the head of your page --><a href='http://soundcloud.com/theciviccommons' style='text-align: left; display: block; margin: 0 auto; width: 160px; height: 92px; font-size: 11px; padding: 68px 0 0 0; background: transparent url(http://a1.sndcdn.com/images/badges/imonsc/square/white.png?0ce1d7f) top left no-repeat; color: #2681C5; text-decoration: none; font-family: "Lucida Grande", Helvetica, Arial, sans-serif; line-height: 1.3em; text-align: center; outline: 0;' class='soundcloud-badge'>http://soundcloud.com<span style="display: block; width: 137px; height: 20px; margin: 0px 0 0 12px; overflow: hidden; -o-text-overflow: ellipsis; text-overflow: ellipsis">The Civic Commons</span></a>
+
+      </div>
 
     </div>
   </div>
 <% end %>
-
