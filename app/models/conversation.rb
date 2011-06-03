@@ -5,19 +5,18 @@ class Conversation < ActiveRecord::Base
   include GeometryForStyle
 
   has_many :contributions
-  has_many(:confirmed_contributions, :class_name => 'Contribution',
-           :conditions => ['confirmed = ?', true])
+  has_many :confirmed_contributions, :class_name => 'Contribution',
+           :conditions => ['confirmed = ?', true]
 
   has_many :top_level_contributions
   has_many :subscriptions, :as => :subscribable, :dependent => :destroy
   accepts_nested_attributes_for :top_level_contributions, :allow_destroy => true
 
   # any person that has made a contribution to the convo
-  has_many(:participants, :through => :confirmed_contributions,
+  has_many :participants, :through => :confirmed_contributions,
            :source => :person, :uniq => true,
-           :order => "contributions.created_at ASC")
+           :order => "contributions.created_at ASC"
 
-  has_and_belongs_to_many :guides, :class_name => 'Person', :join_table => 'conversations_guides', :association_foreign_key => :guide_id
   has_and_belongs_to_many :issues
 
   belongs_to :person, :foreign_key => "owner"
