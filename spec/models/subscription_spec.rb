@@ -17,13 +17,13 @@ describe Subscription do
   it "should have a person and conversation" do
     subscription = Factory.build(:conversation_subscription)
     subscription.person.name.should == "Marc Canter"
-    subscription.subscribable.title.should == 'Civic Commons'
+    subscription.subscribable.title.should == 'The Civic Commons'
   end
 
   it "should have a person and issue" do
     subscription = Factory.build(:issue_subscription)
     subscription.person.name.should == "Marc Canter"
-    subscription.subscribable.summary.should == 'Civic Commons'
+    subscription.subscribable.summary.should == 'The Civic Commons'
   end
 
   describe "name" do

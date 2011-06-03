@@ -22,9 +22,9 @@
     #add_group 'Libraries', 'lib'
     #add_group 'Mailers', 'app/mailers'
     #add_group 'Models', 'app/models'
-    #add_group 'Presenters', 'app/presenters'
     #add_group 'Observers', 'app/observers'
     #add_group 'Services', 'app/services'
+    #add_group 'Presenters', 'app/presenters'
     ##add_group 'Views', 'app/views'
   #end
 #end

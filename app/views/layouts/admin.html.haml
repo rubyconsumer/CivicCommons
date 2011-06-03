@@ -17,7 +17,7 @@
     .admin-header
       .wrapper
         %h1
-          =link_to "Civic Commons Admin", admin_root_path
+          =link_to "The Civic Commons Admin", admin_root_path
         = csrf_meta_tag
     -if flash[:error]
       .flash-error
@@ -29,7 +29,7 @@
       .nav
         %ul
           %li
-            =link_to "Civic Commons Home", root_path
+            =link_to "The Civic Commons Home", root_path
           %li
             =link_to "Articles", admin_articles_path
             %ul

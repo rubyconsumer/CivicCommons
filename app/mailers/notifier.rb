@@ -6,7 +6,7 @@ class Notifier < Devise::Mailer
   def email_changed(old_email, new_email)
     @old_email = old_email
     @new_email = new_email
-    mail(:subject => "You've recently changed your Civic Commons email",
+    mail(:subject => "You've recently changed your email with The Civic Commons",
          :from => Devise.mailer_sender,
          :to => [old_email, new_email])
   end
@@ -55,7 +55,7 @@ class Notifier < Devise::Mailer
     @person = person
     @conversations = conversations
     @new_conversations = new_conversations
-    mail(:subject => "Civic Commons Daily Digest",
+    mail(:subject => "The Civic Commons Daily Digest",
          :from => '"Curator of Conversation" <curator@theciviccommons.com>',
          :to => @person.email)
   end
