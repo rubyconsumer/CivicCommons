@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '/acceptance_helper')
 feature "Register Feature", %q{
   As an anonymous person
   I want to sign up for an account
-  So that I can interact with the Civic Commons community
+  So that I can interact with The Civic Commons community
 } do
 
   background do

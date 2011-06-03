@@ -1,7 +1,7 @@
 # = Civic Commons Markup Language
 #
 # CCML is a minimal markup language based on ExpressionEngine tag syntax. It is
-# intended to allow web designers on the Civic Commons project easily embed
+# intended to allow web designers on The Civic Commons project easily embed
 # server-side dynamic behavior into an HTML output stream. CCML was originally
 # created for Managed Issues but may be leveraged for other features. 
 #

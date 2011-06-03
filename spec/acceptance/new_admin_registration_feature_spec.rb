@@ -33,8 +33,8 @@ feature "Admin User Registration Tool", %q{
     #Then I should be on the admin people page
     current_url.should include('/admin/people')
     #And I should see a message thanking the user for registering
-    page.should have_content('Thank you for registering with the Civic Commons')
-    #And the user should have received the Civic Commons Welcome email
+    page.should have_content('Thank you for registering with The Civic Commons')
+    #And the user should have received The Civic Commons Welcome email
     ActionMailer::Base.deliveries.length.should == 2
   end
 

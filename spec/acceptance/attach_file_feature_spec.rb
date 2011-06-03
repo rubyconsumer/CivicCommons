@@ -3,9 +3,9 @@ WebMock.allow_net_connect!
 Capybara.default_wait_time = 20
 
 feature "Attach a file", %q{
-  As a Civic Commons registered user
+  As a registered user at The Civic Commons
   I want to attach a file
-  So that I can interact with the Civic Commons community
+  So that I can interact with The Civic Commons community
 } do
 
   before :each do
