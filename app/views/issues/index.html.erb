@@ -14,12 +14,13 @@
         <% @issues.each do |issue| %>
 	<div class="issue-container">
 		<div class="issue-details">
-	  		<img src="http://placehold.it/200x125">
-            <h4><%= link_to issue.name, issue %></h4>
-            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin augue nisi, fermentum vitae, imperdiet a, auctor eu, mi. Nulla imperdiet molestie purus. Duis arcu dui, pretium in, molestie id, convallis eget, orci.</p>
+	  		<%= image_tag issue.image.url(:panel) %>
+            <h4><%= link_to issue.name, issue_path(issue) %></h4>
+            <p><%= raw(truncate(issue.summary, length: 255)) %></p>
 		</div>
 		<div class="issue-meta">
-			<p class="issue-contrib"><%= pluralize(issue.contributions.size, "Contribution") %></p>
+			<p class="issue-conv"><%= pluralize(issue.contributions.size, "Resources") %></p>
+			<p class="issue-contrib"><%= pluralize(issue.participants.size, "Participants") %></p>
 			<p class="issue-conv"><%= pluralize(issue.conversations.size, "Conversation") %></p>
 		</div>
 	</div>
