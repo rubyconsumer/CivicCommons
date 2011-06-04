@@ -443,9 +443,14 @@ border-radius: 4px 4px 0 0;
 font-size: 1.8em;
 font-weight: normal;
 }
+.issue-details h4, .issue-details p {padding-left: 210px;}
 .issue-details img {
 float: left;
-margin: 0 10px 10px 0;
+margin-bottom: 10px;
+-webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+-moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+-o-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 }
 .issue-meta {
 background: #e6e6e6;
@@ -468,12 +473,16 @@ text-shadow: 0 1px 1px rgba(255,255,255,.9);
 text-transform: uppercase;
 }
 .issue-contrib {
-background: url(/images/people-i.png) no-repeat 0 1px;
-padding: 2px 0 2px 28px;
+background: url(/images/people-i.png) no-repeat 0 2px;
+padding: 2px 0 2px 31px;
 }
 .issue-conv {
-background: url(/images/conv-i.png) no-repeat 0 0;
-padding: 2px 0 2px 28px;
+background: url(/images/conv-i.png) no-repeat 0 2px;
+padding: 2px 0 2px 24px;
+}
+.issue-res {
+background: url(/images/doc-i.png) no-repeat 0 2px;
+padding: 2px 0 2px 21px;
 }
 
 /*- PAGINATION STYLES
