@@ -54,6 +54,9 @@
     = auto_discovery_link_tag(:rss, "http://feeds.theciviccommons.com/civiccommonsblog", { :title => "The Civic Commons: Common Blog" } )
     = auto_discovery_link_tag(:rss, "http://feeds.theciviccommons.com/civiccommonsradio", { :title => "The Civic Commons Radio Show" } )
     = auto_discovery_link_tag(:rss, "http://feeds.theciviccommons.com/civiccommonsnews", { :title => "The Civic Commons In The News" } )
+    
+    = render :partial => 'shared/get_satisfaction'
+
     = csrf_meta_tag
 
   %body
