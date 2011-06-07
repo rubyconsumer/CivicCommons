@@ -10,7 +10,35 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110526205506) do
+ActiveRecord::Schema.define(:version => 20110529110500) do
+
+  create_table "achievement_earneds", :force => true do |t|
+    t.integer  "person_id"
+    t.integer  "achievement_metadata_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "achievement_metadatas", :force => true do |t|
+    t.string   "title"
+    t.text     "description"
+    t.integer  "points"
+    t.integer  "threshold"
+    t.string   "badge_file_name"
+    t.string   "badge_content_type"
+    t.integer  "badge_file_size"
+    t.datetime "badge_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "achievement_statistics", :force => true do |t|
+    t.integer  "person_id"
+    t.integer  "achievement_metadata_id"
+    t.integer  "count"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -338,8 +366,8 @@ ActiveRecord::Schema.define(:version => 20110526205506) do
     t.datetime "updated_at"
     t.integer  "conversation_id"
     t.integer  "issue_id"
-    t.text     "activity_cache"
     t.integer  "person_id"
+    t.text     "activity_cache"
   end
 
   add_index "top_items", ["conversation_id"], :name => "conversations_index"
