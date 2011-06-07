@@ -35,15 +35,17 @@ class Issue < ActiveRecord::Base
 
   has_friendly_id :name, :use_slug => true, :strip_non_ascii => true
 
+  before_create :assign_position
+
   validates :name, :presence => true, :length => { :minimum => 5 }  
   validates_uniqueness_of :name
-  
+
   scope(:most_active, :select =>
         'count(1) as contribution_count, issues.*',
         :joins => [:contributions],
         :group => "issues.id",
         :order => 'contribution_count DESC')
-  
+  scope :custom_order, {:order => 'position ASC'}
   scope :most_recent, {:order => 'created_at DESC'}
   scope :most_recent_update, {:order => 'updated_at DESC'}
   scope :alphabetical, {:order => 'name ASC'}
@@ -57,11 +59,26 @@ class Issue < ActiveRecord::Base
         most_recent_update
       when 'most_active'
         most_active
+      else
+        custom_order
       end
     }
-  
+
+  def self.assign_positions
+    issues = Issue.order('position ASC, id ASC')
+    issues.each_with_index do |issue, i|
+      issue.update_attribute(:position, i)
+    end
+  end
+
   def conversation_comments 
     Comment.joins(:conversation).where({:conversations => {:id => self.conversation_ids}})
+  end
+
+  private
+
+  def assign_position
+    self.position = Issue.maximum('position') ? Issue.maximum('position') + 1 : 0
   end
 
 end
