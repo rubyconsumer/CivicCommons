@@ -53,7 +53,10 @@ class Admin::IssuesController < Admin::DashboardController
     next_position = format_param(params[:next])
     previous_position = format_param(params[:prev])
     
-    raise "Current position cannot be nil" if current_position.nil?
+    if current_position.nil?
+      Issue.assign_positions
+      raise "Current position cannot be nil"
+    end
 
     if previous_position.nil?
       set_position(current_position, 0, next_position)
