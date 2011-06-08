@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110526205506) do
+ActiveRecord::Schema.define(:version => 20110607183415) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -142,16 +142,6 @@ ActiveRecord::Schema.define(:version => 20110526205506) do
 
   add_index "conversations", ["cached_slug"], :name => "index_conversations_on_cached_slug", :unique => true
 
-  create_table "conversations_events", :id => false, :force => true do |t|
-    t.integer "conversation_id"
-    t.integer "event_id"
-  end
-
-  create_table "conversations_guides", :id => false, :force => true do |t|
-    t.integer "conversation_id"
-    t.integer "guide_id"
-  end
-
   create_table "conversations_issues", :id => false, :force => true do |t|
     t.integer "conversation_id"
     t.integer "issue_id"
@@ -225,6 +215,7 @@ ActiveRecord::Schema.define(:version => 20110526205506) do
     t.string   "cached_slug"
     t.string   "type",                  :default => "Issue", :null => false
     t.integer  "managed_issue_page_id"
+    t.integer  "position"
   end
 
   add_index "issues", ["cached_slug"], :name => "index_issues_on_cached_slug", :unique => true
@@ -360,8 +351,8 @@ ActiveRecord::Schema.define(:version => 20110526205506) do
     t.datetime "updated_at"
     t.integer  "conversation_id"
     t.integer  "issue_id"
-    t.text     "activity_cache"
     t.integer  "person_id"
+    t.text     "activity_cache"
   end
 
   add_index "top_items", ["conversation_id"], :name => "conversations_index"

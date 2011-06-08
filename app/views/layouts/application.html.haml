@@ -54,6 +54,7 @@
     = auto_discovery_link_tag(:rss, "http://feeds.theciviccommons.com/civiccommonsblog", { :title => "The Civic Commons: Common Blog" } )
     = auto_discovery_link_tag(:rss, "http://feeds.theciviccommons.com/civiccommonsradio", { :title => "The Civic Commons Radio Show" } )
     = auto_discovery_link_tag(:rss, "http://feeds.theciviccommons.com/civiccommonsnews", { :title => "The Civic Commons In The News" } )
+
     = csrf_meta_tag
 
   %body
@@ -66,13 +67,13 @@
         = link_to 'The Civic Commons', root_url, :id => 'logo', :title => 'The Civic Commons'
         %ul#main-nav
           %li
-            <a href="/conversations" title="Explore Conversations"><span id="conversations"><span>Explore </span> Conversations</span></a>
+            <a href="/conversations" title="Explore Conversations"><div id="conversations"><span>Explore </span> Conversations</div></a>
           %li
-            <a href="/issues" title="Find an Issue"><span id="issues"><span>Find an </span> Issue</span></a>
+            <a href="/issues" title="Find an Issue"><div id="issues"><span>Find an </span> Issue</div></a>
           %li
-            <a href="/community" title="Meet the Community"><span id="community"><span>Meet the </span>Community</span></a>
+            <a href="/community" title="Meet the Community"><div id="community"><span>Meet the </span>Community</div></a>
           %li
-            <a href="/build_the_commons" title="Build the Commons"><span id="commons"><span>Build the </span>Commons</span></a>
+            <a href="/build_the_commons" title="Build the Commons"><div id="commons"><span>Build the </span>Commons</div></a>
         #header-utility
           - if current_person
             #login-status
@@ -110,9 +111,13 @@
                 = link_to 'Radio Show', radioshow_index_url
               %li
                 = link_to 'RSS Feeds', feeds_url
+              %li
+                = link_to 'Server Status', 'http://status.theciviccommons.com/'
           .cols
             %h3 Work with the Commons
             %ul.sub-nav
+              %li
+                = link_to 'Help and Support', 'http://getsatisfaction.com/theciviccommons'
               %li
                 = link_to 'Contact Us', contact_us_url
               %li
@@ -121,6 +126,7 @@
                 = link_to 'Terms of Use', terms_url
               %li
                 = link_to 'Privacy Policy', privacy_url
+
           .cols
             %h3 The Civic Commons Elsewhere
             %ul.social-media
@@ -137,3 +143,5 @@
 
 = render :partial => '/shared/suggest_facebook_auth.js' if signed_in? && !current_person.declined_fb_auth? && !current_person.facebook_authenticated?
 = render :partial => '/shared/show_colorbox.js', :locals => {:path => successful_fb_registration_path} if flash[:successful_fb_registration_modal]
+    
+= render :partial => 'layouts/get_satisfaction'

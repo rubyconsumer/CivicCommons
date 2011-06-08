@@ -26,6 +26,7 @@ private
     if person.valid?
       flash[:notice] = I18n.t "devise.omniauth_callbacks.success", :kind => "Facebook"
       flash[:successful_fb_registration_modal] = true
+      person.remember_me = true
       sign_in person, :event => :authentication
       render_js_redirect_to((env['omniauth.origin'] || root_path),:text => 'Registering to CivicCommons account using your Facebook Credentials...')
     elsif person.errors[:email].to_s.include?("has already been taken")
@@ -70,6 +71,7 @@ private
   
   def successful_authentication(authentication)
     flash[:notice] = I18n.t "devise.omniauth_callbacks.success", :kind => "Facebook"
+    authentication.person.remember_me = true
     sign_in authentication.person, :event => :authentication
     render_js_redirect_to (env['omniauth.origin'] || root_path), :text => 'Logging in to CivicCommons with Facebook...'
   end

@@ -140,6 +140,7 @@ Civiccommons::Application.routes.draw do
     end
     resources :issues, do
       resources :pages, controller: :managed_issue_pages
+      post 'update_order', on: :collection
     end
     get '/issues/pages/all', to: 'managed_issue_pages#all'
     resources :regions
