@@ -12,7 +12,7 @@ module Achievements
     end
     context 'load achievements' do
       it "will read a directory for achievements and register them with the Achievements Directory." do
-        Achievements::Engine.achievements = []
+        Achievements::Directory.achievements = {}
         listing = Achievements::Engine.load_achievements("#{Rails.root}/spec/fixtures/achievements")
 
         listing.should == {:Blue=>{:default=>["BlueAchievement", "DarkBlueAchievement"]},
