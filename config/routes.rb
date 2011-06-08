@@ -138,7 +138,10 @@ Civiccommons::Application.routes.draw do
       put 'toggle_staff_pick', on: :member
       post 'update_order', on: :collection
     end
-    resources :issues, do
+    resources :curated_feeds do
+      resources :items, controller: :curated_feed_items
+    end
+    resources :issues do
       resources :pages, controller: :managed_issue_pages
       post 'update_order', on: :collection
     end
