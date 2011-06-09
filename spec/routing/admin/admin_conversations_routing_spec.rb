@@ -41,7 +41,7 @@ describe Admin::ConversationsController do
   end
 
   it 'recognizes and generates #update_order' do
-    { post: 'admin/conversations/update_order' }.should route_to(controller: 'admin/conversations', action: 'update_order')
+    { put: 'admin/conversations/update_order' }.should route_to(controller: 'admin/conversations', action: 'update_order')
   end
 
 end

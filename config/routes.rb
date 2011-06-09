@@ -136,11 +136,11 @@ Civiccommons::Application.routes.draw do
     resources :content_templates
     resources :conversations do
       put 'toggle_staff_pick', on: :member
-      post 'update_order', on: :collection
+      put 'update_order', on: :collection
     end
     resources :issues, do
       resources :pages, controller: :managed_issue_pages
-      post 'update_order', on: :collection
+      put 'update_order', on: :collection
     end
     get '/issues/pages/all', to: 'managed_issue_pages#all'
     resources :regions
