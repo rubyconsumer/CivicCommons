@@ -6,7 +6,7 @@ class HomepageController < ApplicationController
 
     @main_article = Article.homepage_main_article.first
     @sub_articles = Article.homepage_sub_articles.limit(3)
-    @blog_posts = ContentItem.where("content_type = 'BlogPost' AND (published <= curdate() OR DAY(published) = DAY(curdate())) ").order("published desc, created_at desc").limit(3)
+    @blog_posts = ContentItem.recent_blog_posts.limit(3)
     @regions = Region.all
 
     @recent_items = Activity.most_recent_activity(3)
