@@ -158,9 +158,9 @@ ActiveRecord::Schema.define(:version => 20110608163638) do
   add_index "counties", ["region_id"], :name => "index_counties_on_region_id"
 
   create_table "curated_feed_items", :force => true do |t|
-    t.string   "original_url"
-    t.string   "provider_url"
-    t.string   "title"
+    t.string   "original_url",    :null => false
+    t.string   "provider_url",    :null => false
+    t.string   "title",           :null => false
     t.string   "description"
     t.date     "pub_date"
     t.text     "raw"
@@ -170,9 +170,9 @@ ActiveRecord::Schema.define(:version => 20110608163638) do
   end
 
   create_table "curated_feeds", :force => true do |t|
-    t.string   "title"
+    t.string   "title",       :null => false
     t.string   "description"
-    t.string   "cached_slug", :null => false
+    t.string   "cached_slug"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

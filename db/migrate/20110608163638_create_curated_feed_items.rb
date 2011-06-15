@@ -1,9 +1,9 @@
 class CreateCuratedFeedItems < ActiveRecord::Migration
   def self.up
     create_table :curated_feed_items do |t|
-      t.string :original_url
-      t.string :provider_url
-      t.string :title
+      t.string :original_url, null: false
+      t.string :provider_url, null: false
+      t.string :title, unique: true, null: false
       t.string :description
       t.date :pub_date
       t.text :raw
