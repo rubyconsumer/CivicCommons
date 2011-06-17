@@ -118,6 +118,8 @@ module CCML
           end
 
           # check for date format
+          #TODO Make timezone aware. Parse and format functions
+          #     look at GMT vs. local differently - Jerry
           if match[:format]
             begin
               sub = Time.parse(sub) unless sub.is_a?(Time)

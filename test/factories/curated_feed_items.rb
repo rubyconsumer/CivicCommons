@@ -1,4 +1,5 @@
 Factory.define :curated_feed_item do |f|
+  f.update_embedly_on_save false
   f.original_url "http://blog.cleveland.com/metro/2011/05/global_cleveland_will_launch_w.html"
   f.provider_url "http://blog.cleveland.com/"
   f.title "Global Cleveland will launch with a multicultural party at City Hall"

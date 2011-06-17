@@ -1,83 +1,66 @@
-class Admin::CuratedFeedItemsController < ApplicationController
-  # GET /admin/curated_feed_items
-  # GET /admin/curated_feed_items.xml
+class Admin::CuratedFeedItemsController < Admin::DashboardController
+
+  # GET /admin/curated_feeds/1/items
+  def all
+    @curated_feed_items = CuratedFeedItem.order('curated_feed_id ASC, name ASC')
+    render 'index'
+  end
+
+  # GET /admin/curated_feeds/1/items
   def index
-    @admin_curated_feed_items = Admin::CuratedFeedItem.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @admin_curated_feed_items }
-    end
+    @curated_feed = CuratedFeed.find(params[:curated_feed_id])
+    @curated_feed_items = CuratedFeedItem.where(curated_feed_id: @curated_feed.id).order('name ASC')
   end
 
-  # GET /admin/curated_feed_items/1
-  # GET /admin/curated_feed_items/1.xml
+  # GET /admin/curated_feeds/1/items/1
   def show
-    @admin_curated_feed_item = Admin::CuratedFeedItem.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @admin_curated_feed_item }
-    end
+    @curated_feed = CuratedFeed.find(params[:curated_feed_id])
+    @curated_feed_item = CuratedFeedItem.find(params[:id])
   end
 
-  # GET /admin/curated_feed_items/new
-  # GET /admin/curated_feed_items/new.xml
+  # GET /admin/curated_feeds/1/items/new
   def new
-    @admin_curated_feed_item = Admin::CuratedFeedItem.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @admin_curated_feed_item }
-    end
+    @curated_feed = CuratedFeed.find(params[:curated_feed_id])
+    @curated_feed_item = CuratedFeedItem.new(curated_feed: @curated_feed)
   end
 
-  # GET /admin/curated_feed_items/1/edit
+  # GET /admin/curated_feeds/1/items/1/edit
   def edit
-    @admin_curated_feed_item = Admin::CuratedFeedItem.find(params[:id])
+    @curated_feed = CuratedFeed.find(params[:curated_feed_id])
+    @curated_feed_item = CuratedFeedItem.find(params[:id])
   end
 
-  # POST /admin/curated_feed_items
-  # POST /admin/curated_feed_items.xml
+  # POST /admin/curated_feeds/1/items
   def create
-    @admin_curated_feed_item = Admin::CuratedFeedItem.new(params[:admin_curated_feed_item])
+    @curated_feed = CuratedFeed.find(params[:curated_feed_id])
+    @curated_feed_item = CuratedFeedItem.new(params[:curated_feed_item])
+    @curated_feed_item.curated_feed = @curated_feed
 
-    respond_to do |format|
-      if @admin_curated_feed_item.save
-        format.html { redirect_to(@admin_curated_feed_item, :notice => 'Curated feed item was successfully created.') }
-        format.xml  { render :xml => @admin_curated_feed_item, :status => :created, :location => @admin_curated_feed_item }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @admin_curated_feed_item.errors, :status => :unprocessable_entity }
-      end
+    if @curated_feed_item.save
+      redirect_to(admin_curated_feed_item_path(@curated_feed, @curated_feed_item), :notice => 'Feed item was successfully created.')
+    else
+      render "new"
     end
   end
 
-  # PUT /admin/curated_feed_items/1
-  # PUT /admin/curated_feed_items/1.xml
+  # PUT /admin/curated_feeds/1/items/1
   def update
-    @admin_curated_feed_item = Admin::CuratedFeedItem.find(params[:id])
+    @curated_feed = CuratedFeed.find(params[:curated_feed_id])
+    @curated_feed_item = CuratedFeedItem.find(params[:id])
+    @curated_feed_item.attributes = params[:curated_feed_item]
 
-    respond_to do |format|
-      if @admin_curated_feed_item.update_attributes(params[:admin_curated_feed_item])
-        format.html { redirect_to(@admin_curated_feed_item, :notice => 'Curated feed item was successfully updated.') }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @admin_curated_feed_item.errors, :status => :unprocessable_entity }
-      end
+    if @curated_feed_item.save
+      redirect_to(admin_curated_feed_item_path(@curated_feed, @curated_feed_item), :notice => 'Feed item was successfully updated.')
+    else
+      render "edit"
     end
   end
 
-  # DELETE /admin/curated_feed_items/1
-  # DELETE /admin/curated_feed_items/1.xml
+  # DELETE /admin/curated_feeds/1/items/1
   def destroy
-    @admin_curated_feed_item = Admin::CuratedFeedItem.find(params[:id])
-    @admin_curated_feed_item.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(admin_curated_feed_items_url) }
-      format.xml  { head :ok }
-    end
+    @curated_feed = CuratedFeed.find(params[:curated_feed_id])
+    @curated_feed_item = CuratedFeedItem.find(params[:id])
+    @curated_feed_item.destroy
+    redirect_to(admin_curated_feed_items_path(@curated_feed))
   end
 end

@@ -159,8 +159,8 @@ ActiveRecord::Schema.define(:version => 20110608163638) do
 
   create_table "curated_feed_items", :force => true do |t|
     t.string   "original_url",    :null => false
-    t.string   "provider_url",    :null => false
-    t.string   "title",           :null => false
+    t.string   "provider_url"
+    t.string   "title"
     t.string   "description"
     t.date     "pub_date"
     t.text     "raw"
