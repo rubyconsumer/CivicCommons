@@ -2,6 +2,9 @@ class CuratedFeedItem < ActiveRecord::Base
 
   attr_protected :raw
 
+  # dependency injection to short-circuit during testing
+  attr_accessor :update_embed_on_save
+
   belongs_to :curated_feed
 
   alias_attribute :url, :original_url
@@ -13,7 +16,13 @@ class CuratedFeedItem < ActiveRecord::Base
   before_validation :set_pub_date
   before_save :update_embedly
 
+  def initialize(attributes = nil)
+    self.update_embed_on_save = true
+    super(attributes)
+  end
+
   def update_embedly
+    return true unless self.update_embed_on_save
     embedly = EmbedlyService.new
     embedly.fetch(self.original_url)
     if embedly.ok?

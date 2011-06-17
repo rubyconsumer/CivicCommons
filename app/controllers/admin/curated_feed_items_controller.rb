@@ -1,15 +1,8 @@
 class Admin::CuratedFeedItemsController < Admin::DashboardController
 
   # GET /admin/curated_feeds/1/items
-  def all
-    @curated_feed_items = CuratedFeedItem.order('curated_feed_id ASC, name ASC')
-    render 'index'
-  end
-
-  # GET /admin/curated_feeds/1/items
   def index
-    @curated_feed = CuratedFeed.find(params[:curated_feed_id])
-    @curated_feed_items = CuratedFeedItem.where(curated_feed_id: @curated_feed.id).order('name ASC')
+    @curated_feed_items = CuratedFeedItem.where(curated_feed_id: params[:curated_feed_id]).order('title ASC')
   end
 
   # GET /admin/curated_feeds/1/items/1
@@ -20,13 +13,11 @@ class Admin::CuratedFeedItemsController < Admin::DashboardController
 
   # GET /admin/curated_feeds/1/items/new
   def new
-    @curated_feed = CuratedFeed.find(params[:curated_feed_id])
-    @curated_feed_item = CuratedFeedItem.new(curated_feed: @curated_feed)
+    @curated_feed_item = CuratedFeedItem.new(curated_feed_id: params[:curated_feed_id])
   end
 
   # GET /admin/curated_feeds/1/items/1/edit
   def edit
-    @curated_feed = CuratedFeed.find(params[:curated_feed_id])
     @curated_feed_item = CuratedFeedItem.find(params[:id])
   end
 

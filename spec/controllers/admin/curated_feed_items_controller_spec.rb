@@ -16,7 +16,7 @@ module Admin
       before(:each) do
         @curated_feed_items = {}
         (1..5).each do 
-          curated_feed_item = Factory.create(:curated_feed_item)
+          curated_feed_item = Factory.create(:curated_feed_item, curated_feed: curated_feed)
           @curated_feed_items[curated_feed_item.id] = curated_feed_item
         end
       end
@@ -75,13 +75,13 @@ module Admin
         end
 
         it "assigns a newly created curated_feed_item as @curated_feed_item" do
-          assigns[:curated_feed_item].name.should eq params[:name]
-          assigns[:curated_feed_item].cached_slug.should eq params[:cached_slug]
-          assigns[:curated_feed_item].template.should eq params[:template]
+          assigns[:curated_feed_item].title.should eq params[:title]
+          assigns[:curated_feed_item].provider_url.should eq params[:provider_url]
+          assigns[:curated_feed_item].description.should eq params[:description]
         end
 
         it "redirects to the created curated_feed_item" do
-          response.should redirect_to admin_curated_feed_item_path(curated_feed, assigns[:curated_feed_item].cached_slug)
+          response.should redirect_to admin_curated_feed_item_path(curated_feed, assigns[:curated_feed_item])
         end
 
       end
@@ -93,15 +93,15 @@ module Admin
         end
 
         before(:each) do
-          params.delete(:name)
+          params.delete(:original_url)
           post :create, :curated_feed_id => curated_feed.id, :curated_feed_item => params
         end
 
         it "assigns a newly created but unsaved curated_feed_item as @curated_feed_item" do
-          assigns[:curated_feed_item].template.should eq params[:template]
+          assigns[:curated_feed_item].description.should eq params[:description]
         end
 
-        it "re-renders the 'new' template" do
+        it "re-renders the 'new' description" do
           response.should render_template('new')
         end
 
@@ -115,12 +115,8 @@ module Admin
         Factory.create(:curated_feed_item)
       end
 
-      let(:new_name) do
-        "Some completely different but valid name"
-      end
-
-      let(:new_slug) do
-        "some-completely-different-but-valid-name"
+      let(:new_provider) do
+        "some-completely-different-but-valid-provider"
       end
 
       let(:params) do
@@ -130,23 +126,22 @@ module Admin
       describe "with valid params" do
 
         before(:each) do
-          params['name'] = new_name
+          params['provider_url'] = new_provider
           put :update, :curated_feed_id => curated_feed.id, :id => params['id'], :curated_feed_item => params
         end
 
         it "updates the requested curated_feed_item" do
-          CuratedFeedItem.find_by_id(params['id']).name.should eq new_name
+          CuratedFeedItem.find_by_id(params['id']).provider_url.should eq new_provider
         end
 
         it "assigns the requested curated_feed_item as @curated_feed_item" do
           assigns[:curated_feed_item].id.should eq params['id']
-          assigns[:curated_feed_item].name.should eq new_name
-          assigns[:curated_feed_item].template.should eq params['template']
-          assigns[:curated_feed_item].cached_slug.should eq new_slug
+          assigns[:curated_feed_item].description.should eq params['description']
+          assigns[:curated_feed_item].provider_url.should eq new_provider
         end
 
         it "redirects to the 'GET show' curated_feed_item" do
-          response.should redirect_to admin_curated_feed_item_path(curated_feed, new_slug)
+          response.should redirect_to admin_curated_feed_item_path(curated_feed, assigns[:curated_feed_item])
         end
 
       end
@@ -154,18 +149,16 @@ module Admin
       describe "with invalid params" do
 
         before(:each) do
-          params['name'] = ''
+          params['original_url'] = ''
           put :update, :curated_feed_id => curated_feed.id, :id => params['id'], :curated_feed_item => params
         end
 
         it "assigns the curated_feed_item as @curated_feed_item" do
           assigns[:curated_feed_item].id.should eq params['id']
-          assigns[:curated_feed_item].name.should eq params['name']
-          assigns[:curated_feed_item].template.should eq params['template']
-          assigns[:curated_feed_item].cached_slug.should eq params['cached_slug']
+          assigns[:curated_feed_item].provider_url.should eq params['provider_url']
         end
 
-        it "re-renders the 'edit' template" do
+        it "re-renders the 'edit' description" do
           response.should render_template('edit')
         end
 
