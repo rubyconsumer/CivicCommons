@@ -10,9 +10,9 @@ var is_ascending = true;
 
 function update_sort(event, ui){
   lastUpdatedRow = $(ui.item);
-  var current_index = $(ui.item).find('td:nth-child(4) span').html();
-  var next_index = $(ui.item).next().find('td:nth-child(4) span').html();
-  var prev_index = $(ui.item).prev().find('td:nth-child(4) span').html();
+  var current_index = $(ui.item).find('td span.text').html();
+  var next_index = $(ui.item).next().find('td span.text').html();
+  var prev_index = $(ui.item).prev().find('td span.text').html();
   var data = { current: current_index, next: next_index, prev: prev_index };
 
   $.post('/admin/issues/update_order', data, function(data) {
