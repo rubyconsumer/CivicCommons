@@ -13,9 +13,9 @@ function updateOptionID(selector){
 
 function receivingItem(event,ui){
   if($(this).find('.survey-option').length > 1){
-    $(ui.sender).sortable('cancel');
+    var current_id = ui.item.data('option-id');
+    $(ui.sender).append($(this).find('.survey-option[data-option-id!='+current_id+']').first());
     updateOptionID(ui.sender);
-    alert('Sorry, one option per Vote box only')
   }
 }
 
