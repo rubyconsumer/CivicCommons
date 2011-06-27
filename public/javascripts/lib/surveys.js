@@ -27,9 +27,16 @@ jQuery(function ($) {
   
     $('.survey-option .expand').click(function(){
       $(this).closest('.survey-option').find('.description').show();
-      $(this).hide();
+      $(this).closest('.menu').hide();
       return false;
     });
+    
+    $('.survey-option .contract').click(function(){
+      $(this).closest('.description').hide();
+      $(this).closest('.survey-option').find('div.menu').show();
+      return false;
+    });
+    
     
     $('.survey-options .sortable').sortable({ 
       connectWith: '.selected-survey-options .sortable',

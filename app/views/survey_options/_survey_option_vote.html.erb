@@ -5,5 +5,6 @@
   </div>
   <div class='description'>
     <p><%= auto_link(option.description)  %></p>
+    <%= link_to "less...", '#', :class => 'contract' unless option.description.blank?%>
   </div>
 </div>
