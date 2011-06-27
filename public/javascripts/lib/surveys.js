@@ -14,7 +14,10 @@ function updateOptionID(selector){
 function receivingItem(event,ui){
   if($(this).find('.survey-option').length > 1){
     var current_id = ui.item.data('option-id');
-    $(ui.sender).append($(this).find('.survey-option[data-option-id!='+current_id+']').first());
+    var $existing_item = $(this).find('.survey-option[data-option-id!='+current_id+']').first();
+    $existing_item.hide();
+    $(ui.sender).append($existing_item);
+    $existing_item.show('fast');
     updateOptionID(ui.sender);
   }
 }
