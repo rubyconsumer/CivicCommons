@@ -6,6 +6,10 @@ describe SurveyResponse do
       SurveyResponse.reflect_on_association(:selected_survey_options).macro.should == :has_many
     end
     
+    it "should destroy selected_survey_options dependents" do
+      SurveyResponse.reflect_on_association(:selected_survey_options).options[:dependent].should == :destroy
+    end
+    
     it "should belong to person" do
       SurveyResponse.reflect_on_association(:person).macro.should == :belongs_to
     end
