@@ -25,6 +25,21 @@ function receivingItem(event,ui){
 jQuery(function ($) {
   $(document).ready(function() {
   
+    if($('.selected-survey-options input.submit').attr('disabled') != true){
+      $('.survey-options .sortable').sortable({ 
+        connectWith: '.selected-survey-options .sortable',
+        cursor: 'crosshair',
+        placeholder: "survey-option-placeholder"
+      });
+
+      $('.selected-survey-options .sortable').sortable({ 
+        connectWith: '.survey-options .sortable, .selected-survey-options .sortable',
+        update: updateSelectedOptionID,
+        receive: receivingItem,
+        placeholder: "survey-option-placeholder"
+      });
+      
+    }
     $('.survey-option .expand').click(function(){
       $(this).closest('.survey-option').find('.description').show();
       $(this).closest('.menu').hide();
@@ -35,20 +50,6 @@ jQuery(function ($) {
       $(this).closest('.description').hide();
       $(this).closest('.survey-option').find('div.menu').show();
       return false;
-    });
-    
-    
-    $('.survey-options .sortable').sortable({ 
-      connectWith: '.selected-survey-options .sortable',
-      cursor: 'crosshair',
-      placeholder: "survey-option-placeholder"
-    });
-    
-    $('.selected-survey-options .sortable').sortable({ 
-      connectWith: '.survey-options .sortable, .selected-survey-options .sortable',
-      update: updateSelectedOptionID,
-      receive: receivingItem,
-      placeholder: "survey-option-placeholder"
     });
     
   });
