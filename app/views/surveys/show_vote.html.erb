@@ -33,7 +33,7 @@
               </div>
             </div>
           <% end %>
-          <%= f.submit 'Submit Vote', :class => 'submit' %>
+          <%= f.submit 'Submit Vote', :class => "submit", :disabled => @survey_response_presenter.already_voted? %>
         <% end %>
       </div>
     </div>

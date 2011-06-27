@@ -18,6 +18,10 @@ class VoteResponsePresenter
     end
   end
   
+  def already_voted?
+    survey_response.persisted?
+  end
+  
   def available_options
     survey.options.position_sorted - selected_survey_options.collect{|record| record.survey_option}
   end

@@ -97,6 +97,19 @@ describe VoteResponsePresenter do
       @presenter.selected_survey_option_1.should be_destroyed
     end
     
+    context "already_voted?" do
+      
+      it 'should return true if survey response has already persisted' do
+        given_a_vote_presenter
+        @presenter.save
+        @presenter.already_voted?.should be_true
+      end
+      it "should return false if survey response is not persisted" do
+        given_a_vote_presenter
+        @presenter.already_voted?.should be_false
+      end
+    end
+    
     context "available options" do
       it "should show the available survey options what is remaining" do
         given_a_person_and_a_survey_and_presenter
