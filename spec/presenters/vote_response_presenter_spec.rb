@@ -116,5 +116,29 @@ describe VoteResponsePresenter do
         @presenter.available_options.should == [@survey_option1]
       end      
     end
+
+    context "selected options" do
+      it "should show the available survey options what is remaining" do
+        given_a_person_and_a_survey_and_presenter
+        @presenter.selected_option_1_id = @survey_option1.id
+        @presenter.selected_option(1).should == @survey_option1
+      end      
+    end
+
+    
+    context "confirmed?" do
+      it "should return false if there is no confirmed parameter" do
+        given_a_vote_presenter
+        @presenter.confirmed?.should be_false
+      end
+      it "should return true if there is a confirmed param" do
+        given_a_vote_presenter
+        @presenter = VoteResponsePresenter.new(:person_id => @person.id,
+          :survey_id => @survey.id, :selected_option_1_id => nil, 
+          :confirmed => true)
+            
+        @presenter.confirmed?.should be_true
+      end
+    end
   end
 end

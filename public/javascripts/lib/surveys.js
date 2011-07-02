@@ -25,6 +25,7 @@ function receivingItem(event,ui){
 jQuery(function ($) {
   $(document).ready(function() {
   
+    //drag and drop of the votes
     if($('.selected-survey-options input.submit').attr('disabled') != true){
       $('.survey-options .sortable').sortable({ 
         connectWith: '.selected-survey-options .sortable',
@@ -40,6 +41,8 @@ jQuery(function ($) {
       });
       
     }
+    
+    // expand contract of the options
     $('.survey-option .expand').click(function(){
       $(this).closest('.survey-option').find('.description').show();
       $(this).closest('.menu').hide();
@@ -51,6 +54,23 @@ jQuery(function ($) {
       $(this).closest('.survey-option').find('div.menu').show();
       return false;
     });
+    
+    // close colorbox on cancelation of confirmation
+    $('a.cancel_vote').live('click', function(){
+      $.colorbox.close();
+      return false;
+    })
+    
+    // submits the form with without AJAX when the vote has been confirmed.
+    $('a.confirm_vote').live('click', function(){
+      var $form = $('.selected-survey-options form');
+      var $confirmed_input = $("<input>").attr("type", "hidden").attr("name", "survey_response_presenter[confirmed]").val("true");
+      $form.removeAttr('data-remote');
+      $form.append($confirmed_input);
+      $form.submit();
+      return false;
+    })
+    
     
   });
 });

@@ -45,24 +45,40 @@ describe SurveysController do
   
   describe "create_response" do
     describe "post" do
-      it "should render the show action when successfully saved" do
-        Survey.stub(:find).and_return(mock_survey)
-        @vote_response_presenter = stub("VoteResponsePresenter")
-        VoteResponsePresenter.stub(:new).and_return(@vote_response_presenter)
-        @vote_response_presenter.should_receive(:save).and_return(true)
-        
-        post :create_response, :id => 123, :survey_response_presenter => {}
-        response.should render_template(:action => :show)
+      describe "when confirmed" do
+        before(:each) do
+          Survey.stub(:find).and_return(mock_survey)
+          @vote_response_presenter = stub("VoteResponsePresenter", :confirmed? => true)
+          VoteResponsePresenter.stub(:new).and_return(@vote_response_presenter)
+        end
+        it "should render the show action when successfully saved" do
+          @vote_response_presenter.should_receive(:save).and_return(true)
+          post :create_response, :id => 123, :survey_response_presenter => {}
+          response.should render_template(:action => :show)
+        end
+        it "should redirect to show_ template when there is an error" do
+          @vote_response_presenter.should_receive(:save).and_return(false)
+          post :create_response, :id => 123, :survey_response_presenter => {}
+          response.should render_template('show_vote')
+        end
       end
-      it "should redirect to show_ template when there is an error" do
-        Survey.stub(:find).and_return(mock_survey)
-        @vote_response_presenter = stub("VoteResponsePresenter")
-        VoteResponsePresenter.stub(:new).and_return(@vote_response_presenter)
-        @vote_response_presenter.should_receive(:save).and_return(false)
+      describe "when not confirmed" do
+        before(:each) do
+          Survey.stub(:find).and_return(mock_survey)
+          @vote_response_presenter = stub("VoteResponsePresenter",:confirmed? => false)
+          VoteResponsePresenter.stub(:new).and_return(@vote_response_presenter)
+        end
+        it "should render the vote confirmation partial when format is js" do
+          post :create_response, :id => 123, :survey_response_presenter => {}, :format => :js
+          response.should render_template('/surveys/_vote_response_confirmation')
+        end
+        it "should render nothing vote confirmation partial when format is html" do
+          post :create_response, :id => 123, :survey_response_presenter => {}, :format => :html
+          response.body.should == 'Javascript needs to be turned on to vote'
+        end
         
-        post :create_response, :id => 123, :survey_response_presenter => {}
-        response.should render_template('show_vote')
       end
+      
     end
   end
 

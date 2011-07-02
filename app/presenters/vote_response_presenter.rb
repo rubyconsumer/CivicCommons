@@ -1,5 +1,5 @@
 class VoteResponsePresenter
-  attr_accessor :survey_response
+  attr_accessor :survey_response, :confirmed
   
   delegate  :id, :class, :errors, :to_param, :new_record?, :selected_survey_options, :survey, :person, :persisted?, 
             :to => :survey_response
@@ -16,6 +16,14 @@ class VoteResponsePresenter
     options.each_pair do |key, val|
       self.send("#{key}=".to_sym,val)
     end
+  end
+  
+  def selected_option(opt_id)
+    self.send("selected_option_#{opt_id}")
+  end
+  
+  def confirmed?
+    !!@confirmed
   end
   
   def already_voted?
