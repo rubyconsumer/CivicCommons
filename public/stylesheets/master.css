@@ -319,6 +319,15 @@ p.fb-cnct-links {padding-top: 5px;}
 .fb-modal input.textbox {width: 7em;}
 
 
+/*misc modal*/
+.modal {padding: 25px 20px;}
+.modal h2 {
+border-bottom: 1px solid #d6d6d6;
+margin-bottom: 12px;
+padding-bottom: 12px;
+}
+
+
 /*- MODULAR ELEMENT STYLES
 ----------------------------------------------------------------------*/
 
