@@ -5,7 +5,7 @@ describe '/surveys/_vote_response_confirmation.html.erb' do
   before(:each) do
     @survey_response_presenter = stub(VoteResponsePresenter, :max_selected_options => 3)
     @selected_survey_option = stub(SelectedSurveyOption,:title => 'titlehere')
-    @vote_response_presenter.stub!(:selected_option).and_return(@selected_survey_option)
+    @survey_response_presenter.stub!(:selected_option).and_return(@selected_survey_option)
     render
   end
 
