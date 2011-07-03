@@ -22,7 +22,7 @@
   <div class="field">
     <%= f.label :description %><br />
     <%= f.text_area :description %>
-  </div>
+  </div>  
   
   <div class="field">
     <%= f.label :surveyable_type, "surveyable_type(Optional)" %><br />
@@ -38,6 +38,12 @@
     <%= f.label :max_selected_options %><br />
     <%= f.text_field :max_selected_options %>
   </div>
+  
+  <div class="field">
+    <%= f.label :show_progress %><br />
+    <%= f.check_box :show_progress %>
+  </div>
+  
   <h2>Survey Options:</h2>
   <%= f.fields_for :options do |option| %>
     <div class = 'survey-option'>

@@ -31,6 +31,12 @@
   <%= @survey.max_selected_options %>
 </p>
 
+<p>
+  <b>Show Progress:</b>
+  <%= !!@survey.show_progress %>
+</p>
+
+
 <div class="survey-options">
   <% @survey.options.position_sorted.each_with_index do |option, index| %>
     <h2>Option <%= index+1 %></h2>

@@ -8,6 +8,7 @@ describe "admin/surveys/edit.html.erb" do
       :surveyable_type => "MyString",
       :title => "MyString",
       :type => 'classType',
+      :show_progress => true,
       :description => "MyText",
       :options => [@survey_option]
     ))
@@ -22,6 +23,7 @@ describe "admin/surveys/edit.html.erb" do
       form.should have_selector("textarea#survey_description", :name => "survey[description]")
       form.should have_selector("input#survey_max_selected_options", :name => "survey[max_selected_options]")
       form.should have_selector("select#survey_type", :name => "survey[type]")
+      form.should have_selector("input#survey_show_progress", :name => "survey[show_progress]")
       
       #survey options
       form.should have_selector("input#survey_options_attributes_0_title", :name => "survey[options_attributes][0][title]")

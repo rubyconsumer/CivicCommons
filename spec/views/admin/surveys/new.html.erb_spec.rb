@@ -7,6 +7,7 @@ describe "admin/surveys/new.html.erb" do
       :surveyable_type => "MyString",
       :tye => 'classType',
       :title => "MyString",
+      :show_progress => true,
       :description => "MyText",
       :options => [stub_model(SurveyOption)]
     ).as_new_record)
@@ -21,6 +22,7 @@ describe "admin/surveys/new.html.erb" do
       form.should have_selector("textarea#survey_description", :name => "survey[description]")
       form.should have_selector("input#survey_max_selected_options", :name => "survey[max_selected_options]")
       form.should have_selector("select#survey_type", :name => "survey[type]")
+      form.should have_selector("input#survey_show_progress", :name => "survey[show_progress]")
             
       #survey options
       form.should have_selector("input#survey_options_attributes_0_title", :name => "survey[options_attributes][0][title]")

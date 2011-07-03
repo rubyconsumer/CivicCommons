@@ -8,7 +8,8 @@ describe "admin/surveys/show.html.erb" do
       :type => 'classType',
       :title => "Title",
       :description => "MyText",
-      :max_selected_options => 5
+      :max_selected_options => 5,
+      :show_progress => true
     ))
     @survey.stub_chain(:options, :position_sorted).and_return([stub_model(SurveyOption, :title => 'myOptionTitle', :description => 'myOptionDescription',:position => 123 )])
   end
@@ -24,5 +25,6 @@ describe "admin/surveys/show.html.erb" do
     rendered.should match(/myOptionDescription/)
     rendered.should match(/123/)
     rendered.should match(/5/)
+    rendered.should match(/true/)
   end
 end
