@@ -1,4 +1,5 @@
 module AvatarHelper
+
   # Create Avatar and Link for a Users Profile
   def user_profile(person)
     if person
@@ -36,11 +37,15 @@ module AvatarHelper
     css_class = options.delete(:class)
     image_tag person.avatar.url(:standard), alt: person.name, height: size, width: size, title: person.name, class: css_class
   end
-  
+
   # Use this one if you want to display an image_tag for the profile.
   def profile_image(person, size=20, options = {})
-    if person.facebook_authenticated? && !person.avatar?
+    if person.facebook_authenticated?
       facebook_profile_image(person, size, options)
+    elsif person.twitter_username?
+      twitter_profile_image(person, size, option)
+    elsif person.gravatar_exists?
+      gravatar_profile_image(peson, size, option)
     else
       local_profile_image(person, size, options)
     end
@@ -64,6 +69,12 @@ module AvatarHelper
     css_class = options.delete(:class)
     if person.facebook_authenticated?
       image_tag person.facebook_profile_pic_url(type), alt: person.name, height: size, width: size, title: person.name, class: css_class
+    end
+  end
+
+  def twitter_profile_image(person, size = 20)
+    if person.twitter_username?
+      image_tag "http:", alt: person.name, height: size, width: size, title: person.name, class: css_class
     end
   end
 
