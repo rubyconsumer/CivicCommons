@@ -73,9 +73,7 @@ module AvatarHelper
   end
 
   def twitter_profile_image(person, size = 20)
-    if person.twitter_username?
-      image_tag "http:", alt: person.name, height: size, width: size, title: person.name, class: css_class
-    end
+    image_tag "http://api.twitter.com/1/users/profile_image/#{person.twitter_username}", alt: person.name, height: size, width: size, title: person.name, class: css_class
   end
 
   def loggedin_image(person, size=40)
