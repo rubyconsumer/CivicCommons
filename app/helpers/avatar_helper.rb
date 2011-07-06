@@ -1,3 +1,7 @@
+require 'digest'
+require 'net/http'
+require 'uri'
+
 module AvatarHelper
 
   # Create Avatar and Link for a Users Profile
@@ -42,17 +46,17 @@ module AvatarHelper
   def profile_image(person, size=20, options = {})
     if person.facebook_authenticated?
       facebook_profile_image(person, size, options)
-    elsif person.twitter_username?
-      twitter_profile_image(person, size, option)
-    elsif person.gravatar_exists?
-      gravatar_profile_image(peson, size, option)
+    elsif !person.twitter_username.blank?
+      twitter_profile_image(person, size)
+    elsif gravatar_exist?(person)
+      gravatar_profile_image(person, size)
     else
-      local_profile_image(person, size, options)
+      local_profile_image(person, size)
     end
   end
 
   def profile_image_url(person, size=20, options = {})
-    if person.facebook_authenticated? && !person.avatar?
+    if person.facebook_authenticated?
       type = options.delete(:type) || :square
       person.facebook_profile_pic_url(type)
     else
@@ -73,7 +77,28 @@ module AvatarHelper
   end
 
   def twitter_profile_image(person, size = 20)
-    image_tag "http://api.twitter.com/1/users/profile_image/#{person.twitter_username}", alt: person.name, height: size, width: size, title: person.name, class: css_class
+    image_tag "http://api.twitter.com/1/users/profile_image/#{person.twitter_username}", alt: person.name, height: size, width: size, title: person.name
+  end
+
+  def gravatar_profile_image(person, size = 20)
+    image_tag gravatar_url(person), alt: person.name, height: size, width: size, title: person.name
+  end
+
+  def gravatar_url(person)
+    md5_hash = Digest::MD5.hexdigest(person.email)
+    image_url = "http://www.gravatar.com/avatar/#{md5_hash}?d=404"
+  end
+
+
+  def gravatar_exist?(person)
+    gravatar_response = Net::HTTP.get_response(URI.parse(gravatar_url(person)))
+
+    unless gravatar_response.class == Net::HTTPNotFound
+      true
+    else
+      false
+    end
+
   end
 
   def loggedin_image(person, size=40)
