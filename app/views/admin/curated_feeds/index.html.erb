@@ -1,21 +1,27 @@
-<h1>Listing admin_curated_feeds</h1>
+<h1>Listing Curated Feeds</h1>
 
-<table>
-  <tr>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<table class="tablesorter" summary="List of Curated Feeds">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+    <thead>
+      <tbody>
 
-<% @admin_curated_feeds.each do |admin_curated_feed| %>
-  <tr>
-    <td><%= link_to 'Show', admin_curated_feed %></td>
-    <td><%= link_to 'Edit', edit_admin_curated_feed_path(admin_curated_feed) %></td>
-    <td><%= link_to 'Destroy', admin_curated_feed, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
-</table>
+        <% @feeds.each do |feed| %>
+          <tr>
+            <td><%= feed.title %></td>
+            <td><%= link_to 'Show', admin_curated_feed_path(feed) %></td>
+            <td><%= link_to 'Edit', edit_admin_curated_feed_path(feed) %></td>
+            <td><%= link_to 'Destroy', admin_curated_feed_path(feed), :confirm => 'Are you sure?', :method => :delete %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
 
-<br />
+    <br />
 
-<%= link_to 'New Curated feed', new_admin_curated_feed_path %>
+    <%= link_to 'Create a new Feed', new_admin_curated_feed_path %>

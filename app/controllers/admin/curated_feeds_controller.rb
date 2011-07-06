@@ -1,8 +1,8 @@
-class Admin::CuratedFeedsController < ApplicationController
+class Admin::CuratedFeedsController < Admin::DashboardController
 
   # GET /admin/curated_feeds
-  def index
-    @feeds = CuratedFeed.all
+  def index 
+    @feeds = CuratedFeed.order(title: 'ASC')
   end
 
   # GET /admin/curated_feeds/1

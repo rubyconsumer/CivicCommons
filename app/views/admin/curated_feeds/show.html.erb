@@ -1,5 +1,31 @@
 <p id="notice"><%= notice %></p>
 
+<p>
+  <b>Title:</b>
+  <%= @feed.title %>
+</p>
 
-<%= link_to 'Edit', edit_admin_curated_feed_path(@admin_curated_feed) %> |
+<p>
+  <b>Slug:</b>
+  <%= @feed.cached_slug %>
+</p>
+
+<p>
+  <b>Created At:</b>
+  <%= @feed.created_at.strftime("%m-%d-%Y %I:%M %p") %>
+</p>
+
+<p>
+  <b>Updated At:</b>
+  <%= @feed.updated_at.strftime("%m-%d-%Y %I:%M %p") %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <br />
+  <%= text_area(:feed, :description, :cols => 95, :rows => 10, :disabled => 'disabled') %>
+</p>
+
+
+<%= link_to 'Edit', edit_admin_curated_feed_path(@feed) %> |
 <%= link_to 'Back', admin_curated_feeds_path %>
