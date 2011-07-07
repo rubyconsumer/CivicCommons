@@ -76,12 +76,14 @@ module AvatarHelper
     end
   end
 
-  def twitter_profile_image(person, size = 20)
-    image_tag "http://api.twitter.com/1/users/profile_image/#{person.twitter_username}", alt: person.name, height: size, width: size, title: person.name
+  def twitter_profile_image(person, size = 20, options = {})
+    css_class = options[:class]
+    image_tag "http://api.twitter.com/1/users/profile_image/#{person.twitter_username}", alt: person.name, height: size, width: size, title: person.name, class: css_class
   end
 
-  def gravatar_profile_image(person, size = 20)
-    image_tag gravatar_url(person), alt: person.name, height: size, width: size, title: person.name
+  def gravatar_profile_image(person, size = 20, options ={})
+    css_class = options[:class]
+    image_tag gravatar_url(person), alt: person.name, height: size, width: size, title: person.name, class: css_class
   end
 
   def gravatar_url(person)
