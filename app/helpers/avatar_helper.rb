@@ -47,11 +47,11 @@ module AvatarHelper
     if person.facebook_authenticated?
       facebook_profile_image(person, size, options)
     elsif !person.twitter_username.blank?
-      twitter_profile_image(person, size)
+      twitter_profile_image(person, size, options)
     elsif gravatar_exist?(person)
-      gravatar_profile_image(person, size)
+      gravatar_profile_image(person, size, options)
     else
-      local_profile_image(person, size)
+      local_profile_image(person, size, options)
     end
   end
 
