@@ -4,7 +4,7 @@ require 'uri'
 
 class AvatarService
 
-  def self.avatar_url(person)
+  def self.avatar_image_url(person)
     if !person.authentications.empty?
       self.facebook_image_url(person)
     elsif person.twitter_username
@@ -44,6 +44,10 @@ class AvatarService
 
   def self.create_email_hash(person)
     Digest::MD5.hexdigest(person.email)
+  end
+
+  def self.update_person(person)
+    person.update_attributes(avatar_url: self.avatar_image_url(person))
   end
 
 end
