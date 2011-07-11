@@ -26,6 +26,18 @@
   <%= text_area(:feed, :description, :cols => 95, :rows => 10, :disabled => 'disabled') %>
 </p>
 
+<p>
+  <b>Items in this feed:</b>
+  <br />
+  <% @items = @feed.items.order(created_at: 'DESC') %>
+  <%= render partial: 'admin/curated_feed_items/index' %>
+</p>
+
+<p>
+  <b>Add a new feed item:</b>
+  <br />
+  <%= render partial: 'admin/curated_feed_items/form' %>
+</p>
 
 <%= link_to 'Edit', edit_admin_curated_feed_path(@feed) %> |
 <%= link_to 'Back', admin_curated_feeds_path %>

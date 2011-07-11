@@ -1,0 +1,21 @@
+<table class="tablesorter" summary="Items on this Feed">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <% @items.each do |item| %>
+      <tr>
+        <td><%= item.title %></td>
+        <td><%= link_to 'Show', admin_curated_feed_item_path(item) %></td>
+        <td><%= link_to 'Edit', edit_admin_curated_feed_item_path(item) %></td>
+        <td><%= link_to 'Destroy', admin_curated_feed_item_path(item), :confirm => 'Are you sure?', :method => :delete %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
