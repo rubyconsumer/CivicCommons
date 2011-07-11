@@ -154,6 +154,7 @@ GEM
       rspec (~> 2.0)
       rspec-instafail (~> 0.1.8)
       ruby-progressbar (~> 0.0.10)
+    gchart (1.0.0)
     geokit (1.6.0)
     gherkin (2.4.21)
       json (>= 1.4.6)
@@ -383,6 +384,7 @@ DEPENDENCIES
   fitter-happier
   friendly_id (~> 3.2.1)
   fuubar (~> 0.0.3)
+  gchart (~> 1.0.0)
   geokit
   gibbon
   haml (< 3.1)

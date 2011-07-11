@@ -82,6 +82,17 @@ group :development, :test do
   gem 'rspec-spies'
 end
 
+gem 'devise', :git => 'git://github.com/plataformatec/devise.git', :branch => 'v1.3'
+gem "oa-oauth", :require => "omniauth/oauth"
+gem 'omniauth', '~>0.2.0', :git => 'git://github.com/intridea/omniauth.git'
+
+gem 'shoulda'
+gem 'paperclip', "2.3.8"
+gem 'delayed_paperclip'
+gem 'aws-s3'
+gem 'nokogiri'
+gem "gchart", "~> 1.0.0"
+
 group :cool_toys do
   gem 'autotest'
   gem 'autotest-rails' 
