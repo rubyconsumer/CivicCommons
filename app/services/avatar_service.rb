@@ -12,7 +12,7 @@ class AvatarService
     elsif self.gravatar_available?(person)
       self.gravatar_image_url(person)
     else
-      person.avatar.url
+      person.avatar.url(:standard)
     end
   end
 
