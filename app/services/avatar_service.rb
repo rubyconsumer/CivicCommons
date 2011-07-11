@@ -11,6 +11,8 @@ class AvatarService
       self.twitter_image_url(person)
     elsif self.gravatar_available?(person)
       self.gravatar_image_url(person)
+    else
+      person.avatar.url
     end
   end
 

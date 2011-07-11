@@ -30,7 +30,12 @@ module Services
         avatar_url.should == "http://gravatar.com/avatar/5?d=404"
       end
 
-      it "When a person does not have a FB linked, Twitter username, or Gravatar, defaults to the local CC avatar"
+      it "When a person does not have a FB linked, Twitter username, or Gravatar, defaults to the local CC avatar" do
+        @person.update_attributes(:twitter_username => nil)
+        AvatarService.should_receive(:gravatar_available?).and_return(false)
+        avatar_url = AvatarService.avatar_url(@person)
+        avatar_url.should match(/images/)
+      end
 
     end
 
