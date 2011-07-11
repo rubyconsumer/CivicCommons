@@ -117,6 +117,12 @@ describe Conversation do
       @conversation.destroy
       TopItem.where(:id => item_ids).count.should == 0
     end
+
+    it "destroys all subscriptions" do
+      subscription = Factory.create(:conversation_subscription, :subscribable => @conversation)
+      @conversation.destroy
+      lambda{ Subscription.find(subscription.id)}.should raise_error ActiveRecord::RecordNotFound
+    end
   end
 
   describe "when filtering conversations" do

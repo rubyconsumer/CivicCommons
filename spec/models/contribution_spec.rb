@@ -2,6 +2,17 @@ require 'spec_helper'
 
 describe Contribution do
 
+  describe "when destroyed" do
+    it "should destroy rating groups associated with it" do
+      @contribution = Factory.create(:contribution, {:created_at => Time.now - 25.minutes})
+
+      rating_group = Factory.create(:rating_group, contribution: @contribution)
+      @contribution.destroy
+
+      lambda {RatingGroup.find(rating_group.id)}.should raise_error ActiveRecord::RecordNotFound
+    end
+  end
+
   describe "when creating a TopLevelContribution for a conversation" do
 
     before(:each) do

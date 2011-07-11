@@ -70,6 +70,7 @@ group :test do
   gem 'email_spec'
   gem 'simplecov'
   gem 'timecop'
+  gem 'selenium-webdriver', '>= 0.2.2'
 end
 
 # On non-osx platforms, use: bundle install --without osx_test
