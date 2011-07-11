@@ -5,15 +5,23 @@ module Services
 
     context "Determining avatar url" do
 
+      before(:each) do
+        @person = Factory.create(:registered_user, :twitter_username => "civiccommons")
+      end
+
       it "When a person has linked their Facebook account, returns a FB graph url" do
-        person = Factory.create(:registered_user)
-        person.stub_chain(:authentications, :empty?).and_return(false)
-        person.stub_chain(:authentications, :first, :uid).and_return(1)
-        avatar_url = AvatarService.avatar_url(person)
+        @person.stub_chain(:authentications, :empty?).and_return(false)
+        @person.stub_chain(:authentications, :first, :uid).and_return(1)
+        avatar_url = AvatarService.avatar_url(@person)
         avatar_url.should == "http://graph.facebook.com/1/picture"
       end
 
-      it "When a person has not linked their Facebook account, but the person has entered a Twitter Username, returns Twitter url"
+      it "When a person has not linked their Facebook account, but the person has entered a Twitter Username, returns Twitter url" do
+        @person.stub_chain(:authentications, :empty?).and_return(true)
+        avatar_url = AvatarService.avatar_url(@person)
+        avatar_url.should == "http://api.twitter.com/1/users/profile_image/civiccommons"
+      end
+
       it "When a person does not have FB linked, or a Twitter username, checks if the user has a gravatar for their email, returns Gravatar url"
       it "When a person does not have a FB linked, Twitter username, or Gravatar, defaults to the local CC avatar"
 
