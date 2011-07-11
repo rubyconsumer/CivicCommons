@@ -163,7 +163,7 @@ ActiveRecord::Schema.define(:version => 20110629135637) do
     t.string   "provider_url"
     t.string   "title"
     t.text     "description"
-    t.date     "pub_date"
+    t.datetime "pub_date"
     t.text     "raw"
     t.integer  "curated_feed_id"
     t.datetime "created_at"

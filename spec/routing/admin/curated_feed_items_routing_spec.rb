@@ -10,10 +10,9 @@ describe Admin::CuratedFeedItemsController do
     { get: 'admin/curated_feeds/20/items/1/edit' }.should route_to(controller: 'admin/curated_feed_items', action: 'edit', curated_feed_id: '20', id: '1')
   end
 
-  # because of friendly_id this route appears to Rails to be a #show route
-  #it "does not recognize #new" do
-    #{ :get => 'admin/curated_feeds/20/items/new' }.should_not be_routable
-  #end
+  it "recognizes 'new' as #show with friendly-id" do
+  { :get => 'admin/curated_feeds/20/items/new' }.should route_to(:controller => "admin/curated_feed_items", :action => "show", curated_feed_id: '20', :id => "new")
+  end
 
   it 'recognizes and generates #show' do
     { get: 'admin/curated_feeds/20/items/1' }.should route_to(controller: 'admin/curated_feed_items', action: 'show', curated_feed_id: '20', id: '1')

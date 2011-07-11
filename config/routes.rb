@@ -113,6 +113,8 @@ Civiccommons::Application.routes.draw do
     delete "destroy_avatar", on: :member
   end
 
+  resources :feeds, only: [:show]
+
   resources :issues, only: [:index, :show] do
     post 'create_contribution', on: :member
     resources :pages, controller: :managed_issue_pages, only: [:show]
