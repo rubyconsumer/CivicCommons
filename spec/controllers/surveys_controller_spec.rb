@@ -23,14 +23,39 @@ describe SurveysController do
   end
 
   describe "GET show" do
-    before(:each) do
-      Survey.stub(:find).and_return(mock_survey)
-      VoteResponsePresenter.stub(:new)
+    describe "User have not voted yet" do      
+      it "should render the show_vote template if it is a 'vote'" do
+        Survey.stub(:find).and_return(mock_survey)
+        VoteResponsePresenter.stub(:new).and_return(stub(VoteResponsePresenter, :already_voted? => false))
+        
+        get :show, :id => 123
+        response.should render_template('surveys/show_vote')
+      end
     end
-    
-    it "should render the show_vote template if it is a 'vote'" do
-      get :show, :id => 123
-      response.should render_template('surveys/show_vote')
+    describe "user already voted" do
+      it "should show progress if show_progress toggle is on" do
+        @survey = mock_survey
+        @survey.stub!(:show_progress?).and_return(true)
+        Survey.stub(:find).and_return(@survey)
+        
+        @vote_response_presenter = stub(VoteResponsePresenter, :already_voted? => true)
+        VoteResponsePresenter.stub(:new).and_return(@vote_response_presenter)
+        
+        get :show, :id => 123
+        response.should render_template('surveys/show_vote_show_progress')
+        
+      end
+      it "should not show progress if the show_progress toggle is off" do
+        @survey = mock_survey
+        @survey.stub!(:show_progress?).and_return(false)
+        Survey.stub(:find).and_return(@survey)
+        
+        @vote_response_presenter = stub(VoteResponsePresenter, :already_voted? => true)
+        VoteResponsePresenter.stub(:new).and_return(@vote_response_presenter)
+        
+        get :show, :id => 123
+        response.should render_template('surveys/show_vote_hide_progress')
+      end
     end
     
   end

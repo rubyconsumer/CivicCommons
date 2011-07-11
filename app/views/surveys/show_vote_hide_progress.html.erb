@@ -1,0 +1,17 @@
+<% content_for(:header) do %>
+  <%= javascript_include_tag 'lib/surveys' %>
+<% end %>
+<% content_for(:main_body) do %>
+  <%= render :partial => "#{@surveyable.class.name.pluralize.underscore}/survey_header", :object => @surveyable if @surveyable %>
+  <div class="wrapper">
+    <div class="content-container">
+      
+      <h1>You've already voted.</h1>
+      <h2><%= @survey.title  %></h2>
+      <p><%= @survey.description %></p>
+      <p></p>
+      
+      <hr/>
+    </div>
+  </div>
+<% end %>
