@@ -4,7 +4,7 @@ class CreateCuratedFeedItems < ActiveRecord::Migration
       t.string :original_url, null: false
       t.string :provider_url
       t.string :title
-      t.string :description
+      t.text :description
       t.date :pub_date
       t.text :raw
       t.integer :curated_feed_id

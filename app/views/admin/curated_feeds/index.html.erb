@@ -13,7 +13,7 @@
 
     <% @feeds.each do |feed| %>
       <tr>
-        <td><%= feed.title %></td>
+        <td><%= link_to feed.title, admin_curated_feed_path(feed) %></td>
         <td><%= link_to 'Show', admin_curated_feed_path(feed) %></td>
         <td><%= link_to 'Edit', edit_admin_curated_feed_path(feed) %></td>
         <td><%= link_to 'Destroy', admin_curated_feed_path(feed), :confirm => 'Are you sure?', :method => :delete %></td>

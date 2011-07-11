@@ -2,6 +2,8 @@
   <thead>
     <tr>
       <th>Title</th>
+      <th>Publication Date</th>
+      <th>Created At</th>
       <th></th>
       <th></th>
       <th></th>
@@ -11,10 +13,12 @@
 
     <% @items.each do |item| %>
       <tr>
-        <td><%= item.title %></td>
-        <td><%= link_to 'Show', admin_curated_feed_item_path(item) %></td>
-        <td><%= link_to 'Edit', edit_admin_curated_feed_item_path(item) %></td>
-        <td><%= link_to 'Destroy', admin_curated_feed_item_path(item), :confirm => 'Are you sure?', :method => :delete %></td>
+        <td><%= link_to item.title, admin_curated_feed_item_path(@feed, item) %></td>
+        <td><%= item.pub_date.strftime("%m-%d-%Y %I:%M %p") %></td>
+        <td><%= item.created_at.strftime("%m-%d-%Y %I:%M %p") %></td>
+        <td><%= link_to 'Show', admin_curated_feed_item_path(@feed, item) %></td>
+        <td><%= link_to 'Edit', edit_admin_curated_feed_item_path(@feed, item) %></td>
+        <td><%= link_to 'Destroy', admin_curated_feed_item_path(@feed, item), :confirm => 'Are you sure?', :method => :delete %></td>
       </tr>
     <% end %>
   </tbody>

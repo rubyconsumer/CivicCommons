@@ -1,5 +1,39 @@
 <p id="notice"><%= notice %></p>
 
+<p>
+  <b>Original URL:</b>
+  <%= link_to @item.original_url %>
+</p>
+<p>
+  <b>Provider URL:</b>
+  <%= link_to @item.provider_url %>
+</p>
 
-<%= link_to 'Edit', edit_admin_curated_feed_item_path(@admin_curated_feed_item) %> |
-<%= link_to 'Back', admin_curated_feed_items_path %>
+<p>
+  <b>Title:</b>
+  <%= @item.title %>
+</p>
+
+<p>
+  <b>Publication Date:</b>
+  <%= @item.pub_date.strftime("%m-%d-%Y %I:%M %p") %>
+</p>
+
+<p>
+  <b>Created At:</b>
+  <%= @item.created_at.strftime("%m-%d-%Y %I:%M %p") %>
+</p>
+
+<p>
+  <b>Updated At:</b>
+  <%= @item.updated_at.strftime("%m-%d-%Y %I:%M %p") %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <br />
+  <%= text_area(:item, :description, :cols => 95, :rows => 20, :disabled => 'disabled') %>
+</p>
+
+<%= link_to 'Edit', edit_admin_curated_feed_item_path(@feed, @item) %> |
+<%= link_to 'Back', admin_curated_feed_path(@feed) %>

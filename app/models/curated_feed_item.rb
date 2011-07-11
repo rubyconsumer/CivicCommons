@@ -5,6 +5,8 @@ class CuratedFeedItem < ActiveRecord::Base
   # dependency injection to short-circuit during testing
   attr_accessor :update_embed_on_save
 
+  default_scope :order => 'pub_date, created_at DESC'
+
   belongs_to :curated_feed
 
   alias_attribute :url, :original_url
@@ -16,9 +18,9 @@ class CuratedFeedItem < ActiveRecord::Base
   before_validation :set_pub_date
   before_save :update_embedly
 
-  def initialize(attributes = nil)
-    self.update_embed_on_save = true
-    super(attributes)
+  def update_embed_on_save
+    @update_embed_on_save = true if @update_embed_on_save.nil?
+    return @update_embed_on_save
   end
 
   def update_embedly
