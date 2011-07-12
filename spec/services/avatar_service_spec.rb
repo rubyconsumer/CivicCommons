@@ -15,7 +15,7 @@ module Services
         @person.stub_chain(:authentications, :empty?).and_return(false)
         @person.stub_chain(:authentications, :first, :uid).and_return(1)
         avatar_url = AvatarService.avatar_image_url(@person)
-        avatar_url.should == "http://graph.facebook.com/1/picture"
+        avatar_url.should == "https://graph.facebook.com/1/picture"
       end
 
       it "When a person has not linked their Facebook account, but the person has entered a Twitter Username, returns Twitter url" do

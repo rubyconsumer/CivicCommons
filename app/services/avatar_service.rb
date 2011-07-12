@@ -18,7 +18,7 @@ class AvatarService
 
   def self.facebook_image_url(person)
     facebook_id = person.authentications.first.uid
-    "http://graph.facebook.com/#{facebook_id}/picture"
+    "https://graph.facebook.com/#{facebook_id}/picture"
   end
 
   def self.twitter_image_url(person)
