@@ -1,7 +1,3 @@
-require 'digest'
-require 'net/http'
-require 'uri'
-
 module AvatarHelper
 
   # Create Avatar and Link for a Users Profile
@@ -37,75 +33,12 @@ module AvatarHelper
     avatar_profile(person, 50)
   end
 
-  def local_profile_image(person, size=20, options = {})
-    css_class = options.delete(:class)
-    image_tag person.avatar.url(:standard), alt: person.name, height: size, width: size, title: person.name, class: css_class
-  end
-
-  # Use this one if you want to display an image_tag for the profile.
-  def profile_image(person, size=20, options = {})
-    if person.facebook_authenticated?
-      facebook_profile_image(person, size, options)
-    elsif !person.twitter_username.blank?
-      twitter_profile_image(person, size, options)
-    elsif gravatar_exist?(person)
-      gravatar_profile_image(person, size, options)
-    else
-      local_profile_image(person, size, options)
-    end
-  end
-
-  def profile_image_url(person, size=20, options = {})
-    if person.facebook_authenticated?
-      type = options.delete(:type) || :square
-      person.facebook_profile_pic_url(type)
-    else
-      person.avatar.url(:standard)
-    end
-  end
-
-  # Gets image from facebook graph
-  # https://graph.facebook.com/#{uid}/picture
-  # optional params: type=small|square|large
-  # square (50x50), small (50 pixels wide, variable height), and large (about 200 pixels wide, variable height):
-  def facebook_profile_image(person, size = 20, options = {})
-    type = options.delete(:type) || :square
-    css_class = options.delete(:class)
-    if person.facebook_authenticated?
-      image_tag person.facebook_profile_pic_url(type), alt: person.name, height: size, width: size, title: person.name, class: css_class
-    end
-  end
-
-  def twitter_profile_image(person, size = 20, options = {})
-    css_class = options[:class]
-    image_tag "http://api.twitter.com/1/users/profile_image/#{person.twitter_username}", alt: person.name, height: size, width: size, title: person.name, class: css_class
-  end
-
-  def gravatar_profile_image(person, size = 20, options ={})
-    css_class = options[:class]
-    image_tag gravatar_url(person), alt: person.name, height: size, width: size, title: person.name, class: css_class
-  end
-
-  def gravatar_url(person)
-    md5_hash = Digest::MD5.hexdigest(person.email)
-    image_url = "http://www.gravatar.com/avatar/#{md5_hash}?d=404"
-  end
-
-
-  def gravatar_exist?(person)
-    gravatar_response = Net::HTTP.get_response(URI.parse(gravatar_url(person)))
-
-    unless gravatar_response.class == Net::HTTPNotFound
-      true
-    else
-      false
-    end
-
+  def profile_image(person, size=20)
+    image_tag person.avatar_url, alt: person.name, height: size, width: size, title: person.name, class: 'callout'
   end
 
   def loggedin_image(person, size=40)
-    # image_tag person.avatar.url(:standard), alt: person.name, class: 'callout', height: size, width: size
-    profile_image(person, size, :class => 'callout')
+    profile_image(person, size)
   end
 
   def loggedout_image(size=40)
