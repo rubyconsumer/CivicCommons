@@ -81,6 +81,13 @@ describe SurveysController do
           post :create_response, :id => 123, :survey_response_presenter => {}
           response.should render_template(:action => :show)
         end
+        
+        it "should set flash[:vote_successful] as true when successfully saved" do
+          @vote_response_presenter.should_receive(:save).and_return(true)
+          post :create_response, :id => 123, :survey_response_presenter => {}
+          flash[:vote_successful].should be_true
+        end
+        
         it "should redirect to show_ template when there is an error" do
           @vote_response_presenter.should_receive(:save).and_return(false)
           post :create_response, :id => 123, :survey_response_presenter => {}
@@ -107,4 +114,10 @@ describe SurveysController do
     end
   end
 
+  describe "vote_successful" do
+    it "should render the correct template" do
+      get :vote_successful
+      response.should render_template('surveys/vote_successful')
+    end
+  end
 end

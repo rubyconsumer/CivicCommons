@@ -11,7 +11,12 @@ describe SurveysController do
       it "recognizez #create_response independently on /votes" do
         { post: "/votes/1/create_response" }.should route_to(controller: "surveys", action: "create_response", id: '1')
       end
-      
     end
+    describe "vote_successful" do      
+      it "recognizes #vote_successful" do
+        { get: "/votes/vote_successful" }.should route_to(controller: "surveys", action: "vote_successful")
+      end
+    end
+
   end
 end

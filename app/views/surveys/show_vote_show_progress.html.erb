@@ -1,6 +1,6 @@
 <% content_for(:header) do %>
   <%= javascript_include_tag 'lib/surveys' %>
-  
+  <%= render :partial => '/shared/show_colorbox.js', :locals => {:path => successful_votes_path} if flash[:vote_successful] %>
 <% end %>
 <% content_for(:main_body) do %>
   <%= render :partial => "#{@surveyable.class.name.pluralize.underscore}/survey_header", :object => @surveyable if @surveyable %>
@@ -13,4 +13,5 @@
       <%= @vote_progress_service.render_chart%>
     </div>
   </div>
+  
 <% end %>

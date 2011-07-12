@@ -1,6 +1,6 @@
 class SurveysController < ApplicationController
   before_filter :require_user
-  before_filter :find_survey
+  before_filter :find_survey, :only => [:show, :create_response]
   
   def show
     @survey_response_presenter = VoteResponsePresenter.new(:person_id => current_person.id, :survey_id => @survey.id)
@@ -23,6 +23,7 @@ class SurveysController < ApplicationController
     if @survey_response_presenter.confirmed?
       if @survey_response_presenter.save
         redirect_to :action => :show
+        flash[:vote_successful] = true
       else
         render :template => "surveys/show_#{@survey.class.name.underscore}"
       end
@@ -32,6 +33,11 @@ class SurveysController < ApplicationController
         format.html{render :text => 'Javascript needs to be turned on to vote'}
       end
     end
+  end
+  
+  # vote_successful modal dialog
+  def vote_successful
+    render :layout => nil
   end
   
 protected

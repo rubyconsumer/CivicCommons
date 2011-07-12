@@ -134,6 +134,7 @@ Civiccommons::Application.routes.draw do
   
   resources :votes, controller: :surveys, :only => :show do
     post 'create_response', on: :member
+    get 'vote_successful', on: :collection, :as => :successful
   end
   
   
