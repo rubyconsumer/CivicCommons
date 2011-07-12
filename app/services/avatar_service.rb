@@ -47,7 +47,8 @@ class AvatarService
   end
 
   def self.update_person(person)
-    person.update_attributes(avatar_url: self.avatar_image_url(person))
+    person.avatar_url = self.avatar_image_url(person)
+    person.save(validate: false)
   end
 
 end
