@@ -11,7 +11,7 @@ class Registrations::OmniauthCallbacksController < Devise::OmniauthCallbacksCont
       end
     end
   end
-  
+
   def failure
     text = "#{I18n.t('devise.omniauth_callbacks.failure', :kind => failed_strategy.name.to_s.humanize, :reason => failure_message)}"
     render_popup(text) 
@@ -21,7 +21,7 @@ private
   def auth_popup?
     params[:auth_popup] && params[:auth_popup] == true
   end
-  
+
   def create_account_using_facebook_credentials
     person = Person.create_from_auth_hash(env['omniauth.auth'])
     if person.valid?
@@ -37,18 +37,18 @@ private
       render_js_redirect_to((env['omniauth.origin'] || root_path),:text => "Something went wrong, your account cannot be created")
     end
   end
-  
+
   def failed_linked_to_facebook
     flash[:notice] = I18n.t "devise.omniauth_callbacks.linked_failure", :kind => "Facebook"
     render_js_redirect_to(env['omniauth.origin'] || root_path)
   end
-  
+
   def link_with_facebook
     authentication = Authentication.new_from_auth_hash(env['omniauth.auth'])
-    
+
     if current_person.link_with_facebook(authentication)
       @other_email = Authentication.email_from_auth_hash(env['omniauth.auth'])
-      
+
       sign_in current_person, :event => :authentication, :bypass => true
       if current_person.conflicting_email?(@other_email)
         successfully_linked_but_conflicting_email
@@ -59,17 +59,17 @@ private
       failed_linked_to_facebook
     end
   end
-  
+
   def successfully_linked_to_facebook
     flash[:notice] = I18n.t "devise.omniauth_callbacks.linked_success", :kind => "Facebook"
     render_js_fb_linking_success
   end
-  
+
   def successfully_linked_but_conflicting_email
     session[:other_email] = @other_email
     render_js_conflicting_email    
   end
-  
+
   def successful_authentication(authentication)
     flash[:notice] = I18n.t "devise.omniauth_callbacks.success", :kind => "Facebook"
     authentication.person.remember_me = true
@@ -81,17 +81,17 @@ private
     options[:path] = registering_email_taken_path
     render_js_colorbox(options)
   end
-  
+
   def render_js_conflicting_email(options={})
     options[:path] = conflicting_email_path
     render_js_colorbox(options)
   end
-  
+
   def render_js_fb_linking_success(options={})
     options[:path] = fb_linking_success_path
     render_js_colorbox(options)
   end
-  
+
   def render_js_colorbox(options={})
     @text = options.delete(:text) || 'Redirecting back to CivicCommons....'
     @path = options.delete(:path)
@@ -102,7 +102,7 @@ private
         }"
     render_popup(@text, @script) 
   end
-  
+
   def render_js_redirect_to(path = '', options={})
     @text = options.delete(:text) || 'Redirecting back to CivicCommons....'
     @script = "if(window.opener) {
@@ -112,10 +112,10 @@ private
           window.opener.location = '#{path}';
           }"
    render_popup(@text, @script) 
-  end  
-  
+  end
+
   def render_popup(text,script = nil)
     render :partial => '/authentication/fb_interstitial_message', :layout => 'fb_popup', :locals => {:text => text, :script => script}
   end
-  
+
 end
