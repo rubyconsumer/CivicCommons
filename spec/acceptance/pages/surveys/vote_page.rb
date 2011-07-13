@@ -4,7 +4,11 @@ class VotePage < PageObject
   VOTEBOX_LOCATOR = '.selected-survey-options .sortable'
   
   def visit_an_independent_vote(vote)
-    visit "/votes/#{vote.id}"
+    visit independent_vote_path(vote)
+  end
+  
+  def independent_vote_path(vote)
+    "/votes/#{vote.id}"
   end
 
   def visit_vote_on_an_issue(issue)

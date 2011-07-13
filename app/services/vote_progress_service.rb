@@ -33,7 +33,7 @@ class VoteProgressService
                     'chts' => '000000,18,l'   # Align Title to the left
                     } 
       end
-    image_tag chart.to_url
+    image_tag chart.to_url, :class => 'google-chart'
   end
   
   def calculate_progress
