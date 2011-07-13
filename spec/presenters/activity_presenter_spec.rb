@@ -3,18 +3,21 @@ require 'spec_helper'
 describe ActivityPresenter do
 
   before(:all) do
-   ActiveRecord::Observer.enable_observers 
-   # let the observer create the activity
-   @user = Factory.create(:admin_person)
-   @convo = Factory.create(:conversation, owner: @user)
-   (1..3).each { |i| Factory.create(:contribution, conversation: @convo) }
-   @activity = Activity.all
-   @presenter = ActivityPresenter.new(@activity)
+   ActiveRecord::Observer.enable_observers
   end
 
   after(:all) do
-   ActiveRecord::Observer.disable_observers 
+   ActiveRecord::Observer.disable_observers
    DatabaseCleaner.clean
+  end
+
+  before :each do
+    AvatarService.stub(:update_person).and_return(true)
+    @user = Factory.create(:admin_person)
+    @convo = Factory.create(:conversation, owner: @user)
+    (1..3).each { |i| Factory.create(:contribution, conversation: @convo) }
+    @activity = Activity.all
+    @presenter = ActivityPresenter.new(@activity)
   end
 
   context "creation" do
