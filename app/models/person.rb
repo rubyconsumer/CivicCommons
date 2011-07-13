@@ -242,6 +242,7 @@ class Person < ActiveRecord::Base
       self.encrypted_password = ''
       self.create_from_auth = true
       save!
+      AvatarService.update_avatar_url_for(self)
       facebook_authentication.persisted?
     end
   end

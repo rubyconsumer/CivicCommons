@@ -32,7 +32,7 @@ World(WebMock::API)
 
 include WebMock::API
 
-stub_request(:get, /http:\/\/www\.gravatar\.com/).to_return(:body => '', :status => 404)
+stub_request(:get, /http:\/\/gravatar\.com/).to_return(:body => '', :status => 404)
 stub_request(:any, /http:\/\/s3\.amazonaws\.com\/cc-dev\/attachments/)
 stub_request(:any, /http:\/\/s3\.amazonaws\.com/)
 stub_request(:any, %r{http://www.yahoo.com/}).
