@@ -46,9 +46,8 @@ class AvatarService
     Digest::MD5.hexdigest(person.email)
   end
 
-  def self.update_person(person)
-    person.avatar_url = self.avatar_image_url(person)
-    person.save(validate: false)
+  def self.update_avatar_url_for(person)
+    Person.update_all({avatar_url: avatar_image_url(person)}, {id: person.id})
   end
 
 end

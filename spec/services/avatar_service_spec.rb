@@ -44,7 +44,8 @@ module Services
     context "Updating person's avatar url" do
 
       it "Saves the url for the person" do
-        AvatarService.update_person(@person)
+        AvatarService.update_avatar_url_for(@person)
+        @person.reload
         @person.avatar_url.should == AvatarService.avatar_image_url(@person)
       end
 
