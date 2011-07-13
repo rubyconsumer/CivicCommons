@@ -80,6 +80,11 @@
             %ul
               %li
                 =link_to "Add Static Page", new_admin_content_template_path
+          %li
+            =link_to "Curated Feeds", admin_curated_feeds_path
+            %ul
+              %li
+                =link_to "Add Feed", new_admin_curated_feed_path
       %div#main
         =yield
 

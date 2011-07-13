@@ -1,0 +1,28 @@
+{
+ "provider_url": null,
+ "provider_display": "",
+ "favicon_url": null,
+ "meta": {},
+ "open_graph": {},
+ "images": [],
+ "event": {},
+ "original_url": null,
+ "payload": {},
+ "place": {},
+ "provider_name": null,
+ "type": "error",
+ "description": null,
+ "embeds": [],
+ "title": null,
+ "safe": true,
+ "cache_age": 86400,
+ "url": "garbage",
+ "error_message": "Invalid url 'garbage'",
+ "oembed": {
+  "error_code": 598,
+  "error_message": "Invalid url 'garbage'",
+  "type": "error"
+ },
+ "entry": {},
+ "error_code": 400
+}

@@ -1,0 +1,27 @@
+<h1>Listing Curated Feeds</h1>
+
+<table class="tablesorter" summary="List of Curated Feeds">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <% @feeds.each do |feed| %>
+      <tr>
+        <td><%= link_to feed.title, admin_curated_feed_path(feed) %></td>
+        <td><%= link_to 'Show', admin_curated_feed_path(feed) %></td>
+        <td><%= link_to 'Edit', edit_admin_curated_feed_path(feed) %></td>
+        <td><%= link_to 'Destroy', admin_curated_feed_path(feed), :confirm => 'Are you sure?', :method => :delete %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br />
+
+<%= link_to 'Create a new Feed', new_admin_curated_feed_path %>

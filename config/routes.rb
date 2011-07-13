@@ -113,6 +113,8 @@ Civiccommons::Application.routes.draw do
     delete "destroy_avatar", on: :member
   end
 
+  resources :feeds, only: [:show]
+
   resources :issues, only: [:index, :show] do
     post 'create_contribution', on: :member
     resources :pages, controller: :managed_issue_pages, only: [:show]
@@ -147,7 +149,10 @@ Civiccommons::Application.routes.draw do
       put 'toggle_staff_pick', on: :member
       post 'update_order', on: :collection
     end
-    resources :issues, do
+    resources :curated_feeds do
+      resources :items, controller: :curated_feed_items, only: [ :show, :edit, :create, :update, :destroy ]
+    end
+    resources :issues do
       resources :pages, controller: :managed_issue_pages
       post 'update_order', on: :collection
     end

@@ -11,7 +11,7 @@ class LoginPage < PageObject
     @page
   end
 
-  def sign_out()
+  def sign_out
     @page.visit '/people/logout'
     @page
   end

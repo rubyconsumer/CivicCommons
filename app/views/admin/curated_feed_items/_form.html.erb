@@ -1,0 +1,33 @@
+<%
+  @item = CuratedFeedItem.new unless defined? @item
+  if @item.id.nil?
+    url = admin_curated_feed_items_path(@feed)
+    method = :post
+  else
+    url = admin_curated_feed_item_path(@feed, @item)
+    method = :put
+  end
+%>
+
+<%= form_for @item, :url => url, :html => { :method => method } do |f| %>
+  <% if @item.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@item.errors.count, "error") %> prohibited this item from being saved:</h2>
+
+      <ul>
+      <% @item.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <p>
+  <%= f.label :original_url %><br>
+  <%= f.text_field :original_url, :size => 100 %>
+  </p>
+
+  <div class="actions">
+    <%= f.submit 'Add new feed item' %>
+  </div>
+<% end %>

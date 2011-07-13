@@ -72,6 +72,7 @@ Rspec.configure do |config|
     stub_contribution_urls
     stub_amazon_s3_request
     stub_pro_embedly_request
+    stub_gravatar
   end
 
   config.after :each do
@@ -83,12 +84,16 @@ Rspec.configure do |config|
     stub_contribution_urls
     stub_amazon_s3_request
     stub_pro_embedly_request
+    stub_gravatar
   end
+
   config.after :all do
     DatabaseCleaner.clean
   end
 end
+
 ActiveRecord::Observer.disable_observers
+
 def fixture_content(path)
   File.open(File.dirname(__FILE__) + '/../test/fixtures/' + path, 'rb') { |f| f.read }
 end

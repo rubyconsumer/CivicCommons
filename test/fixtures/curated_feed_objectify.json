@@ -1,0 +1,82 @@
+{
+ "embeds": [],
+ "provider_url": "http://blog.cleveland.com/",
+ "description": "Tuesday, hundreds of people are expected to converge on Cleveland City Hall to declare that being a multicultural city is okay with them. The region's two leading public officials--Mayor Frank Jackson and Cuyahoga County Executive Ed FitzGerald--will join them to announce that Greater Cleveland is again willing to welcome the world.",
+ "original_url": "http://blog.cleveland.com/metro/2011/05/global_cleveland_will_launch_w.html",
+ "url": "http://blog.cleveland.com/metro/2011/05/global_cleveland_will_launch_w.html",
+ "images": [
+  {
+   "url": "http://media.cleveland.com//avatars/img_5657t.jpg",
+   "width": 1726,
+   "height": 3066
+  },
+  {
+   "url": "http://media.cleveland.com/metro/photo/9597670-large.jpg",
+   "width": 380,
+   "height": 253
+  },
+  {
+   "url": "http://media.cleveland.com//avatars/____ali_1.jpg",
+   "width": 445,
+   "height": 474
+  },
+  {
+   "url": "http://media.cleveland.com//avatars/9434373-userpic-9546530.png",
+   "width": 186,
+   "height": 200
+  },
+  {
+   "url": "http://media.cleveland.com//avatars/9473584-userpic-8003740.png",
+   "width": 200,
+   "height": 130
+  }
+ ],
+ "safe": true,
+ "provider_display": "blog.cleveland.com",
+ "event": {},
+ "favicon_url": null,
+ "meta": {
+  "medium": "news",
+  "description": "Hundreds are expected to descend on Cleveland City Hall Tuesday night to support the concept of a welcoming, multicultural city.",
+  "title": "Global Cleveland will launch with a multicultural party at City Hall",
+  "image_width": 60,
+  "image_height": 60,
+  "image_src": "http://media.cleveland.com/metro/photo/9597670-thumb_square.jpg",
+  "rss": [
+   {
+    "type": "application/atom+xml",
+    "href": "http://blog.cleveland.com/metro//atom.xml",
+    "tag": "link",
+    "rel": "alternate",
+    "title": "Metro - cleveland.com"
+   }
+  ]
+ },
+ "oembed": {
+  "provider_url": "http://blog.cleveland.com/",
+  "description": "Tuesday, hundreds of people are expected to converge on Cleveland City Hall to declare that being a multicultural city is okay with them. The region's two leading public officials--Mayor Frank Jackson and Cuyahoga County Executive Ed FitzGerald--will join them to announce that Greater Cleveland is again willing to welcome the world.",
+  "title": "Global Cleveland will launch with a multicultural party at City Hall",
+  "url": "http://blog.cleveland.com/metro/2011/05/global_cleveland_will_launch_w.html",
+  "thumbnail_width": 60,
+  "thumbnail_url": "http://media.cleveland.com/metro/photo/9597670-thumb_square.jpg",
+  "provider_name": "Cleveland",
+  "type": "link",
+  "thumbnail_height": 60
+ },
+ "place": {},
+ "entry": {},
+ "open_graph": {
+  "site_name": "The Plain Dealer - cleveland.com",
+  "title": "Global Cleveland will launch with a multicultural party at City Hall",
+  "url": "http://blog.cleveland.com/metro/2011/05/global_cleveland_will_launch_w.html",
+  "image": "http://media.cleveland.com/metro/photo/9597670-thumb_square.jpg",
+  "image_width": 60,
+  "image_height": 60,
+  "type": "article"
+ },
+ "title": "Global Cleveland will launch with a multicultural party at City Hall",
+ "provider_name": "Cleveland",
+ "cache_age": 86277,
+ "type": "html",
+ "payload": {}
+}
