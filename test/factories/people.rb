@@ -18,6 +18,7 @@ Factory.define :people do |f|
     f.sequence(:cached_slug) {|n| "john-doe--#{n}" }
     u.skip_email_marketing true
     u.daily_digest false
+    u.avatar_url '/images/avatar_70.gif'
   end
 
   Factory.define :registered_user, :parent => :normal_person do |u|

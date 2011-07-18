@@ -21,7 +21,7 @@ class Region < ActiveRecord::Base
   end
 
   def people
-    Person.where(where_clause)
+    Person.includes(:authentications).where(where_clause)
   end
 
   def conversations(page = 1)

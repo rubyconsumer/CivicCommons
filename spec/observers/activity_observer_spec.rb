@@ -10,6 +10,10 @@ describe ActivityObserver do
     ActiveRecord::Observer.disable_observers
   end
 
+  before :each do
+    AvatarService.stub(:update_person).and_return(true)
+  end
+
   context "On create" do
 
     it 'creates a new activity record when a conversation is created' do

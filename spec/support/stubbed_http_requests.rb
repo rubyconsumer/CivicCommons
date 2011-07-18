@@ -15,7 +15,7 @@ module StubbedHttpRequests
   end
 
   def stub_gravatar
-    stub_request(:get, /http:\/\/www\.gravatar\.com/).to_return(:body => '', :status => 404)
+    stub_request(:get, /http:\/\/gravatar\.com\/avatar.*/).to_return(:body => '', :status => 404)
   end
 
 end
