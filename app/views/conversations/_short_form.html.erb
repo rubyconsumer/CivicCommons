@@ -1,14 +1,6 @@
 <% content_for :document_ready do %>
-  $('.tab-strip').easytabs({
-  tabActiveClass: 'tab-active',
-  tabActivePanel: 'panel-active',
-  tabs: '> .tab-area > .tab-strip-options > ul > li',
-  defaultTab: '.default-tab',
-  animationSpeed: 250,
-  updateHash: false
-  })
-  .closest('form').bind('submit', function(){
-  $(this).scrubPlaceholderText();
+  $('#new_conversation').submit(function(){
+    $(this).scrubPlaceholderText();
   });
 <% end %>
 
@@ -54,40 +46,13 @@
 
   <p>Get the ball rolling with a comment, question, or maybe a thought-provoking video you’ve already uploaded to YouTube.</p>
   <fieldset class="form-group">
-    <div id="new-convo-contribution" class="tab-strip">
-      <div class="tab-area input-with-options">
-        <div class="tab-strip-options">
-          <ul>
-            <li class="default-tab">
-            <%= link_to "Comment", "#new-comment" %>
-            </li>
-            <li><%= link_to "Suggest Action", "#new-suggested_action" %></li>
-            <li><%= link_to "Question", "#new-question" %></li>
-            <li><%= link_to "Attach", "#new-attached_file" %></li>
-            <li><%= link_to "Link", "#new-link" %></li>
-            <li><%= link_to "Video", "#new-embedded_snippet" %></li>
-          </ul>
-        </div>
-        <div class="panels">
-          <div id="new-comment">
-            <%= render :partial => 'conversations/user_conversation_contribution_fields', :locals => {:conversation => conversation, :type => :comment, :subtype => nil} %>
-          </div>
-          <div id="new-question">
-            <%= render :partial => 'conversations/user_conversation_contribution_fields', :locals => {:conversation => conversation, :type => :question, :subtype => nil} %>
-          </div>
-          <div id="new-attached_file">
-            <%= render :partial => 'conversations/user_conversation_contribution_fields', :locals => {:conversation => conversation, :type => :attached_file, :subtype => nil} %>
-          </div>
-          <div id="new-link">
-            <%= render :partial => 'conversations/user_conversation_contribution_fields', :locals => {:conversation => conversation, :type => :embedly_contribution, :subtype => :link} %>
-          </div>
-          <div id="new-embedded_snippet">
-            <%= render :partial => 'conversations/user_conversation_contribution_fields', :locals => {:conversation => conversation, :type => :embedly_contribution, :subtype => :video } %>
-          </div>
-          <div id="new-suggested_action">
-            <%= render :partial => 'conversations/user_conversation_contribution_fields', :locals => {:conversation => conversation, :type => :suggested_action, :subtype => nil} %>
-          </div>
-        </div>
+    <div id="new-convo-contribution">
+      <div style="border-style: solid; border-width: 1px; border-color: #A9A9A9;">
+        <%= conversation.fields_for :contributions, @contributions do |f| %>
+          <%= f.text_area(:content, :placeholder => "Leave a Comment...", :rows => "10") %>
+          <%= f.text_field(:url, :type => "text", :class => "textbox link", :placeholder => "(Optional) Share a link...") %>
+          <%= f.file_field(:attachment) %>
+        <% end %>
       </div>
     </div>
   </fieldset>

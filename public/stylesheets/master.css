@@ -160,6 +160,13 @@ font-family: Helvetica, Arial, sans-serif;
 font-size: 1em;
 border: 1px solid #ccc;
 padding: 5px;
+width: 600px;
+}
+input.textbox.contrib, textarea.contrib {
+font-family: Helvetica, Arial, sans-serif;
+font-size: 1em;
+border: 1px solid #ccc;
+padding: 5px;
 width: 448px;
 }
 input[type="file"] {border: none;}

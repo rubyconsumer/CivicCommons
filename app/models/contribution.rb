@@ -218,7 +218,11 @@ class Contribution < ActiveRecord::Base
   protected
 
   def self.setup_node_level_contribution(params,person)
-    model = (params.delete(:type) || params.delete('type')).constantize
+    if params.has_key?(:type) or params.has_key?('type')
+      model = (params.delete(:type) || params.delete('type')).constantize
+    else
+      model = Comment
+    end
     # could probably do this much cleaner, but still need to sanitize this for now
     raise(ArgumentError, "not a valid node-level Contribution type") unless ALL_TYPES.include?(model.to_s)
     params.merge!({:person => person})
@@ -251,7 +255,7 @@ class Contribution < ActiveRecord::Base
   end
 
   def set_person_from_item
-    self.person = item.person
+    self.person = item.person unless item.nil?
   end
 
 end
