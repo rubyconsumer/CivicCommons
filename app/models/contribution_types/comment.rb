@@ -1,3 +1,0 @@
-class Comment < Contribution
-  
-end

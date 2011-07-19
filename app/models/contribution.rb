@@ -3,28 +3,77 @@ require 'parent_validator'
 class Contribution < ActiveRecord::Base
   include Visitable
 
+  attr_accessor :top_level
+
   # nested contributions are destroyed via callbacks
   acts_as_nested_set :exclude_unless => {:confirmed => true}, :dependent => :destroy
   acts_as_revisionable
   profanity_filter :content, :method => 'hollow'
   attr_accessor :moderation_reason
 
-  ALL_TYPES = ["Answer","AttachedFile","Comment","EmbeddedSnippet","Link",
-               "Question","SuggestedAction", "EmbedlyContribution"]
-
   belongs_to :person, :foreign_key => "owner"
   belongs_to :conversation
   belongs_to :issue
   has_many   :rating_groups, :dependent => :destroy
 
+  #############################################################################
+  # Validations
+
   validates_with ContributionValidator
   validates :item, :presence=>true
+
+  def self.valid_attributes?(attributes)
+    mock = self.new(attributes)
+    unless mock.valid?
+      return mock.errors.select{|k,v| attributes.keys.collect(&:to_sym).include?(k)}.size == 0
+    end
+    true
+  end
+
+  #############################################################################
+  # Embedly
+
+  validates_format_of :url, :with => URI::regexp(%w(http https)), :allow_blank => true
+
+  validates :embedly_code, presence: true, :if => :url
+  validates :embedly_type, presence: true, :if => :url
+
+  def base_url
+    match = /^(?<base_url>http[s]?:\/\/(\w|[^\?\/:])+(:\d+)?).*$/i.match(url)
+    return match.nil? ? nil : match[:base_url]
+  end
+
+  #############################################################################
+  # Paperclip
+
+  # supported files:
+  # xls, ppt, pdf, doc, txt, xlsx, docx, pptx, rtf, jpg, png
+
+  has_attached_file :attachment,
+    :storage => :s3,
+    :s3_credentials => S3Config.credential_file,
+    :path => IMAGE_ATTACHMENT_PATH,
+    :styles => {:thumb => "75x75>", :medium => "300x300>", :large => "800x800>"}
+
+  before_attachment_post_process :is_image?
+
+  # Return true if attachment is an image
+  # Returns false if it is not an image
+  # Does not return nil since before_attachment_post_process relies requires
+  # true or false
+  def is_image?
+    !(attachment_content_type =~ /^image.*/).nil?
+  end
+
+  #############################################################################
+  # Scopes
 
   scope :most_recent, {:order => 'created_at DESC'}
   scope :not_top_level, where("#{quoted_table_name}.type != 'TopLevelContribution'")
   scope :without_parent, where(:parent_id => nil)
   scope :confirmed, where(:confirmed => true)
   scope :unconfirmed, where(:confirmed => false)
+
   # Scope for contributions that are still editable, i.e. no descendants and less than 30 minutes old
   scope :editable, where(["#{quoted_table_name}.created_at >= DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 30 MINUTE)"])
   scope :for_conversation, lambda { |convo|
@@ -33,6 +82,9 @@ class Contribution < ActiveRecord::Base
       includes([:person]).
       order('contributions.created_at ASC')
   }
+
+  #############################################################################
+  # Confirmation
 
   after_initialize :set_confirmed, :if => :new_record? # sets confirmed to false by default when object created
   before_validation :set_person_from_item, :if => :person_blank?
@@ -48,6 +100,9 @@ class Contribution < ActiveRecord::Base
     return Contribution.unconfirmed.editable.where(attrs).first || Contribution.new(attrs)
   end
 
+  #############################################################################
+  # Creation
+
   def self.update_or_create_node_level_contribution(params,person)
     if contribution = Contribution.unconfirmed.where(:type => params[:type], :parent_id => params[:parent_id], :owner => person.id).first
       contribution.update_attributes(params)
@@ -59,9 +114,7 @@ class Contribution < ActiveRecord::Base
 
   def self.new_node_level_contribution(params, person)
     model, params = setup_node_level_contribution(params,person)
-    #model.new(params)
     contribution = UberContribution.new(params)
-    contribution.type = model.to_s
     return contribution
   end
 
@@ -72,9 +125,7 @@ class Contribution < ActiveRecord::Base
 
   def self.create_node_level_contribution(params, person)
     model, params = setup_node_level_contribution(params,person)
-    #contribution = model.create(params)
     contribution = UberContribution.create(params)
-    contribution.type = model.to_s
     return contribution
   end
 
@@ -89,13 +140,8 @@ class Contribution < ActiveRecord::Base
     return count
   end
 
-  def self.valid_attributes?(attributes)
-    mock = self.new(attributes)
-    unless mock.valid?
-      return mock.errors.select{|k,v| attributes.keys.collect(&:to_sym).include?(k)}.size == 0
-    end
-    true
-  end
+  #############################################################################
+  # Item
 
   def item=(item)
     if item.is_a?(Conversation)
@@ -121,14 +167,13 @@ class Contribution < ActiveRecord::Base
     end
   end
 
-  # Is this contribution an Image? Default to false, override in
-  # subclasses
-  def is_image?
-    false
-  end
+  #############################################################################
+  # Utilities
 
-  def suggestion?
-    false
+  def top_level
+    raise(ArgumentError, 'Top-level contributions cannot have a parent contribution.') unless self.parent.nil?
+    @top_level = true if @top_level.nil?
+    return @top_level
   end
 
   def unconfirmed?
@@ -201,18 +246,6 @@ class Contribution < ActiveRecord::Base
     self.confirmed = true if value
   end
 
-  def contribution_type
-    if self.you_tubeable?
-      :video
-    elsif self.suggestion?
-      :suggestion
-    elsif self.is_image?
-      :image
-    else
-      self.type.underscore
-    end
-  end
-
   def owner_editable?(user)
     if self.owner == user.id && self.created_at > 30.minutes.ago && self.descendants_count == 0 && self.rating_groups.empty?
       true
@@ -221,31 +254,25 @@ class Contribution < ActiveRecord::Base
     end
   end
 
+  #############################################################################
+
   protected
 
   def self.setup_node_level_contribution(params,person)
     if params.has_key?(:type) or params.has_key?('type')
       model = (params.delete(:type) || params.delete('type')).constantize
-    else
-      model = Comment
     end
-    # could probably do this much cleaner, but still need to sanitize this for now
-    raise(ArgumentError, "not a valid node-level Contribution type") unless ALL_TYPES.include?(model.to_s)
     params.merge!({:person => person})
-    return model,params
+    return Contribution,params
   end
 
   def top_level_contribution?
-    self.class == TopLevelContribution
+    self.top_level
   end
 
   def set_confirmed
     self.confirmed = self.override_confirmed || self.top_level_contribution? ? true : 0
     # RAILS BUG - ActiveRecord::RecordNotSaved if set to false, but works for true, 1, and 0
-  end
-
-  def you_tubeable?
-    false
   end
 
   def url_title

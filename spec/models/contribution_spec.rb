@@ -2,6 +2,60 @@ require 'spec_helper'
 
 describe Contribution do
 
+  context "embedly" do
+
+    before(:each) do
+      @person = Factory.build(:registered_user)
+      @contribution = Factory.attributes_for(:embedly_contribution)
+      @contribution[:person] = @person
+    end
+
+    it "requires embedly_type when url given" do
+      @contribution[:embedly_type] = nil
+      UberContribution.new(@contribution).should_not be_valid
+    end
+
+    it "requires embedly_code when url given" do
+      @contribution[:embedly_code] = nil
+      UberContribution.new(@contribution).should_not be_valid
+    end
+
+  end
+
+  context "attached file" do
+
+    it "should return false when content type is not an image" do
+      attached_file = Contribution.
+        new(:attachment_content_type => "application/vnd.ms-excel")
+
+      attached_file.is_image?.should_not be_nil
+      attached_file.is_image? == false
+    end
+
+  end
+
+  context "base_url" do
+
+    let(:contribution) do
+      Factory.build(:embedly_contribution)
+    end
+
+    it "returns blank when url is blank" do
+      contribution.url = nil
+      contribution.base_url.should be_blank
+      contribution.url = ''
+      contribution.base_url.should be_blank
+    end
+
+    it "returns the host valid base url when url is valid" do
+      contribution.url = 'http://localhost:3000/issues/more-about-the-civic-commons'
+      contribution.base_url.should == 'http://localhost:3000'
+      contribution.url = 'http://www.youtube.com/watch?v=QCvYTijYDfE'
+      contribution.base_url.should == 'http://www.youtube.com'
+    end
+
+  end
+
   describe "when destroyed" do
     it "should destroy rating groups associated with it" do
       @contribution = Factory.create(:contribution, {:created_at => Time.now - 25.minutes})
@@ -279,122 +333,114 @@ describe Contribution do
 
   end
 
-  Contribution::ALL_TYPES.each do |contribution_type|
-    describe contribution_type, "when creating for a conversation" do
+  describe "when creating for a conversation" do
 
-      before(:each) do
-        @conversation = Factory.create(:conversation)
-        @person = Factory.create(:normal_person)
-        @top_level_contribution = Factory.create(:top_level_contribution,{:conversation=>@conversation})
-        @contribution = Factory.build(contribution_type.underscore.to_sym, {
-          :person=>@person,
-          :conversation=>@conversation,
-          :parent=>@top_level_contribution
-        } )
+    before(:each) do
+      @conversation = Factory.create(:conversation)
+      @person = Factory.create(:normal_person)
+      @top_level_contribution = Factory.create(:top_level_contribution,{:conversation=>@conversation})
+      @contribution = Factory.build(:contribution, {
+        :person=>@person,
+        :conversation=>@conversation,
+        :parent=>@top_level_contribution
+      } )
+    end
+
+    context "and there is a validation error" do
+
+      it "should return a contribution with an error" do
+        @contribution.content = nil
+        @contribution.url = nil
+        if ["Link","EmbeddedSnippet"].include?(@contribution.type)
+          @contribution.should have_validation_error(:url)
+        else
+          @contribution.should have_validation_error(:content)
+        end
       end
 
-      context "and there is a validation error" do
+    end
 
-        it "should return a contribution with an error" do
-          @contribution.content = nil
-          @contribution.url = nil
-          if ["Link","EmbeddedSnippet"].include?(@contribution.type)
-            @contribution.should have_validation_error(:url)
-          else
-            @contribution.should have_validation_error(:content)
-          end
+    describe "when it is saved for preview" do
+
+      before(:each) do
+        # @contribution.run_callbacks(:save) # this does not work with awesome_nested_set apparently
+        @contribution.save!
+      end
+
+      it "saves with :confirmed set to false" do
+        @contribution.confirmed.should be_false
+      end
+
+      it "should set the passed in user as the owner" do
+        @contribution.person.should == @person
+      end
+
+      it "should set the item to the conversation" do
+        @contribution.item.should == @conversation
+      end
+
+    end
+
+    describe "and using node level contribution methods" do
+
+      before(:each) do
+        @attributes = Factory.attributes_for(:contribution,
+                                             :conversation => @contribution.conversation,
+                                             :parent_id => @contribution.parent_id)
+      end
+
+      context "when using Contribution.new_node_level_contribution" do
+
+        it "sets up a valid contribution but doesn't save it to the db" do
+          contribution = Contribution.new_node_level_contribution(@attributes, @person)
+          contribution.valid?.should be_true
+          contribution.new_record?.should be_true
         end
 
       end
 
-      describe "when it is saved for preview" do
+      context "when using Contribution.create_node_level_contribution" do
+
+        it "sets up and creates a valid contribution saved to the db" do
+          contribution = Contribution.create_node_level_contribution(@attributes, @person)
+          contribution.valid?.should be_true
+          contribution.confirmed.should be_false
+          contribution.new_record?.should be_false
+        end
+
+      end
+
+      context "when using Contribution.create_confirmed_node_level_contribution" do
+
+        it "sets up and creates a valid confirmed contribution saved to the db" do
+          contribution = Contribution.create_confirmed_node_level_contribution(@attributes, @person)
+          contribution.valid?.should be_true
+          contribution.confirmed.should be_true
+          contribution.new_record?.should be_false
+        end
+
+      end
+
+      describe "dealing with preview functionality" do
 
         before(:each) do
-          # @contribution.run_callbacks(:save) # this does not work with awesome_nested_set apparently
           @contribution.save!
         end
 
-        it "saves with :confirmed set to false" do
-          @contribution.confirmed.should be_false
-        end
+        context "when using Contribution.find_or_create_node_level_contribution" do
 
-        it "should set the passed in user as the owner" do
-          @contribution.person.should == @person
-        end
-
-        it "should set the item to the conversation" do
-          @contribution.item.should == @conversation
-        end
-
-      end
-
-      describe "and using node level contribution methods" do
-
-        before(:each) do
-          @attributes = Factory.attributes_for(contribution_type.underscore,
-                                               :conversation => @contribution.conversation,
-                                               :parent_id => @contribution.parent_id)
-                               .merge({:type => contribution_type}
-                        )
-        end
-
-        context "when using Contribution.new_node_level_contribution" do
-
-          it "sets up a valid #{contribution_type} but doesn't save it to the db" do
-            contribution = Contribution.new_node_level_contribution(@attributes, @person)
-            contribution.class.to_s.should == contribution_type.to_s
-            contribution.valid?.should be_true
-            contribution.new_record?.should be_true
+          it "finds and returns unconfirmed contribution for user/parent combination, if it exists, but with new content" do
+            new_comment = "This is a different comment"
+            attributes = @attributes.merge(:content => new_comment)
+            new_contribution = Contribution.update_or_create_node_level_contribution(attributes, @person)
+            new_contribution.id.should == @contribution.id
+            new_contribution.content.should == new_comment
           end
 
-        end
-
-        context "when using Contribution.create_node_level_contribution" do
-
-          it "sets up and creates a valid #{contribution_type} saved to the db" do
-            contribution = Contribution.create_node_level_contribution(@attributes, @person)
-            contribution.class.to_s.should == contribution_type.to_s
-            contribution.valid?.should be_true
-            contribution.confirmed.should be_false
-            contribution.new_record?.should be_false
-          end
-
-        end
-
-        context "when using Contribution.create_confirmed_node_level_contribution" do
-
-          it "sets up and creates a valid confirmed #{contribution_type} saved to the db" do
-            contribution = Contribution.create_confirmed_node_level_contribution(@attributes, @person)
-            contribution.class.to_s.should == contribution_type.to_s
-            contribution.valid?.should be_true
-            contribution.confirmed.should be_true
-            contribution.new_record?.should be_false
-          end
-
-        end
-
-        describe "dealing with preview functionality" do
-
-          before(:each) do
-            @contribution.save!
-          end
-
-          context "when using Contribution.find_or_create_node_level_contribution" do
-
-            it "finds and returns unconfirmed contribution for user/parent combination, if it exists, but with new content" do
-              new_comment = "This is a different comment"
-              attributes = @attributes.merge(:content => new_comment)
-              new_contribution = Contribution.update_or_create_node_level_contribution(attributes, @person)
-              new_contribution.id.should == @contribution.id
-              new_contribution.content.should == new_comment
-            end
-
-            it "creates and returns a new contribution if no unconfirmed contribution exists for user/parent combination" do
-              attributes = @attributes.merge(:parent_id => (@contribution.parent_id + 1))
-              new_contribution = Contribution.update_or_create_node_level_contribution(attributes, @person)
-              new_contribution.id.should_not == @contribution.id
-            end
-
+          it "creates and returns a new contribution if no unconfirmed contribution exists for user/parent combination" do
+            attributes = @attributes.merge(:parent_id => (@contribution.parent_id + 1))
+            new_contribution = Contribution.update_or_create_node_level_contribution(attributes, @person)
+            new_contribution.id.should_not == @contribution.id
           end
 
         end
@@ -408,7 +454,7 @@ describe Contribution do
           @contribution.save!
         end
 
-        it "should add the #{contribution_type} to a conversation" do
+        it "should add the contribution to a conversation" do
           @conversation.contributions.count.should == 2
           @conversation.contributions.should include @contribution
         end
@@ -439,7 +485,7 @@ describe Contribution do
       person = Factory.create(:normal_person)
       contribution = Contribution.
         create_node_level_contribution({:content => "Foo Bar",
-                                        :type => "Comment"},
+                                       :type => "Comment"},
                                        person)
       contribution.errors.count.should == 1
     end
@@ -456,8 +502,8 @@ describe Contribution do
     it "should be valid when creating a Comment" do
       contribution = Contribution.
         create_node_level_contribution({:issue_id => @issue.id,
-                                         :content => "Foo Bar",
-                                         :type => "Comment"},
+                                       :content => "Foo Bar",
+                                       :type => "Comment"},
                                        @person)
       contribution.valid?.should be_true
     end
@@ -466,8 +512,8 @@ describe Contribution do
       pending "Validation has not been written yet..."
       contribution = Contribution.
         create_node_level_contribution({:issue_id => @issue.id,
-                                         :content => "Foo Bar",
-                                         :type => "Comment"}, nil)
+                                       :content => "Foo Bar",
+                                       :type => "Comment"}, nil)
       contribution.valid?.should be_false
     end
 
@@ -562,37 +608,37 @@ describe Contribution do
 
   context "Existing contribution, conversation, and issue" do
 
-     let(:contribution) {Contribution.new(content: "This is a contribution")}
-     let(:conversation) {Factory.create(:conversation, title: "I'm a conversation")}
-     let(:issue)        {Issue.create(name: "I'm an Issue")}
+    let(:contribution) {Contribution.new(content: "This is a contribution")}
+    let(:conversation) {Factory.create(:conversation, title: "I'm a conversation")}
+    let(:issue)        {Issue.create(name: "I'm an Issue")}
 
-     describe "Contribution#item_id" do
+    describe "Contribution#item_id" do
 
-       it "Retuns the id of the issue" do
-         issue.contributions << contribution
-         contribution.item_id.should == issue.id
-       end
+      it "Retuns the id of the issue" do
+        issue.contributions << contribution
+        contribution.item_id.should == issue.id
+      end
 
-       it "Returns the id of the conversation" do
-         conversation.contributions << contribution
-         contribution.item_id.should == conversation.id
-       end
+      it "Returns the id of the conversation" do
+        conversation.contributions << contribution
+        contribution.item_id.should == conversation.id
+      end
 
-     end
+    end
 
-     describe "Contribution#item_class" do
+    describe "Contribution#item_class" do
 
-       it "Returns 'Issue' if the item was contributed to an Issue" do
-         issue.contributions << contribution
-         contribution.item_class.should == issue.class.to_s
-       end
+      it "Returns 'Issue' if the item was contributed to an Issue" do
+        issue.contributions << contribution
+        contribution.item_class.should == issue.class.to_s
+      end
 
-       it "Returns 'Conversation' if the item was contributed to a conversation" do
-         conversation.contributions << contribution
-         contribution.item_class.should == conversation.class.to_s
-       end
+      it "Returns 'Conversation' if the item was contributed to a conversation" do
+        conversation.contributions << contribution
+        contribution.item_class.should == conversation.class.to_s
+      end
 
-     end
+    end
 
   end
 
