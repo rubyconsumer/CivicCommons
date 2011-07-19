@@ -117,7 +117,7 @@ class EmbedlyService
   def self.parse_raw(data)
 
     if not data.is_a?(Hash)
-      data = data.embedly_code if data.is_a?(EmbedlyContribution)
+      data = data.embedly_code if data.is_a?(EmbedlyContribution) or data.is_a?(UberContribution)
       begin
         data = JSON.parse(data)
       rescue JSON::ParserError 

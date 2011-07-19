@@ -7,8 +7,6 @@ class UberContribution < Contribution
   #############################################################################
   # Copied from contribution_types/embedly_contribution.rb
 
-  #validates :url, presence: true
-
   validates_format_of :url, :with => URI::regexp(%w(http https)), :allow_blank => true
 
   validates :embedly_code, presence: true, :if => :url
@@ -30,9 +28,6 @@ class UberContribution < Contribution
     :s3_credentials => S3Config.credential_file,
     :path => IMAGE_ATTACHMENT_PATH,
     :styles => {:thumb => "75x75>", :medium => "300x300>", :large => "800x800>"}
-
-  # http://rdoc.info/github/thoughtbot/paperclip/master/Paperclip/ClassMethods:validates_attachment_presence
-  validates_attachment_presence :attachment#, :unless => ???
 
   before_attachment_post_process :is_image?
 

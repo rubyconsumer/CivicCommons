@@ -59,7 +59,10 @@ class Contribution < ActiveRecord::Base
 
   def self.new_node_level_contribution(params, person)
     model, params = setup_node_level_contribution(params,person)
-    model.new(params)
+    #model.new(params)
+    contribution = UberContribution.new(params)
+    contribution.type = model.to_s
+    return contribution
   end
 
   def self.new_confirmed_node_level_contribution(params, person)
@@ -69,7 +72,10 @@ class Contribution < ActiveRecord::Base
 
   def self.create_node_level_contribution(params, person)
     model, params = setup_node_level_contribution(params,person)
-    contribution = model.create(params)
+    #contribution = model.create(params)
+    contribution = UberContribution.create(params)
+    contribution.type = model.to_s
+    return contribution
   end
 
   def self.create_confirmed_node_level_contribution(params, person)
