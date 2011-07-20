@@ -1851,3 +1851,15 @@ padding: 6px 0;
 
 *:first-child+html #wrapper, *:first-child+html #header, *:first-child+html .feature, *:first-child+html div.tab-strip ul, *:first-child+html div.tab-area, *:first-child+html #nav, #header-wrapper, *:first-child+html .section, *:first-child+html .content-container, *:first-child+html .photobank, *:first-child+html div.three-col, *:first-child+html div.three-col-sm, *:first-child+html .form-block, *:first-child+html .offset-1, *:first-child+html .offset-2, *:first-child+html form, *:first-child+html .convo-utility, *:first-child+html ul.social-media, *:first-child+html div.two-col, *:first-child+html div.two-col-sm, *:first-child+html .conversations, *:first-child+html div.convo-popup, *:first-child+html .pagination p, *:first-child+html #header-utility, *:first-child+html .convo-create, *:first-child+html p.fb-cnct-links, *:first-child+html div.four-col {zoom: 1;}
 *:first-child+html .group {zoom: 1;}
+
+/*fixing flickering artifact when doing voting*/
+.survey-options ::selection, .selected-survey-options ::selection{
+ background-color:transparent;
+ color:#000;
+ -moz-user-select: -moz-none;
+ -khtml-user-select: none;
+ -webkit-user-select: none;
+ -o-user-select: none;
+ user-select: none;
+ }
+ 
