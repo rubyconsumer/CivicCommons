@@ -60,7 +60,15 @@ module Admin
         Conversation.find_by_id(conversation.id).staff_pick.should be_false
       end
 
-      it "redirects to the original controller action if provided"
+      it "redirects to the original controller action if provided" do
+        conversation = Factory.create(:conversation, staff_pick: true)
+        Conversation.stub(:find) { conversation }
+        conversation.stub(:toggle!) { true }
+
+        post :toggle_staff_pick, id: conversation, redirect_to: 'index'
+        response.should redirect_to admin_conversations_path
+      end
+
       it "shows a flash[:error] message if the conversation cannot be saved"
     end
 

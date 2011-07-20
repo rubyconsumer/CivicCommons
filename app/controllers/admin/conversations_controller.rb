@@ -91,9 +91,8 @@ class Admin::ConversationsController < Admin::DashboardController
   #POST admin/conversations/:id/toggle_staff_pick
   def toggle_staff_pick
     @conversation = Conversation.find(params[:id])
-    @conversation.staff_pick = !@conversation.staff_pick
 
-    if @conversation.save
+    if @conversation.toggle!(:staff_pick)
       status = @conversation.staff_pick? ? 'on' : 'off'
       flash[:notice] = "Staff Pick is turned #{status} for \"#{@conversation.title}\""
       @conversation.sort
