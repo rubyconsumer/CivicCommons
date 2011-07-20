@@ -12,12 +12,12 @@ describe Contribution do
 
     it "requires embedly_type when url given" do
       @contribution[:embedly_type] = nil
-      UberContribution.new(@contribution).should_not be_valid
+      Contribution.new(@contribution).should_not be_valid
     end
 
     it "requires embedly_code when url given" do
       @contribution[:embedly_code] = nil
-      UberContribution.new(@contribution).should_not be_valid
+      Contribution.new(@contribution).should_not be_valid
     end
 
   end
@@ -83,7 +83,7 @@ describe Contribution do
   describe "when confirming contributions" do
 
     before(:each) do
-      @contribution = Factory.create(:contribution, {:override_confirmed => false})
+      @contribution = Factory.create(:unconfirmed_contribution)
     end
 
     it "omits unconfirmed contributions (those only previewed but never confirmed) in confirmed scope" do
@@ -110,7 +110,7 @@ describe Contribution do
     before(:each) do
       @person = Factory.create(:registered_user)
       @old_contribution = Factory.create(:contribution, {:created_at => Time.now - 35.minutes, :person => @person})
-      @new_contribution = Factory.create(:contribution, {:created_at => Time.now - 25.minutes, :person => @person})
+      @new_contribution = Factory.create(:contribution, {:created_at => Time.now - 5.minutes, :person => @person})
       @new_params = { 'content' => "Some new comment", 'url' => "http://www.example.com/some-other-link" }
     end
 
@@ -135,13 +135,15 @@ describe Contribution do
       end
 
       it "allows editing by the user within 30 minutes of creation" do
-        @new_contribution.should_receive(:update)
         @new_contribution.update_attributes_by_user(@new_params, @person)
+        @new_contribution.content.should == @new_params['content']
+        @new_contribution.url.should == @new_params['url']
       end
 
       it "disallows editing by the user if older than 30 minutes" do
-        @old_contribution.should_not_receive(:update)
         @old_contribution.update_attributes_by_user(@new_params, @person)
+        @new_contribution.content.should_not == @new_params['content']
+        @new_contribution.url.should_not == @new_params['url']
         @old_contribution.should have_generic_error(:base, /Contributions cannot be edited if they are older than 30 minutes or have any responses./)
       end
 
@@ -176,8 +178,9 @@ describe Contribution do
       end
 
       it "allows editing by an admin at any time" do
-        @old_contribution.should_receive(:update)
         @old_contribution.update_attributes_by_user(@new_params, @admin_person)
+        @old_contribution.content.should == @new_params['content']
+        @old_contribution.url.should == @new_params['url']
       end
 
     end
@@ -223,28 +226,27 @@ describe Contribution do
 
     it "sets the reason for moderation in the content" do
       contribution = Factory.create(:comment)
-      reason = { :comment => @reason }
+      reason = { :contribution => @reason }
       contribution.moderate_content(reason, @person).should be_true
-      contribution.content.should match(reason[:comment][:moderation_reason])
+      contribution.content.should match(reason[:contribution][:moderation_reason])
     end
 
     it "sets the contribution type to Comment" do
       contribution = Factory.create(:question)
-      reason = { :question => @reason }
+      reason = { :contribution => @reason }
       contribution.moderate_content(reason, @person).should be_true
-      contribution.type.should == 'Comment'
     end
 
     it "clears attachments" do
       contribution = Factory.create(:attached_file)
-      reason = { :attached_file => @reason }
+      reason = { :contribution => @reason }
       contribution.moderate_content(reason, @person).should be_true
       contribution.attachment.should_not exist
     end
 
     it "clears embedly_content" do
       contribution = Factory.create(:embedly_contribution)
-      reason = { :embedly_contribution => @reason }
+      reason = { :contribution => @reason }
       contribution.moderate_content(reason, @person).should be_true
       contribution.embedly_code.should be_nil
       contribution.embedly_type.should be_nil
@@ -252,7 +254,7 @@ describe Contribution do
 
     it "clears title and description" do
       contribution = Factory.create(:embedly_contribution)
-      reason = { :embedly_contribution => @reason }
+      reason = { :contribution => @reason }
       contribution.moderate_content(reason, @person).should be_true
       contribution.title.should be_nil
       contribution.description.should be_nil
@@ -264,7 +266,7 @@ describe Contribution do
 
     before(:each) do
       @person = Factory.create(:normal_person)
-      @attached_file = Factory.create(:attached_file, {:person => @person, :override_confirmed => true})
+      @attached_file = Factory.create(:attached_file, {:person => @person})
     end
 
     it "does nothing to the file attachment if left blank" do
@@ -286,7 +288,7 @@ describe Contribution do
 
     before(:each) do
       @person = Factory.create(:normal_person)
-      @link = Factory.create(:link, {:person => @person, :override_confirmed => true})
+      @link = Factory.create(:link, {:person => @person})
     end
 
     it "does nothing to the URL if left blank" do
@@ -306,10 +308,10 @@ describe Contribution do
   describe "when deleting old unconfirmed contributions" do
 
     before(:each) do
-      @old_unconfirmed_contribution = Factory.create(:comment, {:created_at => Time.now - 3.days, :confirmed => false})
-      @new_unconfirmed_contribution = Factory.create(:comment, {:created_at => Time.now, :confirmed => false})
-      @old_confirmed_contribution = Factory.create(:comment, {:created_at => Time.now - 3.days, :override_confirmed => true})
-      @new_confirmed_contribution = Factory.create(:comment, {:created_at => Time.now, :override_confirmed => true})
+      @old_unconfirmed_contribution = Factory.create(:comment, {:created_at => Time.now - 3.days, :override_confirmed => false})
+      @new_unconfirmed_contribution = Factory.create(:comment, {:created_at => Time.now, :override_confirmed => false})
+      @old_confirmed_contribution = Factory.create(:comment, {:created_at => Time.now - 3.days})
+      @new_confirmed_contribution = Factory.create(:comment, {:created_at => Time.now})
       @count = Contribution.delete_old_unconfirmed_contributions
       @remaining_contributions = Contribution.all
     end
@@ -339,10 +341,10 @@ describe Contribution do
       @conversation = Factory.create(:conversation)
       @person = Factory.create(:normal_person)
       @top_level_contribution = Factory.create(:top_level_contribution,{:conversation=>@conversation})
-      @contribution = Factory.build(:contribution, {
-        :person=>@person,
-        :conversation=>@conversation,
-        :parent=>@top_level_contribution
+      @contribution = Factory.build(:unconfirmed_contribution, {
+        :person => @person,
+        :conversation => @conversation,
+        :parent => @top_level_contribution
       } )
     end
 
@@ -350,12 +352,7 @@ describe Contribution do
 
       it "should return a contribution with an error" do
         @contribution.content = nil
-        @contribution.url = nil
-        if ["Link","EmbeddedSnippet"].include?(@contribution.type)
-          @contribution.should have_validation_error(:url)
-        else
-          @contribution.should have_validation_error(:content)
-        end
+        @contribution.should have_validation_error(:content)
       end
 
     end
@@ -384,7 +381,7 @@ describe Contribution do
     describe "and using node level contribution methods" do
 
       before(:each) do
-        @attributes = Factory.attributes_for(:contribution,
+        @attributes = Factory.attributes_for(:unconfirmed_contribution,
                                              :conversation => @contribution.conversation,
                                              :parent_id => @contribution.parent_id)
       end
@@ -509,7 +506,6 @@ describe Contribution do
     end
 
     it "should not be valid without a person" do
-      pending "Validation has not been written yet..."
       contribution = Contribution.
         create_node_level_contribution({:issue_id => @issue.id,
                                        :content => "Foo Bar",

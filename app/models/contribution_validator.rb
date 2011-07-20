@@ -7,11 +7,11 @@ class ContributionValidator < ActiveModel::Validator
   end
 
   def top_level_or_parent_present?(record)
-    record.class!=TopLevelContribution && record.parent.blank?
+    record.top_level_contribution? or record.parent.blank?
   end
 
   def content_not_blank_or_link_or_embedded_snippet?(record)
-    !record.content.blank? || [Link, EmbeddedSnippet, EmbedlyContribution].include?(record.class)
+    ! record.content.blank? || ! record.url.blank?
   end
 
   def parent_contribution_belongs_to_conversation?(record)

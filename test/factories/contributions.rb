@@ -13,6 +13,10 @@ Factory.define :top_level_contribution, :parent => :contribution do |f|
   f.top_level true
 end
 
+Factory.define :unconfirmed_contribution, :parent => :contribution do |f|
+  f.override_confirmed false
+end
+
 Factory.define :contribution_without_parent, :parent => :contribution do |f|
   f.top_level false
   f.parent nil

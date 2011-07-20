@@ -20,7 +20,8 @@ class Contribution < ActiveRecord::Base
   # Validations
 
   validates_with ContributionValidator
-  validates :item, :presence=>true
+  validates :item, :presence => true
+  validates :person, :presence => true
 
   def self.valid_attributes?(attributes)
     mock = self.new(attributes)
@@ -69,13 +70,13 @@ class Contribution < ActiveRecord::Base
   # Scopes
 
   scope :most_recent, {:order => 'created_at DESC'}
-  scope :not_top_level, where("#{quoted_table_name}.type != 'TopLevelContribution'")
+  scope :not_top_level, where("top_level_contribution = 0")
   scope :without_parent, where(:parent_id => nil)
   scope :confirmed, where(:confirmed => true)
   scope :unconfirmed, where(:confirmed => false)
 
   # Scope for contributions that are still editable, i.e. no descendants and less than 30 minutes old
-  scope :editable, where(["#{quoted_table_name}.created_at >= DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 30 MINUTE)"])
+  scope :editable, where(["created_at >= DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 30 MINUTE)"])
   scope :for_conversation, lambda { |convo|
     confirmed.
       where(:conversation_id => convo.id).
@@ -104,7 +105,7 @@ class Contribution < ActiveRecord::Base
   # Creation
 
   def self.update_or_create_node_level_contribution(params,person)
-    if contribution = Contribution.unconfirmed.where(:type => params[:type], :parent_id => params[:parent_id], :owner => person.id).first
+    if contribution = Contribution.unconfirmed.where(:parent_id => params[:parent_id], :owner => person.id).first
       contribution.update_attributes(params)
     else 
       contribution = Contribution.create_node_level_contribution(params,person)
@@ -114,7 +115,7 @@ class Contribution < ActiveRecord::Base
 
   def self.new_node_level_contribution(params, person)
     model, params = setup_node_level_contribution(params,person)
-    contribution = UberContribution.new(params)
+    contribution = Contribution.new(params)
     return contribution
   end
 
@@ -125,7 +126,7 @@ class Contribution < ActiveRecord::Base
 
   def self.create_node_level_contribution(params, person)
     model, params = setup_node_level_contribution(params,person)
-    contribution = UberContribution.create(params)
+    contribution = Contribution.create(params)
     return contribution
   end
 
@@ -170,10 +171,16 @@ class Contribution < ActiveRecord::Base
   #############################################################################
   # Utilities
 
+  def top_level=(value)
+    self.top_level_contribution = (true & value)
+  end
+
   def top_level
-    raise(ArgumentError, 'Top-level contributions cannot have a parent contribution.') unless self.parent.nil?
-    @top_level = true if @top_level.nil?
-    return @top_level
+    self.top_level_contribution
+  end
+
+  def top_level_contribution?
+    self.top_level_contribution
   end
 
   def unconfirmed?
@@ -212,11 +219,9 @@ class Contribution < ActiveRecord::Base
   end
 
   def moderate_content(params, moderated_by)
-   contribution_type = self.type.underscore.to_sym
-   reason = params[contribution_type][:moderation_reason]
+   reason = params[:contribution][:moderation_reason]
    self.content = "<b><i>Contribution removed by #{moderated_by.name} on #{Time.now.strftime('%B %d, %Y')}, for the following reason: #{reason}</i></b>"
    self.clear_attributes
-   self.type = "Comment"
    self.save(validate: false)
   end
 
@@ -242,8 +247,7 @@ class Contribution < ActiveRecord::Base
   end
 
   def override_confirmed=(value)
-    @override_confirmed = value
-    self.confirmed = true if value
+    self.confirmed = @override_confirmed = (true & value)
   end
 
   def owner_editable?(user)
@@ -259,15 +263,8 @@ class Contribution < ActiveRecord::Base
   protected
 
   def self.setup_node_level_contribution(params,person)
-    if params.has_key?(:type) or params.has_key?('type')
-      model = (params.delete(:type) || params.delete('type')).constantize
-    end
     params.merge!({:person => person})
     return Contribution,params
-  end
-
-  def top_level_contribution?
-    self.top_level
   end
 
   def set_confirmed
