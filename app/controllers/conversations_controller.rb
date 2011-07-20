@@ -46,9 +46,9 @@ class ConversationsController < ApplicationController
     # @contributions.each do |c|
     #   c.ratings       #=> {'some-descriptor' => {:total => 5, :person => true}, 'some-other' => 0, 'and-again' => 1}
     # end
-    @top_level_contributions = @contributions.select{ |c| c.is_a?(TopLevelContribution) }
+    @top_level_contributions = @contributions.select{ |c| c.top_level_contribution? }
     # grab all direct contributions to conversation that aren't TLC
-    @conversation_contributions = @contributions.select{ |c| !c.is_a?(TopLevelContribution) && c.parent_id.nil? }
+    @conversation_contributions = @contributions.select{ |c| !c.top_level_contribution? && c.parent_id.nil? }
 
     @top_level_contribution = Contribution.new # for conversation comment form
     @tlc_participants = @top_level_contributions.collect{ |tlc| tlc.owner }

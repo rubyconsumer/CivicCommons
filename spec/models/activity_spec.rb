@@ -218,7 +218,7 @@ describe Activity do
       comment = Factory.create(:comment)
       encoded_comment = Activity.encode(comment)
       decoded_comment = Activity.decode(encoded_comment)
-      decoded_comment.class.should == Comment
+      decoded_comment.class.should == Contribution
       decoded_comment.id.should == comment.id
       decoded_comment.content.should == comment.content
     end

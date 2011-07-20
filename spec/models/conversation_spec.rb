@@ -190,11 +190,12 @@ describe Conversation do
 
       @contributions = {
         "0" => Factory.build(:comment, :owner => @person.id, :conversation => nil, :parent => nil).attributes,
-        "1" => Question.new.attributes,
-        "2" => AttachedFile.new.attributes,
-        "3" => Link.new.attributes,
-        "4" => EmbeddedSnippet.new.attributes,
-        "5" => SuggestedAction.new.attributes
+        "1" => Factory.build(:question, :owner => @person.id, :conversation => nil, :parent => nil).attributes,
+        "2" => Factory.build(:attached_file, :owner => @person.id, :conversation => nil, :parent => nil).attributes,
+        "3" => Factory.build(:link, :owner => @person.id, :conversation => nil, :parent => nil).attributes,
+        "4" => Factory.build(:embedded_snippet, :owner => @person.id, :conversation => nil, :parent => nil).attributes,
+        "5" => Factory.build(:suggested_action, :owner => @person.id, :conversation => nil, :parent => nil).attributes,
+        "6" => Factory.build(:embedly_contribution, :owner => @person.id, :conversation => nil, :parent => nil).attributes,
       }
 
       @conversation = Factory.build(:user_generated_conversation, :owner => @person)

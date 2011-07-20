@@ -7,7 +7,6 @@ class LinksController < ApplicationController
     @contribution = Contribution.new
     @contribution.url = link
     @contribution.title = title
-    @contribution.type = "Link"
     forget_url
   end
 

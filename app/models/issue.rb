@@ -11,10 +11,6 @@ class Issue < ActiveRecord::Base
   has_and_belongs_to_many :conversations
   # Contributions directly related to this Issue
   has_many :contributions
-  has_many :suggested_actions
-  has_many :links
-  has_many(:media_contributions, :class_name => "Contribution",
-           :conditions => {:type => ['EmbeddedSnippet', 'Link', 'AttachedFile']})
 
   has_many :subscriptions, :as => :subscribable, :dependent => :destroy
   
@@ -90,7 +86,7 @@ class Issue < ActiveRecord::Base
   end
 
   def conversation_comments 
-    Comment.joins(:conversation).where({:conversations => {:id => self.conversation_ids}})
+    Contribution.joins(:conversation).where({:conversations => {:id => self.conversation_ids}})
   end
 
   private
