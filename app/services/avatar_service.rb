@@ -7,7 +7,7 @@ class AvatarService
   def self.avatar_image_url(person)
     if !person.authentications.empty?
       self.facebook_image_url(person)
-    elsif person.twitter_username
+    elsif person.twitter_username && !person.twitter_username.blank?
       self.twitter_image_url(person)
     elsif self.gravatar_available?(person)
       self.gravatar_image_url(person)
