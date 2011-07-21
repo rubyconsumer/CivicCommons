@@ -9,3 +9,7 @@ Factory.define :article do |f|
   f.percent "MyString"
   f.current false
 end
+
+Factory.define :youtube_article, :parent => :article do |f|
+  f.video_url "http://www.youtube.com/watch?v=djtNtt8jDW4"
+end

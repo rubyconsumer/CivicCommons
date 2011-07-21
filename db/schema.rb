@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110708201946) do
+ActiveRecord::Schema.define(:version => 20110720172430) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -91,7 +91,6 @@ ActiveRecord::Schema.define(:version => 20110708201946) do
     t.string   "attachment_content_type"
     t.integer  "attachment_file_size"
     t.datetime "attachment_updated_at"
-    t.string   "type",                                          :default => "Contribution"
     t.integer  "total_visits"
     t.integer  "recent_visits"
     t.integer  "total_rating"
@@ -109,6 +108,7 @@ ActiveRecord::Schema.define(:version => 20110708201946) do
     t.boolean  "notify"
     t.text     "embedly_code",            :limit => 2147483647
     t.string   "embedly_type"
+    t.boolean  "top_level_contribution",                        :default => false
   end
 
   create_table "conversations", :force => true do |t|

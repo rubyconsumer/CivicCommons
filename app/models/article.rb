@@ -5,6 +5,10 @@ class Article < ActiveRecord::Base
     self.video_url
   end
 
+  def url=(value)
+    self.video_url = value
+  end
+
   has_attached_file :image,
     :styles => {
        :subfeature => "90x60#",

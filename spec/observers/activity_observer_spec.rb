@@ -37,13 +37,17 @@ describe ActivityObserver do
   context "after saving" do
 
     it 'creates a new activity record when a contribution is confirmed' do
-      contribution = Factory.create(:contribution)
+      conversation = Factory.create(:conversation)
+      contribution = Factory.create(:contribution, :conversation => conversation)
+      contribution = Factory.create(:contribution, :conversation => conversation)
       a = Activity.where(item_type: 'Contribution', item_id: contribution.id).first
       a.item_id.should == contribution.id
       a.item_type.should == 'Contribution'
       a.activity_cache.should_not be_nil
     end
 
+    it 'does not create a contribution activity record when contribution is part of conversation creation'
+    it 'creates a new activity record when a contribution is added to an existing comversation'
     it 'does not create a new activity record for contributions on preview'
     it 'does not create a new activity record on update for contribution'
 

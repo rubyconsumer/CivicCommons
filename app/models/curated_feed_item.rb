@@ -23,6 +23,10 @@ class CuratedFeedItem < ActiveRecord::Base
     return @update_embed_on_save
   end
 
+  def update_embed_on_save=(value)
+    @update_embed_on_save = (true & value)
+  end
+
   def update_embedly
     return true unless self.update_embed_on_save
     embedly = EmbedlyService.new

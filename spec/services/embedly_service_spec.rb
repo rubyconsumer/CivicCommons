@@ -91,17 +91,13 @@ describe EmbedlyService do
       describe "EmbedlyService#fetch_ane_update_attributes(contribution)" do
 
         before(:each) do
-          @contribution = Factory.create(:contribution, type: 'Link', url: 'http://www.youtube.com/watch?v=ukuERsvfDMU')
+          @contribution = Factory.create(:embedly_contribution, url: 'http://www.youtube.com/watch?v=ukuERsvfDMU')
           @embedly = EmbedlyService.new
           @boolean = @embedly.fetch_and_update_attributes(@contribution)
         end
 
         it "returns true if able to connect and retrieve information from embed.ly" do
           @boolean.should be_true
-        end
-
-        it "converts the contribution type to EmbedlyContribution" do
-          @contribution.type.should == 'EmbedlyContribution'
         end
 
         it "sets the contribution.embedly_code attribute to embed.ly json string" do
@@ -222,10 +218,6 @@ describe EmbedlyService do
   describe "HTML helpers" do
 
     context "self.to_embed(embedly)" do
-
-      let(:contrib) do
-        EmbedlyContribution.new
-      end
 
       context "success" do
 

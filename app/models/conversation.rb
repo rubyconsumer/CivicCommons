@@ -8,9 +8,11 @@ class Conversation < ActiveRecord::Base
   has_many :confirmed_contributions, :class_name => 'Contribution',
            :conditions => ['confirmed = ?', true]
 
-  has_many :top_level_contributions
   has_many :subscriptions, :as => :subscribable, :dependent => :destroy
-  accepts_nested_attributes_for :top_level_contributions, :allow_destroy => true
+  
+  def top_level_contributions
+    Contribution.where(:conversation_id => self.id, :top_level_contribution => true)
+  end
 
   # any person that has made a contribution to the convo
   has_many :participants, :through => :confirmed_contributions,
@@ -67,7 +69,7 @@ class Conversation < ActiveRecord::Base
   def self.most_active
     Conversation.select('conversations.*, COUNT(*) AS count_all, MAX(contributions.created_at) AS max_contributions_created_at').
       joins(:contributions).
-      where("contributions.type != 'TopLevelContribution'").
+      where("contributions.top_level_contribution = 0").
       where("contributions.created_at > ?", Time.now - 60.days).
       group('conversations.id').
       order('count_all DESC, max_contributions_created_at DESC')
@@ -108,7 +110,7 @@ class Conversation < ActiveRecord::Base
     self.rejected_contributions = []
     attributes.each_value { |attr|
       attr.merge!(:item => self)
-      if attr[:type]  && attr[:type].constantize == EmbedlyContribution
+      if attr.has_key?(:url) and not attr[:url].blank?
         attr_hash = {contribution: attr}
         embedly = EmbedlyService.new
         embedly.fetch_and_merge_params!(attr_hash)

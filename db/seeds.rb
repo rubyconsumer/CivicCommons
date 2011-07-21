@@ -177,10 +177,11 @@ Issue.all.each_with_index do |issue, index|
   Person.all.sort_by{ rand }.first(index).each_with_index do |person, p_index|
   contributions = (p_index % 5) + 1
     contributions.times do
-      TopLevelContribution.create!(:person => person,
-                                   :issue => issue,
-                                   :content => lorems[rand(lorems.size)],
-                                   :conversation => Conversation.all.sort_by{ rand }.first)
+      Contribution.create!(:person => person,
+                           :issue => issue,
+                           :content => lorems[rand(lorems.size)],
+                           :conversation => Conversation.all.sort_by{ rand }.first,
+                           :top_level_contribution => true)
     end
   end
 end

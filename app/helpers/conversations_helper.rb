@@ -28,40 +28,35 @@ module ConversationsHelper
   end
   
   def contribution_action_past_tense(contribution)
-    embedly_type = contribution.embedly_type if contribution.is_a?(EmbedlyContribution)
-    case contribution.type
-    when "Answer"
-      "answered a question"
-    when "AttachedFile"
-      "shared a file"
-    when "Comment"
-      "commented"
-    when "EmbeddedSnippet"
-      "shared a video"
-    when "Link"
-      "shared a link"
-    when "Question"
-      "asked a question"
-    when "SuggestedAction"
-      "suggested an action"
-    when "EmbedlyContribution"
+    if contribution.attachment_file_name.blank? and contribution.url.blank?
+      action = 'commented'
+    elsif contribution.url.blank?
+      action = 'shared a file'
+    elsif contribution.attachment_file_name.blank?
+      action = 'shared a link'
+    else
+      action = 'shared a file and a link'
+    end
+
+    if not contribution.blank?
       case contribution.embedly_type
       when "image"
-        "shared an image"
+        type = "image"
       when "video"
-        "shared a video"
+        type = "video"
       when "audio"
-        "shared audio"
+        type = "audio"
       when "ppt"
-        "shared a presentation"
+        type = "presentation"
       when "photo"
-        "shared a photo"
+        type = "photo"
       else
-        "shared a link"
+        type = nil
       end
-    else
-      "responded"
+      action.sub!('link', type) unless type.nil?
     end
+
+    return action
   end
   
   def contribution_form_placeholder_text_for(type, subtype = nil)
@@ -98,7 +93,7 @@ module ConversationsHelper
     out = ""
     return out unless contribution_descendants
     contribution_descendants.select{ |c| c.parent_id == this_contribution_id }.sort_by{ |c| c.created_at }.each do |contribution|
-      out += render(:partial => "conversations/contributions/threaded_contribution_template", :locals => { :contribution => contribution })
+      out += render(:partial => "threaded_contribution_template", :locals => { :contribution => contribution })
     end
     raw(out)
   end

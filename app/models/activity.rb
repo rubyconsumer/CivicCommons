@@ -85,7 +85,10 @@ class Activity < ActiveRecord::Base
   def self.valid_type?(item)
     ok = false
     VALID_TYPES.each do |type|
-      if item.is_a?(type) && item.class != TopLevelContribution
+      if (item.is_a? Contribution and not item.top_level_contribution?)
+        ok = true
+        break
+      elsif item.is_a? type and not item.is_a? Contribution
         ok = true
         break
       end

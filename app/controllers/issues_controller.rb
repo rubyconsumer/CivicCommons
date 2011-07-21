@@ -29,8 +29,7 @@ class IssuesController < ApplicationController
       @conversations = all_conversations_on_issue.paginate(:page => params[:page], :per_page => 6)
       @people = @issue.participants
       @conversation_comments = @issue.conversation_comments.most_recent
-      @suggested_actions = @issue.suggested_actions.most_recent
-      @media_contributions = @issue.media_contributions.most_recent
+      @contributions = @issue.contributions.most_recent
 
       @recent_items = Activity.most_recent_activity_for_issue(@issue, 5)
     end

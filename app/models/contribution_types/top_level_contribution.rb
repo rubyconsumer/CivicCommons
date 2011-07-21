@@ -1,3 +1,0 @@
-class TopLevelContribution < Contribution
-
-end

@@ -43,7 +43,7 @@ class DigestService
     time_range = (Time.now.midnight - 1.day)..(Time.now.midnight - 1.second)
 
     # get the list of conversations that were updated yesterday
-    @updated_contributions = Contribution.confirmed.includes(:conversation).order('conversation_id ASC, id ASC').where(created_at: time_range).where('type != \'TopLevelContribution\'')
+    @updated_contributions = Contribution.confirmed.includes(:conversation).order('conversation_id ASC, id ASC').where(created_at: time_range).where(top_level_contribution: false)
   end
 
   def get_updated_conversations
