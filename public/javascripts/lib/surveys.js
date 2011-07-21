@@ -17,9 +17,19 @@ function receivingItem(event,ui){
     var $existing_item = $(this).find('.survey-option[data-option-id!='+current_id+']').first();
     $existing_item.hide();
     $(ui.sender).append($existing_item);
+    $existing_item.siblings('.placeholder').hide();
     $existing_item.show('fast');
     updateOptionID(ui.sender);
   }
+  $(this).find('.placeholder').hide();
+}
+
+
+function showPlaceHolder(event,ui){
+  $(this).find('.placeholder').show();
+}
+function hidePlaceHolder(event,ui){
+  $(ui.item).siblings('.placeholder').hide()
 }
 
 jQuery(function ($) {
@@ -35,9 +45,12 @@ jQuery(function ($) {
 
       $('.selected-survey-options .sortable').sortable({ 
         connectWith: '.survey-options .sortable, .selected-survey-options .sortable',
+        items: 'div.survey-option',
         update: updateSelectedOptionID,
         receive: receivingItem,
-        placeholder: "survey-option-placeholder"
+        placeholder: "survey-option-placeholder",
+        start: showPlaceHolder,
+        stop: hidePlaceHolder
       });
       
     }
