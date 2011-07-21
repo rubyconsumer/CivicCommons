@@ -66,9 +66,6 @@ Civiccommons::Application.routes.draw do
   #Content
   get '/podcast',                                      to: 'radioshow#podcast',                              as: 'podcast'
 
-  #Widget
-  get '/widget',                                       to: 'widget#index'
-
   #Static Pages
   match '/about'             => redirect('/pages/about')
   match '/build_the_commons' => redirect('/pages/build-the-commons')
@@ -130,7 +127,6 @@ Civiccommons::Application.routes.draw do
   resources :contributions, only: [:destroy]
 
   resources :regions, only: [:index, :show]
-  resources :links, only: [:new, :create]
   resources :invites, only: [:new, :create]
   resources :pages, only: [:show]
   resources :blog, only: [:index, :show]

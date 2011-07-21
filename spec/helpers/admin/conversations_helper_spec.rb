@@ -1,15 +1,19 @@
 require 'spec_helper'
 
-# Specs in this file have access to a helper object that includes
-# the Admin::ConversationsHelper. For example:
-#
-# describe Admin::ConversationsHelper do
-#   describe "string concat" do
-#     it "concats two strings with spaces" do
-#       helper.concat_strings("this","that").should == "this that"
-#     end
-#   end
-# end
 describe Admin::ConversationsHelper do
-  pending "add some examples to (or delete) #{__FILE__}"
+
+  describe "toggle_staff_pick_link" do
+
+    it "returns a link with the class of 'on' when conversation is staff picked" do
+      conversation = Factory.create(:conversation, staff_pick: true)
+      helper.toggle_staff_pick_link(conversation).should include('on')
+    end
+
+    it "returns a link with the class of 'off' when the conversation is not a staff pick" do
+      conversation = Factory.create(:conversation, staff_pick: false)
+      helper.toggle_staff_pick_link(conversation).should include('off')
+    end
+
+  end
+
 end
