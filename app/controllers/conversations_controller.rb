@@ -94,7 +94,7 @@ class ConversationsController < ApplicationController
   def preview_node_contribution
 
     errors = []
-    if params[:contribution][:type].constantize == EmbedlyContribution
+    unless params[:contribution][:url].nil?
       embedly = EmbedlyService.new
       embedly.fetch_and_merge_params!(params)
     end
@@ -127,8 +127,8 @@ class ConversationsController < ApplicationController
     respond_to do |format|
       if @contribution.confirm!
         Subscription.create_unless_exists(current_person, @contribution.item)
-        format.js   { render :partial => "conversations/contributions/threaded_contribution_template", :locals => {:contribution => @contribution}, :status => (params[:preview] ? :accepted : :created) }
-        format.html   { render :partial => "conversations/contributions/threaded_contribution_template", :locals => {:contribution => @contribution}, :status => (params[:preview] ? :accepted : :created) }
+        format.js   { render :partial => "threaded_contribution_template", :locals => {:contribution => @contribution}, :status => (params[:preview] ? :accepted : :created) }
+        format.html   { render :partial => "threaded_contribution_template", :locals => {:contribution => @contribution}, :status => (params[:preview] ? :accepted : :created) }
       else
         format.js   { render :json => @contribution.errors, :status => :unprocessable_entity }
         format.html { render :text => @contribution.errors, :status => :unprocessable_entity }

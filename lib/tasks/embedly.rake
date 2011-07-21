@@ -27,7 +27,7 @@ namespace :embedly do
   desc 'Update existing embedly records'
   task :update_embedly => :environment do
     puts "Updating Embedly Contributions"
-    contributions = Contribution.where(type: 'EmbedlyContribution')
+    contributions = Contribution.where('embedly_code IS NOT NULL')
     contributions.each do |c|
       embedly = EmbedlyService.new
       embedly.fetch_and_update_attributes(c)

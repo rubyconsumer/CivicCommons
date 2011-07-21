@@ -19,9 +19,10 @@ class IngestPresenter
 
       dialogs.each do |dialog|
         speaker = Person.find_all_by_name(dialog.speaker).first
-        contribution = TopLevelContribution.create!(:conversation => @conversation,
-                                                    :content => dialog.content,
-                                                    :person => speaker)
+        contribution = Contribution.create!(:conversation => @conversation,
+                                            :content => dialog.content,
+                                            :person => speaker,
+                                            :top_level_contribution => true)
 
         @conversation.contributions << contribution
       end

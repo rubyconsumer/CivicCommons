@@ -57,9 +57,6 @@ class EmbedlyService
 
   def fetch_and_update_attributes(contribution)
     fetch(contribution.url)
-    unless contribution.type == "EmbedlyContribution"
-      contribution.type = "EmbedlyContribution"
-    end
     unless properties.nil?
       if properties[:type] == 'html' and not properties[:oembed].empty?
         contribution.embedly_type = properties[:oembed][:type]
@@ -117,7 +114,7 @@ class EmbedlyService
   def self.parse_raw(data)
 
     if not data.is_a?(Hash)
-      data = data.embedly_code if data.is_a?(EmbedlyContribution) or data.is_a?(UberContribution)
+      data = data.embedly_code if data.is_a?(Contribution)
       begin
         data = JSON.parse(data)
       rescue JSON::ParserError 
