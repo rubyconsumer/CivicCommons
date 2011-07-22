@@ -38,8 +38,7 @@ class IssuesController < ApplicationController
   def create_contribution
     @issue = Issue.find(params[:id])
     contribution_params = params[:contribution].merge(:issue_id => @issue.id)
-    @contribution = Contribution.
-      create_confirmed_node_level_contribution(contribution_params, current_person)
+    @contribution = Contribution.create_node(contribution_params, current_person, true)
     Subscription.create_unless_exists(current_person, @issue)
 
     respond_to do |format|

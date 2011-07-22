@@ -312,7 +312,7 @@ describe Contribution do
       @new_unconfirmed_contribution = Factory.create(:comment, {:created_at => Time.now, :override_confirmed => false})
       @old_confirmed_contribution = Factory.create(:comment, {:created_at => Time.now - 3.days})
       @new_confirmed_contribution = Factory.create(:comment, {:created_at => Time.now})
-      @count = Contribution.delete_old_unconfirmed_contributions
+      @count = Contribution.delete_old_and_unconfirmed
       @remaining_contributions = Contribution.all
     end
 
@@ -386,20 +386,20 @@ describe Contribution do
                                              :parent_id => @contribution.parent_id)
       end
 
-      context "when using Contribution.new_node_level_contribution" do
+      context "when using Contribution.new_node" do
 
         it "sets up a valid contribution but doesn't save it to the db" do
-          contribution = Contribution.new_node_level_contribution(@attributes, @person)
+          contribution = Contribution.new_node(@attributes, @person)
           contribution.valid?.should be_true
           contribution.new_record?.should be_true
         end
 
       end
 
-      context "when using Contribution.create_node_level_contribution" do
+      context "when using Contribution.create_node" do
 
         it "sets up and creates a valid contribution saved to the db" do
-          contribution = Contribution.create_node_level_contribution(@attributes, @person)
+          contribution = Contribution.create_node(@attributes, @person)
           contribution.valid?.should be_true
           contribution.confirmed.should be_false
           contribution.new_record?.should be_false
@@ -410,7 +410,7 @@ describe Contribution do
       context "when using Contribution.create_confirmed_node_level_contribution" do
 
         it "sets up and creates a valid confirmed contribution saved to the db" do
-          contribution = Contribution.create_confirmed_node_level_contribution(@attributes, @person)
+          contribution = Contribution.create_node(@attributes, @person, true)
           contribution.valid?.should be_true
           contribution.confirmed.should be_true
           contribution.new_record?.should be_false
@@ -424,19 +424,19 @@ describe Contribution do
           @contribution.save!
         end
 
-        context "when using Contribution.find_or_create_node_level_contribution" do
+        context "when using Contribution.find_or_create_node" do
 
           it "finds and returns unconfirmed contribution for user/parent combination, if it exists, but with new content" do
             new_comment = "This is a different comment"
             attributes = @attributes.merge(:content => new_comment)
-            new_contribution = Contribution.update_or_create_node_level_contribution(attributes, @person)
+            new_contribution = Contribution.update_or_create_node(attributes, @person)
             new_contribution.id.should == @contribution.id
             new_contribution.content.should == new_comment
           end
 
           it "creates and returns a new contribution if no unconfirmed contribution exists for user/parent combination" do
             attributes = @attributes.merge(:parent_id => (@contribution.parent_id + 1))
-            new_contribution = Contribution.update_or_create_node_level_contribution(attributes, @person)
+            new_contribution = Contribution.update_or_create_node(attributes, @person)
             new_contribution.id.should_not == @contribution.id
           end
 
@@ -480,10 +480,7 @@ describe Contribution do
 
     it "should require an issue or a contributiion" do
       person = Factory.create(:normal_person)
-      contribution = Contribution.
-        create_node_level_contribution({:content => "Foo Bar",
-                                       :type => "Comment"},
-                                       person)
+      contribution = Contribution.create_node({:content => "Foo Bar"}, person)
       contribution.errors.count.should == 1
     end
 
@@ -497,19 +494,12 @@ describe Contribution do
     end
 
     it "should be valid when creating a Comment" do
-      contribution = Contribution.
-        create_node_level_contribution({:issue_id => @issue.id,
-                                       :content => "Foo Bar",
-                                       :type => "Comment"},
-                                       @person)
+      contribution = Contribution.create_node({:issue_id => @issue.id, :content => "Foo Bar"}, @person)
       contribution.valid?.should be_true
     end
 
     it "should not be valid without a person" do
-      contribution = Contribution.
-        create_node_level_contribution({:issue_id => @issue.id,
-                                       :content => "Foo Bar",
-                                       :type => "Comment"}, nil)
+      contribution = Contribution.create_node({:issue_id => @issue.id, :content => "Foo Bar"}, nil)
       contribution.valid?.should be_false
     end
 

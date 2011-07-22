@@ -19,9 +19,14 @@ class Contribution < ActiveRecord::Base
   #############################################################################
   # Validations
 
-  validates_with ContributionValidator
   validates :item, :presence => true
   validates :person, :presence => true
+
+  validate :requires_content_or_link
+
+  def requires_content_or_link
+    self.errors[:content] << "Comment cannot be blank" if self.content.blank? and self.url.blank?
+  end
 
   def self.valid_attributes?(attributes)
     mock = self.new(attributes)
@@ -92,6 +97,46 @@ class Contribution < ActiveRecord::Base
 
   attr_reader :override_confirmed
 
+  #############################################################################
+  # Construction/Destruction
+
+  def self.update_or_create_node(params,person)
+    if contribution = Contribution.unconfirmed.where(:parent_id => params[:parent_id], :owner => person.id).first
+      contribution.update_attributes(params)
+    else 
+      contribution = Contribution.create_node(params,person)
+    end
+    return contribution
+  end
+
+  def self.new_node(params, person, confirmed = false)
+    params.merge!( { :person => person, :override_confirmed => confirmed } )
+    Contribution.new(params)
+  end
+
+  def self.create_node(params, person, confirmed = false)
+    params.merge!( { :person => person, :override_confirmed => confirmed } )
+    Contribution.create(params)
+  end
+
+  def self.delete_old_and_unconfirmed(age = 30.minutes)
+    count = self.unconfirmed.where(["created_at < ?", (Time.now - age)]).count
+    self.unconfirmed.destroy_all(["created_at < ?", (Time.now - age)])
+    return count
+  end
+
+  def destroy_by_user(user)
+    if self.editable_by?(user)
+      self.destroy
+    else
+      self.errors[:base] << "Contributions cannot be deleted if they are older than 30 minutes or have any responses."
+      return false
+    end
+  end
+
+  #############################################################################
+  # Finders
+
   def self.find_or_new_unconfirmed(params,person)
     attrs = {
       :conversation_id => params[:id],
@@ -99,46 +144,6 @@ class Contribution < ActiveRecord::Base
       :owner => person.id
     }
     return Contribution.unconfirmed.editable.where(attrs).first || Contribution.new(attrs)
-  end
-
-  #############################################################################
-  # Creation
-
-  def self.update_or_create_node_level_contribution(params,person)
-    if contribution = Contribution.unconfirmed.where(:parent_id => params[:parent_id], :owner => person.id).first
-      contribution.update_attributes(params)
-    else 
-      contribution = Contribution.create_node_level_contribution(params,person)
-    end
-    return contribution
-  end
-
-  def self.new_node_level_contribution(params, person)
-    model, params = setup_node_level_contribution(params,person)
-    contribution = Contribution.new(params)
-    return contribution
-  end
-
-  def self.new_confirmed_node_level_contribution(params, person)
-    params.merge!(:override_confirmed => true)
-    new_node_level_contribution(params, person)
-  end
-
-  def self.create_node_level_contribution(params, person)
-    model, params = setup_node_level_contribution(params,person)
-    contribution = Contribution.create(params)
-    return contribution
-  end
-
-  def self.create_confirmed_node_level_contribution(params, person)
-    params.merge!(:override_confirmed => true)
-    create_node_level_contribution(params, person)
-  end
-
-  def self.delete_old_unconfirmed_contributions(age=30.minutes)
-    count = self.unconfirmed.where(["created_at < ?", (Time.now - age)]).count
-    self.unconfirmed.destroy_all(["created_at < ?", (Time.now - age)])
-    return count
   end
 
   #############################################################################
@@ -169,7 +174,7 @@ class Contribution < ActiveRecord::Base
   end
 
   #############################################################################
-  # Utilities
+  # Special Attributes
 
   def top_level=(value)
     self.top_level_contribution = (true & value)
@@ -191,14 +196,12 @@ class Contribution < ActiveRecord::Base
     self.update_attribute(:confirmed, true)
   end
 
-  def destroy_by_user(user)
-    if self.editable_by?(user)
-      self.destroy
-    else
-      self.errors[:base] << "Contributions cannot be deleted if they are older than 30 minutes or have any responses."
-      return false
-    end
+  def override_confirmed=(value)
+    self.confirmed = @override_confirmed = (true & value)
   end
+
+  #############################################################################
+  # Edit/Moderate/Delete
 
   def update_attributes_by_user(params, user)
     params = params.select{ |k,v| ['content', 'url', 'attachment'].include?(k.to_s) && !v.blank? }
@@ -246,10 +249,6 @@ class Contribution < ActiveRecord::Base
     end
   end
 
-  def override_confirmed=(value)
-    self.confirmed = @override_confirmed = (true & value)
-  end
-
   def owner_editable?(user)
     if self.owner == user.id && self.created_at > 30.minutes.ago && self.descendants_count == 0 && self.rating_groups.empty?
       true
@@ -261,11 +260,6 @@ class Contribution < ActiveRecord::Base
   #############################################################################
 
   protected
-
-  def self.setup_node_level_contribution(params,person)
-    params.merge!({:person => person})
-    return Contribution,params
-  end
 
   def set_confirmed
     self.confirmed = self.override_confirmed || self.top_level_contribution? ? true : 0

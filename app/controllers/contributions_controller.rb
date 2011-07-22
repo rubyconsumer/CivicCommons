@@ -26,7 +26,7 @@ class ContributionsController < ApplicationController
   end
 
   def create_confirmed_contribution
-    @contribution = Contribution.create_confirmed_node_level_contribution(params[:contribution], current_person)
+    @contribution = Contribution.create_node(params[:contribution], current_person, true)
     redirect_to("#{contribution_parent_page(@contribution)}#contribution#{@contribution.id}",
                     :notice => 'Contribution was successfully created.')
   end

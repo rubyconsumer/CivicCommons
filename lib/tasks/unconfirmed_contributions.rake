@@ -3,6 +3,6 @@
 # ^^ runs this at 2am every Monday morning and outputs to shared/log/cron.log
 
 task :delete_old_unconfirmed_contributions => :environment do
-  count = Contribution.delete_old_unconfirmed_contributions
+  count = Contribution.delete_old_and_unconfirmed
   puts "#{Time.now}: Deleted #{count} unconfirmed contribution(s)."
 end

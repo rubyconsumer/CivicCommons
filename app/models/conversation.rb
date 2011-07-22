@@ -118,7 +118,7 @@ class Conversation < ActiveRecord::Base
       end
       # Rather than set contribution.person over and over, 
       # it will now be set from contribution#set_person_from_item before_validation hook
-      contribution = Contribution.new_confirmed_node_level_contribution(attr, nil)
+      contribution = Contribution.new_node(attr, nil, true)
       if contribution.valid?
         self.contributions << contribution
       else

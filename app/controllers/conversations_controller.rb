@@ -98,7 +98,7 @@ class ConversationsController < ApplicationController
       embedly = EmbedlyService.new
       embedly.fetch_and_merge_params!(params)
     end
-    @contribution = Contribution.update_or_create_node_level_contribution(params[:contribution], current_person)
+    @contribution = Contribution.update_or_create_node(params[:contribution], current_person)
 
     if @contribution.invalid?
       errors = @contribution.errors.full_messages
