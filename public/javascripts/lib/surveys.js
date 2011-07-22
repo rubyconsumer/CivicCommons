@@ -26,10 +26,19 @@ function receivingItem(event,ui){
 
 
 function showPlaceHolder(event,ui){
-  $(this).find('.placeholder').show();
+  $(this).find('.placeholder').addClass('over').show();
 }
 function hidePlaceHolder(event,ui){
-  $(ui.item).siblings('.placeholder').hide()
+  $(ui.item).siblings('.placeholder').hide();
+}
+
+function addActivePlaceholder(event,ui){
+   $('.selected-survey-options .placeholder').removeClass('over');
+  $('.selected-survey-options .survey-option-locator').siblings('.placeholder').addClass('over');
+}
+
+function removeActivePlaceholder(event,ui){
+  $('.selected-survey-options .placeholder').removeClass('over');
 }
 
 jQuery(function ($) {
@@ -40,15 +49,18 @@ jQuery(function ($) {
       $('.survey-options .sortable').sortable({ 
         connectWith: '.selected-survey-options .sortable',
         cursor: 'crosshair',
-        placeholder: "survey-option-placeholder"
+        placeholder: "survey-option-locator",
+        over: removeActivePlaceholder
       });
 
       $('.selected-survey-options .sortable').sortable({ 
         connectWith: '.survey-options .sortable, .selected-survey-options .sortable',
         items: 'div.survey-option',
+        over: addActivePlaceholder,
+        out: removeActivePlaceholder,
         update: updateSelectedOptionID,
         receive: receivingItem,
-        placeholder: "survey-option-placeholder",
+        placeholder: "survey-option-locator",
         start: showPlaceHolder,
         stop: hidePlaceHolder
       });

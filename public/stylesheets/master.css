@@ -422,7 +422,7 @@ div.three-col-sm div.photobank img {margin: 0 0 6px 6px;}
   padding: 10px;
   cursor: move;
 }
-.survey-option-placeholder{
+.survey-option-locator{
   border: 0px;
   height: 0px; 
 }
@@ -430,7 +430,10 @@ div.three-col-sm div.photobank img {margin: 0 0 6px 6px;}
 .survey-options .sortable{
   min-height: 15em;
 }
- 
+.survey-options .sortable.over{
+ background-color:#FFFFFF;
+}
+
 .selected-survey-options{
   float:right; 
   width: 49%;  
@@ -468,6 +471,11 @@ div.three-col-sm div.photobank img {margin: 0 0 6px 6px;}
   height:100%;
   color: #A2A2A2;
   font-size: 1.4em;
+}
+
+.selected-survey-options .sortable .placeholder.over{
+  color: #2D2D2D;
+  border-color:#2D2D2D;
 }
 .selected-survey-options .survey-option{
   margin: 0px;
