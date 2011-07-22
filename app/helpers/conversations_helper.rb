@@ -30,9 +30,9 @@ module ConversationsHelper
   def contribution_action_past_tense(contribution)
     if contribution.comment_only?
       action = 'commented'
-    elsif contribution.url.blank?
+    elsif contribution.has_attachment?
       action = 'shared a file'
-    elsif contribution.attachment_file_name.blank?
+    elsif contribution.has_media?
       action = 'shared a link'
     else
       action = 'shared a file and a link'

@@ -1,3 +1,3 @@
-<% unless contribution.url.blank? and contribution.attachment_file_name.blank? %>
+<% if contribution.has_media? or contribution.has_attachment? %>
   <%= render :partial => 'issues/contributions/media_contribution', :locals => {:contribution => contribution} %>
 <% end %>

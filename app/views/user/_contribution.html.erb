@@ -3,7 +3,7 @@
   <% unless contribution.title.nil? %>
     <%= link_to contribution.title, contribution.url %>
   <% end %>
-  <% if contribution.is_a?(AttachedFile) %>
+  <% if contribution.has_attachment? %>
     <% if contribution.is_image? %>
       <%= image_tag contribution.attachment.url %>
     <% else %>

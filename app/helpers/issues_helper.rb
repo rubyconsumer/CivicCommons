@@ -2,7 +2,7 @@ module IssuesHelper
   def media_style(contribution)
     if contribution.is_image? #or contribution.embedly_type == "image"
       "image"
-    elsif not contribution.attachment_file_name.blank?
+    elsif contribution.has_attachment?
       "document"
     elsif contribution.embedly_type == "video"
       "video"
@@ -14,7 +14,7 @@ module IssuesHelper
   end
 
   def media_link_info(contribution)
-    if not contribution.attachment_file_name.blank?
+    if contribution.has_attachment?
       link_to(contribution.attachment_file_name, contribution.attachment.url)
     else 
       link_to(contribution.title, contribution.url)
