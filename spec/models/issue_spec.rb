@@ -110,46 +110,51 @@ describe Issue do
   context "Top Issues" do
 
     it "should be determined by total # of contributions to an Issue + total # of page visits." do
-      pending
-      given_2_issues_with_contributions_and_visits
-      Issue.top_issues.should == [@issue2,@issue1]
+      first_issue = Factory.create(:issue, name: "Issue 1")
+      second_issue = Factory.create(:issue, name: "Issue 2")
+      first_issue.stub_chain(:visits, :count) { 5 }
+      second_issue.stub_chain(:visits, :count) { 3 }
+      first_issue.stub_chain(:contributions, :count) { 7 }
+      second_issue.stub_chain(:contributions, :count) { 5 }
+
+      Issue.top_issues.should == [first_issue, second_issue]
     end
 
   end
 
   context "counters" do
-    
+
     it "should have the correct count of contributions" do
       given_an_issue_with_contributions_and_conversations_and_page_visits
       @issue.contributions.count.should == 1
     end
-    
+
     it "should have the correct count of conversations" do
       given_an_issue_with_contributions_and_conversations_and_page_visits
       @issue.conversations.count.should == 1
     end
-    
+
     it "should have visit counts" do
       given_an_issue_with_contributions_and_conversations_and_page_visits
       @issue.visits.count.should == 1
     end
-  
+
   end
-  
+
   context "with participants" do
-    
+
     it "should have the correct participants" do
       given_an_issue_with_contributions_and_participants
       @issue.participants.should == [@person1,@person2]
     end
-    
+
     it "should have the correct number of participants" do
       given_an_issue_with_contributions_and_participants
       @issue.participants.count.should == 2
     end
-  
+
   end
-  
+
   context "Sort filter" do
     it "should sort by position ascending, id ascending by default" do
       @issue1 = Factory.create(:issue, :position => 2)
@@ -162,42 +167,38 @@ describe Issue do
       given_3_issues
       Issue.sort('alphabetical').collect(&:id).should == [@issue1, @issue2, @issue3].collect(&:id)
     end
-    
+
     it "should sort issue by date created" do
       given_3_issues
       Issue.sort('most_recent').collect(&:id).should == [@issue3, @issue2, @issue1].collect(&:id)
     end
-    
+
     it "should sort issue by recently updated" do
       given_3_issues
       @issue1.touch
       Issue.sort('most_recent_update').first.should == @issue1
     end
-    
+
     it "should sort by most active(# of participants and # of contributions)" do
       given_3_issues
       issues = Issue.most_active
       issues.collect(&:id).should == [@issue2.id,@issue1.id,@issue3.id]
     end
-    
-    it "should sort issue by region" do
-      pending
-    end
-  
+
   end
-  
+
   context "comments on issues" do
-    
+
     it "should display the correct comments(contribution) that are attached to conversations arround that issues" do
       given_an_issue_with_conversations_and_comments
       @issue.conversation_comments.should == [@comment]
     end
-    
+
     it "should not display other things on comments" do
       given_an_issue_with_conversations_and_comments
       @other_issue.conversation_comments.should == []
     end
-  
+
   end
 
   context "self.assign_positions" do
