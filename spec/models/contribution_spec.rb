@@ -602,26 +602,12 @@ describe Contribution do
 
       it "Retuns the id of the issue" do
         issue.contributions << contribution
-        contribution.item_id.should == issue.id
+        contribution.item.id.should == issue.id
       end
 
       it "Returns the id of the conversation" do
         conversation.contributions << contribution
-        contribution.item_id.should == conversation.id
-      end
-
-    end
-
-    describe "Contribution#item_class" do
-
-      it "Returns 'Issue' if the item was contributed to an Issue" do
-        issue.contributions << contribution
-        contribution.item_class.should == issue.class.to_s
-      end
-
-      it "Returns 'Conversation' if the item was contributed to a conversation" do
-        conversation.contributions << contribution
-        contribution.item_class.should == conversation.class.to_s
+        contribution.item.id.should == conversation.id
       end
 
     end

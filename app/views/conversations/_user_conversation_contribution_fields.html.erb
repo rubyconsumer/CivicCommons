@@ -1,5 +1,4 @@
 <%= conversation.fields_for :contributions, @contributions.first do |f| %>
-  <%= f.hidden_field(:type, :value => type.to_s.camelcase) %>
   <% if type == :attached_file %>
       Upload a file:
       <%= f.file_field(:attachment) %>

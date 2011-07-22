@@ -20,9 +20,20 @@ class Contribution < ActiveRecord::Base
   # Validations
 
   validates :item, :presence => true
-  validates :person, :presence => true
+
+  # In a perfect world a contribution would require an owner. Unfortunately,
+  # there is some complexity to the way we create the first contribution when
+  # creating a new community-generated conversation. This prevents proper
+  # validation of the owner during contribution creation.
+  # -Jerry
+  #validates :person, :presence => true
+  validate :requires_an_owner
 
   validate :requires_content_or_link
+
+  def requires_an_owner
+    self.errors[:person] << "Must have an owner" if self.person.nil? and self.item.is_a?(Issue)
+  end
 
   def requires_content_or_link
     self.errors[:content] << "Comment cannot be blank" if self.content.blank? and self.url.blank?
@@ -158,6 +169,8 @@ class Contribution < ActiveRecord::Base
   # Item
 
   def item=(item)
+    conversation = nil
+    issue = nil
     if item.is_a?(Conversation)
       self.conversation = item
     elsif item.is_a?(Issue)
@@ -167,18 +180,6 @@ class Contribution < ActiveRecord::Base
 
   def item
     self.conversation || self.issue
-  end
-
-  def item_id
-    self.conversation_id || self.issue_id
-  end
-
-  def item_class
-    if conversation
-      conversation.class.to_s
-    elsif issue
-      issue.class.to_s
-    end
   end
 
   #############################################################################
