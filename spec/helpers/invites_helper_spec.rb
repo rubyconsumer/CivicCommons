@@ -1,15 +1,18 @@
 require 'spec_helper'
 
-# Specs in this file have access to a helper object that includes
-# the InvitesHelper. For example:
-#
-# describe InvitesHelper do
-#   describe "string concat" do
-#     it "concats two strings with spaces" do
-#       helper.concat_strings("this","that").should == "this that"
-#     end
-#   end
-# end
 describe InvitesHelper do
-  pending "add some examples to (or delete) #{__FILE__}"
+
+  context "from_conversation_create_page?" do
+
+    it "returns value in the params[:conversation_created]" do
+      helper.params[:conversation_created] = true
+      helper.from_conversation_create_page?.should be_true
+    end
+
+    it "returns nil if the params does not have the :conversation_created key" do
+      helper.from_conversation_create_page?.should be_nil
+    end
+
+  end
+
 end
