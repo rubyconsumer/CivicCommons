@@ -1,30 +1,28 @@
 module IssuesHelper
   def media_style(contribution)
-    if contribution.is_image?
+    if contribution.is_image? #or contribution.embedly_type == "image"
       "image"
-    elsif contribution.is_a?(AttachedFile)
+    elsif not contribution.attachment_file_name.blank?
       "document"
-    elsif contribution.is_a?(Link)
+    elsif contribution.embedly_type == "video"
+      "video"
+    elsif not contribution.url.blank?
       "link"
     else
-      "video"
+      "comment"
     end
   end
 
   def media_link_info(contribution)
-    if contribution.is_image?
+    if not contribution.attachment_file_name.blank?
       link_to(contribution.attachment_file_name, contribution.attachment.url)
-    elsif contribution.is_a?(AttachedFile)
-      link_to(contribution.attachment_file_name, contribution.attachment.url)
-    elsif contribution.is_a?(Link)
-      link_to(contribution.title, contribution.url)
     else 
       link_to(contribution.title, contribution.url)
     end
   end
 
   def source_url(issue)
-    if issue.url.match(/^http:/)
+    if issue.url.match(/^https?:/)
       issue.url
     else
       "http://" + issue.url

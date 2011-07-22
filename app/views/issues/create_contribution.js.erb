@@ -1,6 +1,6 @@
 <%= remotipart_response do %>
   <% unless @contribution.new_record? %>
-    <% if @contribution.is_a?(SuggestedAction) %>
+    <% if @contribution.comment_only? %>
         var $container = $('#suggested-action-form-container'),
             $target = $('#suggested-actions');
     <% else %>
@@ -18,7 +18,7 @@
     $forms.find('.errors').empty();
     $forms.find('[placeholder]').placeholder({className: 'placeholder'});
 
-    <% unless @contribution.is_a?(SuggestedAction) %>
+    <% unless @contribution.comment_only? %>
       $forms.hide();
       $('p#resource-contributions').show('slow');
       $('#contribution-<%= @contribution.id %>').scrollTo();

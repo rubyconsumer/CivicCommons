@@ -39,7 +39,7 @@
       </div>
     </div><!-- /.main-content -->
     <div id='media-contributions' class='aside supplementary'>
-      <%= render :partial => "issues/contributions/media_contribution", :collection => @media_contributions, :as => :contribution %>
+      <%= render :partial => "issues/contributions/contribution_template", :collection => @contributions, :as => :contribution %>
       <div id="media-contribution-form-container">
         <p id="resource-contributions"><a href="#" class="file-link button">File</a><a class="file-link button" href="#">Image</a><a class="video-link button" href="#">Video</a><a class="url-link button" href="#">Link</a></p>
         <%= render :partial => "new_file_contribution" %>
@@ -55,18 +55,6 @@
               <%= featured_profile(person).html_safe %>
             <% end %>
           </div>
-        </div>
-      </div>
-
-      <div class="mod">
-        <h3>Suggest Action</h3>
-        <div class="mod-content">
-          <div id='suggested-action-form-container'>
-            <%= render :partial => "new_suggested_action_contribution" %>
-          </div>
-          <ol id='suggested-actions' class='conversations divided'>
-            <%= render :partial => 'issues/contributions/suggested_action', :collection => @suggested_actions, :as => :contribution %>
-          </ol>
         </div>
       </div>
 

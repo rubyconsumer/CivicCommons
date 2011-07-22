@@ -1,1 +1,3 @@
-<%= render :partial => ( contribution.is_a?(SuggestedAction) ? 'issues/contributions/suggested_action' : 'issues/contributions/media_contribution' ), :locals => {:contribution => contribution} %>
+<% unless contribution.url.blank? and contribution.attachment_file_name.blank? %>
+  <%= render :partial => 'issues/contributions/media_contribution', :locals => {:contribution => contribution} %>
+<% end %>

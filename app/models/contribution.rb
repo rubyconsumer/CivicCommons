@@ -176,6 +176,11 @@ class Contribution < ActiveRecord::Base
   #############################################################################
   # Special Attributes
 
+  def comment_only?
+    self.url.blank? and self.attachment_file_name.blank?
+  end
+
+  # The redundancy here is legacy, refactor when you have time - Jerry
   def top_level=(value)
     self.top_level_contribution = (true & value)
   end

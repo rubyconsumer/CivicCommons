@@ -30,15 +30,18 @@ class IssuesController < ApplicationController
       @people = @issue.participants
       @conversation_comments = @issue.conversation_comments.most_recent
       @contributions = @issue.contributions.most_recent
-
       @recent_items = Activity.most_recent_activity_for_issue(@issue, 5)
     end
   end
 
   def create_contribution
     @issue = Issue.find(params[:id])
-    contribution_params = params[:contribution].merge(:issue_id => @issue.id)
-    @contribution = Contribution.create_node(contribution_params, current_person, true)
+    params[:contribution].merge!(:issue_id => @issue.id)
+    unless params[:contribution][:url].nil?
+      embedly = EmbedlyService.new
+      embedly.fetch_and_merge_params!(params)
+    end
+    @contribution = Contribution.create_node(params[:contribution], current_person, true)
     Subscription.create_unless_exists(current_person, @issue)
 
     respond_to do |format|
