@@ -1,9 +1,11 @@
 namespace :embedly do
 
+  # DEPRECATED
   desc 'Update existing records that have links to embedly'
   task :update_links => :environment do
     puts "Updating Links..."
-    contributions = Contribution.where(type: 'Link')
+    #contributions = Contribution.where(type: 'Link')
+    contributions = Contribution.where('url IS NOT NULL').where(embedly_code: nil)
     contributions.each do |c|
       embedly = EmbedlyService.new
       embedly.fetch_and_update_attributes(c)
@@ -12,10 +14,12 @@ namespace :embedly do
     puts "Finished updating Links"
   end
 
+  # DEPRECATED
   desc 'Update existing records that have embeded snippets to embedly'
   task :update_embeded_snippets  => :environment do
     puts "Updating Embedded Snippets..."
-    contributions = Contribution.where(type: 'EmbeddedSnippet')
+    #contributions = Contribution.where(type: 'EmbeddedSnippet')
+    contributions = Contribution.where('url IS NOT NULL').where(embedly_code: nil)
     contributions.each do |c|
       embedly = EmbedlyService.new
       embedly.fetch_and_update_attributes(c)
