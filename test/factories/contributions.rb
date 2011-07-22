@@ -68,13 +68,22 @@ Factory.define :answer, :parent => :contribution do |f|
   f.content "Answer Contribution"
 end
 
+Factory.define :attached_image, :parent => :contribution do |f|
+  f.datetime "2010-06-30 12:39:43"
+  f.association :person, :factory => :normal_person
+  f.association :parent, :factory => :top_level_contribution
+  f.conversation { |c| c.parent.conversation }
+  f.content "Attached Image Contribution"
+  f.attachment File.new(Rails.root + 'test/fixtures/images/test_image.jpg')
+end
+
 Factory.define :attached_file, :parent => :contribution do |f|
   f.datetime "2010-06-30 12:39:43"
   f.association :person, :factory => :normal_person
   f.association :parent, :factory => :top_level_contribution
   f.conversation { |c| c.parent.conversation }
   f.content "Attached File Contribution"
-  f.attachment File.new(Rails.root + 'test/fixtures/images/test_image.jpg')
+  f.attachment File.new(Rails.root + 'test/fixtures/test_pdf.pdf')
 end
 
 Factory.define :link, :parent => :contribution do |f|
@@ -83,8 +92,8 @@ Factory.define :link, :parent => :contribution do |f|
   f.association :parent, :factory => :top_level_contribution
   f.conversation { |c| c.parent.conversation }
   f.content "Link Contribution"
-  f.url "http://www.example.com/this-page-exists"
-  f.embedly_type "video"
+  f.url "http://maps.google.com/maps?f=q&source=s_q&hl=en&q=1360+East+Ninth+Street%2C+Suite+210%2C+Cleveland%2C+OH+44114&sll=41.510184%2C-81.690967&sspn=0.008243%2C0.019205&ie=UTF8&hnear=1360+E+9th+St+%23210%2C+Cleveland%2C+Cuyahoga%2C+Ohio+44114&ll=41.503451%2C-81.690087&spn=0.008244%2C0.019205&t=h&z=1"
+  f.embedly_type "rich"
   f.embedly_code "valid embedly code"
 end
 

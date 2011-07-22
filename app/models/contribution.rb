@@ -49,6 +49,10 @@ class Contribution < ActiveRecord::Base
     return match.nil? ? nil : match[:base_url]
   end
 
+  def has_media?
+    not self.embedly_code.blank?
+  end
+
   #############################################################################
   # Paperclip
 
@@ -69,6 +73,10 @@ class Contribution < ActiveRecord::Base
   # true or false
   def is_image?
     !(attachment_content_type =~ /^image.*/).nil?
+  end
+
+  def has_attachment?
+    not self.attachment_file_name.blank?
   end
 
   #############################################################################

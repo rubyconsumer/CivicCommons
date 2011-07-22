@@ -5,7 +5,7 @@ describe UserHelper do
   context "classes" do
 
     it "returns \"image dnld\" when contribution is an image" do
-      contribution = Factory.create(:attached_file)
+      contribution = Factory.create(:attached_image)
       helper.classes(contribution).should == "image dnld"
     end
 
@@ -16,11 +16,11 @@ describe UserHelper do
 
     it "returns \"suggestion dnld\" when contribution is a suggestion" do
       contribution = Factory.create(:suggested_action)
-      helper.classes(contribution).should == "suggestion dnld"
+      helper.classes(contribution).should == ""
     end
 
     it "returns \"document dnld\" when the contribution is an attached file" do
-      contribution = Factory.create(:attached_file, attachment: File.new(Rails.root + 'test/fixtures/test_pdf.pdf'))
+      contribution = Factory.create(:attached_file)
       helper.classes(contribution).should == "document dnld"
     end
 

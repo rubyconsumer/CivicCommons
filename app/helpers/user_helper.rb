@@ -1,16 +1,19 @@
 module UserHelper
 
   def classes(contribution)
-    return case contribution.contribution_type
-      when :image, :video, :suggestion
-        "#{contribution.contribution_type.to_s} dnld"
-      when 'attached_file'
-        "document dnld"
-      when 'link'
-        "#{contribution.contribution_type} dnld"
-      else
-        ''
+    cls = ''
+
+    if contribution.is_image? or contribution.embedly_type == 'image'
+      cls = 'image dnld'
+    elsif contribution.embedly_type == 'video'
+      cls = 'video dnld'
+    elsif contribution.has_attachment?
+      cls = 'document dnld'
+    elsif contribution.has_media?
+      cls = 'link dnld'
     end
+
+    return cls
   end
 
 end
