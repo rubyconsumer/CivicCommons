@@ -28,8 +28,6 @@ gem 'hoptoad_notifier'
 
 gem 'remotipart'
 
-gem 'whenever', :require => false
-
 gem 'shoulda'
 gem 'paperclip', "2.3.8"
 gem 'delayed_paperclip'
