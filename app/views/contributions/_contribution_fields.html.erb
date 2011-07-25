@@ -1,0 +1,11 @@
+<fieldset class="form-group">
+  <div id="new-convo-contribution">
+    <div style="border-style: solid; border-width: 1px; border-color: #A9A9A9;">
+      <%= form.fields_for :contributions, contributions do |f| %>
+        <%= f.text_area(:content, :placeholder => "Leave a Comment...", :rows => "10") %>
+        <%= f.text_field(:url, :type => "text", :class => "textbox link", :placeholder => "(Optional) Share a link...") %>
+        <%= f.file_field(:attachment) %>
+      <% end %>
+    </div>
+  </div>
+</fieldset>

@@ -52,8 +52,8 @@ class Contribution < ActiveRecord::Base
 
   validates_format_of :url, :with => URI::regexp(%w(http https)), :allow_blank => true
 
-  validates :embedly_code, presence: true, :if => :url
-  validates :embedly_type, presence: true, :if => :url
+  validates_presence_of :embedly_code, :unless => 'url.blank?'
+  validates_presence_of :embedly_type, :unless => 'url.blank?'
 
   def base_url
     match = /^(?<base_url>http[s]?:\/\/(\w|[^\?\/:])+(:\d+)?).*$/i.match(url)

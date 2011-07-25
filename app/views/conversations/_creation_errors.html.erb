@@ -1,0 +1,14 @@
+<% if conversation.errors.any? %>
+  <div id="error_explanation">
+    <h2>
+      It looks like we’re still missing some important information:
+    </h2>
+    <ul>
+      <% conversation.errors.each do |attr,msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+<% conversation.errors.clear %>
+<% contributions.each { |c| c.errors.clear } %>
