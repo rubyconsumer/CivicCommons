@@ -24,6 +24,10 @@ describe ContributionsController do
     end
 
     it "recognizes and generates #update" do
+      { put: "/conversations/1/contributions/1" }.should route_to(controller: "contributions", action: "update", conversation_id: "1")
+    end
+
+    it "recognizes and generates #update" do
       { put: "/conversations/1/contributions/1" }.should route_to(controller: "contributions", action: "update", conversation_id: "1", id: "1")
     end
 

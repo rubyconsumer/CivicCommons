@@ -123,8 +123,6 @@ class Conversation < ActiveRecord::Base
       if contribution.valid?
         self.contributions << contribution
       else
-puts "---------------------------------"
-pp contribution.errors
         self.rejected_contributions << contribution
       end
     }

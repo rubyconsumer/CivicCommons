@@ -1,0 +1,97 @@
+<% content_for :header do %>
+
+  <style type="text/css">
+    .visible
+    {
+      position:absolute;
+      right:0px;
+      top:auto;
+      /*  width:1px; */
+      /*  height:1px; */
+    }
+
+    .hidden 
+    {
+      position:absolute;
+      left:-10000px;
+      top:auto;
+      /*  width:1px; */
+      /*  height:1px; */
+      overflow:hidden;
+    }
+  </style>
+
+  <script type='text/javascript'> 
+    //<![CDATA[
+
+    function clear_form() {
+      $(':input','#contribution_new')
+        .not(':button, :submit, :reset, :hidden')
+        .val('')
+        .removeAttr('checked')
+        .removeAttr('selected');
+    }
+
+    function toggle(container, contribution_id) {
+      if ($('#contrib').hasClass('hidden')) {
+        // add contribution parent hidden field
+        $('#contrib').removeClass('hidden');
+        if (null != container) container.append($('#contrib'));
+        $('#contribution_content').focus()
+      } else {
+        // remove contribution parent hidden field
+        $('#contribution_tool_container').append($('#contrib'))
+        $('#contrib').addClass('hidden');
+      }
+    }
+
+    function show_contrib_with_parent(parnet_id) {
+      // needs more work
+      var $hiddenInput = $('<input/>',{type:'hidden',id:'contribution_id',value:contribution_id});
+      if ( ! $('#contrib').hasClass('hidden')) $('#contrib').addClass('hidden');
+      $hiddenInput.appendTo($(':input','#contribution_new'));
+    }
+
+    $(document).ready(function(){
+
+      $('.toggle').click(function() {
+        var contribution_id = $(this).attr('id');
+        contribution_id = contribution_id.match(/respond-to-(\d+)/);
+        if (contribution_id instanceof Array && contribution_id.length == 2) {
+          contribution_id = contribution_id[1];
+          toggle($(this).parent(), contribution_id);
+        } else {
+          toggle(null, null);
+        }
+        return false;
+      });
+
+      $('#cancel').click(function() {
+        toggle(null, null);
+        clear_form();
+        return false;
+      });
+
+      })();
+
+    //]]>
+  </script>
+
+<% end %>
+
+<div id="contrib" name="contrib" class="hidden" style="border-style: solid; border-width: 1px; border-color: #A9A9A9;">
+  <%= form_for contribution, :as => :contribution, :url => conversation_contributions_path(conversation), :html => {:multipart => true} do |f| %>
+
+    <fieldset>
+      <%= f.text_area(:content, :placeholder => "Leave a Comment...", :rows => "10") %>
+      <%= f.text_field(:url, :type => "text", :class => "textbox link", :placeholder => "(Optional) Share a link...") %>
+      <%= f.file_field(:attachment) %>
+    </fieldset>
+
+    <fieldset>
+      <%= f.submit 'Leave my response', :class => 'submit' %>
+      <%= link_to "Cancel", '#', :id => 'cancel' %>
+    </fieldset>
+
+  <% end %>
+</div>

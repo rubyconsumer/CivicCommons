@@ -4,6 +4,10 @@ class ContributionsController < ApplicationController
   before_filter :load_conversation, only: [:edit, :update, :moderate, :moderated]
   before_filter :verify_admin, only: [:moderate, :moderated]
 
+  def create
+
+  end
+
   def destroy
     @contribution = Contribution.find(params[:id])
     respond_to do |format|

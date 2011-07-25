@@ -7,7 +7,7 @@
 <% @conversation ||= Conversation.new %>
 <% @contributions ||= [Contribution.new] %>
 
-<%= form_for @conversation, url: url, :html =>{:multipart => true} do |conversation| %>
+<%= form_for @conversation, url: url, :html => {:multipart => true} do |conversation| %>
 
   <%= render :partial => 'conversations/creation_errors', :locals => { :conversation => @conversation, :contributions => @contributions } %>
   <br class="clear" />

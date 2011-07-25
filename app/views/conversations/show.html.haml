@@ -35,14 +35,12 @@
             %strong
               = format_date @conversation.created_at
             = raw(@conversation.summary)
-          -#%p.convo-summary
-            -#=render :partial => 'layouts/facebook_like'
         .aside.supplementary.convo-mast-buttons
           %p
             %span#subscription
               = render :partial => '/subscriptions/subscription', :locals => {:subscribable => @conversation}
           %p
-            = link_to("Post to this Conversation", {:action => "new_node_contribution", :id => @conversation.id, :div_id => "conversation-#{@conversation.id}"}, :class => "text button top-node-conversation-action", :id => "conversation-action-link-#{@conversation.id}", :title => "", 'data-target' => "#conversation-action-div-#{@conversation.id}")
+            = link_to("Post to this Conversation", '#', :class => "text button toggle", :id => 'post_to_conversation')
           %p
             = render :partial => '/invites/invite_to_conversation', :locals => {:conversation => @conversation}
 
@@ -58,6 +56,8 @@
           %ol#conversation-thread-list.conversations.divided.thread-list
             %div{:id => "conversation-action-div-#{@conversation.id}"}
             =render :partial => "threaded_contribution_template", :collection => @conversation_contributions, :as => :contribution
+          %div{:id => 'contribution_tool_container'}
+            =render :partial => 'conversations/contribution_tool', :locals => { :conversation => @conversation, :contribution => @contribution }
 
       .aside.supplementary
         - if @conversation.issues.size > 0
