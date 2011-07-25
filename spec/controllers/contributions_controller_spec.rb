@@ -50,4 +50,36 @@ describe ContributionsController do
 
   end
 
+  describe "POST: Create Confirmed Contribution" do
+
+    it "Creates a new contribution" do
+      conversation = mock_model(Conversation, id: 1)
+      contribution = mock_model(Contribution, conversation: conversation)
+      Contribution.should_receive(:create_node).and_return(contribution)
+
+      post :create_confirmed_contribution, contribution: {content: "hello world", owner: 1, conversation_id: 1}
+    end
+
+    it "Redirects to conversation page" do
+      conversation = mock_model(Conversation, id: 1)
+      contribution = mock_model(Contribution, id: 1, conversation: conversation)
+      Contribution.stub(:create_node).and_return(contribution)
+
+      post :create_confirmed_contribution, contribution: {content: "hello world", owner: 1, conversation_id: 1}
+      response.should redirect_to '/conversations/1#contribution1'
+    end
+
+  end
+
+  context "Within a Conversation" do
+
+    before :each do
+      @conversation = Factory.create(:conversation)
+      controller.stub(:load_conversation).and_return(@conversation)
+    end
+
+    describe ""
+
+  end
+
 end
