@@ -427,12 +427,53 @@ div.three-col-sm div.photobank img {margin: 0 0 6px 6px;}
   height: 0px; 
 }
 
+.survey-option .menu .contract{
+  display:none;
+}
+
+.survey-option .content{
+  float:left;
+  width:80%;
+}
+.survey-option .menu{
+  float:right;
+  width:18%;
+}
+.survey-option .select{
+  float:right;
+  width:2%;
+}
+.survey-option .unselect{
+  float:right;
+  width:2%;
+}
+.survey-option .clear-both{
+  clear: both;
+}
+
 .survey-options .sortable{
   min-height: 15em;
 }
 .survey-options .sortable.over{
  background-color:#FFFFFF;
 }
+
+.survey-options .survey-option .unselect{
+  display: none;
+}
+.survey-options .survey-option .select{
+  display: block;
+  margin: -10px;
+  height: 100%;
+  padding: 10px;
+  
+  background-color: #99AC5D;
+  color: #ffffff;
+  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#A2B562), to(#96A957));
+  background: -moz-linear-gradient(center top , #A2B562, #96A957);
+  
+}
+
 
 .selected-survey-options{
   float:right; 
@@ -448,9 +489,30 @@ div.three-col-sm div.photobank img {margin: 0 0 6px 6px;}
 .selected-survey-options .menu{
   margin: 1em;
 }
-.selected-survey-options .menu input{
+
+.selected-survey-options .survey-option .content{
+  width:85%;
+}
+.selected-survey-options .survey-option .menu input{
   margin-left:1em;
 }
+
+.selected-survey-options .survey-option .description{
+  display:none !important;
+}
+
+.selected-survey-options .survey-option .menu{
+  display:none;
+}
+
+.selected-survey-options .survey-option .unselect{
+  display: block;
+  padding:10px 20px;
+}
+.selected-survey-options .survey-option .select{
+  display: none;
+}
+
 
 .selected-survey-options .sortable-wrapper{
   border: solid #687A2E 1px;
@@ -488,7 +550,7 @@ div.three-col-sm div.photobank img {margin: 0 0 6px 6px;}
 
 /*Surveys/Votes---------------*/
 /*fixing flickering artifact when doing voting*/
-.survey-options ::selection, .selected-survey-options ::selection{
+.voting-container ::selection{
  background-color:transparent;
  color:none;
  -moz-user-select: -moz-none;

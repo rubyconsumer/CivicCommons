@@ -1,10 +1,18 @@
 <div class="survey-option" data-option-id="<%= option.id %>">
-  <div class = 'title'>
-    <h5><%= option.title %></h5>
-    <div class="menu"><%= link_to "more...", '#', :class => 'expand' unless option.description.blank?%></div>
+  <div class="content">
+    <div class = 'title'>
+      <h5><%= option.title %></h5>
+    </div>
+    <div class='description'>
+      <p><%= auto_link(option.description)  %></p>
+    </div>
   </div>
-  <div class='description'>
-    <p><%= auto_link(option.description)  %></p>
-    <%= link_to "less...", '#', :class => 'contract' unless option.description.blank?%>
+  <div class="select">></div>
+  <div class="unselect">(x)</div>
+  <div class="menu">
+    <%= link_to "Read More", '#', :class => 'expand' unless option.description.blank?%>
+    <%= link_to "Read Less", '#', :class => 'contract' unless option.description.blank?%>
   </div>
+  
+  <div class="clear-both"></div>
 </div>

@@ -70,13 +70,15 @@ jQuery(function ($) {
     // expand contract of the options
     $('.survey-option .expand').click(function(){
       $(this).closest('.survey-option').find('.description').show();
-      $(this).closest('.menu').hide();
+      $(this).siblings('.contract').show();
+      $(this).hide()
       return false;
     });
     
     $('.survey-option .contract').click(function(){
-      $(this).closest('.description').hide();
-      $(this).closest('.survey-option').find('div.menu').show();
+      $(this).closest('.survey-option').find('.description').hide();
+      $(this).siblings('.expand').show();
+      $(this).hide()
       return false;
     });
     
