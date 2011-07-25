@@ -40,7 +40,7 @@
             %span#subscription
               = render :partial => '/subscriptions/subscription', :locals => {:subscribable => @conversation}
           %p
-            = link_to("Post to this Conversation", '#', :class => "text button toggle", :id => 'post_to_conversation')
+            = link_to("Post to this Conversation", '#', :class => "text button post_to_conversation", :id => 'post_to_conversation')
           %p
             = render :partial => '/invites/invite_to_conversation', :locals => {:conversation => @conversation}
 

@@ -32,42 +32,48 @@
         .removeAttr('selected');
     }
 
-    function toggle(container, contribution_id) {
-      if ($('#contrib').hasClass('hidden')) {
-        // add contribution parent hidden field
-        $('#contrib').removeClass('hidden');
-        if (null != container) container.append($('#contrib'));
-        $('#contribution_content').focus()
-      } else {
-        // remove contribution parent hidden field
-        $('#contribution_tool_container').append($('#contrib'))
-        $('#contrib').addClass('hidden');
-      }
+    function get_contribution_parent_id(container) {
+        var contribution_id = container.attr('id');
+        contribution_id = contribution_id.match(/respond-to-(\d+)/);
+        if (contribution_id instanceof Array && contribution_id.length == 2) {
+          return contribution_id[1];
+        } else {
+          return false;
+        }
     }
 
-    function show_contrib_with_parent(parnet_id) {
-      // needs more work
-      var $hiddenInput = $('<input/>',{type:'hidden',id:'contribution_id',value:contribution_id});
-      if ( ! $('#contrib').hasClass('hidden')) $('#contrib').addClass('hidden');
-      $hiddenInput.appendTo($(':input','#contribution_new'));
+    function show_contrib_tool(container, contribution_id) {
+      // add contribution parent hidden field
+      $('#contribution_parent_id').val(contribution_id);
+      $('#contrib').removeClass('hidden');
+      if (null != container) {
+        container.append($('#contrib'));
+      } else {
+        $('#contribution_tool_container').append($('#contrib'));
+      }
+      $('#contribution_content').focus()
+    }
+
+    function hide_contrib_tool() {
+      // remove contribution parent hidden field
+      $('#contribution_tool_container').append($('#contrib'));
+      $('#contrib').addClass('hidden');
     }
 
     $(document).ready(function(){
 
-      $('.toggle').click(function() {
-        var contribution_id = $(this).attr('id');
-        contribution_id = contribution_id.match(/respond-to-(\d+)/);
-        if (contribution_id instanceof Array && contribution_id.length == 2) {
-          contribution_id = contribution_id[1];
-          toggle($(this).parent(), contribution_id);
+        $('.post_to_conversation').click(function() {
+        var contribution_id = get_contribution_parent_id($(this));
+        if (contribution_id) {
+          show_contrib_tool($(this).parent(), contribution_id);
         } else {
-          toggle(null, null);
+          show_contrib_tool(null, null);
         }
         return false;
       });
 
-      $('#cancel').click(function() {
-        toggle(null, null);
+      $('#cancel_contribution').click(function() {
+        hide_contrib_tool();
         clear_form();
         return false;
       });
@@ -83,6 +89,7 @@
   <%= form_for contribution, :as => :contribution, :url => conversation_contributions_path(conversation), :html => {:multipart => true} do |f| %>
 
     <fieldset>
+      <%= f.hidden_field(:parent_id) %>
       <%= f.text_area(:content, :placeholder => "Leave a Comment...", :rows => "10") %>
       <%= f.text_field(:url, :type => "text", :class => "textbox link", :placeholder => "(Optional) Share a link...") %>
       <%= f.file_field(:attachment) %>
@@ -90,7 +97,7 @@
 
     <fieldset>
       <%= f.submit 'Leave my response', :class => 'submit' %>
-      <%= link_to "Cancel", '#', :id => 'cancel' %>
+      <%= link_to "Cancel", '#', :id => 'cancel_contribution' %>
     </fieldset>
 
   <% end %>

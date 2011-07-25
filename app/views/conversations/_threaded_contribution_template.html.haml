@@ -32,7 +32,7 @@
                             :title => "Alert Us of Terms of Service Violations")
               = rating_buttons(contribution, @ratings || ratings)
               %span.respond
-                = link_to(respond_button_text(contribution), '#', :class => "text rating-button toggle", :id => "respond-to-#{contribution.id}", :title => "Leave a comment here")
+                = link_to(respond_button_text(contribution), '#', :class => "text rating-button post_to_conversation", :id => "respond-to-#{contribution.id}", :title => "Leave a comment here")
           %ol.conversations.divided.thread-list
             .comment-contribution-action(id="action-div-#{contribution.id}")
             .contribution-thread-div(id="thread-div-#{contribution.id}")
