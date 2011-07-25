@@ -82,6 +82,14 @@ jQuery(function ($) {
       return false;
     });
     
+    //unselect the survey options
+    $('.survey-option .unselect').click(function(){
+      $(this).closest('.sortable').find('.placeholder').show();
+      $('.survey-options .sortable').append($(this).closest('.survey-option'))
+      return false;
+    });
+    
+    
     // close colorbox on cancelation of confirmation
     $('a.cancel_vote').live('click', function(){
       $.colorbox.close();

@@ -446,6 +446,7 @@ div.three-col-sm div.photobank img {margin: 0 0 6px 6px;}
 .survey-option .unselect{
   float:right;
   width:2%;
+  cursor: pointer;
 }
 .survey-option .clear-both{
   clear: both;
@@ -465,6 +466,7 @@ div.three-col-sm div.photobank img {margin: 0 0 6px 6px;}
   display: block;
   margin: -10px;
   height: 100%;
+  min-height: 100%;
   padding: 10px;
   
   background-color: #99AC5D;
