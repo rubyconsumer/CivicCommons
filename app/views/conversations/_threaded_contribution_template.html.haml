@@ -1,3 +1,5 @@
+- depth ||= 0
+- maxdepth = 2
 %li.offset-1{:id => "show-contribution-#{contribution.id}"}
   %a{:name=>"contribution-#{contribution.id}"}
   %div.contribution-container{:class => ('collapsed' unless controller.action_name == 'confirm_node_contribution' || contribution.parent.nil? || controller.action_name == 'preview_node_contribution')}
@@ -32,8 +34,13 @@
                             :title => "Alert Us of Terms of Service Violations")
               = rating_buttons(contribution, @ratings || ratings)
               %span.respond
-                = link_to(respond_button_text(contribution), '#', :class => "text rating-button post_to_conversation", :id => "respond-to-#{contribution.id}", :title => "Leave a comment here")
-          %ol.conversations.divided.thread-list
-            .comment-contribution-action(id="action-div-#{contribution.id}")
-            .contribution-thread-div(id="thread-div-#{contribution.id}")
-              = display_direct_descendant_subset(@contributions, contribution.id)
+                = link_to(respond_button_text(contribution), '#', :class => "text rating-button post_to_conversation", :id => "respond-to-#{contribution.id}", :title => respond_button_text(contribution))
+          - if depth < maxdepth
+            %ol.conversations.divided.thread-list
+              .comment-contribution-action(id="action-div-#{contribution.id}")
+              .contribution-thread-div(id="thread-div-#{contribution.id}")
+                = display_direct_descendant_subset(@contributions, contribution.id, depth)
+- unless depth < maxdepth
+  .comment-contribution-action(id="action-div-#{contribution.id}")
+  .contribution-thread-div(id="thread-div-#{contribution.id}")
+    = display_direct_descendant_subset(@contributions, contribution.id, depth)

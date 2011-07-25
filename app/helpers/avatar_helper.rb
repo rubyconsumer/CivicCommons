@@ -21,37 +21,37 @@ module AvatarHelper
     end
   end
 
-  def conversation_profile(person)
-    avatar_profile(person, 40)
+  def conversation_profile(person, css_class='callout')
+    avatar_profile(person, 40, css_class)
   end
 
-  def contribution_profile(person)
-    avatar_profile(person, 40)
+  def contribution_profile(person, css_class='callout')
+    avatar_profile(person, 40, css_class)
   end
 
-  def featured_profile(person)
-    avatar_profile(person, 50)
+  def featured_profile(person, css_class='callout')
+    avatar_profile(person, 50, css_class)
   end
 
-  def profile_image(person, size=20)
-    image_tag (person.avatar_url ||= person.avatar.url(:standard)), alt: person.name, height: size, width: size, title: person.name, class: 'callout'
+  def profile_image(person, size=20, css_class='callout')
+    image_tag (person.avatar_url ||= person.avatar.url(:standard)), alt: person.name, height: size, width: size, title: person.name, class: css_class
   end
 
-  def loggedin_image(person, size=40)
-    profile_image(person, size)
+  def loggedin_image(person, size=40, css_class='callout')
+    profile_image(person, size, css_class)
   end
 
-  def loggedout_image(size=40)
-    image_tag "avatar_#{size}.gif", alt: 'default avatar', class: 'callout', height: size, width: size
+  def loggedout_image(size=40, css_class='callout')
+    image_tag "avatar_#{size}.gif", alt: 'default avatar', class: css_class, height: size, width: size
   end
 
-  def avatar_profile(person, size=20)
+  def avatar_profile(person, size=20, css_class='callout')
     if person
       link_to_profile(person) do
-        profile_image(person, size)
+        profile_image(person, size, css_class)
       end
     else
-      profile_image(person, size)
+      profile_image(person, size, css_class)
     end
   end
 
@@ -59,8 +59,8 @@ module AvatarHelper
     link_to yield, user_url(person), title: person.name
   end
 
-  def link_to_settings(person)
-    link_to "Settings", edit_user_url(person), title: "Profile Settings", class: 'user-link'
+  def link_to_settings(person, css_class='user-link')
+    link_to "Settings", edit_user_url(person), title: "Profile Settings", class: css_class
   end
 
   # Creates an image_tag for a particular person

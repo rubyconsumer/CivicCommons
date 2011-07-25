@@ -89,11 +89,12 @@ module ConversationsHelper
   # This method allows you to get the subset of direct descendents of this_contribution_id from the complete thread of root_contribution_and_descendents
   #  root_contribution in this case is a TopLevelContribution node, and the whole thing has already been loaded by the controller,
   #  so we don't want to poll the database for each subset when we've already loaded the entire set once.
-  def display_direct_descendant_subset(contribution_descendants, this_contribution_id)
+  def display_direct_descendant_subset(contribution_descendants, this_contribution_id, depth=0)
     out = ""
     return out unless contribution_descendants
+    depth = depth + 1
     contribution_descendants.select{ |c| c.parent_id == this_contribution_id }.sort_by{ |c| c.created_at }.each do |contribution|
-      out += render(:partial => "threaded_contribution_template", :locals => { :contribution => contribution })
+      out += render(:partial => "threaded_contribution_template", :locals => { :contribution => contribution, :depth => depth })
     end
     raw(out)
   end
