@@ -442,6 +442,7 @@ div.three-col-sm div.photobank img {margin: 0 0 6px 6px;}
 .survey-option .select{
   float:right;
   width:2%;
+  cursor: pointer;
 }
 .survey-option .unselect{
   float:right;

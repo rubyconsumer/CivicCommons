@@ -84,8 +84,21 @@ jQuery(function ($) {
     
     //unselect the survey options
     $('.survey-option .unselect').click(function(){
-      $(this).closest('.sortable').find('.placeholder').show();
+      var $sortable = $(this).closest('.sortable')
+      $sortable.find('.placeholder').show();
       $('.survey-options .sortable').append($(this).closest('.survey-option'))
+      updateOptionID($sortable);
+      return false;
+    });
+    
+    $('.survey-option .select').click(function(){
+      // $(this).closest('.sortable').find('.placeholder').show();
+      // $('.survey-options .sortable').append($(this).closest('.survey-option'))
+      $empty_vote = $('.selected_option_id').filter(function() { return $(this).val() == ""; }).first();
+      $sortable = $empty_vote.closest('.sortable');
+      $sortable.find('.placeholder').hide();
+      $sortable.append($(this).closest('.survey-option'));
+      updateOptionID($sortable);
       return false;
     });
     
