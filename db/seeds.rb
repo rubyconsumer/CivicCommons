@@ -146,11 +146,6 @@ ingest(lethal_convo, "internationalbusinessrulesforum.txt")
 
 
 
-Person.limit(15).each do |p|
-  p.update_attribute(:organization, true)
-end
-
-
 lorems = ["Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod iaculis bibendum. Integer in diam sem, non pulvinar sapien. Nunc luctus, magna sed tempus sodales, metus erat sollicitudin velit, vel congue tortor nunc quis erat. Cras venenatis commodo felis a fringilla. Morbi porttitor tellus magna, sollicitudin auctor lorem. Cras lacus erat, rutrum eget adipiscing vel, adipiscing ac urna. Nam feugiat consectetur erat in aliquet. Vivamus eu metus nulla. Vivamus vestibulum sapien ullamcorper ligula pretium id convallis elit tristique. Aenean nec quam eu mi fringilla pulvinar a nec purus. In ullamcorper felis et elit tempus hendrerit. Morbi bibendum, ante vitae ornare tincidunt, leo metus mattis diam, a fringilla urna sem a nunc. Aenean quis erat eget neque porttitor vehicula vitae vel erat.",
 "Vestibulum nec mi viverra urna tempus congue at ut orci. Praesent suscipit massa sit amet elit blandit elementum. Maecenas adipiscing faucibus augue ac commodo. Cras condimentum ultrices euismod. Pellentesque et metus ac lectus venenatis aliquet a non erat. Proin sit amet turpis enim, ac vehicula tortor. Integer non urna sapien, sed gravida ligula. Curabitur pulvinar egestas porta. Maecenas ut velit et arcu tincidunt pharetra volutpat ut augue. Cras ligula turpis, placerat sit amet malesuada sed, accumsan faucibus nibh. Aenean at sagittis nunc. Mauris ac leo quis dui vulputate gravida sed eu massa. Aenean semper metus sed velit aliquam pellentesque. Aenean luctus consectetur tincidunt. Nullam eget elementum orci. Proin molestie pulvinar purus ut bibendum. Curabitur porta fringilla ipsum, vitae porttitor nibh placerat sit amet.",
 "Phasellus accumsan hendrerit mattis. Sed ipsum diam, euismod non posuere id, cursus consequat turpis. Aenean sed lacus sed urna molestie volutpat sit amet at lorem. Duis adipiscing euismod venenatis. Aenean pellentesque odio a massa congue et tincidunt mi aliquet. Nulla tortor orci, sagittis ac condimentum et, feugiat id justo. Nam id massa ipsum, et fermentum est. Aenean ligula dolor, ultricies vitae porttitor a, porta eget nibh. Morbi a quam leo. In scelerisque semper leo, eget ultrices lorem condimentum at.",
