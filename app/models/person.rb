@@ -32,7 +32,6 @@ class Person < ActiveRecord::Base
                   :bio,
                   :website,
                   :twitter_username,
-                  :top,
                   :zip_code,
                   :admin,
                   :validated,
