@@ -56,6 +56,11 @@ describe ConversationsController do
       { :post => "/conversations/radio/1" }.should route_to(:controller => "conversations", :action => "create_from_radioshow", id: "1")
     end
 
+    it "recognizes and generates #conversations_node_show" do
+      pending "This route works but the test conflicts with the filter route"
+      { :get => "/conversations/1#node-1234" }.should route_to(:controller => "conversations", :action => "show", id: "1", contribution_id: "1234")
+    end
+
     Conversation.available_filter_names.each do |filter_name|
       it "recognizes and generates #filter route for :#{filter_name} filter" do
         { :get => "/conversations/#{filter_name}" }.should route_to(:controller => "conversations", :action => "filter", :filter => filter_name)

@@ -5,7 +5,16 @@ class ContributionsController < ApplicationController
   before_filter :verify_admin, only: [:moderate, :moderated]
 
   def create
-
+    @conversation = Conversation.find(params[:conversation_id])
+    unless params[:contribution][:url].nil?
+      embedly = EmbedlyService.new
+      embedly.fetch_and_merge_params!(params)
+    end
+    @contribution = Contribution.new(params[:contribution])
+    @contribution.item = @conversation
+    @contribution.confirmed = true
+    @contribution.save
+    redirect_to conversations_node_show_path(@conversation.id, @contribution.id)
   end
 
   def destroy
@@ -38,7 +47,7 @@ class ContributionsController < ApplicationController
   def edit
     @contribution = Contribution.find(params[:id])
     respond_to do |format|
-      format.js{ render(:partial => 'conversations/new_contribution_form', :locals => {:div_id => "show-contribution-#{@contribution.id}", :type => @contribution.type.underscore.to_sym, :subtype => nil}, :layout => false) }
+      format.js { render(:partial => 'conversations/new_contribution_form', :locals => {:div_id => "show-contribution-#{@contribution.id}", :type => @contribution.type.underscore.to_sym, :subtype => nil}, :layout => false) }
     end
   end
 
@@ -47,9 +56,9 @@ class ContributionsController < ApplicationController
     respond_to do |format|
       if @contribution.update_attributes_by_user(params[:contribution], current_person)
         ratings = RatingGroup.ratings_for_conversation_by_contribution_with_count(@contribution.conversation, current_person)
-        format.js{ render(:partial => "threaded_contribution_template", :locals => {:contribution => @contribution, :ratings => ratings, :div_id => params[:div_id]}, :layout => false, :status => :ok) }
+        format.js { render(:partial => "threaded_contribution_template", :locals => {:contribution => @contribution, :ratings => ratings, :div_id => params[:div_id]}, :layout => false, :status => :ok) }
       else
-        format.js   { render :json => @contribution.errors, :status => :unprocessable_entity }
+        format.js { render :json => @contribution.errors, :status => :unprocessable_entity }
       end
     end
   end
