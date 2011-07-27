@@ -16,8 +16,7 @@ class Person < ActiveRecord::Base
          :lockable,
          :omniauthable
 
-  attr_accessor :organization_name,
-                :send_welcome,
+  attr_accessor :send_welcome,
                 :create_from_auth,
                 :facebook_unlinking,
                 :send_email_change_notification
