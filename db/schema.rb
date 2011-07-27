@@ -242,9 +242,9 @@ ActiveRecord::Schema.define(:version => 20110727143847) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "password"
-    t.string   "email",                               :default => "",   :null => false
-    t.string   "encrypted_password",   :limit => 128, :default => "",   :null => false
-    t.string   "password_salt",                       :default => "",   :null => false
+    t.string   "email",                               :default => "",    :null => false
+    t.string   "encrypted_password",   :limit => 128, :default => "",    :null => false
+    t.string   "password_salt",                       :default => "",    :null => false
     t.string   "reset_password_token"
     t.string   "remember_token"
     t.datetime "remember_created_at"
@@ -269,7 +269,7 @@ ActiveRecord::Schema.define(:version => 20110727143847) do
     t.boolean  "marketable"
     t.datetime "marketable_at"
     t.text     "bio"
-    t.boolean  "daily_digest",                        :default => true, :null => false
+    t.boolean  "daily_digest",                        :default => true,  :null => false
     t.boolean  "declined_fb_auth"
     t.string   "cached_slug"
     t.string   "twitter_username"
@@ -344,11 +344,6 @@ ActiveRecord::Schema.define(:version => 20110727143847) do
 
   add_index "subscriptions", ["person_id", "subscribable_type", "subscribable_id"], :name => "unique-subs", :unique => true
 
-  create_table "test_objects", :force => true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "top_items", :force => true do |t|
     t.integer  "item_id"
     t.string   "item_type"
@@ -357,8 +352,8 @@ ActiveRecord::Schema.define(:version => 20110727143847) do
     t.datetime "updated_at"
     t.integer  "conversation_id"
     t.integer  "issue_id"
-    t.integer  "person_id"
     t.text     "activity_cache",  :limit => 2147483647
+    t.integer  "person_id"
   end
 
   add_index "top_items", ["conversation_id"], :name => "conversations_index"
