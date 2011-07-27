@@ -1,13 +1,13 @@
 <% content_for :header do %>
 
+  <%= javascript_include_tag 'vendor/tiny_mce/jquery.tinymce.js' %>
+
   <style type="text/css">
     .visible
     {
       position:absolute;
       right:0px;
       top:auto;
-      /*  width:1px; */
-      /*  height:1px; */
     }
 
     .hidden 
@@ -15,8 +15,6 @@
       position:absolute;
       left:-10000px;
       top:auto;
-      /*  width:1px; */
-      /*  height:1px; */
       overflow:hidden;
     }
   </style>
@@ -24,12 +22,24 @@
   <script type='text/javascript'> 
     //<![CDATA[
 
-    function clear_form() {
+    function init_tiny_mce(JqueryListOfElements){
+      $(JqueryListOfElements).tinymce({
+        script_url : '/javascripts/vendor/tiny_mce/tiny_mce.js',
+        mode : "textareas",
+        theme : "simple",
+        // turned off autoresize because it doesn't seem to work very well
+        //plugins : 'autoresize',
+        width : '100%',
+      });
+    }
+
+    function clear_contribution_tool_form() {
       $(':input','#contribution_new')
         .not(':button, :submit, :reset, :hidden')
         .val('')
         .removeAttr('checked')
         .removeAttr('selected');
+      $('#contribution_content').tinymce().setContent('');
     }
 
     function get_contribution_parent_id(container) {
@@ -43,26 +53,34 @@
     }
 
     function show_contribution_tool(container, contribution_id, title) {
+      $('#contribution_content').tinymce().remove();
       $('#contribution_parent_id').val(contribution_id);
       $('#contribution-title').html(title + ':');
-      $('#contrib').removeClass('hidden');
       if (null != container) {
         container.append($('#contrib'));
       } else {
         $('#contribution_tool_container').append($('#contrib'));
       }
-      $('#contribution_content').focus()
+      $('#contrib').removeClass('hidden');
+      init_tiny_mce('#contribution_content');
+      scroll_to_contribution_tool();
     }
 
     function hide_contribution_tool() {
-      $('#contribution_tool_container').append($('#contrib'));
       $('#contribution-title').html('');
       $('#contrib').addClass('hidden');
     }
 
+    function scroll_to_contribution_tool() {
+      $('html, body').animate({
+        scrollTop: $('#contrib').offset().top
+      }, 500);
+    }
+
     $(document).ready(function() {
 
-       $('.post_to_conversation').click(function() {
+      $('.post_to_conversation').click(function() {
+        clear_contribution_tool_form();
         var contribution_id = get_contribution_parent_id($(this));
         var title = $(this).attr('title');
         if (contribution_id) {
@@ -70,22 +88,25 @@
         } else {
           show_contribution_tool(null, null, title);
         }
+        $('#contribution_content').tinymce().focus();
         return false;
       });
 
       $('#cancel-contribution').click(function() {
         hide_contribution_tool();
-        clear_form();
+        //clear_contribution_tool_form();
         return false;
       });
 
       $('#contribution-add-link').click(function() {
-        $('#contribution_url').toggle()
+        $('#contribution_url').toggle();
       });
 
       $('#contribution-add-file').click(function() {
-        $('#contribution_attachment').toggle()
+        $('#contribution_attachment').toggle();
       });
+
+      init_tiny_mce('#contribution_content');
 
     })(); // end document ready function
 
@@ -107,7 +128,7 @@
       <p><%= profile_image(current_person, 20, '') %></p>
 
       <p>
-        <%= f.text_area(:content, :placeholder => "Leave a Comment...", :rows => "10") %>
+      <%= f.text_area(:content, :placeholder => "Leave a Comment...", :class => 'tinymce') %>
       </p>
 
       <p>
