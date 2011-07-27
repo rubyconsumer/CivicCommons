@@ -57,7 +57,7 @@
               =render :partial => "show_contribution", :locals => { :contribution => contribution }
           %ol#conversation-thread-list.conversations.divided.thread-list
             %div{:id => "conversation-action-div-#{@conversation.id}"}
-            =render :partial => "threaded_contribution_template", :collection => @conversation_contributions, :as => :contribution
+            =render :partial => "threaded_contribution_template", :locals => { :ratings => @ratings }, :collection => @conversation_contributions, :as => :contribution
 
       .aside.supplementary
         - if @conversation.issues.size > 0
