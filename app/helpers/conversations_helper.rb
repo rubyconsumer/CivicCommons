@@ -91,7 +91,7 @@ module ConversationsHelper
   #  so we don't want to poll the database for each subset when we've already loaded the entire set once.
   def display_direct_descendant_subset(contribution_descendants, this_contribution_id)
     out = ""
-    ratings = RatingGroup.ratings_for_conversation_by_contribution_with_count(this_contribution_id.conversation, current_person)
+    ratings = RatingGroup.ratings_for_conversation_by_contribution_with_count(Contribution.find(this_contribution_id).conversation, current_person)
     return out unless contribution_descendants
     contribution_descendants.select{ |c| c.parent_id == this_contribution_id }.sort_by{ |c| c.created_at }.each do |contribution|
       out += render(:partial => "threaded_contribution_template", :locals => { :contribution => contribution, :ratings => ratings })
