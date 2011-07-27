@@ -26,10 +26,16 @@
       $(JqueryListOfElements).tinymce({
         script_url : '/javascripts/vendor/tiny_mce/tiny_mce.js',
         mode : "textareas",
-        theme : "simple",
+        //theme : "simple",
+        theme : "advanced",
         // turned off autoresize because it doesn't seem to work very well
         //plugins : 'autoresize',
         width : '100%',
+		theme_advanced_buttons1 : "bold,italic,underline,strikethrough,|,link,unlink,|,bullist,numlist,|,undo,redo,|,cut,copy,paste",
+        theme_advanced_buttons2 : "",
+        theme_advanced_buttons3 : "",
+		theme_advanced_toolbar_location : "top",
+		theme_advanced_toolbar_align : "left",
       });
     }
 
@@ -79,7 +85,8 @@
 
     $(document).ready(function() {
 
-      $('.post_to_conversation').click(function() {
+      $('.post_to_conversation').click(function(event) {
+        event.preventDefault();
         clear_contribution_tool_form();
         var contribution_id = get_contribution_parent_id($(this));
         var title = $(this).attr('title');
@@ -89,21 +96,32 @@
           show_contribution_tool(null, null, title);
         }
         $('#contribution_content').tinymce().focus();
-        return false;
       });
 
-      $('#cancel-contribution').click(function() {
+      $('#cancel-contribution').click(function(event) {
+        event.preventDefault();
         hide_contribution_tool();
         //clear_contribution_tool_form();
-        return false;
       });
 
-      $('#contribution-add-link').click(function() {
+      $('#contribution-add-link').click(function(event) {
+        event.preventDefault();
         $('#contribution_url').toggle();
+        if ('none' != $('#contribution_url').css('display')) {
+          $('#contribution_url').focus();
+        } else {
+          $('#contribution_content').tinymce().focus();
+        }
       });
 
-      $('#contribution-add-file').click(function() {
+      $('#contribution-add-file').click(function(event) {
+        event.preventDefault();
         $('#contribution_attachment').toggle();
+        if ('none' != $('#contribution_attachment').css('display')) {
+          $('#contribution_attachment').focus();
+        } else {
+          $('#contribution_content').tinymce().focus();
+        }
       });
 
       init_tiny_mce('#contribution_content');
