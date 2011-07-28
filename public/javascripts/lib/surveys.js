@@ -9,6 +9,7 @@ function updateOptionID(selector){
   var $selected_option = $(selector).find('.survey-option')[0];
   if($selected_option){ value = $($selected_option).data('option-id');}    
   $($input).val(value);
+  $($selected_option).height('');
 }
 
 function receivingItem(event,ui){
@@ -19,6 +20,7 @@ function receivingItem(event,ui){
     $(ui.sender).append($existing_item);
     $existing_item.siblings('.placeholder').hide();
     $existing_item.show('fast');
+    $existing_item.equalHeights();
     updateOptionID(ui.sender);
   }
   $(this).find('.placeholder').hide();
@@ -44,11 +46,17 @@ function removeActivePlaceholder(event,ui){
 jQuery(function ($) {
   $(document).ready(function() {
   
+    $('.survey-options .survey-option').equalHeights();
+    
     //drag and drop of the votes
     if($('.selected-survey-options input.submit').attr('disabled') != true){
       $('.survey-options .sortable').sortable({ 
         connectWith: '.selected-survey-options .sortable',
         cursor: 'crosshair',
+        receive: function(event,ui){
+          console.log(this);
+          $(ui.item).equalHeights();
+        },
         placeholder: "survey-option-locator",
         over: removeActivePlaceholder
       });
@@ -71,13 +79,17 @@ jQuery(function ($) {
     $('.survey-option .expand').click(function(){
       $(this).closest('.survey-option').find('.description').show();
       $(this).siblings('.contract').show();
-      $(this).hide()
+      $(this).hide();
+      $(this).closest('.survey-option').height('');
+      $(this).closest('.survey-option').equalHeights();
       return false;
     });
     
     $('.survey-option .contract').click(function(){
       $(this).closest('.survey-option').find('.description').hide();
       $(this).siblings('.expand').show();
+      $(this).closest('.survey-option').height('');
+      $(this).closest('.survey-option').equalHeights();
       $(this).hide()
       return false;
     });
@@ -88,6 +100,7 @@ jQuery(function ($) {
       $sortable.find('.placeholder').show();
       $('.survey-options .sortable').append($(this).closest('.survey-option'))
       updateOptionID($sortable);
+      $(this).closest('.survey-option').equalHeights();
       return false;
     });
     
@@ -99,6 +112,7 @@ jQuery(function ($) {
       $sortable.find('.placeholder').hide();
       $sortable.append($(this).closest('.survey-option'));
       updateOptionID($sortable);
+      $(this).closest('.survey-option').height('');
       return false;
     });
     
