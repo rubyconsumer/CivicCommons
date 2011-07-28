@@ -8,6 +8,7 @@
       position:absolute;
       right:0px;
       top:auto;
+      overflow:visible;
     }
 
     .hidden 
@@ -144,22 +145,17 @@
 <% end %>
 
 <div id="contrib" name="contrib" class="hidden" style="border-style: solid; border-width: 1px; border-color: #A9A9A9;text-align:left;">
-  <%= form_for contribution, :as => :contribution, :url => conversation_contributions_path(conversation), :remote => true, :method => :post, :html => {:multipart => true} do |f| %>
 
-    <p id='contribution-title--after-buggy-expand-and-collapse-is-fixed' style="font-weight:bold;">
-      <div id='contribution-title' class="hack-to-prevent-old-expand-and-collapse-from-triggering" style="font-weight:bold;">
-      </div>
-    </p>
+  <p id='contribution-title----rename-id-after-buggy-expand-and-collapse-is-fixed' style="font-weight:bold;">
+  <div id='contribution-title' class="hack-to-prevent-old-expand-and-collapse-from-triggering" style="font-weight:bold;">
+  </div>
+  </p>
+
+  <%= form_for contribution, :as => :contribution, :url => conversation_contributions_path(conversation), :remote => true, :method => :post, :html => {:multipart => true} do |f| %>
 
     <%= f.hidden_field(:parent_id) %>
 
     <fieldset>
-
-      <p>
-      <div class="hack-to-prevent-old-expand-and-collapse-from-triggering">
-        <%= profile_image(current_person, 20, '') %>
-      </div>
-      </p>
 
       <p>
       <div class="hack-to-prevent-old-expand-and-collapse-from-triggering">

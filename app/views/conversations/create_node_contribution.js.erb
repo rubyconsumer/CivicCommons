@@ -8,8 +8,10 @@
     $('#show_conversation ol.thread-list').first().append("<%= escape_javascript( render :partial => "conversations/threaded_contribution_template", :locals => { :contribution => @contribution } ) %>");
   <% end %>
 
-  enable_post_to_conversation($('#respond-to-<%= @contribution.id %>'));
+  $('#respond-to-<%= @contribution.id %>').ready(enable_post_to_conversation($('#respond-to-<%= @contribution.id %>')));
 
 <% else %>
-  $("#action-div-<%= @contribution.id %>").html("<%= escape_javascript(error_messages_for(@contribution))%>");
+
+  $("#contrib fieldset").first().before("<%= escape_javascript( render :partial => 'contributions/creation_errors' ) %>");
+
 <% end %>
