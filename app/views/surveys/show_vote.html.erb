@@ -10,8 +10,9 @@
         
       
         <h1>Cast Your Vote</h1>
+        <p><strong><%= @survey.description %></strong></p>
+        <h4 class="tips">SELECT FROM THESE OPTIONS:</h4>
         <div class="survey-options">
-          <h4>SELECT FROM THESE OPTIONS:</h4>
           <div class="sortable">
             <%= render :partial => 'survey_options/survey_option_vote', :collection => @survey_response_presenter.available_options, :as => :option %>
           </div>

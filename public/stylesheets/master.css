@@ -460,6 +460,13 @@ div.three-col-sm div.photobank img {margin: 0 0 6px 6px;}
  background-color:#FFFFFF;
 }
 
+.voting-container .tips {
+  padding-bottom: 0.5em;
+  border-bottom: solid 1px #C3C6CD;
+  margin-right: 51%;
+  margin-bottom: -2px;
+}
+
 .survey-options .survey-option .unselect{
   display: none;
 }
