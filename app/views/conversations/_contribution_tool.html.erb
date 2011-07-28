@@ -89,9 +89,8 @@
       }, 500);
     }
 
-    $(document).ready(function() {
-
-      $('.post_to_conversation').click(function(event) {
+    function enable_post_to_conversation(element) {
+      element.click(function(event) {
         event.preventDefault();
         clear_contribution_tool_form();
         var contribution_id = get_contribution_parent_id($(this));
@@ -103,6 +102,11 @@
         }
         $('#contribution_content').tinymce().focus();
       });
+    }
+
+    $(document).ready(function() {
+
+      enable_post_to_conversation($('.post_to_conversation'));
 
       $('#cancel-contribution').click(function(event) {
         event.preventDefault();
@@ -140,7 +144,7 @@
 <% end %>
 
 <div id="contrib" name="contrib" class="hidden" style="border-style: solid; border-width: 1px; border-color: #A9A9A9;text-align:left;">
-  <%= form_for contribution, :as => :contribution, :url => conversation_contributions_path(conversation), :html => {:multipart => true} do |f| %>
+  <%= form_for contribution, :as => :contribution, :url => conversation_contributions_path(conversation), :remote => true, :method => :post, :html => {:multipart => true} do |f| %>
 
     <p id='contribution-title--after-buggy-expand-and-collapse-is-fixed' style="font-weight:bold;">
       <div id='contribution-title' class="hack-to-prevent-old-expand-and-collapse-from-triggering" style="font-weight:bold;">

@@ -13,12 +13,24 @@ class ContributionsController < ApplicationController
     @contribution = Contribution.new(params[:contribution])
     @contribution.item = @conversation
     @contribution.confirmed = true
-    if @contribution.save
-      redirect_to conversations_node_show_path(@conversation.id, @contribution.id)
-    elsif @contribution.parent
-      redirect_to conversations_node_show_path(@conversation.id, @contribution.parent.id)
-    else
-      redirect_to conversations_path(@conversation.id)
+
+    if ok = @contribution.save
+      Subscription.create_unless_exists(current_person, @contribution.item)
+      @ratings = RatingGroup.default_contribution_hash
+    end
+
+    respond_to do |format|
+      format.js { render "conversations/create_node_contribution" }
+      format.html do
+        # NOTE: this path does poor error handling - Jerry
+        if @contribution.save
+          redirect_to conversations_node_show_path(@conversation.id, @contribution.id)
+        elsif @contribution.parent
+          redirect_to conversations_node_show_path(@conversation.id, @contribution.parent.id)
+        else
+          redirect_to conversations_path(@conversation.id)
+        end
+      end
     end
   end
 

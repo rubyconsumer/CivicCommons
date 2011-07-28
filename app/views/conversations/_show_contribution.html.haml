@@ -1,32 +1,36 @@
+- unless defined? collapsed then collapsed = true end
 - if contribution.top_level_contribution
   =render :partial => "top_level_contribution", :locals => { :contribution => contribution }
 - else  
   %div.content
     %span.contribution-person-name= person_display_name(contribution.person)
+    - if true == collapsed
+      %p
+        %em (Click here to expand/collapse...)
     = format_comment(contribution)
-  - if contribution.embedly_type
-    %div.link-meta
-      %p.content.embedded
-        -if !contribution.confirmed?
-          = raw EmbedlyService.to_thumbnail(contribution, 100)
-        -elsif contribution.parent
-          = raw EmbedlyService.to_fancybox(contribution, 200)
-        -else
-          = raw EmbedlyService.to_embed_or_fancybox(contribution, 200)
-      %div.embed-content
-        %p.link-title
-          = link_to(contribution.title, contribution.url)
-        %p
-          = link_to(contribution.base_url.sub(/https?:\/\//i, ''), contribution.base_url)
-        %p.content.link-quot
-          = raw contribution.description
-  - if contribution.attachment_file_name
-    - if contribution.attachment_content_type =~ /^image/
-      %p.attached-file
-        - if contribution.new_record? || contribution.unconfirmed?
-          = image_tag(contribution.attachment.url(:medium))
-        - else
-          = link_to(image_tag(contribution.attachment.url(:medium)).html_safe, contribution.attachment.url(:large), {'data-colorbox' => true})
-    - else
-      %p.attached-file
+    - if contribution.embedly_type
+      %div.link-meta
+        %p.content.embedded
+          -if !contribution.confirmed?
+            = raw EmbedlyService.to_thumbnail(contribution, 100)
+          -elsif contribution.parent
+            = raw EmbedlyService.to_fancybox(contribution, 200)
+          -else
+            = raw EmbedlyService.to_embed_or_fancybox(contribution, 200)
+        %p.embed-content
+          %p.link-title
+            = link_to(contribution.title, contribution.url)
+          %p
+            = link_to(contribution.base_url.sub(/https?:\/\//i, ''), contribution.base_url)
+          %p.content.link-quot
+            = raw contribution.description
+    - if contribution.attachment_file_name
+      - if contribution.attachment_content_type =~ /^image/
+        %p.attached-file
+          - if contribution.new_record? || contribution.unconfirmed?
+            = image_tag(contribution.attachment.url(:medium))
+          - else
+            = link_to(image_tag(contribution.attachment.url(:medium)).html_safe, contribution.attachment.url(:large), {'data-colorbox' => true})
+      - else
+        %p.attached-file
         = link_to("Download attached file", contribution.attachment.url, {:target => :blank})
