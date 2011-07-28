@@ -46,10 +46,33 @@ describe ActivityObserver do
       a.activity_cache.should_not be_nil
     end
 
-    it 'does not create a contribution activity record when contribution is part of conversation creation'
-    it 'creates a new activity record when a contribution is added to an existing comversation'
-    it 'does not create a new activity record for contributions on preview'
-    it 'does not create a new activity record on update for contribution'
+    it 'does not create a contribution activity record when contribution is part of conversation creation' do
+      contribution = Factory.create(:top_level_contribution)
+      Activity.where(item_id: contribution.id, item_type: "Contribution").should be_empty
+    end
+
+    it 'creates a new activity record when a contribution is added to an existing comversation' do
+      conversation = Factory.create(:user_generated_conversation)
+      contribution = Factory.create(:contribution_without_parent, conversation: conversation)
+      a = Activity.last
+      a.item_id.should == contribution.id
+      a.item_type.should == 'Contribution'
+    end
+
+    it 'does not create a new activity record for contributions on preview' do
+      conversation = Factory.create(:conversation)
+      contribution = Factory.create(:unconfirmed_contribution, id: 5, conversation: conversation)
+      a = Activity.last
+      a.item_id.should_not == contribution.id
+      a.item_type.should_not == 'Contribution'
+    end
+
+    it 'does not create a new activity record on update for contribution' do
+      contribution = Factory.create(:comment)
+      contribution.update_attributes(content: "changed my mind...")
+      a = Activity.where(item_id: contribution.id, item_type: 'Contribution')
+      a.size.should == 1
+    end
 
   end
 

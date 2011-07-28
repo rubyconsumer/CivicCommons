@@ -3,7 +3,7 @@ class ActivityObserver < ActiveRecord::Observer
   observe :contribution, :conversation, :rating_group
 
   def after_create(model)
-    unless model.is_a?(Contribution)
+    unless model.is_a?(Contribution) && !model.top_level_contribution?
       a = Activity.new(model)
       a.save
     end
@@ -11,7 +11,7 @@ class ActivityObserver < ActiveRecord::Observer
 
   def after_save(model)
     if model.is_a?(Contribution)
-      if model.confirmed && (model.issue || model != model.conversation.contributions.first)
+      if model.confirmed &&  model != model.conversation.contributions.first
         if Activity.where(item_id: model.id, item_type: 'Contribution').empty?
           a = Activity.new(model)
           a.save
