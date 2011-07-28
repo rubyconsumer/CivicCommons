@@ -13,8 +13,13 @@ class ContributionsController < ApplicationController
     @contribution = Contribution.new(params[:contribution])
     @contribution.item = @conversation
     @contribution.confirmed = true
-    @contribution.save
-    redirect_to conversations_node_show_path(@conversation.id, @contribution.id)
+    if @contribution.save
+      redirect_to conversations_node_show_path(@conversation.id, @contribution.id)
+    elsif @contribution.parent
+      redirect_to conversations_node_show_path(@conversation.id, @contribution.parent.id)
+    else
+      redirect_to conversations_path(@conversation.id)
+    end
   end
 
   def destroy

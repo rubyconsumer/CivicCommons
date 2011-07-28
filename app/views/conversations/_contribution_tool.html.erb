@@ -83,6 +83,12 @@
       }, 500);
     }
 
+    function scroll_to_element(element) {
+      $('html, body').animate({
+        scrollTop: element.offset().top
+      }, 500);
+    }
+
     $(document).ready(function() {
 
       $('.post_to_conversation').click(function(event) {
@@ -101,7 +107,7 @@
       $('#cancel-contribution').click(function(event) {
         event.preventDefault();
         hide_contribution_tool();
-        //clear_contribution_tool_form();
+        scroll_to_element($(this).parents('.contribution-thread-div'));
       });
 
       $('#contribution-add-link').click(function(event) {
@@ -136,37 +142,51 @@
 <div id="contrib" name="contrib" class="hidden" style="border-style: solid; border-width: 1px; border-color: #A9A9A9;text-align:left;">
   <%= form_for contribution, :as => :contribution, :url => conversation_contributions_path(conversation), :html => {:multipart => true} do |f| %>
 
-    <p id='contribution-title' style="font-weight:bold;">
+    <p id='contribution-title--after-buggy-expand-and-collapse-is-fixed' style="font-weight:bold;">
+      <div id='contribution-title' class="hack-to-prevent-old-expand-and-collapse-from-triggering" style="font-weight:bold;">
+      </div>
     </p>
 
     <%= f.hidden_field(:parent_id) %>
 
     <fieldset>
 
-      <p><%= profile_image(current_person, 20, '') %></p>
-
       <p>
-      <%= f.text_area(:content, :placeholder => "Leave a Comment...", :class => 'tinymce') %>
+      <div class="hack-to-prevent-old-expand-and-collapse-from-triggering">
+        <%= profile_image(current_person, 20, '') %>
+      </div>
       </p>
 
       <p>
+      <div class="hack-to-prevent-old-expand-and-collapse-from-triggering">
+        <%= f.text_area(:content, :placeholder => "Leave a Comment...", :class => 'tinymce') %>
+      </div>
+      </p>
+
+      <p>
+      <div class="hack-to-prevent-old-expand-and-collapse-from-triggering">
         <a href="#" id="contribution-add-link">Add a link to a related website</a>
         <br />
         <%= f.text_field(:url, :type => "text", :class => "textbox link", :placeholder => "(Optional) Share a link...", :style => 'display:none;') %>
+      </div>
       </p>
 
       <p>
+      <div>
         <a href="#" id="contribution-add-file">Upload a photograph, document, or other file</a>
         <br />
         <%= f.file_field(:attachment, :style => 'display:none;') %>
+      </div>
       </p>
-    
+
     </fieldset>
 
     <fieldset>
       <p>
+      <div class="hack-to-prevent-old-expand-and-collapse-from-triggering">
         <%= f.submit 'Leave my response', :class => 'submit' %>
         <%= link_to "Cancel", '#', :id => 'cancel-contribution' %>
+      </div>
       </p>
     </fieldset>
 
