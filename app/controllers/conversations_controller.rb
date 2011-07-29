@@ -10,6 +10,12 @@ class ConversationsController < ApplicationController
     :create_from_radioshow,
   ]
 
+  def search
+    @search = Conversation.solr_search do
+      keywords(params[:q])
+    end
+  end
+
   # GET /conversations
   def index
     @active = Conversation.includes(:participants).most_active.limit(3)
@@ -108,10 +114,12 @@ class ConversationsController < ApplicationController
       errors = ['There was a problem with our system. Please try again.']
     end
 
+    ratings = RatingGroup.ratings_for_conversation_by_contribution_with_count(@contribution.conversation, current_person)
+
     respond_to do |format|
       if errors.size == 0
-        format.js   { render(:partial => "conversations/new_contribution_preview", :locals => {:div_id => params[:div_id], :layout => false}) }
-        format.html { render(:partial => "conversations/new_contribution_preview", :locals => {:div_id => params[:div_id], :layout => 'application'}) }
+        format.js   { render(:partial => "conversations/new_contribution_preview", :locals => { :div_id => params[:div_id], :layout => false, :ratings => ratings }) }
+        format.html { render(:partial => "conversations/new_contribution_preview", :locals => { :div_id => params[:div_id], :layout => 'application', :ratings => ratings }) }
       else
         format.js   { render :json => errors, :status => :unprocessable_entity }
         format.html { render :text => errors, :status => :unprocessable_entity }
@@ -127,8 +135,8 @@ class ConversationsController < ApplicationController
     respond_to do |format|
       if @contribution.confirm!
         Subscription.create_unless_exists(current_person, @contribution.item)
-        format.js   { render :partial => "threaded_contribution_template", :locals => {:contribution => @contribution}, :status => (params[:preview] ? :accepted : :created) }
-        format.html   { render :partial => "threaded_contribution_template", :locals => {:contribution => @contribution}, :status => (params[:preview] ? :accepted : :created) }
+        format.js   { render :partial => "threaded_contribution_template", :locals => { :contribution => @contribution, :ratings => @ratings }, :status => (params[:preview] ? :accepted : :created) }
+        format.html   { render :partial => "threaded_contribution_template", :locals => { :contribution => @contribution, :ratings => @ratings }, :status => (params[:preview] ? :accepted : :created) }
       else
         format.js   { render :json => @contribution.errors, :status => :unprocessable_entity }
         format.html { render :text => @contribution.errors, :status => :unprocessable_entity }

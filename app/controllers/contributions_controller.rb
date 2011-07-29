@@ -45,16 +45,6 @@ class ContributionsController < ApplicationController
     end
   end
 
-  def moderate
-    @contribution = Contribution.find(params[:id])
-  end
-
-  def moderated
-    @contribution = Contribution.find(params[:id])
-    @contribution.moderate_content(params, current_person)
-    redirect_to conversation_path(@conversation)
-  end
-
   def create_confirmed_contribution
     @contribution = Contribution.create_node(params[:contribution], current_person, true)
     redirect_to("#{contribution_parent_page(@contribution)}#contribution#{@contribution.id}",
@@ -80,13 +70,21 @@ class ContributionsController < ApplicationController
     end
   end
 
+  def moderate
+    @contribution = Contribution.find(params[:id])
+  end
+
+  def moderated
+    @contribution = Contribution.find(params[:id])
+    @contribution.moderate_content(params, current_person)
+    redirect_to conversation_path(@conversation)
+  end
+
 private
 
   def load_conversation
     if params.has_key?(:conversation_id)
       @conversation = Conversation.find(params[:conversation_id])
-    elsif params.has_key?(:issue_id)
-      @issue = Issue.find(params[:issue_id])
     end
   end
 

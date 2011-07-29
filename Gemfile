@@ -28,8 +28,6 @@ gem 'hoptoad_notifier'
 
 gem 'remotipart'
 
-gem 'whenever', :require => false
-
 gem 'shoulda'
 gem 'paperclip', "2.3.8"
 gem 'delayed_paperclip'
@@ -37,6 +35,8 @@ gem 'aws-s3'
 gem 'nokogiri'
 gem 'sanitize'
 gem 'highline'
+
+gem 'sunspot_rails', '~> 1.2.1'
 
 # for testing, but needed globally because it add rake tasks
 gem 'single_test'

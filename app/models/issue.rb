@@ -4,8 +4,13 @@ class Issue < ActiveRecord::Base
   include Regionable 
   include GeometryForStyle
 
+  searchable do
+    text :name, :default_boost => 2
+    text :summary, :stored => true
+  end
+
   ALL_TYPES = ['Issue', 'ManagedIssue']
-  
+
   belongs_to :person
 
   has_and_belongs_to_many :conversations
@@ -13,19 +18,19 @@ class Issue < ActiveRecord::Base
   has_many :contributions
 
   has_many :subscriptions, :as => :subscribable, :dependent => :destroy
-  
+
   # Anyone who has contributed directly to the issue via a contribution
   has_many(:participants,
            :through => :contributions,
            :source => :person,
            :uniq => true)
-  
+
   has_attached_file(:image,
                     :styles => {
                       :normal => "480x300#",
                       :panel => "198x130#" },
                     :storage => :s3,
-                    :s3_credentials => S3Config.credential_file, 
+                    :s3_credentials => S3Config.credential_file,
                     :path => IMAGE_ATTACHMENT_PATH,
                     :default_url => '/images/issue_img_:style.gif')
 
@@ -33,7 +38,7 @@ class Issue < ActiveRecord::Base
 
   before_create :assign_position
 
-  validates :name, :presence => true, :length => { :minimum => 5 }  
+  validates :name, :presence => true, :length => { :minimum => 5 }
   validates_uniqueness_of :name
 
   scope(:most_active, :select =>
@@ -83,6 +88,19 @@ class Issue < ActiveRecord::Base
       self.update_positions(current_position, next_position + 1, previous_position)
     end
     Issue.assign_positions
+  end
+
+  def self.top_issues
+    Issue.all.sort_by do |issue|
+      issue.activity_weight
+    end
+  end
+
+  def activity_weight
+    visits = self.visits.count
+    contributions = self.contributions.count
+
+    @activity_weight = visits + contributions
   end
 
   def conversation_comments 

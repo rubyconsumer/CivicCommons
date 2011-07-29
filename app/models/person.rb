@@ -4,6 +4,13 @@ class Person < ActiveRecord::Base
   include GeometryForStyle
   include Marketable
 
+  searchable do
+    text :first_name, :default_boost => 2
+    text :last_name, :default_boost => 2
+    text :bio, :stored => true
+  end
+
+
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable, and :timeoutable
   devise :database_authenticatable,
@@ -16,8 +23,7 @@ class Person < ActiveRecord::Base
          :lockable,
          :omniauthable
 
-  attr_accessor :organization_name,
-                :send_welcome,
+  attr_accessor :send_welcome,
                 :create_from_auth,
                 :facebook_unlinking,
                 :send_email_change_notification
@@ -32,7 +38,6 @@ class Person < ActiveRecord::Base
                   :bio,
                   :website,
                   :twitter_username,
-                  :top,
                   :zip_code,
                   :admin,
                   :validated,
