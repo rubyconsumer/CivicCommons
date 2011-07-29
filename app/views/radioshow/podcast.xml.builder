@@ -4,7 +4,7 @@ xml.rss :version => '2.0', 'xmlns:itunes' => 'http://www.itunes.com/dtds/podcast
     xml.tag!('atom:link', :href => podcast_url(:format => :xml), :rel => "self", :type => "application/rss+xml")
     xml.title 'The Civic Commons Podcast'
     xml.link radioshow_index_url
-    xml.description 'The Civic Commons podcast is a dynamic half-hour public affairs program airing Saturday mornings on 88.7 FM, WJCU, featuring citizen voices more than talking heads, citizen commentaries instead of expert drones and hosts who are always looking for different ways to set the stage for discussion.'
+    xml.description 'The Civic Commons podcast is a dynamic half-hour public affairs program airing Saturday mornings on WJCU (88.7 FM, University Heights), and Tuesday evenings on WYSU (88.5 FM, Youngstown). It features citizen voices more than talking heads, citizen commentaries instead of expert drones, and hosts who are always looking for different ways to set the stage for discussion. Hosted by award-winning public radio host Dan Moulthrop, produced by Luke Frazier of NOW Productions with assistance from WJCU and edited by Daniel Steinberg of Dim Sum Thinking and Erica Brenner of Brenner Productions. The podcast is part of The Civic Commons, a regional effort to bring more citizens into the conversations that matter.'
     xml.copyright "(c) Copyright #{Date.today.strftime('%Y')} The Civic Commons"
     xml.image do
       xml.url "#{root_url}images/cc_podcast.jpg"
@@ -14,7 +14,7 @@ xml.rss :version => '2.0', 'xmlns:itunes' => 'http://www.itunes.com/dtds/podcast
     xml.language 'en-us'
     xml.pubDate Time.now.rfc822
     xml.lastBuildDate Time.now.rfc822
-    xml.tag!('itunes:summary', 'The Civic Commons podcast is a dynamic half-hour public affairs program airing Saturday mornings on 88.7 FM, WJCU, featuring citizen voices more than talking heads, citizen commentaries instead of expert drones and hosts who are always looking for different ways to set the stage for discussion.')
+    xml.tag!('itunes:summary', 'The Civic Commons podcast is a dynamic half-hour public affairs program airing Saturday mornings on WJCU (88.7 FM, University Heights), and Tuesday evenings on WYSU (88.5 FM, Youngstown). It features citizen voices more than talking heads, citizen commentaries instead of expert drones, and hosts who are always looking for different ways to set the stage for discussion. Hosted by award-winning public radio host Dan Moulthrop, produced by Luke Frazier of NOW Productions with assistance from WJCU and edited by Daniel Steinberg of Dim Sum Thinking and Erica Brenner of Brenner Productions. The podcast is part of The Civic Commons, a regional effort to bring more citizens into the conversations that matter.')
 	xml.tag!('itunes:subtitle', 'Weekly Radio Show Podcast')
 	xml.tag!('itunes:author', 'The Civic Commons')
     xml.tag!('itunes:owner') do
