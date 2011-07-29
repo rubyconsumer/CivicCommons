@@ -11,6 +11,7 @@ module HelperMethods
     fill_in 'Email', with: user.email
     fill_in 'Password', with: user.password
     click_button 'Login'
+    return user
   end
 
   def logged_in_as_admin

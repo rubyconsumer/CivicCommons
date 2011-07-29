@@ -1,4 +1,5 @@
 require File.expand_path(File.dirname(__FILE__) + '/acceptance_helper')
+
 WebMock.allow_net_connect!
 Capybara.default_wait_time = 10
 
@@ -28,7 +29,7 @@ feature "Add contribution", %q{
   background do
 
     # Given I am logged in
-    logged_in_user
+    @user = logged_in_user
     
     # Then a conversation with at least one contribution exists
     @contribution = Factory.create(:contribution_without_parent, :override_confirmed => true)
@@ -198,6 +199,9 @@ feature "Add contribution", %q{
     # Then I should see my contribution
     convo_page.should have_content(content)
 
+    # Then I should see a link to my profile
+    contrib.should have_link(@user.name)
+
     # And I should not see the contribution tool
     contrib.should_not be_visible
 
@@ -224,6 +228,9 @@ feature "Add contribution", %q{
 
     # Then I should see a link to my url
     contrib.should have_css("a[href='#{url}']")
+
+    # Then I should see a link to my profile
+    contrib.should have_link(@user.name)
 
     # And I should not see the contribution tool
     contrib.should_not be_visible
@@ -285,6 +292,9 @@ feature "Add contribution", %q{
     # Then I should see a link to my url
     contrib.should have_css("a[href='#{url}']")
 
+    # Then I should see a link to my profile
+    contrib.should have_link(@user.name)
+
     # And I should not see the contribution tool
     contrib.should_not be_visible
 
@@ -317,6 +327,9 @@ feature "Add contribution", %q{
 
     # Then I should see a link to my file
     convo_page.should have_link('Download attached file')
+
+    # Then I should see a link to my profile
+    contrib.should have_link(@user.name)
 
     # And I should not see the contribution tool
     contrib.should_not be_visible
@@ -353,6 +366,9 @@ feature "Add contribution", %q{
 
     # Then I should see a link to my file
     convo_page.should have_link('Download attached file')
+
+    # Then I should see a link to my profile
+    contrib.should have_link(@user.name)
 
     # And I should not see the contribution tool
     contrib.should_not be_visible
@@ -395,6 +411,9 @@ feature "Add contribution", %q{
 
     # Then I should see a link to my file
     convo_page.should have_link('Download attached file')
+
+    # Then I should see a link to my profile
+    contrib.should have_link(@user.name)
 
     # And I should not see the contribution tool
     contrib.should_not be_visible

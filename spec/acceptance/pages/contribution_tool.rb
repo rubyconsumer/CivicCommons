@@ -7,6 +7,8 @@ class ContributionTool < PageObject
   end
 
   def visible?
+    #NOTE: This seems like a bad way to do this and it is prone
+    # to false failures, but I can't think of a better way - Jerry
     @page.has_css?('#contrib') and @page.has_no_css?('#contrib.hidden')
   end
   

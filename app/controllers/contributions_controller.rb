@@ -3,6 +3,7 @@ class ContributionsController < ApplicationController
 
   before_filter :load_conversation, only: [:edit, :update, :moderate, :moderated]
   before_filter :verify_admin, only: [:moderate, :moderated]
+  before_filter :require_user, onlu: [ :create ]
 
   def create
     @conversation = Conversation.find(params[:conversation_id])
@@ -11,6 +12,7 @@ class ContributionsController < ApplicationController
       embedly.fetch_and_merge_params!(params)
     end
     @contribution = Contribution.new(params[:contribution])
+    @contribution.person = current_person
     @contribution.item = @conversation
     @contribution.confirmed = true
 
