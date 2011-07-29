@@ -37,7 +37,7 @@ class IssuesController < ApplicationController
   def create_contribution
     @issue = Issue.find(params[:id])
     params[:contribution].merge!(:issue_id => @issue.id)
-    unless params[:contribution][:url].nil?
+    unless params[:contribution][:url].blank?
       embedly = EmbedlyService.new
       embedly.fetch_and_merge_params!(params)
     end

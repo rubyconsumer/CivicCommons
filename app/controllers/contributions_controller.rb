@@ -6,7 +6,7 @@ class ContributionsController < ApplicationController
 
   def create
     @conversation = Conversation.find(params[:conversation_id])
-    unless params[:contribution][:url].nil?
+    unless params[:contribution][:url].blank?
       embedly = EmbedlyService.new
       embedly.fetch_and_merge_params!(params)
     end

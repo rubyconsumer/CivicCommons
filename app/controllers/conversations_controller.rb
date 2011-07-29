@@ -94,7 +94,7 @@ class ConversationsController < ApplicationController
   def preview_node_contribution
 
     errors = []
-    unless params[:contribution][:url].nil?
+    unless params[:contribution][:url].blank?
       embedly = EmbedlyService.new
       embedly.fetch_and_merge_params!(params)
     end

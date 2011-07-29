@@ -3,14 +3,6 @@
   <%= javascript_include_tag 'vendor/tiny_mce/jquery.tinymce.js' %>
 
   <style type="text/css">
-    .visible
-    {
-      position:absolute;
-      right:0px;
-      top:auto;
-      overflow:visible;
-    }
-
     .hidden 
     {
       position:absolute;
@@ -167,6 +159,7 @@
       <div class="hack-to-prevent-old-expand-and-collapse-from-triggering">
         <a href="#" id="contribution-add-link">Add a link to a related website</a>
         <br />
+        <br />
         <%= f.text_field(:url, :type => "text", :class => "textbox link", :placeholder => "(Optional) Share a link...", :style => 'display:none;') %>
       </div>
       </p>
@@ -174,6 +167,7 @@
       <p>
       <div>
         <a href="#" id="contribution-add-file">Upload a photograph, document, or other file</a>
+        <br />
         <br />
         <%= f.file_field(:attachment, :style => 'display:none;') %>
       </div>
