@@ -3,7 +3,7 @@ class ContributionsController < ApplicationController
 
   before_filter :load_conversation, only: [:edit, :update, :moderate, :moderated]
   before_filter :verify_admin, only: [:moderate, :moderated]
-  before_filter :require_user, onlu: [ :create ]
+  before_filter :require_user, only: [ :create ]
 
   def create
     @conversation = Conversation.find(params[:conversation_id])
