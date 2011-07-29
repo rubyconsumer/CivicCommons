@@ -939,6 +939,25 @@ padding-top: 15px;
 
 /*- Conversation Divider ----------*/
 
+/*--- New Hottness --*/
+
+.hide_contrib_tool 
+{
+  position:absolute;
+  left:-10000px;
+  top:auto;
+  overflow:hidden;
+  }
+  .contrib_tool_container
+  {
+    border-style: solid;
+    border-width: 1px;
+    border-color: #A9A9A9;
+    text-align:left;
+  }
+
+/*--- Old Busted --*/
+
 .comment {padding-bottom: 0;}
 /* These styles are added via JS in javascripts/lib/conversations/show.js:
 div.contribution-container.collapsed > .comment > .content p {

@@ -5,6 +5,8 @@ class EmbedlyService
   # http://explore.embed.ly/
   # http://api.embed.ly/
 
+  HTTP = /^https?:\/\//i
+
   attr_reader :properties
   attr_reader :error
   attr_reader :error_code
@@ -21,6 +23,7 @@ class EmbedlyService
   def fetch(url, opts = {})
     clear_state
     opts[:url] = url.strip
+    opts[:url] = "http://#{opts[:url]}" if opts[:url].match(HTTP).nil?
     opts[:wmode] = 'opaque'
     objs = @embedly.objectify(opts)
     @properties = objs[0].marshal_dump
