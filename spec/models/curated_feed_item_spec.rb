@@ -34,7 +34,10 @@ describe CuratedFeedItem do
   context "objectify" do
 
     it "builds the raw data into an object model" do
-      pending
+      feed = CuratedFeedItem.new
+      feed.raw = fixture_content('curated_feed_objectify.json')
+      feed.objectify.provider_url.should == 'http://blog.cleveland.com/'
+      feed.objectify.images.first.url.should == 'http://media.cleveland.com//avatars/img_5657t.jpg'
     end
 
   end
