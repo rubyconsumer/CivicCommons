@@ -39,6 +39,7 @@ stub_request(:any, %r{http://www.yahoo.com/}).
   to_return(:body => "<html><title>Yahoo!</title><body></body></html>")
 stub_request(:any, %r{http://www.youtube.com/}).
   to_return(:body => "<html><title>YouTube - David Perron Goal vs Islanders - November 21 2009</title><body></body></html>")
+stub_request(:post, "http://localhost:8981/solr/update?wt=ruby").to_return(:status => 200, :body => "", :headers => {})
 
 $encrypted_passwords = Hash.new
 
