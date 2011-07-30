@@ -7,7 +7,9 @@
       <p><%= auto_link(option.description)  %></p>
     </div>
   </div>
-  <div class="select" title="Select this option">></div>
+  <div class="select" title="Select this option">
+    <span class="select-icon">></span>
+  </div>
   <div class="unselect" title = "Remove this">(x)</div>
   <div class="menu">
     <%= link_to "Read More", '#', :class => 'expand' unless option.description.blank?%>

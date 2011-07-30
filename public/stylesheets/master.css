@@ -433,15 +433,24 @@ div.three-col-sm div.photobank img {margin: 0 0 6px 6px;}
 
 .survey-option .content{
   float:left;
-  width:80%;
+  width:350px;
 }
 .survey-option .menu{
   float:right;
-  width:18%;
+  width:78px;
 }
 .survey-option .select{
+  display: block;
+  margin: -10px;
+  height: 100%;*/
+  min-height: 2em;
+  padding: 10px;
+  background-color: #99AC5D;
+  background-image: url(/images/voting-arrow-background.png);
+  color: #ffffff;
+  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#A2B562), to(#96A957));
+  background: -moz-linear-gradient(center top , #A2B562, #96A957);
   float:right;
-  width:2%;
   cursor: pointer;
 }
 .survey-option .unselect{
@@ -470,19 +479,18 @@ div.three-col-sm div.photobank img {margin: 0 0 6px 6px;}
 .survey-options .survey-option .unselect{
   display: none;
 }
-.survey-options .survey-option .select{
-  display: block;
-  margin: -10px;
-  height: 100%;
-/*  min-height: 2em;*/
-  padding: 10px;
-  
-  background-color: #99AC5D;
-  color: #ffffff;
-  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#A2B562), to(#96A957));
-  background: -moz-linear-gradient(center top , #A2B562, #96A957);
-  
+
+.survey-options .survey-option .select .select-icon{
+  background-image: url(/images/voting-arrow.png);
+  text-indent: -9999px;
+  height: 15px;
+  width:15px;
+  margin-left:-6px;
+  margin-right:-9px;
+  margin-top: -3px;
+  display:block;
 }
+
 
 
 .selected-survey-options{
@@ -522,7 +530,6 @@ div.three-col-sm div.photobank img {margin: 0 0 6px 6px;}
 .selected-survey-options .survey-option .select{
   display: none;
 }
-
 
 .selected-survey-options .sortable-wrapper{
   border: solid #687A2E 1px;
