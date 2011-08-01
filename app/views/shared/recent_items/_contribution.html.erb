@@ -39,7 +39,7 @@ elsif contribution.conversation
     link_url = conversation_node_path( contribution )
   else
     posted_text = contribution.conversation.title
-    posted_url = conversation_path( contribution.conversation )
+    posted_url = conversation_path( contribution.conversation.id )
     link_url = conversation_node_path( contribution )
   end
 end
