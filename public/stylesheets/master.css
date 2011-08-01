@@ -462,6 +462,28 @@ div.three-col-sm div.photobank img {margin: 0 0 6px 6px;}
   clear: both;
 }
 
+.survey-option .select .select-icon{
+  background-image: url(/images/voting-arrow.png);
+  text-indent: -9999px;
+  height: 15px;
+  width:15px;
+  margin-left:-6px;
+  margin-right:-9px;
+  margin-top: -3px;
+  display:block;
+}
+
+.survey-option .unselect .unselect-icon{
+  background-image: url(/images/voting-close.png);
+  text-indent: -9999px;
+  height: 22px;
+  width:22px;
+  margin-left:-5px;
+  display:block;
+}
+
+
+
 .survey-options .sortable{
   min-height: 15em;
 }
@@ -480,16 +502,8 @@ div.three-col-sm div.photobank img {margin: 0 0 6px 6px;}
   display: none;
 }
 
-.survey-options .survey-option .select .select-icon{
-  background-image: url(/images/voting-arrow.png);
-  text-indent: -9999px;
-  height: 15px;
-  width:15px;
-  margin-left:-6px;
-  margin-right:-9px;
-  margin-top: -3px;
-  display:block;
-}
+
+
 
 
 

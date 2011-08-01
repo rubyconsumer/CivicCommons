@@ -10,7 +10,9 @@
   <div class="select" title="Select this option">
     <span class="select-icon">></span>
   </div>
-  <div class="unselect" title = "Remove this">(x)</div>
+  <div class="unselect" title = "Remove this">
+    <span class="unselect-icon">(x)</span>
+  </div>
   <div class="menu">
     <%= link_to "Read More", '#', :class => 'expand' unless option.description.blank?%>
     <%= link_to "Read Less", '#', :class => 'contract' unless option.description.blank?%>
