@@ -167,8 +167,8 @@ class Activity < ActiveRecord::Base
         end
       end
     end
-    obj = clazz.new(data)
-    obj.id = data['id']
+    data['__class__'] = clazz.to_s
+    obj = GenericObject.new(data)
     return obj
   end
 
