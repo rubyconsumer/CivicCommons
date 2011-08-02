@@ -111,7 +111,7 @@ describe Contribution do
       @person = Factory.create(:registered_user)
       @old_contribution = Factory.create(:contribution, {:created_at => Time.now - 35.minutes, :person => @person})
       @new_contribution = Factory.create(:contribution, {:created_at => Time.now - 5.minutes, :person => @person})
-      @new_params = { 'content' => "Some new comment", 'url' => "http://www.example.com/some-other-link" }
+      @new_params = {:contribution => { 'content' => "Some new comment", 'url' => "http://www.example.com/some-other-link" } }
     end
 
     context "as the contributing user" do
@@ -136,14 +136,14 @@ describe Contribution do
 
       it "allows editing by the user within 30 minutes of creation" do
         @new_contribution.update_attributes_by_user(@new_params, @person)
-        @new_contribution.content.should == @new_params['content']
-        @new_contribution.url.should == @new_params['url']
+        @new_contribution.content.should == @new_params[:contribution]['content']
+        @new_contribution.url.should == @new_params[:contribution]['url']
       end
 
       it "disallows editing by the user if older than 30 minutes" do
         @old_contribution.update_attributes_by_user(@new_params, @person)
-        @new_contribution.content.should_not == @new_params['content']
-        @new_contribution.url.should_not == @new_params['url']
+        @new_contribution.content.should_not == @new_params[:contribution]['content']
+        @new_contribution.url.should_not == @new_params[:contribution]['url']
         @old_contribution.should have_generic_error(:base, /Contributions cannot be edited if they are older than 30 minutes or have any responses./)
       end
 
@@ -157,11 +157,11 @@ describe Contribution do
       it "only updates updateable parameters" do
         @non_updateable_params = {:parent_id => @new_contribution.id + 1}
         @new_contribution.update_attributes_by_user(@new_params.merge(@non_updateable_params), @person)
-        @new_params.each do |key, value|
-          @new_contribution[key].should == value
+        @new_params[:contribution].each_pair do |key, value|
+          @new_contribution.send(key.to_s).should == value
         end
-        @non_updateable_params.each do |key, value|
-          @new_contribution[key].should_not == value
+        @non_updateable_params.each_pair do |key, value|
+          @new_contribution.send(key.to_s).should_not == value
         end
       end
     end
@@ -179,8 +179,8 @@ describe Contribution do
 
       it "allows editing by an admin at any time" do
         @old_contribution.update_attributes_by_user(@new_params, @admin_person)
-        @old_contribution.content.should == @new_params['content']
-        @old_contribution.url.should == @new_params['url']
+        @old_contribution.content.should == @new_params[:contribution]['content']
+        @old_contribution.url.should == @new_params[:contribution]['url']
       end
 
     end
@@ -278,7 +278,7 @@ describe Contribution do
 
     it "updates the attached file if file is specified" do
       @attached_file.should_receive(:save_attached_files)
-      @attached_file.update_attributes_by_user({:attachment => File.new(Rails.root + 'test/fixtures/images/test_image2.jpg')}, @person)
+      @attached_file.update_attributes_by_user({contribution: {:attachment => File.new(Rails.root + 'test/fixtures/images/test_image2.jpg')}}, @person)
       @attached_file.attachment_file_name.should == "test_image2.jpg"
     end
 
@@ -299,7 +299,7 @@ describe Contribution do
 
     it "updates the URL if new URL is specified" do
       new_url = 'http://www.example.com/some-other-link'
-      @link.update_attributes_by_user({:url => new_url}, @person)
+      @link.update_attributes_by_user({ contribution: {:url => new_url} }, @person)
       @link.url.should == new_url
     end
 
