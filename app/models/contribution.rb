@@ -218,9 +218,12 @@ class Contribution < ActiveRecord::Base
   # Edit/Moderate/Delete
 
   def update_attributes_by_user(params, user)
-    params = params.select{ |k,v| ['content', 'url', 'attachment'].include?(k.to_s) && !v.blank? }
     if self.editable_by?(user)
-      self.update_attributes(params)
+      if params.has_key?(:contributions)
+        self.update_attributes(params[:contributions])
+      else
+        self.update_attributes(params[:contribution])
+      end
     else
       self.errors[:base] << "Contributions cannot be edited if they are older than 30 minutes or have any responses."
       return false
