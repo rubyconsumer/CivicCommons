@@ -1492,11 +1492,13 @@ var NUMERIC = "[.\\d]";
     if (appVersion < 7) {
       IE7.CSS.addRecalc("max-width", NUMERIC, layout.maxWidth);
       IE7.CSS.addRecalc("right", NUMERIC, fixRight);
-    }/* else if (appVersion == 7) {
+    } else if (appVersion == 7) {
       if (HEIGHT) IE7.CSS.addRecalc("height", "[\\d.]+%", function(element) {
-        element.runtimeStyle.pixelHeight = parseInt(layoutWidth(element) * element.currentStyle["ie7-height"].slice(0, -1) / 100);
+        if (typeof element.currentStyle["ie7-height"] != 'undefined') {
+          element.runtimeStyle.pixelHeight = parseInt(layoutWidth(element) * element.currentStyle["ie7-height"].slice(0, -1) / 100);
+        }
       });
-    }*/
+    }
   };
 
   eval("var _fixHeight=" + rotate(_fixWidth));
