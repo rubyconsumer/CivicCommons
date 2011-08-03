@@ -218,7 +218,8 @@ describe Activity do
       comment = Factory.create(:comment)
       encoded_comment = Activity.encode(comment)
       decoded_comment = Activity.decode(encoded_comment)
-      decoded_comment.class.should == Contribution
+      decoded_comment.class == GenericObject
+      decoded_comment.__class__ == 'Contribution'
       decoded_comment.id.should == comment.id
       decoded_comment.content.should == comment.content
     end
@@ -227,7 +228,8 @@ describe Activity do
       conversation = Factory.create(:conversation)
       encoded_conversation = Activity.encode(conversation)
       decoded_conversation = Activity.decode(encoded_conversation)
-      decoded_conversation.class == Conversation
+      decoded_conversation.class == GenericObject
+      decoded_conversation.__class__ == 'Conversation'
       decoded_conversation.summary.should == conversation.summary
       decoded_conversation.id.should == conversation.id
     end
@@ -236,7 +238,8 @@ describe Activity do
       rating_group = Factory.create(:rating_group)
       encoded_rating_group = Activity.encode(rating_group)
       decoded_rating_group = Activity.decode(encoded_rating_group)
-      decoded_rating_group.class == RatingGroup
+      decoded_rating_group.class == GenericObject
+      decoded_rating_group.__class__ == 'RatingGroup'
       decoded_rating_group.conversation_id.should == rating_group.conversation_id
       decoded_rating_group.person_id.should == rating_group.person_id
     end

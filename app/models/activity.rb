@@ -91,6 +91,12 @@ class Activity < ActiveRecord::Base
       elsif item.is_a? type and not item.is_a? Contribution
         ok = true
         break
+      elsif item.is_a? GenericObject and item.__class__ == 'Contribution' and not item.top_level_contribution?
+        ok = true
+        break
+      elsif item.is_a? GenericObject and item.__class__ == type.to_s and not item.__class__ == 'Contribution'
+        ok = true
+        break
       end
     end
     return ok

@@ -43,7 +43,7 @@ describe ActivityPresenter do
       count.should == @presenter.size
     end
 
-    it "returns the real item (not the activity record)" do
+    it "returns a GenericObject representation of a cached item from the Activity record" do
       @presenter.each do |item|
         Activity.valid_type?(item).should be_true
       end
