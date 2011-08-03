@@ -1496,6 +1496,8 @@ var NUMERIC = "[.\\d]";
       if (HEIGHT) IE7.CSS.addRecalc("height", "[\\d.]+%", function(element) {
         if (typeof element.currentStyle["ie7-height"] != 'undefined') {
           element.runtimeStyle.pixelHeight = parseInt(layoutWidth(element) * element.currentStyle["ie7-height"].slice(0, -1) / 100);
+        } else {
+          element.runtimeStyle.pixelHeight = parseInt(layoutWidth(element));
         }
       });
     }
