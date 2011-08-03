@@ -56,7 +56,7 @@ class ContributionsController < ApplicationController
   def edit
     @contribution = Contribution.find(params[:id])
     respond_to do |format|
-      format.js { render(:partial => 'conversations/new_contribution_form', :locals => {:div_id => "show-contribution-#{@contribution.id}", :type => @contribution.type.underscore.to_sym, :subtype => nil}, :layout => false) }
+      format.js { render(:partial => 'conversations/new_contribution_form', :locals => {:div_id => "show-contribution-#{@contribution.id}"}, :layout => false) }
     end
   end
 
