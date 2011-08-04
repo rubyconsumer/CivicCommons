@@ -1,10 +1,11 @@
 module ConversationsHelper
+
   def format_rating(contribution)
     return "" unless contribution.total_rating
     out = contribution.total_rating > 0 ? "+" : ""
     out += contribution.total_rating.to_s
   end
-  
+
   def format_user_rating(value)
     return case value
     when 1
@@ -18,7 +19,7 @@ module ConversationsHelper
      return "no particular time" if t.nil?
      return t.localtime.strftime("%c")
   end
-  
+
   def format_time_only(t)
     return t.localtime.strftime("%l:%M %p") unless t.nil?
   end
@@ -26,7 +27,7 @@ module ConversationsHelper
   def format_date(t)
     t.localtime.strftime("%b %e, %G") unless t.blank?
   end
-  
+
   def contribution_action_past_tense(contribution)
     if contribution.comment_only?
       action = 'commented'
@@ -159,13 +160,13 @@ module ConversationsHelper
   end
 
   def format_comment(contribution)
-    unless contribution.content.blank?
-      text = contribution.content.gsub(/([^\n]\n)(?=[^\n])/, ' ') # 1 newline   -> space
-      auto_link(simple_format(text))
-    end
+    return '<p class="expand-text">(Click to expand)</p>'.html_safe if contribution.content.blank?
+    text = '<i>' + contribution.created_at.strftime('%b %d, %Y %I:%M%p') + '</i>: ' + contribution.content.gsub(/([^\n]\n)(?=[^\n])/, ' ') # 1 newline   -> space
+    auto_link(simple_format(text))
   end
 
   def respond_button_text(contribution)
     current_person && contribution.person == current_person ? "Add More" : "Respond#{' to ' + contribution.person.first_name if contribution.person}"
   end
+
 end

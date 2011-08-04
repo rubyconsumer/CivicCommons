@@ -287,10 +287,15 @@
     selectResponseFromHash();
   });
 
-  $('.collapsed .comment p, .uncollapsed .comment p')
+  $('.collapsed .comment p, .uncollapsed .comment p, .collapsed .comment a.contribution-toggle, .uncollapsed .comment a.contribution-toggle')
     .live('click', function(e){
+      e.preventDefault();
       var $div = $(this).closest('.collapsed, .uncollapsed'),
           s = document.documentElement.style;
+
+      if ($(this).hasClass('contribution-toggle')) {
+        $(this).toggleClass('active');
+      }
 
       if (!('textOverflow' in s || 'OTextOverflow' in s)) {
         var newDiv = $div.clone().toggleClass('collapsed uncollapsed');
@@ -298,7 +303,9 @@
       } else {
         $div.toggleClass('collapsed uncollapsed');
       }
+
       e.stopPropagation(); // needed to prevent repeated firing since '.collapsed .comment' are nested
+
   });
 
   var collapsedStyle = 'div.contribution-container.collapsed > .comment > .content p {';

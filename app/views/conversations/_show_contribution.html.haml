@@ -1,13 +1,14 @@
 - unless defined? collapsed then collapsed = true end
 - if contribution.top_level_contribution
   =render :partial => "top_level_contribution", :locals => { :contribution => contribution }
-- else  
+- else
   %div.content
     %span.contribution-person-name= person_display_name(contribution.person)
     - if true == collapsed
       %p
         %em (Click here to expand/collapse...)
     = format_comment(contribution)
+    %a{href:"#", class:"contribution-toggle"}Toggle
     - if contribution.embedly_type
       %div.link-meta
         %p.content.embedded
