@@ -293,13 +293,19 @@
       var $div = $(this).closest('.collapsed, .uncollapsed'),
           s = document.documentElement.style;
 
+      if ($(this).hasClass('contribution-toggle')) {
+        $(this).toggleClass('active');
+      }
+
       if (!('textOverflow' in s || 'OTextOverflow' in s)) {
         var newDiv = $div.clone().toggleClass('collapsed uncollapsed');
         $div.replaceWith(newDiv);
       } else {
         $div.toggleClass('collapsed uncollapsed');
       }
+
       e.stopPropagation(); // needed to prevent repeated firing since '.collapsed .comment' are nested
+
   });
 
   var collapsedStyle = 'div.contribution-container.collapsed > .comment > .content p {';
