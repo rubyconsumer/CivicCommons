@@ -287,8 +287,9 @@
     selectResponseFromHash();
   });
 
-  $('.collapsed .comment p, .uncollapsed .comment p')
+  $('.collapsed .comment p, .uncollapsed .comment p, .collapsed .comment a.contribution-toggle, .uncollapsed .comment a.contribution-toggle')
     .live('click', function(e){
+      e.preventDefault();
       var $div = $(this).closest('.collapsed, .uncollapsed'),
           s = document.documentElement.style;
 
