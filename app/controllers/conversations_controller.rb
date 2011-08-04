@@ -31,6 +31,10 @@ class ConversationsController < ApplicationController
   # GET /conversations/rss
   def rss
     @conversations = Conversation.where("created_at >= '#{1.month.ago}'").order(:created_at => :desc)
+    respond_to do |format|
+      format.html { redirect_to(conversations_url) }
+      format.xml
+    end
   end
 
   def filter
