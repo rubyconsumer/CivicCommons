@@ -293,9 +293,7 @@
       var $div = $(this).closest('.collapsed, .uncollapsed'),
           s = document.documentElement.style;
 
-      if ($(this).hasClass('contribution-toggle')) {
-        $(this).toggleClass('active');
-      }
+      $div.find('a.contribution-toggle').toggleClass('active');
 
       if (!('textOverflow' in s || 'OTextOverflow' in s)) {
         var newDiv = $div.clone().toggleClass('collapsed uncollapsed');
