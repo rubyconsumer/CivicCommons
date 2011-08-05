@@ -9,8 +9,9 @@ if notify_deploy_environments.include?(@configuration[:environment]) && notify_d
   run "echo Setting up AirBrake to send deployment information..."
   run "echo     TO: #{@configuration[:environment]}"
   run "echo     REVISION: #{@configuration[:revision]}"
-  run "echo     REPO: #{@configuration[:repository]}"
-  run "cd #{release_path} && bundle exec rake hoptoad:deploy TO=#{@configuration[:environment]} REVISION=#{@configuration[:revision]} REPO=#{@configuration[:repository]}"
+  run "echo     REPO: #{@configuration[:repo]}"
+  run "echo     configuration: #{@configuration.inspect}"
+  run "cd #{release_path} && bundle exec rake hoptoad:deploy TO=#{@configuration[:environment]} REVISION=#{@configuration[:revision]} REPO=#{@configuration[:repo]}"
   run "echo Finished setting up AirBrake to send deployment information"
 end
 
