@@ -12,7 +12,7 @@ else
 end
 
 # Link to Hoptoad Config In Staging and Production
-if current_environment == "production" || current_environment == "staging" || current_environment == "integration"
+if current_environment == "production" || current_environment == "staging"
   run "echo Config Hoptoad Connection..."
   run "ln -nfs #{shared_path}/config/initializers/hoptoad.rb #{release_path}/config/initializers/hoptoad.rb"
 else
