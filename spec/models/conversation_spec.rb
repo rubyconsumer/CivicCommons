@@ -186,7 +186,7 @@ describe Conversation do
 
   describe "when creating a user-generated conversation" do
     before(:each) do
-      @person = Factory.build(:normal_person)
+      @person = Factory.create(:normal_person)
 
       @contributions = {
         "0" => Factory.build(:comment, :owner => @person.id, :conversation => nil, :parent => nil).attributes,
@@ -235,6 +235,13 @@ describe Conversation do
     it "raises error if conversation created with no associated issues" do
       @conversation.issues = []
       @conversation.should have_validation_error(:issues)
+    end
+
+    it "automatically subscribes owner to conversation" do
+      Subscription.delete_all
+      @person.reload.subscriptions.length.should == 0
+      @conversation.save
+      @person.reload.subscriptions.length.should == 1
     end
   end
 
@@ -331,6 +338,15 @@ describe Conversation do
       conversation = Factory.create(:conversation, { title: 'Conversation 4' })
       conversation = Conversation.find_by_id(conversation.id)
       conversation.position.should == 3
+    end
+
+    it "automatically subscribes owner to conversation" do
+      Subscription.delete_all
+      owner = Factory.create(:normal_person)
+      conversation = Factory.build(:conversation, owner: owner.id)
+      owner.subscriptions.length.should == 0
+      conversation.save
+      owner.reload.subscriptions.length.should == 1
     end
   end
 

@@ -52,7 +52,7 @@ class Conversation < ActiveRecord::Base
   validates_presence_of :summary, :message => "Please give us a short summary."
   validates_presence_of :zip_code, :message => "Please give us a zip code for a little geographic context."
 
-  after_create :set_initial_position
+  after_create :set_initial_position, :subscribe_creator
   before_destroy :destroy_root_contributions # since non-root contributions will be destroyed internally be awesome_nested_set
 
   has_friendly_id :title, :use_slug => true, :strip_non_ascii => true
@@ -182,7 +182,7 @@ class Conversation < ActiveRecord::Base
       started_at.mday
     end
   end
-  
+
   def set_initial_position
     max = Conversation.maximum(:position)
     if max
@@ -190,6 +190,10 @@ class Conversation < ActiveRecord::Base
     else
       self.update_attribute(:position, 0)
     end
+  end
+
+  def subscribe_creator
+    Subscription.create_unless_exists(person, self)
   end
 
   protected
