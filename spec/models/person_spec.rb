@@ -524,10 +524,10 @@ describe Person do
     end
 
     it "will delete all subscriptions" do
-      Factory.create(:conversation_subscription, person: @person)
+      Factory.create(:conversation, owner: @person.id)
       Factory.create(:issue_subscription, person: @person)
 
-      Subscription.find(:all).length.should == 2
+      @person.subscriptions.length.should == 2
       @person.destroy
       Subscription.find(:all).length.should == 0
     end
