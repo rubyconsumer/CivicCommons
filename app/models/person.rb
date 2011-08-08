@@ -4,11 +4,12 @@ class Person < ActiveRecord::Base
   include GeometryForStyle
   include Marketable
 
-  searchable do
-    text :first_name, :default_boost => 2
-    text :last_name, :default_boost => 2
-    text :bio, :stored => true
-  end
+# Commented search for production build since it is not ready
+#  searchable do
+#    text :first_name, :default_boost => 2
+#    text :last_name, :default_boost => 2
+#    text :bio, :stored => true
+#  end
 
 
   # Include default devise modules. Others available are:
