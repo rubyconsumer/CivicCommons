@@ -107,7 +107,6 @@ describe DigestService do
       @person_with_subs = Factory.create(:registered_user, :name => 'I Subscribe', :daily_digest => true, :avatar => nil)
       @contributor = Factory.create(:registered_user, :name => 'Big Talker', :avatar => nil)
       @convo_fresh_with_subs = Factory.create(:conversation, :title => 'Fresh with Subscriptions')
-      @sub_fresh = Factory.create(:conversation_subscription, :person => @person_with_subs, :subscribable => @convo_fresh_with_subs)
       @first_contribution = Factory.create(:contribution, :person => @contributor, :conversation => @convo_fresh_with_subs, :created_at => 1.day.ago)
 
       digest = DigestService.new
