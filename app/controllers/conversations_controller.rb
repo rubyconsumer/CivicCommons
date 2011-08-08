@@ -10,11 +10,12 @@ class ConversationsController < ApplicationController
     :create_from_radioshow,
   ]
 
-  def search
-    @search = Conversation.solr_search do
-      keywords(params[:q])
-    end
-  end
+# Commented search for production build since it is not ready
+#  def search
+#    @search = Conversation.solr_search do
+#      keywords(params[:q])
+#    end
+#  end
 
   # GET /conversations
   def index

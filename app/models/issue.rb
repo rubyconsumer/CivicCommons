@@ -4,10 +4,11 @@ class Issue < ActiveRecord::Base
   include Regionable 
   include GeometryForStyle
 
-  searchable do
-    text :name, :default_boost => 2
-    text :summary, :stored => true
-  end
+# Commented search for production build since it is not ready
+#  searchable do
+#    text :name, :default_boost => 2
+#    text :summary, :stored => true
+#  end
 
   ALL_TYPES = ['Issue', 'ManagedIssue']
   
