@@ -169,6 +169,7 @@ class ConversationsController < ApplicationController
     prep_convo(params)
     respond_to do |format|
       if @conversation.save
+        Subscription.create_unless_exists(current_person, @conversation)
         format.html { redirect_to(new_invite_path(:source_type => :conversations, :source_id => @conversation.id, :conversation_created => true), :notice => 'Your conversation has been created!') }
       else
         #TODO: Find a better way to handle errors on submission
@@ -193,6 +194,7 @@ class ConversationsController < ApplicationController
       if @conversation.save
         @blog_post.conversation = @conversation
         @blog_post.save
+        Subscription.create_unless_exists(current_person, @conversation)
         redirect_to conversation_path(@conversation)
       else
         render 'blog/show'
@@ -215,6 +217,7 @@ class ConversationsController < ApplicationController
       if @conversation.save
         @radioshow.conversation = @conversation
         @radioshow.save
+        Subscription.create_unless_exists(current_person, @conversation)
         redirect_to conversation_path(@conversation)
       else
         render 'radioshow/show'
