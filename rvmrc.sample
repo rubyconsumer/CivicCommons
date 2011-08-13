@@ -1,0 +1,28 @@
+# setup ruby environment
+rvm 1.9.2-p290@commons
+CC=/usr/bin/gcc-4.2 
+
+# set local aliases
+alias rc='bundle exec rails console'
+alias rs='bundle exec rails server'
+alias rg='bundle exec rails generate'
+
+alias be='bundle exec'
+alias bake='bundle exec rake'
+
+# set service start/stop aliases
+alias solr.start='bundle exec rake sunspot:solr:start'
+alias solr.stop='bundle exec rake sunspot:solr:stop'
+
+alias server.start="bundle exec rails server"
+alias server.stop="cat tmp/pids/server.pid | xargs kill -9"
+
+www.start() {
+  solr.start
+  server.start
+}
+
+www.stop() {
+  server.stop
+  solr.stop
+}
