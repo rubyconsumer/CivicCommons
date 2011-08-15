@@ -1,6 +1,17 @@
 require 'spec_helper'
 
 describe SurveyOption do
+  context "attributes" do
+    before(:each) do
+      @survey_option = SurveyOption.new
+    end
+    it "should have :winner" do
+      @survey_option.respond_to?(:winner).should be_true
+    end
+    it "should have :weighted_votes_percentage" do
+      @survey_option.respond_to?(:weighted_votes_percentage).should be_true
+    end
+  end
   context "Associations" do
     it "should belong to poll" do
       SurveyOption.reflect_on_association(:survey).macro.should == :belongs_to

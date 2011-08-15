@@ -5,13 +5,16 @@ class VoteProgressService
   include ActionView::Helpers::TagHelper
   include ActionView::Helpers::TextHelper
   
-  attr_accessor :survey, :progress_result
+  attr_accessor :survey, :progress_result, :total_weighted_votes, :highest_weighted_votes_percentage
+  delegate  :max_selected_options, 
+            :to => :survey
   
   DEFAULT_CHART_COLORS = %w(EFD279 95CBE9 024769 AFD775 2C5700 DE9D7F 097054 FFDE00 6599FF FF9900 FFC6A5 FFFF42 DEF3BD 00A5C6 DEBDDE)
   
   def initialize(survey)
     @survey = survey
     calculate_progress
+    calculate_weighted_votes_percentage
   end
     
   def render_chart
@@ -35,6 +38,22 @@ class VoteProgressService
       end
     image_tag chart.to_url, :class => 'google-chart'
   end
+    
+  def total_weighted_votes
+    @total_weighted_votes ||= calculate_total_weighted_votes
+  end
+  
+  def calculate_total_weighted_votes
+    progress_result.inject(0){|sum,record| sum + record.weighted_votes.to_i}
+  end
+  
+  def calculate_weighted_votes_percentage
+    progress_result.each_with_index do |record, index| 
+      record.weighted_votes_percentage = (record.weighted_votes.to_f / total_weighted_votes.to_f * 100).to_i 
+      record.winner = true if index < max_selected_options
+    end
+    @highest_weighted_votes_percentage = progress_result.collect(&:weighted_votes_percentage).max
+  end
   
   def calculate_progress
     # Calculation of survey results based on weigthed points on the order of selected options.
@@ -51,6 +70,7 @@ class VoteProgressService
       ON sso.survey_option_id = so.id
       WHERE so.survey_id = #{survey.id}
       GROUP BY so.id
+      ORDER BY weighted_votes DESC
     SQL
     @progress_result =  SurveyOption.find_by_sql(progress_sql)
   end

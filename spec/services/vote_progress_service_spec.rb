@@ -8,6 +8,9 @@ describe VoteProgressService do
     @survey_option1 = Factory.create(:survey_option,:survey_id => @survey.id, :position => 1)
     @survey_option2 = Factory.create(:survey_option,:survey_id => @survey.id, :position => 2)
     @survey_option3 = Factory.create(:survey_option,:survey_id => @survey.id, :position => 3)
+    @survey_option4 = Factory.create(:survey_option,:survey_id => @survey.id, :position => 4)
+    @survey_option5 = Factory.create(:survey_option,:survey_id => @survey.id, :position => 5)
+    @survey_option6 = Factory.create(:survey_option,:survey_id => @survey.id, :position => 6)
     @presenter1 = VoteResponsePresenter.new(:person_id => @person1.id,
       :survey_id => @survey.id, 
       :selected_option_1_id => @survey_option1.id)
@@ -19,10 +22,15 @@ describe VoteProgressService do
     @presenter2.save
   end
   
+  def given_a_vote_progress_service
+    given_valid_votes
+    @vote_progress_service = VoteProgressService.new(@survey)
+  end
+  
   describe "calculate_progress" do
-    it "should return 3 results" do
+    it "should return the correct number of results" do
       given_valid_votes
-      VoteProgressService.new(@survey).calculate_progress.count.should == 3 
+      VoteProgressService.new(@survey).calculate_progress.count.should == 6
     end
     it "should return the correct attributes" do
       given_valid_votes
@@ -36,6 +44,37 @@ describe VoteProgressService do
     it "should return the correct weighted votes" do
       given_valid_votes
       VoteProgressService.new(@survey).calculate_progress.first.weighted_votes.to_i.should == 6
+    end
+    it "should order by the highest weighted votes first" do
+      given_valid_votes
+      VoteProgressService.new(@survey).calculate_progress.first.weighted_votes.to_i.should == 6
+      VoteProgressService.new(@survey).calculate_progress.last.weighted_votes.to_i.should == 0
+    end
+  end
+  
+  describe "calculate_weighted_votes_percentage" do
+    it "should set each survey_options with 'weighted_votes_percentage'" do
+      given_a_vote_progress_service
+      @vote_progress_service.progress_result.first.weighted_votes_percentage.should be_an_instance_of(Fixnum)
+    end
+    it "should set each survey_option's winner field with true if they are under the max_selected_votes" do
+      given_a_vote_progress_service
+      @vote_progress_service.progress_result.first.winner.should be_true
+      @vote_progress_service.progress_result.last.winner.should be_false
+    end
+  end
+  
+  describe "calculate_total_weighted_votes" do
+    it "should correctly sum the total weighted_votes" do
+      given_a_vote_progress_service
+      @vote_progress_service.calculate_total_weighted_votes.should == 8
+    end
+  end
+  
+  describe "total_weighted_votes" do
+    it "should correctly sum the total weighted_votes" do
+      given_a_vote_progress_service
+      @vote_progress_service.total_weighted_votes.should == 8
     end
   end
   
