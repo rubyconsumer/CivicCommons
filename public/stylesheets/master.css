@@ -591,6 +591,67 @@ div.three-col-sm div.photobank img {margin: 0 0 6px 6px;}
  user-select: none;
  }
  
+ 
+/*vote results*/
+.survey_results { 
+  width: 60%;
+  list-style-type:none;
+  margin:0;
+  padding:0;
+}
+
+.survey_results li {
+  display:block;
+  position:relative; 
+  padding:0.8em;
+  font-size:1.2em;
+  margin-bottom:0.5em;
+}
+
+.survey_results .bar {
+  display:block;
+  position:absolute;
+  top:0;
+  left:8%;
+  height:100%;
+  background:#C4C4C4;
+  overflow:hidden;
+  text-indent:-9999px;
+}
+
+.survey_results .info {
+  background:#5A5A5A;
+  display:block;
+  position:absolute;
+  top:0;
+  left:0;
+  height:100%;
+  overflow:hidden;
+  color: #ffffff;
+  text-align:center;
+  line-height:3em;
+  width:8%
+}
+
+.survey_results .winning.info{
+  background:#3A505B;
+}
+
+.survey_results .info .span{
+  top:10px;
+}
+
+.survey_results .winning.bar {
+  background:#98b9ca;
+}
+
+.survey_results .answer {
+  position:relative;
+  z-index:2;
+  font-weight:bold;
+  left:8%;
+  width: 92%;
+}
 
 /*-----------------------------------------------
 =Table Styles

@@ -1,5 +1,9 @@
 require 'spec_helper'
 describe '/surveys/show_vote_show_progress.html.erb' do
+  
+  before(:each) do
+    stub_template('subscriptions/_subscription.html.erb' => 'rendering subscription')
+  end
     
   def content_for(name) 
     view.instance_variable_get(:@_content_for)[name] 
@@ -19,19 +23,17 @@ describe '/surveys/show_vote_show_progress.html.erb' do
       
     view.stub(:current_person).and_return(@person)
     
-    @vote_progress_service = stub('VoteProgressService')
+    @vote_progress_service = stub('VoteProgressService', :progress_result => @survey_options, :highest_weighted_votes_percentage => 10)
   end
     
   it "should render the progress" do
     given_a_vote_response_presenter_that_is_persisted
-    @vote_progress_service.should_receive(:render_chart)
     render
     content_for(:main_body).should render_template("issues/_survey_header")
   end
   
   it "should display the vote_successful colorbox if the user have previously voted" do
     given_a_vote_response_presenter_that_is_persisted
-    @vote_progress_service.should_receive(:render_chart)
     flash[:vote_successful] = true
     render
     content_for(:header).should contain "$.colorbox({href:'/votes/vote_successful', opacity: 0.5})"
@@ -39,7 +41,6 @@ describe '/surveys/show_vote_show_progress.html.erb' do
   
   it "should NOT display the vote_successful colorbox if the user have previously voted" do
     given_a_vote_response_presenter_that_is_persisted
-    @vote_progress_service.should_receive(:render_chart)
     flash[:vote_successful] = false
     render
     content_for(:header).should_not contain "$.colorbox({href:'/votes/vote_successful', opacity: 0.5})"

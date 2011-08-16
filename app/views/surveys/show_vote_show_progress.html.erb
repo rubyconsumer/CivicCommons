@@ -10,8 +10,7 @@
       <h1>You've already voted.</h1>
       <h2><%= @survey.title  %></h2>
       <p><%= @survey.description %></p>
-      <%= @vote_progress_service.render_chart%>
+      <%= render :partial => '/surveys/result_bars' %>
     </div>
   </div>
-  
 <% end %>
