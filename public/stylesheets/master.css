@@ -410,7 +410,10 @@ div.three-col-sm div.photobank img {margin: 0 0 6px 6px;}
 =Survey Styles
 -----------------------------------------------*/
 
-.survey-options{float: left; width: 50% }
+.survey-options{
+  float: left; 
+  width: 64% 
+}
 .survey-option .description{
   display: none;
   padding-top: 10px;
@@ -494,7 +497,7 @@ div.three-col-sm div.photobank img {margin: 0 0 6px 6px;}
 .voting-container .tips {
   padding-bottom: 0.5em;
   border-bottom: solid 1px #C3C6CD;
-  margin-right: 51%;
+  margin-right: 37%;
   margin-bottom: -2px;
 }
 
@@ -502,14 +505,9 @@ div.three-col-sm div.photobank img {margin: 0 0 6px 6px;}
   display: none;
 }
 
-
-
-
-
-
 .selected-survey-options{
   float:right; 
-  width: 49%;  
+  width: 35%;  
   border: 1px solid #B5B5B5;
   background-color: #FFFFFF;
   
@@ -517,9 +515,14 @@ div.three-col-sm div.photobank img {margin: 0 0 6px 6px;}
 
 .selected-survey-options .title{
   margin: 1em;
+  border-bottom: 0px;
 }
 .selected-survey-options .menu{
   margin: 1em;
+}
+
+.selected-survey-options .menu input{
+  margin-left:4px;
 }
 
 .selected-survey-options .survey-option .content{
@@ -594,7 +597,7 @@ div.three-col-sm div.photobank img {margin: 0 0 6px 6px;}
  
 /*vote results*/
 .survey_results { 
-  width: 60%;
+  width:98%;
   list-style-type:none;
   margin:0;
   padding:0;
