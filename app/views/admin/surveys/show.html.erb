@@ -16,6 +16,16 @@
 </p>
 
 <p>
+  <b>Start Date:</b>
+  <%= @survey.start_date && @survey.start_date.to_s(:long) %>
+</p>
+
+<p>
+  <b>End Date:</b>
+  <%= @survey.end_date && @survey.end_date.to_s(:long) %>
+</p>
+
+<p>
   <b>Surveyable_type:</b>
   <%= @survey.surveyable_type %>
 </p>

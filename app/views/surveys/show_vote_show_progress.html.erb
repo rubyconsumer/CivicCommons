@@ -10,7 +10,11 @@
       <h1>Voting Results</h1>
       <p><%= @survey.description %></p>
       <br/>
-      <%= render :partial => '/surveys/result_bars' %>
+      <% if @survey.show_progress_now? %>
+        <%= render :partial => '/surveys/result_bars' %>
+      <% else %>
+        <p><strong>Check back on <%= @survey.end_date && @survey.end_date.to_s(:long) %> to see the results</strong></p>
+      <% end %>
       <%= render :partial => '/surveys/vote_form' %>
     </div>
   </div>

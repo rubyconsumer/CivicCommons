@@ -61,6 +61,9 @@ describe Survey do
       @survey.errors[:surveyable_id].should be_blank
       @survey.errors[:surveyable_type].should be_blank
     end
+    it "should validate presence_of end_date" do
+      @survey.errors[:end_date].should == ["can't be blank"]
+    end
   end
   
   context "Single Table Inheritance" do
@@ -69,6 +72,22 @@ describe Survey do
     end
     it "can be a Poll" do
       Poll.superclass.should == Survey
+    end
+  end
+  
+  context "End Date" do
+    it "should display the survey progress if show_progress is set to true AND end_date is less than today's date" do
+      @survey = Factory.create(:survey, :end_date => 2.days.ago.to_date, :show_progress => true)
+      @survey.end_date.should be_present
+      @survey.show_progress_now?.should == true
+    end
+    it "should NOT display survey progress if show_progress is set to true AND end_date is later than Today's date" do
+      @survey = Factory.create(:survey, :end_date => 2.days.from_now.to_date, :show_progress => true)
+      @survey.show_progress_now?.should == false
+    end
+    it "should NOT display survey progress if show_progress is set to false" do
+      @survey = Factory.create(:survey, :end_date => 2.days.from_now.to_date, :show_progress => false)
+      @survey.show_progress_now?.should == false
     end
   end
 end
