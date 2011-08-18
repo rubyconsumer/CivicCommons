@@ -30,7 +30,7 @@
   </div>  
   
   <div class="field">
-    <%= f.label :end_date %><br />
+    <%= f.label :end_date, 'End Date*' %><br />
     <%= f.date_select :end_date, :prompt => true, :order => [:month,:day,:year], :start_year => (Time.now.year), :end_year => (Time.now.year + 1) %>
   </div>  
   

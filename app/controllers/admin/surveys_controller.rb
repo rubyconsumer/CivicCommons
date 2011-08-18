@@ -53,7 +53,7 @@ class Admin::SurveysController < Admin::DashboardController
   def create
     @survey = Survey.new(params[:survey])
     @survey.type = params["survey"]["type"]
-
+    @survey = @survey.becomes(Survey) # needed for STI so that the form can use the parent, not the child
     respond_to do |format|
       if @survey.save
         format.html { redirect_to(admin_survey_url(@survey), :notice => 'Survey was successfully created.') }
@@ -69,7 +69,7 @@ class Admin::SurveysController < Admin::DashboardController
   # PUT /admin/surveys/1.xml
   def update
     @survey = Survey.find(params[:id])
-
+    @survey = @survey.becomes(Survey) # needed for STI so that the form can use the parent, not the child
     respond_to do |format|
       if @survey.update_attributes(params[:survey])
         format.html { redirect_to(admin_survey_url(@survey), :notice => 'Survey was successfully updated.') }
