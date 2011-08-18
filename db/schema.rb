@@ -289,7 +289,6 @@ ActiveRecord::Schema.define(:version => 20110826211416) do
     t.string   "twitter_username"
     t.string   "website"
     t.string   "avatar_url"
-    t.boolean  "daily_digest",                        :default => true,  :null => false
   end
 
   add_index "people", ["cached_slug"], :name => "index_people_on_cached_slug", :unique => true
@@ -400,6 +399,8 @@ ActiveRecord::Schema.define(:version => 20110826211416) do
     t.datetime "updated_at"
     t.integer  "max_selected_options", :default => 0
     t.boolean  "show_progress"
+    t.date     "start_date"
+    t.date     "end_date"
   end
 
   create_table "top_items", :force => true do |t|
