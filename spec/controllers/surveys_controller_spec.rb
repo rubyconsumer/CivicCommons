@@ -57,7 +57,19 @@ describe SurveysController do
         response.should render_template('surveys/show_vote_hide_progress')
       end
     end
-    
+    describe "survey inactive" do
+      it "should render the inactive if a survey is inactive " do
+        Survey.stub(:find).and_return(mock_survey(:active? => false))
+        get :show, :id => 123
+        response.should render_template('surveys/show_vote_inactive')
+      end
+      it "should render normally if survey is active" do
+        Survey.stub(:find).and_return(mock_survey(:active? => true))
+        VoteResponsePresenter.stub(:new).and_return(stub(VoteResponsePresenter, :already_voted? => false))
+        get :show, :id => 123
+        response.should_not render_template('surveys/show_vote_inactive')
+      end
+    end
   end
   
   

@@ -90,4 +90,24 @@ describe Survey do
       @survey.show_progress_now?.should == false
     end
   end
+  
+  context "active?" do
+    it "should be active when there is no start_date" do
+      @survey = Factory.create(:survey, :show_progress => true)
+      @survey.should be_active
+    end
+    it "should not be active when the start_date is in the future" do
+      @survey = Factory.create(:survey, :show_progress => true, :start_date => 1.days.from_now.to_date)
+      @survey.should_not be_active
+    end
+    it "should be active when the start_date is in the past" do
+      @survey = Factory.create(:survey, :show_progress => true, :start_date => 1.days.ago.to_date)
+      @survey.should be_active
+    end
+    it "should be active when the start_date is today" do
+      @survey = Factory.create(:survey, :show_progress => true, :start_date => Date.today)
+      @survey.should be_active
+    end
+    
+  end
 end

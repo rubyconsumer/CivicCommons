@@ -10,4 +10,8 @@ class Survey < ActiveRecord::Base
   def show_progress_now?
     show_progress? && (end_date.present? && end_date.past? )
   end
+  
+  def active?
+    start_date.blank? || (start_date.present? && start_date.past?)
+  end
 end
