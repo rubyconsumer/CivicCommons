@@ -108,6 +108,15 @@ describe Survey do
       @survey = Factory.create(:survey, :show_progress => true, :start_date => Date.today)
       @survey.should be_active
     end
-    
+  end
+  context "days_until_end_date" do
+    it "should display the number of days until end date if end_date is in the future" do
+      @survey = Factory.create(:survey, :end_date => 1.days.from_now.to_date, :show_progress => false)
+      @survey.days_until_end_date.should == 1
+    end
+    it "should display nil if end_date is today" do
+      @survey = Factory.create(:survey, :end_date => Date.today, :show_progress => false)
+      @survey.days_until_end_date.should be_nil
+    end
   end
 end

@@ -7,11 +7,15 @@ class Survey < ActiveRecord::Base
   validates_numericality_of :max_selected_options, :only_integer => true
   accepts_nested_attributes_for :options, :reject_if => :all_blank, :allow_destroy => true
   
+  def days_until_end_date
+    (Date.today - end_date).to_i.abs if end_date && end_date.future?
+  end
+  
   def show_progress_now?
     show_progress? && (end_date.present? && end_date.past? )
   end
   
   def active?
-    start_date.blank? || (start_date.present? && start_date.past?)
+    start_date.blank? || (start_date && start_date <= Date.today)
   end
 end

@@ -9,7 +9,7 @@
       <div class="voting-container">
         
       
-        <h1>Cast Your Vote</h1>
+        <h1>Cast Your Vote <%= "(#{pluralize(@survey.days_until_end_date,'day', 'days')} left)" if @survey.days_until_end_date %></h1>
         <p><%= @survey.description %></p>
         <h4 class="tips">SELECT FROM THESE OPTIONS:</h4>
         <div class="survey-options">
