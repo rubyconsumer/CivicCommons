@@ -5,8 +5,6 @@
   %div.content
     %span.contribution-person-name= person_display_name(contribution.person)
     - if true == collapsed
-      %p
-        %em (Click here to expand/collapse...)
     = format_comment(contribution)
     %a{href:"#", class:"contribution-toggle"}Toggle
     - if contribution.embedly_type

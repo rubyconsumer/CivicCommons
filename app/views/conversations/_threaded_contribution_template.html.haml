@@ -33,12 +33,12 @@
                             :id => "action-link-#{contribution.id}",
                             'data-colorbox' => true,
                             :title => "Alert Us of Terms of Service Violations")
-              = rating_buttons(contribution, @ratings || ratings)
-              %span.respond
-                -if current_person
-                  = link_to(respond_button_text(contribution), '#', :class => "text rating-button post_to_conversation", :id => "respond-to-#{contribution.id}", :title => respond_button_text(contribution))
-                -else
-                  = link_to(respond_button_text(contribution), { :controller => :sessions, :action => :ajax_new }, :class => "text rating-button", 'data-colorbox' => true )
+              %div.button-wrapper
+                = rating_buttons(contribution, @ratings || ratings)
+                -if current_person											   
+                  = link_to(respond_button_text(contribution), '#', :class => "respond text rating-button post_to_conversation", :id => "respond-to-#{contribution.id}", :title => respond_button_text(contribution))
+                -else														   
+                  = link_to(respond_button_text(contribution), { :controller => :sessions, :action => :ajax_new }, :class => "respond text rating-button", 'data-colorbox' => true )
           - if depth < maxdepth
             %ol.conversations.divided.thread-list
               .comment-contribution-action(id="action-div-#{contribution.id}")

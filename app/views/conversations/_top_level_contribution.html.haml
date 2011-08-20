@@ -22,12 +22,12 @@
             - else
               %span.conversation-responses No Responses
           .respond-container
-            = rating_buttons(contribution, @ratings)
-            %span.respond
+            %div.button-wrapper
+              = rating_buttons(contribution, @ratings)
               -if current_person
-                = link_to(respond_button_text(contribution), '#', :class => "text rating-button post_to_conversation", :id => "respond-to-#{contribution.id}", :title => respond_button_text(contribution))
+                = link_to(respond_button_text(contribution), '#', :class => "respond text rating-button post_to_conversation", :id => "respond-to-#{contribution.id}", :title => respond_button_text(contribution))
               -else
-                = link_to(respond_button_text(contribution), { :controller => :sessions, :action => :ajax_new }, :class => "text rating-button", 'data-colorbox' => true )
+                = link_to(respond_button_text(contribution), { :controller => :sessions, :action => :ajax_new }, :class => "respond text rating-button", 'data-colorbox' => true )
         %ol.conversations.divided.thread-list
           .top-level-contribution-action(id="action-div-#{contribution.id}")
           .contribution-thread-div(id="thread-div-#{contribution.id}")

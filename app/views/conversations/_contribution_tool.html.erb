@@ -44,37 +44,27 @@
 
     <fieldset>
 
-      <p>
       <div class="hack-to-prevent-old-expand-and-collapse-from-triggering">
         <%= f.text_area(:content, :placeholder => "Leave a Comment...", :class => 'tinymce') %>
       </div>
-      </p>
 
-      <p>
       <div class="hack-to-prevent-old-expand-and-collapse-from-triggering">
         <a href="#" id="contribution-add-link">Add a link to a related website</a>
-        <br />
         <%= f.text_field(:url, :type => "text", :class => "textbox link", :placeholder => "(Optional) Share a link...", :style => 'display:none;') %>
       </div>
-      </p>
 
-      <p>
       <div>
         <a href="#" id="contribution-add-file">Upload a photograph, document, or other file</a>
-        <br />
         <%= f.file_field(:attachment, :style => 'display:none;') %>
       </div>
-      </p>
 
     </fieldset>
 
     <fieldset>
-      <p>
       <div class="hack-to-prevent-old-expand-and-collapse-from-triggering">
         <%= f.submit 'Leave my response', :class => 'submit' %>
         <%= link_to "Cancel", '#', :id => 'cancel-contribution' %>
       </div>
-      </p>
     </fieldset>
 
   <% end %>
