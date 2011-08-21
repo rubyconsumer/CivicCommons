@@ -66,5 +66,14 @@ class Notifier < Devise::Mailer
          :from => '"Curator of Conversation" <curator@theciviccommons.com>',
          :to => @person.email)
   end
+  
+  def survey_confirmation(person, survey)
+    @person = person
+    @survey = survey
+    headers['X-SMTPAPI'] = '{"category": "survey_confirmation"}'
+    mail(:subject => "Thanks for your #{@survey.type.to_s.downcase} participation.",
+         :from => Devise.mailer_sender,
+         :to => @person.email)
+  end
 
 end
