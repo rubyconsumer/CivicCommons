@@ -13,6 +13,17 @@ describe ActivityObserver do
   before :each do
     AvatarService.stub(:update_person).and_return(true)
   end
+  
+  def given_a_user_have_voted
+    @person = Factory.create(:registered_user)
+    @survey = Factory.create(:vote)
+    @survey_option1 = Factory.create(:survey_option,:survey_id => @survey.id, :position => 1)
+    @presenter = VoteResponsePresenter.new(:person_id => @person.id,
+      :survey_id => @survey.id, 
+      :selected_option_1_id => 11, 
+      :selected_option_2_id => 22)
+    @presenter.save
+  end
 
   context "On create" do
 
@@ -29,6 +40,14 @@ describe ActivityObserver do
       a = Activity.last
       a.item_id.should == rating_group.id
       a.item_type.should == 'RatingGroup'
+      a.activity_cache.should_not be_nil
+    end
+    
+    it "creates a new activity record when someone have voted(A survey_response has been created)" do
+      given_a_user_have_voted
+      a = Activity.last
+      a.item_id.should == @presenter.id
+      a.item_type.should == 'SurveyResponse'
       a.activity_cache.should_not be_nil
     end
 
@@ -103,5 +122,13 @@ describe ActivityObserver do
       RatingGroup.destroy(rating_group)
       Activity.where(item_id: rating_group.id, item_type: 'RatingGroup').should be_empty
     end
+    
+    it "removes the actvity records when a survey_response is destroyed" do
+      given_a_user_have_voted
+      Activity.where(item_id: @presenter.id, item_type: 'SurveyResponse').should_not be_empty
+      @presenter.survey_response.destroy
+      Activity.where(item_id: @presenter.id, item_type: 'SurveyResponse').should be_empty
+    end
+
   end
 end
