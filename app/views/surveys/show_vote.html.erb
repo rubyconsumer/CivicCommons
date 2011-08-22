@@ -9,8 +9,9 @@
       <div class="voting-container">
         
       
-        <h1>Cast Your Vote <%= "(#{pluralize(@survey.days_until_end_date,'day', 'days')} left)" if @survey.days_until_end_date %></h1>
+        <h1>Cast Your Vote</h1>
         <p><%= @survey.description %></p>
+        <p><%= "This vote started on #{@survey.start_date && @survey.start_date.to_s(:long) || @survey.created_at.to_date.to_s(:long) } and will end on #{ @survey.end_date.to_s(:long)}" %> <%= "(#{pluralize(@survey.days_until_end_date,'day', 'days')} left)" if @survey.days_until_end_date %></p>
         <h4 class="tips">SELECT FROM THESE OPTIONS:</h4>
         <div class="survey-options">
           <div class="sortable">
