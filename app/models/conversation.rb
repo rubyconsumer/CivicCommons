@@ -3,6 +3,7 @@ class Conversation < ActiveRecord::Base
   include Subscribable
   include Regionable
   include GeometryForStyle
+  include HomepageFeaturable
 
   searchable :ignore_attribute_changes_of => [ :total_visits, :recent_visits, :last_visit_date, :updated_at, :recent_rating ] do
     text :title, :boost => 3, :default_boost => 3

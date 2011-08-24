@@ -210,6 +210,15 @@ ActiveRecord::Schema.define(:version => 20110901060023) do
   add_index "delayed_jobs", ["locked_by"], :name => "delayed_jobs_locked_by"
   add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
 
+  create_table "homepage_featureds", :force => true do |t|
+    t.integer  "homepage_featureable_id",   :null => false
+    t.string   "homepage_featureable_type", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "homepage_featureds", ["homepage_featureable_id", "homepage_featureable_type"], :name => "homepage_featureable_id_and_type", :unique => true
+
   create_table "issues", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
