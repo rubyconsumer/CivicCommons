@@ -1,5 +1,5 @@
 # setup ruby environment
-rvm 1.9.2-p290@commons
+rvm use 1.9.2-p290@commons --create
 CC=/usr/bin/gcc-4.2 
 
 # set local aliases
