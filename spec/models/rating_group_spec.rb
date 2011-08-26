@@ -119,6 +119,7 @@ describe RatingGroup do
       @rating1b = Factory.create(:rating, :rating_group => @rg, :rating_descriptor => @descriptor2)
       @rating2a = Factory.create(:rating, :rating_group => @rg2, :rating_descriptor => @descriptor)
       @rating2c = Factory.create(:rating, :rating_group => @rg2, :rating_descriptor => @descriptor3)
+      RatingGroup.refresh_cached_rating_descriptors
     end
 
     it "returns all of the ratings for a conversation" do

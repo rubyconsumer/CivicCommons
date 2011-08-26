@@ -1,10 +1,6 @@
 class RatingGroup < ActiveRecord::Base
   @@cached_rating_descriptors = nil
 
-  def self.cached_rating_descriptors
-    @@cached_rating_descriptors = @@cached_rating_descriptors || RatingGroup.rating_descriptors
-  end
-
   belongs_to :person
   belongs_to :conversation
   belongs_to :contribution
@@ -24,6 +20,14 @@ class RatingGroup < ActiveRecord::Base
 
   def set_conversation_id
     self.conversation_id = contribution.conversation_id if conversation_id.blank?
+  end
+
+  def self.cached_rating_descriptors
+    @@cached_rating_descriptors = @@cached_rating_descriptors || RatingGroup.rating_descriptors
+  end
+
+  def self.refresh_cached_rating_descriptors
+    @@cached_rating_descriptors = RatingGroup.rating_descriptors
   end
 
   def self.add_rating!(person, contribution, descriptor, rg=nil)
