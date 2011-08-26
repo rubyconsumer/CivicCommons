@@ -47,6 +47,7 @@ group :development do
   gem "ruby_parser"
   gem "engineyard"
   gem "ruby-debug19"
+  gem 'query_reviewer', :git => 'git://github.com/nesquena/query_reviewer.git'
 end
 
 group :test do

@@ -61,6 +61,12 @@ GIT
       oa-openid (= 0.2.1)
 
 GIT
+  remote: git://github.com/nesquena/query_reviewer.git
+  revision: 9de60e75d18068d40cd3f8439a3de28eb4df5f3b
+  specs:
+    query_reviewer (0.1.2)
+
+GIT
   remote: git://github.com/plataformatec/devise.git
   revision: 9f763d082a51d5b0c50c884b044a8900faada8bf
   branch: v1.3
@@ -378,6 +384,7 @@ DEPENDENCIES
   oa-oauth
   omniauth (~> 0.2.0)!
   paperclip (= 2.3.8)
+  query_reviewer!
   rack (= 1.2.1)
   rack-test!
   rails (= 3.0.3)
