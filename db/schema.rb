@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110727193514) do
+ActiveRecord::Schema.define(:version => 20110826153907) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -63,7 +63,8 @@ ActiveRecord::Schema.define(:version => 20110727193514) do
     t.integer  "conversation_id"
   end
 
-  add_index "content_items", ["cached_slug"], :name => "index_content_items_on_cached_slug", :unique => true
+  add_index "content_items", ["cached_slug"], :name => "index_content_items_on_cached_slug", :length => {"cached_slug"=>10}
+  add_index "content_items", ["content_type"], :name => "index_content_items_on_content_type", :length => {"content_type"=>4}
 
   create_table "content_templates", :force => true do |t|
     t.string   "name"
@@ -111,6 +112,10 @@ ActiveRecord::Schema.define(:version => 20110727193514) do
     t.boolean  "top_level_contribution",                        :default => false
   end
 
+  add_index "contributions", ["conversation_id"], :name => "index_contributions_on_conversation_id"
+  add_index "contributions", ["issue_id"], :name => "index_contributions_on_issue_id"
+  add_index "contributions", ["owner"], :name => "index_contributions_on_owner"
+
   create_table "conversations", :force => true do |t|
     t.datetime "started_at"
     t.datetime "finished_at"
@@ -142,6 +147,7 @@ ActiveRecord::Schema.define(:version => 20110727193514) do
   end
 
   add_index "conversations", ["cached_slug"], :name => "index_conversations_on_cached_slug", :unique => true
+  add_index "conversations", ["exclude_from_most_recent"], :name => "index_conversations_on_exclude_from_most_recent"
 
   create_table "conversations_issues", :id => false, :force => true do |t|
     t.integer "conversation_id"
@@ -294,12 +300,17 @@ ActiveRecord::Schema.define(:version => 20110727193514) do
     t.datetime "updated_at"
   end
 
+  add_index "rating_groups", ["conversation_id"], :name => "index_rating_groups_on_conversation_id"
+
   create_table "ratings", :force => true do |t|
     t.integer  "rating_group_id"
     t.integer  "rating_descriptor_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "ratings", ["rating_descriptor_id"], :name => "index_ratings_on_rating_descriptor_id"
+  add_index "ratings", ["rating_group_id"], :name => "index_ratings_on_rating_group_id"
 
   create_table "regions", :force => true do |t|
     t.string   "name"
@@ -351,8 +362,8 @@ ActiveRecord::Schema.define(:version => 20110727193514) do
     t.datetime "updated_at"
     t.integer  "conversation_id"
     t.integer  "issue_id"
-    t.integer  "person_id"
     t.text     "activity_cache",  :limit => 2147483647
+    t.integer  "person_id"
   end
 
   add_index "top_items", ["conversation_id"], :name => "conversations_index"
@@ -366,6 +377,8 @@ ActiveRecord::Schema.define(:version => 20110727193514) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "visits", ["visitable_id", "visitable_type"], :name => "index_visits_on_visitable_id_and_visitable_type"
 
   create_table "zip_codes", :force => true do |t|
     t.integer  "region_id"
