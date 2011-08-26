@@ -149,7 +149,7 @@ module ConversationsHelper
 
   def rating_buttons(contribution, ratings_hash)
     out = []
-    RatingGroup.rating_descriptors.each do |id, title|
+    RatingGroup.cached_rating_descriptors.each do |id, title|
       if current_person && current_person.id == contribution.owner
         out << "<span class='rating-button'>#{title} <span class='number'>#{ratings_hash[contribution.id][title][:total]}</span></span>"
       else

@@ -1,4 +1,9 @@
 class RatingGroup < ActiveRecord::Base
+  @@cached_rating_descriptors = nil
+
+  def self.cached_rating_descriptors
+    @@cached_rating_descriptors = @@cached_rating_descriptors || RatingGroup.rating_descriptors
+  end
 
   belongs_to :person
   belongs_to :conversation
@@ -61,14 +66,14 @@ class RatingGroup < ActiveRecord::Base
     rgs = RatingGroup.where(:conversation_id => conversation).includes(:ratings)
 
     returning Hash.new do |hash|
-      RatingGroup.rating_descriptors.values.collect{ |rd_title| hash[rd_title] = [] }
+      RatingGroup.cached_rating_descriptors.values.collect{ |rd_title| hash[rd_title] = [] }
     end.merge( rgs.collect{|rg| rg.ratings}.flatten.group_by(&:title) )
   end
 
   def self.ratings_for_conversation_with_count(conversation)
     rgs = ratings_for_conversation(conversation)
 
-    RatingGroup.rating_descriptors.values.each{|rd_title| rgs[rd_title] = rgs[rd_title].count}
+    RatingGroup.cached_rating_descriptors.values.each{|rd_title| rgs[rd_title] = rgs[rd_title].count}
     rgs
   end
 
@@ -89,7 +94,7 @@ class RatingGroup < ActiveRecord::Base
       contribution_hash = returning Hash.new do |h2|
         # Populate each contribution_id value hash with rating_descriptor keys
         # e.g. { 1 => { 'some-descriptor' => ... }, 2 => { 'some-descriptor' => ... } }
-        RatingGroup.rating_descriptors.each do |rd_id, rd_title|
+        RatingGroup.cached_rating_descriptors.each do |rd_id, rd_title|
           # Populate each rating_descriptor value with hash of total and person ratings
           h2[rd_title] = {
             :total => contribution_rgs.collect(&:ratings).flatten.count{|r| r.rating_descriptor_id == rd_id },
@@ -108,7 +113,7 @@ class RatingGroup < ActiveRecord::Base
 
   def self.default_ratings_hash(person=nil)
     returning Hash.new do |hash|
-      RatingGroup.rating_descriptors.each do |rd_id, rd_title|
+      RatingGroup.cached_rating_descriptors.each do |rd_id, rd_title|
         hash[rd_title] = {
           :total => 0,
           :person => person ? false : nil

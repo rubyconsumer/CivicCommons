@@ -181,6 +181,18 @@ describe RatingGroup do
       RatingGroup.rating_descriptors.should == expected_result
     end
 
+    it "returns a hash of ids/titles of all cached rating descriptors" do
+      expected_result = {
+        @descriptor.id  => @descriptor.title,
+        @descriptor2.id => @descriptor2.title,
+        @descriptor3.id => @descriptor3.title,
+        @descriptor4.id => @descriptor4.title
+      }
+
+      RatingGroup.cached_rating_descriptors.should == expected_result
+      RatingGroup.cached_rating_descriptors.should == expected_result
+    end
+
     it "returns skeleton of expected hash for contribution with not rating_groups" do
       contribution = Factory.build(:contribution, :id => 42)
       ratings = RatingGroup.ratings_for_conversation_by_contribution_with_count(@conversation, @current_person)
