@@ -1,7 +1,12 @@
 <% content_for :main_body do %>
   <div class="wrapper">
     <div class="content-container">
-      <h1><span>Search Results for</span> <%= params['q'] %></h1>
+		<div id="search" class="main-search-bar">
+		  <form accept-charset="utf-8" action="/search/results" method="get"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="✓"></div>
+		    <input class="textbox" id="q" name="q" placeholder="What are you looking for?" type="text">
+		    <input class="submit" id="Search" type="submit" value="Search">
+		  </form>
+		</div>
 
       <div class="main-content">
         <div class="results">
@@ -29,9 +34,18 @@
     </div>
 
     <div class="aside supplementary">
+	    <div class="search-filter">
+		    <div class="mod">
+		    	<h3>Filter Results</h3>
+		    	<ul>
+			        <li><a href="#" class="" id="conv-s">Conversations</a></li>
+			        <li><a href="#" class="" id="comm-s">Community</a></li>
+			        <li><a href="#" class="" id="issues-s">Issues</a></li>
+			    </ul>
+		    </div>
+	    </div>
     </div>
 
   </div>
 </div>
 <% end %>
-

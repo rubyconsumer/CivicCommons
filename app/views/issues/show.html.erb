@@ -39,8 +39,9 @@
       </div>
     </div><!-- /.main-content -->
     <div id='media-contributions' class='aside supplementary'>
+      <%= render :partial => '/search/search' %>
       <%= render :partial => "issues/contributions/contribution_template", :collection => @contributions, :as => :contribution %>
-      <div id="media-contribution-form-container">
+      <div id="media-contribution-form-container" class="mod">
         <p id="resource-contributions"><a href="#" class="file-link button">File</a><a class="file-link button" href="#">Image</a><a class="video-link button" href="#">Video</a><a class="url-link button" href="#">Link</a></p>
         <%= render :partial => "new_file_contribution" %>
         <%= render :partial => "new_url_contribution" %>
