@@ -1,3 +1,5 @@
+
+
 <%= form_for([:admin,@survey]) do |f| %>
   <% if @survey.errors.any? %>
     <div id="error_explanation">
@@ -63,7 +65,7 @@
       </div>
       <div class="field">
         <%= option.label :description, 'Option Description' %><br />
-        <%= option.text_area :description, :rows => 3, :cols => 50 %>
+        <%= option.text_area :description, :rows => 3, :cols => 50, :class => 'tinymce' %>
       </div>
       <div class="field">
         <%= option.label :position, "Option Position" %><br />
@@ -83,3 +85,10 @@
     <%= f.submit %>
   </div>
 <% end %>
+
+<script type="text/javascript">
+  $().ready(function() {
+    init_tiny_mce('.survey-option textarea');
+  });
+</script>
+
