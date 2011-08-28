@@ -66,6 +66,7 @@
               =render :partial => 'conversations/contribution_tool', :locals => { :conversation => @conversation, :contribution => @contribution }
 
       .aside.supplementary
+        =render :partial => '/search/search'
         - if @conversation.issues.size > 0
           .mod
             %h3 Issues

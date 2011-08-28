@@ -1373,7 +1373,7 @@ margin: 0;
 
 /*- Search Input on Main Search Page ----------*/
 
-div#search {
+div#search.main-search-bar {
 border-bottom: none;
 margin-bottom: 20px;
 }
