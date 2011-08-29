@@ -68,7 +68,7 @@ function scroll_to_element(element) {
 }
 
 function enable_post_to_conversation(element) {
-  element.click(function(event) {
+  element.live('click', function(event) {
     event.preventDefault();
     clear_contribution_tool_form();
     var contribution_id = get_contribution_parent_id($(this));

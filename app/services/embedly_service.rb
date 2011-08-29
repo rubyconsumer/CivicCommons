@@ -288,7 +288,6 @@ class EmbedlyService
           //<![CDATA[
             $(document).ready(function() {
               $(\"a#single_image-#{r}\").fancybox({'scrolling': 'no'});
-              $(\"a#inline-#{r}\").fancybox({'scrolling': 'no'});
             });
           //]]>
         </script>
@@ -306,7 +305,7 @@ class EmbedlyService
           html << '</a>'
         else
           html << js
-          html << "<a id=\"inline-#{r}\" href=\"#data-#{r}\">"
+          html << "<a id=\"inline-#{r}\" href=\"#{code[:url]}\">"
           html << thumbnail
           html << '</a>'
           html << "<div style=\"display:none\"><div id=\"data-#{r}\">"
@@ -329,22 +328,22 @@ class EmbedlyService
 
   def self.generate_img_html(opts)
     html = '<img'
-    html << " src=\"#{opts[:url]}\"" if opts.has_key?(:url)
-    html << " height=\"#{opts[:height]}\"" if opts.has_key?(:height)
-    html << " width=\"#{opts[:width]}\"" if opts.has_key?(:width)
-    html << " title=\"#{opts[:title]}\"" if opts.has_key?(:title)
-    html << " alt=\"#{opts[:description]}\"" if opts.has_key?(:description)
+    html << " src=\"#{opts[:url]}\"" if opts[:url]
+    html << " height=\"#{opts[:height]}\"" if opts[:height]
+    html << " width=\"#{opts[:width]}\"" if opts[:width]
+    html << " title=\"#{CGI.escapeHTML(opts[:title])}\"" if opts[:title]
+    html << " alt=\"#{CGI.escapeHTML(opts[:description])}\"" if opts[:description]
     html << ' />'
     return html
   end
 
   def self.generate_thumbnail_html(opts)
     html = '<img'
-    html << " src=\"#{opts[:thumbnail_url]}\"" if opts.has_key?(:thumbnail_url)
-    html << " height=\"#{opts[:thumbnail_height]}\"" if opts.has_key?(:thumbnail_height)
-    html << " width=\"#{opts[:thumbnail_width]}\"" if opts.has_key?(:thumbnail_width)
-    html << " title=\"#{opts[:title]}\"" if opts.has_key?(:title)
-    html << " alt=\"#{opts[:description]}\"" if opts.has_key?(:description)
+    html << " src=\"#{opts[:thumbnail_url]}\"" if opts[:thumbnail_url]
+    html << " height=\"#{opts[:thumbnail_height]}\"" if opts[:thumbnail_height]
+    html << " width=\"#{opts[:thumbnail_width]}\"" if opts[:thumbnail_width]
+    html << " title=\"#{CGI.escapeHTML(opts[:title])}\"" if opts[:title]
+    html << " alt=\"#{CGI.escapeHTML(opts[:description])}\"" if opts[:description]
     html << ' />'
     return html
   end
@@ -355,7 +354,7 @@ class EmbedlyService
     if not url.nil? and not title.nil?
       html << '<a'
       html << " href=\"#{url}\""
-      html << " title=\"#{title}\""
+      html << " title=\"#{CGI.escapeHTML(title)}\""
       html << '>'
       html << link_body
       html << '</a>'

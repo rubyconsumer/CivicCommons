@@ -287,7 +287,7 @@
     selectResponseFromHash();
   });
 
-  $('.collapsed .comment p, .uncollapsed .comment p, .collapsed .comment a.contribution-toggle, .uncollapsed .comment a.contribution-toggle')
+  $('.collapsed .comment a.contribution-toggle, .uncollapsed .comment a.contribution-toggle')
     .live('click', function(e){
       e.preventDefault();
       var $div = $(this).closest('.collapsed, .uncollapsed'),
@@ -312,13 +312,7 @@
   collapsedStyle += 'text-overflow: ellipsis;';
   collapsedStyle += '-o-text-overflow: ellipsis;';
   collapsedStyle += '-moz-binding: url(\'/stylesheets/ellipsis.xml#ellipsis\');';
-  collapsedStyle += 'cursor: pointer;';
   collapsedStyle += 'width: auto;';
-  collapsedStyle += '}';
-  collapsedStyle += 'div.contribution-container.collapsed .comment p:hover,';
-  collapsedStyle += 'div.contribution-container.uncollapsed .comment p:hover {';
-  collapsedStyle += 'cursor: pointer;';
-  collapsedStyle += 'background-color: #c5d36a;';
   collapsedStyle += '}';
   collapsedStyle += 'div.contribution-container.collapsed > .comment > .edit-contribution,';
   collapsedStyle += 'div.contribution-container.collapsed > .comment > .convo-utility,';
