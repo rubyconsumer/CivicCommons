@@ -160,7 +160,6 @@ module ConversationsHelper
   end
 
   def format_comment(contribution)
-    return '<p class="expand-text">(Click to expand)</p>'.html_safe if contribution.content.blank?
     text = '<i>' + contribution.created_at.strftime('%b %d, %Y %I:%M%p') + '</i>: ' + contribution.content.gsub(/([^\n]\n)(?=[^\n])/, ' ') # 1 newline   -> space
     auto_link(simple_format(text))
   end
