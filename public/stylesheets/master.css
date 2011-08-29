@@ -977,8 +977,6 @@ padding-left: 20px;
 }
 div.contribution-container {zoom: 1;}
 
-/*--- Old Busted --*/
-
 .comment {padding-bottom: 0;}
 
 div.contribution-container.collapsed > .comment > .content p {
@@ -992,6 +990,7 @@ width: auto;
 div.contribution-container.collapsed > .comment > .edit-contribution,
 div.contribution-container.collapsed > .comment > .convo-utility,
 div.contribution-container.collapsed > .comment > .content p,
+div.contribution-container.collapsed > .comment > .content ul,
 div.contribution-container.collapsed > .comment > .attached-file,
 div.contribution-container.collapsed > .comment > .link-title,
 div.contribution-container.collapsed > .comment > .embedded,
