@@ -18,6 +18,10 @@ class VoteResponsePresenter
     end
   end
   
+  def selected_survey_option_titles
+    selected_survey_options.collect{|selected_option| selected_option.survey_option.title }
+  end
+  
   def selected_option(opt_id)
     self.send("selected_option_#{opt_id}")
   end

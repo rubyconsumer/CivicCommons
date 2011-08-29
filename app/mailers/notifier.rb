@@ -69,11 +69,16 @@ class Notifier < Devise::Mailer
   
   def survey_confirmation(person, survey)
     @person = person
-    @survey = survey
+    @survey = survey    
     headers['X-SMTPAPI'] = '{"category": "survey_confirmation"}'
-    mail(:subject => "Thanks for your #{@survey.type.to_s.downcase} participation.",
-         :from => Devise.mailer_sender,
-         :to => @person.email)
+    mail(:subject => "Thanks for your #{@survey.type.to_s.downcase} participation.",:from => Devise.mailer_sender,:to => @person.email) do |format|
+      format.html do 
+        if @survey.is_a?(Vote)
+          @vote_response_presenter = VoteResponsePresenter.new(:person_id => @person.id, :survey_id => @survey.id)
+          render :template => '/notifier/survey_vote_confirmation'
+        end
+      end
+    end
   end
 
 end
