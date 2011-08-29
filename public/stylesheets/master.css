@@ -980,20 +980,14 @@ div.contribution-container {zoom: 1;}
 /*--- Old Busted --*/
 
 .comment {padding-bottom: 0;}
-/* These styles are added via JS in javascripts/lib/conversations/show.js:
+
 div.contribution-container.collapsed > .comment > .content p {
 white-space: nowrap;
 overflow: hidden;
 text-overflow: ellipsis;
 -o-text-overflow: ellipsis;
 -moz-binding: url('/stylesheets/ellipsis.xml#ellipsis');
-cursor: pointer;
 width: auto;
-}
-div.contribution-container.collapsed .comment p:hover,
-div.contribution-container.uncollapsed .comment p:hover {
-cursor: pointer;
-background-color: #c5d36a;
 }
 div.contribution-container.collapsed > .comment > .edit-contribution,
 div.contribution-container.collapsed > .comment > .convo-utility,
@@ -1008,7 +1002,7 @@ display: none;
 div.contribution-container.collapsed > .comment > .content p:nth-child(2) {
 display: block;
 }
-*/
+
 div.contribution-container.collapsed > div.callout {width: 20px;}
 div.contribution-container.collapsed > .callout img {
 width: 20px;

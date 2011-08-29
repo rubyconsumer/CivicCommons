@@ -306,30 +306,6 @@
 
   });
 
-  var collapsedStyle = 'div.contribution-container.collapsed > .comment > .content p {';
-  collapsedStyle += 'white-space: nowrap;';
-  collapsedStyle += 'overflow: hidden;';
-  collapsedStyle += 'text-overflow: ellipsis;';
-  collapsedStyle += '-o-text-overflow: ellipsis;';
-  collapsedStyle += '-moz-binding: url(\'/stylesheets/ellipsis.xml#ellipsis\');';
-  collapsedStyle += 'width: auto;';
-  collapsedStyle += '}';
-  collapsedStyle += 'div.contribution-container.collapsed > .comment > .edit-contribution,';
-  collapsedStyle += 'div.contribution-container.collapsed > .comment > .convo-utility,';
-  collapsedStyle += 'div.contribution-container.collapsed > .comment > .content p,';
-  collapsedStyle += 'div.contribution-container.collapsed > .comment > .attached-file,';
-  collapsedStyle += 'div.contribution-container.collapsed > .comment > .link-title,';
-  collapsedStyle += 'div.contribution-container.collapsed > .comment > .embedded,';
-  collapsedStyle += 'div.contribution-container.collapsed > .comment > .link-title,';
-  collapsedStyle += 'div.contribution-container.collapsed > .comment > .link-quot {';
-  collapsedStyle += 'display: none;';
-  collapsedStyle += '}';
-  collapsedStyle += 'div.contribution-container.collapsed > .comment > .content p:nth-child(2) {';
-  collapsedStyle += 'display: block;';
-  collapsedStyle += '}';
-  // By the time this file is included, the head element already exists in the DOM
-  $("<style type='text/css'>" + collapsedStyle + "</style>").appendTo("head");
-
   $(document).ready(function() {
 
     selectResponseFromHash();
