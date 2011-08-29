@@ -86,7 +86,7 @@ function enable_cancel_contribution(element) {
   element.click(function(event) {
     event.preventDefault();
     hide_contribution_tool();
-    scroll_to_element($(this).parents('.contribution-thread-div'));
+    scroll_to_element($(this).parents('.contribution-container'));
   });
 }
 
