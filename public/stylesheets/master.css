@@ -497,15 +497,19 @@ padding: 2px 0 2px 21px;
 .pagination {clear: both;}
 .pagination p {padding-top: 1em;}
 .pagination span, .pagination a, .pagination em {
-background: #eee;
-border-bottom: 1px solid #ccc;
-border-right: 1px solid #ccc;
-border-top: 1px solid #ccc;
+background: #f9f9f9;
+border-bottom: 1px solid #c0c0c0;
+border-right: 1px solid #c0c0c0;
+border-top: 1px solid #c0c0c0;
 display: block;
 float: left;
 font-weight: bold;
 padding: 8px 12px;
 text-decoration: none;
+-webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+-moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+-o-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
 }
 .pagination span {color: #999;}
 .pagination .prev_page {
@@ -525,6 +529,7 @@ border-radius: 0 4px 4px 0;
 background: #fff;
 font-style: normal;
 }
+.pagination a:hover {background-color: #eee;}
 
 
 /*- BUTTON AND LINK STYLES
