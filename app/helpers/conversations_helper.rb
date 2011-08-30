@@ -160,7 +160,7 @@ module ConversationsHelper
   end
 
   def format_comment(contribution)
-    text = contribution.content.gsub(/([^\n]\n)(?=[^\n])/, ' ')  + '<p><i>Posted ' + contribution.created_at.strftime('%b %d, %Y') + '</i></p>' 
+    text = contribution.content.gsub(/([^\n]\n)(?=[^\n])/, ' ')
 
     # remove double paragraph tags which ocurr since TinyMCE creates paragraph tags by default and so does simple_format. Since old contribitions
     # do not have the paragraph tags for all text and we don't want to update them so that they do, we remove double p tags from output
