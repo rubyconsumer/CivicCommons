@@ -40,7 +40,7 @@ class Contribution < ActiveRecord::Base
   end
 
   def requires_one_of_url_or_attachement
-    self.errors[:content] << "can only have attachement or link, not both" if self.url and self.attachment
+    self.errors[:content] << "can only have attachment or link, not both" if not self.url.blank? and has_attachment?
   end
 
   def self.valid_attributes?(attributes)

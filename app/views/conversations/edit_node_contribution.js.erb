@@ -1,0 +1,11 @@
+<% unless @contribution.errors.any? %>
+
+  hide_contribution_tool();
+
+  $('#respond-to-<%= @contribution.id %>').ready(enable_post_to_conversation($('#respond-to-<%= @contribution.id %>')));
+
+<% else %>
+
+  $("#contrib fieldset").first().before("<%= escape_javascript( render :partial => 'contributions/creation_errors' ) %>");
+
+<% end %>
