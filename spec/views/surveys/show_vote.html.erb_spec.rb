@@ -7,7 +7,7 @@ describe '/surveys/show_vote.html.erb' do
   
   def given_a_vote_response_presenter
     @surveyable = stub_model(Issue)
-    @survey = stub_model(Vote, :surveyable => @surveyable)
+    @survey = stub_model(Vote, :surveyable => @surveyable, :start_date => 1.days.ago.to_date,:end_date => Date.today)
     @survey_options = [stub_model(SurveyOption)]
     @person = stub_model(Person)
     @survey_response_presenter = stub("VoteResponsePresenter", 
@@ -21,7 +21,7 @@ describe '/surveys/show_vote.html.erb' do
   
   def given_a_vote_response_presenter_that_is_persisted
     @surveyable = stub_model(Issue)
-    @survey = stub_model(Vote, :surveyable => @surveyable)
+    @survey = stub_model(Vote, :surveyable => @surveyable, :start_date => 1.days.ago.to_date,:end_date => Date.today)
     @survey_options = [stub_model(SurveyOption)]
     @person = stub_model(Person)
     @survey_response_presenter = stub("VoteResponsePresenter", 
@@ -36,7 +36,7 @@ describe '/surveys/show_vote.html.erb' do
   
   def given_a_vote_response_presenter_that_is_not_persisted
     @surveyable = stub_model(Issue)
-    @survey = stub_model(Vote, :surveyable => @surveyable)
+    @survey = stub_model(Vote, :surveyable => @surveyable, :start_date => 1.days.ago.to_date,:end_date => Date.today)
     @survey_options = [stub_model(SurveyOption)]
     @person = stub_model(Person)
     @survey_response_presenter = stub("VoteResponsePresenter", 

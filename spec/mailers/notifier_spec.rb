@@ -25,8 +25,8 @@ describe Notifier do
     end
     it "should send it correctly" do
       given_sending_a_survey_confirmation
-      @notification.body.should contain 'Thank you for participating on our vote'
-      @notification.body.should contain "Please check back on #{@survey_response.survey.end_date.to_s(:long)} to see the results"
+      @notification.body.should contain 'Thank for your vote on "This is a title"'
+      @notification.body.should contain "Please check back"
     end
   end
 end

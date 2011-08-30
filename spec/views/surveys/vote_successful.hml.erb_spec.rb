@@ -7,7 +7,7 @@ describe '/surveys/vote_successful.html.erb' do
   end
 
   it "should display the title of the modal" do
-    rendered.should have_selector('h2', :content => 'Thanks for Voting')
+    rendered.should have_selector('h2', :content => 'Thank you for voting!')
   end
 
 
