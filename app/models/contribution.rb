@@ -28,8 +28,8 @@ class Contribution < ActiveRecord::Base
   # -Jerry
   #validates :person, :presence => true
   validate :requires_an_owner
-
   validate :requires_content_or_link
+  validate :requires_one_of_url_or_attachement
 
   def requires_an_owner
     self.errors[:person] << "Must have an owner" if self.person.nil? and self.item.is_a?(Issue)
@@ -37,6 +37,10 @@ class Contribution < ActiveRecord::Base
 
   def requires_content_or_link
     self.errors[:content] << "Comment cannot be blank" if self.content.blank? and self.url.blank?
+  end
+
+  def requires_one_of_url_or_attachement
+    self.errors[:content] << "can only have attachment or link, not both" if not self.url.blank? and has_attachment?
   end
 
   def self.valid_attributes?(attributes)
