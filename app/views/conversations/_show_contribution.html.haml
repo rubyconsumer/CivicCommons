@@ -9,7 +9,7 @@
     %a{href:"#", class:"contribution-toggle"}Toggle
     - if !contribution.embedly_type && !contribution.attachment_file_name
       %p
-        %i 
+        %i.date 
           = 'Posted ' + contribution.created_at.strftime('%b %d, %Y')
     - if contribution.embedly_type
       %div.link-meta
@@ -29,7 +29,7 @@
             = raw contribution.description
             %br
             %br
-            %i
+            %i.date
               = 'Posted ' + contribution.created_at.strftime('%b %d, %Y')
     - if contribution.attachment_file_name
       - if contribution.attachment_content_type =~ /^image/
@@ -42,5 +42,5 @@
         %p.attached-file
         = link_to("Download attached file", contribution.attachment.url, {:target => :blank})
       %p
-        %i 
+        %i.date
           = 'Posted ' + contribution.created_at.strftime('%b %d, %Y')

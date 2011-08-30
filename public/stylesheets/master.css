@@ -41,6 +41,7 @@ font-weight: bold;
 margin-right: 10px;
 float: left;
 }
+.contribution-container i.date{color:#444;}
 .conversations {margin: 0;}
 /*
 .conversations.divided {
