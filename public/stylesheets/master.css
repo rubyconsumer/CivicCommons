@@ -1029,7 +1029,12 @@ border-radius: 8px;
 
 /*- Conversation Utility ----------*/
 
-.edit-contribution {float: right;}
+.edit-contribution {
+float: right;
+}
+.contribution-thread-div .contribution-container .edit-contribution{
+margin-right: 40px;
+}
 .edit-contribution a {margin-left: 15px;}
 div.convo-utility {
 position:relative;
