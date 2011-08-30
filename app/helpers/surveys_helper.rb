@@ -4,4 +4,18 @@ module SurveysHelper
     total = total + offset if total > offset.abs
     return total.to_i
   end
+  
+  def back_to_surveyable(survey)
+    if survey.surveyable 
+      case survey.surveyable
+      when Issue
+        surveyable = survey.surveyable.becomes(Issue)
+        title = survey.surveyable.name
+      when Conversation
+        surveyable = survey.surveyable
+        title = survey.surveyable.title
+      end
+      raw "Back to: #{link_to title, surveyable}"
+    end
+  end
 end

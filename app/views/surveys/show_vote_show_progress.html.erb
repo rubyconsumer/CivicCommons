@@ -9,6 +9,7 @@
     <div class="content-container">
       <h1>Voting Results</h1>
       <p><%= @survey.description %></p>
+      <p><%= back_to_surveyable(@survey) %></p>      
       <br/>
       <% if @survey.show_progress_now? %>
         <%= render :partial => '/surveys/result_bars' %>

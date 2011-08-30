@@ -1,6 +1,6 @@
 <% content_for(:header) do %>
   <%= javascript_include_tag 'vendor/jquery.equalheights.js' %>
-  <%= javascript_include_tag 'lib/surveys' %>
+  <%# javascript_include_tag 'lib/surveys' %>
   <%= render :partial => '/shared/show_colorbox.js', :locals => {:path => successful_votes_path} if flash[:vote_successful] %>
 <% end %>
 <% content_for(:main_body) do %>
@@ -10,6 +10,7 @@
       
       <h1>You've already voted.</h1>
       <p><%= @survey.description %></p>
+      <p><%= back_to_surveyable(@survey) %></p>
       <div class="survey-options">
         <div class="sortable">
           <%= render :partial => 'survey_options/survey_option_vote', :collection => @survey_response_presenter.available_options, :as => :option %>
