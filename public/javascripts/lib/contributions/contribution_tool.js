@@ -24,6 +24,7 @@ function clear_contribution_tool_form() {
     .removeAttr('checked')
     .removeAttr('selected');
   $('#contribution_content').tinymce().setContent('');
+  $("#contrib #error_explanation").remove();
 }
 
 function get_contribution_parent_id(container) {
