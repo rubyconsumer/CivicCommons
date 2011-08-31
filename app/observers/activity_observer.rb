@@ -11,7 +11,11 @@ class ActivityObserver < ActiveRecord::Observer
 
   def after_save(model)
     if model.is_a?(Contribution)
-      if model.confirmed &&  model != model.conversation.contributions.first
+      if model.confirmed &&
+        (
+          (!model.conversation.nil? && model != model.conversation.contributions.first) ||
+          (!model.issue.nil? && model != model.issue.contributions.first)
+        )
         if Activity.where(item_id: model.id, item_type: 'Contribution').empty?
           a = Activity.new(model)
           a.save
