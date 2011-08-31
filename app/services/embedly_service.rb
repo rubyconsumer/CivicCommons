@@ -120,7 +120,7 @@ class EmbedlyService
       data = data.embedly_code if data.is_a?(Contribution)
       begin
         data = JSON.parse(data)
-      rescue JSON::ParserError 
+      rescue JSON::ParserError
         data = {}
       end
     end
@@ -305,7 +305,7 @@ class EmbedlyService
           html << '</a>'
         else
           html << js
-          html << "<a id=\"inline-#{r}\" href=\"#{code[:url]}\">"
+          html << "<a id=\"inline-#{r}\" href=\"#{CGI::escapeHTML(CGI::unescapeHTML(code[:url]))}\">"
           html << thumbnail
           html << '</a>'
           html << "<div style=\"display:none\"><div id=\"data-#{r}\">"
@@ -328,22 +328,22 @@ class EmbedlyService
 
   def self.generate_img_html(opts)
     html = '<img'
-    html << " src=\"#{opts[:url]}\"" if opts[:url]
+    html << " src=\"#{CGI::escapeHTML(CGI::unescapeHTML(opts[:url]))}\"" if opts[:url]
     html << " height=\"#{opts[:height]}\"" if opts[:height]
     html << " width=\"#{opts[:width]}\"" if opts[:width]
-    html << " title=\"#{CGI.escapeHTML(opts[:title])}\"" if opts[:title]
-    html << " alt=\"#{CGI.escapeHTML(opts[:description])}\"" if opts[:description]
+    html << " title=\"#{CGI::escapeHTML(CGI::unescapeHTML(opts[:title]))}\"" if opts[:title]
+    html << " alt=\"#{CGI::escapeHTML(CGI::unescapeHTML(opts[:description]))}\"" if opts[:description]
     html << ' />'
     return html
   end
 
   def self.generate_thumbnail_html(opts)
     html = '<img'
-    html << " src=\"#{opts[:thumbnail_url]}\"" if opts[:thumbnail_url]
+    html << " src=\"#{CGI::escapeHTML(CGI::unescapeHTML(opts[:thumbnail_url]))}\"" if opts[:thumbnail_url]
     html << " height=\"#{opts[:thumbnail_height]}\"" if opts[:thumbnail_height]
     html << " width=\"#{opts[:thumbnail_width]}\"" if opts[:thumbnail_width]
-    html << " title=\"#{CGI.escapeHTML(opts[:title])}\"" if opts[:title]
-    html << " alt=\"#{CGI.escapeHTML(opts[:description])}\"" if opts[:description]
+    html << " title=\"#{CGI::escapeHTML(CGI::unescapeHTML(opts[:title]))}\"" if opts[:title]
+    html << " alt=\"#{CGI::escapeHTML(CGI::escapeHTML(opts[:description]))}\"" if opts[:description]
     html << ' />'
     return html
   end
@@ -353,8 +353,8 @@ class EmbedlyService
     link_body = title if link_body.nil?
     if not url.nil? and not title.nil?
       html << '<a'
-      html << " href=\"#{url}\""
-      html << " title=\"#{CGI.escapeHTML(title)}\""
+      html << " href=\"#{CGI::escapeHTML(CGI::unescapeHTML(url))}\""
+      html << " title=\"#{CGI::escapeHTML(CGI::unescapeHTML(title))}\""
       html << '>'
       html << link_body
       html << '</a>'

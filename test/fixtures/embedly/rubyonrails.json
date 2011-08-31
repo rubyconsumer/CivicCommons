@@ -1,0 +1,56 @@
+{
+	"embeds": [],
+	"provider_url": "http://rubyonrails.org/",
+	"description": "\"Ruby on Rails is a breakthrough in lowering the barriers of entry to programming. Powerful web applications that formerly might have taken weeks or months to develop can be produced in a matter of days.\"-Tim O'Reilly, Founder of O'Reilly Media Read more quotes \"Rails\", \"Ruby on Rails\", and the Rails logo are registered trademarks of David Heinemeier Hansson.",
+	"original_url": "http://rubyonrails.org/",
+	"url": "http://rubyonrails.org/",
+	"images": [{
+		"url": "http://rubyonrails.org/images/applications/twitter.jpg",
+		"width": 175,
+		"height": 110
+	},
+	{
+		"url": "http://rubyonrails.org/images/applications/github.jpg",
+		"width": 175,
+		"height": 110
+	},
+	{
+		"url": "http://rubyonrails.org/images/applications/groupon.jpg",
+		"width": 175,
+		"height": 110
+	},
+	{
+		"url": "http://rubyonrails.org/images/applications/shopify.jpg",
+		"width": 175,
+		"height": 110
+	},
+	{
+		"url": "http://rubyonrails.org/images/applications/yellowpages.jpg",
+		"width": 175,
+		"height": 110
+	}],
+	"safe": true,
+	"provider_display": "rubyonrails.org",
+	"event": {},
+	"favicon_url": "http://rubyonrails.org/favicon.ico",
+	"meta": {},
+	"oembed": {
+		"provider_url": "http://rubyonrails.org/",
+		"description": "\"Ruby on Rails is a breakthrough in lowering the barriers of entry to programming. Powerful web applications that formerly might have taken weeks or months to develop can be produced in a matter of days.\"-Tim O'Reilly, Founder of O'Reilly Media Read more quotes \"Rails\", \"Ruby on Rails\", and the Rails logo are registered trademarks of David Heinemeier Hansson.",
+		"title": "Ruby on Rails",
+		"url": "http://rubyonrails.org/",
+		"thumbnail_width": 175,
+		"thumbnail_url": "http://rubyonrails.org/images/applications/twitter.jpg",
+		"provider_name": "Rubyonrails",
+		"type": "link",
+		"thumbnail_height": 110
+	},
+	"place": {},
+	"entry": {},
+	"open_graph": {},
+	"title": "Ruby on Rails",
+	"provider_name": "Rubyonrails",
+	"cache_age": 86400,
+	"type": "html",
+	"payload": {}
+}

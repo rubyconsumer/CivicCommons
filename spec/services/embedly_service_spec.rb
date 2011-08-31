@@ -271,6 +271,15 @@ describe EmbedlyService do
             html.should =~ /\s+title="The Start"/
             html.should =~ /\s+alt="Poster #19: &quot;The Start&quot; Created by: Tom Sawyer Community: North Royalton From the Artist: &quot;Even something as simple as a &quot;Hi&quot; can make someone's day&quot;."/
             html.should =~ /\s*\/>$/
+
+            html = EmbedlyService.to_thumbnail(fixture_content('embedly/rubyonrails.json'))
+            html.should =~ /^<img/
+            html.should =~ /\s+src="http:\/\/rubyonrails.org\/images\/applications\/twitter.jpg"/
+            html.should =~ /\s+height="110"/
+            html.should =~ /\s+width="175"/
+            html.should =~ /\s+title="Ruby on Rails"/
+            html.should =~ /\s+alt="&quot;Ruby on Rails is a breakthrough in lowering the barriers of entry to programming. Powerful web applications that formerly might have taken weeks or months to develop can be produced in a matter of days.&quot;-Tim O'Reilly, Founder of O'Reilly Media Read more quotes &quot;Rails&quot;, &quot;Ruby on Rails&quot;, and the Rails logo are registered trademarks of David Heinemeier Hansson."/
+            html.should =~ /\s*\/>$/
           end
 
           it "should return nil when no thumbnail is present" do
