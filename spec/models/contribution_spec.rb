@@ -614,4 +614,11 @@ describe Contribution do
 
   end
 
+  describe " determining levels of indentation" do
+    it "delegates to the model" do
+      subject = Contribution.new
+      subject.parent = Contribution.new
+      subject.level_of_indentation.should == 1
+    end
+  end
 end

@@ -1,5 +1,5 @@
-- depth ||= 0
-- maxdepth = 2
+- depth = contribution.level_of_indentation
+- maxdepth = 2 
 - collapsed = (controller.action_name != 'create' && ! contribution.parent.nil?)
 %li.offset-1{:id => "show-contribution-#{contribution.id}"}
   %a{:name=>"contribution-#{contribution.id}"}
