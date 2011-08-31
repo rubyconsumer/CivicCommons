@@ -442,6 +442,14 @@ div.three-col-sm div.photobank img {margin: 0 0 6px 6px;}
   float:right;
   width:78px;
 }
+.disabled .survey-option .select, 
+.disabled .survey-option .unselect, 
+.disabled.selected-survey-options .menu{
+  display:none !important;
+}
+.disabled .survey-option{
+  cursor: default !important;
+}
 .survey-option .select{
   display: block;
   margin: -10px;

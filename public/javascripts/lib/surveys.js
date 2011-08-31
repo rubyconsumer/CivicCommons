@@ -50,7 +50,7 @@ jQuery(function ($) {
     
     //drag and drop of the votes
     if($('.selected-survey-options input.submit').attr('disabled') != true){
-      $('.survey-options .sortable').sortable({ 
+      $('.survey-options:not(.disabled) .sortable').sortable({ 
         connectWith: '.selected-survey-options .sortable',
         cursor: 'crosshair',
         receive: function(event,ui){
