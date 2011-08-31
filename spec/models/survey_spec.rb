@@ -109,6 +109,21 @@ describe Survey do
       @survey.should be_active
     end
   end
+  
+  context "expired?" do
+    it "should not be expired when the end_date is in the future" do
+      @survey = Factory.create(:survey, :show_progress => true, :end_date => 1.days.from_now.to_date)
+      @survey.should_not be_expired
+    end
+    it "should be expired when the end_date is in the past" do
+      @survey = Factory.create(:survey, :show_progress => true, :end_date => 1.days.ago.to_date)
+      @survey.should be_expired
+    end
+    it "should be expired when the start_date is today" do
+      @survey = Factory.create(:survey, :show_progress => true, :end_date => Date.today)
+      @survey.should be_expired
+    end
+  end
   context "days_until_end_date" do
     it "should display the number of days until end date if end_date is in the future" do
       @survey = Factory.create(:survey, :end_date => 1.days.from_now.to_date, :show_progress => false)
