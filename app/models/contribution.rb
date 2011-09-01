@@ -1,8 +1,8 @@
 require 'parent_validator'
-
+require 'contributions_determines_level_of_indentation'
 class Contribution < ActiveRecord::Base
   include Visitable
-
+  include DeterminesLevelOfIndentation
   attr_accessor :top_level
 
   # nested contributions are destroyed via callbacks
@@ -217,7 +217,6 @@ class Contribution < ActiveRecord::Base
   def override_confirmed=(value)
     self.confirmed = @override_confirmed = (true & value)
   end
-
   #############################################################################
   # Edit/Moderate/Delete
 
@@ -277,6 +276,7 @@ class Contribution < ActiveRecord::Base
       false
     end
   end
+
 
   #############################################################################
 

@@ -1,5 +1,3 @@
-- depth ||= 0
-- maxdepth = 2
 - collapsed = (controller.action_name != 'create' && ! contribution.parent.nil?)
 %li.offset-1{:id => "show-contribution-#{contribution.id}"}
   %a{:name=>"contribution-#{contribution.id}"}
@@ -39,12 +37,12 @@
                   = link_to(respond_button_text(contribution), '#', :class => "respond text rating-button post_to_conversation", :id => "respond-to-#{contribution.id}", :title => respond_button_text(contribution))
                 -else
                   = link_to(respond_button_text(contribution), { :controller => :sessions, :action => :ajax_new }, :class => "respond text rating-button", 'data-colorbox' => true )
-          - if depth < maxdepth
+          - if contribution.further_indented? 
             %ol.conversations.divided.thread-list
               .comment-contribution-action(id="action-div-#{contribution.id}")
               .contribution-thread-div(id="thread-div-#{contribution.id}")
-                = display_direct_descendant_subset(@contributions, contribution.id, depth, @ratings || ratings)
-- unless depth < maxdepth
+                = display_direct_descendant_subset(@contributions, contribution.id, @ratings || ratings)
+- unless contribution.further_indented? 
   .comment-contribution-action(id="action-div-#{contribution.id}")
   .contribution-thread-div(id="thread-div-#{contribution.id}")
-    = display_direct_descendant_subset(@contributions, contribution.id, depth, @ratings || ratings)
+    = display_direct_descendant_subset(@contributions, contribution.id, @ratings || ratings)

@@ -3,7 +3,7 @@ $("#contrib #error_explanation").remove();
 
   hide_contribution_tool();
 
-  <% if @contribution.parent %>
+  <% if @contribution.further_indented? %>
     $('ol.thread-list #show-contribution-<%= @contribution.parent.id %>').append("<%= escape_javascript( render :partial => "conversations/threaded_contribution_template", :locals => { :contribution => @contribution } ) %>");
   <% else %>
     $('#show_conversation ol.thread-list').first().append("<%= escape_javascript( render :partial => "conversations/threaded_contribution_template", :locals => { :contribution => @contribution } ) %>");

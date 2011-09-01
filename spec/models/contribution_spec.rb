@@ -614,4 +614,11 @@ describe Contribution do
 
   end
 
+  describe "determining if further indented" do
+    it "can do that" do
+      subject = Contribution.new
+      subject.parent = Contribution.new
+      subject.should be_further_indented
+    end
+  end
 end
