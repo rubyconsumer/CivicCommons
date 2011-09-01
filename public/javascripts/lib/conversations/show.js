@@ -243,6 +243,7 @@
   $('.edit-contribution-action')
     .changeTextOnLoading()
     .live("ajax:success", function(evt, data, status, xhr){
+      var $this = $(this);
       var $target = $(this.getAttribute("data-target"));
 
       $form = $target.html(xhr.responseText).find('form');
@@ -250,16 +251,12 @@
         .maskOnSubmit()
         .bind("ajax:success", function(evt, data, status, xhr){
           var $responseNode;
-          if( $form.data('remotipartSubmitted') == 'script' ) {
-            $responseNode = $($("<div />").html(xhr.responseText).text()); // this is needed to properly unescape the HTML returned from doing the jquery.form plugin's ajaxSubmit for some reason
-          } else {
-            $responseNode = $(xhr.responseText);
-          }
+          $responseNode = $(xhr.responseText); 
           contributionContent = $responseNode.html();
           $target.html(contributionContent);
         })
         .bindValidationErrorOnAjaxFailure();
-        init_tiny_mce($form.find('textarea.tinymce'))
+        init_tiny_mce($form.find('textarea.tinymce'));
     })
     .liveAlertOnAjaxFailure();
 

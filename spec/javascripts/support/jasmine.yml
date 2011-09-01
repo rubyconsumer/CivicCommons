@@ -11,8 +11,7 @@
 #   - dist/**/*.js
 #
 src_files:
-  - public/javascripts/vendor/jquery-1.4.2.min.js
-  - public/javascripts/lib/youtube.js
+  - public/javascripts/**/*.js
 
 # stylesheets
 #
