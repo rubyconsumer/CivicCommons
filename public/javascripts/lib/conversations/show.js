@@ -230,7 +230,7 @@
     });
   };
 
-  $('.delete-conversation-action')
+  $('.delete-contribution-action')
     .changeTextOnLoading({
       loadText: "Deleting..."
     })
@@ -240,7 +240,7 @@
     })
     .liveAlertOnAjaxFailure();
 
-  $('.edit-conversation-action')
+  $('.edit-contribution-action')
     .changeTextOnLoading()
     .live("ajax:success", function(evt, data, status, xhr){
       var $target = $(this.getAttribute("data-target"));
