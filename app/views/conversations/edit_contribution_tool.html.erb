@@ -1,0 +1,26 @@
+<%= form_for @contribution, :as => :contribution, 
+      :url => conversation_contributions_path(@contribution.conversation),
+      :remote => true, :method => :post, 
+      :html => {:multipart => true},
+        do |contribution_form| %>
+
+  <p class="title">Edit your response</p>
+  <%= contribution_form.hidden_field(:parent_id) %>
+
+  <fieldset>
+    <%= contribution_form.text_area(:content, :placeholder => "Leave a Comment...", :class => 'tinymce') %>
+
+    <a href="#" class="add-link">Add a link to a related website</a>
+    <%= contribution_form.text_field(:url, :type => "text", :class => "textbox link hide") %>
+
+    <a href="#" class="add-file">Upload a photograph, document, or other file</a>
+    <%= contribution_form.file_field(:attachment, :class => 'hide') %>
+
+  </fieldset>
+
+  <fieldset>
+    <%= contribution_form.submit 'Edit my response', :class => 'submit' %>
+    <%= link_to "Cancel", '#', :class => 'cancel' %>
+  </fieldset>
+
+<% end %>
