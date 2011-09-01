@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110826211416) do
+ActiveRecord::Schema.define(:version => 20110901060023) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -283,7 +283,7 @@ ActiveRecord::Schema.define(:version => 20110826211416) do
     t.boolean  "marketable"
     t.datetime "marketable_at"
     t.text     "bio"
-    t.boolean  "daily_digest",                        :default => true,  :null => false
+    t.boolean  "daily_digest",                        :default => true, :null => false
     t.boolean  "declined_fb_auth"
     t.string   "cached_slug"
     t.string   "twitter_username"
@@ -397,10 +397,11 @@ ActiveRecord::Schema.define(:version => 20110826211416) do
     t.string   "type"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "max_selected_options", :default => 0
+    t.integer  "max_selected_options",        :default => 0
     t.boolean  "show_progress"
     t.date     "start_date"
     t.date     "end_date"
+    t.boolean  "end_notification_email_sent"
   end
 
   create_table "top_items", :force => true do |t|

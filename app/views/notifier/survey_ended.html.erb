@@ -1,0 +1,3 @@
+<h1>The "<%= @survey.title %>" <%= @survey.type.downcase %> has ended.</h1>
+<p>You can now see the results <%= link_to 'here', send("#{@survey.type.underscore}_url".to_sym,@survey.id) %>".<p/> 
+

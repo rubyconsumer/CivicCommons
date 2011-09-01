@@ -134,4 +134,55 @@ describe Survey do
       @survey.days_until_end_date.should be_nil
     end
   end
+  
+  describe "sending emails to survey respondents that the survey has ended" do
+    context "sending to background job" do
+      it "should send to background job on save" do
+        @survey = Factory.create(:survey, :end_date => Date.today, :show_progress => false)
+        Delayed::Job.count.should == 1
+      end
+      it "should send to the background job on update when end_date is changed" do
+        @survey = Factory.create(:survey, :end_date => Date.today, :show_progress => false)
+        @survey.end_date = 1.days.from_now.to_date
+        @survey.save
+        Delayed::Job.count.should == 2
+      end
+      it "should have the delayed job run at the end_date" do
+        the_date = Date.today
+        @survey = Factory.create(:survey, :end_date => the_date, :show_progress => false)
+        Delayed::Job.last.run_at.to_date.should == the_date
+      end
+    end
+    context "when running background job" do
+      def given_a_survey_with_a_response
+        @vote_survey_response = Factory.create(:vote_survey_response)
+        @survey = @vote_survey_response.survey
+        @person = @vote_survey_response.person
+      end
+      it "should send all email, if email notification has not been sent" do
+        given_a_survey_with_a_response
+        ActionMailer::Base.deliveries = []
+        @survey.send_end_notification_email
+        ActionMailer::Base.deliveries.count.should == 1
+      end
+      it "should set the end_notification_email_sent to true if email is sent" do
+        given_a_survey_with_a_response
+        @survey.send_end_notification_email        
+        @survey.end_notification_email_sent.should be_true
+      end
+      it "should not send any email, if email notification has been sent before" do
+        given_a_survey_with_a_response
+        ActionMailer::Base.deliveries = []
+        @survey.end_notification_email_sent = true
+        @survey.save
+        @survey.send_end_notification_email
+        ActionMailer::Base.deliveries.count.should == 0
+      end
+      it "should receive notifier" do
+        given_a_survey_with_a_response
+        Notifier.stub_chain(:survey_ended,:deliver)
+        @survey.send_end_notification_email
+      end
+    end    
+  end
 end
