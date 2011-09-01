@@ -1,6 +1,6 @@
 <%= form_for @contribution, :as => :contribution, 
-      :url => conversation_contributions_path(@contribution.conversation),
-      :remote => true, :method => :post, 
+      :url => conversation_contribution_path(@contribution.conversation),
+      :remote => true, :method => :put, 
       :html => {:multipart => true},
         do |contribution_form| %>
 
