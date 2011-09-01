@@ -259,6 +259,7 @@
           $target.html(contributionContent);
         })
         .bindValidationErrorOnAjaxFailure();
+        init_tiny_mce($form.find('textarea.tinymce'))
     })
     .liveAlertOnAjaxFailure();
 
