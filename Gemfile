@@ -82,7 +82,6 @@ end
 # end
 
 group :development, :test do
-  gem 'jasmine'
   gem "rspec-rails", "~> 2.5.0"
   gem 'steak'
   gem "capybara", "~> 0.4.0"
