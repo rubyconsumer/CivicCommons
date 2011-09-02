@@ -20,7 +20,7 @@
 
   <fieldset>
     <%= contribution_form.submit 'Edit my response', :class => 'submit' %>
-    <%= link_to "Cancel", '#', :class => 'cancel' %>
+    <%= link_to "Cancel", conversation_contribution_path(@contribution.conversation, @contribution), :class => 'cancel', :remote => true, :method => :get, 'data-target' => "#show-contribution-#{@contribution.id}" %>
   </fieldset>
 
 <% end %>

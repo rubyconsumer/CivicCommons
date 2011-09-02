@@ -60,6 +60,15 @@ class ContributionsController < ApplicationController
     end
   end
 
+  def show
+    @contribution = Contribution.find(params[:id])
+    @contributions = @contribution.self_and_descendants
+    @ratings = RatingGroup.ratings_for_conversation_by_contribution_with_count(@contribution.conversation, current_person)
+    respond_to do |format|
+      format.js { render(:partial => "conversations/threaded_contribution_template", :locals => { :ratings => @ratings }, :collection => @contributions, :as => :contribution) }
+    end
+  end
+
   def update
     @contribution = Contribution.find(params[:id])
     respond_to do |format|

@@ -246,14 +246,7 @@
       var $this = $(this);
       var $target = $(this.getAttribute("data-target"));
 
-      $target.data('old_html',$target.html());
-
       $form = $target.html(xhr.responseText).find('form');
-      
-      $target.find('.cancel').bind('click', function(e) {
-        e.preventDefault();
-        $target.html($target.data('old_html'));
-      });
       $form
         .maskOnSubmit()
         .bind("ajax:success", function(evt, data, status, xhr){

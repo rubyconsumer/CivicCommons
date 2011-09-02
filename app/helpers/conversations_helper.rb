@@ -95,7 +95,7 @@ module ConversationsHelper
     ratings = ratings || RatingGroup.ratings_for_conversation_by_contribution_with_count(Contribution.find(this_contribution_id).conversation, current_person)
     return out unless contribution_descendants
     contribution_descendants.select{ |c| c.parent_id == this_contribution_id }.sort_by{ |c| c.created_at }.each do |contribution|
-      out += render(:partial => "threaded_contribution_template", :locals => { :contribution => contribution, :ratings => ratings })
+      out += render(:partial => "conversations/threaded_contribution_template", :locals => { :contribution => contribution, :ratings => ratings })
     end
     raw(out)
   end
