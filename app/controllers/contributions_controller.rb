@@ -71,10 +71,12 @@ class ContributionsController < ApplicationController
 
   def update
     @contribution = Contribution.find(params[:id])
+    @contributions = @contribution.self_and_descendants
+    attributes = { contribution: params[:contribution][params[:id]] }
     respond_to do |format|
-      if @contribution.update_attributes_by_user(params, current_person)
+      if @contribution.update_attributes_by_user(attributes, current_person)
         ratings = RatingGroup.ratings_for_conversation_by_contribution_with_count(@contribution.conversation, current_person)
-        format.js { render(:partial => "conversations/threaded_contribution_template", :locals => {:contribution => @contribution, :ratings => ratings }, :layout => false, :status => :ok) }
+        format.js { render(:partial => "conversations/threaded_contribution_template", :locals => { :ratings => ratings }, :collection => @contributions, :as => :contribution) }
       else
         format.js { render :json => @contribution.errors, :status => :unprocessable_entity }
       end

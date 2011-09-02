@@ -5,21 +5,21 @@
         do |contribution_form| %>
 
   <p class="title">Edit your response</p>
-  <%= contribution_form.hidden_field(:parent_id) %>
+  <%= contribution_form.hidden_field(:parent_id, :index => @contribution.id) %>
 
   <fieldset>
-    <%= contribution_form.text_area(:content, :placeholder => "Leave a Comment...", :class => 'tinymce') %>
+    <%= contribution_form.text_area(:content, :placeholder => "Leave a Comment...", :class => 'tinymce', :index => @contribution.id) %>
 
     <a href="#" class="add-link">Add a link to a related website</a>
-    <%= contribution_form.text_field(:url, :type => "text", :class => "textbox link hide") %>
+    <%= contribution_form.text_field(:url, :type => "text", :class => "textbox link hide", :index => @contribution.id) %>
 
     <a href="#" class="add-file">Upload a photograph, document, or other file</a>
-    <%= contribution_form.file_field(:attachment, :class => 'hide') %>
+    <%= contribution_form.file_field(:attachment, :class => 'hide', :index => @contribution.id) %>
 
   </fieldset>
 
   <fieldset>
-    <%= contribution_form.submit 'Edit my response', :class => 'submit' %>
+    <%= contribution_form.submit 'Edit my response', :class => 'submit', :index => @contribution.id %>
     <%= link_to "Cancel", conversation_contribution_path(@contribution.conversation, @contribution), :class => 'cancel', :remote => true, :method => :get, 'data-target' => "#show-contribution-#{@contribution.id}" %>
   </fieldset>
 
