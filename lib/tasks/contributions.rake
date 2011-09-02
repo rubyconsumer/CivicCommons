@@ -31,6 +31,6 @@ namespace :contribution do
   end
 
   def format_content(content)
-    simple_format(content).to_s.gsub('<p><p>', '<p>').gsub('</p></p>', '</p>')
+    simple_format(content).to_s.gsub(/\n/, '').gsub(/\<p\>\<p\>/, "<p>").gsub(/\<\/p\>\<\/p\>/, "</p>")
   end
 end
