@@ -19,6 +19,30 @@ The John S. and James L. Knight Foundation
 === Organizational Support
 
 The Fund For Our Economic Future
+== Contributing
+ * Fork
+ * Make Changes (Adding and updating tests as needed)
+ * Submit pull request
+ * Profit
+
+=== Runtime Dependencies
+ * Ruby 1.9.*
+ * mysql
+ * libiconv
+ * imagemagick
+
+=== Test Dependencies
+ * qt4.7+
+
+=== Installation
+From your command line: 
+    git pull git@github.com/CivicCommons/CivicCommons
+    bundle install
+    bundle exec rake db:setup
+
+== Running the App
+From your command line: 
+    bundle exec rake server:start
 
 == Copyright
 

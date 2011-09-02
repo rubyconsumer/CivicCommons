@@ -1,5 +1,4 @@
 source 'http://rubygems.org'
-
 gem 'rack', '1.2.1'
 
 gem 'mysql2'
@@ -81,6 +80,8 @@ end
 # end
 
 group :development, :test do
+  gem "jasmine"
+  gem "jasmine-headless-webkit"
   gem "rspec-rails", "~> 2.5.0"
   gem 'steak'
   gem "capybara", "~> 0.4.0"
