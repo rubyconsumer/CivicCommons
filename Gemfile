@@ -81,7 +81,8 @@ end
 
 group :development, :test do
   gem "jasmine"
-  gem "jasmine-headless-webkit"
+  #THIS GIVES YOU RAKE JASMINE:HEADLESS FOR JS TESTING
+  #gem "jasmine-headless-webkit"
   gem "rspec-rails", "~> 2.5.0"
   gem 'steak'
   gem "capybara", "~> 0.4.0"
