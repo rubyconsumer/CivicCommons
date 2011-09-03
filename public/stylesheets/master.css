@@ -376,7 +376,7 @@ position: relative;
 min-height: 70px;
 padding-left: 100px;
 }
-.feature-mast .offset-1.profile-mast {
+.feature-mast .offset-1.profile-mast, .profile .offset-1.profile-mast {
 min-height: 80px;
 padding-left: 80px;
 }

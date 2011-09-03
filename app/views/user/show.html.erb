@@ -3,30 +3,25 @@
 <% end %>
 
 <%= content_for :main_body do %>
-  <div class="feature-mast">
-    <div class="wrapper">
-      <div class="content-container">
-        <div class="main-content">
-          <div class="offset-1 profile-mast">
-            <%= profile_image(@user, 70) %>
-            <h1><%= @user.name %></h1>
-            <% unless @user.website.blank? %>
-              <p>Website: <%= link_to @user.website, remote_url(@user.website) %></p>
-            <% end %>
-            <% unless @user.twitter_username.blank? %>
-              <p>Twitter: <%= link_to "@#{@user.twitter_username}", "http://twitter.com/#!/#{@user.twitter_username}" %></p>
-            <% end %>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <div class="wrapper">
 
     <div class="content-container">
 
-      <div class="main-content">
+      <div class="main-content profile">
+		<div class="offset-1 profile-mast">
+  		  <%= profile_image(@user, 70) %>
+  		  <h1><%= @user.name %></h1>
+  		  <% unless @user.bio.blank? %>
+  		        <p><%= @user.bio %></p>
+  		  <% end %>
+  		  <% unless @user.website.blank? %>
+  		    	<p>Website: <%= link_to @user.website, @user.website %></p>
+  		  <% end %>
+  		  <% unless @user.twitter_username.blank? %>
+  		    	<p>Twitter: <%= link_to "@#{@user.twitter_username}", "http://twitter.com/#!/#{@user.twitter_username}" %></p>
+  		  <% end %>
+		</div>
         <div class="wide_content" id="UserContributionsModule">
           <h2>Recent Activity</h2>
           <% if @recent_items.empty? %>
@@ -46,18 +41,6 @@
       </div>
 
       <div class="aside supplementary">
-
-        <% unless @user.bio.blank? %>
-          <div class="mod" id="AboutUserModule">
-            <h3>About <%= @user.name %></h3>
-            <div class="mod-content">
-              <p>
-              <%= @user.bio %>
-              <br />
-              </p>
-            </div>
-          </div>
-        <% end %>
 
         <% unless @user.twitter_username.blank? %>
           <div class="mod" id="TwitterProfileModule">
