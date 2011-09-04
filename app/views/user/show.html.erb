@@ -12,18 +12,20 @@
 		<div class="offset-1 profile-mast">
   		  <%= profile_image(@user, 70) %>
   		  <h1><%= @user.name %></h1>
+  		  <ul class="profile-extras">
+  		  	<% unless @user.website.blank? %>
+  		    	<li class="website-profile"><%= link_to @user.website, @user.website %></li>
+            <% end %>
+            <% unless @user.twitter_username.blank? %>
+              	<li class="twitter-profile"><%= link_to "@#{@user.twitter_username}", "http://twitter.com/#!/#{@user.twitter_username}" %></li>
+            <% end %>
+  		  </ul>
   		  <% unless @user.bio.blank? %>
   		        <p><%= @user.bio %></p>
   		  <% end %>
-  		  <% unless @user.website.blank? %>
-  		    	<p>Website: <%= link_to @user.website, @user.website %></p>
-  		  <% end %>
-  		  <% unless @user.twitter_username.blank? %>
-  		    	<p>Twitter: <%= link_to "@#{@user.twitter_username}", "http://twitter.com/#!/#{@user.twitter_username}" %></p>
-  		  <% end %>
 		</div>
         <div class="wide_content" id="UserContributionsModule">
-          <h2>Recent Activity</h2>
+          <h3>Recent Activity</h3>
           <% if @recent_items.empty? %>
             <p><%= @user.name %> is just getting started</p>
           <% else %>
