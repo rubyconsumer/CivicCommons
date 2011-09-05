@@ -1,5 +1,6 @@
 class ContributionsController < ApplicationController
   include ContributionsHelper
+  include ConversationsHelper
 
   before_filter :load_conversation, only: [:edit, :update, :moderate, :moderated]
   before_filter :verify_admin, only: [:moderate, :moderated]
@@ -73,9 +74,11 @@ class ContributionsController < ApplicationController
     @contribution = Contribution.find(params[:id])
     @contributions = @contribution.self_and_descendants
     attributes = { contribution: params[:contribution][params[:id]] }
+    success = @contribution.update_attributes_by_user(attributes, current_person)
     respond_to do |format|
-      if @contribution.update_attributes_by_user(attributes, current_person)
+      if success
         ratings = RatingGroup.ratings_for_conversation_by_contribution_with_count(@contribution.conversation, current_person)
+        format.html { redirect_to conversation_node_path(@contribution) }
         format.js { render(:partial => "conversations/threaded_contribution_template", :locals => { :ratings => ratings }, :collection => @contributions, :as => :contribution) }
       else
         format.js { render :json => @contribution.errors, :status => :unprocessable_entity }
