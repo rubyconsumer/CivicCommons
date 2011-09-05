@@ -74,6 +74,11 @@ class ContributionsController < ApplicationController
     @contribution = Contribution.find(params[:id])
     @contributions = @contribution.self_and_descendants
     attributes = { contribution: params[:contribution][params[:id]] }
+    unless attributes[:contribution][:url].blank?
+      embedly = EmbedlyService.new
+      embedly.fetch_and_merge_params!(attributes)
+    end
+
     success = @contribution.update_attributes_by_user(attributes, current_person)
     respond_to do |format|
       if success
