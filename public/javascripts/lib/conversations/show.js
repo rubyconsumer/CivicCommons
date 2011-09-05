@@ -251,12 +251,20 @@
         .maskOnSubmit()
         .bind("ajax:success", function(evt, data, status, xhr){
           var $responseNode;
-          $responseNode = $(xhr.responseText); 
+          $responseNode = $(xhr.responseText);
           contributionContent = $responseNode.html();
           $target.html(contributionContent);
         })
         .bindValidationErrorOnAjaxFailure();
         init_tiny_mce($form.find('textarea.tinymce'));
+      $form.find('.add-link').click(function(event){
+        event.preventDefault();
+        $(this).next().toggleClass('hide');
+      });
+      $form.find('.add-file').click(function(event){
+        event.preventDefault();
+        $(this).next().toggleClass('hide');
+      });
     })
     .liveAlertOnAjaxFailure();
 

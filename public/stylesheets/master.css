@@ -967,6 +967,10 @@ border-radius: 4px;
 -o-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 }
+.contrib_tool_container .section input,
+form.contribution_edit .section input{
+margin-bottom: 10px;
+}
 form.contribution_edit .title{
 font-weight: bold;
 }

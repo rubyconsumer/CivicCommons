@@ -1,6 +1,6 @@
-<%= form_for @contribution, :as => :contribution, 
+<%= form_for @contribution, :as => :contribution,
       :url => conversation_contribution_path(@contribution.conversation),
-      :remote => true, :method => :put, 
+      :remote => true, :method => :put,
       :html => {:multipart => true},
         do |contribution_form| %>
 
@@ -10,11 +10,15 @@
   <fieldset>
     <%= contribution_form.text_area(:content, :placeholder => "Leave a Comment...", :class => 'tinymce', :index => @contribution.id) %>
 
-    <a href="#" class="add-link">Add a link to a related website</a>
-    <%= contribution_form.text_field(:url, :type => "text", :class => "textbox link hide", :index => @contribution.id) %>
+    <div class="section">
+      <a href="#" class="add-link">Add a link to a related website</a>
+      <%= contribution_form.text_field(:url, :type => "text", :class => "textbox link hide", :index => @contribution.id) %>
+    </div>
 
-    <a href="#" class="add-file">Upload a photograph, document, or other file</a>
-    <%= contribution_form.file_field(:attachment, :class => 'hide', :index => @contribution.id) %>
+    <div class="section">
+      <a href="#" class="add-file">Upload a photograph, document, or other file</a>
+      <%= contribution_form.file_field(:attachment, :class => 'hide', :index => @contribution.id) %>
+    </div>
   </fieldset>
 
   <fieldset>
