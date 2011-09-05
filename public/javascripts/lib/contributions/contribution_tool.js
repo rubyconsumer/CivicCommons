@@ -23,7 +23,10 @@ function clear_contribution_tool_form() {
     .val('')
     .removeAttr('checked')
     .removeAttr('selected');
-  $('#contribution_content').tinymce().setContent('');
+  if(typeof $('#contribution_content').tinymce == 'function')
+  {
+    $('#contribution_content').tinymce().setContent('');
+  }
   $("#contrib #error_explanation").remove();
 }
 
