@@ -256,7 +256,7 @@
           $target.html(contributionContent);
         })
         .bindValidationErrorOnAjaxFailure();
-        init_tiny_mce($form.find('textarea.tinymce'));
+      init_tiny_mce($form.find('textarea.tinymce'));
       $form.find('.add-file, .add-link').click(function(event){
         event.preventDefault();
         $(this).next().toggleClass('hide');
