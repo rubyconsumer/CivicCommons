@@ -88,7 +88,7 @@ group :development, :test do
   gem 'webrat', "~> 0.7.3"
 end
 #if you don't have QT installed (brew install qt) then you should do bundle install --without headlessjs
-group :headlessjs do
+group :headlessjs, :development, :test do
   gem "jasmine-headless-webkit"
 end
 gem 'devise', :git => 'git://github.com/plataformatec/devise.git', :branch => 'v1.3'
