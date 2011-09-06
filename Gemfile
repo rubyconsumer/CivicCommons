@@ -73,6 +73,7 @@ group :test do
   gem 'simplecov'
   gem 'timecop'
   gem 'selenium-webdriver', '>= 0.2.2'
+  gem "jasmine-headless-webkit"
 end
 
 # On non-osx platforms, use: bundle install --without osx_test
@@ -89,10 +90,12 @@ group :development, :test do
   gem "launchy"
   gem 'webrat', "~> 0.7.3"
 end
+
 #if you don't have QT installed (brew install qt) then you should do bundle install --without headlessjs
-group :headlessjs, :development, :test do
-  gem "jasmine-headless-webkit"
-end
+# group :headlessjs, :development, :test do
+#   gem "jasmine-headless-webkit"
+# end
+
 gem 'devise', :git => 'git://github.com/plataformatec/devise.git', :branch => 'v1.3'
 gem "oa-oauth", :require => "omniauth/oauth"
 gem 'omniauth', '~>0.2.0', :git => 'git://github.com/intridea/omniauth.git'
