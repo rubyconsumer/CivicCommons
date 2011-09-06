@@ -13,7 +13,7 @@
 src_files:
 
   - public/javascripts/vendor/jquery/jquery-1.5.min.js
-  - public/javascripts/vendor/jquery/jquery-ui-1.8.4.custom.min.js
+  - public/javascripts/vendor/jquery/jquery-ui-1.8.16.custom.min.js
   - public/javascripts/vendor/jquery/jquery.fancybox-1.3.4.pack.js
   - public/javascripts/vendor/jquery/jquery-ui-timepicker-addon-0.5.min.js
   - public/javascripts/vendor/jquery/jquery.colorbox-min.js
@@ -21,7 +21,7 @@ src_files:
   - public/javascripts/vendor/jquery/jquery.remotipart.js
   - public/javascripts/vendor/jquery/jquery.loadmask.min.js
   - public/javascripts/vendor/jquery/jquery.hashchange.min.js
-  - public/javascripts/vendor/jquery/jquery.easytabs'
+  - public/javascripts/vendor/jquery/jquery.easytabs
   - public/javascripts/vendor/placeholder-1.0.1.min.js
   - public/javascripts/vendor/modernizr-1.5.min.js
 
