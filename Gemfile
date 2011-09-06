@@ -81,15 +81,16 @@ end
 
 group :development, :test do
   gem "jasmine"
-  #THIS GIVES YOU RAKE JASMINE:HEADLESS FOR JS TESTING
-  #gem "jasmine-headless-webkit"
   gem "rspec-rails", "~> 2.5.0"
   gem 'steak'
   gem "capybara", "~> 0.4.0"
   gem "launchy"
   gem 'webrat', "~> 0.7.3"
 end
-
+#if you don't have QT installed (brew install qt) then you should do bundle install --without headlessjs
+group :headlessjs do
+  gem "jasmine-headless-webkit"
+end
 gem 'devise', :git => 'git://github.com/plataformatec/devise.git', :branch => 'v1.3'
 gem "oa-oauth", :require => "omniauth/oauth"
 gem 'omniauth', '~>0.2.0', :git => 'git://github.com/intridea/omniauth.git'
