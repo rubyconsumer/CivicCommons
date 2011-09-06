@@ -951,7 +951,8 @@ left: -10000px;
 top: auto;
 overflow: hidden;
 }
-.contrib_tool_container {
+.contrib_tool_container,
+form.contribution_edit {
 background: #e6e6e6;
 border: 1px solid #ccc;
 margin-top: 20px;
@@ -966,13 +967,22 @@ border-radius: 4px;
 -o-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 }
+.contrib_tool_container .section input,
+form.contribution_edit .section input{
+margin-bottom: 10px;
+}
+form.contribution_edit .title{
+font-weight: bold;
+}
 .divided div:last-child.contrib_tool_container {border-bottom: 1px solid #ccc;}
-#cancel-contribution {margin-left: 10px;}
-.mceEditor, #contribution-add-link, #contribution-add-file {
+#cancel-contribution, form.contribution_edit .cancel {margin-left: 10px;}
+.mceEditor, #contribution-add-link, #contribution-add-file,
+form.contribution_edit .add-link, form.contribution_edit .add-file {
 display: block;
 margin-bottom: 10px;
 }
-#contribution-add-link, #contribution-add-file {
+#contribution-add-link, #contribution-add-file,
+form.contribution_edit .add-link, form.contribution_edit .add-file {
 background: url(/images/icons/sm_add.png) no-repeat 0 2px;
 padding-left: 20px;
 }

@@ -4,6 +4,7 @@ gem 'rack', '1.2.1'
 gem 'mysql2'
 
 gem 'rails', "3.0.3"
+gem 'jquery-rails', '>= 1.0.3'
 
 gem 'sqlite3-ruby', :require => 'sqlite3'
 
@@ -17,6 +18,7 @@ gem 'geokit'
 
 gem "friendly_id", "~> 3.2.1"
 gem 'acts_as_revisionable'
+gem 'awesome_nested_set'
 gem 'embedly'
 
 gem 'gibbon'

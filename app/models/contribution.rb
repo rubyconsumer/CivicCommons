@@ -270,7 +270,7 @@ class Contribution < ActiveRecord::Base
   end
 
   def owner_editable?(user)
-    if self.owner == user.id && self.created_at > 30.minutes.ago && self.descendants_count == 0 && self.rating_groups.empty?
+    if self.owner == user.id && self.created_at > 30.minutes.ago && self.children.count == 0 && self.rating_groups.empty?
       true
     else
       false

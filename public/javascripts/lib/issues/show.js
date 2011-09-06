@@ -4,7 +4,7 @@ jQuery(function ($){
     .live('ajax:success', function(evt, data, status, xhr){
       $(this).closest('li,div.dnld').remove();
     })
-    .live('ajax:failure', function(evt, xhr, status, error){
+    .live('ajax:error', function(evt, xhr, status, error){
       try {
         alert( $.parseJSON(xhr.responseText)['base'] );
       } catch(err) {
@@ -49,11 +49,11 @@ jQuery(function ($){
       .bind("ajax:success", function(evt, data, status, xhr) {
         try {
           var json = $.parseJSON(data); // throws error if data is not JSON
-          if("errors" in json) {return $(this).trigger('ajax:failure', xhr, status, data);} // only gets to here if JSON parsing was successful and has error key
+          if("errors" in json) {return $(this).trigger('ajax:error', xhr, status, data);} // only gets to here if JSON parsing was successful and has error key
         } catch(err) {  }
         // Don't do anything (will be handled by create_contribution.js.erb)
       })
-      .bind("ajax:failure", function(evt, xhr, status, error) {
+      .bind("ajax:error", function(evt, xhr, status, error) {
         var errors = $.parseJSON(xhr.responseText)['errors'].join("<br/>");
         $(this).find(".errors").html(errors);
       });

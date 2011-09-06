@@ -43,28 +43,22 @@
     <%= f.hidden_field(:parent_id) %>
 
     <fieldset>
+      <%= f.text_area(:content, :placeholder => "Leave a Comment...", :class => 'tinymce') %>
 
-      <div class="hack-to-prevent-old-expand-and-collapse-from-triggering">
-        <%= f.text_area(:content, :placeholder => "Leave a Comment...", :class => 'tinymce') %>
-      </div>
-
-      <div class="hack-to-prevent-old-expand-and-collapse-from-triggering">
+      <div class="section">
         <a href="#" id="contribution-add-link">Add a link to a related website</a>
         <%= f.text_field(:url, :type => "text", :class => "textbox link", :style => 'display:none;') %>
       </div>
 
-      <div>
+      <div class="section">
         <a href="#" id="contribution-add-file">Upload a photograph, document, or other file</a>
         <%= f.file_field(:attachment, :style => 'display:none;') %>
       </div>
-
     </fieldset>
 
     <fieldset>
-      <div class="hack-to-prevent-old-expand-and-collapse-from-triggering">
-        <%= f.submit 'Leave my response', :class => 'submit' %>
-        <%= link_to "Cancel", '#', :id => 'cancel-contribution' %>
-      </div>
+      <%= f.submit 'Leave my response', :class => 'submit' %>
+      <%= link_to "Cancel", '#', :id => 'cancel-contribution' %>
     </fieldset>
 
   <% end %>

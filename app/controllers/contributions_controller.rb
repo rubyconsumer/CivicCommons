@@ -1,5 +1,6 @@
 class ContributionsController < ApplicationController
   include ContributionsHelper
+  include ConversationsHelper
 
   before_filter :load_conversation, only: [:edit, :update, :moderate, :moderated]
   before_filter :verify_admin, only: [:moderate, :moderated]
@@ -56,16 +57,34 @@ class ContributionsController < ApplicationController
   def edit
     @contribution = Contribution.find(params[:id])
     respond_to do |format|
-      format.js { render(:partial => 'conversations/new_contribution_form', :locals => {:div_id => "show-contribution-#{@contribution.id}"}, :layout => false) }
+      format.js { render 'conversations/edit_contribution_tool' }
+    end
+  end
+
+  def show
+    @contribution = Contribution.find(params[:id])
+    @contributions = @contribution.self_and_descendants
+    @ratings = RatingGroup.ratings_for_conversation_by_contribution_with_count(@contribution.conversation, current_person)
+    respond_to do |format|
+      format.js { render(:partial => "conversations/threaded_contribution_template", :locals => { :ratings => @ratings }, :collection => @contributions, :as => :contribution) }
     end
   end
 
   def update
     @contribution = Contribution.find(params[:id])
+    @contributions = @contribution.self_and_descendants
+    attributes = { contribution: params[:contribution][params[:id]] }
+    unless attributes[:contribution][:url].blank?
+      embedly = EmbedlyService.new
+      embedly.fetch_and_merge_params!(attributes)
+    end
+
+    success = @contribution.update_attributes_by_user(attributes, current_person)
     respond_to do |format|
-      if @contribution.update_attributes_by_user(params[:contribution], current_person)
+      if success
         ratings = RatingGroup.ratings_for_conversation_by_contribution_with_count(@contribution.conversation, current_person)
-        format.js { render(:partial => "conversations/threaded_contribution_template", :locals => {:contribution => @contribution, :ratings => ratings, :div_id => params[:div_id]}, :layout => false, :status => :ok) }
+        format.html { redirect_to conversation_node_path(@contribution) }
+        format.js { render(:partial => "conversations/threaded_contribution_template", :locals => { :ratings => ratings }, :collection => @contributions, :as => :contribution) }
       else
         format.js { render :json => @contribution.errors, :status => :unprocessable_entity }
       end

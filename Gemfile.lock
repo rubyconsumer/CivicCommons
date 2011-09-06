@@ -118,6 +118,8 @@ GEM
     autotest-growl (0.2.9)
     autotest-rails (4.1.0)
       ZenTest
+    awesome_nested_set (2.0.1)
+      activerecord (>= 3.0.0)
     aws-s3 (0.6.2)
       builder
       mime-types
@@ -224,6 +226,9 @@ GEM
       jasmine-core (~> 1.1.beta)
       multi_json
       rainbow
+    jquery-rails (1.0.9)
+      railties (~> 3.0)
+      thor (~> 0.14)
     json (1.5.1)
     json_pure (1.5.3)
     launchy (0.4.0)
@@ -370,6 +375,7 @@ DEPENDENCIES
   autotest-fsevent
   autotest-growl
   autotest-rails
+  awesome_nested_set
   aws-s3
   capybara (~> 0.4.0)
   cucumber (~> 0.10.0)
@@ -395,6 +401,7 @@ DEPENDENCIES
   httparty
   jasmine
   jasmine-headless-webkit
+  jquery-rails (>= 1.0.3)
   launchy
   linguistics
   mysql2

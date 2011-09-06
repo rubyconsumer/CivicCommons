@@ -95,7 +95,7 @@ module ConversationsHelper
     ratings = ratings || RatingGroup.ratings_for_conversation_by_contribution_with_count(Contribution.find(this_contribution_id).conversation, current_person)
     return out unless contribution_descendants
     contribution_descendants.select{ |c| c.parent_id == this_contribution_id }.sort_by{ |c| c.created_at }.each do |contribution|
-      out += render(:partial => "threaded_contribution_template", :locals => { :contribution => contribution, :ratings => ratings })
+      out += render(:partial => "conversations/threaded_contribution_template", :locals => { :contribution => contribution, :ratings => ratings })
     end
     raw(out)
   end
@@ -163,7 +163,7 @@ module ConversationsHelper
 
     # remove double paragraph tags which ocurr since TinyMCE creates paragraph tags by default and so does simple_format. Since old contribitions
     # do not have the paragraph tags for all text and we don't want to update them so that they do, we remove double p tags from output
-    stripped_extra_paragraphs = simple_format(text).gsub('<p><p>', '<p>').gsub('</p></p>', '</p>') 
+    stripped_extra_paragraphs = simple_format(text).gsub(/\<p\>\<p\>/, '<p>').gsub(/\<\/p\>\<\/p\>/, '</p>') 
     auto_link stripped_extra_paragraphs
   end
 

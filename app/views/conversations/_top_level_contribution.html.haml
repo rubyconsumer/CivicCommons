@@ -9,10 +9,10 @@
         %div.content
           %span.contribution-person-name= person_display_name(contribution.person)
           =auto_link(simple_format(contribution.content, {}, {:sanitize => false}))
-        %div{:class => "convo-utility #{contribution.descendants_count > 0 ? 'response' : 'no-response'}"}
+        %div{:class => "convo-utility #{contribution.children.count > 0 ? 'response' : 'no-response'}"}
           %p.respond-link
-            - if contribution.descendants_count > 0
-              = link_to(pluralize(contribution.descendants_count,'Response'),
+            - if contribution.children.count > 0
+              = link_to(pluralize(contribution.children.count,'Response'),
                           {:action => "node_conversation", :id => contribution.id, :div_id => "contribution-#{contribution.id}"},
                           :class => "text conversation-responses",
                           :id => "action-link-#{contribution.id}",

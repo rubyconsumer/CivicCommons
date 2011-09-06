@@ -20,7 +20,7 @@
           //  But for this action, successes always return HTML and failures return JSON of the error messages, so we'll test if response is JSON and trigger failure if so
           try{
             $.parseJSON(data); // throws error if data is not JSON
-            return $(this).trigger('ajax:complete').trigger('ajax:failure', xhr, status, data); // only gets to here if JSON parsing was successful, meaning data is error messages
+            return $(this).trigger('ajax:complete').trigger('ajax:error', xhr, status, data); // only gets to here if JSON parsing was successful, meaning data is error messages
           }catch(err){
             // do nothing
           }
@@ -126,7 +126,7 @@
       },
 
       bindValidationErrorOnAjaxFailure: function() {
-        this.bind("ajax:failure", function(evt, xhr, status, error){
+        this.bind("ajax:error", function(evt, xhr, status, error){
           try{
             var errors = $.parseJSON(xhr.responseText);
           }catch(err){
@@ -146,7 +146,7 @@
       },
 
       liveAlertOnAjaxFailure: function() {
-        this.live("ajax:failure", function(evt, xhr, status, error){
+        this.live("ajax:error", function(evt, xhr, status, error){
           try{
             var errors = $.parseJSON(xhr.responseText);
           }catch(err){
@@ -230,7 +230,7 @@
     });
   };
 
-  $('.delete-conversation-action')
+  $('.delete-contribution-action')
     .changeTextOnLoading({
       loadText: "Deleting..."
     })
@@ -240,9 +240,10 @@
     })
     .liveAlertOnAjaxFailure();
 
-  $('.edit-conversation-action')
+  $('.edit-contribution-action')
     .changeTextOnLoading()
     .live("ajax:success", function(evt, data, status, xhr){
+      var $this = $(this);
       var $target = $(this.getAttribute("data-target"));
 
       $form = $target.html(xhr.responseText).find('form');
@@ -250,15 +251,16 @@
         .maskOnSubmit()
         .bind("ajax:success", function(evt, data, status, xhr){
           var $responseNode;
-          if( $form.data('remotipartSubmitted') == 'script' ) {
-            $responseNode = $($("<div />").html(xhr.responseText).text()); // this is needed to properly unescape the HTML returned from doing the jquery.form plugin's ajaxSubmit for some reason
-          } else {
-            $responseNode = $(xhr.responseText);
-          }
+          $responseNode = $(xhr.responseText);
           contributionContent = $responseNode.html();
           $target.html(contributionContent);
         })
         .bindValidationErrorOnAjaxFailure();
+      init_tiny_mce($form.find('textarea.tinymce'));
+      $form.find('.add-file, .add-link').click(function(event){
+        event.preventDefault();
+        $(this).next().toggleClass('hide');
+      });
     })
     .liveAlertOnAjaxFailure();
 
