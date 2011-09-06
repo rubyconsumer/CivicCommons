@@ -8,7 +8,7 @@
     <% 
       elsif(hit.result.issue_id)
 
-        title = issues[hit.result.issue_id].title
+        title = issues[hit.result.issue_id].name
       %>
       <h4><%= link_to title , issue_node_path(hit.result) %></h4>
     <% end %>
