@@ -1,12 +1,12 @@
 - content_for :header do
-  = javascript_include_tag('lib/conversations/show')
-  = javascript_include_tag('lib/subscriptions/show')
-  = javascript_include_tag('/vendor/jquery/jquery.fancybox-1.3.4.pack.js')
-  = stylesheet_link_tag '/fancybox/jquery.fancybox-1.3.4.css'
+  = javascript_include_tag 'lib/conversations/show'
+  = javascript_include_tag 'lib/subscriptions/show'
+  = javascript_include_tag 'vendor/jquery/jquery.fancybox-1.3.4.pack.js'
+  = stylesheet_link_tag 'jquery.fancybox-1.3.4.css'
   /[if lt IE 9]
-    = javascript_include_tag('vendor/ie7_js/IE9')
+    = javascript_include_tag 'vendor/ie7_js/IE9'
   /[if IE 7]
-    = javascript_include_tag('vendor/ie7_js/ie7-recalc')
+    = javascript_include_tag 'vendor/ie7_js/ie7-recalc'
 
 - content_for :main do
   .feature-mast
