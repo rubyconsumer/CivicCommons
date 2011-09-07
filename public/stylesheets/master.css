@@ -978,7 +978,7 @@ form.contribution_edit .section input{
 margin-bottom: 10px;
 }
 form.contribution_edit .title,
-#contribution_tool_container .title{
+.contrib_tool_container .title{
 font-weight: bold;
 }
 .divided div:last-child.contrib_tool_container {border-bottom: 1px solid #ccc;}
@@ -1051,7 +1051,7 @@ border-radius: 8px;
 .edit-contribution {
 float: right;
 }
-.thread-list .contribution-container .edit-contribution{
+.thread-list .thread-list .contribution-container .edit-contribution{
 margin-right: 40px;
 }
 .edit-contribution a {margin-left: 15px;}
@@ -1139,8 +1139,8 @@ color: #fff;
 /*- Contribution Threads ----------*/
 
 .contribution-container .contribution-toggle {display: none;}
-.thread-list .contribution-container .content {padding-right: 40px;}
-.thread-list .contribution-container .contribution-toggle {
+.thread-list .thread-list .contribution-container .content {padding-right: 40px;}
+.thread-list .thread-list .contribution-container .contribution-toggle {
 background: url(../images/accordion-icon.png) no-repeat 0 0;
 display: block;
 height: 27px;
@@ -1151,9 +1151,9 @@ top: 10px;
 width: 25px;
 }
 .content {overflow: hidden;}
-.thread-list .contribution-container .contribution-toggle:hover {background-position:  0 -27px;}
-.thread-list .contribution-container .contribution-toggle:active,
-.thread-list .contribution-container .contribution-toggle.active {background-position:  0 -54px;}
+.thread-list .thread-list .contribution-container .contribution-toggle:hover {background-position:  0 -27px;}
+.thread-list .thread-list .contribution-container .contribution-toggle:active,
+.thread-list .thread-list .contribution-container .contribution-toggle.active {background-position:  0 -54px;}
 
 /*- Rating and Response Buttons ----------*/
 

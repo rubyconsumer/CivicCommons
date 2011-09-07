@@ -43,7 +43,7 @@ function get_contribution_parent_id(container) {
 function show_contribution_tool(container, contribution_id, title) {
   $('#contribution_content').tinymce().remove();
   $('#contribution_parent_id').val(contribution_id);
-  $('#contribution_tool_container .title').html(title + ':');
+  $('.contrib_tool_container .title').html(title + ':');
   if (null != container) {
     container.append($('#contrib'));
   } else {
@@ -55,7 +55,7 @@ function show_contribution_tool(container, contribution_id, title) {
 }
 
 function hide_contribution_tool() {
-  $('#contribution_tool_container .title').html('');
+  $('.contrib_tool_container .title').html('');
   $('#contrib').addClass('hide_contrib_tool');
 }
 
