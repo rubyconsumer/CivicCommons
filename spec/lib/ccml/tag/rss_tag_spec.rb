@@ -199,7 +199,7 @@ describe CCML::Tag::RssTag do
       html.should =~ /Copyright: \(c\) Copyright \d{4} The Civic Commons/i
       html.should =~ /Link: http:\/\/www\.theciviccommons\.com\/blog/i
       html.should =~ /Language: en-us/i
-      html.should =~ /Publication Date: 05-12-2011 08:45/i
+      html.should =~ /Publication Date: 05-12-2011/i
       html.should =~ /Image URL: http:\/\/www\.theciviccommons\.com\/images\/cc_podcast\.jpg/i
       html.should =~ /Image Title: The Civic Commons: Common Blog/i
       html.should =~ /Image Link: http:\/\/www\.theciviccommons\.com\/blog/i
