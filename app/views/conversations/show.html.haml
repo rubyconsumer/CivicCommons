@@ -54,10 +54,10 @@
         #show_conversation
           %input{:type=>"hidden", :id=>"conversation_id", :value=>"#{@conversation.id}"}
           %input{:type=>"hidden", :id=>"post_model_type", :value=>"Comment"}
-          %ol.conversations.divided
+          %ol.conversations.divided.thread-list
             - @top_level_contributions.each do |contribution|
               =render :partial => "show_contribution", :locals => { :contribution => contribution }
-          %ol#conversation-thread-list.conversations.divided.thread-list
+          %ol.conversations.divided.thread-list
             =render :partial => "threaded_contribution_template", :locals => { :ratings => @ratings }, :collection => @conversation_contributions, :as => :contribution
           -if current_person
             %div{:id => 'contribution_tool_container'}
