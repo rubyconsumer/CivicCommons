@@ -39,10 +39,6 @@
                   = link_to(respond_button_text(contribution), { :controller => :sessions, :action => :ajax_new }, :class => "respond text rating-button", 'data-colorbox' => true )
           - if contribution.further_indented? 
             %ol.conversations.divided.thread-list
-              .comment-contribution-action(id="action-div-#{contribution.id}")
-              .contribution-thread-div(id="thread-div-#{contribution.id}")
-                = display_direct_descendant_subset(@contributions, contribution.id, @ratings || ratings)
-- unless contribution.further_indented? 
-  .comment-contribution-action(id="action-div-#{contribution.id}")
-  .contribution-thread-div(id="thread-div-#{contribution.id}")
-    = display_direct_descendant_subset(@contributions, contribution.id, @ratings || ratings)
+              = display_direct_descendant_subset(@contributions, contribution.id, @ratings || ratings)
+- unless contribution.further_indented?
+  = display_direct_descendant_subset(@contributions, contribution.id, @ratings || ratings)

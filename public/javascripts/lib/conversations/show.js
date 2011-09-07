@@ -62,7 +62,7 @@
       },
 
       appendContributionToThread: function($responseNode) {
-        var $target = this.closest('.contribution-container').find('ol.thread-list,ul.thread-list').first().find('.contribution-thread-div').first(),
+        var $target = this.closest('.contribution-container').find('ol.thread-list,ul.thread-list').first(),
             contribution = $responseNode.children('li').attr('id'),
             $contributionOnPage = $target.find('li#' + contribution);
 

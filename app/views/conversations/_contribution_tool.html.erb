@@ -33,10 +33,7 @@
 
 <div id="contrib" name="contrib" class="hide_contrib_tool contrib_tool_container">
 
-  <p id='contribution-title----rename-id-after-buggy-expand-and-collapse-is-fixed' style="font-weight:bold;">
-  <div id='contribution-title' class="hack-to-prevent-old-expand-and-collapse-from-triggering" style="font-weight:bold;">
-  </div>
-  </p>
+  <p class="title">Post to this conversation:</p>
 
   <%= form_for contribution, :as => :contribution, :url => conversation_contributions_path(conversation), :remote => true, :method => :post, :html => {:multipart => true} do |f| %>
 
