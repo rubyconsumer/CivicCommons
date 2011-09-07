@@ -1049,7 +1049,7 @@ border-radius: 8px;
 .edit-contribution {
 float: right;
 }
-.contribution-thread-div .contribution-container .edit-contribution{
+.thread-list .contribution-container .edit-contribution{
 margin-right: 40px;
 }
 .edit-contribution a {margin-left: 15px;}
@@ -1137,8 +1137,8 @@ color: #fff;
 /*- Contribution Threads ----------*/
 
 .contribution-container .contribution-toggle {display: none;}
-.contribution-thread-div .contribution-container .content {padding-right: 40px;}
-.contribution-thread-div .contribution-container .contribution-toggle {
+.thread-list .contribution-container .content {padding-right: 40px;}
+.thread-list .contribution-container .contribution-toggle {
 background: url(../images/accordion-icon.png) no-repeat 0 0;
 display: block;
 height: 27px;
@@ -1149,8 +1149,9 @@ top: 10px;
 width: 25px;
 }
 .content {overflow: hidden;}
-.contribution-thread-div .contribution-container .contribution-toggle:hover {background-position:  0 -27px;}
-.contribution-thread-div .contribution-container .contribution-toggle:active, .contribution-thread-div .contribution-container .contribution-toggle.active {background-position:  0 -54px;}
+.thread-list .contribution-container .contribution-toggle:hover {background-position:  0 -27px;}
+.thread-list .contribution-container .contribution-toggle:active,
+.thread-list .contribution-container .contribution-toggle.active {background-position:  0 -54px;}
 
 /*- Rating and Response Buttons ----------*/
 
