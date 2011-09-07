@@ -1,0 +1,5 @@
+rvm: 1.9.2
+before_script:
+  - "cp config/ci.database.yml config/database.yml"
+  - "mysql -e 'create database CivicCommons_test;' >/dev/null"
+script: "bundle exec rake db:drop db:create db:migrate spec"
