@@ -4,11 +4,13 @@ namespace :ci do
     Rake::Task["db:drop"].invoke
     Rake::Task["db:create"].invoke
     Rake::Task["db:migrate"].invoke
-    ["rake spec_js", "rake cucumber"].each do |cmd|
+    tasks = { "rake spec_js"=>false, 
+              "rake cucumber"=>false }
+    ["rake spec_js", "rake cucumber"].each do |cmd, passed|
       
       puts "Starting to run #{cmd}..."
-      system("export DISPLAY=:99.0 && bundle exec #{cmd}")
-      raise "#{cmd} failed!" unless $?.exitstatus == 0
+      tasks[cmd] = system("export DISPLAY=:99.0 && bundle exec #{cmd}")
     end
+    raise "build failed!" if tasks.has_value?(false)
   end
 end
