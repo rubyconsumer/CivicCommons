@@ -126,7 +126,7 @@ describe CCML::Tag::RssTag do
       html.should =~ /Channel Copyright: \(c\) Copyright \d{4} The Civic Commons/i
       html.should =~ /Channel Link: http:\/\/www\.theciviccommons\.com\/blog/i
       html.should =~ /Channel Language: en-us/i
-      html.should =~ /Channel Publication Date: 05-12-2011 08:45/i
+      html.should =~ /Channel Publication Date: 05-12-2011/i
       html.should =~ /Channel Image URL: http:\/\/www\.theciviccommons\.com\/images\/cc_podcast\.jpg/i
       html.should =~ /Channel Image Title: The Civic Commons: Common Blog/i
       html.should =~ /Channel Image Link: http:\/\/www\.theciviccommons\.com\/blog/i
@@ -143,7 +143,7 @@ describe CCML::Tag::RssTag do
       html.should =~ /Item Title: Feedback Loop/i
       html.should =~ /Item Link: http:\/\/www\.theciviccommons\.com\/blog\/feedback-loop/i
       html.should =~ /Item Description: .*I had coffee this morning with a boomeranging Clevelander./i
-      html.should =~ /Item Publication Date: 05-09-2011 03:00/i
+      html.should =~ /Item Publication Date: 05-09-2011/i
     end
 
     it "returns no more items than specified by the limit option" do
