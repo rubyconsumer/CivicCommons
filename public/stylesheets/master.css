@@ -781,9 +781,9 @@ text-decoration: none;
 text-transform: uppercase;
 text-shadow: 0 1px 1px rgba(255,255,255,1);
 }
-ul#main-nav li a div {overflow: hidden;}
-ul#main-nav li a:hover div {cursor: pointer;}
-ul#main-nav li a div span {
+ul#main-nav li a {overflow: hidden;}
+ul#main-nav li a:hover {cursor: pointer;}
+ul#main-nav li a span {
 color: #666;
 display: block;
 font-size: .916em;
@@ -791,20 +791,24 @@ line-height: 1em;
 text-transform: none;
 }
 ul#main-nav li a:hover {background: url(/images/top_arrow.png) no-repeat 50% 0;}
-ul#main-nav li div#conversations {
-background: url(../images/nav_convo.png) no-repeat 0 0;
+ul#main-nav li.conversations {
+background: url(../images/nav_convo.png) no-repeat 0 17px;
+display: block;
 padding-left: 27px;
 }
-ul#main-nav li div#issues {
-background: url(../images/nav_issues.png) no-repeat 0 0;
+ul#main-nav li.issues {
+background: url(../images/nav_issues.png) no-repeat 0 17px;
+display: block;
 padding-left: 23px;
 }
-ul#main-nav li div#community {
-background: url(../images/nav_comm.png) no-repeat 0 0;
+ul#main-nav li.community {
+background: url(../images/nav_comm.png) no-repeat 0 17px;
+display: block;
 padding-left: 32px;
 }
-ul#main-nav li div#commons {
-background: url(../images/nav_build.png) no-repeat 0 0;
+ul#main-nav li.commons {
+background: url(../images/nav_build.png) no-repeat 0 17px;
+display: block;
 padding-left: 26px;
 }
 
@@ -1710,7 +1714,7 @@ padding-bottom: 0.5em;
 /*- COMMUNITY PAGE STYLES
 ----------------------------------------------------------------------*/
 
-.community {
+.main-content .community {
 clear: both;
 padding-top: 20px;
 }
