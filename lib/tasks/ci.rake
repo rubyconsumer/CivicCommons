@@ -9,7 +9,8 @@ namespace :ci do
     ["rake spec_js", "rake cucumber"].each do |cmd, passed|
       
       puts "Starting to run #{cmd}..."
-      tasks[cmd] = system("export DISPLAY=:99.0 && bundle exec #{cmd}")
+      system("export DISPLAY=:99.0 && bundle exec #{cmd}")
+      tasks[cmd] = $?.exitstatus == 0
     end
     raise "build failed!" if tasks.has_value?(false)
   end
