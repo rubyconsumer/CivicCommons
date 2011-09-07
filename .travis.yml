@@ -6,4 +6,4 @@ before_script:
   - "cp config/civic_commons.yml.sample config/civic_commons.yml"
   - "mysql -e 'create database CivicCommons_test;' >/dev/null"
   - "sh -e /etc/init.d/xvfb start"
-script: "bundle exec rake db:drop db:create db:migrate ci:travis"
+script: "bundle exec rake ci:travis"
