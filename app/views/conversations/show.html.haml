@@ -32,7 +32,7 @@
               =render :partial => 'shared/facebook_like'
             %p.convo-meta
               =render :partial => 'shared/twitter_share', locals: { title: @conversation.title}
-          %p.convo-summary
+          %div.convo-summary
             %strong
               = format_date @conversation.created_at
             = raw(@conversation.summary)

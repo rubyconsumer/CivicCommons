@@ -939,8 +939,10 @@ width: 97%; /* This gets modified in the show.js easytabs:after binding, so it d
 margin: 0;
 }
 div.tab-strip input[type=text] {width: 97%;}
-p.convo-summary {
+div.convo-summary {
 clear: both;
+line-height: 1.4em;
+margin-bottom: 0.8em;
 padding-top: 15px;
 }
 .convo-mast-buttons a.button {width: 150px;}
