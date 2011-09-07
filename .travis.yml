@@ -1,5 +1,6 @@
 rvm: 1.9.2
 bundler_args: --without cool_toys 
+env: DISPLAY=:99.0
 before_script:
   - "cp config/ci.database.yml config/database.yml"
   - "cp config/amazon_s3.yml.sample config/amazon_s3.yml"
