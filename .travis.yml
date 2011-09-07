@@ -2,6 +2,6 @@ rvm: 1.9.2
 bundler_args: --without cool_toys 
 before_script:
   - "cp config/ci.database.yml config/database.yml"
-  - "cp config/sample.civic_commons.yml config/civic_commons.yml"
+  - "cp config/civic_commons.yml.sample config/civic_commons.yml"
   - "mysql -e 'create database CivicCommons_test;' >/dev/null"
 script: "bundle exec rake db:drop db:create db:migrate spec"
