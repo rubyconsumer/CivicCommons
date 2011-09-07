@@ -58,7 +58,6 @@
             - @top_level_contributions.each do |contribution|
               =render :partial => "show_contribution", :locals => { :contribution => contribution }
           %ol#conversation-thread-list.conversations.divided.thread-list
-            %div{:id => "conversation-action-div-#{@conversation.id}"}
             =render :partial => "threaded_contribution_template", :locals => { :ratings => @ratings }, :collection => @conversation_contributions, :as => :contribution
           -if current_person
             %div{:id => 'contribution_tool_container'}
