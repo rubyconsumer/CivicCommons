@@ -1,5 +1,5 @@
 rvm: 1.9.2
-bundler_args: --without osx_test
+bundler_args: --without cool_toys 
 before_script:
   - "cp config/ci.database.yml config/database.yml"
   - "mysql -e 'create database CivicCommons_test;' >/dev/null"

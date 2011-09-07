@@ -1,12 +1,15 @@
 source 'http://rubygems.org'
+
 gem 'rack', '1.2.1'
 
 gem 'mysql2'
 
+gem 'devise', :git => 'git://github.com/plataformatec/devise.git', :branch => 'v1.3'
+gem "oa-oauth", :require => "omniauth/oauth"
+gem 'omniauth', '~>0.2.0', :git => 'git://github.com/intridea/omniauth.git'
+
 gem 'rails', "3.0.3"
 gem 'jquery-rails', '>= 1.0.3'
-
-gem 'sqlite3-ruby', :require => 'sqlite3'
 
 gem 'haml'
 gem 'date_validator'
@@ -48,15 +51,10 @@ group :development do
   gem "ruby_parser"
   gem "engineyard"
   gem "ruby-debug19"
-  gem 'query_reviewer', :git => 'git://github.com/nesquena/query_reviewer.git'
 end
 
 group :test do
   gem "rack-test", :git => 'git://github.com/econsultancy/rack-test.git', :branch => 'econsultancy-20110119'
-  gem 'autotest'
-  gem 'autotest-rails' 
-  gem 'autotest-growl', :group => [:osx_test]
-  gem 'autotest-fsevent', :group => [:osx_test]
   gem 'cucumber', '~>0.10.0'
   gem "factory_girl_rails", '~>1.0.1'
   gem 'no_peeping_toms', :git => 'git://github.com/alindeman/no_peeping_toms.git'
@@ -73,7 +71,6 @@ group :test do
   gem 'simplecov'
   gem 'timecop'
   gem 'selenium-webdriver', '>= 0.2.2'
-  gem "jasmine-headless-webkit"
 end
 
 
@@ -86,17 +83,11 @@ group :development, :test do
   gem 'webrat', "~> 0.7.3"
 end
 
-#if you don't have QT installed (brew install qt) then you should do bundle install --without headlessjs
-# group :headlessjs, :development, :test do
-#   gem "jasmine-headless-webkit"
-# end
-
-gem 'devise', :git => 'git://github.com/plataformatec/devise.git', :branch => 'v1.3'
-gem "oa-oauth", :require => "omniauth/oauth"
-gem 'omniauth', '~>0.2.0', :git => 'git://github.com/intridea/omniauth.git'
-
-gem 'shoulda'
-gem 'paperclip', "2.3.8"
-gem 'delayed_paperclip'
-gem 'aws-s3'
-gem 'nokogiri'
+group :cool_toys do
+  gem 'autotest'
+  gem 'autotest-rails' 
+  gem 'autotest-growl'
+  gem 'autotest-fsevent'
+  gem "jasmine-headless-webkit"
+  gem 'query_reviewer', :git => 'git://github.com/nesquena/query_reviewer.git'
+end
