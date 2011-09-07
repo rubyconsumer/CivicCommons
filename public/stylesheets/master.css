@@ -1008,6 +1008,7 @@ width: auto;
 div.contribution-container.collapsed > .comment > .edit-contribution,
 div.contribution-container.collapsed > .comment > .convo-utility,
 div.contribution-container.collapsed > .comment > .content p,
+div.contribution-container.collapsed > .comment > .content ol,
 div.contribution-container.collapsed > .comment > .content ul,
 div.contribution-container.collapsed > .comment > .attached-file,
 div.contribution-container.collapsed > .comment > .link-title,
