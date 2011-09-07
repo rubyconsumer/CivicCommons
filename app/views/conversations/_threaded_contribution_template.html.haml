@@ -41,5 +41,4 @@
             %ol.conversations.divided.thread-list
               = display_direct_descendant_subset(@contributions, contribution.id, @ratings || ratings)
 - unless contribution.further_indented?
-  %ol.conversations.divided.thread-list
-    = display_direct_descendant_subset(@contributions, contribution.id, @ratings || ratings)
+  = display_direct_descendant_subset(@contributions, contribution.id, @ratings || ratings)
