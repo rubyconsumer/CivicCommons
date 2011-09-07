@@ -977,7 +977,8 @@ box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 form.contribution_edit .section input{
 margin-bottom: 10px;
 }
-form.contribution_edit .title{
+form.contribution_edit .title,
+#contrib_tool_container .title{
 font-weight: bold;
 }
 .divided div:last-child.contrib_tool_container {border-bottom: 1px solid #ccc;}
