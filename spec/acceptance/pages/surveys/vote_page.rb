@@ -2,6 +2,8 @@ class VotePage < PageObject
   OPTIONS_LOCATOR = '.survey-options .sortable .survey-option'
   SELECTED_OPTIONS_LOCATOR = '.selected-survey-options .sortable .survey-option'
   VOTEBOX_LOCATOR = '.selected-survey-options .sortable'
+  VOTE_RESULTS = 'ul.survey_results'
+  BALLOT_FORM_DISABLED = '.selected-survey-options.disabled'
   
   def visit_an_independent_vote(vote)
     visit independent_vote_path(vote)
