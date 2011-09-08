@@ -26,7 +26,6 @@ class Admin::SurveysController < Admin::DashboardController
   def new
     @survey = Survey.new(:max_selected_options => 3)
     @survey.type = 'Vote'
-    @survey = @survey.becomes(Survey) # needed for STI so that the form can use the parent, not the child
     3.times do
       @survey.options.build
     end
@@ -54,6 +53,8 @@ class Admin::SurveysController < Admin::DashboardController
     @survey = Survey.new(params[:survey])
     @survey.type = params["survey"]["type"]
     @survey = @survey.becomes(Survey) # needed for STI so that the form can use the parent, not the child
+    @survey.attributes = params[:survey]
+    
     respond_to do |format|
       if @survey.save
         format.html { redirect_to(admin_survey_url(@survey), :notice => 'Survey was successfully created.') }
