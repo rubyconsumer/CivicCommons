@@ -17,6 +17,8 @@ class SearchController < ApplicationController
       case hit.result
       when Contribution
         if(hit.result.conversation_id)
+          # possible query to decrease number of queries
+          # select u.first_name, u.last_name, c.title from contributions cont INNER JOIN conversations c ON cont.conversation_id = c.id INNER JOIN people u ON cont.owner = u.id;
           conversation = Conversation.find hit.result.conversation_id
           if(conversation)
             @conversations[hit.result.conversation_id] = conversation
@@ -26,7 +28,7 @@ class SearchController < ApplicationController
         if(hit.result.issue_id)
           issue = Issue.find hit.result.issue_id
           if(issue)
-            @conversations[hit.result.issue_id] = issue
+            @issues[hit.result.issue_id] = issue
           end 
         end
       end
