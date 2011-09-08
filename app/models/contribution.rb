@@ -4,7 +4,7 @@ class Contribution < ActiveRecord::Base
   include Visitable
   include DeterminesLevelOfIndentation
 
-  searchable :ignore_attribute_changes_of => [ :total_visits, :recent_visits, :last_visit_date, :updated_at, :recent_rating ] do
+  searchable :include => [:person, :conversation, :issue], :ignore_attribute_changes_of => [ :total_visits, :recent_visits, :last_visit_date, :updated_at, :recent_rating ] do
     text :title, :default_boost => 1
     text :description, :stored => true
     text :content, :stored => true
