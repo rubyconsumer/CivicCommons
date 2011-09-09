@@ -48,6 +48,7 @@ Civiccommons::Application.routes.draw do
   post '/conversations/toggle_rating',                 to: 'conversations#toggle_rating',                    as: 'conversation_contribution_toggle_rating'
   post '/conversations/blog/:id',                      to: 'conversations#create_from_blog_post',            as: 'start_conversation_from_blog_post'
   post '/conversations/radio/:id',                     to: 'conversations#create_from_radioshow',            as: 'start_conversation_from_radioshow'
+  get '/conversations/:id#node-:contribution_id',      to: 'conversations#show',                             as: 'conversations_node_show'
 
   #Search
   match '/search/results',                             to: 'search#results',                                 as: 'search'
@@ -98,6 +99,7 @@ Civiccommons::Application.routes.draw do
 
   devise_scope :person do
     match '/people/ajax_login', :to=>'sessions#ajax_create', :via=>[:post]
+    match '/people/ajax_new_login', :to=>'sessions#ajax_new', :via=>[:get]
     get '/people/secret/fb_auth_forgot_password', to: 'passwords#fb_auth_forgot_password', as: 'fb_auth_forgot_password'
     get "/registrations/omniauth_callbacks/failure", to: "registrations/omniauth_callbacks#failure"
   end
@@ -122,7 +124,7 @@ Civiccommons::Application.routes.draw do
   end
 
   resources :conversations, only: [:index, :show, :new, :create] do
-    resources :contributions, only: [:edit, :update, :destroy] do
+    resources :contributions, only: [:create, :edit, :show, :update, :destroy] do
       get '/moderate', to: 'contributions#moderate', on: :member
       put '/moderate', to: 'contributions#moderated', on: :member
     end
