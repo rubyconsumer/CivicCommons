@@ -16,4 +16,8 @@ module UserHelper
     return cls
   end
 
+  def remote_url(url)
+    url.gsub(/www\./, 'http://www.')
+  end
+
 end

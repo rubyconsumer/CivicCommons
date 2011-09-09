@@ -11,7 +11,7 @@
             <%= profile_image(@user, 70) %>
             <h1><%= @user.name %></h1>
             <% unless @user.website.blank? %>
-              <p>Website: <%= link_to @user.website, @user.website %></p>
+              <p>Website: <%= link_to @user.website, remote_url(@user.website) %></p>
             <% end %>
             <% unless @user.twitter_username.blank? %>
               <p>Twitter: <%= link_to "@#{@user.twitter_username}", "http://twitter.com/#!/#{@user.twitter_username}" %></p>
