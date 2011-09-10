@@ -1,25 +1,27 @@
-<div class="selected-survey-options  <%= 'disabled' if @survey_response_presenter.already_voted? %>">
-  <h3 class="title"><%= @survey.title %></h3>
-  <% form_for :survey_response_presenter, @survey_response_presenter, :url => polymorphic_url([:create_response, @survey]), :remote => true  do |f| %>
-    <% if @survey_response_presenter.errors.any? %>
-      <h3>Errors saving this vote</h3>
-    <% end %>
-  
-    <% @survey_response_presenter.max_selected_options.times do |i|  %>
-      <div class="sortable-wrapper">
-        <div class="sortable">
-          <% if @survey_response_presenter.send("selected_option_#{i+1}_id".to_sym).blank? %>
-            <div class="placeholder">
-              Drop your <%= (i+1).ordinalize %> vote here
-            </div>
-          <% end %>
-          <%= f.text_field "selected_option_#{i+1}_id".to_sym, :class => 'selected_option_id', :style => 'display:none;' %>
-          <%= render :partial => 'survey_options/survey_option_vote', :object => @survey_response_presenter.send("selected_option_#{i+1}"), :as => :option if @survey_response_presenter.send("selected_option_#{i+1}")%>
-        </div>
-      </div>
-    <% end %>
-    <div class="menu">
-      <%= f.submit 'CAST BALLOT', :class => "submit", :disabled => @survey_response_presenter.already_voted? %> or <%= link_to 'Cancel','' %>
-    </div>
-  <% end %>
+<div class="aside supplementary">
+	<div class="selected-survey-options  <%= 'disabled' if @survey_response_presenter.already_voted? %>">
+	  <h3 class="title"><%= @survey.title %></h3>
+	  <% form_for :survey_response_presenter, @survey_response_presenter, :url => polymorphic_url([:create_response, @survey]), :remote => true  do |f| %>
+	    <% if @survey_response_presenter.errors.any? %>
+	      <h3>Errors saving this vote</h3>
+	    <% end %>
+	  
+	    <% @survey_response_presenter.max_selected_options.times do |i|  %>
+	      <div class="sortable-wrapper">
+	        <div class="sortable">
+	          <% if @survey_response_presenter.send("selected_option_#{i+1}_id".to_sym).blank? %>
+	            <div class="placeholder">
+	              Drop your <%= (i+1).ordinalize %> vote here
+	            </div>
+	          <% end %>
+	          <%= f.text_field "selected_option_#{i+1}_id".to_sym, :class => 'selected_option_id', :style => 'display:none;' %>
+	          <%= render :partial => 'survey_options/survey_option_vote', :object => @survey_response_presenter.send("selected_option_#{i+1}"), :as => :option if @survey_response_presenter.send("selected_option_#{i+1}")%>
+	        </div>
+	      </div>
+	    <% end %>
+	    <div class="menu">
+	      <%= f.submit 'Cast Ballot', :class => "submit", :disabled => @survey_response_presenter.already_voted? %> or <%= link_to 'Cancel','' %>
+	    </div>
+	  <% end %>
+	</div>
 </div>

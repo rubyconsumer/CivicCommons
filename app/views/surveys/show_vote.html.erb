@@ -7,18 +7,22 @@
   <div class="wrapper">
     <div class="content-container">
       <div class="voting-container">
-        
-      
-        <h1>Cast Your Vote</h1>
-        <p><%= @survey.description %></p>
-        <p><%= "This vote started on #{@survey.start_date && @survey.start_date.to_s(:long) || @survey.created_at.to_date.to_s(:long) } and will end on #{ @survey.end_date.to_s(:long)}" %> <%= "(#{pluralize(@survey.days_until_end_date,'day', 'days')} left)" if @survey.days_until_end_date %></p>
-        <h4 class="tips">SELECT FROM THESE OPTIONS:</h4>
-        <div class="survey-options">
-          <div class="sortable">
-            <%= render :partial => 'survey_options/survey_option_vote', :collection => @survey_response_presenter.available_options, :as => :option %>
-          </div>
+        <div class="content-container">
+	        <div class="main-content">
+		        <h1>Cast Your Vote</h1>
+		        <p><%= @survey.description %></p>
+		        <p class="vote-time"><%= "This vote started on #{@survey.start_date && @survey.start_date.to_s(:long) || @survey.created_at.to_date.to_s(:long) } and will end on #{ @survey.end_date.to_s(:long)}" %> <%= "(#{pluralize(@survey.days_until_end_date,'day', 'days')} left)" if @survey.days_until_end_date %></p>
+	        </div>
         </div>
-        <%= render :partial => '/surveys/vote_form' %>
+        <div class="main-content">
+	        <h3 class="tips">Select from these options:</h3>
+	        <div class="survey-options">
+	          <div class="sortable">
+	            <%= render :partial => 'survey_options/survey_option_vote', :collection => @survey_response_presenter.available_options, :as => :option %>
+	          </div>
+	        </div>
+        </div>
+	    <%= render :partial => '/surveys/vote_form' %>
       </div>
     </div>
   </div>
