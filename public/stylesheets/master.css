@@ -556,6 +556,11 @@ color: #fff;
 background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#a2b562), to(#96a957));
 background: -moz-linear-gradient(center top , #a2b562, #96a957);
 }
+.vote-time {
+background: url(../images/calendar-f.png) no-repeat 0 8px;
+border-top: 1px solid #ccc;
+padding: 10px 0 2px 25px;
+}
 
 /*- Surveys/Votes ----------*/
 
