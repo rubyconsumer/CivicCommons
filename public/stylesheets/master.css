@@ -560,6 +560,7 @@ background: -moz-linear-gradient(center top , #a2b562, #96a957);
 .vote-time {
 background: url(../images/calendar-f.png) no-repeat 0 8px;
 border-top: 1px solid #ccc;
+font-weight: bold;
 padding: 10px 0 2px 25px;
 }
 .vote-band {margin-left: 0;}

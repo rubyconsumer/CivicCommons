@@ -5,7 +5,7 @@
       <div class="main-content">
         <div class="voting-container">
           <h1>This Ballot is not available at this moment.</h1>
-          <p>Please come back again on or after <%= @survey.start_date.present? && @survey.start_date.to_s(:long) %></p>
+          <p class="vote-time">Please come back again on or after <%= @survey.start_date.present? && @survey.start_date.to_s(:long) %></p>
         </div>
       </div>
     </div>

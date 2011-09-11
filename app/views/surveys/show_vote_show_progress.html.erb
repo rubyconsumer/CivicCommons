@@ -18,7 +18,7 @@
 		  <% if @survey.show_progress_now? %>
 	        <%= render :partial => '/surveys/result_bars' %>
 	      <% else %>
-	        <p><strong>Check back on <%= @survey.end_date && @survey.end_date.to_s(:long) %> to see the results</strong></p>
+	        <p class="vote-time"><strong>Check back on <%= @survey.end_date && @survey.end_date.to_s(:long) %> to see the results</strong></p>
           <% end %>
 		</div>
         <div class="aside supplementary">
