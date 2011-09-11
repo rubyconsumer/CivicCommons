@@ -2,10 +2,9 @@ module DeterminesLevelOfIndentation
   MaximumIndentationLevel = 2
 
   def further_indented?
-    level_of_indentation < MaximumIndentationLevel 
+    level_of_indentation < MaximumIndentationLevel
   end
 
-  private
   def level_of_indentation
     if number_of_ancestors > MaximumIndentationLevel
        MaximumIndentationLevel 
@@ -13,6 +12,8 @@ module DeterminesLevelOfIndentation
       number_of_ancestors
     end
   end
+
+  private
 
   def number_of_ancestors
     number_of_ancestors = 0
