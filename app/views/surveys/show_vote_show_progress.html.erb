@@ -7,16 +7,23 @@
   <%= render :partial => "#{@surveyable.class.name.pluralize.underscore}/survey_header", :object => @surveyable if @surveyable %>
   <div class="wrapper">
     <div class="content-container">
-      <h1>Voting Results</h1>
-      <p><%= @survey.description %></p>
-      <p><%= back_to_surveyable(@survey) %></p>      
-      <br/>
-      <% if @survey.show_progress_now? %>
-        <%= render :partial => '/surveys/result_bars' %>
-      <% else %>
-        <p><strong>Check back on <%= @survey.end_date && @survey.end_date.to_s(:long) %> to see the results</strong></p>
-      <% end %>
-      <%= render :partial => '/surveys/vote_form' %>
+  	  <div class="main-content">
+        <h1>Voting Results</h1>
+        <p><%= @survey.description %></p>
+        <p><%= back_to_surveyable(@survey) %></p>
+      </div>
+    </div>
+	<div class="content-container">
+		<div class="main-content">
+		  <% if @survey.show_progress_now? %>
+	        <%= render :partial => '/surveys/result_bars' %>
+	      <% else %>
+	        <p><strong>Check back on <%= @survey.end_date && @survey.end_date.to_s(:long) %> to see the results</strong></p>
+          <% end %>
+		</div>
+        <div class="aside supplementary">
+      		<%= render :partial => '/surveys/vote_form' %>
+        </div>
     </div>
   </div>
 <% end %>
