@@ -1,5 +1,5 @@
 <%= form_for Contribution.new, :url => create_contribution_issue_url(@issue),
-    :remote => true, :html => {:class => "general-aside contribution-form", :style => "display:none",
+    :remote => true, :html => {:class => "general-aside contribution-form file-form", :style => "display:none",
                                 :multipart => true,
                                 :id => "new-file-contribution"} do |f| %>
   <div class='form-block'>

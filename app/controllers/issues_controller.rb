@@ -46,7 +46,7 @@ class IssuesController < ApplicationController
 
     respond_to do |format|
       if @contribution.save
-        format.html { render :partial => 'issues/contributions/media_contribution', :locals => {:contribution => @contribution}, :status => :created }
+        format.html { render :partial => 'issues/create_contribution', :locals => {:issue => @issue}, :status => :created }
         format.js
       else
         format.html { render :json => {:errors => @contribution.errors.full_messages }, :status => :unprocessable_entity }

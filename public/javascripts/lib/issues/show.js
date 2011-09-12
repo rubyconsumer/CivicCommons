@@ -32,13 +32,32 @@ jQuery(function ($){
     selectResponseFromHash();
 
     $('form.contribution-form')
-      .bind('submit', function(){
+      .bind('submit', function(e){
         $(this).find('input[placeholder], textarea[placeholder]').each( function() {
           $this = $(this);
           if( $this.val() == $this.attr('placeholder') ){
             $this.val('');
           }
         });
+        if($(this).hasClass('file-form')) {
+          e.preventDefault();
+          $(this).ajaxSubmit({
+            url: $(this).attr('action'),
+            dataType: 'script',
+            beforeSend: function (xhr) {
+              $this.trigger('ajax:loading', xhr);
+            },
+            success: function (data, status, xhr) {
+              $this.trigger('ajax:success', [data, status, xhr]);
+            },
+            complete: function (xhr) {
+              $this.trigger('ajax:complete', xhr);
+            },
+            error: function (xhr, status, error) {
+              $this.trigger('ajax:error', [xhr, status, error]);
+            }
+          });
+        }
       })
       .bind('ajax:loading', function(){
         $(this).mask('Loading...');
