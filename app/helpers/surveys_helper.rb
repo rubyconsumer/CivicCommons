@@ -6,7 +6,7 @@ module SurveysHelper
   end
   
   def back_to_surveyable(survey)
-    if survey.surveyable 
+    if !survey.surveyable_type.blank? && !survey.surveyable_id.blank?
       case survey.surveyable
       when Issue
         surveyable = survey.surveyable.becomes(Issue)
