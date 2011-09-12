@@ -51,6 +51,7 @@ describe ActivityObserver do
       Activity.where(item_id: contribution.id, item_type: "Contribution").should be_empty
     end
 
+<<<<<<< HEAD
     it 'creates a new activity record when a contribution is added to an existing comversation' do
       conversation = Factory.create(:user_generated_conversation)
       contribution = Factory.create(:contribution_without_parent, conversation: conversation)
