@@ -19,12 +19,14 @@ class SurveysController < ApplicationController
   
   def create_response
     @survey_response_presenter = VoteResponsePresenter.new({:person_id => current_person.id, :survey_id => @survey.id}.merge!(params[:survey_response_presenter]))
-    
     # if it has been confirmed, then it can be saved
     if @survey_response_presenter.confirmed?
       if @survey_response_presenter.save
-        redirect_to :action => :show
         flash[:vote_successful] = true
+        respond_to do |format|
+          format.html{redirect_to :action => :show}
+          format.js{render :js => "document.location = '#{url_for(:action => :show)}';"}
+        end
       else
         render :template => "surveys/show_#{@survey.class.name.underscore}"
       end
