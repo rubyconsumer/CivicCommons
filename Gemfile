@@ -81,6 +81,7 @@ group :development, :test do
   gem "capybara", "~> 0.4.0"
   gem "launchy"
   gem 'webrat', "~> 0.7.3"
+  gem 'rspec-spies'
 end
 
 group :cool_toys do

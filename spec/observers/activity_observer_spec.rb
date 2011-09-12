@@ -76,12 +76,22 @@ describe ActivityObserver do
 
   end
 
-  context "On destroy" do
-
-    it 'removes activity records when a conversation is deleted/destroyed' do
-      conversation = Factory.create(:conversation)
-      Conversation.destroy(conversation)
-      Activity.where(item_id: conversation.id, item_type: 'Conversation').should be_empty
+  context "when destroying" do
+    context 'a conversation' do
+      context 'without an activity parent' do
+        it 'doesnt destroy the activity', do
+          Activity.stub(:destroy)
+          Activity.stub(:exists?).and_return(false)
+          conversation = Factory.create(:conversation)
+          conversation.destroy
+          Activity.should_not have_received(:destroy)
+        end
+      end
+      it 'removes activity records when a conversation is deleted/destroyed' do
+        conversation = Factory.create(:conversation)
+        Conversation.destroy(conversation)
+        Activity.where(item_id: conversation.id, item_type: 'Conversation').should be_empty
+      end
     end
 
     it 'removes activity records when a contribution is deleted/destroyed' do
@@ -95,7 +105,5 @@ describe ActivityObserver do
       RatingGroup.destroy(rating_group)
       Activity.where(item_id: rating_group.id, item_type: 'RatingGroup').should be_empty
     end
-
   end
-
 end

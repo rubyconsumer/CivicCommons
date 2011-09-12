@@ -29,7 +29,7 @@ class ActivityObserver < ActiveRecord::Observer
   end
 
   def before_destroy(model)
-    Activity.destroy(model)
+    Activity.destroy(model) if Activity.exists?(model)
   end
 
 end
