@@ -1,5 +1,5 @@
 rvm: 1.9.2
-bundler_args: --without cool_toys 
+bundler_args: --without cool_toys development
 env: DISPLAY=:99.0
 before_script:
   - "cp config/ci.database.yml config/database.yml"
