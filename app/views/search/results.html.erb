@@ -35,9 +35,9 @@
 		    <div class="mod">
 		    	<h3>Filter Results</h3>
 		    	<ul>
-			        <li><a href="#" class="" id="conv-s">Conversations</a></li>
-			        <li><a href="#" class="" id="comm-s">Community</a></li>
-			        <li><a href="#" class="" id="issues-s">Issues</a></li>
+            <li><%= link_to "Conversations", search_path(:q => params['q'], :filter => 'conversations'), id: "conv-s",  title: "Filter by conversations" %></li>
+            <li><%= link_to "Community", search_path(:q => params['q'], :filter => 'community'), id: "comm-s",  title: "Filter by community" %></li>
+            <li><%= link_to "Issues", search_path(:q => params['q'], :filter => 'issues'), id: "issues-s",  title: "Filter by issues" %></li>
 			    </ul>
 		    </div>
 	    </div>
