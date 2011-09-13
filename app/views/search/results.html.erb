@@ -16,7 +16,7 @@
               <% when Person %>
                 <%= render :partial => 'community', :locals => { :hit => hit } %>
               <% when Contribution %>
-                <%= render :partial => 'contribution', :locals => { :hit => hit , :conversations => @conversations, :issues => @issues} %>
+                <%= render :partial => 'contribution', :locals => { :hit => hit } %>
               <% when ContentItem %>
                 <%= render :partial => 'content_item', :locals => { :hit => hit } %>
               <% end
