@@ -38,7 +38,10 @@
             <li><%= link_to "Conversations", search_path(:q => params['q'], :filter => 'conversations'), id: "conv-s",  title: "Filter by conversations" %></li>
             <li><%= link_to "Community", search_path(:q => params['q'], :filter => 'community'), id: "comm-s",  title: "Filter by community" %></li>
             <li><%= link_to "Issues", search_path(:q => params['q'], :filter => 'issues'), id: "issues-s",  title: "Filter by issues" %></li>
-			    </ul>
+          </ul>
+          <% if params.key?(:filter) %>
+            <%= link_to "remove filter", search_path(:q => params['q']),  :title => "Remove this filter", :class => 'remove-search-filter'%>
+          <% end %>
 		    </div>
 	    </div>
     </div>

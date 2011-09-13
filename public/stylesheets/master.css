@@ -1549,6 +1549,7 @@ border-radius: 4px;
 -o-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
 box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
 }
+.aside .f-conv ul.feat-list li a, .aside .search-filter a.remove-search-filter {margin-left:5px}
 .aside .f-conv ul.feat-list li a:hover, .aside .f-conv ul.feat-list li a.active, .aside .search-filter ul li a:hover, .aside .search-filter ul li a.active {
 background-color: #dbedf5;
 border-color: #9db4bc;
