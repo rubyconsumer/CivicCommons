@@ -1,7 +1,7 @@
 - collapsed = (controller.action_name != 'create' && ! contribution.parent.nil?)
 %li.offset-1{:id => "show-contribution-#{contribution.id}"}
   %a{:name=>"contribution-#{contribution.id}"}
-  %div.contribution-container{:class => ('collapsed' if collapsed)}
+  %div.contribution-container{:class => (collapsed ? 'collapsed' : 'uncollapsed')}
     - if contribution
       .callout
         - unless contribution.person.nil?
