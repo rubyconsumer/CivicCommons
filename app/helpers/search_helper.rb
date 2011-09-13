@@ -11,7 +11,7 @@ module SearchHelper
     end
 
     if(!text.nil?)
-      text = text.gsub(/<\/?[^>]*>/, "")
+      text = text.gsub(/<[^(strong)][^(strong)]\/?[^>]*>/, "")
     end
 
     raw(truncate(text, :length => 150))
