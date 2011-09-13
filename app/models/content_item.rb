@@ -3,6 +3,12 @@ class ContentItem < ActiveRecord::Base
 
   CONTENT_TYPES = ["BlogPost", "NewsItem", "RadioShow"]
 
+  searchable :include => [:author, :conversation], :ignore_attribute_changes_of => [ :updated_at ] do
+    text :title, :default_boost => 1
+    text :body, :stored => true
+    text :summary, :stored => true
+  end
+
   belongs_to :author, :class_name => "Person", :foreign_key => "person_id"
   belongs_to :conversation
 

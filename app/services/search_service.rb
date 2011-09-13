@@ -38,6 +38,10 @@ class SearchService
         fields[i] = :bio
       when mod == Issue then
         fields[i] = :summary
+      when mod == ContentItem then
+        fields[i] = :body
+        i = i + 1
+        fields[i] = :summary
       end
       i = i + 1
     end

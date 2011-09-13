@@ -17,6 +17,8 @@
                 <%= render :partial => 'community', :locals => { :hit => hit } %>
               <% when Contribution %>
                 <%= render :partial => 'contribution', :locals => { :hit => hit , :conversations => @conversations, :issues => @issues} %>
+              <% when ContentItem %>
+                <%= render :partial => 'content_item', :locals => { :hit => hit } %>
               <% end
               end %>
             <div class="pagination">
