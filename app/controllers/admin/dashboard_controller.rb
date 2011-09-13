@@ -1,3 +1,4 @@
+require 'socket'
 class Admin::DashboardController < ApplicationController
 
   before_filter :verify_admin
@@ -5,6 +6,7 @@ class Admin::DashboardController < ApplicationController
   layout 'admin'
 
   def show
+    @host = Socket.gethostname
   end
 
 end
