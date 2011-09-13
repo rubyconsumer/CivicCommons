@@ -1,4 +1,4 @@
-require 'Socket'
+require 'socket'
 class Admin::DashboardController < ApplicationController
 
   before_filter :verify_admin
