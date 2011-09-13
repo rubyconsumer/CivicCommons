@@ -1,4 +1,11 @@
-<div id="search">
+<%
+  if defined? main_search
+    if main_search == true
+      cssclass = "main-search-bar"
+    end
+  end
+%>
+<div id="search" class="<%= cssclass %>">
   <%= form_tag(search_path, {:method => "get", :'accept-charset' => 'utf-8'}) do  %>
     <%= text_field_tag :q, params['q'], :class => 'textbox', :placeholder => 'What are you looking for?' %>
     <%= submit_tag "Search", :class => 'submit', :id => 'Search', :name => nil %>

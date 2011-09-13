@@ -1,9 +1,7 @@
 <% content_for :main_body do %>
   <div class="wrapper">
     <div class="content-container">
-      <div id="search" class="main-search-bar">
-          <%= render :partial => 'search' %>
-		</div>
+      <%= render :partial => 'search', :locals => { :main_search => true } %>
 
       <div class="main-content">
         <div class="results">
