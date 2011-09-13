@@ -11,9 +11,10 @@ class SearchService
   end
 
   def fetch_results(query = nil, *models)
+    fields = accepted_fields(models)
     results = @search.search(models) do
       keywords(query) do
-        highlight :summary, :bio, :description, :content
+        highlight fields
       end
     end
 
@@ -22,5 +23,24 @@ class SearchService
       fetched_results << hit
     end
     return fetched_results
+  end
+
+  def accepted_fields(models)
+    fields = {}
+    i = 0 
+    models.each do |mod|
+      case 
+      when mod == Contribution then
+        fields[i] = :content
+      when mod == Conversation then
+        fields[i] = :summary
+      when mod == Person then
+        fields[i] = :bio
+      when mod == Issue then
+        fields[i] = :summary
+      end
+      i = i + 1
+    end
+    return fields
   end
 end
