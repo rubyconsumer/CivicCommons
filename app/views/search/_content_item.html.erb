@@ -4,8 +4,9 @@
     type = hit.result.content_type
     case type 
     when "BlogPost"
+      author_name = [hit.result.author.first_name, hit.result.author.last_name].join(' ')
   %>
-      <h4><%= link_to title, blog_path(hit.result) %></h4>
+      <h4><%= link_to author_name + ' blogged: ' + title, blog_path(hit.result) %></h4>
   <% 
     when "NewsItem"
   %>
