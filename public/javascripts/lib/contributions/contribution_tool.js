@@ -23,7 +23,8 @@ function clear_contribution_tool_form() {
     .val('')
     .removeAttr('checked')
     .removeAttr('selected');
-  if((typeof $('#contribution_content').tinymce == 'function')
+  if(($('#contribution_content').length > 0)
+    && (typeof $('#contribution_content').tinymce == 'function')
     && ($('#contribution_content').tinymce() != undefined))
   {
     $('#contribution_content').tinymce().setContent('');
@@ -73,9 +74,11 @@ function scroll_to_contribution_tool() {
 }
 
 function scroll_to_element(element) {
-  $('html, body').animate({
-    scrollTop: element.offset().top
-  }, 500);
+  if(element.length > 0){
+    $('html, body').animate({
+      scrollTop: element.offset().top
+    }, 500);
+  }
 }
 
 function enable_post_to_conversation(element) {
@@ -85,7 +88,12 @@ function enable_post_to_conversation(element) {
     var contribution_id = get_contribution_parent_id($(this));
     var title = $(this).attr('title');
     if (contribution_id) {
-      show_contribution_tool($(this).parents('.respond-container'), contribution_id, title);
+      var $thread = $(this).parents('.respond-container').parent().next('ol');
+      if($thread.find('li.tinymce-container').length == 0)
+      {
+        $thread.append('<li class="tinymce-container"></li>');
+      }
+      show_contribution_tool($thread.find('li.tinymce-container'), contribution_id, title);
     } else {
       show_contribution_tool(null, null, title);
     }
