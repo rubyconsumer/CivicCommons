@@ -23,5 +23,5 @@ config/people_aggregator.yml
 solr/data
 log
 sunspot-solr.pid
-
+.rspec
 specrunner.*.html
