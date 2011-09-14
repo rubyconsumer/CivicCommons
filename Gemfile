@@ -2,11 +2,10 @@ source 'http://rubygems.org'
 
 gem 'rack', '1.2.1'
 
-gem 'mysql2'
-
+gem 'mysql2', '< 0.3'
 gem 'devise', :git => 'git://github.com/plataformatec/devise.git', :branch => 'v1.3'
 gem "oa-oauth", :require => "omniauth/oauth"
-gem 'omniauth', '~>0.2.0', :git => 'git://github.com/intridea/omniauth.git'
+gem 'omniauth', '~>0.2.0'
 
 gem 'rails', "3.0.3"
 gem 'jquery-rails', '>= 1.0.3'
