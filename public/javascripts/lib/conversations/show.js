@@ -289,7 +289,7 @@
     selectResponseFromHash();
   });
 
-  $('.collapsed .comment a.contribution-toggle, .uncollapsed .comment a.contribution-toggle')
+  $('a.contribution-toggle')
     .live('click', function(e){
       e.preventDefault();
       var $div = $(this).closest('.collapsed, .uncollapsed'),
