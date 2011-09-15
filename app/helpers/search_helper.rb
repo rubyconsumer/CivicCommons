@@ -11,7 +11,7 @@ module SearchHelper
     end
 
     if(!text.nil?)
-      text = text.gsub(/<[^(strong)][^(strong)]\/?[^>]*>/, "")
+      text = Sanitize.clean(text, Sanitize::Config::RESTRICTED).strip
     end
 
     raw(truncate(text, :length => 150))
