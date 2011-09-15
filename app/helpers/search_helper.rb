@@ -4,7 +4,6 @@ module SearchHelper
     if highlight = hit.highlight(field_name)
       if(!highlight.nil?)
         text = highlight.format { |fragment| content_tag(:strong, fragment) }
-        # TODO: strip html from the text variable above, but leave the strong tag for highlighting
       end
     else
       text = hit.result.method(field_name).call
