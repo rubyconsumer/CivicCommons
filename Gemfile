@@ -21,7 +21,7 @@ gem 'geokit'
 gem "friendly_id", "~> 3.2.1"
 gem 'acts_as_revisionable'
 gem 'awesome_nested_set'
-gem 'embedly'
+gem 'embedly', '<0.4'
 
 gem 'gibbon'
 gem 'hominid', "~>3.0.2"

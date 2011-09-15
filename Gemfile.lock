@@ -128,10 +128,7 @@ GEM
     email_spec (1.2.1)
       mail (~> 2.2)
       rspec (~> 2.0)
-    embedly (1.3.0)
-      oauth
-      querystring
-      typhoeus
+    embedly (0.3.3)
     engineyard (1.3.22)
       engineyard-serverside-adapter (= 1.4.2)
       escape (~> 0.0.4)
@@ -259,7 +256,6 @@ GEM
     polyglot (0.3.2)
     pr_geohash (1.0.0)
     pyu-ruby-sasl (0.0.3.3)
-    querystring (0.1.0)
     rack (1.2.1)
     rack-mount (0.6.14)
       rack (>= 1.0.0)
@@ -352,9 +348,6 @@ GEM
     treetop (1.4.10)
       polyglot
       polyglot (>= 0.3.1)
-    typhoeus (0.2.4)
-      mime-types
-      mime-types
     tzinfo (0.3.29)
     warden (1.0.5)
       rack (>= 1.0)
@@ -391,7 +384,7 @@ DEPENDENCIES
   delayed_paperclip (< 0.7)
   devise!
   email_spec
-  embedly
+  embedly (< 0.4)
   engineyard
   factory_girl_rails (~> 1.0.1)
   friendly_id (~> 3.2.1)
