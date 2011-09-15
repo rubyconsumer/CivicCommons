@@ -22,5 +22,6 @@ Civiccommons::Application.configure do
   config.action_mailer.raise_delivery_errors = true
 
   config.active_support.deprecation = :log
+  ActiveSupport::Deprecation.debug = true
 
 end

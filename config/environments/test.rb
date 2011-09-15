@@ -32,5 +32,6 @@ Civiccommons::Application.configure do
   
   # outputs deprecation errors to stderr stream
   config.active_support.deprecation = :stderr
+  ActiveSupport::Deprecation.debug = true
 end
 OmniAuth.config.test_mode = true
