@@ -10,7 +10,7 @@ gem 'omniauth', '~>0.2.0'
 gem 'rails', "3.0.3"
 gem 'jquery-rails', '>= 1.0.3'
 
-gem 'haml'
+gem 'haml', "<3.1"
 gem 'date_validator'
 gem "will_paginate", "2.3.15"
 
