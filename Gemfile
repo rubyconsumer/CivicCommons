@@ -33,7 +33,7 @@ gem 'remotipart'
 
 gem 'shoulda'
 gem 'paperclip', "2.3.8"
-gem 'delayed_paperclip'
+gem 'delayed_paperclip', '<0.7'
 gem 'aws-s3'
 gem 'nokogiri'
 gem 'sanitize'
