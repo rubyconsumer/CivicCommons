@@ -1,9 +1,9 @@
 source 'http://rubygems.org'
 
 gem 'rack', '1.2.1'
-
+gem 'rake', '0.8.7'
 gem 'mysql2', '< 0.3'
-gem 'devise', :git => 'git://github.com/plataformatec/devise.git', :branch => 'v1.3'
+gem 'devise'
 gem "oa-oauth", :require => "omniauth/oauth"
 gem 'omniauth', '~>0.2.0'
 
@@ -39,7 +39,7 @@ gem 'nokogiri'
 gem 'sanitize'
 gem 'highline'
 
-gem 'sunspot_rails', '~> 1.2.1'
+gem 'sunspot_rails' 
 
 gem 'rails3_fitter_happier'
 # for testing, but needed globally because it add rake tasks
