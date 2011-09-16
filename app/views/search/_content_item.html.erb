@@ -14,7 +14,7 @@
   <% 
     when "RadioShow"
   %>
-     <h4><%= link_to title , radioshow_path(hit.result) %></h4>
+     <h4><%= link_to 'Radio Show: ' + title , radioshow_path(hit.result) %></h4>
   <% end %>
   <p><%= best_hit_description(hit, :body) %></p>
 </div>
