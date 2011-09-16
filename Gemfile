@@ -41,7 +41,7 @@ gem 'highline'
 
 gem 'sunspot_rails' 
 
-gem 'rails3_fitter_happier'
+gem 'fitter-happier'
 # for testing, but needed globally because it add rake tasks
 gem 'single_test'
 
