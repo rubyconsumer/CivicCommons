@@ -12,6 +12,7 @@ class SearchService
 
   def fetch_results(query = nil, *models)
     fields = accepted_fields(models)
+    fields[:fragment_size] = -1
     results = @search.search(models) do
       keywords(query) do
         highlight fields

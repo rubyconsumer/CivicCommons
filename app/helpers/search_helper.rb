@@ -10,9 +10,25 @@ module SearchHelper
     end
 
     if(!text.nil?)
-      text = Sanitize.clean(text, Sanitize::Config::RESTRICTED).strip
+      clean_text = Sanitize.clean(text, :elements => ['strong']).strip
+      text = text_containing_match clean_text
     end
 
-    raw(truncate(text, :length => 150))
+    raw(truncate(text, :length => 200))
+  end
+
+  private
+  def text_containing_match(text)
+    matched_text_start = text.index(/\<strong\>/) || 0
+    matched_text_end = text.index(/\<\/strong\>/) || 0
+
+    if(matched_text_start < 100)
+      slice_start = 0
+      slice_end = matched_text_end + 150
+    else
+      slice_start = matched_text_start - 50
+      slice_end = matched_text_end + 200
+    end
+    text.slice!(slice_start..slice_end).strip
   end
 end
