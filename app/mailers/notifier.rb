@@ -85,7 +85,7 @@ class Notifier < Devise::Mailer
     @person = person
     @survey = survey    
     headers['X-SMTPAPI'] = '{"category": "survey_ended"}'
-    mail(:subject => "the \"#{survey.title}\" #{@survey.type.to_s.downcase} has ended.",:from => Devise.mailer_sender,:to => @person.email) do |format|
+    mail(:subject => "Check out the results of the \"#{survey.title}\" #{@survey.type.to_s.downcase}!",:from => Devise.mailer_sender,:to => @person.email) do |format|
       format.html do 
         if @survey.is_a?(Vote)
           render :template => '/notifier/survey_vote_ended'

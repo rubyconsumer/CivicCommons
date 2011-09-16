@@ -1,2 +1,9 @@
-<h1>The "<%= @survey.title %>" vote has ended.</h1>
-<p>You can now see the results <%= link_to 'here', send("#{@survey.type.underscore}_url".to_sym,@survey.id) %>".<p/> 
+<h1>
+  Thanks again for voting on "<%= @survey.title %>" The voting has officially ended and the results are in!
+</h1>
+<p>
+  To see the results of the vote, <%= link_to 'click here', send("#{@survey.type.underscore}_url".to_sym,@survey.id) %>.
+</p>
+<p>
+  While you only have one vote per issue, be sure to visit the <%= link_to "Civic Commons", root_url %> early and often and help turn talk into action.
+</p>
