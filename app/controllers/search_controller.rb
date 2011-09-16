@@ -13,6 +13,7 @@ class SearchController < ApplicationController
 
   end
 
+  private
   def determine_model_class(model_string)
     case model_string
     when "contributions"
