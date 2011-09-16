@@ -42,8 +42,6 @@ gem 'highline'
 gem 'sunspot_rails' 
 
 gem 'fitter-happier'
-# for testing, but needed globally because it add rake tasks
-gem 'single_test'
 
 group :development do
   gem "rails3-generators"
