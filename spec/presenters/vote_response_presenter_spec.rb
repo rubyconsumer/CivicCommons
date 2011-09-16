@@ -49,6 +49,16 @@ describe VoteResponsePresenter do
         :selected_option_2_id => 22)
     end
     
+    def given_a_presenter_with_an_expired_vote
+      @person = Factory.create(:registered_user)
+      @survey = Factory.create(:vote, :end_date => 2.days.ago)
+      @survey_option1 = Factory.create(:survey_option,:survey_id => @survey.id, :position => 1)
+      @presenter = VoteResponsePresenter.new(:person_id => @person.id,
+        :survey_id => @survey.id, 
+        :selected_option_1_id => 11, 
+        :selected_option_2_id => 22)
+    end
+    
     def given_a_bare_vote_presenter
       @person = Factory.create(:registered_user)
       @survey = Factory.create(:vote)
@@ -107,6 +117,17 @@ describe VoteResponsePresenter do
       it "should return false if survey response is not persisted" do
         given_a_vote_presenter
         @presenter.already_voted?.should be_false
+      end
+    end
+    
+    context "allowed?" do
+      it "should be true if user has not already_voted yet" do
+        given_a_vote_presenter
+        @presenter.should be_allowed
+      end
+      it "should not be true if survey has not expired yet" do
+        given_a_presenter_with_an_expired_vote
+        @presenter.should_not be_allowed
       end
     end
     

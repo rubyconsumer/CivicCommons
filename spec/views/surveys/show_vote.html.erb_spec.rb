@@ -19,7 +19,7 @@ describe '/surveys/show_vote.html.erb' do
     view.stub(:current_person).and_return(@person)
   end
   
-  def given_a_vote_response_presenter_that_is_persisted
+  def given_a_vote_response_presenter_that_is_not_allowing_votes
     @surveyable = stub_model(Issue)
     @survey = stub_model(Vote, :surveyable => @surveyable, :start_date => 1.days.ago.to_date,:end_date => Date.today)
     @survey_options = [stub_model(SurveyOption)]
@@ -28,13 +28,13 @@ describe '/surveys/show_vote.html.erb' do
       :available_options => @survey_options, 
       :survey => @survey, 
       :survey_response => @survey_response,
-      :already_voted? => true,
+      :allowed? => false,
       :max_selected_options => 3).as_null_object
       
     view.stub(:current_person).and_return(@person)
   end
   
-  def given_a_vote_response_presenter_that_is_not_persisted
+  def given_a_vote_response_presenter_that_is_allowing_votes
     @surveyable = stub_model(Issue)
     @survey = stub_model(Vote, :surveyable => @surveyable, :start_date => 1.days.ago.to_date,:end_date => Date.today)
     @survey_options = [stub_model(SurveyOption)]
@@ -43,7 +43,7 @@ describe '/surveys/show_vote.html.erb' do
       :available_options => @survey_options, 
       :survey => @survey, 
       :survey_response => @survey_response,
-      :already_voted? => false,
+      :allowed? => true,
       :max_selected_options => 3).as_null_object
       
     view.stub(:current_person).and_return(@person)
@@ -79,15 +79,13 @@ describe '/surveys/show_vote.html.erb' do
   end
   
   describe "submit button" do
-    it "should be disabled if the user has voted" do
-      given_a_vote_response_presenter_that_is_persisted
-      @presenter.stub!(:already_voted?).and_return(true)
+    it "should be disabled if the voting is not allowed" do
+      given_a_vote_response_presenter_that_is_not_allowing_votes
       render
       content_for(:main_body).should have_selector('input.submit[disabled=disabled]')
     end
-    it "should NOT be disabled if the user has NOT voted" do
-      given_a_vote_response_presenter_that_is_not_persisted
-      @presenter.stub!(:already_voted?).and_return(false)
+    it "should NOT be disabled if the voting is allowed" do
+      given_a_vote_response_presenter_that_is_allowing_votes
       render
       content_for(:main_body).should_not have_selector('input.submit[disabled=disabled]')
     end

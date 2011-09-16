@@ -1,5 +1,5 @@
 <div class="aside supplementary">
-	<div class="selected-survey-options  <%= 'disabled' if @survey_response_presenter.already_voted? %>">
+	<div class="selected-survey-options  <%= 'disabled' if !@survey_response_presenter.allowed?  %>">
 	  <h3 class="title"><%= @survey.title %></h3>
 	  <% form_for :survey_response_presenter, @survey_response_presenter, :url => polymorphic_url([:create_response, @survey]), :remote => true  do |f| %>
 	    <% if @survey_response_presenter.errors.any? %>
@@ -20,7 +20,7 @@
 	      </div>
 	    <% end %>
 	    <div class="menu">
-	      <%= f.submit 'Cast Ballot', :class => "submit", :disabled => @survey_response_presenter.already_voted? %> or <%= link_to 'Cancel','' %>
+	      <%= f.submit 'Cast Ballot', :class => "submit", :disabled => !@survey_response_presenter.allowed? %> or <%= link_to 'Cancel','' %>
 	    </div>
 	  <% end %>
 	</div>

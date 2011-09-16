@@ -22,5 +22,8 @@ describe SurveysHelper do
     it "should not offset if it results in negative" do
       helper.relative_weighted_votes_percentage(5,10,-60).should == 50
     end
+    it "should not break when it's zero" do
+      helper.relative_weighted_votes_percentage(0,0).should == 0
+    end
   end
 end

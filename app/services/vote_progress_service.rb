@@ -49,7 +49,8 @@ class VoteProgressService
   
   def calculate_weighted_votes_percentage
     progress_result.each_with_index do |record, index| 
-      record.weighted_votes_percentage = (record.weighted_votes.to_f / total_weighted_votes.to_f * 100).to_i 
+      weighted_vote_num = record.weighted_votes.to_f / total_weighted_votes.to_f
+      record.weighted_votes_percentage = (weighted_vote_num.nan? ? 0 : weighted_vote_num * 100).to_i 
       record.winner = true if index < max_selected_options
     end
     @highest_weighted_votes_percentage = progress_result.collect(&:weighted_votes_percentage).max

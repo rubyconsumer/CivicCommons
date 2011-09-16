@@ -5,15 +5,15 @@ class SurveysController < ApplicationController
   
   def show
     @survey_response_presenter = VoteResponsePresenter.new(:person_id => current_person.id, :survey_id => @survey.id)
-    if @survey_response_presenter.already_voted?
+    if @survey_response_presenter.allowed?
+      render :template => "surveys/show_#{@survey.class.name.underscore}"
+    else
       if @survey.show_progress?
         @vote_progress_service = VoteProgressService.new(@survey)
         render :template =>"surveys/show_#{@survey.class.name.underscore}_show_progress"
       else
         render :template => "surveys/show_#{@survey.class.name.underscore}_hide_progress"
       end
-    else
-      render :template => "surveys/show_#{@survey.class.name.underscore}"
     end
   end
   

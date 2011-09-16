@@ -3,7 +3,7 @@ class VoteResponsePresenter
   
   delegate  :id, :class, :errors, :to_param, :new_record?, :selected_survey_options, :survey, :person, :persisted?, 
             :to => :survey_response
-  delegate  :max_selected_options, 
+  delegate  :max_selected_options, :expired?,
             :to => :survey
 
   def initialize(options)
@@ -32,6 +32,10 @@ class VoteResponsePresenter
   
   def already_voted?
     survey_response.persisted?
+  end
+  
+  def allowed?
+    !(expired? || already_voted?)
   end
   
   def available_options

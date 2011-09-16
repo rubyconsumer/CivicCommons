@@ -26,19 +26,22 @@ describe SurveysController do
     describe "User have not voted yet" do      
       it "should render the show_vote template if it is a 'vote'" do
         Survey.stub(:find).and_return(mock_survey)
-        VoteResponsePresenter.stub(:new).and_return(stub(VoteResponsePresenter, :already_voted? => false))
+        VoteResponsePresenter.stub(:new).and_return(stub(VoteResponsePresenter, :allowed? => true))
         
         get :show, :id => 123
         response.should render_template('surveys/show_vote')
       end
+      it "should render the show, that the vote has ended if the vote has ended" do
+        
+      end
     end
-    describe "user already voted" do
+    describe "user not allowed to vote" do
       it "should show progress if show_progress toggle is on" do
         @survey = mock_survey
         @survey.stub!(:show_progress?).and_return(true)
         Survey.stub(:find).and_return(@survey)
         
-        @vote_response_presenter = stub(VoteResponsePresenter, :already_voted? => true)
+        @vote_response_presenter = stub(VoteResponsePresenter, :allowed? => false)
         VoteResponsePresenter.stub(:new).and_return(@vote_response_presenter)
         
         get :show, :id => 123
@@ -50,7 +53,7 @@ describe SurveysController do
         @survey.stub!(:show_progress?).and_return(false)
         Survey.stub(:find).and_return(@survey)
         
-        @vote_response_presenter = stub(VoteResponsePresenter, :already_voted? => true)
+        @vote_response_presenter = stub(VoteResponsePresenter, :allowed? => false)
         VoteResponsePresenter.stub(:new).and_return(@vote_response_presenter)
         
         get :show, :id => 123
@@ -65,7 +68,7 @@ describe SurveysController do
       end
       it "should render normally if survey is active" do
         Survey.stub(:find).and_return(mock_survey(:active? => true))
-        VoteResponsePresenter.stub(:new).and_return(stub(VoteResponsePresenter, :already_voted? => false))
+        VoteResponsePresenter.stub(:new).and_return(stub(VoteResponsePresenter, :allowed? => true))
         get :show, :id => 123
         response.should_not render_template('surveys/show_vote_inactive')
       end

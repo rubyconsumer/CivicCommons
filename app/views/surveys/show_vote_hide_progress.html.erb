@@ -8,14 +8,18 @@
   <div class="wrapper">
     <div class="content-container">
       <div class="main-content">
-        <h1>You've already voted.</h1>
+        <% if @survey_response_presenter.expired? %>
+          <h1>The Vote has ended</h1>
+        <% else %>
+          <h1>You've already voted.</h1>
+        <% end %>
         <p><%= @survey.description %></p>
         <p><%= back_to_surveyable(@survey) %></p>
       </div>
     </div>
     <div class="content-container">
     	<div class="main-content">
-    		<div class="survey-options  <%= 'disabled' if @survey_response_presenter.already_voted? %>">
+    		<div class="survey-options  <%= 'disabled' unless @survey_response_presenter.allowed? %>">
             <div class="sortable">
               <%= render :partial => 'survey_options/survey_option_vote', :collection => @survey_response_presenter.available_options, :as => :option %>
             </div>
