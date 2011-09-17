@@ -1390,6 +1390,18 @@ padding: 2px 0 2px 35px;
 .results a img.callout {border: 1px solid #bbb;}
 .results a:hover img.callout {border-color: #999;}
 
+/*- Remove Search Filter ----------*/
+
+a.remove-search-filter:link, a.remove-search-filter:visited {
+color: #777;
+background: url(../images/close.png) no-repeat 0 0;
+padding: 0 0 2px 20px;
+text-decoration: none;
+}
+a.remove-search-filter:hover {
+background-position: 0 -64px;
+color: #51778e;
+}
 
 /*- MISCELLANEOUS
 ----------------------------------------------------------------------*/
