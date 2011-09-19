@@ -5,9 +5,9 @@ class Contribution < ActiveRecord::Base
   include DeterminesLevelOfIndentation
 
   searchable :include => [:person, :conversation, :issue], :ignore_attribute_changes_of => [ :total_visits, :recent_visits, :last_visit_date, :updated_at, :recent_rating ] do
-    text :title, :default_boost => 0
+    text :title
     text :description, :stored => true
-    text :content, :stored => true, :boost => 2, :default_boost => 2
+    text :content, :stored => true, :boost => 1, :default_boost => 1
 
   end
 

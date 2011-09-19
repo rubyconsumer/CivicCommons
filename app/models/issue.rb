@@ -6,7 +6,7 @@ class Issue < ActiveRecord::Base
 
   searchable :ignore_attribute_changes_of => [ :total_visits, :recent_visits, :last_visit_date, :updated_at, :recent_rating ] do
     text :name, :boost => 3, :default_boost => 3
-    text :summary, :stored => true
+    text :summary, :stored => true, :boost => 2, :default_boost => 2
   end
 
   ALL_TYPES = ['Issue', 'ManagedIssue']
