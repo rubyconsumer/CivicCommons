@@ -6,7 +6,7 @@ class SearchController < ApplicationController
     if params[:filter]
       models_to_search = determine_model_class(params[:filter])
     else
-      models_to_search = [Conversation, Issue, Person, Contribution, ContentItem]
+      models_to_search = [Conversation, Issue, Person, Contribution, ContentItem, ManagedIssuePage]
     end
 
     @results = search_service.fetch_results(params[:q], models_to_search).paginate(page: params[:page], per_page: 10)
@@ -23,7 +23,7 @@ class SearchController < ApplicationController
     when "community"
       return Person
     when "issues"
-      return Issue
+      return [Issue, ManagedIssuePage]
     end
   end
 end

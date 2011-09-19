@@ -17,6 +17,8 @@
                 <%= render :partial => 'community', :locals => { :hit => hit } %>
               <% when Contribution %>
                 <%= render :partial => 'contribution', :locals => { :hit => hit } %>
+              <% when ManagedIssuePage %>
+                <%= render :partial => 'managed_issue', :locals => { :hit => hit } %>
               <% when ContentItem %>
                 <%= render :partial => 'content_item', :locals => { :hit => hit } %>
               <% end

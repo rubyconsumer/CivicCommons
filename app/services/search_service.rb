@@ -39,6 +39,8 @@ class SearchService
         fields[i] = :bio
       when mod == Issue then
         fields[i] = :summary
+      when mod == ManagedIssuePage then
+        fields[i] = :template
       when mod == ContentItem then
         fields[i] = :body
         i = i + 1
