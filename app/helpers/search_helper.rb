@@ -14,18 +14,7 @@ module SearchHelper
       text = text_containing_match clean_text
     end
 
-    truncated = truncate(text, :length => 200)
-    highlighted = truncated.gsub(/(___)/, "<strong>").gsub(/~{2,}/, "</strong>").gsub(/~+/, "&nbsp;").gsub(/_{2,}/, "</strong>").gsub(/_+/, "&nbsp;")
-
-    strong_start_index = highlighted.rindex(/\<(strong)\>/) || 0
-    strong_end_index =  highlighted.rindex(/\<\/(strong)\>/) || 0
-
-    if(strong_start_index > strong_end_index)
-      # need to append /strong to string
-      highlighted = highlighted + "</strong>"
-    end 
-
-    raw(highlighted)
+    raw(text)
   end
 
   private
@@ -33,6 +22,7 @@ module SearchHelper
     matched_text_start = text.index(/(___)/) || 0
     matched_text_end = text.rindex(/(~~~)/) || 0
 
+    # Get only text surrounding the matched elements
     if(matched_text_start < 100)
       slice_start = 0
       slice_end = matched_text_end + 150
@@ -40,6 +30,24 @@ module SearchHelper
       slice_start = matched_text_start - 50
       slice_end = matched_text_end + 200
     end
-    text.slice!(slice_start..slice_end).strip
+    text = text.slice!(slice_start..slice_end).strip
+
+    # truncate text so that it doesn't cut off the strong tags
+    truncated = truncate(text, :length => 200)
+    highlighted = truncated.gsub(/(___)/, "<strong>").gsub(/~{2,}/, "</strong>").gsub(/~+/, "&nbsp;").gsub(/_{2,}/, "</strong>").gsub(/_+/, "&nbsp;")
+    highlighted = auto_close_strong_tag(highlighted)
+    return highlighted
+  end
+
+  def auto_close_strong_tag(text)
+    # check if strong closing tag exists at the end of the string
+    strong_start_index = text.rindex(/\<(strong)\>/) || 0
+    strong_end_index =  text.rindex(/\<\/(strong)\>/) || 0
+
+    if(strong_start_index > strong_end_index)
+      # need to append closing strong tag to string since it was detected that an opening strong tag exists
+      text += "</strong>"
+    end 
+    return text
   end
 end
