@@ -40,15 +40,14 @@ describe ConversationsController do
 
     it "does not duplicate avatars for recent contributions on the same conversation" do
       @person = Factory.create(:registered_user)
-      contributions = [
-        Factory.create(:contribution, { :person => @person }),
-        Factory.create(:contribution, { :person => @person }),
-        Factory.create(:contribution, { :person => @person })
-      ]
-      Factory.create(:conversation, { :contributions => contributions })
+      Factory.create(:contribution, { :conversation => @new_conversation, :person => @person })
+      Factory.create(:contribution, { :conversation => @new_conversation, :person => @person })
+      Factory.create(:contribution, { :conversation => @new_conversation, :person => @person })
+
       get :index
+
+      assigns(:active).first.contributions.size.should == 3
       assigns(:active).first.participants.size.should == 1
-      assigns(:recent).first.participants.size.should == 1
     end
 
   end
