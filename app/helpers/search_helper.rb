@@ -36,6 +36,7 @@ module SearchHelper
     truncated = truncate(text, :length => 200)
     highlighted = truncated.gsub(/(___)/, "<strong>").gsub(/~{2,}/, "</strong>").gsub(/~+/, "&nbsp;").gsub(/_{2,}/, "</strong>").gsub(/_+/, "&nbsp;")
     highlighted = auto_close_strong_tag(highlighted)
+    highlighted = append_ellipsis_if_missing(highlighted)
     return highlighted
   end
 
@@ -48,6 +49,16 @@ module SearchHelper
       # need to append closing strong tag to string since it was detected that an opening strong tag exists
       text += "</strong>"
     end 
+    return text
+  end
+
+  def append_ellipsis_if_missing(text)
+    ellipsis_index = text.rindex(/\.{3}/)
+    if(ellipsis_index == nil)
+      text += "..."
+    elsif(ellipsis_index < (text.length - 3))
+      text += "..."
+    end
     return text
   end
 end
