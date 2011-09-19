@@ -5,8 +5,8 @@ class Person < ActiveRecord::Base
   include Marketable
 
   searchable :ignore_attribute_changes_of => [ :updated_at, :failed_attempts, :current_sign_in_at, :last_sign_in_at, :current_sign_in_ip, :confirmed_at, :sign_in_count ] do
-    text :first_name, :default_boost => 2
-    text :last_name, :default_boost => 2
+    text :first_name, :boost => 2, :default_boost => 2
+    text :last_name, :boost => 2, :default_boost => 2
     text :bio, :stored => true
   end
 
