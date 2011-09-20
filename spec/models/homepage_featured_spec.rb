@@ -12,4 +12,20 @@ describe HomepageFeatured do
       Factory.create(:homepage_featured).should be_valid
     end
   end
+
+  context 'creation' do
+    it 'should not allow entries with duplicate homepage_featureable' do
+      Factory.create(:homepage_featured)
+      should validate_uniqueness_of(:homepage_featureable_id).scoped_to(:homepage_featureable_type)
+    end
+  end
+
+  context 'deletion' do
+    it 'should not delete the homepage_featureable object if the HomepageFeature object is deleted' do
+      homepage_featured = Factory.create(:homepage_featured)
+      homepage_featureable = homepage_featured.homepage_featureable
+      homepage_featured.destroy
+      homepage_featureable.reload.should be_valid
+    end
+  end
 end
