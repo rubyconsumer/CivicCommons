@@ -33,9 +33,11 @@ describe Issue do
     @person1 = Factory.create(:normal_person)
     @person2 = Factory.create(:normal_person)
     @person3 = Factory.create(:normal_person)
+    @conversation = Factory.create(:conversation)
+    @conversation2 = Factory.create(:conversation)
     @contribution1 = Factory.create(:contribution, :person => @person1, :issue => @issue)
-    @contribution2 = Factory.create(:contribution, :person => @person2, :issue => @issue)
-    @contribution3 = Factory.create(:contribution, :person => @person2, :issue => @issue)
+    @contribution2 = Factory.create(:contribution, :person => @person2, :conversation => @conversation, :issue => @issue)
+    @contribution3 = Factory.create(:contribution, :person => @person2, :conversation => @conversation2, :issue => @issue)
   end
 
   def given_an_issue_with_contributions_and_conversations_and_page_visits
@@ -146,6 +148,12 @@ describe Issue do
     it "should have the correct participants" do
       given_an_issue_with_contributions_and_participants
       @issue.participants.should == [@person1,@person2]
+    end
+
+    it "should have all issue participants when include is used" do
+      given_an_issue_with_contributions_and_participants
+      # i = Issue.find(@issue.id, :include => :participants)
+      Issue.includes(:participants).find(@issue.id).participants.should == [@person1,@person2,@person2]
     end
 
     it "should have the correct number of participants" do
