@@ -12,10 +12,10 @@ class ConversationsController < ApplicationController
 
   # GET /conversations
   def index
-    @active = Conversation.includes(:participants).most_active.limit(3)
-    @popular = Conversation.includes(:participants).get_top_visited(3)
-    @recent = Conversation.includes(:participants).latest_created.limit(3)
-    @recommended = Conversation.includes(:participants).recommended.limit(3)
+    @active = Conversation.most_active.limit(3)
+    @popular = Conversation.get_top_visited(3)
+    @recent = Conversation.latest_created.limit(3)
+    @recommended = Conversation.recommended.limit(3)
 
     @regions = Region.all
     @recent_items = Activity.most_recent_activity(3)

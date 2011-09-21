@@ -38,6 +38,18 @@ describe ConversationsController do
       assigns(:recent).last.should == @old_conversation
     end
 
+    it "does not duplicate avatars for recent contributions on the same conversation" do
+      @person = Factory.create(:registered_user)
+      Factory.create(:contribution, { :conversation => @new_conversation, :person => @person })
+      Factory.create(:contribution, { :conversation => @new_conversation, :person => @person })
+      Factory.create(:contribution, { :conversation => @new_conversation, :person => @person })
+
+      get :index
+
+      assigns(:active).first.contributions.size.should == 3
+      assigns(:active).first.participants.size.should == 1
+    end
+
   end
 
   describe "GET rss" do
