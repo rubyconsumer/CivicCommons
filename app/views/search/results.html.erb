@@ -27,7 +27,11 @@
               <%= will_paginate @results, :inner_window => 3, previous_label: 'Previous', next_label: 'Next' %>
               </div>
             <% else %>
-            <p>Sorry. Your search did not return any results.</p>
+              <% if(params.key?(:filter)) %>
+                <p>Sorry. Your search filter did not return any results. <br>Try removing the filter by clicking the &ldquo;remove filter&rdquo; button on the right.</p>
+              <% else %>
+                <p>Sorry. Your search did not return any results.</p>
+            <% end %>
           <% end %>
       </div>
     </div>
