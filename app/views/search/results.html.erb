@@ -33,6 +33,7 @@
     </div>
 
     <div class="aside supplementary">
+      <% if(@results.length > 0 or params.key?(:filter)) %>
 	    <div class="search-filter">
         <div class="mod">
           <h3>Filter Results</h3>
@@ -58,6 +59,7 @@
           <% end %>
         </div>
       </div>
+    <% end %>
     </div>
 
   </div>
