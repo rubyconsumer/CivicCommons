@@ -92,7 +92,7 @@ describe Conversation do
     it "does not destroy contributions from other conversations when conversation is destroyed" do
       size = @conversation2.contributions.size
       @conversation1.destroy
-      @conversation2.contributions.size.should == size
+      @conversation2.reload.contributions.size.should == size
     end
   end
 
@@ -103,19 +103,18 @@ describe Conversation do
       @top_level_contribution = Factory.create(:top_level_contribution, :conversation => @conversation)
       @nested_contribution = Factory.create(:contribution, :parent => @top_level_contribution, :conversation => @conversation)
     end
+
     it "destroys all nested contributions" do
-      contribution_ids = [ @contribution,
-        @top_level_contribution,
-        @nested_contribution
-      ].collect(&:id)
+      conversation_id = @conversation.id
+      Contribution.find_all_by_conversation_id(conversation_id).count.should == 3
       @conversation.destroy
-      Contribution.where(:id => contribution_ids).count.should == 0
+      Contribution.find_all_by_conversation_id(conversation_id).count.should == 0
     end
 
     it "destroys all subscriptions" do
       subscription = Factory.create(:conversation_subscription, :subscribable => @conversation)
       @conversation.destroy
-      lambda{ Subscription.find(subscription.id)}.should raise_error ActiveRecord::RecordNotFound
+      lambda{ Subscription.find(subscription.id) }.should raise_error ActiveRecord::RecordNotFound
     end
   end
 

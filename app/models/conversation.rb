@@ -10,7 +10,7 @@ class Conversation < ActiveRecord::Base
 #    text :summary, :stored => true
 #  end
 
-  has_many :contributions
+  has_many :contributions, :dependent => :destroy
   has_many :confirmed_contributions, :class_name => 'Contribution',
            :conditions => ['confirmed = ?', true]
   accepts_nested_attributes_for :contributions, :allow_destroy => true
@@ -53,7 +53,6 @@ class Conversation < ActiveRecord::Base
   validates_presence_of :zip_code, :message => "Please give us a zip code for a little geographic context."
 
   after_create :set_initial_position, :subscribe_creator
-  before_destroy :destroy_root_contributions # since non-root contributions will be destroyed internally be awesome_nested_set
 
   has_friendly_id :title, :use_slug => true, :strip_non_ascii => true
 
@@ -194,19 +193,6 @@ class Conversation < ActiveRecord::Base
 
   def subscribe_creator
     Subscription.create_unless_exists(person, self)
-  end
-
-  protected
-
-  def destroy_root_contributions
-    # Make sure to delete root contributions in descending order of rgt
-    # value. Otherwise lft/rgt values will become corrupted due to the
-    # fact that the root objects don't get refreshed with adjusted
-    # lft/rgt values after previous roots are destroyed, while the
-    # decendants will be refreshed with new adjusted lft/rgt values and
-    # thus be shifted out of the lft/rgt ancestor bounds of the stale
-    # root objects in the collect block below.
-    self.contributions.roots.sort_by(&:rgt).reverse.collect(&:destroy)
   end
 
 end

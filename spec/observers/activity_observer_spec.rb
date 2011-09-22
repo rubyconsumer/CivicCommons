@@ -76,17 +76,11 @@ describe ActivityObserver do
 
   end
 
-  describe "observing destruction" do
-    context 'of a conversation' do
-      let(:conversation) { Factory.create(:conversation) }
-      context 'without an activity watching it' do
-        it 'doesnt throw an exception', do
-          Activity.stub(:destroy) { throw Error.new("OH NOES") }
-          Activity.stub(:exists?).and_return(false)
-          expect { conversation.destroy}.should_not raise_error 
-        end
-      end
+  context "when destroying" do
+    context 'a conversation' do
       it 'removes activity records when a conversation is deleted/destroyed' do
+        conversation = Factory.create(:conversation)
+        Activity.where(item_id: conversation.id, item_type: 'Conversation').should_not be_empty
         Conversation.destroy(conversation)
         Activity.where(item_id: conversation.id, item_type: 'Conversation').should be_empty
       end
