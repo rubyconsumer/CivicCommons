@@ -6,7 +6,7 @@ class Contribution < ActiveRecord::Base
   attr_accessor :top_level
 
   # nested contributions are destroyed via callbacks
-  acts_as_nested_set :exclude_unless => {:confirmed => true}, :dependent => :destroy
+  acts_as_nested_set :exclude_unless => {:confirmed => true}, :dependent => :destroy, :scope => :conversation_id
   acts_as_revisionable
   profanity_filter :content, :method => 'hollow'
   attr_accessor :moderation_reason
