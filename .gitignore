@@ -26,3 +26,4 @@ log
 sunspot-solr.pid
 .rspec
 specrunner.*.html
+.jhw-cache

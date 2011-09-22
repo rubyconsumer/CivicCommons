@@ -17,7 +17,7 @@ class ContributionsController < ApplicationController
     @contribution.item = @conversation
     @contribution.confirmed = true
 
-    if ok = @contribution.save
+    if @contribution.save
       Subscription.create_unless_exists(current_person, @contribution.item)
       @ratings = RatingGroup.default_contribution_hash
     end

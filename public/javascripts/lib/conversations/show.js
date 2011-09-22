@@ -4,14 +4,7 @@
     bindContributionFormEvents: function($clicked,$tabStrip){
       var form = this;
       form
-        .bind("submit", function(){
-          $(this).find('input[placeholder], textarea[placeholder]').each( function() {
-            $this = $(this);
-            if( $this.val() == $this.attr('placeholder') ){
-              $this.val('');
-            }
-          });
-        })
+        .bind("submit", clearOutPlaceholderText(form))
         .maskOnSubmit($tabStrip)
         .bind("ajax:success", function(evt, data, status, xhr){
           var $this = $(this);
@@ -66,9 +59,7 @@
             contribution = $responseNode.children('li').attr('id'),
             $contributionOnPage = $target.find('li#' + contribution);
 
-        if ( this.hasClass('top-node-conversation-action') ) {
-          $contributionOnPage = $('ol#conversation-thread-list').append($responseNode);
-        } else if ( $contributionOnPage.size > 0 ){
+        if ( $contributionOnPage.size > 0 ){
           $contributionOnPage = $contributionOnPage.replaceWith($responseNode);
         } else {
           $contributionOnPage = $target.append($responseNode);
@@ -212,12 +203,12 @@
 
   });
 
-  selectResponseFromHash = function(){
+  scrollToContribution = function(){
     var hash = window.location.hash.match(/^#node-([\d]+)/);
 
     if ( hash && hash[1] ){
-      var responseId = hash[1],
-          $onPage = $('#show-contribution-' + responseId);
+      var responseId = hash[1];
+      var $onPage = $('#show-contribution-' + responseId);
 
       $onPage.scrollTo()
         .find('.collapsed p').first().trigger('click'); // trigger click event to uncollapse contribution
@@ -264,7 +255,7 @@
     })
     .liveAlertOnAjaxFailure();
 
-  $('.top-node-conversation-action,.conversation-action').live('click', function(e){
+  $('.conversation-action').live('click', function(e){
     var $this = $(this);
     $.colorbox({
       transition: 'fade', // needed to fix colorbox bug with jquery 1.4.4
@@ -286,7 +277,7 @@
   });
 
   $(window).hashchange( function(){
-    selectResponseFromHash();
+    scrollToContribution();
   });
 
   $('a.contribution-toggle')
@@ -310,16 +301,46 @@
 
   $(document).ready(function() {
 
-    selectResponseFromHash();
+    scrollToContribution();
 
-    $('.rating-button')
-      .live('ajax:before', function(){
-        $(this).children('.loading').show();
-      })
-      .live('ajax:complete', function(){
-        $(this).children('.loading').hide();
-      });
-
+    conversationShower = new ShowsConversations().domReadyHandler();
   });
 
+  var clearOutPlaceholderText = function(contributionTool) {
+   contributionTool.find('input[placeholder], textarea[placeholder]').each(function(index, placeholder) {
+    $placeholder = $(placeholder);
+    if($placeholder.val() == $placeholder.attr('placeholder')) { 
+      $placeholder.val('');
+    }
+   });
+  };
+
+  $.fn.extend({
+    ratingButton: function() {
+      this.live('ajax:before', function() {
+       $(this).children('.loading').show();
+      });
+      this.live('ajax:complete', function() {
+        $(this).children('.loading').hide();
+      });
+      return this;
+    }
+  });
+
+  window.ShowsConversations = function() { };
+  window.ShowsConversations.prototype = {
+    domReadyHandler: function() {
+      $('.rating-button').ratingButton();
+      this.scrollToContributionDenotedByWindowsLocationHash();
+    },
+    scrollToContributionDenotedByWindowsLocationHash: function() {
+      this.scrollToContribution(1234)
+    },
+    scrollToContribution: function(contributionId) {
+      $('#show-contribution-' + contributionId).scrollTo();
+    }
+  };
+  $.getHash = function() {
+
+  }
 })(jQuery);
