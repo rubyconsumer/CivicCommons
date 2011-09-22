@@ -4,11 +4,10 @@ class Conversation < ActiveRecord::Base
   include Regionable
   include GeometryForStyle
 
-# Commented search for production build since it is not ready
-#  searchable do
-#    text :title, :default_boost => 2
-#    text :summary, :stored => true
-#  end
+  searchable :ignore_attribute_changes_of => [ :total_visits, :recent_visits, :last_visit_date, :updated_at, :recent_rating ] do
+    text :title, :boost => 3, :default_boost => 3
+    text :summary, :stored => true, :boost => 2, :default_boost => 2
+  end
 
   has_many :contributions
   has_many :confirmed_contributions, :class_name => 'Contribution',

@@ -1,7 +1,7 @@
 <% content_for :main_body do %>
   <div class="wrapper">
     <div class="content-container">
-      <h1><span>Search Results for</span> Display Search String</h1>
+      <%= render :partial => 'search', :locals => { :main_search => true } %>
 
       <div class="main-content">
         <div class="results">
@@ -15,19 +15,57 @@
                 <%= render :partial => 'conversation', :locals => { :hit => hit } %>
               <% when Person %>
                 <%= render :partial => 'community', :locals => { :hit => hit } %>
+              <% when Contribution %>
+                <%= render :partial => 'contribution', :locals => { :hit => hit } %>
+              <% when ManagedIssuePage %>
+                <%= render :partial => 'managed_issue', :locals => { :hit => hit } %>
+              <% when ContentItem %>
+                <%= render :partial => 'content_item', :locals => { :hit => hit } %>
               <% end
-              end
-            else %>
-            <p>Sorry. Your search did not return any results.</p>
-          <%end
-        %>
+              end %>
+            <div class="pagination">
+              <%= will_paginate @results, :inner_window => 3, previous_label: 'Previous', next_label: 'Next' %>
+              </div>
+            <% else %>
+              <% if(params.key?(:filter)) %>
+                <p>Sorry. Your search filter did not return any results. <br>Try removing the filter by clicking the &ldquo;remove filter&rdquo; button on the right.</p>
+              <% else %>
+                <p>Sorry. Your search did not return any results.</p>
+            <% end %>
+          <% end %>
       </div>
     </div>
 
     <div class="aside supplementary">
+      <% if(@results.length > 0 or params.key?(:filter)) %>
+	    <div class="search-filter">
+        <div class="mod">
+          <h3>Filter Results</h3>
+          <ul>
+            <% 
+              if(params.key?(:filter))
+                case params[:filter]
+                when "conversations"
+                  activeFilterConversation = "active"
+                when "community"
+                  activeFilterCommunity = "active"
+                when "issues"
+                  activeFilterIssues = "active"
+                end
+              end
+            %>
+            <li><%= link_to "Conversations", search_path(:q => params['q'], :filter => 'conversations'), id: "conv-s",  title: "Filter by conversations", class: activeFilterConversation %></li>
+            <li><%= link_to "Community", search_path(:q => params['q'], :filter => 'community'), id: "comm-s",  title: "Filter by community", class: activeFilterCommunity %></li>
+            <li><%= link_to "Issues", search_path(:q => params['q'], :filter => 'issues'), id: "issues-s",  title: "Filter by issues", class: activeFilterIssues %></li>
+          </ul>
+          <% if params.key?(:filter) %>
+            <%= link_to "remove filter", search_path(:q => params['q']),  :title => "Remove this filter", :class => 'remove-search-filter'%>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
     </div>
 
   </div>
 </div>
 <% end %>
-

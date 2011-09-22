@@ -1,0 +1,17 @@
+<div class="result contribution-result">
+  <% 
+    title =  hit.result.title || "This contribution has no title"
+    user_name = [hit.result.person.first_name, hit.result.person.last_name].join(' ')
+
+    if(hit.result.conversation_id)
+      title = hit.result.conversation.title
+    %>
+      <h4><%= link_to user_name + " said on " + title , conversation_node_path(hit.result) %></h4>
+    <% 
+      elsif(hit.result.issue_id)
+        title = hit.result.issue.name
+      %>
+      <h4><%= link_to user_name + " said on " + title , issue_node_path(hit.result) %></h4>
+    <% end %>
+  <p><%= best_hit_description(hit, :content) %></p>
+</div>

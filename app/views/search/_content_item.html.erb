@@ -1,0 +1,26 @@
+<% 
+  title =  hit.result.title
+  type = hit.result.content_type
+  case type 
+  when "BlogPost"
+    author_name = [hit.result.author.first_name, hit.result.author.last_name].join(' ')
+%>
+	<div class="result blog-result">
+    <h4><%= link_to author_name + ' blogged: ' + title, blog_path(hit.result) %></h4>
+    <p><%= best_hit_description(hit, :body) %></p>
+  </div>
+<% 
+  when "NewsItem"
+%>
+  <div class="result news-result">
+   <h4><%= link_to title, hit.result.external_link, :title => title, :target => "blank" %></h4>
+   <p><%= best_hit_description(hit, :body) %></p>
+ </div>
+<% 
+  when "RadioShow"
+%>
+  <div class="result radio-result">
+   <h4><%= link_to 'Radio Show: ' + title , radioshow_path(hit.result) %></h4>
+   <p><%= best_hit_description(hit, :body) %></p>
+ </div>
+<% end %>
