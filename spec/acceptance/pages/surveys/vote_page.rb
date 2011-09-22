@@ -4,8 +4,10 @@ class VotePage < PageObject
   VOTEBOX_LOCATOR = '.selected-survey-options .sortable'
   VOTE_RESULTS = 'ul.survey_results'
   BALLOT_FORM_DISABLED = '.selected-survey-options.disabled'
+  SUBMIT_BUTTON_TITLE = 'Cast Ballot'
   
-  def visit_an_independent_vote(vote)
+  
+  def visit_a_vote(vote)
     visit independent_vote_path(vote)
   end
   
@@ -22,6 +24,7 @@ class VotePage < PageObject
       //taken from surveys.js 
       var $from = $('.survey-options .sortable .survey-option').first().remove();
       var $to = $('.selected-survey-options .sortable').first()
+      $to.children('.placeholder').hide();
       $to.append($from);
       updateOptionID($to);
     "
@@ -33,7 +36,7 @@ class VotePage < PageObject
   end
   
   def click_submit
-    page.click_button 'Submit Vote'
+    page.click_button SUBMIT_BUTTON_TITLE
   end
   
   def available_options(options)

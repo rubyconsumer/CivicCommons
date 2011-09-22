@@ -40,7 +40,7 @@ feature "Voting results", %q{
     
     # When I am on a survey page
     Survey.count.should == 1
-    vote_page.visit_an_independent_vote(Survey.last)
+    vote_page.visit_a_vote(Survey.last)
     
     # Then I should be able to see the results
     vote_page.should have_selector(VotePage::VOTE_RESULTS)
@@ -59,7 +59,7 @@ feature "Voting results", %q{
     @survey.save
     
     # When I am on a survey page
-    vote_page.visit_an_independent_vote(Survey.last)
+    vote_page.visit_a_vote(Survey.last)
     
     # Then I should not be able to see the results
     vote_page.should_not have_selector(VotePage::VOTE_RESULTS)
@@ -83,7 +83,7 @@ feature "Voting results", %q{
     @survey.save
     
     # When I am on a survey page
-    vote_page.visit_an_independent_vote(Survey.last)
+    vote_page.visit_a_vote(Survey.last)
     
     # Then I should not be able to see the results
     vote_page.should_not have_selector(VotePage::VOTE_RESULTS)
@@ -106,7 +106,7 @@ feature "Voting results", %q{
     @survey.save
     
     # When I am on a survey page
-    vote_page.visit_an_independent_vote(Survey.last)
+    vote_page.visit_a_vote(Survey.last)
     
     # Then I should not be able to see the results
     vote_page.should_not have_selector(VotePage::VOTE_RESULTS)
