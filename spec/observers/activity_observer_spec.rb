@@ -68,7 +68,9 @@ describe ActivityObserver do
     end
 
     it 'does not create a new activity record on update for contribution' do
-      contribution = Factory.create(:comment)
+      conversation = Factory.create(:conversation)
+      top_level_contribution = Factory.create(:top_level_contribution, conversation: conversation)
+      contribution = Factory.create(:comment, conversation: conversation, parent: top_level_contribution)
       contribution.update_attributes(content: "changed my mind...")
       a = Activity.where(item_id: contribution.id, item_type: 'Contribution')
       a.size.should == 1

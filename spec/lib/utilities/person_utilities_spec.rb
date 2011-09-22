@@ -66,13 +66,13 @@ module Utilities
         Factory.create(:comment, person: @person_to_merge)
         Factory.create(:comment_with_unique_content, person: @person_to_merge)
         Factory.create(:suggested_action, person: @person_to_merge)
-        Factory.create(:question, conversation: conversation, person: @person_to_merge)
+        Factory.create(:question, conversation: conversation, parent: contribution, person: @person_to_merge)
         Factory.create(:question_without_parent, conversation: conversation ,person: @person_to_merge)
         Factory.create(:answer, person: @person_to_merge)
         Factory.create(:attached_file, person: @person_to_merge)
         Factory.create(:link, person: @person_to_merge)
         Factory.create(:embedded_snippet, person: @person_to_merge)
-        Factory.create(:embedly_contribution, person: @person_to_merge)
+        Factory.create(:embedly_contribution, conversation: conversation, parent: contribution, person: @person_to_merge)
 
         # create an array of the contribution IDs attributed to person_to_merge
         contribution_ids = @person_to_merge.contributions.collect do |contribution|
