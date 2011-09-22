@@ -33,7 +33,6 @@ feature "Voting Admin", %q{
     admin_surveys_page.visit
     
     # Then I will see an option to add a survey
-    admin_surveys_page.should have_link 'New Survey', :href => new_admin_survey_path
     admin_surveys_page.should have_link 'Add Survey', :href => new_admin_survey_path
   end
   

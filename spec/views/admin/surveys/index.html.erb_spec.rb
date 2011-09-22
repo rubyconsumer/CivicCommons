@@ -9,14 +9,16 @@ describe "admin/surveys/index.html.erb" do
         :surveyable_type => "Surveyable Type",
         :title => "Title",
         :description => "MyText",
-        :surveyable => issue
+        :surveyable => issue,
+        :type => 'Vote'
       ),
       stub_model(Survey,
         :surveyable_id => 1,
         :surveyable_type => "Surveyable Type",
         :title => "Title",
         :description => "MyText",
-        :surveyable => issue
+        :surveyable => issue,
+        :type => 'Vote'
       )
     ])
   end
@@ -24,6 +26,5 @@ describe "admin/surveys/index.html.erb" do
   it "renders a list of admin_surveys" do
     render
     rendered.should have_selector( "tr>td", :content => "Title".to_s, :count => 2 )
-    rendered.should have_selector( "tr>td", :content => "MyText".to_s, :count => 2 )
   end
 end

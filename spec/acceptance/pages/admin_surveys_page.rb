@@ -6,7 +6,7 @@ class AdminSurveysPage < PageObject
   end
   
   def click_new_survey
-    @page.click_link 'New Survey'
+    @page.click_link 'Add Survey'
   end
   
   def click_edit_on_a_survey(survey)
