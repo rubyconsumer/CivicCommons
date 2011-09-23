@@ -7,5 +7,6 @@ namespace :ci do
     Rake::Task["db:migrate"].invoke
     Rake::Task["spec_js"].invoke
     Rake::Task["cucumber"].invoke
+    Rake::Task["jasmine:ci"].invoke
   end
 end
