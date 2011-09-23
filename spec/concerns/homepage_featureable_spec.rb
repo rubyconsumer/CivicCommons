@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-[Conversation].each do |model|
+[Conversation, Issue].each do |model|
   describe model do
     it { should have_one(:homepage_featured) }
 

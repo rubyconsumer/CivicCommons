@@ -1,7 +1,8 @@
 class Admin::FeaturedHomepageController < Admin::DashboardController
   def index
-    conversations = Conversation.includes(:homepage_featured).latest_created
     @items = []
+
+    conversations = Conversation.includes(:homepage_featured).latest_created
     @items |= conversations.collect do |conversation|
       {
         created_at: conversation.created_at,
@@ -9,6 +10,17 @@ class Admin::FeaturedHomepageController < Admin::DashboardController
         id: conversation.id,
         title: conversation.title,
         type: conversation.class.to_s
+      }
+    end
+
+    issues = Issue.includes(:homepage_featured).most_recent
+    @items |= issues.collect do |issue|
+      {
+        created_at: issue.created_at,
+        featured: issue.featured?,
+        id: issue.id,
+        title: issue.name,
+        type: issue.class.to_s
       }
     end
   end
