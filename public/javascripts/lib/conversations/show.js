@@ -1,11 +1,15 @@
-(function ($) {
+(function () {
+  $ = this.jQuery;
   $.fn.extend({
 
     bindContributionFormEvents: function($clicked,$tabStrip){
-      var form = this;
-      form
-        .bind("submit", clearOutPlaceholderText(form))
-        .maskOnSubmit($tabStrip)
+      var form = new ConversationTool({
+        el: this, 
+        tabStrip: $tabStrip,
+        clicked: $clicked
+      });
+      $(form.el)
+        .maskChildOnSubmit($tabStrip)
         .bind("ajax:success", function(evt, data, status, xhr){
           var $this = $(this);
           // apparently there is no way to inspect the HTTP status returned when submitting via iframe (which happens for AJAX file/image uploads)
@@ -152,7 +156,7 @@
         return this;
       },
 
-      maskOnSubmit: function($container) {
+      maskChildOnSubmit: function($container) {
         if($container == undefined) { $container = this; }
         this
           .bind("ajax:loading", function(){
@@ -239,7 +243,7 @@
 
       $form = $target.html(xhr.responseText).find('form');
       $form
-        .maskOnSubmit()
+        .maskChildOnSubmit()
         .bind("ajax:success", function(evt, data, status, xhr){
           var $responseNode;
           $responseNode = $(xhr.responseText);
@@ -300,47 +304,31 @@
   });
 
   $(document).ready(function() {
-
     scrollToContribution();
 
-    conversationShower = new ShowsConversations().domReadyHandler();
-  });
-
-  var clearOutPlaceholderText = function(contributionTool) {
-   contributionTool.find('input[placeholder], textarea[placeholder]').each(function(index, placeholder) {
-    $placeholder = $(placeholder);
-    if($placeholder.val() == $placeholder.attr('placeholder')) { 
-      $placeholder.val('');
-    }
-   });
-  };
-
-  $.fn.extend({
-    ratingButton: function() {
-      this.live('ajax:before', function() {
-       $(this).children('.loading').show();
-      });
-      this.live('ajax:complete', function() {
-        $(this).children('.loading').hide();
-      });
-      return this;
-    }
+    new ShowsConversations().onReady();
   });
 
   window.ShowsConversations = function() { };
+
   window.ShowsConversations.prototype = {
-    domReadyHandler: function() {
+    onReady: function() {
       $('.rating-button').ratingButton();
       this.scrollToContributionDenotedByWindowsLocationHash();
     },
     scrollToContributionDenotedByWindowsLocationHash: function() {
-      this.scrollToContribution(1234)
-    },
-    scrollToContribution: function(contributionId) {
-      $('#show-contribution-' + contributionId).scrollTo();
+      $('#show-contribution-' + ParseHashFor.contributionId()).scrollTo();
     }
   };
-  $.getHash = function() {
-
+  window.ParseHashFor = {
+    contributionId: function() {
+      return parseInt(_.last(this.cleanHash().split('-')));
+    },
+    cleanHash: function() {
+      return window.location.hash;
+    }
   }
-})(jQuery);
+
+  
+
+}).call(this);
