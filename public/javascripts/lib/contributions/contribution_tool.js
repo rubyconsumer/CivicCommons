@@ -122,3 +122,32 @@ function enable_add_file_toggle(link, file_field, content_field) {
     }
   });
 }
+
+(function() {
+
+  var clearPlaceholders = function() {
+    $(_.select(this.$('*[placeholder]'), function(element) {
+      element = $(element);
+      return element.val() == element.attr('placeholder');
+    })).val('');
+  }
+
+  this.ContributionTool = Backbone.View.extend({
+    initialize: function() {
+      this.tabstrip = this.options.tabstrip;
+    },
+    submit: function() {
+      clearPlaceholders.call(this);
+      this.tabstrip.maskChild();
+    },
+
+    render: function() {
+      $(this.el).html(this.template());
+      return this;
+    },
+
+    template: function() {
+      return '<input placeholder="ohhai" type="textbox" value="ohhai" />';
+    }
+  });
+}).call(this);
