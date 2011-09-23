@@ -159,6 +159,7 @@ Civiccommons::Application.routes.draw do
     resources :curated_feeds do
       resources :items, controller: :curated_feed_items, only: [ :show, :edit, :create, :update, :destroy ]
     end
+    resources :featured_homepage, only: [:index, :update]
     resources :issues do
       resources :pages, controller: :managed_issue_pages
       post 'update_order', on: :collection
