@@ -135,10 +135,15 @@ function enable_add_file_toggle(link, file_field, content_field) {
   this.ContributionTool = Backbone.View.extend({
     initialize: function() {
       this.tabstrip = this.options.tabstrip;
+      this.tabstrip.maskMe({
+        startOn: 'ajax:loading',
+        endOn:   'ajax:complete',
+        message: 'Loading...',
+        eventHandler: $(this.el)
+      });
     },
     submit: function() {
       clearPlaceholders.call(this);
-      this.tabstrip.maskChild();
     },
 
     render: function() {

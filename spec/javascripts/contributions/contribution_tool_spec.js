@@ -2,12 +2,12 @@ describe("The Conversation Tool", function() {
   var subject;
   var result;
   beforeEach(function() {
-
+    var tabstrip = $('<p>borkborkbork</p>');
+    spyOn(tabstrip,'maskMe');  
     subject = new ContributionTool({
-      tabstrip: $('<p>borkborkbork</p>')
+      tabstrip: tabstrip 
     });
     subject.render();
-    spyOn(subject.tabstrip,'maskChild');  
   });
 
   describe('rendering', function() {
@@ -42,13 +42,13 @@ describe("The Conversation Tool", function() {
       });
     });
     it('masks the tabstrip it is created with', function() {
-      expect(subject.tabstrip.maskChild).toHaveBeenCalled();
+      expect(subject.tabstrip.maskMe).toHaveBeenCalledWith({
+        startOn: 'ajax:loading',
+        endOn: 'ajax:complete',
+        message: 'Loading...',
+        eventHandler: $(subject.el)
+      });
     });
   });
-
 });
-$.fn.extend({
-  maskChild: function(child) {
 
-  }
-});
