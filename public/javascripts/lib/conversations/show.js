@@ -9,7 +9,6 @@
         clicked: $clicked
       });
       $(form.el)
-        .maskChildOnSubmit($tabStrip)
         .bind("ajax:success", function(evt, data, status, xhr){
           var $this = $(this);
           // apparently there is no way to inspect the HTTP status returned when submitting via iframe (which happens for AJAX file/image uploads)
@@ -207,17 +206,6 @@
 
   });
 
-  scrollToContribution = function(){
-    var hash = window.location.hash.match(/^#node-([\d]+)/);
-
-    if ( hash && hash[1] ){
-      var responseId = hash[1];
-      var $onPage = $('#show-contribution-' + responseId);
-
-      $onPage.scrollTo()
-        .find('.collapsed p').first().trigger('click'); // trigger click event to uncollapse contribution
-    }
-  };
 
   resizeColorbox = function(){
     $.colorbox.resize({
@@ -281,7 +269,7 @@
   });
 
   $(window).hashchange( function(){
-    scrollToContribution();
+    new ShowsConversations().scrollToContributionDenotedByWindowsLocationHash();
   });
 
   $('a.contribution-toggle')
@@ -304,14 +292,13 @@
   });
 
   $(document).ready(function() {
-    scrollToContribution();
 
     new ShowsConversations().onReady();
   });
 
-  window.ShowsConversations = function() { };
+  this.ShowsConversations = function() { };
 
-  window.ShowsConversations.prototype = {
+  this.ShowsConversations.prototype = {
     onReady: function() {
       $('.rating-button').ratingButton();
       this.scrollToContributionDenotedByWindowsLocationHash();
@@ -320,7 +307,7 @@
       $('#show-contribution-' + ParseHashFor.contributionId()).scrollTo();
     }
   };
-  window.ParseHashFor = {
+  this.ParseHashFor = {
     contributionId: function() {
       return parseInt(_.last(this.cleanHash().split('-')));
     },

@@ -141,6 +141,11 @@ function enable_add_file_toggle(link, file_field, content_field) {
         message: 'Loading...',
         eventHandler: $(this.el)
       });
+      this.el.maskMe({
+        startOn: 'ajax:loading',
+        endOn:   'ajax:complete',
+        message: 'Loading...',
+      })
     },
     submit: function() {
       clearPlaceholders.call(this);
