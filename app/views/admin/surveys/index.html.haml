@@ -4,7 +4,6 @@
     %tr
       %th ID
       %th Title
-      %th Attached to(Surveyable)
       %th Start Date
       %th End Date
       %th Show progress?
@@ -16,7 +15,6 @@
       %tr
         %td= survey.id
         %td= link_to truncate(survey.title), admin_survey_path(survey), :title=> survey.title
-        %td= "#{survey.surveyable_type} #{survey.surveyable_id}"
         %td= survey.start_date && survey.start_date.strftime("%m-%d-%Y")
         %td= survey.end_date && survey.end_date.strftime("%m-%d-%Y")
         %td= survey.show_progress ? 'yes' : 'no'

@@ -79,10 +79,6 @@ feature "Voting Admin", %q{
     # and I can set a start date
     admin_new_survey_page.select_date('start_date', :with => 1.day.ago.to_date.to_s)
     
-    # and I can make it surveyable to an existing Issue or a Conversation on the site
-    admin_new_survey_page.fill_in(:surveyable_type, :with => Issue)
-    admin_new_survey_page.fill_in(:surveyable_id, :with => @issue.id)
-    
     # and I click submit
     admin_new_survey_page.click_create_survey
         

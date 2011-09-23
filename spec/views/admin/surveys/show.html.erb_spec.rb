@@ -17,7 +17,7 @@ describe "admin/surveys/show.html.erb" do
   it "renders attributes in <p>" do
     render
     rendered.should match(/1/)
-    rendered.should match(/Surveyable Type/)
+    rendered.should_not match(/Surveyable Type/)
     rendered.should match(/Title/)
     rendered.should match(/MyText/)
     rendered.should match(/classType/)

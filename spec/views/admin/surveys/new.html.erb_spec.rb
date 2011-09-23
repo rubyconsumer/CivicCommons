@@ -16,8 +16,8 @@ describe "admin/surveys/new.html.erb" do
   it "renders new survey form" do
     render
     rendered.should have_selector("form", :action => admin_surveys_path, :method => "post") do |form|
-      form.should have_selector("input#survey_surveyable_id", :name => "survey[surveyable_id]")
-      form.should have_selector("select#survey_surveyable_type", :name => "survey[surveyable_type]")
+      form.should_not have_selector("input#survey_surveyable_id", :name => "survey[surveyable_id]")
+      form.should_not have_selector("select#survey_surveyable_type", :name => "survey[surveyable_type]")
       form.should have_selector("input#survey_title", :name => "survey[title]")
       form.should have_selector("textarea#survey_description", :name => "survey[description]")
       form.should have_selector("input#survey_max_selected_options", :name => "survey[max_selected_options]")
