@@ -20,8 +20,7 @@ class Admin::FeaturedHomepageController < Admin::DashboardController
     else
       item.homepage_featured.destroy if item.featured?
     end
-    item.reload
-    flash[:notice] = "Successfully updated #{ params[:type] } #{ params[:id] } to #{ item.featured?.to_s }."
+    flash[:notice] = "Successfully updated #{ params[:type] } #{ params[:id] } to #{ (!params[:featured].nil?).to_s }."
 
     respond_to do |format|
       format.html { redirect_to admin_featured_homepage_index_path }
