@@ -5,7 +5,7 @@
       <th>Item Type</th>
       <th>Item Title</th>
       <th>Created Date</th>
-      <th>Actions</th>
+      <th>Featured</th>
     </tr>
   </thead>
   <tbody>
@@ -14,7 +14,7 @@
         <td><%= item[:type] %></td>
         <td><%= item[:title] %></td>
         <td><%= item[:created_at].strftime("%m-%d-%Y") %></td>
-        <td><a class="staff_pick <%= item[:featured] ? 'on' : 'off' %>" data-method="put" href="<%= admin_featured_homepage_path(item[:id], type: item[:type]) %>"><span class="text"><%= item[:id] %></span></a></td>
+        <td><a class="staff_pick <%= item[:featured] ? 'on' : 'off' %>" data-method="put" href="<%= admin_featured_homepage_path(item[:id], type: item[:type], featured: !item[:featured]) %>"><span class="text"><%= item[:id] %></span></a></td>
       </tr>
     <% end %>
   </tbody>
