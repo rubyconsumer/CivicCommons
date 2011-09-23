@@ -1,11 +1,15 @@
 describe("The Conversation Tool", function() {
   var subject;
   var result;
+  var $subject; 
   beforeEach(function() {
+    $subject = $('<p>morkmorkmork</p>');
+    spyOn($subject, 'maskMe');
     var tabstrip = $('<p>borkborkbork</p>');
     spyOn(tabstrip,'maskMe');  
     subject = new ContributionTool({
-      tabstrip: tabstrip 
+      tabstrip: tabstrip,
+      el: $subject
     });
     subject.render();
   });
@@ -47,6 +51,13 @@ describe("The Conversation Tool", function() {
         endOn: 'ajax:complete',
         message: 'Loading...',
         eventHandler: $(subject.el)
+      });
+    });
+    it('masks itself', function() {
+      expect($subject.maskMe).toHaveBeenCalledWith({
+        startOn: 'ajax:loading',
+        endOn: 'ajax:complete',
+        message: 'Loading...',
       });
     });
   });
