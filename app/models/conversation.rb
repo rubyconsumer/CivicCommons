@@ -16,7 +16,7 @@ class Conversation < ActiveRecord::Base
   accepts_nested_attributes_for :contributions, :allow_destroy => true
 
   has_many :subscriptions, :as => :subscribable, :dependent => :destroy
-  
+
   def top_level_contributions
     Contribution.where(:conversation_id => self.id, :top_level_contribution => true)
   end
@@ -81,6 +81,18 @@ class Conversation < ActiveRecord::Base
       order('count_all DESC, max_contributions_created_at DESC')
   end
 
+  def self.random_active(select=2, limit=4)
+    limit = select if select > limit
+
+    actives = Conversation.most_active.limit(limit)
+    actives.sample(select)
+  end
+
+  def self.random_recommended(select=1)
+    r = Conversation.recommended
+    r.sample(select)
+  end
+
   def self.recommended
     Conversation.where('staff_pick = true').order('position ASC')
   end
@@ -122,7 +134,7 @@ class Conversation < ActiveRecord::Base
         embedly.fetch_and_merge_params!(attr_hash)
         attr.merge!(attr_hash[:contribution])
       end
-      # Rather than set contribution.person over and over, 
+      # Rather than set contribution.person over and over,
       # it will now be set from contribution#set_person_from_item before_validation hook
       contribution = Contribution.new_node(attr, nil, true)
       if contribution.valid?

@@ -1,8 +1,23 @@
+<%
+  title = defined?(lower_third) ? lower_third : title ? title : nil
+
+  if defined?(target)
+    hsp = HPSlotPresenter.new(target)
+  else
+    hsp = HPSlotPresenter.new(nil)
+  end
+
+  #TODO: Clean Up after Integration with Staff Selected Content
+%>
 <div class="t-img <%= slot_class %>">
-  <a href="#">
-    <img src="http://placehold.it/<%= dimensions %>"/>
+  <%= link_to(hsp.url) do %>
+    <% if defined?(hsp.image) %>
+      <img src="<%= hsp.image %>" width=<%=width%> height=<%=height%> />
+    <% else %>
+      <img src="http://placehold.it/<%= width %>x<%= height %>"/>
+    <% end %>
     <div>
-      <p><%= lower_third %></p>
+      <p><%= hsp.title %></p>
     </div>
-  </a>
+  <% end %>
 </div>

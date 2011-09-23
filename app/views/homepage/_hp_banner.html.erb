@@ -1,21 +1,21 @@
 <div class="t-grid">
   <div class="t-col one">
-    <%= render partial: '/homepage/hp_slot', locals: {slot_class: "med", dimensions:"220x145", lower_third:"Lorem ipsum dolor sit amet, consectetuer adipiscing elit."} %>
-    <%= render partial: '/homepage/hp_slot', locals: {slot_class: "med", dimensions:"220x145", lower_third:"Lorem ipsum dolor sit amet, consectetuer adipiscing elit."} %>
+    <%= render partial: '/homepage/hp_slot', locals: { slot_class: "med", width:220, height:145, target:@random_active_conversation.pop } %>
+    <%= render partial: '/homepage/hp_slot', locals: { slot_class: "med", width:220, height:145, target:@random_issues.pop } %>
   </div>
   <div class="t-col two">
-    <%= render partial: '/homepage/hp_slot', locals: {slot_class: "sm", dimensions:"140x90", lower_third:"Lorem ipsum dolor sit amet, consectetuer adipiscing elit."} %>
-    <%= render partial: '/homepage/hp_slot', locals: {slot_class: "sm", dimensions:"140x90", lower_third:"Lorem ipsum dolor sit amet, consectetuer adipiscing elit."} %>
-    <%= render partial: '/homepage/hp_slot', locals: {slot_class: "sm", dimensions:"140x90", lower_third:"Lorem ipsum dolor sit amet, consectetuer adipiscing elit."} %>
+    <%= render partial: '/homepage/hp_slot', locals: { slot_class: "sm", width:140, height:90, target:@random_issues.pop } %>
+    <%= render partial: '/homepage/hp_slot', locals: { slot_class: "sm", width:140, height:90, target:@random_recommended_conversation } %>
+    <%= render partial: '/homepage/hp_slot', locals: { slot_class: "sm", width:140, height:90, target:@random_active_conversation.pop } %>
   </div>
   <div class="t-col three">
-    <%= render partial: '/homepage/hp_slot', locals: {slot_class: "lrg", dimensions:"300x200", lower_third:"Lorem ipsum dolor sit amet, consectetuer adipiscing elit."} %>
-    <%= render partial: '/homepage/hp_slot', locals: {slot_class: "sm one", dimensions:"140x90", lower_third:"Lorem ipsum dolor sit amet, consectetuer adipiscing elit."} %>
-    <%= render partial: '/homepage/hp_slot', locals: {slot_class: "sm two", dimensions:"140x90", lower_third:"Lorem ipsum dolor sit amet, consectetuer adipiscing elit."} %>
+    <%= render partial: '/homepage/hp_slot', locals: { slot_class: "lrg", width:300, height:200, lower_third:"6 - Staff Selected Content" } %>
+    <%= render partial: '/homepage/hp_slot', locals: { slot_class: "sm one", width:140, height:90, lower_third:"7 - Staff Selected Content" } %>
+    <%= render partial: '/homepage/hp_slot', locals: { slot_class: "sm two", width:140, height:90, target:@random_issues.pop } %>
   </div>
   <div class="t-col four">
-    <%= render partial: '/homepage/hp_slot', locals: {slot_class: "med", dimensions:"220x145", lower_third:"Lorem ipsum dolor sit amet, consectetuer adipiscing elit."} %>
-    <%= render partial: '/homepage/hp_slot', locals: {slot_class: "med", dimensions:"220x145", lower_third:"Lorem ipsum dolor sit amet, consectetuer adipiscing elit."} %>
+    <%= render partial: '/homepage/hp_slot', locals: { slot_class: "med", width:220, height:145, lower_third:"9 - Staff Selected Content" } %>
+    <%= render partial: '/homepage/hp_slot', locals: { slot_class: "med", width:220, height:145, target:@random_active_conversation.pop  } %>
   </div>
 </div>
 
