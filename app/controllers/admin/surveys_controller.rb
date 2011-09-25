@@ -93,4 +93,11 @@ class Admin::SurveysController < Admin::DashboardController
       format.xml  { head :ok }
     end
   end
+  
+  #GET /admin/surveys/1/progress
+  def progress
+    @survey = Survey.find(params[:id])
+    @vote_progress_service = VoteProgressService.new(@survey)
+    @responses = @survey.survey_responses.sort_last_created_first
+  end
 end

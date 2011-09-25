@@ -5,6 +5,8 @@ class SurveyResponse < ActiveRecord::Base
   validates_presence_of :person_id
   after_create :send_survey_confirmation
   
+  scope :sort_last_created_first, {:order=> 'created_at DESC'}
+  
   def send_survey_confirmation
     Notifier.survey_confirmation(person, survey).deliver
   end

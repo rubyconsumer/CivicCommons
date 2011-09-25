@@ -30,6 +30,11 @@ describe Admin::SurveysController do
     it "recognizes and generates #destroy" do
       { :delete => "/admin/surveys/1" }.should route_to(:controller => "admin/surveys", :action => "destroy", :id => "1")
     end
+    
+    it "recognizes and generates #progress" do
+      { :get => "/admin/surveys/1/progress" }.should route_to(:controller => "admin/surveys", :action => "progress", :id => "1")
+    end
+    
 
   end
 end
