@@ -14,7 +14,7 @@ font-size: 100%;
 
 div#header-wrapper, div.wrapper, div#nav-wrapper, div#footer, div#legal {font-size: .75em;}
 p {
-line-height: 1.4em;
+line-height: 1.5em;
 margin-bottom: .8em;
 }
 p.fineprint {font-size:0.85em;}
@@ -99,7 +99,7 @@ color: #555
 border-bottom: none;
 font-size: 1.6em;
 line-height: 1em;
-margin-bottom: 1em;
+margin: 1em 0;
 padding-bottom: 0;
 text-transform: none;
 }
@@ -1065,7 +1065,6 @@ div.convo-utility.response {
 div.convo-utility div.tos {
 color: #808080;
 font-size: 80%;
-padding: 4px;
 display: block;
 float: none;
 text-align: right;
