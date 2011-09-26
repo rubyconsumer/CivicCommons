@@ -4,3 +4,4 @@
   background-image: none;
   background-repeat: no-repeat;
   background-color: transparent; }
+div#search form input.textbox {*width:180px;}
