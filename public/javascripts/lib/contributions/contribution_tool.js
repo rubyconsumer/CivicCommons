@@ -149,7 +149,9 @@ function enable_add_file_toggle(link, file_field, content_field) {
     },
     submit: function() {
       this.clearPlaceholderValuesFromFields();
-      this.$errorMessage = $('<p>Woops! We only let you submit one link or file per contribution</p>');
+      if(this.$linkField.val() != '' && this.$fileUploadField.val() != '') {
+        this.$errorMessage = $('<p>Woops! We only let you submit one link or file per contribution</p>');
+      }
     },
 
     clearPlaceholderValuesFromFields: function() {
