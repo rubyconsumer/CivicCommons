@@ -21,8 +21,14 @@ feature "Voting Admin", %q{
     @issue = Factory.create(:issue)
   end
   
+  def given_a_survey_with_responses
+    @survey_response = Factory.create(:vote_survey_response)
+    @survey = @survey_response.survey
+  end
+  
   let(:admin_surveys_page){ AdminSurveysPage.new(page)} 
   let(:admin_new_survey_page){AdminNewSurveyPage.new(page)}
+  let(:admin_survey_progress_page){AdminSurveyProgressPage.new(page)}
     
 
   scenario "See an option to add a survey" do
@@ -147,6 +153,38 @@ feature "Voting Admin", %q{
       form.should have_selector("input#survey_title", :name => "survey[title]")
       form.should have_selector("input#survey_options_attributes_0_title", :name => "survey[options_attributes][0][title]")
     end    
+  end
+  
+  scenario "Survey progress page" do
+    # Given I am an admin 
+    given_logged_in_as_admin
+    
+    # And a survey with responses
+    given_a_survey_with_responses
+    
+    # When I go to the surveys page 
+    admin_surveys_page.visit
+    
+    # Then I should see the survey progress link
+    admin_surveys_page.should have_link "view"
+    
+    # When I click on the survey progress link
+    admin_surveys_page.click_link "view"
+    
+    # Then I should be on the survey progress page
+    page.current_path.should == progress_admin_survey_path(@survey)
+    
+    # And I should see the survey info
+    admin_survey_progress_page.should contain 'Showing survey progress'
+    admin_survey_progress_page.should contain 'Title: This is a title'
+    
+    # And I should see the survey progress chart
+    admin_survey_progress_page.should contain 'Progress Bar'
+    admin_survey_progress_page.should have_selector 'div.survey-options ul.survey_results'
+    
+    # And I should see the respondents of the survey
+    admin_survey_progress_page.should contain 'Respondents'
+    admin_survey_progress_page.should contain(/Respondents\s*John\sDoe/)
   end
   
   scenario  do

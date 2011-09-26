@@ -9,6 +9,10 @@ describe Admin::SurveysController do
   def mock_survey(stubs={})
     @mock_survey ||= mock_model(Survey, stubs).as_null_object
   end
+  
+  def mock_response(stubs={})
+    @mock_response ||= mock_model(SurveyResponse, stubs).as_null_object
+  end
 
   describe "GET index" do
     it "assigns all surveys as @surveys" do
@@ -132,6 +136,26 @@ describe Admin::SurveysController do
       Survey.stub(:find) { mock_survey }
       delete :destroy, :id => "1"
       response.should redirect_to(admin_surveys_url)
+    end
+  end
+  
+  describe "GET progress" do
+    it "assigns the requested survey as @survey" do
+      Survey.stub(:find).with("37") { mock_survey }
+      get :progress, :id => "37"
+      assigns(:survey).should be(mock_survey)
+    end
+    
+    it "gets the survey responses based on last voted" do
+      Survey.stub(:find).with("37") { mock_survey }
+      mock_survey.stub_chain(:survey_responses, :sort_last_created_first).and_return([mock_response])
+      get :progress, :id => "37"
+      assigns(:responses).should == [mock_response]
+    end
+    it "initalizes the Vote Progress service" do
+      Survey.stub(:find).with("37") { mock_survey }
+      VoteProgressService.should_receive(:new).with(mock_survey)
+      get :progress, :id => "37"
     end
   end
 
