@@ -1,13 +1,9 @@
 <%
-  title = defined?(lower_third) ? lower_third : title ? title : nil
-
   if defined?(target)
     hsp = HPSlotPresenter.new(target)
   else
     hsp = HPSlotPresenter.new(nil)
   end
-
-  #TODO: Clean Up after Integration with Staff Selected Content
 %>
 <div class="t-img <%= slot_class %>">
   <%= link_to(hsp.url) do %>
