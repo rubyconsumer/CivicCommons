@@ -16,6 +16,11 @@ class Issue < ActiveRecord::Base
   has_and_belongs_to_many :conversations
   # Contributions directly related to this Issue
   has_many :contributions
+  has_many :suggested_actions
+  has_many :surveys, :as => :surveyable
+  has_many :votes, :as => :surveyable, :class_name => 'Survey', :conditions => {:type => 'Vote'}
+  has_many(:media_contributions, :class_name => "Contribution",
+           :conditions => {:type => ['EmbeddedSnippet', 'Link', 'AttachedFile']})
 
   has_many :subscriptions, :as => :subscribable, :dependent => :destroy
 

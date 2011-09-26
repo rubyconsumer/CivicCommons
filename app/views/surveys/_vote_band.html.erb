@@ -1,0 +1,18 @@
+<% if votes %>
+    <ul class="vote-band">
+      <% votes.each do |vote| %>
+          <% if vote.active? && !vote.expired? %>
+	        <li>
+	            <a href="<%= vote_path(vote)%>">
+	              <h4><%= vote.title %></h4>
+	              <p><%= simple_format(truncate(Sanitize.clean(vote.description), {:length => 125, :separator => ' '})) %></p>
+	            </a>
+	        </li>
+          <% else %>
+          	<li class="closed">
+            	<h4><%= vote.title %></h4>
+            </li>
+          <% end %>
+      <% end %>
+    </ul>
+<% end %>

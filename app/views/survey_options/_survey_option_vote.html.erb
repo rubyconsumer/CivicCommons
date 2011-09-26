@@ -1,0 +1,22 @@
+<div class="survey-option" data-option-id="<%= option.id %>">
+  <div class="content">
+    <div class = 'title'>
+      <h5><%= option.title %></h5>
+    </div>
+    <div class='description'>
+      <p><%= auto_link(sanitize option.description, :tags => %w(img a strong br p))  %></p>
+    </div>
+  </div>
+  <div class="select" title="Select this option">
+    <span class="select-icon">></span>
+  </div>
+  <div class="unselect" title = "Remove this">
+    <span class="unselect-icon">(x)</span>
+  </div>
+  <div class="menu">
+    <%= link_to "Read More", '#', :class => 'expand' unless option.description.blank?%>
+    <%= link_to "Read Less", '#', :class => 'contract' unless option.description.blank?%>
+  </div>
+  
+  <div class="clear-both"></div>
+</div>

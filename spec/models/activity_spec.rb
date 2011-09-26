@@ -99,6 +99,14 @@ describe Activity do
       a.should be_valid
       a.item_type.should == 'RatingGroup'
     end
+    
+    it "Creates a new activity from valid survey response object" do
+      obj = Factory.build(:survey_response, id: 1, created_at: Time.now)
+      a = Activity.new(obj)
+      a.should be_valid
+      a.item_type.should == 'SurveyResponse'
+    end
+    
 
     it "Does not create a new acivity on top level contribution" do
       obj = Factory.build(:top_level_contribution, id: 1, created_at: Time.now)
@@ -146,11 +154,12 @@ describe Activity do
 
     before(:each) do
       @item_count = 3
-      @total_count = 9
+      @total_count = 12
       (1..@item_count).each do |i|
         Factory.create(:conversation_activity, item_id: convo.id)
         Factory.create(:contribution_activity, item_id: 1)
         Factory.create(:rating_group_activity, item_id: 1)
+        Factory.create(:survey_response_activity, item_id: 1)
       end
     end
 
@@ -183,6 +192,7 @@ describe Activity do
     let(:conversation) { Factory.create(:conversation) }
     let(:comment) { Factory.create(:comment) }
     let(:rating_group) { Factory.create(:rating_group) }
+    let(:vote_survey_response) {Factory.create(:vote_survey_response)}
 
     it "serializes a contribution object" do
       encoded_comment = Activity.encode(comment)
@@ -209,7 +219,15 @@ describe Activity do
       encoded_rating_group.should match(/person/)
       encoded_rating_group.should match(/ratings/)
     end
-
+    
+    it "serializes a survey response object" do
+      encoded_survey_response = Activity.encode(vote_survey_response)
+      encoded_survey_response.should be_an_instance_of String
+      expect { JSON.parse(encoded_survey_response) }.should_not raise_exception
+      encoded_survey_response.should match(/person/)
+      encoded_survey_response.should match(/survey/)
+      encoded_survey_response.should match(/survey.+type/)
+    end
   end
 
   context "decodes cache data into ActiveRecord object" do
@@ -242,6 +260,16 @@ describe Activity do
       decoded_rating_group.__class__ == 'RatingGroup'
       decoded_rating_group.conversation_id.should == rating_group.conversation_id
       decoded_rating_group.person_id.should == rating_group.person_id
+    end
+
+    it "decodes a survey repsonse object" do
+      survey_response = Factory.create(:vote_survey_response)
+      encoded_survey_response = Activity.encode(survey_response)
+      decoded_survey_response = Activity.decode(encoded_survey_response)
+      decoded_survey_response.class == GenericObject
+      decoded_survey_response.__class__ == 'SurveyResponse'
+      decoded_survey_response.survey_id.should == survey_response.survey_id
+      decoded_survey_response.person_id.should == survey_response.person_id
     end
 
   end

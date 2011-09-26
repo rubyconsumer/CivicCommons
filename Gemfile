@@ -39,6 +39,8 @@ gem 'nokogiri'
 gem 'sanitize'
 gem 'highline'
 
+gem "gchart", "~> 1.0.0"
+
 gem 'sunspot_rails' 
 
 gem 'fitter-happier'

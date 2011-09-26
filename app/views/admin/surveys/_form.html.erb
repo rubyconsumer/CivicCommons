@@ -1,0 +1,84 @@
+
+
+<%= form_for([:admin,@survey]) do |f| %>
+  <% if @survey.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@survey.errors.count, "error") %> prohibited this admin_survey from being saved:</h2>
+
+      <ul>
+      <% @survey.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field">
+    <%= f.label :type, "Survey Type(Vote)" %><br />
+    <%= f.select :type, Survey::SURVEY_TYPES, :prompt => 'select one...'%>
+  </div>
+  
+  <div class="field">
+    <%= f.label :title, 'title *' %><br />
+    <%= f.text_field :title %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br />
+    <%= f.text_area :description %>
+  </div>  
+
+  <div class="field">
+    <%= f.label :start_date %><br />
+    <%= f.date_select :start_date, :prompt => true, :order => [:month,:day,:year], :start_year => (Time.now.year), :end_year => (Time.now.year + 1) %>
+  </div>  
+  
+  <div class="field">
+    <%= f.label :end_date, 'End Date*' %><br />
+    <%= f.date_select :end_date, :prompt => true, :order => [:month,:day,:year], :start_year => (Time.now.year), :end_year => (Time.now.year + 1) %>
+  </div>    
+  
+  <div class="field">
+    <%= f.label :max_selected_options %><br />
+    <%= f.text_field :max_selected_options %>
+  </div>
+  
+  <div class="field">
+    <%= f.label :show_progress %><br />
+    <%= f.check_box :show_progress %>
+  </div>
+  
+  <h2>Survey Options:</h2>
+  <%= f.fields_for :options do |option| %>
+    <div class = 'survey-option'>
+      <div class="field">
+        <%= option.label :title, 'Option Title' %><br />
+        <%= option.text_field :title %>
+      </div>
+      <div class="field">
+        <%= option.label :description, 'Option Description' %><br />
+        <%= option.text_area :description, :rows => 3, :cols => 50, :class => 'tinymce' %>
+      </div>
+      <div class="field">
+        <%= option.label :position, "Option Position" %><br />
+        <%= option.text_field :position %>
+      </div>
+      <% unless option.object.new_record? %>
+        <div class="field">
+          <%= option.label '_destroy', 'Delete' %><br />
+          <%= option.check_box '_destroy'%>
+        </div>
+      <% end %>
+      <%= option.hidden_field :nested %>
+    </div>
+  <% end %>
+  
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+  $().ready(function() {
+    init_tiny_mce('.survey-option textarea');
+  });
+</script>
+

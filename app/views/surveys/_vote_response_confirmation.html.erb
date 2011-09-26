@@ -1,0 +1,22 @@
+<div class="modal">
+  <h2>You are about to submit your voting selections</h2>
+
+  <% @survey_response_presenter.max_selected_options.times do |index| %>
+    <% index+=1 %>
+    <p>
+      <span class = "selected_option"><strong>Selection <%= index %>:</strong></span>
+      <% if @survey_response_presenter.selected_option(index) %>
+        <%= @survey_response_presenter.selected_option(index).title  %>
+      <% else %>
+        None
+      <% end %>
+    </p>
+  <% end %>
+
+
+  <p><strong>Are you sure you want to submit this vote?</strong></p>
+  <p>
+    <%= link_to "Yes", '', :class => 'confirm_vote button' %>
+    <%= link_to "Cancel", '', :class => 'cancel_vote' %>
+  </p>
+</div>

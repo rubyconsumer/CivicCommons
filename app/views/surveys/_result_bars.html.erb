@@ -1,0 +1,12 @@
+<div class="survey-options">
+  <ul class="survey_results">
+    <% @vote_progress_service.progress_result.each_with_index do |option, index| %>
+      <li> 
+        <div class="<%= 'winning' if option.winner %> info"><%= option.weighted_votes_percentage %>%</div> 
+        <div class="<%= 'winning' if option.winner %> bar" style="width:<%= relative_weighted_votes_percentage(option.weighted_votes_percentage, @vote_progress_service.highest_weighted_votes_percentage, -8) %>%"><%= option.weighted_votes_percentage %>%</div> 
+        <div class="answer"><%= option.title %></div> 
+      </li> 
+    <% end %>
+     
+  </ul>
+</div>

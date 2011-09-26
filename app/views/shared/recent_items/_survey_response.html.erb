@@ -1,0 +1,4 @@
+<p>
+  <%= survey_response.person.name %> has participated in this <%= survey_response.survey.type %>:
+  <%= link_to( survey_response.survey.title, send("#{survey_response.survey.type.underscore}_path".to_sym,survey_response.survey.id)) %>
+</p>

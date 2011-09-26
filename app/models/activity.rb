@@ -9,7 +9,7 @@ class Activity < ActiveRecord::Base
   validates :item_created_at, presence: true
   validates :person_id, presence: true
 
-  VALID_TYPES = [ Conversation, Contribution, Issue, RatingGroup ]
+  VALID_TYPES = [ Conversation, Contribution, Issue, RatingGroup, SurveyResponse ]
 
   ############################################################
   # construction/destruction
@@ -112,6 +112,8 @@ class Activity < ActiveRecord::Base
       elsif item.is_a? RatingGroup
         # need to load rating descriptors
         obj = ActiveSupport::JSON.encode(item, include: [:person, :ratings, :conversation])
+      elsif item.is_a? SurveyResponse
+        obj = ActiveSupport::JSON.encode(item, include: {person:{}, survey: {methods: :type}}) #included the STI type on surveys
       end
     end
     return obj
