@@ -3,7 +3,7 @@ describe("The Conversation Tool", function() {
   var result;
   var $subject; 
   beforeEach(function() {
-    $subject = $('<p>morkmorkmork<form id="contribution_new"><input id="contribution_url" /><input id="contribution_attachment" /></form></p>');
+    $subject = $('<div><p>morkmorkmork</p><form id="contribution_new"><input placeholder="asdf" id="contribution_url"  /><input id="contribution_attachment" /></form><ul class="errors"></ul></div>');
     spyOn($subject, 'maskMe');
     var tabstrip = $('<p>borkborkbork</p>');
     spyOn(tabstrip,'maskMe');  
@@ -11,7 +11,6 @@ describe("The Conversation Tool", function() {
       tabstrip: tabstrip,
       el: $subject
     });
-    subject.render();
   });
 
   describe('initialization', function() {
@@ -33,20 +32,6 @@ describe("The Conversation Tool", function() {
     });
 
   });
-  describe('rendering', function() {
-    beforeEach(function() {
-      result = subject.render();
-    })
-
-    it('is chainable', function() {
-      expect(result).toEqual(subject);
-    });
-
-    it('makes the element look like the contribution tool', function() {
-      expect($(subject.el)).toHaveHtml(subject.template());
-    });
-
-  });
 
   describe('submitting the form with valid information', function() {
     beforeEach(function() {
@@ -56,7 +41,7 @@ describe("The Conversation Tool", function() {
       expect(result).toEqual(true);
     });
     it('doesnt give an error message', function() {
-      expect(subject.$errorMessage).not.toExist();
+      expect(subject.$('.errors')).toHaveText('');
 
     });
     context("when there is placeholder information", function() {
@@ -73,18 +58,20 @@ describe("The Conversation Tool", function() {
     });
   });
   describe('submitting a form with invalid inputs', function() {
-    it('gives error message when link + image are uploaded', function() {
+    beforeEach(function() {
       subject.$linkField.val('http://www.google.com');
       subject.$fileUploadField.val('whatever.js');
-      subject.submit();
-      expect(subject.$errorMessage).toHaveText('Woops! We only let you submit one link or file per contribution');   
+      result = subject.submit();
     });
+    it('gives error message when link + image are uploaded', function() {
+      expect(subject.$('.errors')).toHaveText('Woops! We only let you submit one link or file per contribution');
 
+    });
+    it('inserts the error message into the DOM', function() {
+
+    });
     it('prevents the event from bubbling any further', function() {
-      subject.$linkField.val('http://www.google.com');
-      subject.$fileUploadField.val('whatever.js');
-      expect(subject.submit()).toEqual(false);
-      
+      expect(result).toEqual(false);
     });
   });
 });

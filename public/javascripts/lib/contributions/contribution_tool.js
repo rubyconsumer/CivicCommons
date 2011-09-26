@@ -57,6 +57,7 @@ function show_contribution_tool(container, contribution_id, title) {
   $('#contrib').removeClass('hide_contrib_tool');
   init_tiny_mce('#contribution_content');
   scroll_to_contribution_tool();
+  new ContributionTool({ el: container});
 }
 
 function hide_contribution_tool() {
@@ -137,12 +138,14 @@ function enable_add_file_toggle(link, file_field, content_field) {
     },
     initialize: function() {
       this.tabstrip = this.options.tabstrip;
-      this.tabstrip.maskMe({
-        startOn: 'ajax:loading',
-        endOn:   'ajax:complete',
-        message: 'Loading...',
-        eventHandler: $(this.el)
-      });
+      if(this.tabstrip != undefined) {
+        this.tabstrip.maskMe({
+          startOn: 'ajax:loading',
+          endOn:   'ajax:complete',
+          message: 'Loading...',
+          eventHandler: $(this.el)
+        });
+      }
       this.el.maskMe({
         startOn: 'ajax:loading',
         endOn:   'ajax:complete',
@@ -154,7 +157,7 @@ function enable_add_file_toggle(link, file_field, content_field) {
     submit: function() {
       this.clearPlaceholderValuesFromFields();
       if(this.$linkField.val() != '' && this.$fileUploadField.val() != '') {
-        this.$errorMessage = $('<p>Woops! We only let you submit one link or file per contribution</p>');
+        this.$('.errors').append('<li>Woops! We only let you submit one link or file per contribution</li>');
         return false;
       }
       return true;
@@ -164,13 +167,5 @@ function enable_add_file_toggle(link, file_field, content_field) {
       $(_.select(this.$('*[placeholder]'), ElementHasPlaceholderValue)).val('');
     },
 
-    render: function() {
-      $(this.el).html(this.template());
-      return this;
-    },
-
-    template: function() {
-      return '<input placeholder="ohhai" type="textbox" value="ohhai" />';
-    }
   });
 }).call(this);
