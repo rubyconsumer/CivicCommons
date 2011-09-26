@@ -45,7 +45,7 @@ describe("The Conversation Tool", function() {
         expect(subject.$('*[placeholder]')).toHaveValue('cool');
       });
     });
-    it('masks the tabstrip it is created with', function() {
+    it('sets up the masking for the tabstrip ', function() {
       expect(subject.tabstrip.maskMe).toHaveBeenCalledWith({
         startOn: 'ajax:loading',
         endOn: 'ajax:complete',
@@ -53,12 +53,18 @@ describe("The Conversation Tool", function() {
         eventHandler: $(subject.el)
       });
     });
-    it('masks itself', function() {
+    it('sets up masking for itself', function() {
       expect($subject.maskMe).toHaveBeenCalledWith({
         startOn: 'ajax:loading',
         endOn: 'ajax:complete',
         message: 'Loading...',
       });
+    });
+    it('gives error message when link + image are uploaded', function() {
+      subject.$linkField.val('http://www.google.com');
+      subject.$fileUploadField.val('whatever.js');
+      subject.submit();
+      expect(subject.$errorMessage).toHaveText('Woops! We only let you submit one link or file per contribution');   
     });
   });
 });
