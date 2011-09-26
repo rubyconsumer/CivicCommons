@@ -28,4 +28,36 @@ describe HomepageFeatured do
       homepage_featureable.reload.should be_valid
     end
   end
+
+  context 'min_sample' do
+    before(:each) do
+      #let(:homepage_featured) {Factory.create(:homepage_featured)}
+      #let(:homepage_featured2) {Factory.create(:homepage_featured)}
+      #let(:homepage_featured3) {Factory.create(:homepage_featured)}
+      @homepage_featured = Factory.create(:homepage_featured)
+      @homepage_featured2 = Factory.create(:homepage_featured)
+      @homepage_featured3 = Factory.create(:homepage_featured)
+    end
+
+    it 'returns a minimum sample of results' do
+      hpf = HomepageFeatured.min_sample(2)
+      hpf.include?(@homepage_featured).should be_true
+      hpf.include?(@homepage_featured2).should be_true
+      hpf.include?(@homepage_featured3).should be_true
+    end
+
+    it 'filters out a result' do
+      hpf = HomepageFeatured.min_sample(2, @homepage_featured2.homepage_featureable)
+      hpf.include?(@homepage_featured).should be_true
+      hpf.include?(@homepage_featured2).should be_false
+      hpf.include?(@homepage_featured3).should be_true
+    end
+
+    it 'filters out an array of results' do
+      hpf = HomepageFeatured.min_sample(2, [@homepage_featured.homepage_featureable, @homepage_featured2.homepage_featureable])
+      hpf.include?(@homepage_featured).should be_false
+      hpf.include?(@homepage_featured2).should be_false
+      hpf.include?(@homepage_featured3).should be_true
+    end
+  end
 end
