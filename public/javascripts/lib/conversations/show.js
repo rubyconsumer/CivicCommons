@@ -3,7 +3,7 @@
   $.fn.extend({
 
     bindContributionFormEvents: function($clicked,$tabStrip){
-      var form = new ConversationTool({
+      var form = new ContributionTool({
         el: this, 
         tabStrip: $tabStrip,
         clicked: $clicked
