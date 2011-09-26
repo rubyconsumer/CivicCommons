@@ -130,11 +130,6 @@ function enable_add_file_toggle(link, file_field, content_field) {
     return element.val() == element.attr('placeholder');
   }
 
-  var clearPlaceholders = function() {
-    $(_.select(this.$('*[placeholder]'), ElementHasPlaceholderValue)).val('');
-
-  }
-
   this.ContributionTool = Backbone.View.extend({
     initialize: function() {
       this.tabstrip = this.options.tabstrip;
@@ -149,9 +144,16 @@ function enable_add_file_toggle(link, file_field, content_field) {
         endOn:   'ajax:complete',
         message: 'Loading...',
       })
+      this.$linkField = this.$('#contribution_url');
+      this.$fileUploadField = this.$('#contribution_attachment');
     },
     submit: function() {
-      clearPlaceholders.call(this);
+      this.clearPlaceholderValuesFromFields();
+      this.$errorMessage = $('<p>Woops! We only let you submit one link or file per contribution</p>');
+    },
+
+    clearPlaceholderValuesFromFields: function() {
+      $(_.select(this.$('*[placeholder]'), ElementHasPlaceholderValue)).val('');
     },
 
     render: function() {
