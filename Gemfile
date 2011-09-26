@@ -71,6 +71,7 @@ group :test do
   gem 'simplecov'
   gem 'timecop'
   gem 'selenium-webdriver', '>= 0.2.2'
+  gem 'rspec-spies'
 end
 
 

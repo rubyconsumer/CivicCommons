@@ -20,7 +20,9 @@
       <%= contribution_form.file_field(:attachment, :class => 'hide', :index => @contribution.id) %>
     </div>
   </fieldset>
-
+  <fieldset>
+    <ul class="errors"></ul>
+  </fieldset>
   <fieldset>
     <%= contribution_form.submit 'Edit my response', :class => 'submit', :index => @contribution.id %>
     <%= link_to "Cancel", conversation_contribution_path(@contribution.conversation, @contribution), :class => 'cancel', :remote => true, :method => :get, 'data-target' => "#show-contribution-#{@contribution.id}" %>
