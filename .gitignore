@@ -19,6 +19,7 @@ config/people_aggregator.yml
 *.swp
 *.*~
 *~
+.jhw-cache
 .idea
 solr/data
 log

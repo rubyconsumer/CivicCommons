@@ -2,6 +2,17 @@ require 'spec_helper'
 
 describe Contribution do
 
+  context "factories" do
+    it 'should be valid' do
+      Factory.build(:contribution).should be_valid
+      Factory.create(:contribution).should be_valid
+      Factory.build(:comment).should be_valid
+      Factory.create(:comment).should be_valid
+      Factory.build(:embedly_contribution).should be_valid
+      Factory.build(:embedly_contribution).should be_valid
+    end
+  end
+
   context "embedly" do
 
     before(:each) do

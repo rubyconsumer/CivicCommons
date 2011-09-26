@@ -29,10 +29,8 @@ Factory.define :issue_contribution, :parent => :contribution do |f|
 end
 
 Factory.define :comment, :parent => :contribution do |f|
-  f.datetime "2010-06-30 12:39:43"
-  f.association :person, :factory => :normal_person
-  f.association :parent, :factory => :contribution
-  f.conversation { |c| c.parent.conversation }
+  #f.association :parent, :factory => :contribution   TODO: this needs fixed to allow factory created parent contribution to have the same conversation association
+  #f.conversation { |c| c.parent.conversation }       TODO: this needs fixed to allow factory created parent contribution to have the same conversation association
   f.content "Basic Comment"
 end
 
@@ -41,16 +39,12 @@ Factory.define :comment_with_unique_content, :parent => :comment do |f|
 end
 
 Factory.define :suggested_action, :parent => :contribution do |f|
-  f.datetime "2010-06-30 12:39:43"
-  f.association :person, :factory => :normal_person
   f.association :parent, :factory => :contribution
   f.conversation { |c| c.parent.conversation }
   f.content "Suggested Action Contribution"
 end
 
 Factory.define :question, :parent => :contribution do |f|
-  f.datetime "2010-06-30 12:39:43"
-  f.association :person, :factory => :normal_person
   f.association :parent, :factory => :contribution
   f.conversation { |c| c.parent.conversation }
   f.content "Question Contribution"
@@ -61,16 +55,12 @@ Factory.define :question_without_parent, :parent => :question do |f|
 end
 
 Factory.define :answer, :parent => :contribution do |f|
-  f.datetime "2010-06-30 12:39:43"
-  f.association :person, :factory => :normal_person
   f.association :parent, :factory => :question, :override_confirmed => true
   f.conversation { |c| c.parent.conversation }
   f.content "Answer Contribution"
 end
 
 Factory.define :attached_image, :parent => :contribution do |f|
-  f.datetime "2010-06-30 12:39:43"
-  f.association :person, :factory => :normal_person
   f.association :parent, :factory => :contribution
   f.conversation { |c| c.parent.conversation }
   f.content "Attached Image Contribution"
@@ -78,8 +68,6 @@ Factory.define :attached_image, :parent => :contribution do |f|
 end
 
 Factory.define :attached_file, :parent => :contribution do |f|
-  f.datetime "2010-06-30 12:39:43"
-  f.association :person, :factory => :normal_person
   f.association :parent, :factory => :contribution
   f.conversation { |c| c.parent.conversation }
   f.content "Attached File Contribution"
@@ -87,8 +75,6 @@ Factory.define :attached_file, :parent => :contribution do |f|
 end
 
 Factory.define :link, :parent => :contribution do |f|
-  f.datetime "2010-06-30 12:39:43"
-  f.association :person, :factory => :normal_person
   f.association :parent, :factory => :contribution
   f.conversation { |c| c.parent.conversation }
   f.content "Link Contribution"
@@ -98,8 +84,6 @@ Factory.define :link, :parent => :contribution do |f|
 end
 
 Factory.define :embedded_snippet, :parent => :contribution do |f|
-  f.datetime "2010-06-30 12:39:43"
-  f.association :person, :factory => :normal_person
   f.association :parent, :factory => :contribution
   f.conversation { |c| c.parent.conversation }
   f.content "Embedded Snippet Contribution"
@@ -109,10 +93,7 @@ Factory.define :embedded_snippet, :parent => :contribution do |f|
 end
 
 Factory.define :embedly_contribution, :parent => :contribution do |f|
-  f.datetime "2010-06-30 12:39:43"
-  f.association :person, :factory => :normal_person
-  f.association :conversation, :factory => :conversation
-  f.association :parent, :factory => :contribution
+  #f.association :parent, :factory => :contribution   TODO: this needs fixed to allow factory created parent contribution to have the same conversation association
   f.content "Embedly Contribution"
   f.url "http://www.youtube.com/watch?v=djtNtt8jDW4"
   f.embedly_type "video"

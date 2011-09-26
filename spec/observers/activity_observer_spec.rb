@@ -68,7 +68,9 @@ describe ActivityObserver do
     end
 
     it 'does not create a new activity record on update for contribution' do
-      contribution = Factory.create(:comment)
+      conversation = Factory.create(:conversation)
+      top_level_contribution = Factory.create(:top_level_contribution, conversation: conversation)
+      contribution = Factory.create(:comment, conversation: conversation, parent: top_level_contribution)
       contribution.update_attributes(content: "changed my mind...")
       a = Activity.where(item_id: contribution.id, item_type: 'Contribution')
       a.size.should == 1
@@ -78,17 +80,9 @@ describe ActivityObserver do
 
   context "when destroying" do
     context 'a conversation' do
-      context 'without an activity parent' do
-        it 'doesnt destroy the activity', do
-          Activity.stub(:destroy)
-          Activity.stub(:exists?).and_return(false)
-          conversation = Factory.create(:conversation)
-          conversation.destroy
-          Activity.should_not have_received(:destroy)
-        end
-      end
       it 'removes activity records when a conversation is deleted/destroyed' do
         conversation = Factory.create(:conversation)
+        Activity.where(item_id: conversation.id, item_type: 'Conversation').should_not be_empty
         Conversation.destroy(conversation)
         Activity.where(item_id: conversation.id, item_type: 'Conversation').should be_empty
       end
