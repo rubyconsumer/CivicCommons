@@ -50,7 +50,10 @@ describe("The Conversation Tool", function() {
 
   describe('submitting the form with valid information', function() {
     beforeEach(function() {
-        subject.submit();
+       result = subject.submit();
+    });
+    it('allows the event to bubble up further', function() {
+      expect(result).toEqual(true);
     });
     it('doesnt give an error message', function() {
       expect(subject.$errorMessage).not.toExist();
@@ -75,6 +78,13 @@ describe("The Conversation Tool", function() {
       subject.$fileUploadField.val('whatever.js');
       subject.submit();
       expect(subject.$errorMessage).toHaveText('Woops! We only let you submit one link or file per contribution');   
+    });
+
+    it('prevents the event from bubbling any further', function() {
+      subject.$linkField.val('http://www.google.com');
+      subject.$fileUploadField.val('whatever.js');
+      expect(subject.submit()).toEqual(false);
+      
     });
   });
 });
