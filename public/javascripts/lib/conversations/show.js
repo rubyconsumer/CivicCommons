@@ -85,7 +85,7 @@
             animationSpeed: 250,
             updateHash: false
           })
-          .live("easytabs:after", function(){
+        .live("easytabs:after", function(){
             resizeColorbox();
           });
       },

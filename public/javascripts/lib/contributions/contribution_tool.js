@@ -125,11 +125,14 @@ function enable_add_file_toggle(link, file_field, content_field) {
 
 (function() {
 
+  var ElementHasPlaceholderValue =  function(element) {
+    element = $(element);
+    return element.val() == element.attr('placeholder');
+  }
+
   var clearPlaceholders = function() {
-    $(_.select(this.$('*[placeholder]'), function(element) {
-      element = $(element);
-      return element.val() == element.attr('placeholder');
-    })).val('');
+    $(_.select(this.$('*[placeholder]'), ElementHasPlaceholderValue)).val('');
+
   }
 
   this.ContributionTool = Backbone.View.extend({

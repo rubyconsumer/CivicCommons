@@ -1,4 +1,6 @@
-(function() { 
+(function() {
+  var $ = jQuery || Zepto
+
   $.fn.extend({
     maskMe: function(options) {
       preventInvalidOptions(options);
