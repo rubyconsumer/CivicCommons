@@ -3,11 +3,12 @@
 
   $.fn.extend({
     ratingButton: function() {
-      this.live('ajax:before', function() {
-       $(this).children('.loading').show();
+      var button = this;
+      button.live('ajax:before', function() {
+       button.children('.loading').show();
       });
-      this.live('ajax:complete', function() {
-        $(this).children('.loading').hide();
+      button.live('ajax:complete', function() {
+        button.children('.loading').hide();
       });
       return this;
     }
