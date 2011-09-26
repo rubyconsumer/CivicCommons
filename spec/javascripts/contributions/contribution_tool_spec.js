@@ -3,7 +3,7 @@ describe("The Conversation Tool", function() {
   var result;
   var $subject; 
   beforeEach(function() {
-    $subject = $('<p>morkmorkmork<input id="contribution_url" /><input id="contribution_attachment" /></p>');
+    $subject = $('<p>morkmorkmork<form id="contribution_new"><input id="contribution_url" /><input id="contribution_attachment" /></form></p>');
     spyOn($subject, 'maskMe');
     var tabstrip = $('<p>borkborkbork</p>');
     spyOn(tabstrip,'maskMe');  
@@ -76,7 +76,6 @@ describe("The Conversation Tool", function() {
       subject.submit();
       expect(subject.$errorMessage).toHaveText('Woops! We only let you submit one link or file per contribution');   
     });
-
   });
 });
 

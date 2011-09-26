@@ -131,6 +131,10 @@ function enable_add_file_toggle(link, file_field, content_field) {
   }
 
   this.ContributionTool = Backbone.View.extend({
+    events: {
+      'submit form#contribution_new': 'submit'
+
+    },
     initialize: function() {
       this.tabstrip = this.options.tabstrip;
       this.tabstrip.maskMe({
