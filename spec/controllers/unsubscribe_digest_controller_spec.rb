@@ -14,21 +14,18 @@ describe UnsubscribeDigestController do
   end
 
   describe "PUT: #remove_from_digest" do
-
-    it "updates daily_digest attribute to false" do
-      person = mock_model(Person)
+    let(:person) { mock_model(Person) }
+    before do
+      person.stub(:unsubscribe_from_daily_digest)      
       Person.should_receive(:find).with('27').and_return(person)
-      person.should_receive(:update_attributes).with(daily_digest: false).and_return(true)
-
       put :remove_from_digest, id: '27'
+    end
+    it "unsubscribes the person from the daily digest" do
+
+      person.should have_received(:unsubscribe_from_daily_digest)
     end
 
     it "redirects back to the home page" do
-      person = mock_model(Person)
-      Person.should_receive(:find).with('27').and_return(person)
-      person.should_receive(:update_attributes).with(daily_digest: false).and_return(true)
-
-      put :remove_from_digest, id: '27'
       response.should redirect_to(root_path)
     end
 

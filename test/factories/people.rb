@@ -1,5 +1,4 @@
 Factory.define :people do |f|
-
   Factory.define :invalid_person, :class=>Person do |u|
     u.first_name ''
     u.last_name ''

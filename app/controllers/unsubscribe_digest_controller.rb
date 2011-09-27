@@ -6,7 +6,7 @@ class UnsubscribeDigestController < ApplicationController
 
   def remove_from_digest
     @person = Person.find(params[:id])
-    @person.update_attributes(daily_digest: false)
+    @person.unsubscribe_from_daily_digest
     redirect_to root_path
   end
 
