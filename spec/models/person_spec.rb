@@ -544,4 +544,10 @@ describe Person do
     end
 
   end
+
+  it 'allows you to unsubscribe from daily digest' do
+    @person = Factory.create(:normal_person)
+    @person.unsubscribe_from_daily_digest
+    @person.should_not be_subscribed_to_daily_digest
+  end
 end
