@@ -16,4 +16,10 @@ if notify_deploy_environments.include?(@configuration[:environment]) && notify_d
   run "echo 'Finished setting up AirBrake to send deployment information'"
 end
 
+# restart delayed_job process
+run "echo 'Restarting delayed_job process...'"
+run "echo '  cd #{release_path} && bundle exec script/delayed_job restart'"
+run "cd #{release_path} && bundle exec script/delayed_job restart"
+run "echo 'Finished restarting delayed_job process.'"
+
 run "echo '~~~ Custom After Restart Hooks - Complete'"
