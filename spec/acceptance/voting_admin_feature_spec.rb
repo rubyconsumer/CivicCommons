@@ -1,9 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/acceptance_helper')
 
 WebMock.allow_net_connect!
-# Capybara.register_driver :selenium do |app|
-#   Capybara::Driver::Selenium.new(app, :browser => :chrome)
-# end
 Capybara.default_wait_time = 10
 
 
