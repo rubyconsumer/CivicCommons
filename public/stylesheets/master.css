@@ -1672,6 +1672,16 @@ padding: 0;
 }
 div#cboxLoadedContent .input-with-options label a {color: #444;}
 
+/*- Overrides for Invite Popup Form ----------*/
+
+div#cboxLoadedContent .invite-form textarea {
+border: 1px solid #ccc;
+display: inline;
+width: 385px;
+}
+div#cboxLoadedContent .invite-form .form-block {margin-bottom: 20px;}
+div#cboxLoadedContent div.invite-form p {margin: 10px 0;}
+
 /*- Preview ----------*/
 
 div#cboxLoadedContent li.offset-1 {
