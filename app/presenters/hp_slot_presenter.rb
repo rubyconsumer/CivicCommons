@@ -18,7 +18,12 @@ class HPSlotPresenter
     return "/"
   end
 
-  def image
-    @target.respond_to?(:image) ? @target.image : ""
+  def image(type = :normal)
+    @target.respond_to?(:image) ? refine_image(type) : ""
   end
+
+  def refine_image(type = :normal)
+    @target.image.respond_to?(:url) ? @target.image.url(type) : @target.image
+  end
+
 end
