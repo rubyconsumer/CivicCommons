@@ -4,9 +4,9 @@ class HomepageFeatured < ActiveRecord::Base
   validates_uniqueness_of :homepage_featureable_id, scope: :homepage_featureable_type
   delegate :image, :title, to: :homepage_featureable
 
-  # Returns back a minimium of the desired homepage feature items that is not in the filter.
+  # Returns back a minimium of the desired items that are not in the filter.
   #
-  # Might return back an empty array if the desired number is not available.
+  # returns back an empty array if the desired number is not available.
   def self.min_sample(limit=10, filter = [])
     filter = [filter] unless filter.respond_to?(:flatten)
     filter.flatten!
@@ -19,6 +19,6 @@ class HomepageFeatured < ActiveRecord::Base
       samples.compact!
     end
 
-    samples
+    samples.collect{|sample| sample.homepage_featureable}
   end
 end
