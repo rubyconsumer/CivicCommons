@@ -1,6 +1,6 @@
 production:
   solr:
-    hostname: localhost
+    hostname: "10.116.134.228"
     port: 8983
     log_level: WARNING
 
