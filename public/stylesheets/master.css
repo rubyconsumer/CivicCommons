@@ -1676,6 +1676,7 @@ div#cboxLoadedContent .input-with-options label a {color: #444;}
 
 div#cboxLoadedContent .invite-form textarea {
 border: 1px solid #ccc;
+clear: none;
 display: inline;
 width: 385px;
 }
