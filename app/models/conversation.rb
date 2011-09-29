@@ -108,11 +108,12 @@ class Conversation < ActiveRecord::Base
     others = conversations - staff_picks
 
     staff_picks.each_with_index do |conversation, i|
-      conversation.update_attribute(:position, i)
+      Conversation.where('id = ?', conversation.id).update_all(position: i)
     end
 
+    staff_picks_length = staff_picks.length
     others.each_with_index do |conversation, i|
-      conversation.update_attribute(:position, i + staff_picks.length)
+      Conversation.where('id = ?', conversation.id).update_all(position: i + staff_picks_length)
     end
   end
 
@@ -147,7 +148,7 @@ class Conversation < ActiveRecord::Base
 
   def sort
     max_position = Conversation.where('staff_pick = true').maximum('position')
-    update_attribute(:position, max_position + 1) if max_position
+    Conversation.where('id = ?', self.id).update_all(position: max_position + 1) if max_position
     Conversation.sort
   end
 
