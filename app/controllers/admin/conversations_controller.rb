@@ -122,11 +122,9 @@ private
   def set_position(current, new_index, comparison)
     current_conversation = Conversation.find_by_position(current)
     Conversation.where('position >= ?', comparison).each do |conversation|
-      conversation.position += 1
-      conversation.save
+      Conversation.where('id = ?', conversation.id).update_all(position: conversation.position + 1)
     end
-    current_conversation.position = new_index
-    current_conversation.save
+    Conversation.where('id = ?', current_conversation.id).update_all(position: new_index)
   end
 
 end
