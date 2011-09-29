@@ -17,4 +17,16 @@ describe Notifier do
     end
     
   end
+
+  context "survey_confirmation" do
+    def given_sending_a_survey_confirmation
+      @survey_response = Factory.create(:vote_survey_response)
+      @notification = Notifier.survey_confirmation(@survey_response.person, @survey_response.survey).deliver
+    end
+    it "should send it correctly" do
+      given_sending_a_survey_confirmation
+      @notification.body.should contain 'Thank for your vote on "This is a title"'
+      @notification.body.should contain "Please check back"
+    end
+  end
 end

@@ -3,6 +3,7 @@
   %thead
     %tr
       %th
+      %th ID
       %th Name
       %th Summary
       %th Order
@@ -13,6 +14,7 @@
     -@issues.each do |issue|
       %tr
         %td.handle &#11021;
+        %td= issue.id
         %td= link_to issue.name, admin_issue_path(issue)
         %td= truncate(Sanitize.clean(issue.summary, :remove_contents => ['script']).strip, :length => 200, :separator => ' ')
         %td

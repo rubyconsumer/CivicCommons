@@ -30,6 +30,9 @@
         %ul
           %li
             =link_to "The Civic Commons Home", root_path
+            %ul
+              %li
+                =link_to "Featured Homepage Items", admin_featured_homepage_index_path
           %li
             =link_to "Articles", admin_articles_path
             %ul
@@ -85,6 +88,11 @@
             %ul
               %li
                 =link_to "Add Feed", new_admin_curated_feed_path
+          %li
+            =link_to "Surveys", admin_surveys_path
+            %ul
+              %li
+                =link_to "Add Survey", new_admin_survey_path
       %div#main
         =yield
 

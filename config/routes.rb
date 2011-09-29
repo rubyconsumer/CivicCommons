@@ -129,9 +129,15 @@ Civiccommons::Application.routes.draw do
       put '/moderate', to: 'contributions#moderated', on: :member
     end
   end
-
+  
   resources :contributions, only: [:destroy]
-
+  
+  resources :votes, controller: :surveys, :only => :show do
+    post 'create_response', on: :member
+    get 'vote_successful', on: :collection, :as => :successful
+  end
+  
+  
   resources :regions, only: [:index, :show]
   resources :invites, only: [:new, :create]
   resources :pages, only: [:show]
@@ -139,7 +145,6 @@ Civiccommons::Application.routes.draw do
   resources :content, only: [:index, :show]
   resources :news, only: [:index]
   resources :radioshow, only: [:index, :show]
-
 #Namespaces
   namespace "admin" do
     root      to: "dashboard#show"
@@ -154,12 +159,16 @@ Civiccommons::Application.routes.draw do
     resources :curated_feeds do
       resources :items, controller: :curated_feed_items, only: [ :show, :edit, :create, :update, :destroy ]
     end
+    resources :featured_homepage, only: [:index, :update]
     resources :issues do
       resources :pages, controller: :managed_issue_pages
       post 'update_order', on: :collection
     end
     get '/issues/pages/all', to: 'managed_issue_pages#all'
     resources :regions
+    resources :surveys do
+      get 'progress', on: :member
+    end
     resources :people do
       get 'proxies',       on: :collection
       put 'lock_access',   on: :member

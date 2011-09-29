@@ -57,6 +57,7 @@ function show_contribution_tool(container, contribution_id, title) {
   $('#contrib').removeClass('hide_contrib_tool');
   init_tiny_mce('#contribution_content');
   scroll_to_contribution_tool();
+  new ContributionTool({ el: container});
 }
 
 function hide_contribution_tool() {
@@ -122,3 +123,49 @@ function enable_add_file_toggle(link, file_field, content_field) {
     }
   });
 }
+
+(function() {
+
+  var ElementHasPlaceholderValue =  function(element) {
+    element = $(element);
+    return element.val() == element.attr('placeholder');
+  }
+
+  this.ContributionTool = Backbone.View.extend({
+    events: {
+      'submit form#contribution_new': 'submit'
+
+    },
+    initialize: function() {
+      this.tabstrip = this.options.tabstrip;
+      if(this.tabstrip != undefined) {
+        this.tabstrip.maskMe({
+          startOn: 'ajax:loading',
+          endOn:   'ajax:complete',
+          message: 'Loading...',
+          eventHandler: $(this.el)
+        });
+      }
+      this.el.maskMe({
+        startOn: 'ajax:loading',
+        endOn:   'ajax:complete',
+        message: 'Loading...',
+      })
+      this.$linkField = this.$('#contribution_url');
+      this.$fileUploadField = this.$('#contribution_attachment');
+    },
+    submit: function() {
+      this.clearPlaceholderValuesFromFields();
+      if(this.$linkField.val() != '' && this.$fileUploadField.val() != '') {
+        this.$('.errors').append('<li>Woops! We only let you submit one link or file per contribution</li>');
+        return false;
+      }
+      return true;
+    },
+
+    clearPlaceholderValuesFromFields: function() {
+      $(_.select(this.$('*[placeholder]'), ElementHasPlaceholderValue)).val('');
+    },
+
+  });
+}).call(this);

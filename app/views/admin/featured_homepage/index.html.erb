@@ -1,0 +1,25 @@
+<h2>Featured Homepage Items</h2>
+<table class="tablesorter">
+  <p>
+    Conversations, Issues and Managed Issue pages are available for selection.
+  </p>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Title</th>
+      <th>Created Date</th>
+      <th>Featured</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @items.each do |item| %>
+      <tr>
+        <td><%= item[:type] %></td>
+        <td><%= item[:title] %></td>
+        <td><%= item[:created_at].strftime("%m-%d-%Y") %></td>
+        <td><a class="staff_pick <%= item[:featured] ? 'on' : 'off' %>" data-method="put" href="<%= admin_featured_homepage_path(item[:id], type: item[:type], featured: !item[:featured]) %>"><span class="text"><%= item[:id] %></span></a></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= javascript_include_tag 'lib/admin/featured_homepage.js' %>

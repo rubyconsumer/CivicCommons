@@ -31,6 +31,12 @@ class ContentItem < ActiveRecord::Base
     end
   end
 
+  def self.random_old_radio_show
+    @radioshows = ContentItem.where("content_type = 'RadioShow' AND (published <= curdate() OR DAY(published) = DAY(curdate())) ").order("published desc")
+    @radioshows.all.pop
+    @radioshows.sample(1).pop
+  end
+
 private
 
   def content_type_is_blog_post?

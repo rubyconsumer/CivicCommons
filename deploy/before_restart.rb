@@ -19,4 +19,10 @@ else
   run "echo Config Hoptoad Connection....... IGNORE"
 end
 
+# restart delayed_job process
+run "echo 'Restarting delayed_job process...'"
+run "echo '  cd #{release_path} && bundle exec script/delayed_job restart'"
+run "cd #{release_path} && bundle exec script/delayed_job restart"
+run "echo 'Finished restarting delayed_job process.'"
+
 run "echo ~~~ Custom Before Restart Hooks - Complete..."

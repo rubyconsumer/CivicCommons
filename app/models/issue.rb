@@ -1,8 +1,9 @@
 class Issue < ActiveRecord::Base
   include Visitable
   include Subscribable
-  include Regionable 
+  include Regionable
   include GeometryForStyle
+  include HomepageFeaturable
 
   searchable :ignore_attribute_changes_of => [ :total_visits, :recent_visits, :last_visit_date, :updated_at, :recent_rating ] do
     text :name, :boost => 3, :default_boost => 3
@@ -16,6 +17,11 @@ class Issue < ActiveRecord::Base
   has_and_belongs_to_many :conversations
   # Contributions directly related to this Issue
   has_many :contributions
+  has_many :suggested_actions
+  has_many :surveys, :as => :surveyable
+  has_many :votes, :as => :surveyable, :class_name => 'Survey', :conditions => {:type => 'Vote'}
+  has_many(:media_contributions, :class_name => "Contribution",
+           :conditions => {:type => ['EmbeddedSnippet', 'Link', 'AttachedFile']})
 
   has_many :subscriptions, :as => :subscribable, :dependent => :destroy
 
@@ -65,6 +71,22 @@ class Issue < ActiveRecord::Base
       end
     }
 
+  def self.random
+    if (c = count) != 0
+      find(:first, :offset =>rand(c))
+    end
+  end
+
+  def self.sample(count=1)
+    result = []
+
+    until result.size == count do
+      random_issue = self.random
+      result << random_issue if !result.include?(random_issue)
+    end
+    result
+  end
+
   def self.assign_positions
     non_nil_positions = Issue.where('position IS NOT NULL').order('position ASC, id ASC')
     nil_positions = Issue.where('position IS NULL').order('position ASC, id ASC')
@@ -103,7 +125,7 @@ class Issue < ActiveRecord::Base
     @activity_weight = visits + contributions
   end
 
-  def conversation_comments 
+  def conversation_comments
     Contribution.joins(:conversation).where({:conversations => {:id => self.conversation_ids}})
   end
 
@@ -123,6 +145,10 @@ class Issue < ActiveRecord::Base
     if self.position.nil?
       self.position = Issue.maximum('position') ? Issue.maximum('position') + 1 : 0
     end
+  end
+
+  define_method(:title) do
+    name
   end
 
 end

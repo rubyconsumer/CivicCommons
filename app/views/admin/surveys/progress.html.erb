@@ -1,0 +1,24 @@
+<h1>Showing survey progress</h1>
+<%= link_to 'Edit', edit_admin_survey_path(@survey) %> |
+<%= link_to 'Back', admin_surveys_path %>
+
+<p id="notice"><%= notice %></p>
+<%= render :partial => '/admin/surveys/basic_info' %>
+<p>
+  <b>Number of Respondents:</b>
+  <%= @survey.survey_responses.count %>
+</p>
+<h2>Progress Bar</h2>
+<%= render :partial => '/surveys/result_bars' %>
+
+<h1>Respondents</h1>
+<ul>
+  <% @responses.each do |response| %>
+    <li>
+      <%= link_to response.person.name, user_path(response.person) %> on <%= response.created_at.to_s(:long) %>
+    </li>
+  <% end %>
+</ul>
+<%= link_to 'Edit', edit_admin_survey_path(@survey) %> |
+<%= link_to 'Back', admin_surveys_path %>
+

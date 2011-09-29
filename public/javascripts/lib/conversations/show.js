@@ -1,18 +1,14 @@
-(function ($) {
+(function () {
+  $ = this.jQuery;
   $.fn.extend({
 
     bindContributionFormEvents: function($clicked,$tabStrip){
-      var form = this;
-      form
-        .bind("submit", function(){
-          $(this).find('input[placeholder], textarea[placeholder]').each( function() {
-            $this = $(this);
-            if( $this.val() == $this.attr('placeholder') ){
-              $this.val('');
-            }
-          });
-        })
-        .maskOnSubmit($tabStrip)
+      var form = new ContributionTool({
+        el: this, 
+        tabStrip: $tabStrip,
+        clicked: $clicked
+      });
+      $(form.el)
         .bind("ajax:success", function(evt, data, status, xhr){
           var $this = $(this);
           // apparently there is no way to inspect the HTTP status returned when submitting via iframe (which happens for AJAX file/image uploads)
@@ -66,9 +62,7 @@
             contribution = $responseNode.children('li').attr('id'),
             $contributionOnPage = $target.find('li#' + contribution);
 
-        if ( this.hasClass('top-node-conversation-action') ) {
-          $contributionOnPage = $('ol#conversation-thread-list').append($responseNode);
-        } else if ( $contributionOnPage.size > 0 ){
+        if ( $contributionOnPage.size > 0 ){
           $contributionOnPage = $contributionOnPage.replaceWith($responseNode);
         } else {
           $contributionOnPage = $target.append($responseNode);
@@ -91,7 +85,7 @@
             animationSpeed: 250,
             updateHash: false
           })
-          .live("easytabs:after", function(){
+        .live("easytabs:after", function(){
             resizeColorbox();
           });
       },
@@ -161,7 +155,7 @@
         return this;
       },
 
-      maskOnSubmit: function($container) {
+      maskChildOnSubmit: function($container) {
         if($container == undefined) { $container = this; }
         this
           .bind("ajax:loading", function(){
@@ -212,17 +206,6 @@
 
   });
 
-  selectResponseFromHash = function(){
-    var hash = window.location.hash.match(/^#node-([\d]+)/);
-
-    if ( hash && hash[1] ){
-      var responseId = hash[1],
-          $onPage = $('#show-contribution-' + responseId);
-
-      $onPage.scrollTo()
-        .find('.collapsed p').first().trigger('click'); // trigger click event to uncollapse contribution
-    }
-  };
 
   resizeColorbox = function(){
     $.colorbox.resize({
@@ -248,7 +231,7 @@
 
       $form = $target.html(xhr.responseText).find('form');
       $form
-        .maskOnSubmit()
+        .maskChildOnSubmit()
         .bind("ajax:success", function(evt, data, status, xhr){
           var $responseNode;
           $responseNode = $(xhr.responseText);
@@ -264,7 +247,7 @@
     })
     .liveAlertOnAjaxFailure();
 
-  $('.top-node-conversation-action,.conversation-action').live('click', function(e){
+  $('.conversation-action').live('click', function(e){
     var $this = $(this);
     $.colorbox({
       transition: 'fade', // needed to fix colorbox bug with jquery 1.4.4
@@ -286,7 +269,7 @@
   });
 
   $(window).hashchange( function(){
-    selectResponseFromHash();
+    new ShowsConversations().scrollToContributionDenotedByWindowsLocationHash();
   });
 
   $('a.contribution-toggle')
@@ -310,16 +293,29 @@
 
   $(document).ready(function() {
 
-    selectResponseFromHash();
-
-    $('.rating-button')
-      .live('ajax:before', function(){
-        $(this).children('.loading').show();
-      })
-      .live('ajax:complete', function(){
-        $(this).children('.loading').hide();
-      });
-
+    new ShowsConversations().onReady();
   });
 
-})(jQuery);
+  this.ShowsConversations = function() { };
+
+  this.ShowsConversations.prototype = {
+    onReady: function() {
+      $('.rating-button').ratingButton();
+      this.scrollToContributionDenotedByWindowsLocationHash();
+    },
+    scrollToContributionDenotedByWindowsLocationHash: function() {
+      $('#show-contribution-' + ParseHashFor.contributionId()).scrollTo();
+    }
+  };
+  this.ParseHashFor = {
+    contributionId: function() {
+      return parseInt(_.last(this.cleanHash().split('-')));
+    },
+    cleanHash: function() {
+      return window.location.hash;
+    }
+  }
+
+  
+
+}).call(this);

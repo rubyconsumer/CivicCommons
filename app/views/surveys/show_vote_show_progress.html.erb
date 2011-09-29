@@ -1,0 +1,29 @@
+<% content_for(:header) do %>
+  <%= javascript_include_tag 'vendor/jquery.equalheights.js' %>
+  <%= javascript_include_tag 'lib/surveys' %>
+  <%= render :partial => '/shared/show_colorbox.js', :locals => {:path => successful_votes_path} if flash[:vote_successful] %>
+<% end %>
+<% content_for(:main_body) do %>
+  <%= render :partial => "#{@surveyable.class.name.pluralize.underscore}/survey_header", :object => @surveyable if @surveyable %>
+  <div class="wrapper">
+    <div class="content-container">
+  	  <div class="main-content">
+        <h1>Voting Results</h1>
+        <p><%= @survey.description %></p>
+        <p><%= back_to_surveyable(@survey) %></p>
+      </div>
+    </div>
+	<div class="content-container">
+		<div class="main-content">
+		  <% if @survey.show_progress_now? %>
+	        <%= render :partial => '/surveys/result_bars' %>
+	      <% else %>
+	        <p class="vote-time"><strong>Check back on <%= @survey.end_date && @survey.end_date.to_s(:long) %> to see the results</strong></p>
+          <% end %>
+		</div>
+        <div class="aside supplementary">
+      		<%= render :partial => '/surveys/vote_form' %>
+        </div>
+    </div>
+  </div>
+<% end %>

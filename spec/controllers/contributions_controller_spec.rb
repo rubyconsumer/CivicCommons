@@ -2,52 +2,50 @@ require 'spec_helper'
 
 describe ContributionsController do
 
-  context "DELETE: Contribution" do
-
-    it "assigns @contribution" do
-      contribution = mock_model(Contribution)
-      Contribution.should_receive(:find).and_return(contribution)
-      contribution.stub(:destroy_by_user)
+  describe "responding to DELETE" do
+    let(:contribution) { stub_model(Contribution) }
+    let(:current_person) { 'Your Mom' }
+    before do
+        Contribution.stub(:find).and_return(contribution)
+    end
+    it 'finds the contribution by id' do 
 
       delete :destroy, id: 1
-      assigns(:contribution).should == contribution
+      Contribution.should have_received(:find).with(1)
     end
 
-    it "removes the contribution if the user is an admin or the original contributor" do
-      contribution = mock_model(Contribution)
-      Contribution.stub(:find).and_return(contribution)
-      contribution.should_receive(:destroy_by_user)
+    context "when able to delete" do
+      before do
+        contribution.stub(:destroy_by_user) { contribution }
+        delete :destroy, id: 1
+      end
+      it "provides the deleted contribution to the view" do
+        assigns(:contribution).should == contribution
+      end
 
-      delete :destroy, id: 1
+      it "removes the contribution" do
+        contribution.should have_received(:destroy_by_user).with nil
+      end
+
+      it "returns status ok on success" do
+        delete :destroy, id: 1, format: :js
+        response.status.should == 200
+      end
     end
 
-    it "returns status ok on success" do
-      contribution = mock_model(Contribution)
-      Contribution.stub(:find).and_return(contribution)
-      contribution.stub(:destroy_by_user) { contribution }
-
-      delete :destroy, id: 1, format: :js
-      response.status.should == 200
+    context "when unable to delete" do
+      before do
+        contribution.stub(:destroy_by_user) { false } 
+        contribution.stub(:errors) { [ 'no love', 'just hate'] }
+        delete :destroy, id: 1, format: :js
+      end 
+      it "responds with the contributions error messages" do
+        response.body.should == "[\"no love\",\"just hate\"]"
+      end
+      it "responds with a status of unprocessable entity" do
+        response.status.should == 422
+      end
     end
-
-    it "returns error messages on failure" do
-      contribution = mock_model(Contribution)
-      Contribution.stub(:find).and_return(contribution)
-      contribution.stub(:destroy_by_user) { false }
-
-      delete :destroy, id: 1, format: :js
-      response.body.should == "{}"
-    end
-
-    it "returns error messages on failure" do
-      contribution = mock_model(Contribution)
-      Contribution.stub(:find).and_return(contribution)
-      contribution.stub(:destroy_by_user) { false }
-
-      delete :destroy, id: 1, format: :js
-      response.status.should == 422
-    end
-
   end
 
   describe "POST: Create Confirmed Contribution" do
@@ -55,7 +53,7 @@ describe ContributionsController do
     it "Creates a new contribution" do
       conversation = mock_model(Conversation, id: 1)
       contribution = mock_model(Contribution, conversation: conversation)
-      Contribution.should_receive(:create_node).and_return(contribution)
+      Contribution.stub(:create_node).and_return(contribution)
 
       post :create_confirmed_contribution, contribution: {content: "hello world", owner: 1, conversation_id: 1}
     end

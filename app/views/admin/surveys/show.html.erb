@@ -1,0 +1,28 @@
+<h1>Showing survey</h1>
+<p id="notice"><%= notice %></p>
+
+<%= render :partial => '/admin/surveys/basic_info' %>
+
+
+<div class="survey-options">
+  <% @survey.options.position_sorted.each_with_index do |option, index| %>
+    <h2>Option <%= index+1 %></h2>
+    <p>
+      <b>Title:</b>
+      <%= option.title %>
+    </p>
+    <p>
+      <b>Description:</b>
+      <%= option.description %>
+    </p>
+    <p>
+      <b>Position:</b>
+      <%= option.position %>
+    </p>
+    
+  <% end %>
+</div>
+
+
+<%= link_to 'Edit', edit_admin_survey_path(@survey) %> |
+<%= link_to 'Back', admin_surveys_path %>

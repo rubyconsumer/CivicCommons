@@ -39,6 +39,8 @@ gem 'nokogiri'
 gem 'sanitize'
 gem 'highline'
 
+gem "gchart", "~> 1.0.0"
+
 gem 'sunspot_rails' 
 
 gem 'fitter-happier'
@@ -69,6 +71,7 @@ group :test do
   gem 'simplecov'
   gem 'timecop'
   gem 'selenium-webdriver', '>= 0.2.2'
+  gem 'rspec-spies'
 end
 
 

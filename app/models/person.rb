@@ -3,6 +3,7 @@ class Person < ActiveRecord::Base
   include Regionable
   include GeometryForStyle
   include Marketable
+  include UnsubscribeSomeone
 
   searchable :ignore_attribute_changes_of => [ :updated_at, :failed_attempts, :current_sign_in_at, :last_sign_in_at, :current_sign_in_ip, :confirmed_at, :sign_in_count ] do
     text :first_name, :boost => 2, :default_boost => 2
@@ -58,6 +59,7 @@ class Person < ActiveRecord::Base
   has_many :managed_issue_pages, :foreign_key => 'person_id', :dependent => :restrict 
   has_many :rating_groups, :dependent => :restrict
   has_many :subscriptions, :dependent => :destroy
+  has_many :survey_responses
 
   has_many :contributed_conversations, :through => :contributions, :source => :conversation, :uniq => true, :dependent => :restrict 
   has_many :contributed_issues, :through => :contributions, :source => :issue, :uniq => true, :dependent => :restrict 

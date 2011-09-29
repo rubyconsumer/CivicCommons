@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110826211416) do
+ActiveRecord::Schema.define(:version => 20110901060023) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -210,6 +210,15 @@ ActiveRecord::Schema.define(:version => 20110826211416) do
   add_index "delayed_jobs", ["locked_by"], :name => "delayed_jobs_locked_by"
   add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
 
+  create_table "homepage_featureds", :force => true do |t|
+    t.integer  "homepage_featureable_id",   :null => false
+    t.string   "homepage_featureable_type", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "homepage_featureds", ["homepage_featureable_id", "homepage_featureable_type"], :name => "homepage_featureable_id_and_type", :unique => true
+
   create_table "issues", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -343,6 +352,14 @@ ActiveRecord::Schema.define(:version => 20110826211416) do
 
   add_index "revision_records", ["revisionable_type", "revisionable_id", "revision"], :name => "revisionable", :unique => true
 
+  create_table "selected_survey_options", :force => true do |t|
+    t.integer  "survey_option_id"
+    t.integer  "survey_response_id"
+    t.integer  "position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "slugs", :force => true do |t|
     t.string   "name"
     t.integer  "sluggable_id"
@@ -364,6 +381,37 @@ ActiveRecord::Schema.define(:version => 20110826211416) do
   end
 
   add_index "subscriptions", ["person_id", "subscribable_type", "subscribable_id"], :name => "unique-subs", :unique => true
+
+  create_table "survey_options", :force => true do |t|
+    t.text     "title"
+    t.integer  "survey_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "description"
+    t.integer  "position"
+  end
+
+  create_table "survey_responses", :force => true do |t|
+    t.integer  "person_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "survey_id"
+  end
+
+  create_table "surveys", :force => true do |t|
+    t.integer  "surveyable_id"
+    t.string   "surveyable_type"
+    t.string   "title"
+    t.text     "description"
+    t.string   "type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "max_selected_options",        :default => 0
+    t.boolean  "show_progress"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.boolean  "end_notification_email_sent"
+  end
 
   create_table "top_items", :force => true do |t|
     t.integer  "item_id"

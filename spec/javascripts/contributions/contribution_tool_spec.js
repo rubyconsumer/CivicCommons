@@ -1,0 +1,78 @@
+describe("The Conversation Tool", function() {
+  var subject;
+  var result;
+  var $subject; 
+  beforeEach(function() {
+    $subject = $('<div><p>morkmorkmork</p><form id="contribution_new"><input placeholder="asdf" id="contribution_url"  /><input id="contribution_attachment" /></form><ul class="errors"></ul></div>');
+    spyOn($subject, 'maskMe');
+    var tabstrip = $('<p>borkborkbork</p>');
+    spyOn(tabstrip,'maskMe');  
+    subject = new ContributionTool({
+      tabstrip: tabstrip,
+      el: $subject
+    });
+  });
+
+  describe('initialization', function() {
+
+    it('sets up the masking for the tabstrip ', function() {
+      expect(subject.tabstrip.maskMe).toHaveBeenCalledWith({
+        startOn: 'ajax:loading',
+        endOn: 'ajax:complete',
+        message: 'Loading...',
+        eventHandler: $(subject.el)
+      });
+    });
+    it('sets up masking for itself', function() {
+      expect($subject.maskMe).toHaveBeenCalledWith({
+        startOn: 'ajax:loading',
+        endOn: 'ajax:complete',
+        message: 'Loading...',
+      });
+    });
+
+  });
+
+  describe('submitting the form with valid information', function() {
+    beforeEach(function() {
+       result = subject.submit();
+    });
+    it('allows the event to bubble up further', function() {
+      expect(result).toEqual(true);
+    });
+    it('doesnt give an error message', function() {
+      expect(subject.$('.errors')).toHaveText('');
+
+    });
+    context("when there is placeholder information", function() {
+      it("clears the value", function() {
+        expect(subject.$('*[placeholder]')).toHaveValue('');
+      });
+    });
+    context("when the placeholder value has been replaced", function() {
+      it('leaves the values as is', function() {
+        subject.$('*[placeholder]').val('cool') 
+        subject.submit();
+        expect(subject.$('*[placeholder]')).toHaveValue('cool');
+      });
+    });
+  });
+  describe('submitting a form with invalid inputs', function() {
+    beforeEach(function() {
+      subject.$linkField.val('http://www.google.com');
+      subject.$fileUploadField.val('whatever.js');
+      result = subject.submit();
+    });
+    it('gives error message when link + image are uploaded', function() {
+      expect(subject.$('.errors')).toHaveText('Woops! We only let you submit one link or file per contribution');
+
+    });
+    it('inserts the error message into the DOM', function() {
+
+    });
+    it('prevents the event from bubbling any further', function() {
+      expect(result).toEqual(false);
+    });
+  });
+});
+

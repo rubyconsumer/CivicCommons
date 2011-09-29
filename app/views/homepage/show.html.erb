@@ -1,7 +1,7 @@
 <div class="feature-mast">
   <div class="wrapper">
     <div class="content-container">
-      <%= render :partial => '/articles/featured' %>
+      <%= render :partial => '/homepage/hp_banner' %>
     </div>
   </div>
 </div>
@@ -16,7 +16,8 @@
     <div class="aside supplementary">
       <%= render :partial => '/search/search' %>
       <%= render_recent_items_sidebar %>
-      <%= render partial: 'blog/recent_blog_posts_sidebar', locals: { blog_posts: @blog_posts } %>
+      <% blog_posts = ContentItem.where(content_type: 'BlogPost').order('published DESC').limit(3) %>
+      <%= render partial: 'blog/recent_blog_posts_sidebar', locals: { blog_posts: blog_posts } %>
       <%= render :partial => '/regions/index' %>
     </div><!-- /.aside -->
   </div><!-- /.content-container -->
