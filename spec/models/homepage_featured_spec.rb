@@ -41,23 +41,23 @@ describe HomepageFeatured do
 
     it 'returns a minimum sample of results' do
       hpf = HomepageFeatured.min_sample(2)
-      hpf.include?(@homepage_featured).should be_true
-      hpf.include?(@homepage_featured2).should be_true
-      hpf.include?(@homepage_featured3).should be_true
+      hpf.include?(@homepage_featured.homepage_featureable).should be_true
+      hpf.include?(@homepage_featured2.homepage_featureable).should be_true
+      hpf.include?(@homepage_featured3.homepage_featureable).should be_true
     end
 
     it 'filters out a result' do
       hpf = HomepageFeatured.min_sample(2, @homepage_featured2.homepage_featureable)
-      hpf.include?(@homepage_featured).should be_true
-      hpf.include?(@homepage_featured2).should be_false
-      hpf.include?(@homepage_featured3).should be_true
+      hpf.include?(@homepage_featured.homepage_featureable).should be_true
+      hpf.include?(@homepage_featured2.homepage_featureable).should be_false
+      hpf.include?(@homepage_featured3.homepage_featureable).should be_true
     end
 
     it 'filters out an array of results' do
       hpf = HomepageFeatured.min_sample(2, [@homepage_featured.homepage_featureable, @homepage_featured2.homepage_featureable])
-      hpf.include?(@homepage_featured).should be_false
-      hpf.include?(@homepage_featured2).should be_false
-      hpf.include?(@homepage_featured3).should be_true
+      hpf.include?(@homepage_featured.homepage_featureable).should be_false
+      hpf.include?(@homepage_featured2.homepage_featureable).should be_false
+      hpf.include?(@homepage_featured3.homepage_featureable).should be_true
     end
   end
 end
