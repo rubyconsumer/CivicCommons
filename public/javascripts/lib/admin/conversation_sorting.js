@@ -9,7 +9,7 @@ var lastUpdatedRow = null;
 var is_ascending = false;
 
 function header_clicked(event){
-  if($(this).index() == 3){
+  if($(this).hasClass('staff_pick_header')){
     $("table.conversations tbody").sortable("enable");
   } else {
     $("table.conversations tbody").sortable("disable");
@@ -18,9 +18,9 @@ function header_clicked(event){
 
 function update_sort(event, ui){
   lastUpdatedRow = $(ui.item);
-  var current_index = $(ui.item).find('td:nth-child(4) span').html();
-  var next_index = $(ui.item).next().find('td:nth-child(4) span').html();
-  var prev_index = $(ui.item).prev().find('td:nth-child(4) span').html();
+  var current_index = $(ui.item).find('td.staff_pick_column span').html();
+  var next_index = $(ui.item).next().find('td.staff_pick_column span').html();
+  var prev_index = $(ui.item).prev().find('td.staff_pick_column span').html();
   var data = { current: current_index, next: next_index, prev: prev_index };
 
   if(next_index > prev_index){ is_ascending = true; }
@@ -28,7 +28,7 @@ function update_sort(event, ui){
 
   $.post('/admin/conversations/update_order', data, function(data) {
     lastUpdatedRow.children().effect('highlight');
-    $("table.conversations tbody td:nth-child(4) span").each(function(index, element){
+    $("table.conversations tbody td.staff_pick_column span").each(function(index, element){
       if(is_ascending)
       {
         $(this).html(index);
@@ -37,7 +37,7 @@ function update_sort(event, ui){
         $(this).html(rows - index - 1);
       }
     });
-    $("table.conversations tbody td:nth-child(4) span").each(function(index, element){
+    $("table.conversations tbody td.staff_pick_column span").each(function(index, element){
       if(is_ascending)
       {
         $(this).html(index);
