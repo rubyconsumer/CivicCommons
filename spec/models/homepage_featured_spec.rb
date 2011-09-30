@@ -6,21 +6,21 @@ describe HomepageFeatured do
   it { should validate_presence_of(:homepage_featureable_id) }
   it { should validate_presence_of(:homepage_featureable_type) }
 
-  context 'factories' do
+  describe 'factories' do
     it 'is valid' do
       Factory.build(:homepage_featured).should be_valid
       Factory.create(:homepage_featured).should be_valid
     end
   end
 
-  context 'creation' do
+  describe 'creation' do
     it 'should not allow entries with duplicate homepage_featureable' do
       Factory.create(:homepage_featured)
       should validate_uniqueness_of(:homepage_featureable_id).scoped_to(:homepage_featureable_type)
     end
   end
 
-  context 'deletion' do
+  describe 'deletion' do
     it 'should not delete the homepage_featureable object if the HomepageFeature object is deleted' do
       homepage_featured = Factory.create(:homepage_featured)
       homepage_featureable = homepage_featured.homepage_featureable
@@ -29,35 +29,35 @@ describe HomepageFeatured do
     end
   end
 
-  context 'min_sample' do
+  describe 'min_sample' do
+    let(:homepage_featured) {Factory.create(:homepage_featured)}
+    let(:homepage_featured2) {Factory.create(:homepage_featured)}
+    let(:homepage_featured3) {Factory.create(:homepage_featured)}
+
     before(:each) do
-      #let(:homepage_featured) {Factory.create(:homepage_featured)}
-      #let(:homepage_featured2) {Factory.create(:homepage_featured)}
-      #let(:homepage_featured3) {Factory.create(:homepage_featured)}
-      @homepage_featured = Factory.create(:homepage_featured)
-      @homepage_featured2 = Factory.create(:homepage_featured)
-      @homepage_featured3 = Factory.create(:homepage_featured)
+      HomepageFeatured.stub(:all).and_return([homepage_featured2, homepage_featured, homepage_featured3])
     end
 
     it 'returns a minimum sample of results' do
       hpf = HomepageFeatured.min_sample(2)
-      hpf.include?(@homepage_featured.homepage_featureable).should be_true
-      hpf.include?(@homepage_featured2.homepage_featureable).should be_true
-      hpf.include?(@homepage_featured3.homepage_featureable).should be_true
+      hpf.include?(homepage_featured.homepage_featureable).should be_true
+      hpf.include?(homepage_featured2.homepage_featureable).should be_true
+      hpf.include?(homepage_featured3.homepage_featureable).should be_true
     end
 
     it 'filters out a result' do
-      hpf = HomepageFeatured.min_sample(2, @homepage_featured2.homepage_featureable)
-      hpf.include?(@homepage_featured.homepage_featureable).should be_true
-      hpf.include?(@homepage_featured2.homepage_featureable).should be_false
-      hpf.include?(@homepage_featured3.homepage_featureable).should be_true
+      hpf = HomepageFeatured.min_sample(2, homepage_featured2.homepage_featureable)
+      hpf.include?(homepage_featured.homepage_featureable).should be_true
+      hpf.include?(homepage_featured2.homepage_featureable).should be_false
+      hpf.include?(homepage_featured3.homepage_featureable).should be_true
     end
 
     it 'filters out an array of results' do
-      hpf = HomepageFeatured.min_sample(2, [@homepage_featured.homepage_featureable, @homepage_featured2.homepage_featureable])
-      hpf.include?(@homepage_featured.homepage_featureable).should be_false
-      hpf.include?(@homepage_featured2.homepage_featureable).should be_false
-      hpf.include?(@homepage_featured3.homepage_featureable).should be_true
+      hpf = HomepageFeatured.min_sample(2, [homepage_featured.homepage_featureable, homepage_featured2.homepage_featureable])
+      hpf.include?(homepage_featured.homepage_featureable).should be_false
+      hpf.include?(homepage_featured2.homepage_featureable).should be_false
+      hpf.include?(homepage_featured3.homepage_featureable).should be_true
     end
   end
 end
+
