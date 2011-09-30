@@ -4,7 +4,8 @@ class HomepageController < ApplicationController
     @random_active_conversation = Conversation.random_active(3)
     @random_recommended_conversation = Conversation.random_recommended.first
     @random_issues = Issue.all.sample(3)
-    @staff_selected = HomepageFeatured.min_sample(3, [@most_visited_conversations, @random_active_conversation, @random_recommended_conversation, @random_issues])
+    @random_most_recent_conversations = Conversation.latest_created.limit(4).sample(4)
+    @staff_selected = HomepageFeatured.min_sample(3, [@most_visited_conversations, @random_active_conversation, @random_recommended_conversation, @random_issues, @random_most_recent_conversations])
 
     @conversations = Conversation.latest_created.paginate(:page => params[:page], :per_page => 6)
 
