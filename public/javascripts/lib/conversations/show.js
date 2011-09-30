@@ -304,7 +304,9 @@
       this.scrollToContributionDenotedByWindowsLocationHash();
     },
     scrollToContributionDenotedByWindowsLocationHash: function() {
-      $('#show-contribution-' + ParseHashFor.contributionId()).scrollTo();
+      $contribution = $('#show-contribution-' + ParseHashFor.contributionId());
+      $contribution.scrollTo();
+      $contribution.find('.collapsed a.contribution-toggle').first().trigger('click'); // trigger click event to uncollapse contribution
     }
   };
   this.ParseHashFor = {
