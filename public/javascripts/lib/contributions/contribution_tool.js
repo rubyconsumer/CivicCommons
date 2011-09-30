@@ -52,7 +52,8 @@ function show_contribution_tool(container, contribution_id, title) {
   if (null != container) {
     container.append($('#contrib'));
   } else {
-    $('#contribution_tool_container').append($('#contrib'));
+    container = $('#contribution_tool_container');
+    container.append($('#contrib'));
   }
   $('#contrib').removeClass('hide_contrib_tool');
   init_tiny_mce('#contribution_content');
