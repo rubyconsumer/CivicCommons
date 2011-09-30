@@ -58,7 +58,7 @@ describe CCML::Tag::TagPair do
 
     before(:all) do
 
-      @test_date = Time.utc(2011, 4, 5, 23, 58, 00)
+      @test_date = Time.local_time(2011, 4, 5, 23, 58, 00)
 
       @person = Factory.build(:admin_person, :id => 1, :first_name => 'John', :last_name => 'Doe', :confirmed_at => @test_date)
 
