@@ -149,7 +149,7 @@ function enable_add_file_toggle(link, file_field, content_field) {
       this.el.maskMe({
         startOn: 'ajax:loading',
         endOn:   'ajax:complete',
-        message: 'Loading...',
+        message: 'Loading...'
       })
       this.$linkField = this.$('#contribution_url');
       this.$fileUploadField = this.$('#contribution_attachment');
@@ -165,7 +165,7 @@ function enable_add_file_toggle(link, file_field, content_field) {
 
     clearPlaceholderValuesFromFields: function() {
       $(_.select(this.$('*[placeholder]'), ElementHasPlaceholderValue)).val('');
-    },
+    }
 
   });
 }).call(this);
