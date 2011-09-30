@@ -14,6 +14,9 @@ feature "Add contribution", %q{
   let(:content) do
     content = 'This is my contribution...'
   end
+  let(:file_and_url_error_message) do
+    content = "Woops! We only let you submit one link or file per contribution"
+  end
 
   let(:url) do
     # because of WebMock this URL will always be mocked to/from Embedly
@@ -88,10 +91,11 @@ feature "Add contribution", %q{
     convo_page = ConversationPage.new(page)
     convo_page.visit_node(@conversation, child)
     sleep(1)
+
     contrib = ContributionTool.new(page)
 
     # When I click on the respond-to button
-    contrib.respond_to_link(child).click 
+    contrib.respond_to_link(child).click     # need to see if the child is available to be clicked
 
     # Then I should see the contribution tool
     contrib.should be_visible
@@ -336,7 +340,7 @@ feature "Add contribution", %q{
 
   end
 
-  scenario "Posting a url with a file", :js => true do
+  scenario "Posting a url with a file, is not allowed - must be either a url or a file", :js => true do
  
     # Given I am on a conversation permalink page
     convo_page = ConversationPage.new(page)
@@ -360,22 +364,16 @@ feature "Add contribution", %q{
 
     # And I press the submit button
     contrib.submit_button.click
+    
+    # Then I should see an error message
+    contrib.should contain(file_and_url_error_message)
 
-    # Then I should see a link to my url
-    contrib.should have_css("a[href='#{url}']")
-
-    # Then I should see a link to my file
-    convo_page.should have_link('Download attached file')
-
-    # Then I should see a link to my profile
-    contrib.should have_link(@user.name)
-
-    # And I should not see the contribution tool
-    contrib.should_not be_visible
+    # And I should still see the contribution tool
+    contrib.should be_visible
 
   end
 
-  scenario "Posting a comment with a file and a url", :js => true do
+  scenario "Posting a comment with a file and a url is not allowed - must be either a url or a file", :js => true do
  
     # Given I am on a conversation permalink page
     convo_page = ConversationPage.new(page)
@@ -403,20 +401,11 @@ feature "Add contribution", %q{
     # And I press the submit button
     contrib.submit_button.click
 
-    # Then I should see my contribution
-    convo_page.should have_content(content)
+    # Then I should see an error message
+    contrib.should contain(file_and_url_error_message)
 
-    # Then I should see a link to my url
-    contrib.should have_css("a[href='#{url}']")
-
-    # Then I should see a link to my file
-    convo_page.should have_link('Download attached file')
-
-    # Then I should see a link to my profile
-    contrib.should have_link(@user.name)
-
-    # And I should not see the contribution tool
-    contrib.should_not be_visible
+    # And I should still see the contribution tool
+    contrib.should be_visible
 
   end
 
