@@ -866,6 +866,10 @@ min-height: 0;
 -o-box-shadow: 0 1px 2px rgba(0,0,0,.1);
 box-shadow: 0 1px 2px rgba(0,0,0,.1);
 }
+.profile .related-article.call-out {
+min-height: 50px;
+padding-bottom: 5px;
+}
 ul.profile-extras {
 margin-left: 0;
 overflow: hidden;
@@ -898,11 +902,12 @@ color: #666;
 margin-bottom: 1em;
 }
 .profile .divided {border-top: none;}
-.profile .title {font-size: 1.15em;}
+.profile h4 {font-size: 1.15em;}
 .rating-type {
 background: #9aaa58;
 color: #fff;
 font-size: .9em;
+font-weight: bold;
 margin: 0 3px;
 padding: 3px 7px;
 text-transform: uppercase;
@@ -925,6 +930,8 @@ margin-bottom: 35px;
 .profile .recent-item.conversation {background: url("/images/conv-r.png") no-repeat 2px 4px;}
 .profile .recent-item.rating {background: url("/images/voting-icon.png") no-repeat 7px 4px;}
 .profile .recent-item.issue {background: url("/images/issues-r.png") no-repeat 2px 4px;}
+
+.profile .issue p {padding-left: 0;}
 
 
 /*- BUTTON AND LINK STYLES
