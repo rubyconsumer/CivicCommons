@@ -1711,6 +1711,51 @@ background-position: 0 -64px;
 color: #51778e;
 }
 
+
+/*- ￼404 Page Styles
+----------------------------------------------------------------------*/
+
+/*- Search Overrides for 404 Page ----------*/
+
+.error404 div#search {
+border-bottom: none;
+padding-bottom: 0;
+}
+.error404 div#search form input.textbox {margin-right: 10px;}
+.error404 div#search input.submit {float: left;}
+
+/*- Browse List ----------*/
+
+.error404 ul {
+font-size: 1.1em;
+font-weight: bold;
+list-style-type: none;
+margin-left: 0;
+padding: 2em 0 1em;
+}
+.error404 ul a {
+color: #555;
+text-decoration: none;
+}
+.error404 ul a:hover {color: #2c87b7;}
+.error404 li {
+margin-bottom: 1em;
+padding-left: 28px;
+}
+.home-link {
+background: url(../images/home-r.png) no-repeat 2px 0;
+}
+.conv-link {
+background: url(../images/conv-r.png) no-repeat 0 2px;
+}
+.issue-link {
+background: url(../images/issues-r.png) no-repeat 2px 2px;
+}
+.community-link {
+background: url(../images/people-r.png) no-repeat 0 2px;
+}
+
+
 /*- MISCELLANEOUS
 ----------------------------------------------------------------------*/
 
