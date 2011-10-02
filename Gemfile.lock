@@ -147,7 +147,7 @@ GEM
       multipart-post (~> 1.1.0)
       rack (< 2, >= 1.1.0)
     ffi (1.0.9)
-    fitter-happier (0.0.2)
+    fitter-happier (0.0.1)
     friendly_id (3.2.1.1)
       babosa (~> 0.3.0)
     fuubar (0.0.6)
@@ -381,7 +381,7 @@ DEPENDENCIES
   embedly (< 0.4)
   engineyard
   factory_girl_rails (~> 1.0.1)
-  fitter-happier
+  fitter-happier (= 0.0.1)
   friendly_id (~> 3.2.1)
   fuubar (~> 0.0.3)
   gchart (~> 1.0.0)

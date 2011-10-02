@@ -43,7 +43,7 @@ gem "gchart", "~> 1.0.0"
 
 gem 'sunspot_rails' 
 
-gem 'fitter-happier'
+gem 'fitter-happier', '= 0.0.1'
 
 group :development do
   gem "rails3-generators"
