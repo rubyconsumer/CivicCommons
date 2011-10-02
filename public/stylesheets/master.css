@@ -1711,6 +1711,29 @@ background-position: 0 -64px;
 color: #51778e;
 }
 
+
+/*- MAINTENANCE PAGE
+----------------------------------------------------------------------*/
+
+.maintenance .call-out {
+border: 1px solid #aaa;
+margin: 200px auto 0;
+min-height: 0;
+width: 600px;
+-webkit-box-shadow: 0 0 15px rgba(0,0,0,.5);
+-moz-box-shadow: 0 0 15px rgba(0,0,0,.5);
+-o-box-shadow: 0 0 15px rgba(0,0,0,.5);
+box-shadow: 0 0 15px rgba(0,0,0,.5);
+}
+.maintenance .call-out div {
+background: url(/images/cc_logo_4.png) no-repeat bottom right;
+margin: 25px;
+min-height: 180px;
+height: auto !important;
+height: 180px;
+}
+
+
 /*- MISCELLANEOUS
 ----------------------------------------------------------------------*/
 
