@@ -1,0 +1,54 @@
+server {
+  listen 81;
+  server_name <%=@environment%>.theciviccommons.com;
+
+
+  client_max_body_size 100M;
+
+  root /data/TheCivicCommons/current/public;
+
+  access_log /var/log/engineyard/nginx/TheCivicCommons.access.log main;
+
+  error_log /var/log/engineyard/nginx/TheCivicCommons.error.log notice;
+
+  location @passenger {
+  passenger_enabled on;
+
+  rack_env integration;
+  }
+
+
+  location ~ ^/(images|assets|javascripts|stylesheets)/ {
+    expires 10y;
+  }
+
+  location / {
+  if (-f $document_root/system/maintenance.html) { return 503; }
+    try_files  $uri $uri/index.html $uri.html @passenger;
+  }
+
+
+  error_page 500 502 504 /500.html;
+
+  error_page 503 @503;
+  recursive_error_pages on;
+  location @503 {
+
+    error_page 405 = /system/maintenance.html;
+
+    if (-f $request_filename) {
+      break;
+    }
+
+    rewrite ^(.*)$ /system/maintenance.html break;
+  }
+
+  include /etc/nginx/servers/TheCivicCommons/custom.conf;
+}
+
+# Remove a www with this block instead
+server {
+  listen 81;
+  server_name www.<%= @environment %>.theciviccommons.com;
+  rewrite ^(.*)$ $scheme://<%= @environment %>.theciviccommons.com$1  permanent;
+}
