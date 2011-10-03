@@ -43,7 +43,11 @@ From your command line:
 == Running the App
 From your command line: 
     bundle exec rake server:start
-
+== Deploying the app
+  ey recipes upload -e <environment you want to deploy to>
+  ey rebuild -e <environment you want to deploy to>
+Note: You will be asked to log in with the engine yard credentials. 
+      If you don't have access, talk to Winston.
 == Copyright
 
 Copyright (c) The Civic Commons -- released under the MIT license.
