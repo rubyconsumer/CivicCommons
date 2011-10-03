@@ -259,7 +259,7 @@ describe CCML::Tag::TagPair do
       end
 
       it "properly formats an ActiveRecord date variable" do
-        @tag.obj = { :date => @person.confirmed_at }
+        @tag.obj = { :date => @person.confirmed_at.utc }
         @tag.tag_body = @tag_body_with_date_var_formatting
         @tag.single_object.should == '04-05-2011 11:58 PM'
       end
