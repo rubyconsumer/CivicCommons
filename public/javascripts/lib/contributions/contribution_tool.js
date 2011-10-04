@@ -150,7 +150,11 @@ function enable_add_file_toggle(link, file_field, content_field) {
       this.el.maskMe({
         startOn: 'ajax:loading',
         endOn:   'ajax:complete',
+<<<<<<< HEAD
         message: 'Loading...'
+=======
+        message: 'Loading...',
+>>>>>>> 23c48e309a991d6862cf27ce8ea4445248f7ce7d
       })
       this.$linkField = this.$('#contribution_url');
       this.$fileUploadField = this.$('#contribution_attachment');
@@ -166,7 +170,11 @@ function enable_add_file_toggle(link, file_field, content_field) {
 
     clearPlaceholderValuesFromFields: function() {
       $(_.select(this.$('*[placeholder]'), ElementHasPlaceholderValue)).val('');
+<<<<<<< HEAD
     }
+=======
+    },
+>>>>>>> 23c48e309a991d6862cf27ce8ea4445248f7ce7d
 
   });
 }).call(this);

@@ -6,5 +6,9 @@ before_script:
   - "cp config/amazon_s3.yml.sample config/amazon_s3.yml"
   - "cp config/civic_commons.yml.sample config/civic_commons.yml"
   - "mysql -e 'create database CivicCommons_test;' >/dev/null"
+<<<<<<< HEAD
 #  - "sh -e /etc/init.d/xvfb start" #start selenium
+=======
+  - "sh -e /etc/init.d/xvfb start" #start selenium
+>>>>>>> 23c48e309a991d6862cf27ce8ea4445248f7ce7d
 script: "bundle exec rake ci:travis"

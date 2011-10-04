@@ -13,9 +13,15 @@ var lastAjaxSettings;
     scrollTo: function(){
       var $this = this;
       if(this.offset() == undefined) { return; }
+<<<<<<< HEAD
       var top = this.offset().top - 100; // 100px top padding in viewport,
       var origBG = this.css('background') || 'transparent';
       var scrolled = false; // Hack since 'html,body' is the only cross-browser compatible way to scroll window
+=======
+      top = this.offset().top - 200, // 100px top padding in viewport,
+      origBG = this.css('background') || 'transparent',
+      scrolled = false; // Hack since 'html,body' is the only cross-browser compatible way to scroll window
+>>>>>>> 23c48e309a991d6862cf27ce8ea4445248f7ce7d
                         // which causes callback to run twice.
 
       $('html,body').animate({scrollTop: top}, 1000, function (){
