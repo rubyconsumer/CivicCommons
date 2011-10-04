@@ -14,7 +14,7 @@ font-size: 100%;
 
 div#header-wrapper, div.wrapper, div#nav-wrapper, div#footer, div#legal {font-size: .75em;}
 p {
-line-height: 1.4em;
+line-height: 1.5em;
 margin-bottom: .8em;
 }
 p.fineprint {font-size:0.85em;}
@@ -89,7 +89,7 @@ color: #555
 border-bottom: none;
 font-size: 1.6em;
 line-height: 1em;
-margin-bottom: 1em;
+margin: 1em 0;
 padding-bottom: 0;
 text-transform: none;
 }
@@ -301,6 +301,11 @@ fieldset.footer {margin-bottom: 2em;}
 
 /*- Facebook Modal Styles ----------*/
 
+#ajax-login-container {
+font-size: .75em;
+padding: 20px;
+}
+#ajax-login-container .form-group, #ajax-login-container fieldset.footer {margin-bottom: 15px;}
 div.suggest-auth, div.fb-auth.linking-success, div.fb-auth.successful-registration, div.fb-auth.registering-email-taken, .fb-modal {padding: 25px 20px;}
 .fb-modal h2 {
 border-bottom: 1px solid #d6d6d6;
@@ -317,6 +322,8 @@ float: right;
 padding-top: 4px;
 }
 p.fb-cnct-links {padding-top: 5px;}
+#ajax-login-container input.textbox {width: 200px;}
+#ajax-login-container p#facebook {padding: 0px 0px 0px 160px;}
 .fb-modal input.textbox {width: 7em;}
 
 
@@ -1048,8 +1055,6 @@ font-size: .75em;
 margin-bottom: .2em;
 text-transform: uppercase;
 }
-div#ajax-login-container {padding: 20px;}
-div#ajax-login-container p#facebook {padding: 0px 0px 0px 160px; margin-top: -25px;}
 .important a {font-weight: bold;}
 .build-commons {
 background: url(/images/build_commons.png) no-repeat 0 0;
@@ -1300,7 +1305,6 @@ z-index: 100;
 div.convo-utility div.tos {
 color: #808080;
 font-size: 80%;
-padding: 4px;
 display: block;
 float: none;
 text-align: right;
@@ -1783,11 +1787,13 @@ margin-right: 15px;
 
 /*- Aside Module ----------*/
 
-.aside .mod {margin-bottom: 20px;}
+.aside .mod {margin-bottom: 30px;}
 .aside .mod h3 {
+/*
 font-weight: bold;
 padding: 0 0 3px 0;
 margin-bottom: 7px;
+*/
 text-shadow: 0 1px 1px rgba(255,255,255,1);
 text-transform: uppercase;
 }
@@ -2001,6 +2007,17 @@ height: auto;
 padding: 0;
 }
 div#cboxLoadedContent .input-with-options label a {color: #444;}
+
+/*- Overrides for Invite Popup Form ----------*/
+
+div#cboxLoadedContent .invite-form textarea {
+border: 1px solid #ccc;
+clear: none;
+display: inline;
+width: 385px;
+}
+div#cboxLoadedContent .invite-form .form-block {margin-bottom: 20px;}
+div#cboxLoadedContent div.invite-form p {margin: 10px 0;}
 
 /*- Preview ----------*/
 
