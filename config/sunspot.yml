@@ -18,13 +18,12 @@ test:
 
 integration:
   solr:
-    hostname: "10.214.7.85" # development server
-    #hostname:  "10.113.23.222" # integration server
-    port: 8983
+    hostname: localhost
+    port: 8982
     log_level: WARNING
 
 staging:
   solr:
-    hostname: "10.196.230.33"
-    port: 8983
+    hostname: localhost
+    port: 8982
     log_level: WARNING
