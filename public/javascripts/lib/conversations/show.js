@@ -297,6 +297,7 @@
   });
 
   this.ShowsConversations = function() { };
+<<<<<<< HEAD
 
   this.ShowsConversations.prototype = {
     onReady: function() {
@@ -318,6 +319,27 @@
     }
   }
 
+=======
+
+  this.ShowsConversations.prototype = {
+    onReady: function() {
+      $('.rating-button').ratingButton();
+      this.scrollToContributionDenotedByWindowsLocationHash();
+    },
+    scrollToContributionDenotedByWindowsLocationHash: function() {
+      $('#show-contribution-' + ParseHashFor.contributionId()).scrollTo();
+    }
+  };
+  this.ParseHashFor = {
+    contributionId: function() {
+      return parseInt(_.last(this.cleanHash().split('-')));
+    },
+    cleanHash: function() {
+      return window.location.hash;
+    }
+  }
+
+>>>>>>> 23c48e309a991d6862cf27ce8ea4445248f7ce7d
   
 
 }).call(this);
