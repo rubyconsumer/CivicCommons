@@ -5,7 +5,7 @@ current_environment = node[:environment][:framework_env]
 
 # setup the correct timezone: http://docs.engineyard.com/set-time-zone-for-an-appcloud-instance.html
 # http://www.timezoneconverter.com/cgi-bin/zoneinfo.tzc?s=default&tz=EST5EDT
-run "sudo ln -sf /usr/share/zoneinfo/EST5EDT /etc/localtime"
+# run "sudo ln -sf /usr/share/zoneinfo/EST5EDT /etc/localtime"
 
 # If it's not a production environment, tell robots to not crawl the site
 if current_environment != "production"
