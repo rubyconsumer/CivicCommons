@@ -18,7 +18,8 @@ test:
 
 integration:
   solr:
-    hostname: "10.113.23.222"
+    hostname: "10.214.7.85" # development server
+    #hostname:  "10.113.23.222" # integration server
     port: 8983
     log_level: WARNING
 
