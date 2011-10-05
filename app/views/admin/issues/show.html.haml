@@ -1,8 +1,12 @@
 %h2= @issue.name
 
-%p        
+%p
   %b Type:
   =@issue.type
+
+%p
+  %b Exclude From Result:
+  =@issue.exclude_from_result
 
 -if @issue.is_a?(ManagedIssue)
   %p

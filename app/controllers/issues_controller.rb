@@ -3,7 +3,7 @@ class IssuesController < ApplicationController
 
   # GET /issues
   def index
-    @search = Issue.sort(params[:sort])
+    @search = Issue.sort(params[:sort]).where(:exclude_from_result => false)
     @issues = @search.paginate(:page => params[:page], :per_page => 20)
 
     @regions = Region.all

@@ -11,6 +11,10 @@ describe IssuesController do
       end
 
       (1..2).each do
+        Factory.create(:issue, :exclude_from_result => true)
+      end
+
+      (1..2).each do
         Factory.create(:region)
       end
 
@@ -24,7 +28,7 @@ describe IssuesController do
 
     it "assigns all issues as @issues" do
       get :index
-      assigns(:issues).should == Issue.all
+      assigns(:issues).should == Issue.where(:exclude_from_result => false).all
     end
 
     it "assigns all regions to @regions" do

@@ -20,11 +20,11 @@
       <div class="pagination">
         <%= will_paginate @issues, :inner_window => 3, :previous_label => "Previous", :next_label => "Next" %>
       </div>
-    </div><!-- /.main-content -->			
+    </div><!-- /.main-content -->
     <div class='aside supplementary'>
       <%= render :partial => '/search/search' %>
       <%= render_recent_items_sidebar %>
       <%= render :partial => '/regions/index' %>
-    </div><!-- /.aside -->			
+    </div><!-- /.aside -->
   </div><!-- /.content-container -->
 </div>
