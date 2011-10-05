@@ -17,6 +17,10 @@ feature "Add contribution", %q{
   let(:file_and_url_error_message) do
     content = "Woops! We only let you submit one link or file per contribution"
   end
+  
+  let(:file_only_error_message) do
+    content = "Sorry! You must also write a comment above when you upload a file."
+  end
 
   let(:url) do
     # because of WebMock this URL will always be mocked to/from Embedly
@@ -241,7 +245,7 @@ feature "Add contribution", %q{
 
   end
 
-  scenario "Posting only a file", :js => true do
+  scenario "Posting only a file - is not allowed", :js => true do
  
     # Given I am on a conversation permalink page
     convo_page = ConversationPage.new(page)
@@ -261,7 +265,7 @@ feature "Add contribution", %q{
     contrib.submit_button.click
 
     # Then I should see an error
-    contrib.should have_error
+    contrib.should contain(file_only_error_message)
 
     # And I should still see the contribution tool
     contrib.should be_visible

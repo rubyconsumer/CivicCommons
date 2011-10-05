@@ -152,6 +152,7 @@ function enable_add_file_toggle(link, file_field, content_field) {
         endOn:   'ajax:complete',
         message: 'Loading...'
       })
+      this.$contentField = this.$('#contribution_content');
       this.$linkField = this.$('#contribution_url');
       this.$fileUploadField = this.$('#contribution_attachment');
     },
@@ -159,6 +160,9 @@ function enable_add_file_toggle(link, file_field, content_field) {
       this.clearPlaceholderValuesFromFields();
       if(this.$linkField.val() != '' && this.$fileUploadField.val() != '') {
         this.$('.errors').append('<li>Woops! We only let you submit one link or file per contribution</li>');
+        return false;
+      }else if(this.$fileUploadField.val() != '' && this.$contentField.val() == ''){
+        this.$('.errors').append('<li>Sorry! You must also write a comment above when you upload a file.</li>');
         return false;
       }
       return true;

@@ -3,7 +3,7 @@ describe("The Conversation Tool", function() {
   var result;
   var $subject; 
   beforeEach(function() {
-    $subject = $('<div><p>morkmorkmork</p><form id="contribution_new"><input placeholder="asdf" id="contribution_url"  /><input id="contribution_attachment" /></form><ul class="errors"></ul></div>');
+    $subject = $('<div><p>morkmorkmork</p><form id="contribution_new"><input placeholder="asdf" id="contribution_url"  /><input id="contribution_content" /><input id="contribution_attachment" /></form><ul class="errors"></ul></div>');
     spyOn($subject, 'maskMe');
     var tabstrip = $('<p>borkborkbork</p>');
     spyOn(tabstrip,'maskMe');  
@@ -58,20 +58,30 @@ describe("The Conversation Tool", function() {
     });
   });
   describe('submitting a form with invalid inputs', function() {
-    beforeEach(function() {
-      subject.$linkField.val('http://www.google.com');
-      subject.$fileUploadField.val('whatever.js');
-      result = subject.submit();
-    });
-    it('gives error message when link + image are uploaded', function() {
-      expect(subject.$('.errors')).toHaveText('Woops! We only let you submit one link or file per contribution');
+    context('general way',function(){
+      beforeEach(function() {
+        subject.$linkField.val('http://www.google.com');
+        subject.$fileUploadField.val('whatever.js');
+        result = subject.submit();
+      });
+      it('gives error message when link + image are uploaded', function() {
+        expect(subject.$('.errors')).toHaveText('Woops! We only let you submit one link or file per contribution');
 
-    });
-    it('inserts the error message into the DOM', function() {
+      });
+      it('inserts the error message into the DOM', function() {
 
-    });
-    it('prevents the event from bubbling any further', function() {
-      expect(result).toEqual(false);
+      });
+      it('prevents the event from bubbling any further', function() {
+        expect(result).toEqual(false);
+      });
+    })
+    context('when uploading a file only',function(){
+      it('should give error message',function(){
+        subject.$fileUploadField.val('whatever.js');
+        result = subject.submit();
+        
+        expect(subject.$('.errors')).toHaveText('Sorry! You must also write a comment above when you upload a file.');
+      })
     });
   });
 });
