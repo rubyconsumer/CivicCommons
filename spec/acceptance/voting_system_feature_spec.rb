@@ -223,7 +223,7 @@ feature "Voting system", %q{
     vote_confirmation_page.should have_selector('a', :content => 'Yes')
     
     # When I click no
-    vote_page.click_link_or_button('No')
+    vote_page.click_link_or_button('Cancel')
     
     # Then the modal closes and the ballot can be changed.
     vote_page.select_one_option
