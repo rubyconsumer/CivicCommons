@@ -9,6 +9,16 @@ class ContentItem < ActiveRecord::Base
     text :summary, :stored => true
   end
 
+  has_attached_file :image,
+    :styles => {
+      :normal => "480x300#",
+      :panel => "198x130#"
+    },
+    :storage => :s3,
+    :s3_credentials => S3Config.credential_file,
+    :path => IMAGE_ATTACHMENT_PATH,
+    :default_url => '/images/convo_img_:style.gif'
+
   belongs_to :author, :class_name => "Person", :foreign_key => "person_id"
   belongs_to :conversation
 

@@ -85,4 +85,26 @@ describe ContentItem do
 
   end
 
+  context "paperclip" do
+    it "will have necessary db columns for paperclip" do
+      should have_db_column(:image_file_name).of_type(:string)
+      should have_db_column(:image_content_type).of_type(:string)
+      should have_db_column(:image_file_size).of_type(:integer)
+    end
+
+    it "will have an existing default image" do
+      paperclip_default_file_exists?('original').should be_true
+      ContentItem.attachment_definitions[:image][:styles].each do |style, size|
+        paperclip_default_file_exists?(style.to_s).should be_true
+      end
+    end
+
+    def paperclip_default_file_exists?(style)
+      default_url = ContentItem.attachment_definitions[:image][:default_url].gsub(/\:style/, style)
+      default_file = File.join(Rails.root, 'public', default_url)
+      File.exist?(default_file)
+    end
+
+  end
+
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111005212114) do
+ActiveRecord::Schema.define(:version => 20111007140728) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -51,7 +51,7 @@ ActiveRecord::Schema.define(:version => 20111005212114) do
   create_table "content_items", :force => true do |t|
     t.integer  "person_id"
     t.string   "content_type"
-    t.string   "title",           :null => false
+    t.string   "title",              :null => false
     t.text     "summary"
     t.text     "body"
     t.datetime "created_at"
@@ -61,6 +61,9 @@ ActiveRecord::Schema.define(:version => 20111005212114) do
     t.text     "embed_code"
     t.string   "external_link"
     t.integer  "conversation_id"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
   end
 
   add_index "content_items", ["cached_slug"], :name => "index_content_items_on_cached_slug", :length => {"cached_slug"=>10}
