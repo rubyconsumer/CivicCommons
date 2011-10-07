@@ -34,6 +34,20 @@ describe HPSlotPresenter do
       hsp.title.should == "Homepage Featurable Title"
     end
 
+    it "is available with a BlogPost object" do
+      title = 'Blog Post Title'
+      hp_feature = Factory.build(:blog_post, title: title)
+      hsp = HPSlotPresenter.new(hp_feature)
+      hsp.title.should == title
+    end
+
+    it "is available with a RadioShow object" do
+      title = 'Radio Show Title xx'
+      hp_feature = Factory.build(:radio_show, title: title)
+      hsp = HPSlotPresenter.new(hp_feature)
+      hsp.title.should == title
+    end
+
     it "is nil with a Contribution object" do
       contribution = Factory.create(:contribution)
       hsp = HPSlotPresenter.new(contribution)
@@ -61,6 +75,22 @@ describe HPSlotPresenter do
 
       # hsp.url.should == "http://www.example.com/conversations/#{i.friendly_id}"
       hsp.url.should == "/conversations/#{conversation.friendly_id}"
+    end
+
+    it "is available with a BlogPost object" do
+      blog_post = Factory.build(:blog_post)
+      hsp = HPSlotPresenter.new(blog_post)
+
+      # hsp.url.should == "http://www.example.com/blog/#{i.friendly_id}"
+      hsp.url.should == "/blog/#{blog_post.friendly_id}"
+    end
+
+    it "is available with a RadioShow object" do
+      radio_show = Factory.build(:radio_show)
+      hsp = HPSlotPresenter.new(radio_show)
+
+      # hsp.url.should == "http://www.example.com/radioshow/#{i.friendly_id}"
+      hsp.url.should == "/radioshow/#{radio_show.friendly_id}"
     end
 
     it "is host url with a Contribution object" do
