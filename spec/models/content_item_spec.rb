@@ -92,6 +92,13 @@ describe ContentItem do
       should have_db_column(:image_file_size).of_type(:integer)
     end
 
+    it "will only allow image attachments" do
+      # allowed image mimetypes are based on what we have seen in production
+      should validate_attachment_content_type(:image).
+        allowing('image/bmp', 'image/gif', 'image/jpeg', 'image/png', 'image/pjpeg', 'image/x-png').
+        rejecting('text/plain', 'text/xml')
+    end
+
     it "will have an existing default image" do
       paperclip_default_file_exists?('original').should be_true
       ContentItem.attachment_definitions[:image][:styles].each do |style, size|

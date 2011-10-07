@@ -19,6 +19,10 @@ class ContentItem < ActiveRecord::Base
     :path => IMAGE_ATTACHMENT_PATH,
     :default_url => '/images/convo_img_:style.gif'
 
+  validates_attachment_content_type :image,
+                                    :content_type => /image\/*/,
+                                    :message => "Not a valid image file."
+
   belongs_to :author, :class_name => "Person", :foreign_key => "person_id"
   belongs_to :conversation
 

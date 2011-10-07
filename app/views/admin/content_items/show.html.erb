@@ -1,6 +1,9 @@
 <article>
   <header>
     <h1><%= link_to(@content_item.title, @content_item.cached_slug) %></h1>
+    <div>
+      <%= image_tag @content_item.image.url(:panel) %>
+    </div>
     <p>Author: <%= @person.first_name + ' ' +  @person.last_name %></p>
     <p>Published: <%= @content_item.published.strftime("%B %d, %Y") %></p>
   </header>
@@ -8,18 +11,21 @@
   <% if @content_item.external_link %>
     <p>External Link: <%= link_to(@content_item.external_link, @content_item.external_link) %>
   <% end %>
-  <p>Summary: </p>
-  <blockquote>
+
+  <fieldset>
+    <legend>Summary:</legend>
     <%= raw (@content_item.summary) %>
-  </blockquote>
-  <p>Body: </p>
-  <blockquote>
-    <%= raw (@content_item.body) %>
-  </blockquote>
-  <p>Embed: </p>
-  <blockquote>
+  </fieldset>
+
+  <fieldset>
+  <legend>Body:</legend>
+  <%= raw (@content_item.body) %>
+  </fieldset>
+
+  <fieldset>
+    <legend>Embed:</legend>
     <%= raw (@content_item.embed_code) %>
-  </blockquote>
+  </fieldset>
 </article>
 
 <%= link_to 'Edit', edit_admin_content_item_path(@content_item) %>

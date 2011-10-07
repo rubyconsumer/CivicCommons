@@ -62,7 +62,9 @@ q, blockquote {
 a img {
   border: none; }
 
-
+fieldset {
+  border: 1px solid #ccc;
+  margin: 15px 0; }
 
 .wrapper {
 	width: 960px;
