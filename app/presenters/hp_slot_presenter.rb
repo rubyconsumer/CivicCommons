@@ -14,7 +14,7 @@ class HPSlotPresenter
   def url
     return issue_path(@target) if @target.is_a?(Issue)
     return conversation_path(@target) if @target.is_a?(Conversation)
-    return content_path(@target) if @target.is_a?(ContentItem)
+    return @target.url if @target.is_a?(ContentItem)
     return "/"
   end
 

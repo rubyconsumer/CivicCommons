@@ -9,8 +9,8 @@ class HomepageController < ApplicationController
 
     @conversations = Conversation.latest_created.paginate(:page => params[:page], :per_page => 6)
 
-    @blog_posts = ContentItem.recent_blog_posts.first
-    @random_old_radio_show = ContentItem.random_old_radio_show
+    @recent_blog_posts = ContentItem.recent_blog_posts.limit(1)
+    @recent_radio_shows = ContentItem.recent_radio_shows.limit(1)
     @regions = Region.all
 
     @recent_items = Activity.most_recent_activity(3)

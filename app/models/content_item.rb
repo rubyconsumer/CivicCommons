@@ -45,10 +45,15 @@ class ContentItem < ActiveRecord::Base
     end
   end
 
-  def self.random_old_radio_show
-    @radioshows = ContentItem.where("content_type = 'RadioShow' AND (published <= curdate() OR DAY(published) = DAY(curdate())) ").order("published desc")
-    @radioshows.all.pop
-    @radioshows.sample(1).pop
+  def self.recent_radio_shows
+    ContentItem.where('content_type = ?', 'RadioShow').order("published desc, created_at desc")
+  end
+
+  def url
+    return blog_path(self) if self.content_type == 'BlogPost'
+    return self.external_link if self.content_type == 'NewsItem'
+    return radioshow_path(self) if self.content_type == 'RadioShow'
+    return content_path(self)
   end
 
 private
