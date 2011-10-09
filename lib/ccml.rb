@@ -3,7 +3,7 @@
 # CCML is a minimal markup language based on ExpressionEngine tag syntax. It is
 # intended to allow web designers on The Civic Commons project easily embed
 # server-side dynamic behavior into an HTML output stream. CCML was originally
-# created for Managed Issues but may be leveraged for other features. 
+# created for Managed Issues but may be leveraged for other features.
 #
 # == Syntax
 #
@@ -167,7 +167,7 @@
 # <code>http://www.theciviccommons.com/issues?id=1</code>
 #
 # will have the value of the _id_ option automatically set to 1.
-# 
+#
 # The special field variable 'query_string' will always map to the entire
 # query string, whether or not it is formatted in key/value pairs.
 #
@@ -204,7 +204,7 @@
 # CCML supports both syntaxes so both
 #
 # <code>{if:elseif author}</code>
-# 
+#
 # and
 #
 # <code>{if:elsif author}</code>
@@ -256,7 +256,7 @@ module CCML
   INVALID_TAGS_PATTERN = /(\{ccml)|(\{\/ccml)/
 
   OPTIONS_PATTERN = /\s+(\w+)=("([^"]*)"|'([^']*)')/
-    
+
   ILLEGAL_TAGS = ['base', 'single_tag', 'tag_pair']
 
   def CCML.parse(ccml, url = nil)
@@ -344,6 +344,9 @@ module CCML
 
       # run the method and substitute the results into the ccml
       sub = CCML.run_tag_method(tag, method)
+      if sub.nil?
+        raise CCML::Error::TemplateError, "Requested #{method} method but #{method} was not used."
+      end
       ccml = ccml.sub(match.to_s, sub)
 
       # look for another match
@@ -370,6 +373,9 @@ module CCML
 
       # run the method and substitute the results into the ccml
       sub = CCML.run_tag_method(tag, method)
+      if sub.nil?
+        raise CCML::Error::TemplateError, "Requested #{method} method but #{method} was not used."
+      end
       ccml = ccml.sub(match.to_s, sub)
 
       # look for another match

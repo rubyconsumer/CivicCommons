@@ -88,7 +88,7 @@ describe CCML do
 
     describe "CCML#parse" do
 
-      before(:all) do
+      before(:each) do
 
         # single tag examples
 
@@ -174,6 +174,10 @@ describe CCML do
 
         @tag_pair_missing_close_method = "{ccml:test_pair:echo}some stuff in the middle{/ccml:test_pair}"
 
+        @tag_pair_missing_result_tag = "{ccml:test_pair:url_host}{/ccml:test_pair:url_host}"
+
+        @tag_pair_missing_result_tag_and_closing_tag = "{ccml:test_pair:url_host}"
+
       end
 
       context "setup" do
@@ -219,7 +223,7 @@ describe CCML do
         end
 
         it "parses a tag pair with no method and with options" do
-          CCML.parse(@tag_pair_no_method_no_opts).should == "Hello world!"
+          CCML.parse(@tag_pair_no_method_with_opts).should == "Hello world!"
         end
 
         it "parses a tag pair with method and with options" do
@@ -289,6 +293,14 @@ describe CCML do
 
         it "raises TemplateError for a missing close tag method" do
           lambda { CCML.parse(@tag_pair_missing_close_method) }.should raise_error CCML::Error::TemplateError
+        end
+
+        it "raises TemplateError for a tag pair missing result tag" do
+          lambda { CCML.parse(@tag_pair_missing_result_tag) }.should raise_error CCML::Error::TemplateError
+        end
+
+        it "raises TemplateError for a missing close tag method" do
+          lambda { CCML.parse(@tag_pair_missing_result_tag_and_closing_tag) }.should raise_error CCML::Error::TemplateError
         end
 
       end
