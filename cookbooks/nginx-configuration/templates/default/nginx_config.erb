@@ -1,6 +1,6 @@
 server {
   listen 81;
-  server_name <%=@environment%>.theciviccommons.com;
+  server_name <%=@hostname%>theciviccommons.com;
 
 
   client_max_body_size 100M;
@@ -12,9 +12,8 @@ server {
   error_log /var/log/engineyard/nginx/TheCivicCommons.error.log notice;
 
   location @passenger {
-  passenger_enabled on;
-
-  rack_env integration;
+    passenger_enabled on;
+    rack_env <%= @environment_type %>;
   }
 
 
@@ -49,6 +48,6 @@ server {
 # Remove a www with this block instead
 server {
   listen 81;
-  server_name www.<%= @environment %>.theciviccommons.com;
-  rewrite ^(.*)$ $scheme://<%= @environment %>.theciviccommons.com$1  permanent;
+  server_name www.<%= @hostname %>theciviccommons.com;
+  rewrite ^(.*)$ $scheme://<%= @hostname %>theciviccommons.com$1  permanent;
 }

@@ -3,6 +3,9 @@
 # Recipe:: default
 #
 
+hostname = ''
+hostname = node[:environment][:name] + '.' if node[:environment][:name] != 'production'
+
 app_name = "TheCivicCommons"
 config_file = "/data/nginx/servers/#{app_name}.conf" 
 if ['solo', 'app', 'app_master'].include?(node[:instance_role])
@@ -13,9 +16,9 @@ if ['solo', 'app', 'app_master'].include?(node[:instance_role])
     mode 0644
     variables(
       :app_name => app_name,
-      :environment => node[:environment][:name]
+      :hostname => hostname,
+      :environment_type => node[:environment][:framework_env]
     )
-    
   end
 end
 
