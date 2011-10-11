@@ -14,5 +14,9 @@ class HomepageController < ApplicationController
     @regions = Region.all
 
     @recent_items = Activity.most_recent_activity(3)
+
+    respond_to do |format|
+      format.html
+    end
   end
 end

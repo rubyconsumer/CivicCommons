@@ -10,5 +10,17 @@ describe HomepageController do
       get :show
       assigns(:most_visited_conversations).should eq(mock_conversations)
     end
+
+    it "will respond to :html format" do
+      get :show, format: :html
+      response.should be_success
+    end
+
+    it "will respond with 406 Not Acceptable to other formats" do
+      expect do
+        get :show, format: :text
+        response.should_not be_success
+      end.to_not raise_error(ActionView::MissingTemplate)
+    end
   end
 end
