@@ -158,6 +158,7 @@ function enable_add_file_toggle(link, file_field, content_field) {
     },
     submit: function() {
       this.clearPlaceholderValuesFromFields();
+      this.clearPreviousErrors();
       if(this.$linkField.val() != '' && this.$fileUploadField.val() != '') {
         this.$('.errors').append('<li>Woops! We only let you submit one link or file per contribution</li>');
         return false;
@@ -170,6 +171,10 @@ function enable_add_file_toggle(link, file_field, content_field) {
 
     clearPlaceholderValuesFromFields: function() {
       $(_.select(this.$('*[placeholder]'), ElementHasPlaceholderValue)).val('');
+    },
+
+    clearPreviousErrors: function() {
+      this.$('.errors').html('');
     }
 
   });

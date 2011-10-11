@@ -66,22 +66,27 @@ describe("The Conversation Tool", function() {
       });
       it('gives error message when link + image are uploaded', function() {
         expect(subject.$('.errors')).toHaveText('Woops! We only let you submit one link or file per contribution');
-
       });
-      it('inserts the error message into the DOM', function() {
-
+      it('inserts the error message into the DOM only once', function() {
+        subject.submit();
+        expect(subject.$('.errors').find(':contains("Woops! We only let you submit one link or file per contribution")').length).toEqual(1);
       });
       it('prevents the event from bubbling any further', function() {
         expect(result).toEqual(false);
       });
     })
     context('when uploading a file only',function(){
-      it('should give error message',function(){
+      beforeEach(function() {
         subject.$fileUploadField.val('whatever.js');
         result = subject.submit();
-        
+      });
+      it('should give error message',function(){
         expect(subject.$('.errors')).toHaveText('Sorry! You must also write a comment above when you upload a file.');
-      })
+      });
+      it('inserts the error message into the DOM only once', function() {
+        subject.submit();
+        expect(subject.$('.errors').find(':contains("Sorry! You must also write a comment above when you upload a file.")').length).toEqual(1);
+      });
     });
   });
 });
