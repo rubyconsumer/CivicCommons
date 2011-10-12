@@ -9,7 +9,7 @@ describe Contribution do
       Factory.build(:comment).should be_valid
       Factory.create(:comment).should be_valid
       Factory.build(:embedly_contribution).should be_valid
-      Factory.build(:embedly_contribution).should be_valid
+      Factory.create(:embedly_contribution).should be_valid
     end
   end
 
