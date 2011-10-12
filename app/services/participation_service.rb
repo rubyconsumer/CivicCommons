@@ -72,7 +72,11 @@ class ParticipationService
     if @issues.has_key?(issue_id.to_i)
       issue = Issue.find(issue_id.to_i)
       @issues[issue_id.to_i][:conversations].each do |conversation_id|
+        begin
         count += @conversations[conversation_id][:participants]
+        rescue
+          # Instead of checking all the conditions where there could be no participants, we won't increment the count.
+        end
       end
       count += issue.participants.size
     end
