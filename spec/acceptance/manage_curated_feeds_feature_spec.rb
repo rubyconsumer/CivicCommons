@@ -95,7 +95,7 @@ feature "Manage curated feeds", %q{
       visit admin_curated_feed_path(feed)
       feed_page.edit_item(item)
       should_be_on edit_admin_curated_feed_item_path(feed, item)
-      feed_page.fill_in_item_url('http://www.new-url.com')
+      feed_page.fill_in_item_url('http://www.yahoo.com')
       feed_page.submit_item
       should_be_on admin_curated_feed_path(feed)
       feed_page.has_item_link?(feed, 1)

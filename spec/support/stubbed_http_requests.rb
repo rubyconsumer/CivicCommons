@@ -11,7 +11,11 @@ module StubbedHttpRequests
 
   # This set can be used to mock Embedly calls, but the regex needs more work if we want to mock multiple requests
   def stub_pro_embedly_request
-    stub_request(:get, /http:\/\/pro\.embed\.ly/).to_return(:body => File.open("#{Rails.root}/test/fixtures/embedly/youtube.json"), :status => 200)
+    stub_request(:get, /http:\/\/pro\.embed\.ly.*maps\.google\.com/).to_return(:body => File.open("#{Rails.root}/test/fixtures/embedly/google_map.json"), :status => 200)
+    stub_request(:get, /http:\/\/pro\.embed\.ly.*youtube\.com/).to_return(:body => File.open("#{Rails.root}/test/fixtures/embedly/youtube.json"), :status => 200)
+    stub_request(:get, /http:\/\/pro\.embed\.ly.*yahoo\.com/).to_return(:body => File.open("#{Rails.root}/test/fixtures/embedly/youtube.json"), :status => 200)
+    stub_request(:get, /http:\/\/pro\.embed\.ly.*example\.com/).to_return(:body => File.open("#{Rails.root}/test/fixtures/embedly/youtube.json"), :status => 200)
+    stub_request(:get, /http:\/\/pro\.embed\.ly.*my-invalid/).to_return(:body => File.open("#{Rails.root}/test/fixtures/embedly/youtube.json"), :status => 200)
   end
 
   def stub_gravatar

@@ -30,7 +30,7 @@ describe EmbedlyService do
 
       it "should pass all options through to Embedly" do
 
-        url = 'http://www.youtube.com/watch?v=onUd7aZhu9g'
+        url = 'http://www.youtube.com/watch?v=djtNtt8jDW4'
         opts = {
           :maxwidth => 100,
           :maxheight => 100,
@@ -53,15 +53,15 @@ describe EmbedlyService do
         # This line uses WebMock
         #embedly = EmbedlyService.new
 
-        embedly.fetch('http://www.youtube.com/watch?v=onUd7aZhu9g')
+        embedly.fetch('http://www.youtube.com/watch?v=djtNtt8jDW4')
 
         embedly.error.should be_nil
         embedly.properties.should_not be_nil
 
         embedly.properties.should have_key(:original_url)
-        embedly.properties[:original_url].should == 'http://www.youtube.com/watch?v=onUd7aZhu9g'
+        embedly.properties[:original_url].should == 'http://www.youtube.com/watch?v=djtNtt8jDW4'
         embedly.properties.should have_key(:url)
-        embedly.properties[:url].should == 'http://www.youtube.com/watch?v=onUd7aZhu9g'
+        embedly.properties[:url].should == 'http://www.youtube.com/watch?v=djtNtt8jDW4'
         embedly.properties.should have_key(:oembed)
         embedly.properties[:oembed].should be_instance_of Hash
       end
@@ -69,7 +69,7 @@ describe EmbedlyService do
       describe "EmbedlyService#fetch_and_merge_params!(params)" do
 
         before(:each) do
-          @hash = {:contribution => {:url => 'http://www.youtube.com/watch?v=onUd7aZhu9g'}}
+          @hash = {:contribution => {:url => 'http://www.youtube.com/watch?v=djtNtt8jDW4'}}
           @embedly = EmbedlyService.new
           @embedly.fetch_and_merge_params!(@hash)
         end
@@ -117,7 +117,7 @@ describe EmbedlyService do
         mock_embedly.stub(:objectify).and_raise(StandardError)
 
         embedly = EmbedlyService.new(mock_embedly)
-        embedly.fetch('http://www.youtube.com/watch?v=onUd7aZhu9g')
+        embedly.fetch('http://www.youtube.com/watch?v=djtNtt8jDW4')
         embedly.properties.should be_nil
         embedly.error.should_not be_nil
       end
@@ -130,7 +130,7 @@ describe EmbedlyService do
         mock_embedly.stub(:objectify).and_raise(StandardError)
 
         embedly = EmbedlyService.new(mock_embedly)
-        embedly.fetch('http://www.youtube.com/watch?v=onUd7aZhu9g')
+        embedly.fetch('http://www.youtube.com/watch?v=djtNtt8jDW4')
         embedly.properties.should be_nil
         embedly.error.should_not be_nil
       end
@@ -164,11 +164,11 @@ describe EmbedlyService do
       #let(:embedly) { EmbedlyService.new }
 
       #it "retrieve embedly object given a valid YouTube url" do
-        #embedly.fetch('http://www.youtube.com/watch?v=onUd7aZhu9g')
+        #embedly.fetch('http://www.youtube.com/watch?v=djtNtt8jDW4')
         #embedly.properties.should have_key(:original_url)
-        #embedly.fetch('http://www.youtube.com/watch?v=onUd7aZhu9g&some=other&garbage=data')
+        #embedly.fetch('http://www.youtube.com/watch?v=djtNtt8jDW4&some=other&garbage=data')
         #embedly.properties.should have_key(:url)
-        #embedly.properties[:url].should == 'http://www.youtube.com/watch?v=onUd7aZhu9g'
+        #embedly.properties[:url].should == 'http://www.youtube.com/watch?v=djtNtt8jDW4'
         #embedly.properties.should have_key(:oembed)
         #embedly.properties[:oembed].should be_instance_of Hash
         #embedly.error.should be_nil

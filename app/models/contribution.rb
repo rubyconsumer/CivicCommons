@@ -48,7 +48,7 @@ class Contribution < ActiveRecord::Base
   end
 
   def requires_one_of_url_or_attachement
-    self.errors[:content] << "can only have attachment or link, not both" if not self.url.blank? and has_attachment?
+    self.errors[:content] << "Contributions can only have attachment or link, not both." if not self.url.blank? and has_attachment?
   end
 
   def self.valid_attributes?(attributes)
@@ -61,6 +61,7 @@ class Contribution < ActiveRecord::Base
 
   #############################################################################
   # Embedly
+  before_validation :create_embeddly_info
 
   validates_format_of :url, :with => URI::regexp(%w(http https)), :allow_blank => true
 
@@ -70,6 +71,13 @@ class Contribution < ActiveRecord::Base
   def base_url
     match = /^(?<base_url>http[s]?:\/\/(\w|[^\?\/:])+(:\d+)?).*$/i.match(url)
     return match.nil? ? nil : match[:base_url]
+  end
+
+  def create_embeddly_info
+    unless url.blank?
+      embedly = EmbedlyService.new
+      embedly.fetch_and_update_attributes(self)
+    end
   end
 
   def has_media?

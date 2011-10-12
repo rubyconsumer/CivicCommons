@@ -26,7 +26,7 @@ feature "Add contribution", %q{
     # because of WebMock this URL will always be mocked to/from Embedly
     # /test/fixtures/embedly/youtube.json
     # /spec/support/stubbed_http_requests.rb
-    'http://www.youtube.com/watch?v=onUd7aZhu9g'
+    'http://www.youtube.com/watch?v=djtNtt8jDW4'
   end
 
   let(:file_path) do

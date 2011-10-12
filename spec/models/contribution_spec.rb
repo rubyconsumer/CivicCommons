@@ -122,7 +122,7 @@ describe Contribution do
       @person = Factory.create(:registered_user)
       @old_contribution = Factory.create(:contribution, {:created_at => Time.now - 35.minutes, :person => @person})
       @new_contribution = Factory.create(:contribution, {:created_at => Time.now - 5.minutes, :person => @person})
-      @new_params = {:contribution => { 'content' => "Some new comment", 'url' => "http://www.example.com/some-other-link" } }
+      @new_params = {:contribution => { 'content' => "Some new comment", 'url' => "http://www.youtube.com/watch?v=djtNtt8jDW4" } }
     end
 
     context "as the contributing user" do
@@ -309,7 +309,7 @@ describe Contribution do
     end
 
     it "updates the URL if new URL is specified" do
-      new_url = 'http://www.example.com/some-other-link'
+      new_url = 'http://maps.google.com/maps?f=q&source=s_q&hl=en&q=1360+East+Ninth+Street%2C+Suite+210%2C+Cleveland%2C+OH+44114&sll=41.510184%2C-81.690967&sspn=0.008243%2C0.019205&ie=UTF8&hnear=1360+E+9th+St+%23210%2C+Cleveland%2C+Cuyahoga%2C+Ohio+44114&ll=41.503451%2C-81.690087&spn=0.008244%2C0.019205&t=h&z=16'
       @link.update_attributes_by_user({ contribution: {:url => new_url} }, @person)
       @link.url.should == new_url
     end

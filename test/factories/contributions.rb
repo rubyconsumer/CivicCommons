@@ -79,8 +79,6 @@ Factory.define :link, :parent => :contribution do |f|
   f.conversation { |c| c.parent.conversation }
   f.content "Link Contribution"
   f.url "http://maps.google.com/maps?f=q&source=s_q&hl=en&q=1360+East+Ninth+Street%2C+Suite+210%2C+Cleveland%2C+OH+44114&sll=41.510184%2C-81.690967&sspn=0.008243%2C0.019205&ie=UTF8&hnear=1360+E+9th+St+%23210%2C+Cleveland%2C+Cuyahoga%2C+Ohio+44114&ll=41.503451%2C-81.690087&spn=0.008244%2C0.019205&t=h&z=1"
-  f.embedly_type "rich"
-  f.embedly_code "valid embedly code"
 end
 
 Factory.define :embedded_snippet, :parent => :contribution do |f|
@@ -88,14 +86,10 @@ Factory.define :embedded_snippet, :parent => :contribution do |f|
   f.conversation { |c| c.parent.conversation }
   f.content "Embedded Snippet Contribution"
   f.url "http://www.youtube.com/watch?v=djtNtt8jDW4"
-  f.embedly_type "video"
-  f.embedly_code "valid embedly code"
 end
 
 Factory.define :embedly_contribution, :parent => :contribution do |f|
   #f.association :parent, :factory => :contribution   TODO: this needs fixed to allow factory created parent contribution to have the same conversation association
   f.content "Embedly Contribution"
   f.url "http://www.youtube.com/watch?v=djtNtt8jDW4"
-  f.embedly_type "video"
-  f.embedly_code "valid embedly code"
 end
