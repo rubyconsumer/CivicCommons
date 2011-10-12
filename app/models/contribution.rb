@@ -61,12 +61,9 @@ class Contribution < ActiveRecord::Base
 
   #############################################################################
   # Embedly
-  before_validation :create_embeddly_info
+  before_save :create_embeddly_info
 
   validates_format_of :url, :with => URI::regexp(%w(http https)), :allow_blank => true
-
-  validates_presence_of :embedly_code, :unless => 'url.blank?'
-  validates_presence_of :embedly_type, :unless => 'url.blank?'
 
   def base_url
     match = /^(?<base_url>http[s]?:\/\/(\w|[^\?\/:])+(:\d+)?).*$/i.match(url)
@@ -74,7 +71,7 @@ class Contribution < ActiveRecord::Base
   end
 
   def create_embeddly_info
-    unless url.blank?
+    if not url.blank? and url =~ URI::regexp(%w(http https))
       embedly = EmbedlyService.new
       embedly.fetch_and_update_attributes(self)
     end

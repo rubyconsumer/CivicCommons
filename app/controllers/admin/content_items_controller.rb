@@ -84,7 +84,7 @@ class Admin::ContentItemsController < Admin::DashboardController
   private
 
   def get_embed_code_from_embedly(external_link, embed_code = nil)
-    if embed_code.blank? and not external_link.blank?
+    if embed_code.blank? and external_link =~ URI::regexp(%w(http https))
       embed_code = EmbedlyService.get_simple_embed(external_link)
     end
     return embed_code

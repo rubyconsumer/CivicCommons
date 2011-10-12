@@ -15,7 +15,6 @@ module StubbedHttpRequests
     stub_request(:get, /http:\/\/pro\.embed\.ly.*youtube\.com/).to_return(:body => File.open("#{Rails.root}/test/fixtures/embedly/youtube.json"), :status => 200)
     stub_request(:get, /http:\/\/pro\.embed\.ly.*yahoo\.com/).to_return(:body => File.open("#{Rails.root}/test/fixtures/embedly/youtube.json"), :status => 200)
     stub_request(:get, /http:\/\/pro\.embed\.ly.*example\.com/).to_return(:body => File.open("#{Rails.root}/test/fixtures/embedly/youtube.json"), :status => 200)
-    stub_request(:get, /http:\/\/pro\.embed\.ly.*my-invalid/).to_return(:body => File.open("#{Rails.root}/test/fixtures/embedly/youtube.json"), :status => 200)
   end
 
   def stub_gravatar
