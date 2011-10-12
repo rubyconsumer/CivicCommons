@@ -8,8 +8,6 @@ A commons is a shared public space devoted to the public good. And that’s what
 
 Even while this is important, heady stuff, we want to make your civic involvement easy and fun, something you can do after you put the kids to bed, something you might actually want to do, as much as, say, you want to fire up the DVR or head over to Facebook. Think of The Civic Commons as social media for civic good.
 
----
-
 How The Civic Commons works
 ===========================
 If you prefer video to text, be sure to check out our how-to video. If you’re not a check-out-the-video kind of citizen, you’ll just jump in and likely meet some of the passionate team whose work is grounded in our founding principles. A number of community partners share our commitment to those principles.
@@ -23,8 +21,6 @@ The John S. and James L. Knight Foundation
 Organizational Support
 ----------------------
 The Fund For Our Economic Future
-
----
 
 Contributing
 ============
@@ -67,13 +63,9 @@ Note: You will be asked to log in with the engine yard credentials.
 
     If you don't have access, talk to Winston.
 
----
-
 Copyright
 ---------
 Copyright (c) The Civic Commons -- released under the MIT license.
-
----
 
 License
 -------
