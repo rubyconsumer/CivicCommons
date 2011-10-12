@@ -121,31 +121,6 @@ class Conversation < ActiveRecord::Base
     from_community
   end
 
-  # Define our own method for allowing fields_for :contribution, rather
-  # than using accepts_nested_association :contributions.
-  # We need to use our custom Contribution builder to create contributions
-  # of only allowed types.
-  def contributions_attributes=(attributes)
-    self.rejected_contributions = []
-    attributes.each_value { |attr|
-      attr.merge!(:item => self)
-      if attr.has_key?(:url) and not attr[:url].blank?
-        attr_hash = {contribution: attr}
-        embedly = EmbedlyService.new
-        embedly.fetch_and_merge_params!(attr_hash)
-        attr.merge!(attr_hash[:contribution])
-      end
-      # Rather than set contribution.person over and over,
-      # it will now be set from contribution#set_person_from_item before_validation hook
-      contribution = Contribution.new_node(attr, nil, true)
-      if contribution.valid?
-        self.contributions << contribution
-      else
-        self.rejected_contributions << contribution
-      end
-    }
-  end
-
   def sort
     max_position = Conversation.where('staff_pick = true').maximum('position')
     Conversation.where('id = ?', self.id).update_all(position: max_position + 1) if max_position

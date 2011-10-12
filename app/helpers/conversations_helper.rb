@@ -171,4 +171,10 @@ module ConversationsHelper
     current_person && contribution.person == current_person ? "Add More" : "Respond#{' to ' + contribution.person.first_name if contribution.person}"
   end
 
+  def setup_conversation(conversation)
+    returning(conversation) do |conversation|
+      conversation.contributions.build if conversation.contributions.empty?
+    end
+  end
+
 end

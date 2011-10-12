@@ -4,8 +4,8 @@
       <div class="main-content">
         <h1>Start a Conversation</h1>
 
-        <%= form_for @conversation, :html =>{:multipart => true} do |conversation| %>
-          <%= render :partial => 'conversations/creation_errors', :locals => { :conversation => @conversation, :contributions => @contributions } %>
+        <%= form_for setup_conversation(@conversation), :html =>{:multipart => true} do |conversation| %>
+          <%= render :partial => 'conversations/creation_errors', :locals => { :conversation => @conversation, :contributions => @conversation.contributions } %>
           <br class="clear" />
 
           <%= render :partial => 'conversations/conversation_fields', :locals => { :form => conversation } %>
@@ -16,7 +16,7 @@
           <br class="clear" />
 
           <p>Get the ball rolling with a comment, question, or maybe a thought-provoking video you’ve already uploaded to YouTube.</p>
-          <%= render :partial => 'contributions/contribution_fields', :locals => { :form => conversation, :contributions => @contributions } %>
+          <%= render :partial => 'contributions/contribution_fields', :locals => { :form => conversation, :contributions => @conversation.contributions } %>
           <br class="clear" />
 
           <fieldset class="footer">

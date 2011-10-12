@@ -146,7 +146,6 @@ class ConversationsController < ApplicationController
   def new
     return redirect_to :conversation_responsibilities unless params[:accept]
     @conversation = Conversation.new
-    @contributions = [Contribution.new]
 
     render :new
   end
@@ -160,13 +159,12 @@ class ConversationsController < ApplicationController
   # POST /conversations
   def create
     prep_convo(params)
+
     respond_to do |format|
       if @conversation.save
         format.html { redirect_to(new_invite_path(:source_type => :conversations, :source_id => @conversation.id, :conversation_created => true), :notice => 'Your conversation has been created!') }
       else
-        #TODO: Find a better way to handle errors on submission
-        @contributions = [Contribution.new]
-        format.html { render :new, :status => :unprocessable_entity  }
+        format.html { render :new }
       end
     end
   end
@@ -240,14 +238,14 @@ class ConversationsController < ApplicationController
   private
 
   def prep_convo(params)
-    params[:conversation].merge!({
-      :person => current_person,
-      :from_community => true
-    })
     @conversation = Conversation.new(params[:conversation])
+    @conversation.person = current_person
+    @conversation.from_community = true
     @conversation.started_at = Time.now
-    # Load @contributions to populate re-rendered :new form if save is unsuccessful
-    @contributions = @conversation.contributions | @conversation.rejected_contributions
+    @conversation.contributions.each do |contribution|
+      contribution.confirmed = true
+      contribution.item = @conversation
+    end
   end
 
 end
