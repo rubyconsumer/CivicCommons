@@ -1,10 +1,6 @@
 class Invite
   def self.parse_emails(emails)
-    cleaned_emails = emails.to_s.gsub(/ /, '')
-    cleaned_emails.gsub!(/\r\n/, ',')
-    cleaned_emails.gsub!(/\n/, ',')
-    cleaned_emails.gsub!(/\r/, ',')
-    cleaned_emails.split(',')
+    emails.scan(EmailAddressValidation::EMAIL_ADDRESS_INNER_PATTERN)
   end
 
   def self.send_invites(emails, user, conversation)

@@ -25,6 +25,10 @@ describe Invite do
       email_results = Invite.parse_emails(emails)
       email_results.should == valid_results
     end
+    it "should parse emails with space in between them" do
+      emails = 'alpha@example.com bravo@example.com charlie@example.com'
+      Invite.parse_emails(emails).should == valid_results
+    end
   end
 
 end
