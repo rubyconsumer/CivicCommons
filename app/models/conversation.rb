@@ -30,8 +30,6 @@ class Conversation < ActiveRecord::Base
   has_one :survey, :as => :surveyable
   belongs_to :person, :foreign_key => "owner"
 
-  attr_accessor :rejected_contributions
-
   has_attached_file :image,
     :styles => {
        :normal => "480x300#",
