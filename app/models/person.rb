@@ -88,7 +88,7 @@ class Person < ActiveRecord::Base
     :path => ":attachment/:id/:style/:filename"
 
   validates_attachment_content_type :avatar,
-                                    :content_type => %w(image/jpeg image/gif image/png image/jpg image/x-png image/pjpeg),
+                                    :content_type => /image\/*/,
                                     :message => "Not a valid image file."
   process_in_background :avatar
 
