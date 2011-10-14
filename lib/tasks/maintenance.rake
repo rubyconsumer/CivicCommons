@@ -24,5 +24,18 @@ namespace :maintenance do
     end
     puts "#{Time.now}: Deleted #{deleted} top_item(s) that were orphaned."
   end
-  
+
+  desc "Removed any subscriptions that point to items no longer in the system"
+  task :purge_abandoned_subscriptions => :environment do
+    puts 'Starting abandoned subscription removal...'
+    count = 0
+    subscriptions = Subscription.all
+    subscriptions.each do |subscription|
+      unless subscription.subscribable
+        count += 1
+        subscription.destroy
+      end
+    end
+    puts "Finished abandoned subscription removal, #{count} items removed."
+  end
 end
