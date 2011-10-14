@@ -32,8 +32,8 @@
         <p><strong>Created On:</strong> <%= @issue.created_at.strftime("%m/%d/%Y") %></p>
         <%- unless @issue.sponsor_name.nil? or @issue.sponsor_name.empty?  %>
           <p>
-          This conversation was sponsored by <%= @issue.sponsor_name %>.
-          <%= link_to("Learn More about sponsorships.", sponsorships_url) %>
+          This issue was created on behalf of our client: <%= @issue.sponsor_name %>.
+          <%= link_to("Learn more about our work with clients.", '/pages/faq#work-with-clients') %>
           </p>
         <%- end %>
       </div>
