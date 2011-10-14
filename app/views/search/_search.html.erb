@@ -1,11 +1,20 @@
 <%
+  css_classes = []
   if defined? main_search
     if main_search == true
-      cssclass = "main-search-bar"
+      css_classes << "main-search-bar"
     end
   end
+  flash_error = flash[:error]
+  flash[:error] = nil
+  unless flash_error.nil?
+    css_classes << 'errors'
+  end
 %>
-<div id="search" class="<%= cssclass %>">
+<div id="search" class="<%= css_classes.join(' ') %>">
+  <% if flash_error %>
+    <p class="error"><%= flash_error %></p>
+  <% end %>
   <%= form_tag(search_path, {:method => "get", :'accept-charset' => 'utf-8'}) do  %>
     <%= text_field_tag :q, params['q'], :class => 'textbox', :placeholder => 'What are you looking for?' %>
     <%= submit_tag "Search", :class => 'submit', :id => 'Search', :name => nil %>

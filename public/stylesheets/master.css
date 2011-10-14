@@ -1658,6 +1658,12 @@ border-radius: 4px;
 -o-box-shadow: 0 0 1px rgba(255,255,255,1), inset 1px 1px 1px rgba(0,0,0,.1);
 box-shadow: 0 0 1px rgba(255,255,255,1), inset 1px 1px 1px rgba(0,0,0,.1);
 }
+div#search.errors form input.textbox {
+border-color: #A33333;
+}
+div#search.errors .error {
+font-weight: bold;
+}
 div#search form input.textbox:focus {outline: 0 none;}
 div#search input.submit {
 float: right;

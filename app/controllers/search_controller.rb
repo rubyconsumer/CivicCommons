@@ -9,7 +9,12 @@ class SearchController < ApplicationController
       models_to_search = [Conversation, Issue, Person, Contribution, ContentItem, ManagedIssuePage]
     end
 
-    @results = search_service.fetch_results(params[:q], models_to_search).paginate(page: params[:page], per_page: 10)
+    if params[:q] == ''
+      flash[:error] = 'You did not search for anything.  Please try again.'
+      @results = []
+    else
+      @results = search_service.fetch_results(params[:q], models_to_search).paginate(page: params[:page], per_page: 10)
+    end
 
   end
 
