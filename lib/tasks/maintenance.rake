@@ -33,6 +33,7 @@ namespace :maintenance do
     subscriptions.each do |subscription|
       unless subscription.subscribable
         count += 1
+        puts "  removing subscription to #{subscription.subscribable_type} #{subscription.subscribable_id} for person #{subscription.person_id}"
         subscription.destroy
       end
     end
