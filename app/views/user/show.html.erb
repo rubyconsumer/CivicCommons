@@ -6,10 +6,10 @@
 
   <div class="wrapper profile">
   	<div class="content-container">
+        <h1><%= @user.name %></h1>
   		<div class="main-content">
 	   		<div class="offset-1 profile-mast">
 	   		  <%= profile_image(@user, 70) %>
-	   		  <h1><%= @user.name %></h1>
 	   		  <% unless @user.bio.blank? %>
 	   		        <p><%= @user.bio %></p>
 	   		  <% end %>
