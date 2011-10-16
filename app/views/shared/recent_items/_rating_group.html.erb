@@ -5,7 +5,7 @@
     conversation = Conversation.find(rating_group.conversation_id)
     rating = Rating.find_by_rating_group_id(rating_group.id)
   %>
-  <%= rating_group.person.name %> rated a response from <%= contribution.person.name %> as <strong><%= rating.rating_descriptor.title %></strong>:
+  <%= rating_group.person.name %> rated a response from <%= contribution.person.name %> as <strong><%= rating && rating.rating_descriptor.title %></strong>:
 </p>
 
 <p>

@@ -151,6 +151,10 @@ describe Activity do
     let(:convo) do
       Factory.create(:conversation)
     end
+    
+    let(:rating_group) do
+      Factory.create(:rating_group)
+    end
 
     before(:each) do
       @item_count = 3
@@ -158,7 +162,7 @@ describe Activity do
       (1..@item_count).each do |i|
         Factory.create(:conversation_activity, item_id: convo.id)
         Factory.create(:contribution_activity, item_id: 1)
-        Factory.create(:rating_group_activity, item_id: 1)
+        Factory.create(:rating_group_activity, item_id: rating_group.id)
         Factory.create(:survey_response_activity, item_id: 1)
       end
     end
@@ -272,6 +276,42 @@ describe Activity do
       decoded_survey_response.person_id.should == survey_response.person_id
     end
 
+  end
+  
+  context "Activity#exists?" do
+    context "Checking if the Activity Exists or not" do
+      
+      before(:all) do
+        ActiveRecord::Observer.enable_observers
+      end
+      
+      after(:all) do
+        ActiveRecord::Observer.disable_observers
+      end
+
+      let(:convo) do
+        Factory.create(:conversation)
+      end
+
+      let(:rating_group) do
+        Factory.create(:rating_group)
+      end
+      
+      let(:invalid_type) do
+        Factory.create(:normal_person)
+      end
+      
+      it "should check existance based on item_id and item_type if it is a valid type" do
+        @convo = convo
+        Activity.count.should == 1
+        Activity.exists?(@convo).should be_true
+      end
+      
+      it "should use default 'exists?' method if it's not valid" do
+        @rating_group = rating_group
+        Activity.exists?(invalid_type).should be_false
+      end
+    end
   end
 
 end

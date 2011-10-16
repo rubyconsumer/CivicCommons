@@ -78,6 +78,16 @@ class Activity < ActiveRecord::Base
       super(id)
     end
   end
+  
+  # will find if the activity exists.
+  def self.exists?(id)
+    if Activity.valid_type?(id)
+      id = id.becomes(Contribution) if id.is_a?(Contribution)
+      Activity.exists?(:item_id => id.id, :item_type=> id.class)
+    else
+      super(id)
+    end
+  end
 
   ############################################################
   # class utility methods
