@@ -819,7 +819,7 @@ font-size: 1.8em;
 font-weight: normal;
 margin-bottom: .2em;
 }
-.issue-details .issue-tags {
+.issue-tags {
 color: #999;
 font-size: .95em;
 font-weight: bold;
@@ -991,7 +991,7 @@ margin-bottom: 35px;
 /*- BUTTON AND LINK STYLES
 ----------------------------------------------------------------------*/
 
-a:link, a:visited {
+a {
 color: #444;
 outline: none;
 }
