@@ -152,7 +152,7 @@ text-decoration: none;
 }
 ul.block-link-list a:hover {
 background: #fff;
-color: #6291ac;
+color: #6696b2;
 }
 ul.block-link-list a:active, ul.block-link-list a.current {
 background: #95b6ca;
@@ -860,8 +860,6 @@ padding: 2px 0 2px 24px;
 background: url(/images/doc-i.png) no-repeat 0 2px;
 padding: 2px 0 2px 21px;
 }
-
-/*- Issue Filters in Sidebar ----------*/
 
 /*- PAGINATION STYLES
 ----------------------------------------------------------------------*/
