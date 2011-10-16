@@ -1859,6 +1859,7 @@ margin-bottom: 0;
 float: left;
 margin-right: 15px;
 }
+div.three-col-sm div.cols.call-out p {word-wrap: break-word;}
 
 /*- Aside Module ----------*/
 
