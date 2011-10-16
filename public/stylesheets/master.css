@@ -138,6 +138,9 @@ ul.simple-list {
 list-style-type: none;
 margin-left: 0;
 }
+
+/*- Block Link List Styles (generic) ----------*/
+
 ul.block-link-list li {margin-bottom: 0;}
 ul.block-link-list a {
 border-bottom: 1px solid #ddd;
@@ -149,6 +152,12 @@ text-decoration: none;
 }
 ul.block-link-list a:hover {
 background: #fff;
+color: #6291ac;
+}
+ul.block-link-list a:active, ul.block-link-list a.current {
+background: #95b6ca;
+color: #fff;
+text-shadow: 0 -1px 0px rgba(0, 0, 0, .3);
 }
 ul.block-link-list span {
 float: left;
@@ -360,7 +369,6 @@ p.fb-cnct-links {padding-top: 5px;}
 #ajax-login-container p#facebook {padding: 0px 0px 0px 160px;}
 .fb-modal input.textbox {width: 7em;}
 
-
 /*misc modal*/
 .modal {padding: 25px 20px;}
 .modal h2 {
@@ -451,7 +459,6 @@ margin: 0 0 20px 20px;
 }
 div.three-col-sm div.photobank {margin: 0 0 0 -6px;}
 div.three-col-sm div.photobank img {margin: 0 0 6px 6px;}
-
 
 
 /*- SURVEY STYLES
@@ -854,6 +861,7 @@ background: url(/images/doc-i.png) no-repeat 0 2px;
 padding: 2px 0 2px 21px;
 }
 
+/*- Issue Filters in Sidebar ----------*/
 
 /*- PAGINATION STYLES
 ----------------------------------------------------------------------*/
