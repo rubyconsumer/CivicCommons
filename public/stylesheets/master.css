@@ -10,7 +10,9 @@ font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
 font-size: 100%;
 }
 
-/*- Typography ----------*/
+/* @group Typography */
+
+/*- Basic Typography Styles ----------*/
 
 div#header-wrapper, div.wrapper, div#nav-wrapper, div#footer, div#legal {font-size: .75em;}
 p {
@@ -152,7 +154,7 @@ text-decoration: none;
 }
 ul.block-link-list a:hover {
 background: #fff;
-color: #6696b2;
+color: #6291ac;
 }
 ul.block-link-list a:active, ul.block-link-list a.current {
 background: #95b6ca;
@@ -377,6 +379,8 @@ margin-bottom: 12px;
 padding-bottom: 12px;
 }
 
+/* @end */
+
 
 /*- MODULAR ELEMENT STYLES
 ----------------------------------------------------------------------*/
@@ -393,8 +397,7 @@ p.topic-selection a {margin-left: 1em;}
 a.see-more {float: right;}
 
 
-/*- IMAGE OFFSET STYLE
-----------------------------------------------------------------------*/
+/* @group Offset Styles */
 
 /*- Image Offset ----------*/
 
@@ -443,6 +446,8 @@ padding-left: 25px;
 .dnld strong {display: block;}
 .dnld p {margin-bottom: .2em;}
 
+/* @end */
+
 
 /*- PHOTOBANK STYLES
 ----------------------------------------------------------------------*/
@@ -461,8 +466,9 @@ div.three-col-sm div.photobank {margin: 0 0 0 -6px;}
 div.three-col-sm div.photobank img {margin: 0 0 6px 6px;}
 
 
-/*- SURVEY STYLES
-----------------------------------------------------------------------*/
+/* @group Survey and Voting Styles */
+
+/*- Survey Styles ----------*/
 
 .survey-option .description{
 display: none;
@@ -706,6 +712,8 @@ left: 8%;
 width: 92%;
 text-shadow: 0 1px 1px rgba(255, 255, 255, .5);
 }
+
+/* @end */
 
 
 /*-----------------------------------------------
@@ -1055,6 +1063,8 @@ form.delete-button {
 display: inline;
 margin-left: 8px;
 }
+
+/* @end */
 
 
 /*- PAGE STRUCTURE
