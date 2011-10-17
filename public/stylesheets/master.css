@@ -43,7 +43,11 @@ float: left;
 }
 .contribution-container i.date {color: #444;}
 .conversations {margin: 0;}
-.collapsed > .comment > .conversations.divided {padding-top: 0;}
+.collapsed > .comment > .conversations.divided {
+padding-top: 0;
+/* margin-top: 15px; */
+}
+>>>>>>> c80ea37... CSS formatting cleanup.
 .conversations.divided li {
 margin-bottom: 0;
 margin-top: 0;
@@ -930,7 +934,6 @@ margin-bottom: 35px;
 .profile .recent-item.conversation {background: url("/images/conv-r.png") no-repeat 2px 4px;}
 .profile .recent-item.rating {background: url("/images/voting-icon.png") no-repeat 7px 4px;}
 .profile .recent-item.issue {background: url("/images/issues-r.png") no-repeat 2px 4px;}
-
 .profile .issue p {padding-left: 0;}
 
 
@@ -1207,8 +1210,51 @@ background: url(../images/nav_comm.png) no-repeat 0 17px;
 display: block;
 padding-left: 32px;
 }
-ul#main-nav li.commons {
-background: url(../images/nav_build.png) no-repeat 0 17px;
+ul#main-nav li div#commons {
+background: url(../images/nav_build.png) no-repeat 0 0;
+padding-left: 26px;
+}
+
+/*- Search Form Styles ----------*/
+
+div#search {
+border: 1px solid #b4b4b5;
+float: left;
+margin-left: 66px;
+margin-top: 10px;
+padding-left: 5px;
+width: 266px;
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #f5f5f5), color-stop(0.5, #fff));
+background: -moz-linear-gradient(center top , #f5f5f5, #fff);
+filter: progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorStr=#f5f5f5, endColorStr=#fff);
+-moz-border-radius: 4px;
+-webkit-border-radius: 4px;
+-o-border-radius: 4px;
+border-radius: 4px;
+-webkit-box-shadow: 0 0 1px rgba(255,255,255,1);
+-moz-box-shadow: 0 0 1px rgba(255,255,255,1);
+-o-box-shadow: 0 0 1px rgba(255,255,255,1);
+box-shadow: 0 0 1px rgba(255,255,255,1);
+}
+div#search form {
+background: url(../images/search-icon.png) no-repeat 3px 5px;
+height: 24px;
+padding-left: 24px;
+position: relative;
+width: 242px;
+}
+div#search form input.textbox {
+background: transparent;
+border: none;
+margin: 6px 0 0;
+padding: 0;
+width: 242px;
+}
+div#search form input.textbox:focus {outline: 0 none;}
+div#search input.submit {
+background: none;
+border: none;
+color: transparent; /* Hack to make the value of the submit input invisible to IE */
 display: block;
 padding-left: 26px;
 }
@@ -1384,7 +1430,7 @@ border-radius: 8px;
 /*- Conversation Utility ----------*/
 
 .edit-contribution {float: right;}
-.thread-list .thread-list .contribution-container .edit-contribution {margin-right: 40px;}
+.contribution-thread-div .contribution-container .edit-contribution {margin-right: 40px;}
 .edit-contribution a {margin-left: 15px;}
 div.convo-utility {
 position:relative;
@@ -1431,7 +1477,7 @@ float: left;
 margin-right: 10px;
 }
 p.link-quot {color: #636363;}
-div.link-meta p.link-title a, div.link-meta p.link-quot a{
+div.link-meta p.link-title a, div.link-meta p.link-quot a {
 text-decoration: none;
 font-weight: bold;
 }
@@ -1949,13 +1995,13 @@ div.three-col-sm div.cols.call-out p {word-wrap: break-word;}
 /*- Empty Section ----------*/
 
 .empty {
-  background: #fff;
-  border: 2px dashed #c3c3c3;
-  padding: 20px;
-  -moz-border-radius: 6px;
-  -webkit-border-radius: 6px;
-  -o-border-radius: 6px;
-  border-radius: 6px;
+background: #fff;
+border: 2px dashed #c3c3c3;
+padding: 20px;
+-moz-border-radius: 6px;
+-webkit-border-radius: 6px;
+-o-border-radius: 6px;
+border-radius: 6px;
 }
 
 /*- Aside Module ----------*/
