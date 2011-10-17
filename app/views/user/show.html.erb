@@ -10,22 +10,26 @@
   		<div class="main-content">
 	   		<div class="offset-1 profile-mast">
 	   		  <%= profile_image(@user, 70) %>
-	   		  <% unless @user.bio.blank? %>
-	   		        <p><%= @user.bio %></p>
+	   		  <% if @user.bio.blank? %>
+	   		    <p class="empty">Looks like you haven't filled out your bio&hellip; Head over to your <%= link_to_settings(current_person).html_safe.downcase %> and tell us a little bit about yourself.</p>
+	   		  <% elsif %>
+	   		    <p><%= @user.bio %></p>
 	   		  <% end %>
 	 		</div>
 	  	</div>
   		<div class="aside">
+  		  <% unless @user.website.blank? && @user.twitter_username.blank? %>
   			<div class="mod call-out">
   				<ul class="profile-extras">
-                  <% unless @user.website.blank? %>
-                  	<li class="website-profile"><%= link_to @user.website, @user.website %></li>
-                   <% end %>
-                   <% unless @user.twitter_username.blank? %>
-                     	<li class="twitter-profile"><%= link_to "@#{@user.twitter_username}", "http://twitter.com/#!/#{@user.twitter_username}" %></li>
-                   <% end %>
-                </ul>
+            <% unless @user.website.blank? %>
+            	<li class="website-profile"><%= link_to @user.website, @user.website %></li>
+             <% end %>
+             <% unless @user.twitter_username.blank? %>
+               	<li class="twitter-profile"><%= link_to "@#{@user.twitter_username}", "http://twitter.com/#!/#{@user.twitter_username}" %></li>
+             <% end %>
+          </ul>
   			</div>
+        <% end %>
   		</div>
   	</div>
 

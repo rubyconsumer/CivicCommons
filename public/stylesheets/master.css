@@ -1946,6 +1946,18 @@ margin-right: 15px;
 }
 div.three-col-sm div.cols.call-out p {word-wrap: break-word;}
 
+/*- Empty Section ----------*/
+
+.empty {
+  background: #fff;
+  border: 2px dashed #c3c3c3;
+  padding: 20px;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+  -o-border-radius: 6px;
+  border-radius: 6px;
+}
+
 /*- Aside Module ----------*/
 
 .aside .mod {margin-bottom: 30px;}
