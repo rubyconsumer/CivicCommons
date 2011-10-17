@@ -3,6 +3,7 @@ class Activity < ActiveRecord::Base
   set_table_name "top_items"
 
   belongs_to :item, polymorphic: true
+  belongs_to :person
 
   validates :item_id, presence: true
   validates :item_type, presence: true
@@ -11,10 +12,7 @@ class Activity < ActiveRecord::Base
 
   VALID_TYPES = [ Conversation, Contribution, Issue, RatingGroup, SurveyResponse ]
 
-  ############################################################
-  # construction/destruction
-
-  # will accept an active record object of valid type
+  # Accept an Active Record object of valid type
   def initialize(attributes = nil)
 
     if Activity.valid_type?(attributes)
@@ -37,16 +35,17 @@ class Activity < ActiveRecord::Base
       end
 
       attributes = attr
-
     end
 
     super(attributes)
   end
 
-  #Updating cache data on update
+  ############################################################
+  # class utility methods
+  ############################################################
 
+  # Update cache data
   def self.update(model)
-
     model = model.becomes(Contribution) if model.is_a?(Contribution)
 
     if Activity.valid_type?(model)
@@ -56,42 +55,39 @@ class Activity < ActiveRecord::Base
         item.save
       end
     end
-
   end
 
-  # will accept an active record object of valid type
-  def self.delete(id)
-    if Activity.valid_type?(id)
-      id = id.becomes(Contribution) if id.is_a?(Contribution)
-      Activity.delete_all("item_id = #{id.id} and item_type like '#{id.class}'")
+  # Accept an Active Record object of valid type
+  def self.delete(model)
+    if Activity.valid_type?(model)
+      model = model.becomes(Contribution) if model.is_a?(Contribution)
+      Activity.delete_all("item_id = #{model.id} and item_type like '#{model.class}'")
     else
-      super(id)
+      super(model)
     end
   end
 
-  # will accept an active record object of valid type
-  def self.destroy(id)
-    if Activity.valid_type?(id)
-      id = id.becomes(Contribution) if id.is_a?(Contribution)
-      Activity.destroy_all("item_id = #{id.id} and item_type like '#{id.class}'")
+  # Accept an Active Record object of valid type
+  def self.destroy(model)
+    if Activity.valid_type?(model)
+      model = model.becomes(Contribution) if model.is_a?(Contribution)
+      Activity.destroy_all("item_id = #{model.id} and item_type like '#{model.class}'")
     else
-      super(id)
-    end
-  end
-  
-  # will find if the activity exists.
-  def self.exists?(id)
-    if Activity.valid_type?(id)
-      id = id.becomes(Contribution) if id.is_a?(Contribution)
-      Activity.exists?(:item_id => id.id, :item_type=> id.class)
-    else
-      super(id)
+      super(model)
     end
   end
 
-  ############################################################
-  # class utility methods
+  # Find if the activity exists for an Active Record object.
+  def self.exists?(model)
+    if Activity.valid_type?(model)
+      model = model.becomes(Contribution) if model.is_a?(Contribution)
+      Activity.exists?(:item_id => model.id, :item_type=> model.class)
+    else
+      super(model)
+    end
+  end
 
+  # Check if item is a valid type for Activity
   def self.valid_type?(item)
     ok = false
     VALID_TYPES.each do |type|

@@ -99,14 +99,14 @@ describe Activity do
       a.should be_valid
       a.item_type.should == 'RatingGroup'
     end
-    
+
     it "Creates a new activity from valid survey response object" do
       obj = Factory.build(:survey_response, id: 1, created_at: Time.now)
       a = Activity.new(obj)
       a.should be_valid
       a.item_type.should == 'SurveyResponse'
     end
-    
+
 
     it "Does not create a new acivity on top level contribution" do
       obj = Factory.build(:top_level_contribution, id: 1, created_at: Time.now)
@@ -148,12 +148,20 @@ describe Activity do
 
   context "Removing activity records" do
 
+    let(:contrib) do
+      Factory.create(:contribution)
+    end
+
     let(:convo) do
       Factory.create(:conversation)
     end
-    
+
     let(:rating_group) do
       Factory.create(:rating_group)
+    end
+
+    let(:survey) do
+      Factory.create(:survey)
     end
 
     before(:each) do
@@ -161,9 +169,9 @@ describe Activity do
       @total_count = 12
       (1..@item_count).each do |i|
         Factory.create(:conversation_activity, item_id: convo.id)
-        Factory.create(:contribution_activity, item_id: 1)
+        Factory.create(:contribution_activity, item_id: contrib.id)
         Factory.create(:rating_group_activity, item_id: rating_group.id)
-        Factory.create(:survey_response_activity, item_id: 1)
+        Factory.create(:survey_response_activity, item_id: survey.id)
       end
     end
 
@@ -223,7 +231,7 @@ describe Activity do
       encoded_rating_group.should match(/person/)
       encoded_rating_group.should match(/ratings/)
     end
-    
+
     it "serializes a survey response object" do
       encoded_survey_response = Activity.encode(vote_survey_response)
       encoded_survey_response.should be_an_instance_of String
@@ -277,14 +285,14 @@ describe Activity do
     end
 
   end
-  
+
   context "Activity#exists?" do
     context "Checking if the Activity Exists or not" do
-      
+
       before(:all) do
         ActiveRecord::Observer.enable_observers
       end
-      
+
       after(:all) do
         ActiveRecord::Observer.disable_observers
       end
@@ -296,17 +304,17 @@ describe Activity do
       let(:rating_group) do
         Factory.create(:rating_group)
       end
-      
+
       let(:invalid_type) do
         Factory.create(:normal_person)
       end
-      
+
       it "should check existance based on item_id and item_type if it is a valid type" do
         @convo = convo
         Activity.count.should == 1
         Activity.exists?(@convo).should be_true
       end
-      
+
       it "should use default 'exists?' method if it's not valid" do
         @rating_group = rating_group
         Activity.exists?(invalid_type).should be_false
