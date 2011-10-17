@@ -14,12 +14,13 @@ namespace :maintenance do
     puts "Done!"
   end
 
-  task :purge_abandoned_top_items => :environment do
+  task :purge_abandoned_activities => :environment do
     deleted = 0
-    puts "Deleting ophaned top_items (probably from contributions, conversations, or issues that were manually deleted from teh db)..."
-    TopItem.includes(:item).all.each do |ti|
-      if ti.item.nil?
-        deleted += 1 if ti.destroy
+    puts "Deleting ophaned activities (probably from contributions, conversations, or issues that were manually deleted from teh db)..."
+    Activity.includes(:item).all.each do |activity|
+      if activity.item.nil?
+        puts "Activity #{activity.id} removed. #{activity.inspect}."
+        deleted += 1 if activity.destroy
       end
     end
     puts "#{Time.now}: Deleted #{deleted} top_item(s) that were orphaned."
