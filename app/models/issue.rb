@@ -15,6 +15,7 @@ class Issue < ActiveRecord::Base
   belongs_to :person
 
   has_and_belongs_to_many :conversations
+  has_and_belongs_to_many :topics
   # Contributions directly related to this Issue
   has_many :contributions
   has_many :suggested_actions

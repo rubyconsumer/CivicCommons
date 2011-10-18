@@ -149,6 +149,22 @@ describe Issue do
       end
     end
     
+    context "has_and_belongs_to_many topics" do
+      def given_an_issue_with_topics
+        @issue = Factory.create(:issue)
+        @topic1 = Factory.create(:topic)
+        @topic2 = Factory.create(:topic)
+        @issue.topics = [@topic1, @topic2]
+      end
+      it "should be correct" do
+        Issue.reflect_on_association(:topics).macro.should == :has_and_belongs_to_many
+      end
+      it "should correctly count the number of topics" do
+        given_an_issue_with_topics
+        @issue.topics.count.should == 2
+      end
+    end
+    
   end
 
   context "Top Issues" do

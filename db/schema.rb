@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111007140728) do
+ActiveRecord::Schema.define(:version => 20111017014052) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -249,6 +249,15 @@ ActiveRecord::Schema.define(:version => 20111007140728) do
 
   add_index "issues", ["cached_slug"], :name => "index_issues_on_cached_slug", :unique => true
 
+  create_table "issues_topics", :id => false, :force => true do |t|
+    t.integer  "issue_id"
+    t.integer  "topic_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "issues_topics", ["issue_id", "topic_id"], :name => "index_issues_topics_on_issue_id_and_topic_id"
+
   create_table "managed_issue_pages", :force => true do |t|
     t.string   "name",            :null => false
     t.integer  "issue_id",        :null => false
@@ -434,6 +443,12 @@ ActiveRecord::Schema.define(:version => 20111007140728) do
   add_index "top_items", ["issue_id"], :name => "issues_index"
   add_index "top_items", ["item_id", "item_type"], :name => "index_top_items_on_item_id_and_item_type"
   add_index "top_items", ["person_id"], :name => "person_index"
+
+  create_table "topics", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "visits", :force => true do |t|
     t.integer  "person_id"
