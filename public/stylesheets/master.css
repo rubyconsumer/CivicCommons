@@ -1215,50 +1215,6 @@ background: url(../images/nav_build.png) no-repeat 0 0;
 padding-left: 26px;
 }
 
-/*- Search Form Styles ----------*/
-
-div#search {
-border: 1px solid #b4b4b5;
-float: left;
-margin-left: 66px;
-margin-top: 10px;
-padding-left: 5px;
-width: 266px;
-background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #f5f5f5), color-stop(0.5, #fff));
-background: -moz-linear-gradient(center top , #f5f5f5, #fff);
-filter: progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorStr=#f5f5f5, endColorStr=#fff);
--moz-border-radius: 4px;
--webkit-border-radius: 4px;
--o-border-radius: 4px;
-border-radius: 4px;
--webkit-box-shadow: 0 0 1px rgba(255,255,255,1);
--moz-box-shadow: 0 0 1px rgba(255,255,255,1);
--o-box-shadow: 0 0 1px rgba(255,255,255,1);
-box-shadow: 0 0 1px rgba(255,255,255,1);
-}
-div#search form {
-background: url(../images/search-icon.png) no-repeat 3px 5px;
-height: 24px;
-padding-left: 24px;
-position: relative;
-width: 242px;
-}
-div#search form input.textbox {
-background: transparent;
-border: none;
-margin: 6px 0 0;
-padding: 0;
-width: 242px;
-}
-div#search form input.textbox:focus {outline: 0 none;}
-div#search input.submit {
-background: none;
-border: none;
-color: transparent; /* Hack to make the value of the submit input invisible to IE */
-display: block;
-padding-left: 26px;
-}
-
 /*- Feature Area ----------*/
 
 .feature h1 {margin-bottom: 3px;}
