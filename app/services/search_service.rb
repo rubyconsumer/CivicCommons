@@ -19,13 +19,9 @@ class SearchService
       end
     end
 
-    fetched_results = []
-    results.each_hit_with_result do |hit, result|
-      unless hit.result.is_a?(Contribution) and not hit.result.confirmed?
-        fetched_results << hit
-      end
+    results.hits({ verify: true }).reject do |hit|
+      hit.result.is_a?(Contribution) and not hit.result.confirmed?
     end
-    return fetched_results
   end
 
   def accepted_fields(models)
