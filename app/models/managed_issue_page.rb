@@ -23,6 +23,8 @@ class ManagedIssuePage < ActiveRecord::Base
   has_friendly_id :name, :use_slug => true, :strip_non_ascii => true
 
   searchable :ignore_attribute_changes_of => [ :updated_at, :stylesheet_path, :template ] do
-    text :template, :stored => true, :boost => 1, :default_boost => 1
+    text :template, :stored => true, :boost => 1, :default_boost => 1 do
+       CCML.sanitize_tags(template)
+    end
   end
 end

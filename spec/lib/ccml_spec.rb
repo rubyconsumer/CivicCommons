@@ -307,6 +307,12 @@ describe CCML do
 
     end
 
+    describe "CCML#sanitize_tags" do
+      it "should sanitize all CCML tags" do
+        text = '{ccml:issue:pages}{name}{/ccml:issue:pages}{ccml:render:partial path="layouts/create conversation"}Recommended Conversations'
+        CCML.sanitize_tags(text).should == 'Recommended Conversations'
+      end
+    end
   end
 
 end

@@ -279,6 +279,11 @@ module CCML
 
     return ccml
   end
+  
+  # Does sanitizes text of CCML tag.
+  def CCML.sanitize_tags(ccml)
+    ccml.to_s.gsub(CCML::TAG_PAIR_PATTERN,'').gsub(CCML::SINGLE_TAG_PATTERN,'')
+  end
 
   private
 
