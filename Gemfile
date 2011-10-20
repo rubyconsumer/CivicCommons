@@ -94,4 +94,5 @@ group :cool_toys do
   gem 'autotest-fsevent'
   gem "jasmine-headless-webkit"
   gem 'query_reviewer', :git => 'git://github.com/nesquena/query_reviewer.git'
+  gem 'spork'
 end
