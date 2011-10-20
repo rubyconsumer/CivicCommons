@@ -31,11 +31,6 @@ describe IssuesController do
       assigns(:issues).should == Issue.where(:exclude_from_result => false).all
     end
 
-    it "assigns all regions to @regions" do
-      get :index
-      assigns(:regions).should == Region.all
-    end
-
     it "assigns the first main article to @main_article" do
       get :index
       assigns(:main_article).should == @main_article

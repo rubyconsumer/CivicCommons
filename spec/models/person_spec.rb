@@ -41,12 +41,34 @@ describe Person do
         @person = Factory.build(:normal_person,:zip_code =>'')
       end
       
-      it "should be validated generally" do
+      def given_a_registered_person_without_a_zip_code
+        @person = Factory :registered_user
+        @person.zip_code = nil
+      end
+
+      def given_a_registered_person_with_a_short_zip_code
+        @person = Factory :registered_user
+        @person.zip_code = "all"
+      end
+
+      it "should be validated when a new person is registering" do
         given_a_person_with_no_zip_code
         @person.valid?
         @person.errors.should have_key(:zip_code)
       end
-      
+
+      it "should not be validated when the person already exists" do
+        given_a_registered_person_without_a_zip_code
+        @person.valid?
+        @person.errors.should_not have_key(:zip_code)
+      end
+
+      it "should not be validated when the person already exists and has a short (invalid) zip code" do
+        given_a_registered_person_with_a_short_zip_code
+        @person.valid?
+        @person.errors.should_not have_key(:zip_code)
+      end
+
       it "should not be validated when facebook unlinking" do
         given_a_person_with_no_zip_code
         @person.stub(:facebook_unlinking?).and_return(true)

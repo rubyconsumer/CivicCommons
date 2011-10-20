@@ -6,7 +6,6 @@ class IssuesController < ApplicationController
     @search = Issue.sort(params[:sort]).where(:exclude_from_result => false)
     @issues = @search.paginate(:page => params[:page], :per_page => 20)
 
-    @regions = Region.all
     @main_article = Article.issue_main_article.first
     @sub_articles = Article.issue_sub_articles.limit(3)
     @recent_items = Activity.most_recent_activity(3)

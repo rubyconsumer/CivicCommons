@@ -65,8 +65,11 @@ class Person < ActiveRecord::Base
   has_many :contributed_issues, :through => :contributions, :source => :issue, :uniq => true, :dependent => :restrict 
 
   validates_length_of :email, :within => 6..255, :too_long => "please use a shorter email address", :too_short => "please use a longer email address"
-  validates_length_of :zip_code, :within => (5..10), :allow_blank => true, :allow_nil => true, :if => :validate_zip_code?
-  validates_presence_of :zip_code, :message => 'Please enter zipcode.', :if => :validate_zip_code?
+
+  validates_presence_of :zip_code, :message => ' please enter zipcode', :on => :create, :if => :validate_zip_code_on_create?
+  validates_presence_of :zip_code, :message => ' please enter zipcode', :on => :update, :if => :validate_zip_code_on_update?
+  validates_length_of :zip_code, :message => ' must be 5 characters or higher', :within => (5..10), :allow_blank => false, :allow_nil => false, :on => :create, :if => :validate_zip_code_on_create?
+  validates_length_of :zip_code, :message => ' must be 5 characters or higher', :within => (5..10), :allow_blank => false, :allow_nil => false, :on => :update, :if => :validate_zip_code_on_update?
   validates_presence_of :name
   validate :check_twitter_username_format
 
@@ -268,13 +271,19 @@ class Person < ActiveRecord::Base
     encrypted_password.blank? ? false : super
   end
 
-  def validate_zip_code?
-    if create_from_auth?
-      false
-    elsif facebook_unlinking?
+  def validate_zip_code_on_create?
+    if create_from_auth? || facebook_unlinking?
       false
     else
-      true
+      return (self.new_record?) ? true : false
+    end
+  end
+
+  def validate_zip_code_on_update?
+    if create_from_auth? || facebook_unlinking?
+      false
+    else
+      return (self.new_record?) ? true : false
     end
   end
 
