@@ -58,16 +58,13 @@ Spork.prefork do
     config.include Paperclip::Shoulda::Matchers
     config.include Devise::TestHelpers, :type => :controller
     config.fixture_path = "#{::Rails.root}/spec/fixtures"
-    config.before :suite do
-      DatabaseCleaner.strategy = :transaction
-      DatabaseCleaner.clean_with :truncation
-    end
-
+    
     # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
     config.use_transactional_fixtures = false
 
     config.before :suite do
       DatabaseCleaner.strategy = :truncation
+      DatabaseCleaner.clean_with :truncation
     end
 
     config.before :each do
@@ -76,22 +73,12 @@ Spork.prefork do
       stub_amazon_s3_request
       stub_pro_embedly_request
       stub_gravatar
+      Capybara.current_driver = :selenium if example.metadata[:js]
     end
 
     config.after :each do
       DatabaseCleaner.clean
-    end
-
-    config.before :all do
-      DatabaseCleaner.start
-      stub_contribution_urls
-      stub_amazon_s3_request
-      stub_pro_embedly_request
-      stub_gravatar
-    end
-
-    config.after :all do
-      DatabaseCleaner.clean
+      Capybara.use_default_driver if example.metadata[:js]
     end
   end
 
@@ -104,9 +91,4 @@ Spork.prefork do
 end
 
 Spork.each_run do
-  # This code will be run each time you run your specs.
-  
-  Rspec.configure do | config |
-    config.filter_run_excluding :js => true unless ENV['__test_js__']
-  end
 end
