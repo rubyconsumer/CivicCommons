@@ -1207,6 +1207,7 @@ padding-top: 15px;
 
 .hide_contrib_tool {
 position: absolute;
+display: none;
 left: -10000px;
 top: auto;
 overflow: hidden;
@@ -1226,6 +1227,7 @@ border-radius: 4px;
 -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 -o-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+
 }
 .contrib_tool_container .section input,
 form.contribution_edit .section input{
