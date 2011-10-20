@@ -74,6 +74,7 @@ group :test do
   gem 'timecop'
   gem 'selenium-webdriver', '>= 0.2.2'
   gem 'rspec-spies'
+  gem 'spork'
 end
 
 
@@ -94,5 +95,4 @@ group :cool_toys do
   gem 'autotest-fsevent'
   gem "jasmine-headless-webkit"
   gem 'query_reviewer', :git => 'git://github.com/nesquena/query_reviewer.git'
-  gem 'spork'
 end
