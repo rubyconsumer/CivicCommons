@@ -1,21 +1,23 @@
 <% content_for :main_body do %>
 <div class="wrapper">
+  <h1>Community</h1>
+  <p class="subtitle">Most Active</p>
   <div class="content-container">
     <div class="main-content">
-      <div class="wide_content">
-        <h1>Community</h1>
 
+        <!--
         <p>
           <%= link_to "View by Name", community_path %> |
           <%= link_to "Recently Joined", community_path(:order => 'recent') %>
         </p>
-
+        
         <p>
           Last Name |
           <% ('A'..'Z').each do |letter| %>
             <%= link_to letter, community_path(:order => 'alpha', :letter => letter) %> |
           <% end %>
         </p>
+        -->
         
         <div class="community">
           <% @people.each do |person| %>
@@ -26,21 +28,50 @@
               <div class="text-container" id="label_<%= person.id %>">
                 <% name = ( person.last_name.blank? ? person.name : person.last_name + ", " + person.first_name ) %>
                 <h4><%= link_to name, user_path(person), title: person.name%></h4>
-                <p class="issue-conv"><%= pluralize(person.subscriptions.conversations.size, "Conversation") %></p>
-                <p class="issue-res"><%= pluralize(person.subscriptions.issues.size, "Issue") %></p>
+                  <p>This is where a short snippet of a user bio will go&hellip; Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin augue nisi, fermentum vitae, imperdiet a, auctor eu, mi. Nulla imperdiet molestie purus. Duis arcu dui, pretium in, molestie id, convallis eget, orci. Praesent eget purus. Nullam sed nunc. Etiam quis orci ac metus consectetuer consequat. Sed pulvinar aliquam sem&hellip;</p>
               </div>
             </div>
           <% end %>
 
         <%= will_paginate @people, :inner_window => 3, :previous_label => "Previous", :next_label => "Next" %>
         </div>
-      </div>
     </div>
 
     <div class="aside supplementary">
       <%= render :partial => '/search/search' %>
-      <%= render_recent_items_sidebar %>
+      
+      <div class="mod">
+        <h3>Sort By:</h3>
+        <ul class="site-filter">
+            <li><a href="#" class="" id="active-member">Most Active</a></li>
+            <li><a href="#" class="" id="newest-member">Newest Members</a></li>
+            <li><a href="#" class="" id="alpha-member">Alphabetical</a></li>
+            <li><a href="#" class="" id="persuasive-member">Most Persuasive</a></li>
+            <li><a href="#" class="" id="informative-member">Most Informative</a></li>
+            <li><a href="#" class="" id="inspiring-member">Most Inspiring</a></li>
+        </ul>
+      </div>
+      
+      <div class="mod">
+        <h3>Filter By:</h3>
+        <form class="region-filter" action="post">
+          <select>
+            <option value="">All Counties</option>
+            <option value="">Cuyahoga, Lorain and Medina</option>
+            <option value="">Lake, Geauga and Ashtabula</option>
+            <option value="">Richland, Ashland and Wayne</option>
+            <option value="">Summit, Portage and Stark</option>
+            <option value="">Trumbull, Mahoning, Columbiana and Carroll</option>
+          </select>
+        </form>
+      </div>
+      
+      <!--
+
       <%= render :partial => '/regions/index' %>
+      
+      -->
+      
     </div>
   </div>
 </div>
