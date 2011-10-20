@@ -1,0 +1,96 @@
+<%
+  if @issue.id.nil?
+    url = [ :admin, @issue ]
+    method = :post
+  else
+    url = admin_issue_path(@issue)
+    method = :put
+  end
+%>
+<%= form_for @issue, :url => url, :html =>{ :method => method, :multipart => true } do |f| %>
+  <%= show_errors @issue %>
+  <p>
+    <%= f.label :name %>
+    <br />
+    <%= f.text_field :name %>
+  </p>
+
+  <p>
+    <%= f.label :exclude_from_result, "Exclude from Issues Index Page" %>
+    <%= f.check_box :exclude_from_result %>
+  </p>
+
+  <fieldset>
+    <legend>Topics</legend>
+    <table>
+    <% @topics.each_slice(2) do |slice| %>
+      <tr>
+      <% slice.each do |topic| %>
+        <td style="width: 300px">
+          <%= check_box_tag "topics_#{topic.id}", topic.id, @issue.topics.include?(topic), { name: "topics[]" } %>
+          <%= label_tag "topics_#{topic.id}", topic.name %>
+        </td>
+      <% end %>
+      </tr>
+    <% end %>
+    </table>
+  </fieldset>
+
+  <p>
+    <%= f.label :type %>
+    <br />
+    <%= f.select :type, Issue::ALL_TYPES %>
+  </p>
+
+  <% if @issue.is_a?(ManagedIssue) %>
+    <p>
+      <%= f.label :index %>
+      <br />
+      <%= f.collection_select :managed_issue_page_id, ManagedIssuePage.where(issue_id: @issue.id), :id, :name %>
+    </p>
+  <% end %>
+
+  <% if @issue.image.exists? %>
+    <%= image_tag @issue.image.url(:normal) %>
+  <% end %>
+  <p>
+    <%= f.label :image, "Attach an Image (looks best at 3:2 ratio)" %>
+    <br />
+    <%= f.file_field :image %>
+  </p>
+
+  <p>
+    <%= f.label :summary %>
+    <%= f.text_area :summary, :class => 'tinymce' %>
+  </p>
+
+  <p>
+    <%= f.label :url, "Reference URL" %>
+    <%= f.text_field :url %>
+  </p>
+
+  <p>
+    <%= f.label :url_title, "URL Title" %>
+    <%= f.text_field :url_title %>
+  </p>
+
+  <p>
+    <%= f.label :zip_code %>
+    <%= f.text_field :zip_code %>
+  </p>
+
+  <p>
+    <%= f.label :client_name %>
+    <%= f.text_field :sponsor_name %>
+  </p>
+
+  <p>
+    <%= f.submit @issue.new_record? ? 'Create Issue' : 'Update Issue' %>
+  </p>
+
+  <script type="text/javascript">
+    $().ready(function() {
+      init_tiny_mce('#issue_summary');
+    });
+  </script>
+<% end %>

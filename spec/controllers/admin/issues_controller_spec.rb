@@ -35,6 +35,10 @@ module Admin
         assigns[:issue].should eq issue
       end
 
+      it "assigns the requested issue as @issue" do
+        get :show, :id => issue.id.to_s
+      end
+
     end
 
     describe "GET new" do
@@ -44,17 +48,41 @@ module Admin
         assigns[:issue].should_not be_nil
       end
 
+      it 'sets :topics to all Topics' do
+        Factory.create(:topic)
+        Factory.create(:topic)
+        get :new
+        assigns[:topics].should == Topic.all
+      end
+
     end
 
     describe "GET edit" do
 
+      before(:each) do
+        @topic1 = Factory.create(:topic, name: 'Topic 1')
+        @topic2 = Factory.create(:topic, name: 'Topic 2')
+        @issue = Factory.create(:issue, topics: [@topic1])
+      end
+
       let(:issue) do
-        Factory.create(:issue)
+        @issue
       end
 
       it "assigns the requested issue as @issue" do
         get :edit, :id => issue.id.to_s
         assigns[:issue].should eq issue
+      end
+
+      it 'sets :topics to all Topics' do
+        get :edit, :id => issue.id.to_s
+        assigns[:topics].should == Topic.all
+      end
+
+      it 'shows issue topics as checked' do
+        get :edit, :id => issue.id.to_s
+        assigns[:issue].topics.should include @topic1
+        assigns[:issue].topics.should_not include @topic2
       end
 
     end
@@ -68,6 +96,7 @@ module Admin
         end
 
         before(:each) do
+          @topic = Factory.create(:topic)
           post :create, :issue => params
         end
 
@@ -272,7 +301,7 @@ module Admin
       end
 
       it "redirects to the issues list" do
-        response.should redirect_to(admin_issues_url)
+        response.should redirect_to(admin_issues_path)
       end
 
     end

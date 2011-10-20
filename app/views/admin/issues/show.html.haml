@@ -8,6 +8,13 @@
   %b Exclude From Result:
   =@issue.exclude_from_result
 
+%p
+  %b Topics:
+  %ul
+    -@issue.topics.each do |topic|
+      %li
+        = topic.name
+
 -if @issue.is_a?(ManagedIssue)
   %p
     %b Index Page:
