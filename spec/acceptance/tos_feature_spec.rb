@@ -6,43 +6,18 @@ feature "Report Terms of Service Violation", %q{
   So that action can be taken by site management
 } do
 
-  # Given a registered user
-  let :user do
-    Factory :registered_user
-  end
-
-  # Given a top level contribution for the conversation
-  let :comment do
-    Factory.create(:comment, :override_confirmed => true, :content => "That's pretty crazy.  That's can't be true.  Can it?")
-  end
-
-  # Given a valid conversation
-  let :convo do
-    comment.conversation
-  end
-
-  # Given a valid issue
-  let :issue do
-    Factory :issue
-  end
-
-  let :conversation_page do
-    ConversationsPage.new(page)
-  end
-
-  background do
-    # Given the registered user is logged in
-    LoginPage.new(page).sign_in(user)
-
-    # Given a conversation and comment
-    comment
-  end
 
   scenario "Display the Report Abuse text" do
-    # When I visit a conversation page
-    conversation_page.visit_conversations(convo)
-
-    page.should have_link("Alert us.")
+    given_i_am_on_a_conversation_page_with_a_contribution
+    then_the_page_has_a_report_abuse_link
   end
 
+  def then_the_page_has_a_report_abuse_link
+    page.should have_link("Alert us.")
+  end
+  def given_i_am_on_a_conversation_page_with_a_contribution
+    contribution = Factory :contribution
+    conversation_page = ConversationsPage.new(page)
+    conversation_page.visit_conversations(contribution.conversation)
+  end
 end

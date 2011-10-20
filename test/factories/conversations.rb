@@ -17,3 +17,4 @@ Factory.define :user_generated_conversation, :parent => :conversation do |f|
   f.from_community true
   f.association :owner, :factory => :normal_person
 end
+
