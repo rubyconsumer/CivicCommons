@@ -91,20 +91,17 @@ module Admin
 
       describe "with valid params" do
 
-        let(:params) do
-          Factory.attributes_for(:issue)
-        end
-
         before(:each) do
-          @topic = Factory.create(:topic)
-          post :create, :issue => params
+          topic = Factory.create(:topic)
+          @params = Factory.build(:issue).attributes.symbolize_keys
+          post :create, :issue => @params, :topics => [topic.id]
         end
 
         it "assigns a newly created issue as @issue" do
-          assigns[:issue].name.should eq params[:name]
-          assigns[:issue].cached_slug.should eq params[:cached_slug]
-          assigns[:issue].summary.should eq params[:summary]
-          assigns[:issue].sponsor_name.should eq params[:sponsor_name]
+          assigns[:issue].name.should eq @params[:name]
+          assigns[:issue].cached_slug.should eq @params[:cached_slug]
+          assigns[:issue].summary.should eq @params[:summary]
+          assigns[:issue].sponsor_name.should eq @params[:sponsor_name]
         end
 
         it "redirects to the issues index" do
@@ -116,12 +113,13 @@ module Admin
       describe "with invalid params" do
 
         let(:params) do
-          Factory.attributes_for(:issue)
+          Factory.build(:issue).attributes.symbolize_keys
         end
 
         before(:each) do
+          topic = Factory.create(:topic)
           params.delete(:name)
-          post :create, :issue => params
+          post :create, :issue => params, :topics => [topic.id]
         end
 
         it "assigns a newly created but unsaved issue as @issue" do
@@ -137,17 +135,19 @@ module Admin
       describe "with subclasses" do
 
         it "creates issues" do
-          params = Factory.attributes_for(:issue)
+          topic = Factory.create(:topic)
+          params = Factory.build(:issue).attributes.symbolize_keys
           params[:type] = 'Issue'
-          post :create, :issue => params
+          post :create, :issue => params, :topics => [topic.id]
           assigns[:issue].should be_kind_of Issue
           assigns[:issue].type.should == 'Issue'
         end
 
         it "creates managed issues" do
-          params = Factory.attributes_for(:managed_issue)
+          topic = Factory.create(:topic)
+          params = Factory.build(:managed_issue).attributes.symbolize_keys
           params[:type] = 'ManagedIssue'
-          post :create, :issue => params
+          post :create, :issue => params, :topics => [topic.id]
           assigns[:issue].should be_kind_of Issue
           assigns[:issue].type.should == 'ManagedIssue'
         end
@@ -178,7 +178,7 @@ module Admin
 
         before(:each) do
           params['name'] = new_name
-          put :update, :id => params['id'], :issue => params
+          put :update, :id => params['id'], :issue => params, :topics => issue.topics
         end
 
         it "updates the requested issue" do
@@ -203,7 +203,7 @@ module Admin
 
         before(:each) do
           params['name'] = ''
-          put :update, :id => params['id'], :issue => params
+          put :update, :id => params['id'], :issue => params, :topics => issue.topics
         end
 
         it "assigns the issue as @issue" do
@@ -226,7 +226,7 @@ module Admin
           issue = Factory.create(:issue)
           params = issue.attributes
           params[:type] = 'ManagedIssue'
-          put :update, :id => params['id'], :issue => params
+          put :update, :id => params['id'], :issue => params, :topics => issue.topics
           assigns[:issue].should be_kind_of Issue
           assigns[:issue].type.should == 'ManagedIssue'
         end
@@ -235,7 +235,7 @@ module Admin
           issue = Factory.create(:managed_issue)
           params = issue.attributes
           params[:type] = 'Issue'
-          put :update, :id => params['id'], :managed_issue => params
+          put :update, :id => params['id'], :managed_issue => params, :topics => issue.topics
           assigns[:issue].should be_kind_of Issue
           assigns[:issue].type.should == 'Issue'
         end

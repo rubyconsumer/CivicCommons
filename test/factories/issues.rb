@@ -11,4 +11,5 @@ Factory.define :issue do |f|
   f.zip_code '44313' 
   f.position nil
   f.image File.new(Rails.root + 'test/fixtures/images/test_image.jpg')
+  f.topics { |topics| [topics.association(:topic)] }
 end

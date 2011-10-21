@@ -1,3 +1,18 @@
+class TopicPresenceValidator < ActiveModel::EachValidator
+  def validate_each(record, attribute, value)
+    ignored_model = false
+    options[:ignored_models].each do |model|
+      if record.is_a?(model)
+        ignored_model = true
+      end
+    end
+
+    if not ignored_model and (record.topics.nil? or record.topics == [])
+      record.errors[attribute] << "At least one topic is required"
+    end
+  end
+end
+
 class Issue < ActiveRecord::Base
   include Visitable
   include Subscribable
@@ -48,6 +63,7 @@ class Issue < ActiveRecord::Base
   before_create :assign_position
 
   validates :name, :presence => true, :length => { :minimum => 5 }
+  validates :topics, topic_presence: { ignored_models: [ManagedIssue, ManagedIssuePage] }
   validates_uniqueness_of :name
   validates_attachment_presence :image
   

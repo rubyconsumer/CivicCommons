@@ -81,30 +81,39 @@ describe Issue do
 
   context "validations" do
 
-    let(:attributes) {
-      Factory.attributes_for(:issue)
-    }
+    before(:each) do
+      @issue = Factory.build(:issue)
+    end
 
     it "validates a valid object" do
-      Issue.new(attributes).should be_valid
+      @issue.should be_valid
     end
 
     it "requires a name" do
-      attributes.delete(:name)
-      Issue.new(attributes).should_not be_valid
+      @issue.name = nil
+      @issue.should_not be_valid
     end
 
     it "requires the name to be at least five characters long" do
-      attributes[:name] = '1234'
-      Issue.new(attributes).should_not be_valid
-      attributes[:name] = '12345'
-      Issue.new(attributes).should be_valid
+      @issue.name = '1234'
+      @issue.should_not be_valid
+      @issue.name = '12345'
+      @issue.should be_valid
     end
 
     it "requires the name to be unique" do
       mi = Factory.create(:issue)
-      attributes[:name] = mi.name
-      Issue.new(attributes).should_not be_valid
+      @issue.name = mi.name
+      @issue.should_not be_valid
+    end
+
+    it 'requires one topic to be assigned' do
+      issue = Factory.build(:issue, topics: [])
+      issue.should_not be_valid
+
+      topic = Factory.build(:topic)
+      issue.topics = [topic]
+      issue.should be_valid
     end
   end
 
