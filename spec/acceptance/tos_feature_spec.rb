@@ -12,12 +12,10 @@ feature "Report Terms of Service Violation", %q{
     then_the_page_has_a_report_abuse_link
   end
 
-  def then_the_page_has_a_report_abuse_link
-    page.should have_link("Alert us.")
+  scenario "report a contribution" do
+    given_i_am_on_a_conversation_page_with_a_contribution
+    when_i_report_the_contribution
+    then_the_contribution_is_flagged_for_moderation
   end
-  def given_i_am_on_a_conversation_page_with_a_contribution
-    contribution = Factory :contribution
-    conversation_page = ConversationsPage.new(page)
-    conversation_page.visit_conversations(contribution.conversation)
-  end
+
 end
