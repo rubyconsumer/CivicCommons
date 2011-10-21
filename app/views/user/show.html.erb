@@ -5,39 +5,39 @@
 <%= content_for :main_body do %>
 
   <div class="wrapper profile">
-  	<div class="content-container">
+    <div class="content-container">
         <h1><%= @user.name %></h1>
-  		<div class="main-content">
-	   		<div class="offset-1 profile-mast">
-	   		  <%= profile_image(@user, 70) %>
-	   		  <% if @user.bio.blank? %>
-	   		    <p class="empty">Looks like you haven't filled out your bio&hellip; Head over to your <%= link_to_settings(current_person).html_safe.downcase %> and tell us a little bit about yourself.</p>
-	   		  <% elsif %>
-	   		    <p><%= @user.bio %></p>
-	   		  <% end %>
-	 		</div>
-	  	</div>
-  		<div class="aside">
-  		  <% unless @user.website.blank? && @user.twitter_username.blank? %>
-  			<div class="mod call-out">
-  				<ul class="profile-extras">
+      <div class="main-content">
+        <div class="offset-1 profile-mast">
+          <%= profile_image(@user, 70) %>
+          <% if @user.bio.blank? %>
+            <p class="empty">Looks like you haven't filled out your bio&hellip; Head over to your <%= link_to_settings(current_person).html_safe.downcase %> and tell us a little bit about yourself.</p>
+          <% elsif %>
+            <p><%= @user.bio %></p>
+          <% end %>
+      </div>
+      </div>
+      <div class="aside">
+        <% unless @user.website.blank? && @user.twitter_username.blank? %>
+        <div class="mod call-out">
+          <ul class="profile-extras">
             <% unless @user.website.blank? %>
-            	<li class="website-profile"><%= link_to @user.website, @user.website %></li>
+              <li class="website-profile"><%= link_to @user.website, @user.website %></li>
              <% end %>
              <% unless @user.twitter_username.blank? %>
-               	<li class="twitter-profile"><%= link_to "@#{@user.twitter_username}", "http://twitter.com/#!/#{@user.twitter_username}" %></li>
+                <li class="twitter-profile"><%= link_to "@#{@user.twitter_username}", "http://twitter.com/#!/#{@user.twitter_username}" %></li>
              <% end %>
           </ul>
-  			</div>
+        </div>
         <% end %>
-  		</div>
-  	</div>
+      </div>
+    </div>
 
     <div class="content-container">
 
         <div class="main-content">
             <h3>My Recent Activity</h3>
-            
+
             <div class="divided">
                 <div class="recent-item contribution">
                     <h4>Title of Contribution</h4>
@@ -74,8 +74,8 @@
                     </div>
                 </div>
             </div>
-        
-        
+
+
         </div>
 
       <!-- OLD CONTENT - To be replaced with new format
@@ -100,7 +100,7 @@
       <div class="aside supplementary">
 
         <div class="mod" id="UserFollowingConversationsModule">
-          <h3>Conversations I am Following</h3> 
+          <h3>Conversations I am Following</h3>
           <div class="mod-content">
             <ul class='link-list'>
               <% if @conversation_subscriptions.empty? %>
@@ -117,7 +117,7 @@
         </div>
 
         <div class="mod" id="UserFollowingIssuesModule">
-          <h3>Issues I am Following</h3> 
+          <h3>Issues I am Following</h3>
           <div class="mod-content">
             <ul class='link-list'>
               <% if @issue_subscriptions.empty? %>
