@@ -47,7 +47,6 @@ float: left;
 padding-top: 0;
 /* margin-top: 15px; */
 }
->>>>>>> c80ea37... CSS formatting cleanup.
 .conversations.divided li {
 margin-bottom: 0;
 margin-top: 0;
@@ -879,13 +878,13 @@ margin-left: 0;
 overflow: hidden;
 }
 ul.profile-extras li {
-float: left;
 list-style-type: none;
 margin-right: 1.5em;
 padding-left: 20px;
 }
 li.website-profile {background: url(/images/globe.png) no-repeat 0 0;}
 li.twitter-profile {background: url(/images/twitter.png) no-repeat 0 0;}
+li.fb-profile {background: url(/images/facebook.png) no-repeat 0 0;}
 ul.profile-extras a:link {
 color: #858383;
 text-decoration: none;
@@ -1210,8 +1209,8 @@ background: url(../images/nav_comm.png) no-repeat 0 17px;
 display: block;
 padding-left: 32px;
 }
-ul#main-nav li div#commons {
-background: url(../images/nav_build.png) no-repeat 0 0;
+ul#main-nav li.commons {
+background: url(../images/nav_build.png) no-repeat 0 17px;
 padding-left: 26px;
 }
 
