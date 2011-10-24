@@ -3,7 +3,7 @@
 %>
 <div class="divided">
   <div class="recent-item contribution">
-    <h4><%= contribution.item.title if contribution.item %></h4>
+    <h4><%= link_to( contribution.item_title, contribution_item_url(contribution)) %></h4>
     <p>
     <strong>I <%= link_to("responded to #{parent_contribution ? parent_contribution.person.name : contribution.item.title }", url_to_contribution(contribution)) %></strong>:
       <%= truncate( Sanitize.clean( contribution.content, :remove_contents => ['script'] ).strip, :length => 100, :separator => ' ' ) %>

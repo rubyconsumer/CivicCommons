@@ -36,4 +36,12 @@ module ApplicationHelper
     super(options)
   end
 
+  def contribution_item_url(contribution)
+    if contribution.issue
+      issue_path( contribution )
+    elsif contribution.conversation
+      conversation_path( contribution )
+    end
+  end
+
 end
