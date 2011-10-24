@@ -10,7 +10,7 @@
       <div class="main-content">
         <div class="offset-1 profile-mast">
           <%= profile_image(@user, 70) %>
-          <% if @user.bio.blank? %>
+          <% if @user.bio.blank? && @user == current_person %>
             <p class="empty">Looks like you haven't filled out your bio&hellip; Head over to your <%= link_to_settings(current_person).html_safe.downcase %> and tell us a little bit about yourself.</p>
           <% elsif %>
             <p><%= @user.bio %></p>
@@ -36,67 +36,19 @@
 
     <div class="content-container">
 
-        <div class="main-content">
-            <h3>My Recent Activity</h3>
-
-            <div class="divided">
-                <div class="recent-item contribution">
-                    <h4>Title of Contribution</h4>
-                    <p><strong>I <a href="#">responded to Parag Jagdale:</a></strong> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin augue nisi, fermentum vitae, imperdiet a, auctor eu, mi.</p>
-                    <div class="related-article call-out">
-                        <div class="offset-2">
-                            <img alt="Parag Jagdale" class="callout" height="40" src="http://gravatar.com/avatar/bbf4cb9d454aee7d129443634a316111?d=404" title="Parag Jagdale" width="40">
-                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin augue nisi, fermentum vitae, imperdiet a, auctor eu, mi. Nulla imperdiet molestie purus. Duis arcu dui, pretium in, molestie id, convallis eget, orci. <strong><a href="#">Continue reading&hellip;</a></strong> </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="divided">
-                <div class="recent-item conversation">
-                    <h4>Title of Conversation</h4>
-                    <p>Conversation content lorem ipsum dolor sit amet&hellip;</p>
-                </div>
-            </div>
-            <div class="divided">
-                <div class="recent-item issue">
-                    <h4>Title of Issue</h4>
-                    <p>Issue content lorem ipsum dolor sit amet&hellip;</p>
-                </div>
-            </div>
-            <div class="divided">
-                <div class="recent-item rating">
-                    <h4>Title of Article</h4>
-                    <p>I rated a <a href="#">response from Josh Walsh</a> as <span class="rating-type">Informative</span></p>
-                    <div class="related-article call-out">
-                        <div class="offset-2">
-                            <img alt="Josh Walsh" class="callout" height="40" src="https://graph.facebook.com/53701656/picture" title="Josh Walsh" width="40">
-                            <p>This is a snippet of the response that was rated.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-        </div>
-
-      <!-- OLD CONTENT - To be replaced with new format
-<div class="main-content">
-          <h3>My Recent Activity</h3>
-          <% if @recent_items.empty? %>
-            <p><%= @user.name %> is just getting started</p>
-          <% else %>
-            <div class="divided">
-              <% collection = ActivityPresenter.new(@recent_items) %>
-              <% collection.each_with_type do |item, type| %>
-                <%= render :partial => "/shared/recent_item", locals: { recent_item: item, type: type } %>
-              <% end %>
-            </div>
-            <div class="pagination">
-              <%= will_paginate @recent_items, :inner_window => 3, previous_label: 'Previous', next_label: 'Next' %>
-            </div>
+      <div class="main-content">
+        <h3>My Recent Activity</h3>
+        <% if @recent_items.empty? %>
+          <p><%= @user.name %> is just getting started</p>
+        <% else %>
+          <% @recent_items.each do |item| %>
+            <%= render :partial => "/shared/my_recent_item", locals: { recent_item: item, type: item.class.to_s }%>
           <% end %>
+          <div class="pagination">
+            <%= will_paginate @recent_items, :inner_window => 3, previous_label: 'Previous', next_label: 'Next' %>
+          </div>
+        <% end %>
       </div>
--->
 
       <div class="aside supplementary">
 
