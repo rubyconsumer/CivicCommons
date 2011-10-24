@@ -11,7 +11,7 @@
     <p>I rated a <%= link_to("response from #{ contribution.person.name }", conversation_node_path(contribution)) %> as <span class="rating-type"><%= rating && rating.title %></span></p>
     <div class="related-article call-out">
       <div class="offset-2">
-        <img alt="<%= contribution.person.name %>" class="callout" height="40" src="<%= contribution.person.avatar(:medium) %>" title="<%= contribution.person.name %>" width="40">
+        <%= avatar_profile(contribution.person, 40) %>
         <p>
         <%= truncate( Sanitize.clean( contribution.content, :remove_contents => ['script'] ).strip, :length => 225, :separator => ' ' ) %>
         <% if contribution.parent && contribution.parent.content.size > 225 %>
