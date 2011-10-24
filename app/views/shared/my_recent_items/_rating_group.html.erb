@@ -1,11 +1,9 @@
 <%
   contribution = rating_group.contribution
   conversation = rating_group.conversation
-  rating = rating_group.ratings.where(:updated_at => rating_group.updated_at).first
+  rating = rating_group.ratings.where(:created_at => rating_group.created_at).first
 
-  puts "Contribution:#{contribution.id}"
-  puts "Conversation:#{conversation.id}"
-  puts "Rating:#{rating.id}"
+  unless rating.blank?
 %>
 <div class="divided">
   <div class="recent-item rating">
@@ -24,4 +22,4 @@
     </div>
   </div>
 </div>
-
+<% end %>
