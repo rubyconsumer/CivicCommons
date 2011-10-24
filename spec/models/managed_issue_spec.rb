@@ -37,13 +37,6 @@ describe ManagedIssue do
         }.should raise_error ActiveRecord::ReadOnlyRecord
       end
 
-      it 'requires at least one assigned topic' do
-        managed_issue = Factory.build(:managed_issue, :topics => [])
-        managed_issue.should_not be_valid
-        managed_issue.topics << Factory.build(:topic)
-        managed_issue.should be_valid
-      end
-
     end
 
     context "pages collection" do
