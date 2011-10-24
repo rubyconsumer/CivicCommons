@@ -4,10 +4,6 @@ describe ManagedIssue do
 
   context "validations" do
 
-    let(:attributes) do
-      Factory.attributes_for(:managed_issue)
-    end
-
     before(:each) do
       issue = Factory.create(:managed_issue)
       page = Factory.create(:managed_issue_page, issue: issue)
@@ -16,14 +12,14 @@ describe ManagedIssue do
     end
 
     it "validates a valid object" do
-      ManagedIssue.new(attributes).should be_valid
+      Factory.build(:managed_issue).should be_valid
+      Factory.create(:managed_issue).should be_valid
     end
 
     context "index page" do
 
       it "allows a null index_page" do
-        attributes.delete(:index_page)
-        ManagedIssue.new(attributes).should be_valid
+        Factory.build(:managed_issue, :index => nil).should be_valid
       end
 
       it "requires the index page to be a circular reference" do
@@ -39,6 +35,13 @@ describe ManagedIssue do
         lambda {
           ManagedIssue.first.index.save
         }.should raise_error ActiveRecord::ReadOnlyRecord
+      end
+
+      it 'requires at least one assigned topic' do
+        managed_issue = Factory.build(:managed_issue, :topics => [])
+        managed_issue.should_not be_valid
+        managed_issue.topics << Factory.build(:topic)
+        managed_issue.should be_valid
       end
 
     end
