@@ -27,7 +27,7 @@
       <tr>
       <% slice.each do |topic| %>
         <td>
-          <%= check_box_tag { "topics_#{topic.id}", topic.id, @issue.has_topic?(topic), { name: "topics[]" } %>
+          <%= check_box_tag "topics_#{topic.id}", topic.id, @issue.has_topic?(topic), { name: "topics[]" } %>
           <%= label_tag "topics_#{topic.id}", topic.name %>
         </td>
       <% end %>
