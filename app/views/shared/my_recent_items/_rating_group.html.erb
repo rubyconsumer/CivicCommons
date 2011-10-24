@@ -14,8 +14,8 @@
         <%= avatar_profile(contribution.person, 40) %>
         <p>
         <%= truncate( Sanitize.clean( contribution.content, :remove_contents => ['script'] ).strip, :length => 225, :separator => ' ' ) %>
-        <% if contribution.parent && contribution.parent.content.size > 225 %>
-          <strong><%= link_to("Continue reading", url_to_contribution(contribution.parent)) %></strong>
+        <% if contribution && contribution.content.size > 225 %>
+          <strong><%= link_to("Continue reading", url_to_contribution(contribution)) %></strong>
         <% end %>
         </p>
       </div>
