@@ -13,7 +13,7 @@
         <div class="offset-2">
           <img alt="<%= parent_contribution.person.name %>" class="callout" height="40" src="<%= parent_contribution.person.avatar(:medium) %>" title="<%= parent_contribution.person.name %>" width="40">
           <p>
-          <%= truncate( Sanitize.clean( contribution.parent.try(:content), :remove_contents => ['script'] ).strip, :length => 225, :separator => ' ' ) unless contribution.parent.blank? %>
+          <%= truncate( Sanitize.clean( contribution.parent.try(:content), :remove_contents => ['script'] ).strip, :length => 225, :separator => ' ' ) unless parent_contribution.blank? || Sanitize.clean(parent_contribution.content).blank? %>
           <% if contribution.parent && contribution.parent.content.size > 225 %>
             <strong><%= link_to("Continue reading", url_to_contribution(contribution.parent)) %></strong>
           <% end %>
