@@ -2,9 +2,10 @@ require 'spec_helper'
 
 module Admin
   describe IssuesController do
-
+    let(:topic) { Factory.create(:topic) }
     before(:each) do
       sign_in Factory.create(:admin_person)
+        Factory.create(:topic)
     end
 
     describe "GET index" do
@@ -43,26 +44,24 @@ module Admin
 
     describe "GET new" do
 
-      it "assigns a new issue as @issue" do
+      before do
         get :new
+      end
+      it "assigns a new issue as @issue" do
         assigns[:issue].should_not be_nil
       end
 
       it 'gives all the topics to view' do
-        Factory.create(:topic)
-        Factory.create(:topic)
-        get :new
         assigns[:topics].should == Topic.all
       end
 
     end
 
     describe "GET edit" do
-
+      let(:unselected_topic) { Factory.create(:topic)}
       before(:each) do
-        @topic1 = Factory.create(:topic, name: 'Topic 1')
-        @topic2 = Factory.create(:topic, name: 'Topic 2')
-        @issue = Factory.create(:issue, topics: [@topic1])
+        @issue = Factory.create(:issue, topics: [topic])
+        get :edit, :id => issue.id.to_s
       end
 
       let(:issue) do
@@ -70,19 +69,16 @@ module Admin
       end
 
       it "assigns the requested issue as @issue" do
-        get :edit, :id => issue.id.to_s
         assigns[:issue].should eq issue
       end
 
-      it 'sets :topics to all Topics' do
-        get :edit, :id => issue.id.to_s
+      it 'gives all the topics to view' do
         assigns[:topics].should == Topic.all
       end
 
       it 'shows issue topics as checked' do
-        get :edit, :id => issue.id.to_s
-        assigns[:issue].topics.should include @topic1
-        assigns[:issue].topics.should_not include @topic2
+        assigns[:issue].topics.should include topic
+        assigns[:issue].topics.should_not include unselected_topic 
       end
 
     end
@@ -92,7 +88,6 @@ module Admin
       describe "with valid params" do
 
         before(:each) do
-          topic = Factory.create(:topic)
           @params = Factory.build(:issue).attributes.symbolize_keys
           @params[:topic_ids] = [topic.id]
           post :create, :issue => @params
@@ -118,9 +113,9 @@ module Admin
         end
 
         before(:each) do
-          topic = Factory.create(:topic)
           params.delete(:name)
-          post :create, :issue => params, :topics => [topic.id]
+          params[:topic_ids] = [topic.id]
+          post :create, :issue => params
         end
 
         it "assigns a newly created but unsaved issue as @issue" do
@@ -130,27 +125,28 @@ module Admin
         it "re-renders the 'new' issue" do
           response.should render_template('new')
         end
-
+        it "provides the topics" do
+          assigns[:topics].should == Topic.all
+        end
       end
 
       describe "with subclasses" do
 
         it "creates issues" do
-          topic = Factory.create(:topic)
           params = Factory.build(:issue).attributes.symbolize_keys
           params[:type] = 'Issue'
-          post :create, :issue => params, :topics => [topic.id]
-          assigns[:issue].should be_kind_of Issue
-          assigns[:issue].type.should == 'Issue'
+          params[:topic_ids] = [topic.id]
+          post :create, :issue => params
+          assigns[:issue].should be_a Issue
+          assigns[:issue].type.should == "Issue"
         end
 
         it "creates managed issues" do
-          topic = Factory.create(:topic)
           params = Factory.build(:managed_issue).attributes.symbolize_keys
           params[:type] = 'ManagedIssue'
-          post :create, :issue => params, :topics => [topic.id]
-          assigns[:issue].should be_kind_of Issue
-          assigns[:issue].type.should == 'ManagedIssue'
+          params[:topic_ids] = [topic.id]
+          post :create, :issue => params
+          assigns[:issue].type.should == "ManagedIssue"
         end
 
       end
@@ -213,6 +209,10 @@ module Admin
           assigns[:issue].summary.should eq params['summary']
           assigns[:issue].cached_slug.should eq params['cached_slug']
           assigns[:issue].sponsor_name.should eq params['sponsor_name']
+        end
+
+        it 'provides the topics' do
+          assigns[:topics].should == Topic.all
         end
 
         it "re-renders the 'edit' issue" do
