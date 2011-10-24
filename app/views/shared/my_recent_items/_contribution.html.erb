@@ -5,7 +5,7 @@
   <div class="recent-item contribution">
     <h4><%= contribution.item.title if contribution.item %></h4>
     <p>
-    <strong>I <%= link_to("responded to #{contribution.parent ? contribution.parent.person.name : contribution.conversation.title }", url_to_contribution(contribution)) %></strong>:
+    <strong>I <%= link_to("responded to #{contribution.parent ? contribution.parent.person.name : contribution.item.title }", url_to_contribution(contribution)) %></strong>:
       <%= truncate( Sanitize.clean( contribution.content, :remove_contents => ['script'] ).strip, :length => 100, :separator => ' ' ) %>
     </p>
     <% if parent_contribution && parent_contribution.content && parent_contribution.content != "<p></p>" %>
