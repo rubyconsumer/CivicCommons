@@ -25,6 +25,7 @@ class Contribution < ActiveRecord::Base
   has_many   :rating_groups, :dependent => :destroy
 
   delegate :title, :to => :item, :prefix => true
+  delegate :name, :to => :person, :prefix => true
 
   #############################################################################
   # Validations
