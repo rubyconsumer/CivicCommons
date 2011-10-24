@@ -48,7 +48,7 @@ module Admin
         assigns[:issue].should_not be_nil
       end
 
-      it 'sets :topics to all Topics' do
+      it 'gives all the topics to view' do
         Factory.create(:topic)
         Factory.create(:topic)
         get :new

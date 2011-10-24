@@ -218,6 +218,10 @@ table.issues td.handle:hover {
 	opacity: 1;
 }
 
+table.topics td {
+  width: 300px;
+}
+
 /* staff picks */
 .staff_pick {
 	display: block;

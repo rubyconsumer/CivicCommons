@@ -22,12 +22,12 @@
 
   <fieldset>
     <legend>Topics</legend>
-    <table>
+    <table class="topics">
     <% @topics.each_slice(2) do |slice| %>
       <tr>
       <% slice.each do |topic| %>
-        <td style="width: 300px">
-          <%= check_box_tag "topics_#{topic.id}", topic.id, @issue.topics.include?(topic), { name: "topics[]" } %>
+        <td>
+          <%= check_box_tag { "topics_#{topic.id}", topic.id, @issue.has_topic?(topic), { name: "topics[]" } %>
           <%= label_tag "topics_#{topic.id}", topic.name %>
         </td>
       <% end %>

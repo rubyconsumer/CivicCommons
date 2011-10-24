@@ -48,7 +48,7 @@ class Issue < ActiveRecord::Base
   before_create :assign_position
 
   validates :name, :presence => true, :length => { :minimum => 5 }
-  validates :topics, :presence => true, :length => { :minimum => 1 } #topic_presence: { accepted_models: Issue::ALL_TYPES }
+  validates :topics, :presence => true, :length => { :minimum => 1 }
   validates_uniqueness_of :name
   validates_attachment_presence :image
   
@@ -132,6 +132,10 @@ class Issue < ActiveRecord::Base
 
   def conversation_comments
     Contribution.joins(:conversation).where({:conversations => {:id => self.conversation_ids}})
+  end
+
+  def has_topic?(topic)
+    topics.include?(topic)
   end
 
   private
