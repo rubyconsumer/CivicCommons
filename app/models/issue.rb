@@ -137,9 +137,13 @@ class Issue < ActiveRecord::Base
   def has_topic?(topic)
     topics.include?(topic)
   end
-
+  def topic_ids=(topic_ids)
+    self.topics = topic_ids.collect do |id|
+      Topic.find id
+    end
+  end
   private
-
+ 
   def self.update_positions(current, new_index, comparison)
     current_issue = Issue.find_by_position(current)
     Issue.where('position >= ?', comparison).each do |issue|

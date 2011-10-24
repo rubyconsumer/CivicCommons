@@ -94,7 +94,8 @@ module Admin
         before(:each) do
           topic = Factory.create(:topic)
           @params = Factory.build(:issue).attributes.symbolize_keys
-          post :create, :issue => @params, :topics => [topic.id]
+          @params[:topic_ids] = [topic.id]
+          post :create, :issue => @params
         end
 
         it "assigns a newly created issue as @issue" do

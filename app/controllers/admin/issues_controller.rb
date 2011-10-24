@@ -15,7 +15,6 @@ class Admin::IssuesController < Admin::DashboardController
   def create
     attributes = params[:issue]
     @issue = Issue.new(attributes)
-    setup_topics(@issue, params[:topics])
     # manually manage single table inheritance since Rails won't do it automatically
     @issue.type = attributes['type'] if attributes.has_key?('type') and Issue::ALL_TYPES.include?(attributes['type'])
     @issue.type = attributes[:type] if attributes.has_key?(:type) and Issue::ALL_TYPES.include?(attributes[:type])
@@ -37,7 +36,6 @@ class Admin::IssuesController < Admin::DashboardController
   #PUT admin/issues/:id
   def update
     @issue = Issue.find(params[:id])
-    setup_topics(@issue, params[:topics])
     # manually manage single table inheritance since Rails won't do it automatically
     attributes = params[@issue.type.underscore.to_sym]
     @issue.attributes = attributes
@@ -100,13 +98,4 @@ class Admin::IssuesController < Admin::DashboardController
       nil
     end
   end
-
-  def setup_topics(issue, topics)
-    if topics.nil?
-      issue.topics = []
-    else
-      issue.topics = Topic.find(params[:topics])
-    end
-  end
-
 end
