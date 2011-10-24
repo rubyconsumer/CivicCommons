@@ -48,6 +48,7 @@ class Issue < ActiveRecord::Base
   before_create :assign_position
 
   validates :name, :presence => true, :length => { :minimum => 5 }
+  validates :topics, :presence => true, :length => { :minimum => 1 }
   validates_uniqueness_of :name
   validates_attachment_presence :image
   
@@ -133,8 +134,16 @@ class Issue < ActiveRecord::Base
     Contribution.joins(:conversation).where({:conversations => {:id => self.conversation_ids}})
   end
 
+  def has_topic?(topic)
+    topics.include?(topic)
+  end
+  def topic_ids=(topic_ids)
+    self.topics = topic_ids.collect do |id|
+      Topic.find id
+    end
+  end
   private
-
+ 
   def self.update_positions(current, new_index, comparison)
     current_issue = Issue.find_by_position(current)
     Issue.where('position >= ?', comparison).each do |issue|
