@@ -11,7 +11,8 @@ class UserController < ApplicationController
 
   def edit
     @person = Person.find(params[:id])
-    @person.valid?(:update) #did this So that there is a validation error on the view.
+    @person.require_zip_code = true  #did this So that there is a validation error on the view.
+    @person.valid?
   end
 
   def show
@@ -29,6 +30,7 @@ class UserController < ApplicationController
 
   def update
     @person = Person.find(params[:id])
+    @person.require_zip_code = true
     respond_to do |format|
       if @person.update_attributes(params[:person])
         flash[:notice] = "Successfully edited your profile"

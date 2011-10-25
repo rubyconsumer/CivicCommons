@@ -27,7 +27,8 @@ class Person < ActiveRecord::Base
   attr_accessor :send_welcome,
                 :create_from_auth,
                 :facebook_unlinking,
-                :send_email_change_notification
+                :send_email_change_notification,
+                :require_zip_code
 
   # Setup accessible attributes
   attr_accessible :name,
@@ -140,6 +141,10 @@ class Person < ActiveRecord::Base
   def facebook_unlinking?
     @facebook_unlinking || false
   end
+  
+  def require_zip_code?
+    @require_zip_code || false
+  end
 
   def name=(value)
     @name = value
@@ -148,6 +153,10 @@ class Person < ActiveRecord::Base
 
   def name
     @name ||= ("%s %s" % [self.first_name, self.last_name]).strip
+  end
+
+  def on_facebook_auth?
+    create_from_auth? || facebook_unlinking?
   end
 
   def notify_civic_commons
@@ -272,20 +281,20 @@ class Person < ActiveRecord::Base
   end
 
   def validate_zip_code_on_create?
-    if create_from_auth? || facebook_unlinking?
+    if on_facebook_auth?
       false
     else
-      return (self.new_record?) ? true : false
+      new_record? ? true : false
     end
   end
 
   def validate_zip_code_on_update?
-    if create_from_auth? || facebook_unlinking?
+    if on_facebook_auth?
       false
-    else
-      return (self.new_record?) ? true : false
+    elsif require_zip_code?
+      true
     end
-  end
+  end  
 
   # Add the email subscription signup as a delayed job
   def subscribe_to_marketing_email
