@@ -1722,9 +1722,7 @@ height: 16px;
 /*- Search Form Styles ----------*/
 
 div#search {
-border-bottom: 1px solid #cdcdcd;
 margin-bottom: 20px;
-padding-bottom: 20px;
 }
 div#search form input.textbox {
 background: transparent;
