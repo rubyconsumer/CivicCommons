@@ -3,12 +3,13 @@
 #TODO: Sloppy, too much logic, needs refactored...
 
 link_text = ''
+member_link_text = ''
+
 if contribution.person
-  link_text << contribution.person.name
+  member_link_text << contribution.person.name
 else
-  link_text << 'A member'
+  member_link_text << 'A member'
 end
-link_text << ' '
 
 if contribution.content.blank?
   if contribution.title.blank?
@@ -20,7 +21,8 @@ if contribution.content.blank?
     link_text << '"'
   end
 else
-  link_text << 'responded: "'
+  member_link_text << ' responded:'
+  link_text << '"'
   link_text << truncate( Sanitize.clean( contribution.content, :remove_contents => ['script'] ).strip, :length => 100, :separator => ' ' )
   link_text << '"'
 end
@@ -47,7 +49,7 @@ end
 %>
 
 <p class="title">
-<strong><%= link_to(link_text, link_url) %></strong>
+  <strong><%= link_to(member_link_text, link_url) %></strong> <%= link_to(link_text, link_url) %>
 </p>
 <% unless posted_text.nil? %>
   <span class="posted">

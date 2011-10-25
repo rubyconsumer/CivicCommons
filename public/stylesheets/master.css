@@ -1997,8 +1997,24 @@ line-height: 1.4em;
 }
 .recent-item .posted {
 display: block;
-font-style: italic;
 padding-top: 5px;
+line-height:1.4em;
+}
+
+.recent-item .posted a {
+  color:#2c87b7;
+}
+
+.recent-item a {
+  text-decoration:none;
+}
+
+.recent-item strong a {
+  text-decoration:underline;
+}
+
+.recent-item a:hover {
+  text-decoration:underline;
 }
 
 /*- Global Warning ----------*/
