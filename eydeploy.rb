@@ -7,3 +7,10 @@ def bundler_10_installer(version, options = '')
   ]
   BundleInstaller.new(version, opts.join(" ") + options)
 end
+
+class ::EY::Serverside::Deploy::Configuration
+  def bundle_without
+    "development test cool_toys"
+  end
+end
+
