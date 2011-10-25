@@ -157,6 +157,6 @@
 
 - flash[:notice] = "This is a sample flash message"
 - if flash[:notice]
-  .flash-notice
+  .flash-notice{:style => 'display:none;'}
     = flash[:notice]
     = image_tag 'flash-close.png'

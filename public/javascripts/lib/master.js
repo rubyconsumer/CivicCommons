@@ -59,6 +59,11 @@ $(document).ready(function(){
     });
     e.preventDefault();
   });
+
+  $('.flash-notice').show('blind');
+  setTimeout(function(){
+    $('.flash-notice').hide('blind');
+  },5000);
 });
 
 var civic = function() {
