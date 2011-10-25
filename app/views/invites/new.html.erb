@@ -1,11 +1,5 @@
 <% content_for :main_body do %>
 
-  <% if flash[:notice] -%>
-    <div class="flash-notice">
-      <%=flash[:notice] %>
-    </div>
-  <% end -%>
-
   <% if @conversation %>
     <div class="feature-mast">
       <div class="wrapper">
