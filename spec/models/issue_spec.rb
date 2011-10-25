@@ -81,30 +81,39 @@ describe Issue do
 
   context "validations" do
 
-    let(:attributes) {
-      Factory.attributes_for(:issue)
-    }
+    before(:each) do
+      @issue = Factory.build(:issue)
+    end
 
     it "validates a valid object" do
-      Issue.new(attributes).should be_valid
+      @issue.should be_valid
     end
 
     it "requires a name" do
-      attributes.delete(:name)
-      Issue.new(attributes).should_not be_valid
+      @issue.name = nil
+      @issue.should_not be_valid
     end
 
     it "requires the name to be at least five characters long" do
-      attributes[:name] = '1234'
-      Issue.new(attributes).should_not be_valid
-      attributes[:name] = '12345'
-      Issue.new(attributes).should be_valid
+      @issue.name = '1234'
+      @issue.should_not be_valid
+      @issue.name = '12345'
+      @issue.should be_valid
     end
 
     it "requires the name to be unique" do
       mi = Factory.create(:issue)
-      attributes[:name] = mi.name
-      Issue.new(attributes).should_not be_valid
+      @issue.name = mi.name
+      @issue.should_not be_valid
+    end
+
+    it 'requires one topic to be assigned' do
+      issue = Factory.build(:issue, topics: [])
+      issue.should_not be_valid
+
+      topic = Factory.build(:topic)
+      issue.topics = [topic]
+      issue.should be_valid
     end
   end
 
@@ -146,6 +155,22 @@ describe Issue do
       it "should have 2 votes" do
         given_an_issue_with_many_votes
         @issue.votes.count.should == 2
+      end
+    end
+    
+    context "has_and_belongs_to_many topics" do
+      def given_an_issue_with_topics
+        @issue = Factory.create(:issue)
+        @topic1 = Factory.create(:topic)
+        @topic2 = Factory.create(:topic)
+        @issue.topics = [@topic1, @topic2]
+      end
+      it "should be correct" do
+        Issue.reflect_on_association(:topics).macro.should == :has_and_belongs_to_many
+      end
+      it "should correctly count the number of topics" do
+        given_an_issue_with_topics
+        @issue.topics.count.should == 2
       end
     end
     
@@ -310,5 +335,17 @@ describe Issue do
       should have_db_column(:image_content_type).of_type(:string)
       should have_db_column(:image_file_size).of_type(:integer)
     end
+    
+    it "will only allow image attachments" do
+      # allowed image mimetypes are based on what we have seen in production
+      should validate_attachment_content_type(:image).
+        allowing('image/bmp', 'image/gif', 'image/jpeg', 'image/png', 'image/pjpeg', 'image/x-png').
+        rejecting('text/plain', 'text/xml')
+    end
+    
+    it "should validate presence of attachemnt" do
+      should validate_attachment_presence(:image)
+    end
+    
   end
 end

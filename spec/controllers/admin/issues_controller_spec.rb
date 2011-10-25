@@ -2,9 +2,10 @@ require 'spec_helper'
 
 module Admin
   describe IssuesController do
-
+    let(:topic) { Factory.create(:topic) }
     before(:each) do
       sign_in Factory.create(:admin_person)
+        Factory.create(:topic)
     end
 
     describe "GET index" do
@@ -35,26 +36,49 @@ module Admin
         assigns[:issue].should eq issue
       end
 
+      it "assigns the requested issue as @issue" do
+        get :show, :id => issue.id.to_s
+      end
+
     end
 
     describe "GET new" do
 
-      it "assigns a new issue as @issue" do
+      before do
         get :new
+      end
+      it "assigns a new issue as @issue" do
         assigns[:issue].should_not be_nil
+      end
+
+      it 'gives all the topics to view' do
+        assigns[:topics].should == Topic.all
       end
 
     end
 
     describe "GET edit" do
+      let(:unselected_topic) { Factory.create(:topic)}
+      before(:each) do
+        @issue = Factory.create(:issue, topics: [topic])
+        get :edit, :id => issue.id.to_s
+      end
 
       let(:issue) do
-        Factory.create(:issue)
+        @issue
       end
 
       it "assigns the requested issue as @issue" do
-        get :edit, :id => issue.id.to_s
         assigns[:issue].should eq issue
+      end
+
+      it 'gives all the topics to view' do
+        assigns[:topics].should == Topic.all
+      end
+
+      it 'shows issue topics as checked' do
+        assigns[:issue].topics.should include topic
+        assigns[:issue].topics.should_not include unselected_topic 
       end
 
     end
@@ -63,19 +87,17 @@ module Admin
 
       describe "with valid params" do
 
-        let(:params) do
-          Factory.attributes_for(:issue)
-        end
-
         before(:each) do
-          post :create, :issue => params
+          @params = Factory.build(:issue).attributes.symbolize_keys
+          @params[:topic_ids] = [topic.id]
+          post :create, :issue => @params
         end
 
         it "assigns a newly created issue as @issue" do
-          assigns[:issue].name.should eq params[:name]
-          assigns[:issue].cached_slug.should eq params[:cached_slug]
-          assigns[:issue].summary.should eq params[:summary]
-          assigns[:issue].sponsor_name.should eq params[:sponsor_name]
+          assigns[:issue].name.should eq @params[:name]
+          assigns[:issue].cached_slug.should eq @params[:cached_slug]
+          assigns[:issue].summary.should eq @params[:summary]
+          assigns[:issue].sponsor_name.should eq @params[:sponsor_name]
         end
 
         it "redirects to the issues index" do
@@ -87,11 +109,12 @@ module Admin
       describe "with invalid params" do
 
         let(:params) do
-          Factory.attributes_for(:issue)
+          Factory.build(:issue).attributes.symbolize_keys
         end
 
         before(:each) do
           params.delete(:name)
+          params[:topic_ids] = [topic.id]
           post :create, :issue => params
         end
 
@@ -102,25 +125,28 @@ module Admin
         it "re-renders the 'new' issue" do
           response.should render_template('new')
         end
-
+        it "provides the topics" do
+          assigns[:topics].should == Topic.all
+        end
       end
 
       describe "with subclasses" do
 
         it "creates issues" do
-          params = Factory.attributes_for(:issue)
+          params = Factory.build(:issue).attributes.symbolize_keys
           params[:type] = 'Issue'
+          params[:topic_ids] = [topic.id]
           post :create, :issue => params
-          assigns[:issue].should be_kind_of Issue
-          assigns[:issue].type.should == 'Issue'
+          assigns[:issue].should be_a Issue
+          assigns[:issue].type.should == "Issue"
         end
 
         it "creates managed issues" do
-          params = Factory.attributes_for(:managed_issue)
+          params = Factory.build(:managed_issue).attributes.symbolize_keys
           params[:type] = 'ManagedIssue'
+          params[:topic_ids] = [topic.id]
           post :create, :issue => params
-          assigns[:issue].should be_kind_of Issue
-          assigns[:issue].type.should == 'ManagedIssue'
+          assigns[:issue].type.should == "ManagedIssue"
         end
 
       end
@@ -149,7 +175,7 @@ module Admin
 
         before(:each) do
           params['name'] = new_name
-          put :update, :id => params['id'], :issue => params
+          put :update, :id => params['id'], :issue => params, :topics => issue.topics
         end
 
         it "updates the requested issue" do
@@ -174,7 +200,7 @@ module Admin
 
         before(:each) do
           params['name'] = ''
-          put :update, :id => params['id'], :issue => params
+          put :update, :id => params['id'], :issue => params, :topics => issue.topics
         end
 
         it "assigns the issue as @issue" do
@@ -183,6 +209,10 @@ module Admin
           assigns[:issue].summary.should eq params['summary']
           assigns[:issue].cached_slug.should eq params['cached_slug']
           assigns[:issue].sponsor_name.should eq params['sponsor_name']
+        end
+
+        it 'provides the topics' do
+          assigns[:topics].should == Topic.all
         end
 
         it "re-renders the 'edit' issue" do
@@ -197,7 +227,7 @@ module Admin
           issue = Factory.create(:issue)
           params = issue.attributes
           params[:type] = 'ManagedIssue'
-          put :update, :id => params['id'], :issue => params
+          put :update, :id => params['id'], :issue => params, :topics => issue.topics
           assigns[:issue].should be_kind_of Issue
           assigns[:issue].type.should == 'ManagedIssue'
         end
@@ -206,7 +236,7 @@ module Admin
           issue = Factory.create(:managed_issue)
           params = issue.attributes
           params[:type] = 'Issue'
-          put :update, :id => params['id'], :managed_issue => params
+          put :update, :id => params['id'], :managed_issue => params, :topics => issue.topics
           assigns[:issue].should be_kind_of Issue
           assigns[:issue].type.should == 'Issue'
         end
@@ -272,7 +302,7 @@ module Admin
       end
 
       it "redirects to the issues list" do
-        response.should redirect_to(admin_issues_url)
+        response.should redirect_to(admin_issues_path)
       end
 
     end

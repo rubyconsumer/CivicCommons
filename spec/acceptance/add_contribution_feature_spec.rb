@@ -8,7 +8,7 @@ feature "Add contribution", %q{
   I want to add a contribution
   So that I can interact with the community
 
-  Scenario: 
+  Scenario:
 } do
 
   let(:content) do
@@ -17,7 +17,7 @@ feature "Add contribution", %q{
   let(:file_and_url_error_message) do
     content = "Woops! We only let you submit one link or file per contribution"
   end
-  
+
   let(:file_only_error_message) do
     content = "Sorry! You must also write a comment above when you upload a file."
   end
@@ -37,7 +37,7 @@ feature "Add contribution", %q{
 
     # Given I am logged in
     @user = logged_in_user
-    
+
     # Then a conversation with at least one contribution exists
     @contribution = Factory.create(:contribution_without_parent, :override_confirmed => true)
     @conversation = @contribution.conversation
@@ -63,7 +63,7 @@ feature "Add contribution", %q{
     contrib = ContributionTool.new(page)
 
     # When I click on the post to button
-    contrib.post_to_link.click 
+    contrib.post_to_link.click
 
     # Then I should see the contribution tool
     contrib.should be_visible
@@ -77,7 +77,7 @@ feature "Add contribution", %q{
     contrib = ContributionTool.new(page)
 
     # When I click on the respond-to button
-    contrib.respond_to_link(@contribution).click 
+    contrib.respond_to_link(@contribution).click
 
     # Then I should see the contribution tool
     contrib.should be_visible
@@ -106,14 +106,14 @@ feature "Add contribution", %q{
   end
 
   scenario "Contribution tool has all required elements", :js => true do
- 
+
     # Given I am on a conversation permalink page
     convo_page = ConversationPage.new(page)
     convo_page.visit_page(@conversation)
     contrib = ContributionTool.new(page)
 
     # When I click on the post to conversation button
-    contrib.post_to_link.click 
+    contrib.post_to_link.click
 
     # Then I should not see the content textarea
     contrib.content_field.should_not be_visible
@@ -141,31 +141,31 @@ feature "Add contribution", %q{
 
     # When I click the 'Add a link...' link
     contrib.add_url_link.click
-    
+
     # Then the link field should be visible
     contrib.url_field.should be_visible
 
     # When I click the 'Add a file...' link
     contrib.add_file_link.click
-    
+
     # Then the file field should be visible
     contrib.file_field.should be_visible
  end
 
   scenario "Cancelling a contribution", :js => true do
     # NOTE: This test occationally has timing issues
- 
+
     # Given I am on a conversation permalink page
     convo_page = ConversationPage.new(page)
     convo_page.visit_page(@conversation)
     contrib = ContributionTool.new(page)
 
     # When I click on the post to conversation button
-    contrib.post_to_link.click 
+    contrib.post_to_link.click
 
     # Then I should see the contribution tool
     contrib.should be_visible
-    
+
     # When I fill in the content field
     contrib.fill_in_content_field(content)
 
@@ -189,14 +189,14 @@ feature "Add contribution", %q{
   end
 
   scenario "Posting only a comment", :js => true do
- 
+
     # Given I am on a conversation permalink page
     convo_page = ConversationPage.new(page)
     convo_page.visit_page(@conversation)
     contrib = ContributionTool.new(page)
 
     # When I click on the post to conversation button
-    contrib.post_to_link.click 
+    contrib.post_to_link.click
 
     # When I fill in the content field
     contrib.fill_in_content_field(content)
@@ -216,14 +216,14 @@ feature "Add contribution", %q{
   end
 
   scenario "Posting only a url", :js => true do
- 
+
     # Given I am on a conversation permalink page
     convo_page = ConversationPage.new(page)
     convo_page.visit_page(@conversation)
     contrib = ContributionTool.new(page)
 
     # When I click on the post to conversation button
-    contrib.post_to_link.click 
+    contrib.post_to_link.click
 
     # When I click the 'Add a link...' link
     contrib.add_url_link.click
@@ -246,14 +246,14 @@ feature "Add contribution", %q{
   end
 
   scenario "Posting only a file - is not allowed", :js => true do
- 
+
     # Given I am on a conversation permalink page
     convo_page = ConversationPage.new(page)
     convo_page.visit_page(@conversation)
     contrib = ContributionTool.new(page)
 
     # When I click on the post to conversation button
-    contrib.post_to_link.click 
+    contrib.post_to_link.click
 
     # When I click the 'Add a file...' link
     contrib.add_file_link.click
@@ -273,14 +273,14 @@ feature "Add contribution", %q{
   end
 
   scenario "Posting a comment with a url", :js => true do
- 
+
     # Given I am on a conversation permalink page
     convo_page = ConversationPage.new(page)
     convo_page.visit_page(@conversation)
     contrib = ContributionTool.new(page)
 
     # When I click on the post to conversation button
-    contrib.post_to_link.click 
+    contrib.post_to_link.click
 
     # When I fill in the content field
     contrib.fill_in_content_field(content)
@@ -309,14 +309,14 @@ feature "Add contribution", %q{
   end
 
   scenario "Posting a comment with a file", :js => true do
- 
+
     # Given I am on a conversation permalink page
     convo_page = ConversationPage.new(page)
     convo_page.visit_page(@conversation)
     contrib = ContributionTool.new(page)
 
     # When I click on the post to conversation button
-    contrib.post_to_link.click 
+    contrib.post_to_link.click
 
     # When I fill in the content field
     contrib.fill_in_content_field(content)
@@ -345,14 +345,14 @@ feature "Add contribution", %q{
   end
 
   scenario "Posting a url with a file, is not allowed - must be either a url or a file", :js => true do
- 
+
     # Given I am on a conversation permalink page
     convo_page = ConversationPage.new(page)
     convo_page.visit_page(@conversation)
     contrib = ContributionTool.new(page)
 
     # When I click on the post to conversation button
-    contrib.post_to_link.click 
+    contrib.post_to_link.click
 
     # When I click the 'Add a link...' link
     contrib.add_url_link.click
@@ -368,7 +368,7 @@ feature "Add contribution", %q{
 
     # And I press the submit button
     contrib.submit_button.click
-    
+
     # Then I should see an error message
     contrib.should contain(file_and_url_error_message)
 
@@ -378,14 +378,14 @@ feature "Add contribution", %q{
   end
 
   scenario "Posting a comment with a file and a url is not allowed - must be either a url or a file", :js => true do
- 
+
     # Given I am on a conversation permalink page
     convo_page = ConversationPage.new(page)
     convo_page.visit_page(@conversation)
     contrib = ContributionTool.new(page)
 
     # When I click on the post to conversation button
-    contrib.post_to_link.click 
+    contrib.post_to_link.click
 
     # When I fill in the content field
     contrib.fill_in_content_field(content)

@@ -15,6 +15,7 @@ class Issue < ActiveRecord::Base
   belongs_to :person
 
   has_and_belongs_to_many :conversations
+  has_and_belongs_to_many :topics
   # Contributions directly related to this Issue
   has_many :contributions
   has_many :suggested_actions
@@ -37,16 +38,20 @@ class Issue < ActiveRecord::Base
                       :panel => "198x130#" },
                     :storage => :s3,
                     :s3_credentials => S3Config.credential_file,
-                    :path => IMAGE_ATTACHMENT_PATH,
-                    :default_url => '/images/issue_img_:style.gif')
+                    :path => IMAGE_ATTACHMENT_PATH)
+  validates_attachment_content_type :image,
+                                    :content_type => /image\/*/,
+                                    :message => "Not a valid image file."
 
   has_friendly_id :name, :use_slug => true, :strip_non_ascii => true
 
   before_create :assign_position
 
   validates :name, :presence => true, :length => { :minimum => 5 }
+  validates :topics, :presence => true, :length => { :minimum => 1 }
   validates_uniqueness_of :name
-
+  validates_attachment_presence :image
+  
   scope(:most_active, :select =>
         'count(1) as contribution_count, issues.*',
         :joins => [:contributions],
@@ -129,8 +134,16 @@ class Issue < ActiveRecord::Base
     Contribution.joins(:conversation).where({:conversations => {:id => self.conversation_ids}})
   end
 
+  def has_topic?(topic)
+    topics.include?(topic)
+  end
+  def topic_ids=(topic_ids)
+    self.topics = topic_ids.collect do |id|
+      Topic.find id
+    end
+  end
   private
-
+ 
   def self.update_positions(current, new_index, comparison)
     current_issue = Issue.find_by_position(current)
     Issue.where('position >= ?', comparison).each do |issue|

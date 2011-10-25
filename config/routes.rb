@@ -170,6 +170,7 @@ Civiccommons::Application.routes.draw do
     resources :surveys do
       get 'progress', on: :member
     end
+    resources :topics
     resources :people do
       get 'proxies',       on: :collection
       put 'lock_access',   on: :member

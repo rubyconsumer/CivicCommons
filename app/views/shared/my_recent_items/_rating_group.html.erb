@@ -1,0 +1,25 @@
+<%
+  contribution = rating_group.contribution
+  conversation = rating_group.conversation
+  rating = rating_group.ratings.where(:created_at => rating_group.created_at).first
+
+  unless rating.blank?
+%>
+<div class="divided">
+  <div class="recent-item rating">
+    <h4><%= link_to( conversation.title, conversation_path(contribution.conversation.id) ) %></h4>
+    <p>I rated a <%= link_to("response from #{ contribution.person_name }", conversation_node_path(contribution)) %> as <span class="rating-type"><%= rating && rating.title %></span></p>
+    <div class="related-article call-out">
+      <div class="offset-2">
+        <%= avatar_profile(contribution.person, 40) %>
+        <p>
+        <%= truncate( Sanitize.clean( contribution.content, :remove_contents => ['script'] ).strip, :length => 225, :separator => ' ' ) %>
+        <% if contribution && contribution.content.size > 225 %>
+          <strong><%= link_to("Continue reading", url_to_contribution(contribution)) %></strong>
+        <% end %>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>

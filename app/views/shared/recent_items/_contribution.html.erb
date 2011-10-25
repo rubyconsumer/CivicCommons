@@ -1,3 +1,4 @@
+<div class="recent-item contribution">
 <%
 #TODO: Sloppy, too much logic, needs refactored...
 
@@ -45,11 +46,12 @@ elsif contribution.conversation
 end
 %>
 
-<p>
-<%= link_to(link_text, link_url) %>
+<p class="title">
+<strong><%= link_to(link_text, link_url) %></strong>
 </p>
 <% unless posted_text.nil? %>
   <span class="posted">
     Posted on: <%= link_to(posted_text, posted_url) %>
   </span>
 <% end %>
+</div>

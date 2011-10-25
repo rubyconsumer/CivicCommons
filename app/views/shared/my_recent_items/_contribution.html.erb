@@ -1,0 +1,26 @@
+<%
+  parent_contribution = contribution.parent
+%>
+<div class="divided">
+  <div class="recent-item contribution">
+    <h4><%= link_to( contribution.item_title, contribution_item_url(contribution)) %></h4>
+    <p>
+    <strong>I <%= link_to("responded to #{parent_contribution ? parent_contribution.person.name : contribution.item_title }", url_to_contribution(contribution)) %></strong>:
+      <%= truncate( Sanitize.clean( contribution.content, :remove_contents => ['script'] ).strip, :length => 100, :separator => ' ' ) %>
+    </p>
+    <% if parent_contribution && parent_contribution.content && !Sanitize.clean(parent_contribution.content).blank?  %>
+      <div class="related-article call-out">
+        <div class="offset-2">
+          <%= avatar_profile(parent_contribution.person, 40) %>
+          <p>
+          <%= truncate( Sanitize.clean( parent_contribution.content, :remove_contents => ['script'] ).strip, :length => 225, :separator => ' ' ) unless parent_contribution.blank? || Sanitize.clean(parent_contribution.content).blank? %>
+          <% if parent_contribution && parent_contribution.content.size > 225 %>
+            <strong><%= link_to("Continue reading", url_to_contribution(parent_contribution)) %></strong>
+          <% end %>
+          </p>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+

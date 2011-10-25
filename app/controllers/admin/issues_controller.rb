@@ -8,6 +8,7 @@ class Admin::IssuesController < Admin::DashboardController
   #GET admin/issues/new
   def new
     @issue = Issue.new(params[:issue])
+    @topics = Topic.all
   end
 
   #POST admin/issues
@@ -21,6 +22,7 @@ class Admin::IssuesController < Admin::DashboardController
       redirect_to admin_issues_path
       flash[:notice] = "Thank you for submitting an issue"
     else
+      @topics = Topic.all
       render :new
     end
   end
@@ -28,6 +30,7 @@ class Admin::IssuesController < Admin::DashboardController
   #GET admin/issues/:id/edit
   def edit
     @issue = Issue.find(params[:id])
+    @topics = Topic.all
   end
   
   #PUT admin/issues/:id
@@ -42,6 +45,7 @@ class Admin::IssuesController < Admin::DashboardController
       redirect_to admin_issues_path
       flash[:notice] = "Thank you for updating the issue"
     else
+      @topics = Topic.all
       render :edit
     end
   end
@@ -94,5 +98,4 @@ class Admin::IssuesController < Admin::DashboardController
       nil
     end
   end
-
 end

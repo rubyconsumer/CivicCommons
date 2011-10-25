@@ -43,7 +43,10 @@ float: left;
 }
 .contribution-container i.date {color: #444;}
 .conversations {margin: 0;}
-.collapsed > .comment > .conversations.divided {padding-top: 0;}
+.collapsed > .comment > .conversations.divided {
+padding-top: 0;
+/* margin-top: 15px; */
+}
 .conversations.divided li {
 margin-bottom: 0;
 margin-top: 0;
@@ -150,7 +153,7 @@ color:#555;
 }
 .form-label-offset a img {float: left}
 .form-label-offset .remove_picture {margin-left: 5px;}
-input.textbox, input.textbox.small {
+input.textbox, input.textbox.small, textarea.textbox {
 font-family: Helvetica, Arial, sans-serif;
 font-size: 1em;
 border: 1px solid #ccc;
@@ -385,6 +388,10 @@ left: 0;
 position: absolute;
 }
 .divided div.offset-3 {min-height: 70px;}
+.profile .offset-1.profile-mast {
+min-height: 90px;
+padding-left: 90px;
+}
 
 /*- Media Download Styles ----------*/
 
@@ -851,6 +858,84 @@ font-style: normal;
 .pagination a:hover {background-color: #eee;}
 
 
+/*- PROFILE STYLES
+----------------------------------------------------------------------*/
+
+.profile .call-out {
+padding: 15px 15px 0;
+min-height: 0;
+-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.1);
+-moz-box-shadow: 0 1px 2px rgba(0,0,0,.1);
+-o-box-shadow: 0 1px 2px rgba(0,0,0,.1);
+box-shadow: 0 1px 2px rgba(0,0,0,.1);
+}
+.profile .related-article.call-out {
+min-height: 50px;
+padding-bottom: 5px;
+}
+ul.profile-extras {
+margin-left: 0;
+overflow: hidden;
+}
+ul.profile-extras li {
+list-style-type: none;
+margin-right: 1.5em;
+padding-left: 20px;
+}
+li.website-profile {background: url(/images/globe.png) no-repeat 0 0;}
+li.twitter-profile {background: url(/images/twitter.png) no-repeat 0 0;}
+li.fb-profile {background: url(/images/facebook.png) no-repeat 0 0;}
+ul.profile-extras a:link {
+color: #858383;
+text-decoration: none;
+}
+ul.profile-extras a:hover {color: #2c87b7;}
+.profile .profile-mast {margin-bottom: 2em;}
+.profile .offset-1.profile-mast img {
+background: #fff;
+border: 1px solid #ccc;
+padding: 4px;
+-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.1);
+-moz-box-shadow: 0 1px 2px rgba(0,0,0,.1);
+-o-box-shadow: 0 1px 2px rgba(0,0,0,.1);
+box-shadow: 0 1px 2px rgba(0,0,0,.1);
+}
+.profile h3 {
+color: #666;
+margin-bottom: 1em;
+}
+.profile .divided {border-top: none;}
+.profile h4 {font-size: 1.15em;}
+.rating-type {
+background: #9aaa58;
+color: #fff;
+font-size: .9em;
+font-weight: bold;
+margin: 0 3px;
+padding: 3px 7px;
+text-transform: uppercase;
+-moz-border-radius: 4px;
+-webkit-border-radius: 4px;
+-o-border-radius: 4px;
+border-radius: 4px;
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #adba6b), color-stop(0.5, #9aaa58));
+background: -webkit-linear-gradient(center top , #adba6b, #9aaa58);
+background: -o-linear-gradient(center top , #adba6b, #9aaa58);
+background: -moz-linear-gradient(center top , #adba6b, #9aaa58);
+background: linear-gradient(center top , #adba6b, #9aaa58);
+}
+.profile .recent-item {
+border-bottom: none;
+padding: 0 0 0 35px;
+margin-bottom: 35px;
+}
+.profile .recent-item.contribution {background: url("/images/contrib-r.png") no-repeat 2px 4px;}
+.profile .recent-item.conversation {background: url("/images/conv-r.png") no-repeat 2px 4px;}
+.profile .recent-item.rating {background: url("/images/voting-icon.png") no-repeat 7px 4px;}
+.profile .recent-item.issue {background: url("/images/issues-r.png") no-repeat 2px 4px;}
+.profile .issue p {padding-left: 0;}
+
+
 /*- BUTTON AND LINK STYLES
 ----------------------------------------------------------------------*/
 
@@ -1126,7 +1211,6 @@ padding-left: 32px;
 }
 ul#main-nav li.commons {
 background: url(../images/nav_build.png) no-repeat 0 17px;
-display: block;
 padding-left: 26px;
 }
 
@@ -1207,6 +1291,7 @@ padding-top: 15px;
 
 .hide_contrib_tool {
 position: absolute;
+display: none;
 left: -10000px;
 top: auto;
 overflow: hidden;
@@ -1226,6 +1311,7 @@ border-radius: 4px;
 -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 -o-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+
 }
 .contrib_tool_container .section input,
 form.contribution_edit .section input{
@@ -1299,7 +1385,7 @@ border-radius: 8px;
 /*- Conversation Utility ----------*/
 
 .edit-contribution {float: right;}
-.thread-list .thread-list .contribution-container .edit-contribution {margin-right: 40px;}
+.contribution-thread-div .contribution-container .edit-contribution {margin-right: 40px;}
 .edit-contribution a {margin-left: 15px;}
 div.convo-utility {
 position:relative;
@@ -1346,7 +1432,7 @@ float: left;
 margin-right: 10px;
 }
 p.link-quot {color: #636363;}
-div.link-meta p.link-title a, div.link-meta p.link-quot a{
+div.link-meta p.link-title a, div.link-meta p.link-quot a {
 text-decoration: none;
 font-weight: bold;
 }
@@ -1858,6 +1944,19 @@ margin-bottom: 0;
 .feature-mast img.featured {
 float: left;
 margin-right: 15px;
+}
+div.three-col-sm div.cols.call-out p {word-wrap: break-word;}
+
+/*- Empty Section ----------*/
+
+.empty {
+background: #fff;
+border: 2px dashed #c3c3c3;
+padding: 20px;
+-moz-border-radius: 6px;
+-webkit-border-radius: 6px;
+-o-border-radius: 6px;
+border-radius: 6px;
 }
 
 /*- Aside Module ----------*/

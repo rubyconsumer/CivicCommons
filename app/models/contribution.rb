@@ -24,6 +24,9 @@ class Contribution < ActiveRecord::Base
   belongs_to :issue
   has_many   :rating_groups, :dependent => :destroy
 
+  delegate :title, :to => :item, :prefix => true
+  delegate :name, :to => :person, :prefix => true
+
   #############################################################################
   # Validations
 

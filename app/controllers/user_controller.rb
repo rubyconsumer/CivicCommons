@@ -16,7 +16,7 @@ class UserController < ApplicationController
 
   def show
     @user = Person.includes(:contributions, :subscriptions).find(params[:id])
-    @recent_items = Activity.recent_items_for_person(@user).paginate(page: params[:page], per_page: 10)
+    @recent_items = Activity.recent_items_for_person(@user).collect{|a| a.item}.paginate(page: params[:page], per_page: 10)
 
     @issue_subscriptions = @user.subscriptions.where(:subscribable_type => 'Issue')
     @conversation_subscriptions = @user.subscriptions.where(:subscribable_type => 'Conversation')
