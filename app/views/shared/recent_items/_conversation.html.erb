@@ -1,7 +1,5 @@
 <div class="recent-item conversation">
-<p class="title">
-  <strong>Conversation created:
-  <%= link_to( conversation.title, conversation_path(conversation.id)) %></strong>
-</p>
-<%= simple_format( truncate( Sanitize.clean( conversation.summary, :remove_contents => ['script'] ).strip, :length => 100, :separator => ' ' ) ) %>
+  <p class="create-title"><strong>Conversation created:</strong></p>
+  <h4><%= link_to( conversation.title, conversation_path(conversation.id)) %></h4>
+  <%= simple_format( truncate( Sanitize.clean( conversation.summary, :remove_contents => ['script'] ).strip, :length => 100, :separator => ' ' ) ) %>
 </div>

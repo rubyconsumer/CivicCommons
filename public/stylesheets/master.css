@@ -1015,7 +1015,6 @@ color: #fff;
 a.read-more {
 display: block;
 font-weight: bold;
-text-align: right;
 }
 form.delete-button {
 display: inline;
@@ -2066,6 +2065,29 @@ line-height:1.4em;
 
 .recent-item a:hover {
   text-decoration:underline;
+}
+.recent-item .offset-2 {
+background: #fff;
+padding: 10px 10px 0 60px;
+margin-bottom: .5em;
+min-height: 50px;
+height: auto !important;
+height: 50px;
+-moz-border-radius: 4px;
+-webkit-border-radius: 4px;
+-o-border-radius: 4px;
+border-radius: 4px;
+}
+.recent-item .offset-2 .callout {
+left: 10px;
+position: absolute;
+}
+.recent-item h4 {margin-bottom: .8em;}
+p.create-title {
+color: #777;
+font-size: .9em;
+margin-bottom: .2em;
+text-transform: uppercase;
 }
 
 /*- Global Warning ----------*/
