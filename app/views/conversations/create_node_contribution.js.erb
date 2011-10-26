@@ -12,9 +12,6 @@ $("#contrib #error_explanation").remove();
   <% else %>
     $('#show_conversation > ol.thread-list').last().append("<%= escape_javascript( render :partial => "conversations/threaded_contribution_template", :locals => { :contribution => @contribution } ) %>");
   <% end %>
-
-  $('#respond-to-<%= @contribution.id %>').ready(enable_post_to_conversation($('.post_to_conversation')));
-
 <% else %>
 
   $("#contrib fieldset").first().before("<%= escape_javascript( render :partial => 'contributions/creation_errors' ) %>");

@@ -26,6 +26,8 @@
               = rating_buttons(contribution, @ratings)
               -if current_person
                 = link_to(respond_button_text(contribution), '#', :class => "respond text rating-button post_to_conversation", :id => "respond-to-#{contribution.id}", :title => respond_button_text(contribution))
+                :javascript
+                  enable_post_to_conversation($('#respond-to-#{contribution.id}'));
               -else
                 = link_to(respond_button_text(contribution), { :controller => :sessions, :action => :ajax_new }, :class => "respond text rating-button", 'data-colorbox' => true )
         %ol.conversations.divided.thread-list
