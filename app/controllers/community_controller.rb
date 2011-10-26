@@ -10,10 +10,15 @@ class CommunityController < ApplicationController
   private
 
   def ordered_people
-    if params[:order] == 'recent'
-      @people = Person.find_confirmed_order_by_recency.paginate(:page => params[:page], :per_page => 16)
-    elsif params[:order] == 'alpha'
+    @order = params[:order]
+    case @order
+    when 'newest-member'
+      @subtitle = 'Newest Members'
+      @people = Person.confirmed_accounts.sort_latest_created_at.paginate(:page => params[:page], :per_page => 16)
+    when 'alpha'
       @people = Person.find_confirmed_order_by_last_name(params[:letter]).paginate(:page => params[:page], :per_page => 16)
+    when 'recent'
+      @people = Person.find_confirmed_order_by_recency.paginate(:page => params[:page], :per_page => 16)
     else
       @people = Person.find_confirmed_order_by_last_name.paginate(:page => params[:page], :per_page => 16)
     end

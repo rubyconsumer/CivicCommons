@@ -19,6 +19,15 @@ describe Person do
     end
   end
 
+  context "Scopes" do
+    describe "sort_latest_created_at" do
+      it "should sort by the created_at DESC" do
+        Person.sort_latest_created_at.arel.orders.include?('created_at DESC').should be_true
+      end
+
+    end
+  end
+  
   describe "validate required data" do
 
     before(:each) do
