@@ -48,12 +48,14 @@ elsif contribution.conversation
 end
 %>
 
-<p class="title">
-  <strong><%= link_to(member_link_text, link_url) %></strong> <%= link_to(link_text, link_url) %>
-</p>
-<% unless posted_text.nil? %>
-  <span class="posted">
-    Posted on: <%= link_to(posted_text, posted_url) %>
-  </span>
-<% end %>
+  <% unless posted_text.nil? %>
+  <h4><%= link_to(posted_text, posted_url) %></h4>
+  <% end %>
+
+  <div class="offset-2">
+    <a href="#" title="User Name"><img alt="User Name" class="callout" height="40" src="http://placehold.it/40x40" title="User Name" width="40"></a>
+    <p><%= link_text %></p>
+    <p><a class="read-more" href="<%= link_url %>">Continue Reading</a></p>
+  </div>
+
 </div>
