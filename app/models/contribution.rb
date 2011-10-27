@@ -1,8 +1,6 @@
 require 'parent_validator'
-require 'contributions_determines_level_of_indentation'
 class Contribution < ActiveRecord::Base
   include Visitable
-  include DeterminesLevelOfIndentation
 
   searchable :include => [:person, :conversation, :issue], :ignore_attribute_changes_of => [ :total_visits, :recent_visits, :last_visit_date, :updated_at, :recent_rating ] do
     text :title

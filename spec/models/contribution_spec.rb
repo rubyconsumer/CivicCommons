@@ -625,15 +625,6 @@ describe Contribution do
 
   end
 
-  describe "determining if further indented" do
-    it "can do that" do
-      subject = Contribution.new
-      subject.parent = Contribution.new
-      subject.should be_further_indented
-    end
-  end
-  
-  
   context "paperclip" do
     it "will have necessary db columns for paperclip" do
       should have_db_column(:attachment_file_name).of_type(:string)
@@ -641,6 +632,5 @@ describe Contribution do
       should have_db_column(:attachment_file_size).of_type(:integer)
     end
   end
-  
-  
+
 end
