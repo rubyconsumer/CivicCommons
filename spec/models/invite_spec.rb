@@ -31,4 +31,14 @@ describe Invite do
     end
   end
 
+  describe "send_invites" do
+    it "should not escape the html of the summary" do
+      summary = '<em>Strong Tag Here</em>'
+      conversation = Factory.create(:conversation,:summary=> summary)
+      user = Factory.create(:registered_user)
+      Invite.send_invites('test@test.com',user,conversation)
+      ActionMailer::Base.deliveries.last.body.include?(summary).should be_true
+    end
+    
+  end
 end
