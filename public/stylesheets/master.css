@@ -1745,17 +1745,24 @@ border-radius: 4px;
 -o-box-shadow: 0 0 1px rgba(255,255,255,1), inset 1px 1px 1px rgba(0,0,0,.1);
 box-shadow: 0 0 1px rgba(255,255,255,1), inset 1px 1px 1px rgba(0,0,0,.1);
 }
-div#search.errors form input.textbox {
-border-color: #A33333;
-}
-div#search.errors .error {
-font-weight: bold;
-}
+div#search.errors form input.textbox {border-color: #a33333;}
+div#search.errors .error {font-weight: bold;}
 div#search form input.textbox:focus {outline: 0 none;}
 div#search input.submit {
 float: right;
 margin: 0;
 }
+
+/*- Search Input in Footer ----------*/
+
+#footer div#search {
+border-bottom: none;
+border-top: 1px solid #cdcdcd;
+margin: 20px 0 0 0;
+padding: 20px 0 0 0;
+}
+#footer div#search form input.textbox {margin-bottom: 5px;}
+#footer div#search input.submit {float: left;}
 
 /*- Search Input on Main Search Page ----------*/
 
@@ -2123,6 +2130,21 @@ background-image: url(../images/search/issues-s.png);
 background-position: 12px 7px;
 }
 .aside .search-filter ul li a#issues-s:hover, .aside .search-filter ul li a#issues-s.active {background-position: 12px -57px;}
+.aside .search-filter ul li a#blog-s {
+background-image: url(../images/search/blog-f.png);
+background-position: 11px 4px;
+}
+.aside .search-filter ul li a#blog-s:hover, .aside .search-filter ul li a#blog-s.active {background-position: 11px -55px;}
+.aside .search-filter ul li a#radio-s {
+background-image: url(../images/search/radio-f.png);
+background-position: 11px 3px;
+}
+.aside .search-filter ul li a#radio-s:hover, .aside .search-filter ul li a#radio-s.active {background-position: 11px -53px;}
+.aside .search-filter ul li a#contrib-s {
+background-image: url(../images/search/contrib-f.png);
+background-position: 11px 7px;
+}
+.aside .search-filter ul li a#contrib-s:hover, .aside .search-filter ul li a#contrib-s.active {background-position: 11px -59px;}
 
 /*- Create Conversation Feature ----------*/
 
