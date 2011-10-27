@@ -81,6 +81,11 @@ feature "Add contribution", %q{
 
     # Then I should see the contribution tool
     contrib.should be_visible
+
+    # And it will appear as the last list element
+    within(convo_page.contribution_subthread(@contribution)) do
+      page.should have_selector('li:last-child .tinymce-container')
+    end
   end
 
   scenario "Contribution tool appears when a user responds to a child contribution", :js => true do
@@ -103,6 +108,49 @@ feature "Add contribution", %q{
 
     # Then I should see the contribution tool
     contrib.should be_visible
+
+    # And it will appear as the last list element
+    within(convo_page.contribution_subthread(@contribution)) do
+      page.should have_selector('li:last-child .tinymce-container')
+    end
+  end
+
+  scenario "Contribution tool appears below all other contributions in the same thread", :js => true do
+=begin
+    initial page nested contribution layout
+
+    Contribution
+      Contribution 2
+        Contribution 3
+        Contribution 4
+      Contribution 5
+=end
+
+    # setup contributions for the page to appear like the diagram above
+    contribution2 = Factory.create(:contribution, :override_confirmed => true, :conversation => @conversation, :parent => @contribution, :title => 'Contribution 2')
+    contribution3 = Factory.create(:contribution, :override_confirmed => true, :conversation => @conversation, :parent => contribution2, :title => 'Contribution 3')
+    contribution4 = Factory.create(:contribution, :override_confirmed => true, :conversation => @conversation, :parent => contribution2, :title => 'Contribution 4')
+    contribution5 = Factory.create(:contribution, :override_confirmed => true, :conversation => @conversation, :parent => @contribution, :title => 'Contribution 5')
+    contributions = [contribution2, contribution3, contribution4, contribution5]
+
+    contributions.each do |contribution|
+      # Given I am on a conversation node permalink page
+      convo_page = ConversationPage.new(page)
+      convo_page.visit_node(@conversation, contribution)
+      sleep(2)
+      contrib = ContributionTool.new(page)
+
+      # When I click on the respond-to button
+      contrib.respond_to_link(contribution).click
+
+      # Then I should see the contribution tool
+      contrib.should be_visible
+
+      # And it will appear as the last list element
+      within(convo_page.contribution_subthread(contribution)) do
+        page.should have_selector('li:last-child .tinymce-container')
+      end
+    end
   end
 
   scenario "Contribution tool has all required elements", :js => true do
