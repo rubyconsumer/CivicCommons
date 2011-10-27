@@ -1477,6 +1477,7 @@ width: 25px;
 .thread-list .thread-list .contribution-container .contribution-toggle:hover {background-position:  0 -27px;}
 .thread-list .thread-list .contribution-container .contribution-toggle:active,
 .thread-list .thread-list .contribution-container .contribution-toggle.active {background-position:  0 -54px;}
+.thread-list .thread-list .thread-list .thread-list {margin-left: -50px}
 
 /*- Rating and Response Buttons ----------*/
 
