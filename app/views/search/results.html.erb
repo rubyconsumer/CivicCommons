@@ -63,6 +63,7 @@
             <li><%= link_to "Issues", search_path(:q => params['q'], :filter => 'issues'), id: "issues-s",  title: "Filter by issues", class: activeFilterIssues %></li>
             <li><%= link_to "Blogs", search_path(:q => params['q'], :filter => 'blogs'), id: "blog-s",  title: "Filter by blog posts", class: activeFilterBlogs %></li>
             <li><%= link_to "Radio Shows", search_path(:q => params['q'], :filter => 'radioshows'), id: "radio-s",  title: "Filter by radio shows", class: activeFilterRadioShows %></li>
+            <li><a href="#" id="contrib-s" title="Filter by contributions">Contributions</a></li>
           </ul>
           <% if params.key?(:filter) %>
             <%= link_to "remove filter", search_path(:q => params['q']),  :title => "Remove this filter", :class => 'remove-search-filter'%>
