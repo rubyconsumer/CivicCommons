@@ -8,7 +8,7 @@
       %div.article.comment.top-level-contribution
         %div.content
           %span.contribution-person-name= person_display_name(contribution.person)
-          =auto_link(simple_format(contribution.content, {}, {:sanitize => false}))
+          = format_comment(contribution)
         %div{:class => "convo-utility #{contribution.children.count > 0 ? 'response' : 'no-response'}"}
           %p.respond-link
             - if contribution.children.count > 0
@@ -30,5 +30,5 @@
                   enable_post_to_conversation($('#respond-to-#{contribution.id}'));
               -else
                 = link_to(respond_button_text(contribution), { :controller => :sessions, :action => :ajax_new }, :class => "respond text rating-button", 'data-colorbox' => true )
-        %ol.conversations.divided.thread-list
-          = display_direct_descendant_subset(@contributions, contribution.id)
+  %ol.conversations.divided.thread-list
+    = display_direct_descendant_subset(@contributions, contribution.id)

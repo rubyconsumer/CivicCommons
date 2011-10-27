@@ -88,10 +88,16 @@ function enable_post_to_conversation(element) {
     var contribution_id = get_contribution_parent_id($(this));
     var title = $(this).attr('title');
     if (contribution_id) {
-      var $thread = $(this).parents('.respond-container').parent().next('ol');
-      if($thread.find('li.tinymce-container').length == 0)
+      var $thread = $(this).parents('.contribution-container').next('ol.thread-list');
+      $tinymce_containers = $('li.tinymce-container');
+      if($tinymce_containers.length == 0)
       {
-        $thread.append('<li class="tinymce-container"></li>');
+          $thread.append('<li class="tinymce-container"></li>');
+      }
+      else
+      {
+          var container = $tinymce_containers.first().detach();
+          $thread.append(container);
       }
       show_contribution_tool($thread.find('li.tinymce-container'), contribution_id, title);
     } else {
