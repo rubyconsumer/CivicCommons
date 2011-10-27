@@ -8,4 +8,7 @@ class ConversationPage < PageObject
     visit conversations_node_show_path(conversation, contribution)
   end
 
+  def contribution_subthread(contribution)
+    "#show-contribution-#{contribution.id} .thread-list"
+  end
 end
