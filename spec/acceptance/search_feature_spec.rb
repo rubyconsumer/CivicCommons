@@ -1,10 +1,48 @@
 require File.expand_path(File.dirname(__FILE__) + '/acceptance_helper')
 
+WebMock.allow_net_connect!
+
+Capybara.default_wait_time = 20
+
 feature "Search the web site", %q{
   As a user of The Civic Commons
   I want to search
   So that I can find an issue, conversation or person I am interested in
 } do
+  let(:conversation_page)   {ConversationPage.new(page)}
+  let(:conversations_page)  {ConversationsPage.new(page)}
+  let(:search_results_page)  {SearchResultsPage.new(page)}
+  
+  scenario "Search Filter for the conversations page" do
+    # Given I am on the conversation page
+    conversations_page.visit
+    # When I enter a search query
+    conversations_page.fill_in 'q', :with => 'search term here'
+    # And I press search button
+    conversations_page.click_link_or_button 'Search'
+    # Then I should be redirected to the search results page  
+    page.current_path.include?(search_results_page.path).should be_true
+    
+    # And I should see 'Conversation' as the highlighted filter
+    conversations_page.should have_selector('li a#conv-s.active', :content => 'Conversations')
+  end
+  
+  scenario "Search Filter for a conversation page" do
+    # Given a conversation
+    conversation = Factory.create(:conversation)
+    # And I am on the conversation page
+    conversation_page.visit_page(conversation)
+    # When I enter a search query
+    conversations_page.fill_in 'q', :with => 'search term here'
+    # And I press search button
+    conversations_page.click_link_or_button 'Search'
+    # Then I should be redirected to the search results page  
+    page.current_path.include?(search_results_page.path).should be_true
+
+    # And I should see 'Conversation' as the highlighted filter
+    conversations_page.should have_selector('li a#conv-s.active', :content => 'Conversations')
+  end
+
 =begin
 ### commented out because the test always fails when sunspot is invoked at any point
   scenario "User can search The Civic Commons" do
