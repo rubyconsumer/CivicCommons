@@ -12,7 +12,7 @@ feature "Manage curated feeds", %q{
 
   background do
     # Given I am logged in as an administrator
-    logged_in_as_admin   
+    given_i_am_logged_in_as_admin   
   end
 
   describe "create a new curated feed" do

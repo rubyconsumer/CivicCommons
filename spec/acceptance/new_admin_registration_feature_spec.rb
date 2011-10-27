@@ -7,7 +7,7 @@ feature "Admin User Registration Tool", %q{
 } do
 
   before(:each) do
-    logged_in_as_admin
+    given_i_am_logged_in_as_admin
     ActionMailer::Base.deliveries.clear
   end
 

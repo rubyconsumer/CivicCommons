@@ -7,7 +7,7 @@
       %th(colspan="2") Actions
   %tbody
     - @topics.each do |topic|
-      %tr
+      %tr{"data-topic-id" => topic.id}
         %td= topic.id
         %td= link_to truncate(topic.name), admin_topic_path(topic), :title=> topic.name
         %td= link_to "Edit", edit_admin_topic_path(topic)

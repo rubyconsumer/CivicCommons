@@ -9,13 +9,6 @@ class AdminTopicsPage < PageObject
     @page.click_link 'Add Topic'
   end
 
-  def click_delete_on_a_topic(topic)
-    page.evaluate_script('window.confirm = function() { return true; }')
-    locator = "//a[contains(text(),'Delete')][contains(@href,'#{admin_topic_path(topic.id)}')]"
-    msg = "no link with title, id or text '#{locator}' found"
-    @page.find(:xpath, locator, :message => msg).click
-    # @page.click_link "//a[contains(text(),'Edit')][contains(@href,'#{edit_admin_survey_path(survey.id)}')]"
-  end
   
   def click_edit_on_a_topic(topic)
     locator = "//a[contains(text(),'Edit')][contains(@href,'#{edit_admin_topic_path(topic.id)}')]"
@@ -23,5 +16,5 @@ class AdminTopicsPage < PageObject
     @page.find(:xpath, locator, :message => msg).click
     # @page.click_link "//a[contains(text(),'Edit')][contains(@href,'#{edit_admin_survey_path(survey.id)}')]"
   end
-
 end
+

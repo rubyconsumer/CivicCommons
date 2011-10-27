@@ -1,4 +1,4 @@
-require File.expand_path(File.dirname(__FILE__) + '/acceptance_helper')
+require 'acceptance/acceptance_helper'
 
 WebMock.allow_net_connect!
 Capybara.default_wait_time = 10
@@ -10,9 +10,6 @@ feature "Voting Admin", %q{
   I want to access the survey admin feature
 } do
 
-  def given_logged_in_as_admin
-    @user = logged_in_as_admin
-  end
   
   def given_an_existing_issue
     @issue = Factory.create(:issue)
@@ -29,8 +26,7 @@ feature "Voting Admin", %q{
     
 
   scenario "See an option to add a survey" do
-    # Given that I am an admin    
-    given_logged_in_as_admin
+    given_i_am_logged_in_as_admin
     
     # When I go to the admin page
     admin_surveys_page.visit
@@ -40,8 +36,7 @@ feature "Voting Admin", %q{
   end
   
   scenario "Survey and Survey option sections" do
-    # Given that I am an admin
-    given_logged_in_as_admin
+    given_i_am_logged_in_as_admin
     
     # And I am on the admin page
     admin_surveys_page.visit
@@ -60,8 +55,7 @@ feature "Voting Admin", %q{
   end
   
   scenario "filling in the survey informations" do
-    # Given that I am an admin
-    given_logged_in_as_admin
+    given_i_am_logged_in_as_admin
     
     # And I have an existing Issue
     given_an_existing_issue
@@ -90,8 +84,7 @@ feature "Voting Admin", %q{
   end
   
   scenario "Create the survey options" do
-    # Given that I am an admin
-    given_logged_in_as_admin
+    given_i_am_logged_in_as_admin
     
     # When I am on the survey form
     admin_new_survey_page.visit
@@ -121,7 +114,7 @@ feature "Voting Admin", %q{
   
   scenario "redirecting to the admin's survey info page" do
     # Given that I am an admin who has completed creating a survey
-    given_logged_in_as_admin
+    given_i_am_logged_in_as_admin
     admin_new_survey_page.visit
     admin_new_survey_page.fill_in_survey_fields
     
@@ -135,7 +128,7 @@ feature "Voting Admin", %q{
   
   scenario "Getting to a survey page and editing it" do
     # Given that I am an admin who has completed creating a survey 
-    given_logged_in_as_admin
+    given_i_am_logged_in_as_admin
     admin_new_survey_page.visit
     admin_new_survey_page.fill_in_survey_fields
     admin_new_survey_page.click_create_survey
@@ -154,7 +147,7 @@ feature "Voting Admin", %q{
   
   scenario "Survey progress page" do
     # Given I am an admin 
-    given_logged_in_as_admin
+    given_i_am_logged_in_as_admin
     
     # And a survey with responses
     given_a_survey_with_responses

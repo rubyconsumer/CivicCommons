@@ -1,9 +1,5 @@
 module HelperMethods
 
-  # Put helper methods you need to be available in all tests here.
-
-  ###################################################################
-  # http://blog.areacriacoes.com.br/2010/8/20/helpers-para-steak
 
   def logged_in_user
     user = Factory.create(:registered_user, declined_fb_auth: true)
@@ -15,11 +11,7 @@ module HelperMethods
   end
 
   def logged_in_as_admin
-    user = Factory.create(:admin_person, declined_fb_auth: true)
-    visit new_person_session_path
-    fill_in 'Email', with: user.email
-    fill_in 'Password', with: user.password
-    click_button 'Login'
+    login_as_admin
   end
 
   def should_be_on(path)
@@ -30,35 +22,18 @@ module HelperMethods
     page.current_url.should_not match(Regexp.new(path))
   end
 
-  #fill_the_following(
-  #  "Post"          => "Steak is awesome",
-  #  "Publish date"  => "31/10/2010",
-  #  "Excerpt"       => "Bla bla bla ...",
-  #  "Body"          => "Bla bla bla ..."
-  #)
   def fill_the_following(fields={})
     fields.each do |field, value|
       fill_in field,  :with => value
     end
   end
-
-  #within(".tags") do
-  #  should_have_the_following(
-  #    'steak',
-  #    'acceptance',
-  #    'rails',
-  #    'ruby'
-  #  )
-  #end
+  
   def should_have_the_following(*contents)
     contents.each do |content|
       page.should have_content(content)
     end
   end
 
-  #should_have_table "#posts_grid",
-  #  [ "Intro to RSpec", "Super awesome post about rspec..."     ],
-  #  [ "Rails 3.0",      "Last week Rails 3.0RC was released..." ]
   def should_have_table(table_name, *rows)
     within(table_name) do
       rows.each do |columns|
@@ -67,7 +42,6 @@ module HelperMethods
     end
   end
 
-  ###################################################################
   
   def clear_mail_queue
     ActionMailer::Base.deliveries.clear
@@ -86,4 +60,9 @@ module HelperMethods
 
 end
 
+RSpec::Matchers.define :exist_in_the_database do
+  match do | actual | 
+    actual.id != nil
+  end
+end
 RSpec.configuration.include HelperMethods, :type => :acceptance

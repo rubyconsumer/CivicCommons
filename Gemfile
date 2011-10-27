@@ -1,7 +1,5 @@
 source 'http://rubygems.org'
 
-gem 'rack', '1.2.1'
-gem 'rake', '0.8.7'
 gem 'mysql2', '< 0.3'
 gem 'devise'
 gem "oa-oauth", :require => "omniauth/oauth"
@@ -56,7 +54,7 @@ group :development do
 end
 
 group :test do
-  gem "rack-test", :git => 'git://github.com/econsultancy/rack-test.git', :branch => 'econsultancy-20110119'
+  gem "rack-test"
   gem 'cucumber', '~>0.10.0'
   gem "factory_girl_rails", '~>1.0.1'
   gem 'no_peeping_toms', :git => 'git://github.com/alindeman/no_peeping_toms.git'
@@ -82,8 +80,7 @@ group :development, :test do
   gem "jasmine"
   gem "rspec-rails", "~> 2.5.0"
   gem 'steak'
-  gem "capybara", "~> 0.4.0"
-  gem "launchy"
+  gem "capybara"
   gem 'webrat', "~> 0.7.3"
   gem 'rspec-spies'
 end
