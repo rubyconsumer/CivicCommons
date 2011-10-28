@@ -24,7 +24,8 @@ class ManagedIssuePage < ActiveRecord::Base
 
   searchable :ignore_attribute_changes_of => [ :updated_at, :stylesheet_path, :template ] do
     text :template, :stored => true, :boost => 1, :default_boost => 1 do
-       CCML.sanitize_tags(template)
+      text = Sanitize.clean(template, :remove_contents => ['style','script'])
+      CCML.sanitize_tags(text)
     end
   end
 end
