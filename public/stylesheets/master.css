@@ -244,6 +244,7 @@ a.cancel {font-weight: normal;}
 .form-group {margin-bottom: 30px;}
 .form-group .related {margin-left: 80px;}
 .form-group .related input.textbox {width: 400px;}
+.required { color: #900; font-weight:bold; font-size:14px; }
 .validation-error {color: #ae1111;}
 .friendly-alert {
 color: #000;

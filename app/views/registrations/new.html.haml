@@ -28,12 +28,15 @@
         .form-block
           = f.label :name, 'Your name:'
           = f.text_field :name, :placeholder => 'Johnny Appleseed', :class => "textbox"
+          %span.required *
         .form-block
           = f.label :email, 'Email Address:'
           = f.text_field :email, :placeholder => 'me@johnnyappleseed.com', :class => "textbox ", :maxlength => 255
+          %span.required *
         .form-block
           = f.label :zipcode, 'Zip Code:'
           = f.text_field :zip_code, :placeholder => '44101-9999', :class => "textbox ", :maxlength => 10
+          %span.required *
         .form-block
           = f.label :avatar, 'Upload an Image:'
           -# Bug with Paperclip:
@@ -53,9 +56,11 @@
         .form-block
           = f.label :password, 'Password:'
           = f.password_field :password, :class => "textbox small"
+          %span.required *
         .form-block
           = f.label :password_confirmation, "Password Again:"
           = f.password_field :password_confirmation, :class => "textbox small"
+          %span.required *
       %fieldset.footer
         = succeed 'or' do
           = f.submit 'Continue', :class => "submit"
