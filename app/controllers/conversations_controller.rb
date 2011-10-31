@@ -238,7 +238,9 @@ class ConversationsController < ApplicationController
   private
 
   def prep_convo(params)
+    p params
     @conversation = Conversation.new(params[:conversation])
+
     @conversation.person = current_person
     @conversation.from_community = true
     @conversation.started_at = Time.now
@@ -247,5 +249,6 @@ class ConversationsController < ApplicationController
       contribution.item = @conversation
     end
   end
+
 
 end

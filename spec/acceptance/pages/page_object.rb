@@ -1,6 +1,6 @@
 class PageObject
   include Rails.application.routes.url_helpers
-  include Capybara
+  include Capybara::DSL
 
   attr_reader :page
 

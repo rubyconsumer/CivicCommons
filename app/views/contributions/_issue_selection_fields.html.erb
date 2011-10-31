@@ -1,4 +1,4 @@
-<fieldset class="form-group">
+<fieldset class="form-group issues">
   <%= form.label :issues, "Issue(s)" %>
   <table>
     <% Issue.alphabetical.each_slice(2) do |slice| %>
@@ -6,7 +6,9 @@
         <% slice.each do |issue| %>
           <td>
             <%= check_box_tag "conversation[issue_ids][]", issue.id, conversation.issues.include?(issue) %>
-            <%= issue.name %>
+            <label for="conversation_issue_ids_">
+              <%= issue.name %>
+            </label>
           </td>
         <% end %>
       </tr>

@@ -59,7 +59,6 @@ Spork.prefork do
     config.include Devise::TestHelpers, :type => :controller
     config.fixture_path = "#{::Rails.root}/spec/fixtures"
     
-    # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
     config.use_transactional_fixtures = false
 
     config.before :suite do

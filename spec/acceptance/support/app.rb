@@ -1,113 +1,140 @@
 module CivicCommonsDriver
   include Rails.application.routes.url_helpers
-  include Capybara
-  
-  
+  @@available_pages = {}
+  def self.available_pages
+    @@available_pages
+  end
+
+  def self.set_current_page_to page
+    raise "OH NOES NO PAGE FOR #{page}" unless @@available_pages.has_key?(page)
+    self.current_page = @@available_pages[page].new 
+  end
+
+  def set_current_page_to page
+    CivicCommonsDriver.set_current_page_to page
+  end
 
   def attachments_path
     File.expand_path(File.dirname(__FILE__) + '/attachments')
   end
-  def login_as_admin
-    user = Factory.create(:admin_person, declined_fb_auth: true)
-    visit new_person_session_path
-    fill_in 'Email', with: user.email
-    fill_in 'Password', with: user.password
-    click_button 'Login'
+
+  def create_user(type)
+    Factory.create(type, declined_fb_auth: true)
   end
-  def login
-    user = Factory.create(:registered_user, declined_fb_auth: true)
-    visit new_person_session_path
-    fill_in 'Email', with: user.email
-    fill_in 'Password', with: user.password
-    click_button 'Login'
+
+  def login_as(type = :person)
+    case type
+    when :person 
+      user = create_user :registered_user
+    when :admin
+      user = create_user :admin_person
+    end
+    login user
   end
+
+  def login(user)
+    goto :login
+    fill_in_email_with user.email
+    fill_in_password_with user.password
+    click_login_button
+  end
+
   def goto screen
-    rails_route = { :admin_page => :admin_root }
-    
-    visit url_for rails_route[screen]
+    set_current_page_to screen
+    current_page.goto
   end
 
   def select_topic topic
     check topic  
   end
 
-  def submit_a_topic
-    
-  end
-
-  def fill_name_with(value)
-    fill_in 'Name', with: value
-  end
-  
-  def fill_summary_with(value)
-    fill_in 'Summary', with: value
-  end
-
-  def attach_image file_name
-    attach_file 'issue[image]', File.join(attachments_path, file_name) 
-  end
-
-  def submit_issue
-    click_button 'Create Issue'
-  end
-  def create_topic(attributes={}) 
-    @topic = Factory.create :topic, attributes
-  end
-  
-  def delete_topic topic
-    within "tr[data-topic-id='#{topic.id}']" do
-      click_link "Delete"
-    end
-    page.driver.browser.switch_to.alert.accept
-  end
 
   def topic
+
+    @topic = Topic.find(@topic.id) if @topic.id!=nil and Topic.exists? @topic.id
     @topic.instance_eval do
       def removed_from? page
-        page.has_no_css? "tr[data-topic-id='#{id}']"
+        page.has_no_css? locator
       end
 
       def has_been_removed_from_the_database?
         !Topic.exists? id
       end
+
+      def locator
+        "tr[data-topic-id='#{id}']"
+      end
     end
     @topic
   end
-
-
   def goto_admin_page_as_admin
-    logged_in_as_admin
-    visit '/admin'
+    login_as :admin
+    goto :admin
   end
   def follow_topics_link
     click_link 'Topics'
+    set_current_page_to :admin_topics
   end
+  def self.current_page= page
+    @@current_page = page
+  end
+  def current_page
+    @@current_page
+  end
+
   def follow_add_topic_link
     click_link 'Add Topic'
+    self.current_page = Pages::Admin::Topics::Add.new
   end
 
-  def fill_in_topic_form
-    fill_in 'Name', :with => "WOOHOO!"
+  def fill_in_topic_form(options = { :name=>"WOOHOO!" })
+    fill_in 'Name', :with => options[:name]
   end
 
-  def submit_topic_form
-    click_button "Create Topic"
-  end
 
   def submitted_topic
     Topic.find_by_name "WOOHOO!"
   end
-
+  def the_current_page
+    current_page
+  end
   def the_page_im_on
     def page.for_the?(topic)
       current_path.should == "/admin/topics/#{topic.id}"
     end
-    def page.the_invite_a_friend_page_for_the? conversation
-      has_content?("Invite a Friend") and has_content? conversation.title
+    def page.has_an_error?
+      has_css? '#error_explanation'
     end
     page
   end
+  class Database
+    def has_any?(type)
+      !Topic.count.zero? 
+    end
+    def create_topic(attributes={}) 
+      Factory.create :topic, attributes
+    end
 
+    def create_issue(attributes= {})
+      Factory.create :issue, attributes
+    end
+  end
+  def database
+    Database.new
+  end
+
+  def conversation
+    @conversation = Conversation.find_by_title("Frank")
+  end
+  
+  def method_missing(method, *args, &block)
+    if current_page and current_page.respond_to? method 
+      current_page.send(method, *args, &block) 
+    else
+      super
+    end
+  end
+  
 end
 
 

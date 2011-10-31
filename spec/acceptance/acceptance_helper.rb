@@ -7,4 +7,6 @@ Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
 # Put your page object inside /spec/acceptance/pages
 Dir["#{File.dirname(__FILE__)}/pages/**/*.rb"].each {|f| require f}
 
+WebMock.allow_net_connect!
+Capybara.default_wait_time = 10
 require 'acceptance/steps'

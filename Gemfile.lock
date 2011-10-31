@@ -181,6 +181,7 @@ GEM
       thor (~> 0.14)
     json (1.6.1)
     json_pure (1.6.1)
+    launchy (2.0.3)
     linecache19 (0.5.12)
       ruby_core_source (>= 0.1.4)
     linguistics (1.0.9)
@@ -394,6 +395,7 @@ DEPENDENCIES
   jasmine
   jasmine-headless-webkit
   jquery-rails (>= 1.0.3)
+  launchy
   linguistics
   mysql2 (< 0.3)
   no_peeping_toms!

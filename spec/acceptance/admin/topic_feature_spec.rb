@@ -1,7 +1,5 @@
 require 'acceptance/acceptance_helper'
 
-WebMock.allow_net_connect!
-Capybara.default_wait_time = 10
 
 
 feature "Topic Admin", %q{
@@ -10,17 +8,13 @@ feature "Topic Admin", %q{
   I want to access the topic admin feature
 } do
 
-
-  let(:admin_topics_page){ AdminTopicsPage.new(page)} 
-  let(:admin_new_topic_page){AdminNewTopicPage.new(page)}
-  let(:admin_edit_topic_page){AdminEditTopicPage.new(page)}
     
 
   scenario "creating a topic" do
     goto_admin_page_as_admin
     follow_add_topic_link
     fill_in_topic_form
-    submit_topic_form
+    submit_form
      
     submitted_topic.should exist_in_the_database
     the_page_im_on.should be_for_the submitted_topic
@@ -32,8 +26,8 @@ feature "Topic Admin", %q{
     goto_admin_page_as_admin
     follow_topics_link
     delete_topic topic
-    topic.should be_removed_from page
 
+    topic.should be_removed_from page
     topic.should have_been_removed_from_the_database
 
   end
@@ -44,36 +38,29 @@ feature "Topic Admin", %q{
     goto_admin_page_as_admin
     follow_topics_link
 
-    admin_topics_page.click_edit_on_a_topic(@topic)
-    admin_edit_topic_page.fill_in_topic_fields(:name=>'Changed Name Here')
+    click_edit_link_for topic
     
-    # And I press submit
-    admin_edit_topic_page.click_update_topic
+    fill_in_topic_form name: 'bork bork bork'
+    submit_form
     
-    # Then I should be redirected to the show page
-    page.current_path.should == admin_topic_path(@topic)
+
+    topic.name.should == "bork bork bork"
+    page.should contain "bork bork bork"
+    the_page_im_on.should be_for_the topic
     
-    # And I should see the name changed
-    admin_topics_page.should contain 'Changed Name Here'
+    
   end
   
-  scenario "creating and validating a topic" do
-    create_topic name: "bla"
+  scenario "submitting an empty topic" do
 
     goto_admin_page_as_admin
     follow_topics_link
     
-    # And I click on Add Topic
-    admin_topics_page.click_new_topic
+    follow_add_topic_link
     
-    # and I just click submit without entering anything
-    admin_new_topic_page.click_create_topic
-    
-    # Then I should see validation error
-    admin_new_topic_page.should contain 'error'
-    
-    # Topic should not have been created
-    Topic.count.should == 0
+    submit_form
+    the_page_im_on.should have_an_error 
+    database.should_not have_any :topics
   end
   
 
