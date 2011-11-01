@@ -3,18 +3,29 @@
   <p>
   Who do you want to invite to join this conversation? Just list email addresses one per line and we’ll send out the invitations. If you’d like us to send one to you, too, just add yours to the list.
   </p>
-  <%= form_tag invites_url, :method => :post, :remote => request.xhr?, :id => 'invite-form' do %>
-    <div class="validation-error"></div>
+  
+  <%= form_for(@invite,:remote => request.xhr?,:html => { :id => 'invite-form'}) do |f| %>
+  <div class="validation-error"></div>
+  
+    <% if @invite.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@invite.errors.count, "error") %> prohibited this invite to be sent:</h2>
+        <ul>
+        <% @invite.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+    
     <fieldset class="form-block">
-      <%= hidden_field_tag :source_type, "#{@source_type}" %>
-      <%= hidden_field_tag :source_id, "#{@source_id}" %>
-    </fieldset>
-    <fieldset class="form-block">
-    <%= label :invites, :email %>
-    <%= text_area :invites, :emails, :rows => 10 %>
+      <%= f.label :emails %>
+      <%= f.text_area :emails, :rows => 10 %>      
+      <%= f.hidden_field :source_type %>
+      <%= f.hidden_field :source_id %>
     </fieldset>
     <fieldset class="footer">
-      <%= submit_tag from_conversation_create_page? ? 'Send Invitations' : 'Send', :class=> 'submit' %>
+      <%= f.submit from_conversation_create_page? ? 'Send Invitations' : 'Send' %>
     </fieldset>
   <% end %>
 </div>
