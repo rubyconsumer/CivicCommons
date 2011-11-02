@@ -24,9 +24,7 @@ describe CommunityController do
     describe "ordered_people" do
       context "with newest-member" do
         it "should sort by the most recent newest members who have confirmed" do 
-          person = mock_person
-          Person.should_receive(:confirmed_accounts).and_return(person)
-          person.should_receive(:sort_latest_created_at).and_return(person)
+          Person.should_receive(:find_confirmed_order_by_recency).and_return(mock_person)
           get :index, :order => 'newest-member'
           response.should be_success
         end
@@ -35,26 +33,26 @@ describe CommunityController do
           assigns(:subtitle).should == 'Newest Members'
         end
       end
-      context "with alpha" do
+      context "with alphabetical" do
         it "should sort by alphabet of last name" do
           Person.should_receive(:find_confirmed_order_by_last_name).and_return(mock_person)
-          get :index, :order => 'alpha'
+          get :index, :order => 'alphabetical'
           response.should be_success
         end
-      end
-      context "with recent" do
-        it "should sort by most recently confirmed" do
-          Person.should_receive(:find_confirmed_order_by_recency).and_return(mock_person)
-          get :index, :order => 'recent'
-          response.should be_success
+        it "should set the subtitle to 'Alphabetical'" do
+          get :index, :order => 'alphabetical'
+          assigns(:subtitle).should == 'Alphabetical'
         end
       end
       context "default" do
-        it "should sort by alphabet of last name" do
-          person = mock_person
-          Person.should_receive(:find_confirmed_order_by_last_name).and_return(mock_person)
+        it "should sort by the most recent newest members who have confirmed" do 
+          Person.should_receive(:find_confirmed_order_by_recency).and_return(mock_person)
           get :index
           response.should be_success
+        end
+        it "should set the subtitle to 'Newest Members'" do
+          get :index
+          assigns(:subtitle).should == 'Newest Members'
         end
       end
     end

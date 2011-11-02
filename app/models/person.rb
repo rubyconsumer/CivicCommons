@@ -106,7 +106,6 @@ class Person < ActiveRecord::Base
   scope :proxy_accounts, where(:proxy => true)
   scope :confirmed_accounts, where("confirmed_at is not null")
   scope :unconfirmed_accounts, where(:confirmed_at => nil)
-  scope :sort_latest_created_at, order('created_at DESC')
 
   # All these emails could be moved to an observer - Jerry
   after_create :notify_civic_commons

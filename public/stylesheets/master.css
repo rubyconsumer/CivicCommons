@@ -2090,11 +2090,11 @@ background-image: url(../images/popular-f.png);
 background-position: 12px 7px;
 }
 .site-filter li a#persuasive-member:hover, .site-filter li a#persuasive-member.active {background-position: 12px -57px;}
-.site-filter li a#alpha-member {
+.site-filter li a#alphabetical {
 background-image: url(../images/alpha-f.png);
 background-position: 12px 7px;
 }
-.site-filter li a#alpha-member:hover, .site-filter li a#alpha-member.active {background-position: 12px -59px;}
+.site-filter li a#alphabetical:hover, .site-filter li a#alphabetical.active {background-position: 12px -59px;}
 .site-filter li a#inspiring-member {
 background-image: url(../images/inspire-f.png);
 background-position: 12px 5px;

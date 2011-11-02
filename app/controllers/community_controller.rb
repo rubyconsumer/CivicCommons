@@ -10,17 +10,14 @@ class CommunityController < ApplicationController
   private
 
   def ordered_people
-    @order = params[:order]
+    @order = params[:order] || 'newest-member'
     case @order
-    when 'newest-member'
-      @subtitle = 'Newest Members'
-      @people = Person.confirmed_accounts.sort_latest_created_at.paginate(:page => params[:page], :per_page => 16)
-    when 'alpha'
+    when 'alphabetical'
+      @subtitle = 'Alphabetical'
       @people = Person.find_confirmed_order_by_last_name(params[:letter]).paginate(:page => params[:page], :per_page => 16)
-    when 'recent'
-      @people = Person.find_confirmed_order_by_recency.paginate(:page => params[:page], :per_page => 16)
     else
-      @people = Person.find_confirmed_order_by_last_name.paginate(:page => params[:page], :per_page => 16)
+      @subtitle = 'Newest Members'
+      @people = Person.find_confirmed_order_by_recency.paginate(:page => params[:page], :per_page => 16)
     end
   end
 
