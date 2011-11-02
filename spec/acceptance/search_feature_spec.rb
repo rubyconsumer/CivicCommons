@@ -1,9 +1,5 @@
 require File.expand_path(File.dirname(__FILE__) + '/acceptance_helper')
 
-WebMock.allow_net_connect!
-
-Capybara.default_wait_time = 20
-
 feature "Search the web site", %q{
   As a user of The Civic Commons
   I want to search
@@ -11,8 +7,10 @@ feature "Search the web site", %q{
 } do
   let(:conversation_page)   {ConversationPage.new(page)}
   let(:conversations_page)  {ConversationsPage.new(page)}
-  let(:search_results_page)  {SearchResultsPage.new(page)}
-  
+  let(:issue_page)          {IssuePage.new(page)}
+  let(:issues_page)         {IssuesPage.new(page)}
+  let(:search_results_page) {SearchResultsPage.new(page)}
+
   scenario "Search Filter for the conversations page" do
     # Given I am on the conversation page
     conversations_page.visit
@@ -20,13 +18,12 @@ feature "Search the web site", %q{
     conversations_page.fill_in 'q', :with => 'search term here'
     # And I press search button
     conversations_page.click_link_or_button 'Search'
-    # Then I should be redirected to the search results page  
+    # Then I should be redirected to the search results page
     page.current_path.include?(search_results_page.path).should be_true
-    
     # And I should see 'Conversation' as the highlighted filter
-    conversations_page.should have_selector('li a#conv-s.active', :content => 'Conversations')
+    search_results_page.has_filter_selected?('Conversations').should be_true
   end
-  
+
   scenario "Search Filter for a conversation page" do
     # Given a conversation
     conversation = Factory.create(:conversation)
@@ -36,11 +33,38 @@ feature "Search the web site", %q{
     conversations_page.fill_in 'q', :with => 'search term here'
     # And I press search button
     conversations_page.click_link_or_button 'Search'
-    # Then I should be redirected to the search results page  
+    # Then I should be redirected to the search results page
     page.current_path.include?(search_results_page.path).should be_true
-
     # And I should see 'Conversation' as the highlighted filter
-    conversations_page.should have_selector('li a#conv-s.active', :content => 'Conversations')
+    search_results_page.has_filter_selected?('Conversations').should be_true
+  end
+
+  scenario "Search Filter for the issues page" do
+    # Given I am on the issues page
+    issues_page.visit
+    # When I enter a search query
+    issues_page.fill_in 'q', :with => 'search term here'
+    # And I press search button
+    issues_page.click_link_or_button 'Search'
+    # Then I should be redirected to the search results page
+    page.current_path.include?(search_results_page.path).should be_true
+    # And I should see 'Issues' as the highlighted filter
+    search_results_page.has_filter_selected?('Issues').should be_true
+  end
+
+  scenario "Search Filter for an issue page" do
+    # Given a issue
+    issue = Factory.create(:issue)
+    # And I am on the issue page
+    issue_page.visit_page(issue)
+    # When I enter a search query
+    issue_page.fill_in 'q', :with => 'search term here'
+    # And I press search button
+    issue_page.click_link_or_button 'Search'
+    # Then I should be redirected to the search results page
+    page.current_path.include?(search_results_page.path).should be_true
+    # And I should see 'Issues' as the highlighted filter
+    search_results_page.has_filter_selected?('Issues').should be_true
   end
 
 =begin
