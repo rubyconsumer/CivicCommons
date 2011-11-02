@@ -1,5 +1,5 @@
-Factory.define :people do |f|
-  Factory.define :invalid_person, :class=>Person do |u|
+FactoryGirl.define do |f|
+  factory :invalid_person, :class=>Person do |u|
     u.first_name ''
     u.last_name ''
     u.zip_code '44313'
@@ -8,7 +8,7 @@ Factory.define :people do |f|
     u.skip_email_marketing true
   end
 
-  Factory.define :normal_person, :class=>Person do |u|
+  factory :normal_person, :class=>Person do |u|
     u.first_name 'John'
     u.last_name 'Doe'
     u.zip_code '44313'
@@ -19,17 +19,25 @@ Factory.define :people do |f|
     u.daily_digest false
     u.avatar_url '/images/avatar_70.gif'
   end
-
-  Factory.define :registered_user, :parent => :normal_person do |u|
+  factory :registered_user, :parent => :normal_person do |u|
     u.confirmed_at { Time.now }
     u.skip_email_marketing true
   end
 
-  Factory.define :registered_user_with_avatar, :parent => :registered_user do |u|
+  
+  factory :person_without_zip_code, :parent => :registered_user do |u|
+    u.zip_code nil
+    to_create do |instance|
+      instance.save :validate=>false
+    end
+  end
+  factory :registered_user_with_avatar, :parent => :registered_user do |u|
     u.avatar File.new(Rails.root + 'test/fixtures/images/test_image.jpg')
   end
-
-  Factory.define :admin_person, :parent => :registered_user do |u|
+  factory :person, :parent => :registered_user do | u |
+    u
+  end
+  factory :admin_person, :parent => :registered_user do |u|
     u.password 'password'
     u.sequence(:email) {|n| "test.admin.account#{n}@mysite.com" }
     u.sequence(:last_name) {|n| "Doe #{n}" }
@@ -37,8 +45,11 @@ Factory.define :people do |f|
     u.skip_email_marketing true
     u.confirmed_at '2011-03-04 15:33:33'
   end
+  factory :admin, :parent => :admin_person do |u|
+    u
+  end
 
-  Factory.define :marketable_person, :parent => :registered_user do |u|
+  factory :marketable_person, :parent => :registered_user do |u|
     u.password 'password'
     u.sequence(:email) {|n| "test.account#{n}@mysite.com" }
     u.skip_email_marketing false

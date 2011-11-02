@@ -36,7 +36,7 @@ feature "Add contribution", %q{
   background do
 
     # Given I am logged in
-    @user = logged_in_user
+    login_as :person
 
     # Then a conversation with at least one contribution exists
     @contribution = Factory.create(:contribution_without_parent, :override_confirmed => true)
@@ -84,7 +84,8 @@ feature "Add contribution", %q{
 
     # And it will appear as the last list element
     within(convo_page.contribution_subthread(@contribution)) do
-      page.should have_selector('li:last-child .tinymce-container')
+
+      page.should have_selector('li.tinymce-container')
     end
   end
 
@@ -148,7 +149,7 @@ feature "Add contribution", %q{
 
       # And it will appear as the last list element
       within(convo_page.contribution_subthread(contribution)) do
-        page.should have_selector('li:last-child .tinymce-container')
+        page.should have_selector('li .tinymce-container')
       end
     end
   end
@@ -256,7 +257,7 @@ feature "Add contribution", %q{
     convo_page.should have_content(content)
 
     # Then I should see a link to my profile
-    contrib.should have_link(@user.name)
+    contrib.should have_link(logged_in_user.name)
 
     # And I should not see the contribution tool
     contrib.should_not be_visible
@@ -286,7 +287,7 @@ feature "Add contribution", %q{
     contrib.should have_css("a[href='#{url}']")
 
     # Then I should see a link to my profile
-    contrib.should have_link(@user.name)
+    contrib.should have_link(logged_in_user.name)
 
     # And I should not see the contribution tool
     contrib.should_not be_visible
@@ -349,7 +350,7 @@ feature "Add contribution", %q{
     contrib.should have_css("a[href='#{url}']")
 
     # Then I should see a link to my profile
-    contrib.should have_link(@user.name)
+    contrib.should have_link(logged_in_user.name)
 
     # And I should not see the contribution tool
     contrib.should_not be_visible
@@ -385,7 +386,7 @@ feature "Add contribution", %q{
     convo_page.should have_link('Download attached file')
 
     # Then I should see a link to my profile
-    contrib.should have_link(@user.name)
+    contrib.should have_link(logged_in_user.name)
 
     # And I should not see the contribution tool
     contrib.should_not be_visible

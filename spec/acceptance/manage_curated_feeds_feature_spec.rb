@@ -11,8 +11,7 @@ feature "Manage curated feeds", %q{
   end
 
   background do
-    # Given I am logged in as an administrator
-    given_i_am_logged_in_as_admin   
+    login_as :admin
   end
 
   describe "create a new curated feed" do

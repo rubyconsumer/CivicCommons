@@ -10,23 +10,19 @@ feature "Voting results", %q{
   I want to see the voting results, when available.
 } do
 
-  def given_logged_in_as_a_user
-    @user = logged_in_user
-  end
   def given_an_issue
     @issue = Factory.create(:issue)
   end
   def given_a_survey_with_responses
-    @survey_response = Factory.create(:vote_survey_response, :person_id => @user.id)
+    @survey_response = Factory.create(:vote_survey_response, :person_id => logged_in_user.id)
     @survey = @survey_response.survey
   end
   
   let (:vote_page)               { VotePage.new(page) }    
 
   scenario "Showing of the results when the end date have passed" do
-    # Given that I am any user
-    given_logged_in_as_a_user
-    
+    login_as :person
+
     # and a survey has been set to ‘show progress’
     given_a_survey_with_responses
     @survey.show_progress = true
@@ -48,8 +44,7 @@ feature "Voting results", %q{
   
   scenario "Not showing result when show progress is OFF" do
     # Given that I am any user
-    given_logged_in_as_a_user
-    
+    login_as :person 
     # and a survey has not been set to ‘show progress’
     given_a_survey_with_responses
     @survey.show_progress = false
@@ -64,8 +59,7 @@ feature "Voting results", %q{
   
   scenario "Not showing result when End Date hasn't pass" do
     # Given that I am any user
-    given_logged_in_as_a_user
-    
+    login_as :person 
     # and a survey has been set to ‘show progress’
     given_a_survey_with_responses
     @survey.show_progress = true
@@ -91,9 +85,7 @@ feature "Voting results", %q{
   end
   
   scenario "Not showing result when show progress is set, and start date has not passed" do
-    # Given that I am any user
-    given_logged_in_as_a_user
-
+    login_as :person
     # and a survey has been set to ‘show progress’
     given_a_survey_with_responses
     @survey.show_progress = true

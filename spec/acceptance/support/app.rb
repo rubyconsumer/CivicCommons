@@ -1,6 +1,8 @@
 module CivicCommonsDriver
   include Rails.application.routes.url_helpers
   @@available_pages = {}
+  @@current_page = nil
+  @@user = nil
   def self.available_pages
     @@available_pages
   end
@@ -23,20 +25,8 @@ module CivicCommonsDriver
   end
 
   def login_as(type = :person)
-    case type
-    when :person 
-      user = create_user :registered_user
-    when :admin
-      user = create_user :admin_person
-    end
-    login user
-  end
-
-  def login(user)
-    goto :login
-    fill_in_email_with user.email
-    fill_in_password_with user.password
-    click_login_button
+    self.user = create_user type 
+    login logged_in_user
   end
 
   def goto screen
@@ -51,8 +41,8 @@ module CivicCommonsDriver
 
   def topic
 
-    @topic = Topic.find(@topic.id) if @topic.id!=nil and Topic.exists? @topic.id
-    @topic.instance_eval do
+    topic = Topic.find(@topic.id) if @topic.id!=nil and Topic.exists? @topic.id
+    topic.instance_eval do
       def removed_from? page
         page.has_no_css? locator
       end
@@ -65,7 +55,7 @@ module CivicCommonsDriver
         "tr[data-topic-id='#{id}']"
       end
     end
-    @topic
+    topic
   end
   def goto_admin_page_as_admin
     login_as :admin
@@ -126,7 +116,12 @@ module CivicCommonsDriver
   def conversation
     @conversation = Conversation.find_by_title("Frank")
   end
-  
+  def user=(user)
+    @@user =(user)
+  end
+  def logged_in_user
+    @@user
+  end
   def method_missing(method, *args, &block)
     if current_page and current_page.respond_to? method 
       current_page.send(method, *args, &block) 
@@ -135,6 +130,13 @@ module CivicCommonsDriver
     end
   end
   
+  :private
+  def login(user)
+    goto :login
+    fill_in_email_with user.email
+    fill_in_password_with user.password
+    click_login_button
+  end
 end
 
 

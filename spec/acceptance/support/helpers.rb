@@ -1,19 +1,6 @@
 module HelperMethods
 
 
-  def logged_in_user
-    user = Factory.create(:registered_user, declined_fb_auth: true)
-    visit new_person_session_path
-    fill_in 'Email', with: user.email
-    fill_in 'Password', with: user.password
-    click_button 'Login'
-    return user
-  end
-
-  def logged_in_as_admin
-    login_as_admin
-  end
-
   def should_be_on(path)
     page.current_url.should match(Regexp.new(path))
   end

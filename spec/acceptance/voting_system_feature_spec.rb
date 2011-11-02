@@ -23,13 +23,7 @@ feature "Voting system", %q{
   let (:vote_confirmation_page)  { VoteConfirmationPage.new(page)}
   let (:user_profile_page)       { UserProfilePage.new(page) }
 
-  def given_a_registered_user
-    @person = Factory.create(:registered_user, :email => 'johnd@example.com', :declined_fb_auth => true)
-  end
 
-  def given_logged_in_as_a_user
-    @user = logged_in_user
-  end
 
   def given_an_survey_with_an_issue
     @issue = Factory.create(:issue)
@@ -48,21 +42,18 @@ feature "Voting system", %q{
   end
 
   def given_a_survey_with_responses
-    @survey_response = Factory.create(:vote_survey_response, :person_id => @user.id)
+    @survey_response = Factory.create(:vote_survey_response, :person_id => logged_in_user.id)
     @survey = @survey_response.survey
   end
 
 
   scenario "Voting and submitting", :js => true do
-    # Given I am a registered user at The Civic Commons
-    given_a_registered_user
+    login_as :person
     Notifier.deliveries = []
 
     # Given an independent vote
     given_an_independent_vote(:show_progress => true)
 
-    # And I login
-    login_page.sign_in(@person)
 
     # And I visit the vote page on the issue
     vote_page.visit_a_vote(@vote)
@@ -107,14 +98,14 @@ feature "Voting system", %q{
     Notifier.deliveries.count.should == 1
 
     # And an activity stream should be shown that I have voted here
-    user_profile_page.visit_user(@person)
+    user_profile_page.visit_user(logged_in_user)
 
-    user_profile_page.should contain("#{@person.name} has participated in this Vote")
+    user_profile_page.should contain("#{logged_in_user.name} has participated in this Vote")
   end
 
   scenario "An active vote" do
     # Given I am a registered user at The Civic Commons
-    given_logged_in_as_a_user
+    login_as :person
     given_an_independent_vote
 
     # When I see a survey
@@ -139,7 +130,7 @@ feature "Voting system", %q{
 
   scenario "An active vote associated to an Issue"  do
     # Given I am a registered user at The Civic Commons and I am logged in
-    given_logged_in_as_a_user
+    login_as :person
     @issue = Factory.create(:issue)
     @vote = Factory.create(:vote)
 
@@ -154,7 +145,7 @@ feature "Voting system", %q{
 
   scenario "Drag and drop into ballot box", :js => true do
     # Given I am a registered user who has come to a survey
-    given_logged_in_as_a_user
+    login_as :person
     given_an_survey_with_an_issue
     vote_page.visit_a_vote(@survey)
 
@@ -168,7 +159,7 @@ feature "Voting system", %q{
 
   scenario "Voting and submitting", :js => true do
     # Given I am a registered user who has come to a survey who has created a ballot
-    given_logged_in_as_a_user
+    login_as :person
     given_an_survey_with_an_issue
     vote_page.visit_a_vote(@survey)
     # When I click on the cast ballot button
@@ -184,7 +175,7 @@ feature "Voting system", %q{
   end
   scenario "After submitting vote, confirmation modal appears", :js => true do
     # Given I am a registered user who has finished voting
-    given_logged_in_as_a_user
+    login_as :person
     given_an_survey_with_an_issue
     vote_page.visit_a_vote(@survey)
     vote_page.select_one_option
@@ -196,7 +187,7 @@ feature "Voting system", %q{
   end
   scenario "Clicking yes on confirmation of vote", :js => true do
     # Given I am a registered user who has received a confirmation modal
-    given_logged_in_as_a_user
+    login_as :person
     given_an_survey_with_an_issue
     vote_page.visit_a_vote(@survey)
     vote_page.select_one_option
@@ -214,7 +205,7 @@ feature "Voting system", %q{
 
   scenario "canceling vote confirmation, allows to modify vote", :js => true do
     # Given I am a registered user who has received a confirmation modal
-    given_logged_in_as_a_user
+    login_as :person
     given_an_survey_with_an_issue
     vote_page.visit_a_vote(@survey)
     vote_page.select_one_option
@@ -232,7 +223,7 @@ feature "Voting system", %q{
 
   scenario "Receiving an email when finished voting.", :js => true do
     # Given I am a registered user
-    given_logged_in_as_a_user
+    login_as :person
     Notifier.deliveries  = []
     given_an_survey_with_an_issue
     vote_page.visit_a_vote(@survey)
@@ -252,7 +243,7 @@ feature "Voting system", %q{
 
   scenario "Receiving a Vote ended Email" do
     # Given I am a registered user
-    given_logged_in_as_a_user
+    login_as :person
     given_a_survey_with_responses
     Notifier.deliveries  = []
 
@@ -264,7 +255,7 @@ feature "Voting system", %q{
   end
   scenario "Ability to vote when the start date has not been set" do
     # Given that I am a registered user on a survey page
-    given_logged_in_as_a_user
+    login_as :person
 
     # and a survey has been set to ‘show progress’
     # and the start date has not passed

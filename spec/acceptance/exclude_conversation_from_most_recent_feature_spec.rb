@@ -12,7 +12,7 @@ feature "Exclude conversation from 'most recent' filter", %q{
     issue = Factory.create(:issue)
 
     # Given that I am an admin
-    given_i_am_logged_in_as_admin
+    login_as :admin
     # When I go to the new conversation page through admin interface
     visit new_admin_conversation_path
     # And I check the "Exclude from Most Recent" checkbox
@@ -35,7 +35,7 @@ feature "Exclude conversation from 'most recent' filter", %q{
   scenario "Editing a conversation", :js => true do
     conversation = Factory.create(:conversation)
     # Given that I am an admin
-    given_i_am_logged_in_as_admin
+    login_as :admin
     # And a conversation is on the homepage
     visit('/')
     within('div.main-content') do

@@ -56,7 +56,7 @@ end
 group :test do
   gem "rack-test"
   gem 'cucumber', '~>0.10.0'
-  gem "factory_girl_rails", '~>1.0.1'
+  gem "factory_girl_rails", '~>1.3'
   gem 'no_peeping_toms', :git => 'git://github.com/alindeman/no_peeping_toms.git'
   gem "ruby-debug19"
   gem 'webmock'

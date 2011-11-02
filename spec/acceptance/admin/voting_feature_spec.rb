@@ -26,7 +26,7 @@ feature "Voting Admin", %q{
     
 
   scenario "See an option to add a survey" do
-    given_i_am_logged_in_as_admin
+    login_as :admin
     
     # When I go to the admin page
     admin_surveys_page.visit
@@ -36,7 +36,7 @@ feature "Voting Admin", %q{
   end
   
   scenario "Survey and Survey option sections" do
-    given_i_am_logged_in_as_admin
+    login_as :admin
     
     # And I am on the admin page
     admin_surveys_page.visit
@@ -55,7 +55,7 @@ feature "Voting Admin", %q{
   end
   
   scenario "filling in the survey informations" do
-    given_i_am_logged_in_as_admin
+    login_as :admin
     
     # And I have an existing Issue
     given_an_existing_issue
@@ -84,7 +84,7 @@ feature "Voting Admin", %q{
   end
   
   scenario "Create the survey options" do
-    given_i_am_logged_in_as_admin
+    login_as :admin
     
     # When I am on the survey form
     admin_new_survey_page.visit
@@ -114,7 +114,7 @@ feature "Voting Admin", %q{
   
   scenario "redirecting to the admin's survey info page" do
     # Given that I am an admin who has completed creating a survey
-    given_i_am_logged_in_as_admin
+    login_as :admin
     admin_new_survey_page.visit
     admin_new_survey_page.fill_in_survey_fields
     
@@ -128,7 +128,7 @@ feature "Voting Admin", %q{
   
   scenario "Getting to a survey page and editing it" do
     # Given that I am an admin who has completed creating a survey 
-    given_i_am_logged_in_as_admin
+    login_as :admin
     admin_new_survey_page.visit
     admin_new_survey_page.fill_in_survey_fields
     admin_new_survey_page.click_create_survey
@@ -147,7 +147,7 @@ feature "Voting Admin", %q{
   
   scenario "Survey progress page" do
     # Given I am an admin 
-    given_i_am_logged_in_as_admin
+    login_as :admin
     
     # And a survey with responses
     given_a_survey_with_responses
