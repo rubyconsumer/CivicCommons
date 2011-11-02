@@ -60,5 +60,4 @@ Feature:
     Then the conversation should be created
     And I should be on the Send Invitations page
     And I should see the success message
-    And I should see the conversation box and image
     And I should see an "Send Invitations" submit button

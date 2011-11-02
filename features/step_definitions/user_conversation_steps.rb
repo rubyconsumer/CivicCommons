@@ -97,11 +97,6 @@ Then /see the success message$/ do
   page.should have_content('created')
 end
 
-Then /see the conversation box and image$/ do
-  page.should have_content(@conversation.title)
-  page.should have_xpath("//img[@src=\"#{@conversation.image.url(:panel)}\"]")
-end
-
 Then /be on the conversation page for my conversation$/ do
   current_path.should == conversation_path(@conversation)
 end

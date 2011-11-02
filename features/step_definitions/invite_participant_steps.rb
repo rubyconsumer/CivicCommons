@@ -4,7 +4,7 @@ Given /^that I am on the invitation page$/ do
 end
 
 Given /^the invitee textarea is empty$/ do
-  fill_in('invites_emails', :with => '')
+  fill_in('invite_emails', :with => '')
 end
 
 When /click the 'Send Invitations' button$/ do
@@ -20,7 +20,7 @@ When /^I click the 'Send' button$/ do
 end
 
 When /^I enter one or more comma\-delimited email addresses in the invitee textarea$/ do
-  fill_in('invites_emails', :with => 'alpha@example.com, bravo@example.com, charlie@example.com')
+  fill_in('invite_emails', :with => 'alpha@example.com, bravo@example.com, charlie@example.com')
 end
 
 Then /should be on the conversation page$/ do
@@ -32,7 +32,7 @@ Then /^I will be on the invitation page$/ do
 end
 
 Then /^I should see a textarea for invitee email addresses$/ do
-  page.should have_selector('textarea#invites_emails')
+  page.should have_selector('textarea#invite_emails')
 end
 
 Then /^no email invitations should be sent$/ do
