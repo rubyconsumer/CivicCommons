@@ -42,6 +42,7 @@ feature "Search the web site", %q{
     search_results_page.has_filter_selected?('Conversations').should be_true
   end
 
+<<<<<<< HEAD
   scenario "Search Filter for the community page" do
     # Given the users:
     henry_ford
@@ -58,6 +59,8 @@ feature "Search the web site", %q{
     search_results_page.has_filter_selected?('Community').should be_true
   end
 
+=======
+>>>>>>> UX31:232 - Searching from Issues Index or Detail page filters search results to 'Issues'
   scenario "Search Filter for the issues page" do
     # Given I am on the issues page
     issues_page.visit
