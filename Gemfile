@@ -72,7 +72,7 @@ group :test do
   gem 'email_spec'
   gem 'simplecov'
   gem 'timecop'
-  gem 'selenium-webdriver', '>= 0.2.2'
+  gem 'selenium-webdriver'
   gem 'rspec-spies'
   gem 'spork'
 end
