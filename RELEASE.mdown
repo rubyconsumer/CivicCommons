@@ -1,0 +1,15 @@
+### 1.7.3
+#### External Changes
+  * Bug fixes
+    * [Zip Code required when user edits profile](https://agilezen.com/project/18091/story/224)
+    * [HTML Tags no longer show up in invite to conversation email](https://agilezen.com/project/18091/story/238)
+    * [HTML Tags no longer show up on search results page](https://agilezen.com/project/18091/story/247)
+    * [Contribution Tool aligned with same response level](https://agilezen.com/project/18091/story/134)
+  * [Community Page Redesign](https://agilezen.com/project/26499/story/1) 
+    * [Shows newest members first](https://agilezen.com/project/18091/story/22)
+  * [Additional Search filters](https://agilezen.com/project/26499/story/31)
+    * [Conversation Filter](https://agilezen.com/project/18091/story/230)
+      * Searching in the Conversation Index page takes me to the Search Results page with the Conversation Filter Active.
+      * Searching in the Conversation Detail page takes me to the Search Results page with the Conversation Filter Active.
+#### Internal Changes
+
