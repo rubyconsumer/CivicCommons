@@ -12,4 +12,4 @@
       * Searching in the Conversation Index page takes me to the Search Results page with the Conversation Filter Active.
       * Searching in the Conversation Detail page takes me to the Search Results page with the Conversation Filter Active.
 #### Internal Changes
-
+ * [Strip HTML when indexing search results instead of when presenting the search results](https://agilezen.com/project/18091/story/223)
