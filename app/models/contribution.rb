@@ -5,8 +5,9 @@ class Contribution < ActiveRecord::Base
   searchable :include => [:person, :conversation, :issue], :ignore_attribute_changes_of => [ :total_visits, :recent_visits, :last_visit_date, :updated_at, :recent_rating ] do
     text :title
     text :description, :stored => true
-    text :content, :stored => true, :boost => 1, :default_boost => 1
-
+    text :content, :stored => true, :boost => 1, :default_boost => 1 do
+      Sanitize.clean(content, :remove_contents => ['style','script'])
+    end
   end
 
   attr_accessor :top_level

@@ -5,8 +5,12 @@ class ContentItem < ActiveRecord::Base
 
   searchable :include => [:author, :conversation], :ignore_attribute_changes_of => [ :updated_at ] do
     text :title, :boost => 2, :default_boost => 2
-    text :body, :stored => true
-    text :summary, :stored => true
+    text :body, :stored => true do
+      Sanitize.clean(body, :remove_contents => ['style','script'])
+    end
+    text :summary, :stored => true do
+      Sanitize.clean(summary, :remove_contents => ['style','script'])
+    end
   end
 
   has_attached_file :image,
