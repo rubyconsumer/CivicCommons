@@ -2,7 +2,7 @@
 <div class="wrapper">
   <h1>Community</h1>
   <% if @subtitle %>
-    <p class="subtitle"><%= @subtitle %></p> 
+    <p class="subtitle"><%= @subtitle %></p>
   <% end %>
   <div class="content-container">
     <div class="main-content">
@@ -12,7 +12,7 @@
           <%= link_to "View by Name", community_path %> |
           <%= link_to "Recently Joined", community_path(:order => 'recent') %>
         </p>
-        
+
         <p>
           Last Name |
           <% ('A'..'Z').each do |letter| %>
@@ -20,7 +20,7 @@
           <% end %>
         </p>
         -->
-        
+
         <div class="community">
           <% @people.each do |person| %>
             <div id="<%=person.id %>" class ="buddyimg">
@@ -41,20 +41,20 @@
 
     <div class="aside supplementary">
       <%= render :partial => '/search/search' %>
-      
+
       <div class="mod">
         <h3>Sort By:</h3>
         <ul class="site-filter">
-            <li><a href="#" class="" id="active-member">Most Active</a></li>
+            <!--li><a href="#" class="" id="active-member">Most Active</a></li-->
             <li><%= community_site_filter_link('newest-member') %></li>
             <li><%= community_site_filter_link('alphabetical') %></a></li>
-            <li><a href="#" class="" id="persuasive-member">Most Persuasive</a></li>
-            <li><a href="#" class="" id="informative-member">Most Informative</a></li>
-            <li><a href="#" class="" id="inspiring-member">Most Inspiring</a></li>
+            <!--li><a href="#" class="" id="persuasive-member">Most Persuasive</a></li-->
+            <!--li><a href="#" class="" id="informative-member">Most Informative</a></li-->
+            <!--li><a href="#" class="" id="inspiring-member">Most Inspiring</a></li-->
         </ul>
       </div>
-      
-      <div class="mod">
+
+      <!--div class="mod">
         <h3>Filter By:</h3>
         <form class="region-filter" action="post">
           <select>
@@ -66,14 +66,10 @@
             <option value="">Trumbull, Mahoning, Columbiana and Carroll</option>
           </select>
         </form>
-      </div>
-      
-      <!--
+      </div-->
 
-      <%= render :partial => '/regions/index' %>
-      
-      -->
-      
+      <%#= render :partial => '/regions/index' %>
+
     </div>
   </div>
 </div>
