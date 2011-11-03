@@ -6,10 +6,16 @@
     * [HTML Tags no longer show up on search results page](https://agilezen.com/project/18091/story/247)
     * [Contribution Tool aligned with same response level](https://agilezen.com/project/18091/story/134)
   * [Community Page Redesign](https://agilezen.com/project/26499/story/1) 
-    * [Shows newest members first](https://agilezen.com/project/18091/story/22)
+    * [Shows newest members first](https://agilezen.com/project/18091/story/226)
+    * [Sort members alphabetically](https://agilezen.com/project/18091/story/227)
   * [Additional Search filters](https://agilezen.com/project/26499/story/31)
     * [Conversation Filter](https://agilezen.com/project/18091/story/230)
       * Searching in the Conversation Index page takes me to the Search Results page with the Conversation Filter Active.
       * Searching in the Conversation Detail page takes me to the Search Results page with the Conversation Filter Active.
+    * [Can Search From Footer](https://agilezen.com/project/18091/story/235)
+    * [Issues Filter](https://agilezen.com/project/18091/story/232)
+      * Searching in the Issues Index page takes me to the Search Results page with the Issues Filter Active.
+      * Searching in the Issues Detail page (not pictured) takes me to the Search Results page with the Issues Filter Active.
+
 #### Internal Changes
  * [Strip HTML when indexing search results instead of when presenting the search results](https://agilezen.com/project/18091/story/223)
