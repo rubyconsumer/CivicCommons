@@ -35,20 +35,15 @@ feature "Add contribution", %q{
 
   background do
 
-    # Given I am logged in
     login_as :person
-
-    # Then a conversation with at least one contribution exists
-    @contribution = Factory.create(:contribution_without_parent, :override_confirmed => true)
-    @conversation = @contribution.conversation
-
+    create_contribution
+    self.conversation = contribution.conversation
   end
-
   scenario "Contribution tool is hidden by default", :js => true do
 
     # Given I am on a conversation permalink page
     convo_page = ConversationPage.new(page)
-    convo_page.visit_page(@conversation)
+    convo_page.visit_page(conversation)
     contrib = ContributionTool.new(page)
 
     # Then I should not see the contribution tool
@@ -59,7 +54,7 @@ feature "Add contribution", %q{
 
     # Given I am on a conversation permalink page
     convo_page = ConversationPage.new(page)
-    convo_page.visit_page(@conversation)
+    convo_page.visit_page(conversation)
     contrib = ContributionTool.new(page)
 
     # When I click on the post to button
@@ -73,33 +68,28 @@ feature "Add contribution", %q{
 
     # Given I am on a conversation permalink page
     convo_page = ConversationPage.new(page)
-    convo_page.visit_page(@conversation)
+    convo_page.visit_page(conversation)
     contrib = ContributionTool.new(page)
 
     # When I click on the respond-to button
-    contrib.respond_to_link(@contribution).click
+    contrib.respond_to_link(contribution).click
 
     # Then I should see the contribution tool
     contrib.should be_visible
-
-    # And it will appear as the last list element
-    within(convo_page.contribution_subthread(@contribution)) do
-
-      page.should have_selector('li.tinymce-container')
-    end
+    contrib.should be_within_container convo_page.contribution_subthread(contribution)
   end
-
+ 
   scenario "Contribution tool appears when a user responds to a child contribution", :js => true do
 
     # Given a child contribution exists
     child = Factory.create(:contribution,
                            :override_confirmed => true,
-                           :conversation => @conversation,
-                           :parent => @contribution)
+                           :conversation => conversation,
+                           :parent => contribution)
 
     # Given I am on a conversation node permalink page
     convo_page = ConversationPage.new(page)
-    convo_page.visit_node(@conversation, child)
+    convo_page.visit_node(conversation, child)
     sleep(1)
 
     contrib = ContributionTool.new(page)
@@ -111,33 +101,16 @@ feature "Add contribution", %q{
     contrib.should be_visible
 
     # And it will appear as the last list element
-    within(convo_page.contribution_subthread(@contribution)) do
-      page.should have_selector('li:last-child .tinymce-container')
-    end
+    contrib.should be_within_container convo_page.contribution_subthread(contribution)
   end
 
   scenario "Contribution tool appears below all other contributions in the same thread", :js => true do
-=begin
-    initial page nested contribution layout
-
-    Contribution
-      Contribution 2
-        Contribution 3
-        Contribution 4
-      Contribution 5
-=end
-
-    # setup contributions for the page to appear like the diagram above
-    contribution2 = Factory.create(:contribution, :override_confirmed => true, :conversation => @conversation, :parent => @contribution, :title => 'Contribution 2')
-    contribution3 = Factory.create(:contribution, :override_confirmed => true, :conversation => @conversation, :parent => contribution2, :title => 'Contribution 3')
-    contribution4 = Factory.create(:contribution, :override_confirmed => true, :conversation => @conversation, :parent => contribution2, :title => 'Contribution 4')
-    contribution5 = Factory.create(:contribution, :override_confirmed => true, :conversation => @conversation, :parent => @contribution, :title => 'Contribution 5')
-    contributions = [contribution2, contribution3, contribution4, contribution5]
+    contributions = create_some_nested_contributions
 
     contributions.each do |contribution|
       # Given I am on a conversation node permalink page
       convo_page = ConversationPage.new(page)
-      convo_page.visit_node(@conversation, contribution)
+      convo_page.visit_node(conversation, contribution)
       sleep(2)
       contrib = ContributionTool.new(page)
 
@@ -148,9 +121,7 @@ feature "Add contribution", %q{
       contrib.should be_visible
 
       # And it will appear as the last list element
-      within(convo_page.contribution_subthread(contribution)) do
-        page.should have_selector('li .tinymce-container')
-      end
+      contrib.should be_within_container convo_page.contribution_subthread(contribution)
     end
   end
 
@@ -158,7 +129,7 @@ feature "Add contribution", %q{
 
     # Given I am on a conversation permalink page
     convo_page = ConversationPage.new(page)
-    convo_page.visit_page(@conversation)
+    convo_page.visit_page(conversation)
     contrib = ContributionTool.new(page)
 
     # When I click on the post to conversation button
@@ -206,7 +177,7 @@ feature "Add contribution", %q{
 
     # Given I am on a conversation permalink page
     convo_page = ConversationPage.new(page)
-    convo_page.visit_page(@conversation)
+    convo_page.visit_page(conversation)
     contrib = ContributionTool.new(page)
 
     # When I click on the post to conversation button
@@ -241,7 +212,7 @@ feature "Add contribution", %q{
 
     # Given I am on a conversation permalink page
     convo_page = ConversationPage.new(page)
-    convo_page.visit_page(@conversation)
+    convo_page.visit_page(conversation)
     contrib = ContributionTool.new(page)
 
     # When I click on the post to conversation button
@@ -268,7 +239,7 @@ feature "Add contribution", %q{
 
     # Given I am on a conversation permalink page
     convo_page = ConversationPage.new(page)
-    convo_page.visit_page(@conversation)
+    convo_page.visit_page(conversation)
     contrib = ContributionTool.new(page)
 
     # When I click on the post to conversation button
@@ -298,7 +269,7 @@ feature "Add contribution", %q{
 
     # Given I am on a conversation permalink page
     convo_page = ConversationPage.new(page)
-    convo_page.visit_page(@conversation)
+    convo_page.visit_page(conversation)
     contrib = ContributionTool.new(page)
 
     # When I click on the post to conversation button
@@ -325,7 +296,7 @@ feature "Add contribution", %q{
 
     # Given I am on a conversation permalink page
     convo_page = ConversationPage.new(page)
-    convo_page.visit_page(@conversation)
+    convo_page.visit_page(conversation)
     contrib = ContributionTool.new(page)
 
     # When I click on the post to conversation button
@@ -361,7 +332,7 @@ feature "Add contribution", %q{
 
     # Given I am on a conversation permalink page
     convo_page = ConversationPage.new(page)
-    convo_page.visit_page(@conversation)
+    convo_page.visit_page(conversation)
     contrib = ContributionTool.new(page)
 
     # When I click on the post to conversation button
@@ -397,7 +368,7 @@ feature "Add contribution", %q{
 
     # Given I am on a conversation permalink page
     convo_page = ConversationPage.new(page)
-    convo_page.visit_page(@conversation)
+    convo_page.visit_page(conversation)
     contrib = ContributionTool.new(page)
 
     # When I click on the post to conversation button
@@ -430,7 +401,7 @@ feature "Add contribution", %q{
 
     # Given I am on a conversation permalink page
     convo_page = ConversationPage.new(page)
-    convo_page.visit_page(@conversation)
+    convo_page.visit_page(conversation)
     contrib = ContributionTool.new(page)
 
     # When I click on the post to conversation button
@@ -461,5 +432,17 @@ feature "Add contribution", %q{
     contrib.should be_visible
 
   end
+  def conversation= convo
+    @conversation = convo
+  end
+  def conversation
+    @conversation
+  end
 
+  def create_some_nested_contributions
+    contributions = []
+    2.times { contributions << create_subcontribution_for(contribution)}
+    2.times { contributions << create_subcontribution_for(contributions.first)}
+    contributions
+  end
 end

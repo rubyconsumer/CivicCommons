@@ -76,5 +76,9 @@ class ContributionTool < PageObject
   def select_file(file_path)
     @page.attach_file('contribution_attachment', File.expand_path(file_path))
   end
-
+  def within_container? selector
+    within selector do
+      page.has_selector? 'li.tinymce-container'
+    end
+  end
 end

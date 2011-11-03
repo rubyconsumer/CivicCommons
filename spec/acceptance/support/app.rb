@@ -1,6 +1,7 @@
 module CivicCommonsDriver
   include Rails.application.routes.url_helpers
   @@available_pages = {}
+  @@contributions = []
   @@current_page = nil
   @@user = nil
   def self.available_pages
@@ -88,6 +89,23 @@ module CivicCommonsDriver
   def the_current_page
     current_page
   end
+
+  def create_contribution options={}
+    self.contribution = Factory.create(:contribution_without_parent, options)
+  end
+  def create_contributions_for conversation
+    @@contributions << Factory.create(:contribution, :override_confirmed => true, :conversation => conversation, :parent=>contribution, :title=>"Another Contributioooon!")
+  end
+
+  def contribution= contribution
+    @@contribution = contribution
+  end
+  def contributions
+    @@contributions
+  end
+  def contribution
+    @@contribution
+  end
   def the_page_im_on
     def page.for_the?(topic)
       current_path.should == "/admin/topics/#{topic.id}"
@@ -121,6 +139,9 @@ module CivicCommonsDriver
   end
   def logged_in_user
     @@user
+  end
+  def create_subcontribution_for contribution
+    Factory.create(:contribution, :conversation=>contribution.conversation, :parent=> contribution)
   end
   def method_missing(method, *args, &block)
     if current_page and current_page.respond_to? method 
