@@ -5,6 +5,9 @@ feature "Search the web site", %q{
   I want to search
   So that I can find an issue, conversation or person I am interested in
 } do
+  let(:henry_ford)           {Factory.create(:normal_person, :first_name => "Henry", :last_name => "Ford")}
+  let(:russell_anderson)      {Factory.create(:normal_person, :first_name => "Russell", :last_name => "Anderson")}
+  let(:community_page)      {CommunityPage.new(page)}
   let(:conversation_page)   {ConversationPage.new(page)}
   let(:conversations_page)  {ConversationsPage.new(page)}
   let(:issue_page)          {IssuePage.new(page)}
@@ -37,6 +40,22 @@ feature "Search the web site", %q{
     page.current_path.include?(search_results_page.path).should be_true
     # And I should see 'Conversation' as the highlighted filter
     search_results_page.has_filter_selected?('Conversations').should be_true
+  end
+
+  scenario "Search Filter for the community page" do
+    # Given the users:
+    henry_ford
+    russell_anderson
+    # and I am on the community page
+    community_page.visit_page
+    # When I enter a search query
+    community_page.fill_in 'q', :with => 'search term here'
+    # And I press search button
+    community_page.click_link_or_button 'Search'
+    # Then I should be redirected to the search results page
+    page.current_path.include?(search_results_page.path).should be_true
+    # And I should see 'Community' as the highlighted filter
+    search_results_page.has_filter_selected?('Community').should be_true
   end
 
   scenario "Search Filter for the issues page" do
@@ -84,7 +103,7 @@ feature "Search the web site", %q{
     # Where I will see results of my search
   end
 =end
-=begin 
+=begin
 # sunspot_test way
   describe "searching", :search => true do
     it 'returns conversation results' do
