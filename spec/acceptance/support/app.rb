@@ -1,7 +1,6 @@
 module CivicCommonsDriver
   include Rails.application.routes.url_helpers
   @@available_pages = {}
-  @@contributions = []
   @@current_page = nil
   @@user = nil
   def self.available_pages
@@ -17,9 +16,6 @@ module CivicCommonsDriver
     CivicCommonsDriver.set_current_page_to page
   end
 
-  def attachments_path
-    File.expand_path(File.dirname(__FILE__) + '/attachments')
-  end
 
   def create_user(type)
     Factory.create(type, declined_fb_auth: true)
@@ -35,13 +31,7 @@ module CivicCommonsDriver
     current_page.goto
   end
 
-  def select_topic topic
-    check topic  
-  end
-
-
   def topic
-
     topic = Topic.find(@topic.id) if @topic.id!=nil and Topic.exists? @topic.id
     topic.instance_eval do
       def removed_from? page
@@ -49,7 +39,6 @@ module CivicCommonsDriver
       end
 
       def has_been_removed_from_the_database?
-        !Topic.exists? id
       end
 
       def locator
@@ -66,23 +55,22 @@ module CivicCommonsDriver
     click_link 'Topics'
     set_current_page_to :admin_topics
   end
-  def self.current_page= page
-    @@current_page = page
-  end
   def current_page
     @@current_page
   end
 
   def follow_add_topic_link
     click_link 'Add Topic'
-    self.current_page = Pages::Admin::Topics::Add.new
+    set_current_page_to :admin_add_topic
   end
 
   def fill_in_topic_form(options = { :name=>"WOOHOO!" })
     fill_in 'Name', :with => options[:name]
   end
 
-
+  def topic_i_added
+    Topic.last
+  end
   def submitted_topic
     Topic.find_by_name "WOOHOO!"
   end
@@ -93,16 +81,11 @@ module CivicCommonsDriver
   def create_contribution options={}
     self.contribution = Factory.create(:contribution_without_parent, options)
   end
-  def create_contributions_for conversation
-    @@contributions << Factory.create(:contribution, :override_confirmed => true, :conversation => conversation, :parent=>contribution, :title=>"Another Contributioooon!")
-  end
 
   def contribution= contribution
     @@contribution = contribution
   end
-  def contributions
-    @@contributions
-  end
+
   def contribution
     @@contribution
   end
@@ -126,13 +109,20 @@ module CivicCommonsDriver
     def create_issue(attributes= {})
       Factory.create :issue, attributes
     end
+    def topics
+      Topics.all
+    end
+    def has_any_issues?
+      !Issue.all.empty?
+    end
   end
+
   def database
     Database.new
   end
 
   def conversation
-    @conversation = Conversation.find_by_title("Frank")
+    Conversation.last
   end
   def user=(user)
     @@user =(user)
@@ -157,6 +147,10 @@ module CivicCommonsDriver
     fill_in_email_with user.email
     fill_in_password_with user.password
     click_login_button
+  end
+
+  def self.current_page= page
+    @@current_page = page
   end
 end
 

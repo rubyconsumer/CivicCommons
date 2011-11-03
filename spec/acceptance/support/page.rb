@@ -6,12 +6,18 @@ module CivicCommonsDriver
         base.extend(Page)
         CivicCommonsDriver.available_pages[base::SHORT_NAME] = base
       end
-      def location(url)
-        @@location = url
-      end
 
       def goto
-        visit @@location
+        visit self.class::LOCATION 
+      end
+      def add_wysiwyg_editor_field(field, locator)
+        define_method "fill_in_#{field}_with" do | value |
+          begin
+            page.execute_script("$('#{locator}').val('#{value}')")
+          rescue Capybara::NotSupportedByDriverError
+            fill_in locator, :with=>value
+          end
+        end
       end
       def add_field(field, locator)
         define_method "fill_in_#{field}_with" do | value |
@@ -44,8 +50,8 @@ module CivicCommonsDriver
       def set_current_page_to page
         CivicCommonsDriver.set_current_page_to page
       end
-      def attach_image file_name
-        attach_file 'issue[image]', File.join(attachments_path, file_name) 
+      def attachments_path
+        File.expand_path(File.dirname(__FILE__) + '/attachments')
       end
     end
   end

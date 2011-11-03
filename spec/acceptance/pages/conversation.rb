@@ -6,7 +6,7 @@ class Conversation
     include Page 
     add_field(:title, "Title")
     add_field(:summary, "Summary")
-    add_field(:content, "conversation[contributions_attributes][0][content]")
+    add_wysiwyg_editor_field(:content, "conversation[contributions_attributes][0][content]")
     add_field(:postal_code, "Zip Code")
     add_button(:start_my_conversation, "Start My Conversation", :invite_a_friend) 
 
