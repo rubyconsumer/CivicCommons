@@ -11,6 +11,7 @@ class ContentItem < ActiveRecord::Base
     text :summary, :stored => true do
       Sanitize.clean(summary, :remove_contents => ['style','script'])
     end
+    string :content_type
   end
 
   has_attached_file :image,

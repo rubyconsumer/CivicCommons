@@ -24,6 +24,22 @@ class SearchService
     end
   end
 
+  def fetch_filtered_results(query = nil, filter = nil, *models)
+    fields = accepted_fields(models)
+    fields[:fragment_size] = -1
+    results = @search.search(models) do
+      with(:content_type, 'BlogPost') if filter == 'blogs'
+      with(:content_type, 'RadioShow') if filter == 'radioshows'
+      keywords(query) do
+        highlight fields
+      end
+    end
+
+    results.hits({ verify: true }).reject do |hit|
+      hit.result.is_a?(Contribution) and not hit.result.confirmed?
+    end
+  end
+
   def accepted_fields(models)
     fields = {}
     i = 0 
