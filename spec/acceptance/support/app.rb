@@ -32,16 +32,16 @@ module CivicCommonsDriver
   end
 
   def topic
-    topic = Topic.find(@topic.id) if @topic.id!=nil and Topic.exists? @topic.id
+    topic = Topic.first
     topic.instance_eval do
       def removed_from? page
-        page.has_no_css? locator
+        page.has_no_css? container
       end
 
       def has_been_removed_from_the_database?
       end
 
-      def locator
+      def container
         "tr[data-topic-id='#{id}']"
       end
     end
@@ -51,22 +51,10 @@ module CivicCommonsDriver
     login_as :admin
     goto :admin
   end
-  def follow_topics_link
-    click_link 'Topics'
-    set_current_page_to :admin_topics
-  end
   def current_page
     @@current_page
   end
 
-  def follow_add_topic_link
-    click_link 'Add Topic'
-    set_current_page_to :admin_add_topic
-  end
-
-  def fill_in_topic_form(options = { :name=>"WOOHOO!" })
-    fill_in 'Name', :with => options[:name]
-  end
 
   def topic_i_added
     Topic.last
@@ -89,18 +77,12 @@ module CivicCommonsDriver
   def contribution
     @@contribution
   end
-  def the_page_im_on
-    def page.for_the?(topic)
-      current_path.should == "/admin/topics/#{topic.id}"
-    end
-    def page.has_an_error?
-      has_css? '#error_explanation'
-    end
-    page
-  end
   class Database
     def has_any?(type)
       !Topic.count.zero? 
+    end
+    def has_any_topics?
+      !Topic.count.zero?
     end
     def create_topic(attributes={}) 
       Factory.create :topic, attributes

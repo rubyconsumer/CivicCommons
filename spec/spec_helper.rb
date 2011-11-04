@@ -40,7 +40,6 @@ Spork.prefork do
   require 'rspec/rails'
   require 'webmock/rspec'
   require 'capybara/rspec'
-  require 'cucumber-rails'
   require 'email_spec'
   require 'ostruct'
   require 'paperclip/matchers'

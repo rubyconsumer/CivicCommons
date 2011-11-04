@@ -1,14 +1,16 @@
-module CivicCommonsDriver module Pages
+module CivicCommonsDriver module Pages 
 class Admin
-  class Topics 
-    extend Page
-    add_link_for(:edit, "Edit", Pages::Admin::Topics::Edit)
-    add_link_for(:delete, "Delete", Pages::Admin::Topics)
+class Topics 
+  SHORT_NAME = :admin_topics
+  include Page
+  add_link_for(:edit, "Edit", :admin_edit_topic)
+  add_link_for(:delete, "Delete", :admin_topics)
 
-    def delete_topic topic
-      delete topic 
-      accept_alert
-    end
+  def delete_topic topic
+    follow_delete_link_for topic
+    accept_alert
   end
+
+end
 end
 end end

@@ -13,40 +13,35 @@ feature "Topic Admin", %q{
   scenario "creating a topic" do
     goto_admin_page_as_admin
     follow_add_topic_link
-    fill_in_topic_form
-    submit_form
+    submit_topic "WOOHOO!"
      
     submitted_topic.should exist_in_the_database
-    the_page_im_on.should be_for_the submitted_topic
+    current_page.should be_for submitted_topic
   end
    
   scenario "deleting a topic", :js => true do
-    create_topic name: "bla"
+    database.create_topic name: "bla"
 
     goto_admin_page_as_admin
     follow_topics_link
     delete_topic topic
 
     topic.should be_removed_from page
-    topic.should have_been_removed_from_the_database
+    database.should_not have_any_topics
 
   end
   
   scenario "updating a topic" do
-    create_topic name: "bla"
+    database.create_topic name: "bla"
 
     goto_admin_page_as_admin
     follow_topics_link
 
-    click_edit_link_for topic
+    follow_edit_link_for topic
     
-    fill_in_topic_form name: 'bork bork bork'
-    submit_form
-    
-
+    submit_topic 'bork bork bork'
     topic.name.should == "bork bork bork"
-    page.should contain "bork bork bork"
-    the_page_im_on.should be_for_the topic
+    current_page.should be_for topic
     
     
   end
@@ -54,12 +49,11 @@ feature "Topic Admin", %q{
   scenario "submitting an empty topic" do
 
     goto_admin_page_as_admin
-    follow_topics_link
     
     follow_add_topic_link
     
-    submit_form
-    the_page_im_on.should have_an_error 
+    submit_blank_topic
+    current_page.should have_an_error 
     database.should_not have_any :topics
   end
   
