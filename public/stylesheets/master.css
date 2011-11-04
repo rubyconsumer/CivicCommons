@@ -2066,8 +2066,9 @@ line-height:1.4em;
 .recent-item a:hover {
   text-decoration:underline;
 }
-.recent-item .offset-2 {
+.recent-item .offset-2, .recent-item .bd {
 background: #fff;
+border: 1px solid #e3e3e3;
 padding: 10px 10px 0 60px;
 margin-bottom: .5em;
 min-height: 50px;
@@ -2078,6 +2079,7 @@ height: 50px;
 -o-border-radius: 4px;
 border-radius: 4px;
 }
+.recent-item .bd {padding-left: 10px;}
 .recent-item .offset-2 .callout {
 left: 10px;
 position: absolute;
