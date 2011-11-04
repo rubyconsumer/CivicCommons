@@ -11,7 +11,13 @@ class AdminNewSurveyPage < PageObject
   
   def fill_in_survey_fields
     @page.fill_in(:title, :with => 'Title here')
-    @page.select_date('end_date', :with => 1.week.from_now.to_date.to_s)
+    select_date('end_date', 1.week.from_now.to_date)
+  end
+
+  def select_date(field, date)
+    @page.select date.to_time.strftime("%B"), :from => "survey[#{field}(2i)]"
+    @page.select date.day.to_s, :from => "survey[#{field}(3i)]"
+    @page.select date.year.to_s, :from => "survey[#{field}(1i)]"
   end
   
 end

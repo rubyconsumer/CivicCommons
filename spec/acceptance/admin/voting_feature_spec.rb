@@ -64,8 +64,7 @@ feature "Voting Admin", %q{
     admin_new_survey_page.visit
     
     # And I must fill in: title,and end date
-    admin_new_survey_page.fill_in(:title, :with => 'Title here')
-    admin_new_survey_page.select_date('end_date', :with => 1.week.from_now.to_date.to_s)
+    admin_new_survey_page.fill_in_survey_fields
     
     # and max options defaults to three unless reset by admin
     admin_new_survey_page.should have_field(:max_selected_option,:value => 3)
@@ -74,7 +73,7 @@ feature "Voting Admin", %q{
     admin_new_survey_page.should have_field(:show_progress,:value => nil)
     
     # and I can set a start date
-    admin_new_survey_page.select_date('start_date', :with => 1.day.ago.to_date.to_s)
+    admin_new_survey_page.select_date('start_date', 1.day.ago.to_date)
     
     # and I click submit
     admin_new_survey_page.click_create_survey
