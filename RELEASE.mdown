@@ -16,6 +16,13 @@
     * [Issues Filter](https://agilezen.com/project/18091/story/232)
       * Searching in the Issues Index page takes me to the Search Results page with the Issues Filter Active.
       * Searching in the Issues Detail page (not pictured) takes me to the Search Results page with the Issues Filter Active.
+    * [Blog Filter](https://agilezen.com/project/18091/story/233)
+      * Searching in the Blog Index page takes me to the Search Results page with the Blog Filter Active.
+      * Searching in the Blog Detail page (not pictured) takes me to the Search Results page with the Blog Filter Active.
+    * [Contribution Filter] (https://agilezen.com/project/18091/story/258)
+    * [Radio Show Filter](https://agilezen.com/project/18091/story/234)
+      * Searching in the Radio Show Index page takes me to the Search Results page with the Radio Show Filter Active.
+      * Searching in the Radio Show Detail page (not pictured) takes me to the Search Results page with the Radio Show Filter Active.
 
 #### Internal Changes
  * [Strip HTML when indexing search results instead of when presenting the search results](https://agilezen.com/project/18091/story/223)
