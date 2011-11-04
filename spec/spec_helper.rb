@@ -57,6 +57,10 @@ Spork.prefork do
     config.include StubbedHttpRequests
     config.include Paperclip::Shoulda::Matchers
     config.include Devise::TestHelpers, :type => :controller
+
+    config.include(EmailSpec::Helpers)
+    config.include(EmailSpec::Matchers)
+    
     config.fixture_path = "#{::Rails.root}/spec/fixtures"
     
     config.use_transactional_fixtures = false
@@ -73,6 +77,7 @@ Spork.prefork do
       stub_pro_embedly_request
       stub_gravatar
       Capybara.current_driver = :selenium if example.metadata[:js]
+      ActionMailer::Base.deliveries.clear
     end
 
     config.after :each do

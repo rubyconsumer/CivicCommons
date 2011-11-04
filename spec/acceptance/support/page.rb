@@ -13,7 +13,7 @@ module CivicCommonsDriver
       def add_wysiwyg_editor_field(field, locator)
         define_method "fill_in_#{field}_with" do | value |
           begin
-            page.execute_script("$('#{locator}').val('#{value}')")
+            page.execute_script("tinyMCE.get('#{locator}').setContent('#{value}')")
           rescue Capybara::NotSupportedByDriverError
             fill_in locator, :with=>value
           end

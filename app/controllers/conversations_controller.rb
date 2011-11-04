@@ -238,7 +238,6 @@ class ConversationsController < ApplicationController
   private
 
   def prep_convo(params)
-    p params
     @conversation = Conversation.new(params[:conversation])
 
     @conversation.person = current_person
