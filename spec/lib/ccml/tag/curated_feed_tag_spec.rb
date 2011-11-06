@@ -69,15 +69,27 @@ describe CCML::Tag::CuratedFeedTag do
       @tag_body = '{id} "{title}" {original_url}'
     end
 
-    it "returns all items associated with a feed" do
-      3.times {|i| Factory.create(:curated_feed_item, curated_feed: @feed) }
+    it "returns 5 most recent items associated with a feed" do
+      first_feed = Factory.create(:curated_feed_item, curated_feed: @feed, created_at: 0.days.ago, pub_date: 0.days.ago)
+                   Factory.create(:curated_feed_item, curated_feed: @feed, created_at: 1.days.ago, pub_date: 1.days.ago)
+                   Factory.create(:curated_feed_item, curated_feed: @feed, created_at: 2.days.ago, pub_date: 2.days.ago)
+                   Factory.create(:curated_feed_item, curated_feed: @feed, created_at: 3.days.ago, pub_date: 3.days.ago)
+      fifth_feed = Factory.create(:curated_feed_item, curated_feed: @feed, created_at: 4.days.ago, pub_date: 4.days.ago)
+      sixth_feed = Factory.create(:curated_feed_item, curated_feed: @feed, created_at: 5.days.ago, pub_date: 5.days.ago)
+
       tag = CCML::Tag::CuratedFeedTag.new({id: @feed.id})
       tag.tag_body = @tag_body
       output = tag.items
-      items = CuratedFeed.includes(:curated_feed_items).find(@feed.id).curated_feed_items
+
+      # Make sure each of the feed items are in the output
+      curated_feed = CuratedFeed.find(@feed.id)
+      items = curated_feed.curated_feed_items.limit(5)
       items.each do |item|
         output.should =~ /#{item.id} \"#{item.title}\" #{item.original_url}/
       end
+
+      output.should =~ /.*#{first_feed.original_url}.*#{fifth_feed.original_url}/ # Newest Feed comes first.
+      output.should_not =~ /#{sixth_feed.original_url}/ # Sixth feed should not be incldued in 5 most recent.
     end
 
     it "returns blank if the feed is not found" do

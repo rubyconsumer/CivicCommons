@@ -51,8 +51,9 @@ class CCML::Tag::CuratedFeedTag < CCML::Tag::TagPair
   # {/ccml:curated_feed:items}
   def items
     @opts[:id] = @segments[1] unless @opts.has_key?(:id)
-    feed = CuratedFeed.includes(:curated_feed_items).find(@opts[:id])
-    return process_tag_body(feed.items)
+    curated_feed = CuratedFeed.find(@opts[:id])
+    items = curated_feed.curated_feed_items.limit(5)
+    return process_tag_body(items)
   rescue ActiveRecord::RecordNotFound => e
     return nil
   end

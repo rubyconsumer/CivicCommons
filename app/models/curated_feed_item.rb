@@ -5,13 +5,13 @@ class CuratedFeedItem < ActiveRecord::Base
   # dependency injection to short-circuit during testing
   attr_accessor :update_embed_on_save
 
-  default_scope :order => 'pub_date, created_at DESC'
+  default_scope :order => 'pub_date DESC, created_at DESC'
 
   belongs_to :curated_feed
 
   alias_attribute :url, :original_url
   alias_attribute :feed, :curated_feed
-  
+
   validates_presence_of :original_url
   validates_presence_of :curated_feed_id
 
@@ -46,7 +46,7 @@ class CuratedFeedItem < ActiveRecord::Base
     @objectify ||= structify(self.raw)
     return @objectify
   end
-    
+
   private
 
   def set_pub_date
