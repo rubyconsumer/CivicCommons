@@ -5,11 +5,14 @@ class Issues
   class Add
     SHORT_NAME = :admin_add_issue
     include Page
+    include Database
+
     add_field(:name, 'Name')
-    add_wysiwyg_editor_field(:summary, 'issue[summary]')
+    add_wysiwyg_editor_field(:summary, 'issue_summary')
     add_field(:zip_code, 'Zip code')
     add_button(:create_issue, 'Create Issue', :admin_view_issues)
     add_button(:create_issue_while_in_invalid_state, 'Create Issue', :admin_add_issue)
+
     def attach_image file_name
       attach_file 'issue[image]', File.join(attachments_path, file_name) 
     end
@@ -36,7 +39,7 @@ class Issues
       {
         :name => "WOOwoop",
         :summary => "SUMMMED",
-        :topics => [Topic.first],
+        :topics => [database.first_topic],
         :image => "imageAttachment.png",
         :postal_code => "48867"
       }

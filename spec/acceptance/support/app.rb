@@ -1,4 +1,5 @@
 module CivicCommonsDriver
+  include Database
   include Rails.application.routes.url_helpers
   @@available_pages = {}
   @@current_page = nil
@@ -77,31 +78,7 @@ module CivicCommonsDriver
   def contribution
     @@contribution
   end
-  class Database
-    def has_any?(type)
-      !Topic.count.zero? 
-    end
-    def has_any_topics?
-      !Topic.count.zero?
-    end
-    def create_topic(attributes={}) 
-      Factory.create :topic, attributes
-    end
 
-    def create_issue(attributes= {})
-      Factory.create :issue, attributes
-    end
-    def topics
-      Topics.all
-    end
-    def has_any_issues?
-      !Issue.all.empty?
-    end
-  end
-
-  def database
-    Database.new
-  end
 
   def conversation
     Conversation.last
