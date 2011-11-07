@@ -2,6 +2,7 @@ class Invite #makes invitation behaves like an activerecord model
   include ActiveModel::Validations
   include ActiveModel::Conversion
   extend ActiveModel::Naming
+  EMAIL_SPLIT = /[\s\,]+/i
   
   attr_accessor :emails, 
                 :conversation,
@@ -28,7 +29,7 @@ class Invite #makes invitation behaves like an activerecord model
   
   # email_formatting validation
   def email_formatting
-    unless emails.to_s.split(/[\s\,]+/i).all?{|email| email =~ EmailAddressValidation::EMAIL_ADDRESS_INNER_PATTERN }
+    unless splitted_emails.all?{|email| email =~ EmailAddressValidation::EMAIL_ADDRESS_EXACT_PATTERN }
       errors.add(:emails, "must be in the correct format, example: abc@test.com") 
     end
   end
@@ -37,9 +38,13 @@ class Invite #makes invitation behaves like an activerecord model
     false
   end
   
+  def splitted_emails
+    emails.to_s.split(EMAIL_SPLIT)
+  end
+  
   # returns an array of emails using Regex
   def parsed_emails
-    emails.scan(EmailAddressValidation::EMAIL_ADDRESS_INNER_PATTERN)
+    splitted_emails.find_all{|email| email =~ EmailAddressValidation::EMAIL_ADDRESS_EXACT_PATTERN}
   end
   
   def send_invites

@@ -35,6 +35,14 @@ describe Invite do
         given_an_invite_with_email('abc@test,com')
         @invite.errors[:emails].first.should == "must be in the correct format, example: abc@test.com"
       end
+      it "should disallow test@test@test.com" do
+        given_an_invite_with_email('test@test@test.com')
+        @invite.errors[:emails].first.should == "must be in the correct format, example: abc@test.com"
+      end
+      it "should disallow test@test@test.com" do
+        given_an_invite_with_email('test@test@test.com')
+        @invite.errors[:emails].first.should == "must be in the correct format, example: abc@test.com"
+      end
       it "should allow multiple emails separated by space or comma" do
         given_an_invite_with_email('abc@test.com, ccc@test.com ')
         @invite.errors[:emails].should be_empty
@@ -72,6 +80,14 @@ describe Invite do
         @invite = Invite.new
         @invite.send_invites.should be_false
       end
+    end
+  end
+  
+  describe "splitted_emails" do
+    it "should split the emails based on new line or comma" do
+      emails="first@test.com second@test.com, third@test.com \nfourth@test.com"
+      @invite = Factory.build(:invite, :emails=>emails)
+      @invite.splitted_emails.should == ['first@test.com', 'second@test.com', 'third@test.com', 'fourth@test.com']
     end
   end
 
