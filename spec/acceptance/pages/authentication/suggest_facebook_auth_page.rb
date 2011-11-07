@@ -5,7 +5,7 @@ class SuggestFacebookAuthPage < PageObject
   end
   
   def click_decline
-    Capybara.current_session.driver.process :post, path
+    Capybara.current_session.driver.post path
   end
   
   def modal
