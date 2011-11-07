@@ -6,6 +6,8 @@
     * [HTML Tags no longer show up on search results page](https://agilezen.com/project/18091/story/247)
     * [Contribution Tool aligned with same response level](https://agilezen.com/project/18091/story/134)
     * [Added error message when invalid email is used to invite to conversation](https://agilezen.com/project/18091/story/248)
+    * [Incomplete XML Feed for Users](https://agilezen.com/project/18091/story/252)
+      * added rating group, what they rated, conversations, contributions, etc.
   * [Limit curated feeds to 5 most recent](https://agilezen.com/projects/18091/story/253)
   * [Community Page Redesign](https://agilezen.com/project/26499/story/1)
     * [Shows newest members first](https://agilezen.com/project/18091/story/226)
