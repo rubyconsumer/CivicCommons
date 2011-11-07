@@ -7,7 +7,7 @@
     * [Contribution Tool aligned with same response level](https://agilezen.com/project/18091/story/134)
     * [Added error message when invalid email is used to invite to conversation](https://agilezen.com/project/18091/story/248)
   * [Limit curated feeds to 5 most recent](https://agilezen.com/projects/18091/story/253)
-  * [Community Page Redesign](https://agilezen.com/project/26499/story/1) 
+  * [Community Page Redesign](https://agilezen.com/project/26499/story/1)
     * [Shows newest members first](https://agilezen.com/project/18091/story/226)
     * [Sort members alphabetically](https://agilezen.com/project/18091/story/227)
   * [Additional Search filters](https://agilezen.com/project/26499/story/31)
@@ -21,7 +21,7 @@
     * [Blog Filter](https://agilezen.com/project/18091/story/233)
       * Searching in the Blog Index page takes me to the Search Results page with the Blog Filter Active.
       * Searching in the Blog Detail page (not pictured) takes me to the Search Results page with the Blog Filter Active.
-    * [Contribution Filter] (https://agilezen.com/project/18091/story/258)
+    * [Contribution Filter](https://agilezen.com/project/18091/story/258)
     * [Radio Show Filter](https://agilezen.com/project/18091/story/234)
       * Searching in the Radio Show Index page takes me to the Search Results page with the Radio Show Filter Active.
       * Searching in the Radio Show Detail page (not pictured) takes me to the Search Results page with the Radio Show Filter Active.
@@ -34,4 +34,7 @@
     * Swap out "Disconnect with Facebook" to "Disconnect From Facebook"
 #### Internal Changes
  * [Strip HTML when indexing search results instead of when presenting the search results](https://agilezen.com/project/18091/story/223)
-#### Deployment instructions
+
+#### Post Deployment Instructions
+  * There have been changes to the content that is indexed and Solr will need to be reindexed:
+    * bundle exec rake sunspot:reindex

@@ -46,7 +46,7 @@
 
       <div class="aside supplementary">
       
-        <%= render :partial => '/search/search' %>
+        <%= render :partial => '/search/search', locals: { filter_type: 'blogs' } %>
 
         <div class="mod" id="TwitterProfileModule">
           <%= render :partial => 'shared/twitter_profile_widget', :locals => { :twitter_username => @blog_post.author.twitter_username } %>

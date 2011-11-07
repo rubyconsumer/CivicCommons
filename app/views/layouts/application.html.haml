@@ -146,8 +146,8 @@
                 %a{ :href => 'http://www.youtube.com/user/neociviccommons', :id => 'youtube'} YouTube
               %li
                 %a{ :href => feeds_url, :id => 'rss'} RSS
-            = render :partial => 'search/search'
-              
+            = render :partial => 'search/search', locals: { filter_type: params[:filter] }
+
         = render :partial => 'layouts/creative_commons'
 
 = render :partial => '/shared/suggest_facebook_auth.js' if signed_in? && !current_person.declined_fb_auth? && !current_person.facebook_authenticated?
