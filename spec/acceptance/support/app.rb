@@ -8,13 +8,13 @@ module CivicCommonsDriver
     @@available_pages
   end
 
-  def self.set_current_page_to page
+  def self.set_current_page_to page, options={}
     raise "OH NOES NO PAGE FOR #{page}" unless @@available_pages.has_key?(page)
-    self.current_page = @@available_pages[page].new
+    self.current_page = @@available_pages[page].new options
   end
 
-  def set_current_page_to page
-    CivicCommonsDriver.set_current_page_to page
+  def set_current_page_to page, options = {}
+    CivicCommonsDriver.set_current_page_to page, options
   end
 
   def create_user(type)
@@ -26,8 +26,8 @@ module CivicCommonsDriver
     login logged_in_user
   end
 
-  def goto screen
-    set_current_page_to screen
+  def goto screen, options={}
+    set_current_page_to screen, options
     current_page.goto
   end
 

@@ -8,7 +8,10 @@ module CivicCommonsDriver
       end
 
       def goto
-        visit self.class::LOCATION 
+        visit url
+      end
+      def url
+        self.class::LOCATION
       end
 
       def add_wysiwyg_editor_field(field, locator)

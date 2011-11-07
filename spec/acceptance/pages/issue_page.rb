@@ -1,6 +1,18 @@
-class IssuePage < PageObject
+require_relative 'search_box'
 
-  def visit_page(issue)
-    visit issue_path(issue)
+module CivicCommonsDriver
+  module Pages
+    class IssueDetail
+      SHORT_NAME = :issue_detail
+      attr_accessor :url
+      include Page
+      include SearchBox
+      def initialize attributes
+        self.url = "/issues/#{attributes[:for].cached_slug}"
+      end
+      def has_filed? issue, options
+        has_content? "Filed under: #{options[:filed_under].name}"
+      end
+    end
   end
 end
