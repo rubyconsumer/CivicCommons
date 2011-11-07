@@ -49,7 +49,7 @@ feature "8457517 link local account with facebook", %q{
       # And I go to the settings page
       settings_page.visit(@person)
 
-      # When I click on 'Connect with Facebook'
+     # When I click on 'Connect with Facebook'
       facebook_auth_page.click_connect_with_facebook
 
       # Then it should  open a modal dialog of Facebook linking success 

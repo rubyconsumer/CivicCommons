@@ -18,7 +18,7 @@ feature "Topic Admin", %q{
     submitted_topic.should exist_in_the_database
     current_page.should be_for submitted_topic
   end
-   
+
   scenario "deleting a topic", :js => true do
     database.create_topic name: "bla"
 
