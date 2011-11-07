@@ -34,3 +34,4 @@
     * Swap out "Disconnect with Facebook" to "Disconnect From Facebook"
 #### Internal Changes
  * [Strip HTML when indexing search results instead of when presenting the search results](https://agilezen.com/project/18091/story/223)
+#### Deployment instructions
