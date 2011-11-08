@@ -55,17 +55,14 @@ end
 
 group :test do
   gem "rack-test"
-  gem 'cucumber', '~>0.10.0'
   gem "factory_girl_rails", '~>1.3'
   gem 'no_peeping_toms', :git => 'git://github.com/alindeman/no_peeping_toms.git'
-  gem "ruby-debug19"
   gem 'webmock'
   # Required by WebMock but breaks everything at 2.2.5
   # Can use latest addressable when pull request is accepted: https://github.com/sporkmonger/addressable/pull/33
   gem 'addressable', :git => 'git://github.com/gkellogg/addressable.git', :branch => 'frozen-uri'
   gem 'linguistics'
   gem 'fuubar', '~>0.0.3'
-  gem "cucumber-rails", "0.4.0.beta.1"
   gem "database_cleaner", "~> 0.6.0"
   gem 'email_spec'
   gem 'simplecov'
@@ -93,4 +90,5 @@ group :cool_toys do
   gem "jasmine-headless-webkit"
   gem 'query_reviewer', :git => 'git://github.com/nesquena/query_reviewer.git'
   gem 'launchy'
+  gem "ruby-debug19"
 end

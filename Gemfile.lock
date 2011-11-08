@@ -85,14 +85,6 @@ GEM
     coffee-script-source (1.1.2)
     columnize (0.3.4)
     crack (0.3.1)
-    cucumber (0.10.7)
-      builder (>= 2.1.2)
-      diff-lcs (>= 1.1.2)
-      gherkin (~> 2.4.0)
-      json (>= 1.4.6)
-      term-ansicolor (>= 1.0.5)
-    cucumber-rails (0.4.0.beta.1)
-      cucumber (~> 0.10.0)
     daemons (1.1.4)
     database_cleaner (0.6.7)
     date_validator (0.6.2)
@@ -145,8 +137,6 @@ GEM
       ruby-progressbar (~> 0.0.10)
     gchart (1.0.0)
     geokit (1.6.0)
-    gherkin (2.4.21)
-      json (>= 1.4.6)
     gibbon (0.3.1)
       activesupport (>= 2.3.14)
       activesupport (>= 2.3.14)
@@ -336,7 +326,6 @@ GEM
       nokogiri
       sunspot (= 1.2.1)
     sys-uname (0.8.6)
-    term-ansicolor (1.0.7)
     thor (0.14.6)
     timecop (0.3.5)
     treetop (1.4.10)
@@ -370,8 +359,6 @@ DEPENDENCIES
   awesome_nested_set
   aws-s3
   capybara
-  cucumber (~> 0.10.0)
-  cucumber-rails (= 0.4.0.beta.1)
   database_cleaner (~> 0.6.0)
   date_validator
   delayed_job (>= 2.1.2)
