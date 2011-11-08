@@ -95,7 +95,7 @@ module Admin
 
         it "assigns a newly created issue as @issue" do
           assigns[:issue].name.should eq @params[:name]
-          assigns[:issue].cached_slug.should eq @params[:cached_slug]
+          assigns[:issue].cached_slug.should match 'important-stuff'
           assigns[:issue].summary.should eq @params[:summary]
           assigns[:issue].sponsor_name.should eq @params[:sponsor_name]
         end
