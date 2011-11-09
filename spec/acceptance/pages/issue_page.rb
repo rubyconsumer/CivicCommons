@@ -11,7 +11,7 @@ module CivicCommonsDriver
         self.url = "/issues/#{attributes[:for].cached_slug}"
       end
       def has_filed? issue, options
-        has_content? "Filed under: #{options[:filed_under].name}"
+        has_content? "Filed Under: #{options[:under].name}"
       end
     end
   end

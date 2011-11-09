@@ -11,14 +11,12 @@ feature 'Organize Issues By Topic', %q{
   end 
   scenario "topic visible on issue detail page" do
     goto :issue_detail, :for=>issue
-    current_page.should have_stated(issue, :filed_under=> topic)
+    current_page.should have_filed(issue, :under=> topic)
   end
 
   scenario "topic visible on issues index page" do
-    pending 'iz this right lisa?'
     goto :issues_index
-    current_page.should have_listed issue
-    current_page.should have_stated(issue, :filed_under=>topic)
+    current_page.should have_filed(issue, :under=>topic)
   end
 
   def issue

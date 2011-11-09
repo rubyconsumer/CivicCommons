@@ -6,7 +6,9 @@ class IssuesController < ApplicationController
   def index
     @search = Issue.sort(params[:sort]).where(:type => 'Issue').where(:exclude_from_result => false)
     @issues = @search.paginate(:page => params[:page], :per_page => 20)
-
+    @issues.map! { |i| IssuePresenter.new(i) }
+    @main_article = Article.issue_main_article.first
+    @sub_articles = Article.issue_sub_articles.limit(3)
     @recent_items = Activity.most_recent_activity(3)
   end
 
