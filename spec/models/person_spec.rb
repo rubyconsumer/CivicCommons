@@ -92,14 +92,14 @@ describe Person do
       
       context "require_zip_code" do
         it "should validate zip code when require_zip_code is true" do
-          @person = Factory.create(:normal_person,:zip_code =>12345)
+          @person = Factory.create(:registered_user, :zip_code => 12345)
           @person.zip_code = nil
           @person.require_zip_code = true
           @person.save
           @person.errors.should have_key(:zip_code)
         end
         it "should NOT validate zip code when require_zip_code is not true" do
-          @person = Factory.create(:normal_person,:zip_code =>12345)
+          @person = Factory.create(:registered_user, :zip_code => 12345)
           @person.zip_code = nil
           @person.save
           @person.errors.should_not have_key(:zip_code)
