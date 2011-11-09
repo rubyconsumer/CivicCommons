@@ -40,12 +40,12 @@
     <fieldset>
       <%= f.text_area(:content, :placeholder => "Leave a Comment...", :class => 'tinymce') %>
 
-      <div class="section">
-        <a href="#" id="contribution-add-link">Add a link to a related website</a>
+      <div class="section section-one">
+        <a href="#" id="contribution-add-link">Add a link to a related<br /> website</a>
         <%= f.text_field(:url, :type => "text", :class => "textbox link", :style => 'display:none;') %>
       </div>
 
-      <div class="section">
+      <div class="section section-two">
         <a href="#" id="contribution-add-file">Upload a photograph, document, or other file</a>
         <%= f.file_field(:attachment, :style => 'display:none;') %>
       </div>
