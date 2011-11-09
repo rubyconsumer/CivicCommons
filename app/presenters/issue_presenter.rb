@@ -1,7 +1,8 @@
 class IssuePresenter < PresenterBase
 
-  def url
-    issue_url(@object, host: request.host)
+
+  def filed_under
+    @object.topics.map(&:name).join(", ")
   end
 
 end

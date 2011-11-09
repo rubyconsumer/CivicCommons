@@ -16,4 +16,17 @@ class SearchResultsPage < PageObject
     end
     @page.has_selector?(selector, :content => filter) if defined?(selector)
   end
+
+end
+module CivicCommonsDriver
+  module Pages
+    class SearchResults
+      LOCATION = '/search/results'
+      SHORT_NAME = :search_results
+      include Page
+      def has_issues_filter_selected?
+        has_css? "a#issues-s.active"
+      end
+    end
+  end
 end

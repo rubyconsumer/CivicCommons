@@ -12,7 +12,10 @@ class ManagedIssue < Issue
     :readonly => true
 
   validate :index_is_a_circular_reference
-
+  
+  def managed?
+    true
+  end
 private
 
   def index_is_a_circular_reference

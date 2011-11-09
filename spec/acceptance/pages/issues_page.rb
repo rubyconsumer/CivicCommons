@@ -1,9 +1,12 @@
+require_relative 'search_box'
+
 module CivicCommonsDriver
   module Pages
     class Issues
       SHORT_NAME = :issues_index
       LOCATION = '/issues'
       include Page
+      include SearchBox
 
       def has_listed? issue
         has_content? issue.name 

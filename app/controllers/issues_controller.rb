@@ -12,16 +12,14 @@ class IssuesController < ApplicationController
 
   # GET /issues/1
   def show
-    @issue = Issue.includes(:conversations, :participants).find(params[:id])
+    issue = Issue.includes(:conversations, :participants).find(params[:id])
+    @issue = IssuePresenter.new(issue)
     @issue.visit!((current_person.nil? ? nil : current_person.id))
 
-    if @issue.is_a?(ManagedIssue) and @issue.index
-
+    if @issue.managed? and @issue.index
       @page = @issue.index
       render 'managed_issue_pages/show'
-
     else
-
       @latest_conversations = @issue.conversations.latest_updated.limit(3)
       all_conversations_on_issue = @issue.conversations.latest_updated
       @conversations = all_conversations_on_issue.paginate(:page => params[:page], :per_page => 6)

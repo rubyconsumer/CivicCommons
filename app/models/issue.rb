@@ -136,6 +136,10 @@ class Issue < ActiveRecord::Base
     Contribution.joins(:conversation).where({:conversations => {:id => self.conversation_ids}})
   end
 
+  def managed?
+    false
+  end
+
   def has_topic?(topic)
     topics.include?(topic)
   end
@@ -161,6 +165,7 @@ class Issue < ActiveRecord::Base
       self.position = Issue.maximum('position') ? Issue.maximum('position') + 1 : 0
     end
   end
+
 
   define_method(:title) do
     name

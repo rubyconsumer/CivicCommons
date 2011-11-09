@@ -4,7 +4,9 @@ module CivicCommonsDriver
       include Capybara::DSL
       def self.included(base)
         base.extend(Page)
-        CivicCommonsDriver.available_pages[base::SHORT_NAME] = base
+        if base.constants.include? :SHORT_NAME 
+          CivicCommonsDriver.available_pages[base::SHORT_NAME] = base
+        end
       end
 
       def goto
@@ -63,6 +65,11 @@ module CivicCommonsDriver
 
       def attachments_path
         File.expand_path(File.dirname(__FILE__) + '/attachments')
+      end
+  
+      def equal?(page_name)
+        [self.class::SHORT_NAME == page_name,
+        current_path.end_with?(url)].all?
       end
     end
   end

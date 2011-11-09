@@ -10,7 +10,6 @@ feature 'Organize Issues By Topic', %q{
     database.has_an_issue :topics => [topic]
   end 
   scenario "topic visible on issue detail page" do
-    pending 'iz this right lisa?'
     goto :issue_detail, :for=>issue
     current_page.should have_stated(issue, :filed_under=> topic)
   end
