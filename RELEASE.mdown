@@ -1,3 +1,6 @@
+### 1.7.4
+  * [Flash Message Redesign](https://agilezen.com/project/26499/story/50)
+  * [Removed zip code from Start Conversation Page](https://agilezen.com/project/18091/story/271)
 ### 1.7.3
 #### External Changes
   * Bug fixes
