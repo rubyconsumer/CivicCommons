@@ -1,15 +1,13 @@
-<% content_for :main do %>
-  <div class="wrapper">
-    <div class="content-container">
-      <div class="main-content">
-        <h1>Start a Conversation</h1>
-        <%= render partial: 'conversations/responsibilities_verbiage' %>
-        <p>
-          <%= link_to "I agree, continue", new_conversation_path(:accept => true), :class => 'button' %>
-          or
-          <%= link_to "Cancel", root_url %>
-        </p>
-      </div>
+<div class="wrapper">
+  <div class="content-container">
+    <div class="main-content">
+      <h1>Start a Conversation</h1>
+      <%= render partial: 'conversations/responsibilities_verbiage' %>
+      <p>
+        <%= link_to "I agree, continue", new_conversation_path(:accept => true), :class => 'button' %>
+        or
+        <%= link_to "Cancel", root_url %>
+      </p>
     </div>
   </div>
-<% end %>
+</div>

@@ -1,31 +1,29 @@
-<% content_for :main do %>
-  <div class="wrapper">
-    <div class="content-container">
-      <div class="main-content">
-        <h1>Start a Conversation</h1>
+<div class="wrapper">
+  <div class="content-container">
+    <div class="main-content">
+      <h1>Start a Conversation</h1>
 
-        <%= form_for setup_conversation(@conversation), :html =>{:multipart => true} do |conversation| %>
-          <%= render :partial => 'conversations/creation_errors', :locals => { :conversation => @conversation, :contributions => @conversation.contributions } %>
-          <br class="clear" />
+      <%= form_for setup_conversation(@conversation), :html =>{:multipart => true} do |conversation| %>
+        <%= render :partial => 'conversations/creation_errors', :locals => { :conversation => @conversation, :contributions => @conversation.contributions } %>
+        <br class="clear" />
 
-          <%= render :partial => 'conversations/conversation_fields', :locals => { :form => conversation } %>
-          <br class="clear" />
+        <%= render :partial => 'conversations/conversation_fields', :locals => { :form => conversation } %>
+        <br class="clear" />
 
-          <p>Which issues is this conversation related to?</p>
-          <%= render :partial => 'contributions/issue_selection_fields', :locals => { :form => conversation, :conversation => @conversation } %>
-          <br class="clear" />
+        <p>Which issues is this conversation related to?</p>
+        <%= render :partial => 'contributions/issue_selection_fields', :locals => { :form => conversation, :conversation => @conversation } %>
+        <br class="clear" />
 
-          <p>Get the ball rolling with a comment, question, or maybe a thought-provoking video you’ve already uploaded to YouTube.</p>
-          <%= render :partial => 'contributions/contribution_fields', :locals => { :form => conversation, :contributions => @conversation.contributions } %>
-          <br class="clear" />
+        <p>Get the ball rolling with a comment, question, or maybe a thought-provoking video you’ve already uploaded to YouTube.</p>
+        <%= render :partial => 'contributions/contribution_fields', :locals => { :form => conversation, :contributions => @conversation.contributions } %>
+        <br class="clear" />
 
-          <fieldset class="footer">
-            <%= conversation.submit 'Start My Conversation', :class => 'submit' %>
-            <%= link_to "Cancel", root_url %>
-          </fieldset>
+        <fieldset class="footer">
+          <%= conversation.submit 'Start My Conversation', :class => 'submit' %>
+          <%= link_to "Cancel", root_url %>
+        </fieldset>
 
-        <% end %>
-      </div>
+      <% end %>
     </div>
   </div>
-<% end %>
+</div>
