@@ -172,7 +172,7 @@ module ConversationsHelper
   end
 
   def setup_conversation(conversation)
-    returning(conversation) do |conversation|
+    conversation.tap do |conversation|
       conversation.contributions.build if conversation.contributions.empty?
     end
   end

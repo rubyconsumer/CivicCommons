@@ -69,7 +69,7 @@ class RatingGroup < ActiveRecord::Base
   def self.ratings_for_conversation(conversation)
     rgs = RatingGroup.where(:conversation_id => conversation).includes(:ratings)
 
-    returning Hash.new do |hash|
+    Hash.new.tap do |hash|
       RatingGroup.cached_rating_descriptors.values.collect{ |rd_title| hash[rd_title] = [] }
     end.merge( rgs.collect{|rg| rg.ratings}.flatten.group_by(&:title) )
   end
@@ -95,7 +95,7 @@ class RatingGroup < ActiveRecord::Base
       contribution_rgs = rgs.select{ |rg| rg.contribution_id == contribution_id }
       contribution_person_ratings = contribution_rgs.select{ |rg| rg.person_id == person }.collect(&:ratings).flatten if person
       # Populate hash with each unique contribution_id as a key #=> { 1 => {}, 2 => {} }
-      contribution_hash = returning Hash.new do |h2|
+      contribution_hash = Hash.new.tap do |h2|
         # Populate each contribution_id value hash with rating_descriptor keys
         # e.g. { 1 => { 'some-descriptor' => ... }, 2 => { 'some-descriptor' => ... } }
         RatingGroup.cached_rating_descriptors.each do |rd_id, rd_title|
@@ -116,7 +116,7 @@ class RatingGroup < ActiveRecord::Base
   end
 
   def self.default_ratings_hash(person=nil)
-    returning Hash.new do |hash|
+    Hash.new.tap do |hash|
       RatingGroup.cached_rating_descriptors.each do |rd_id, rd_title|
         hash[rd_title] = {
           :total => 0,
