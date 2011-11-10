@@ -57,7 +57,7 @@
         <%= render partial: 'blog/recent_blog_posts_sidebar', locals: { author: @blog_post.author, blog_posts: blog_posts } %>
 
         <div>&nbsp;</div>
-        <% recent_items = Activity.recent_items_for_person(@blog_post.author).limit(3) %>
+        <% recent_items = Activity.most_recent_activity_items_for_person(@blog_post.author).limit(3) %>
         <%= render partial: 'shared/recent_items_sidebar', locals: { recent_items: recent_items, person: @blog_post.author } %>
 
       </div>

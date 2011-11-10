@@ -322,4 +322,37 @@ describe Activity do
     end
   end
 
+  describe "most recent activity items" do
+    let(:contrib) do
+      Factory.create(:contribution)
+    end
+
+    let(:convo) do
+      Factory.create(:conversation)
+    end
+
+    let(:rating_group) do
+      Factory.create(:rating_group)
+    end
+
+    before(:each) do
+      Factory.create(:conversation_activity, item_id: convo.id, :item_created_at => 0.days.ago)
+      Factory.create(:contribution_activity, item_id: contrib.id, :item_created_at => 1.days.ago)
+      Factory.create(:rating_group_activity, item_id: rating_group.id, :item_created_at => 2.days.ago)
+    end
+
+
+    it "retrieves all the activity items" do
+      Activity.most_recent_activity_items.should == [convo, contrib, rating_group]
+    end
+
+    it "retrieves a number of the activity items" do
+      Activity.most_recent_activity_items(2).should == [convo, contrib]
+    end
+
+    it "retrieves a number of the activity items excluding items that no longer exist" do
+      contrib.delete
+      Activity.most_recent_activity_items(2).should == [convo]
+    end
+  end
 end

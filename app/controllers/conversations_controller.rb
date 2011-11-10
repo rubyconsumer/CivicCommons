@@ -19,7 +19,7 @@ class ConversationsController < ApplicationController
     @recommended = Conversation.recommended.limit(3)
 
     @regions = Region.all
-    @recent_items = Activity.most_recent_activity(3)
+    @recent_items = Activity.most_recent_activity_items(3)
     render :index
   end
 
@@ -37,7 +37,7 @@ class ConversationsController < ApplicationController
     @conversations = Conversation.filtered(@filter).paginate(:page => params[:page], :per_page => 12)
 
     @regions = Region.all
-    @recent_items = Activity.most_recent_activity(3)
+    @recent_items = Activity.most_recent_activity_items(3)
     render :filter
   end
 
@@ -60,7 +60,7 @@ class ConversationsController < ApplicationController
 
     @latest_contribution = @conversation.confirmed_contributions.most_recent.first
 
-    @recent_items = Activity.most_recent_activity_for_conversation(@conversation, 5)
+    @recent_items = Activity.most_recent_activity_items_for_conversation(@conversation, 5)
 
     render :show
   end

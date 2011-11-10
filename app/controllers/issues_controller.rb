@@ -7,14 +7,12 @@ class IssuesController < ApplicationController
     @topics = Topic.including_public_issues
     @current_topic = Topic.find_by_id(params[:topic])
     @subtitle = @current_topic.name if @current_topic
-    
+
     @search = @current_topic ? @current_topic.issues : Issue
     @issues = @search.type_is_issue.published.paginate(:page => params[:page], :per_page => 20)
     @issues.map! { |i| IssuePresenter.new(i) }
 
-    @main_article = Article.issue_main_article.first
-    @sub_articles = Article.issue_sub_articles.limit(3)
-    @recent_items = Activity.most_recent_activity(3)
+    @recent_items = Activity.most_recent_activity_items(3)
   end
 
   # GET /issues/1
@@ -33,7 +31,7 @@ class IssuesController < ApplicationController
       @people = @issue.participants.uniq
       @conversation_comments = @issue.conversation_comments.most_recent
       @contributions = @issue.contributions.most_recent
-      @recent_items = Activity.most_recent_activity_for_issue(@issue, 5)
+      @recent_items = Activity.most_recent_activity_items_for_issue(@issue, 5)
     end
   end
 

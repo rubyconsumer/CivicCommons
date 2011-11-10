@@ -60,7 +60,7 @@
 
         <div>&nbsp;</div>
         <% if @radioshow.conversation %>
-          <% @recent_items = Activity.most_recent_activity_for_conversation(@radioshow.conversation, 5) %>
+          <% @recent_items = Activity.most_recent_activity_items_for_conversation(@radioshow.conversation, 5) %>
           <%= render_recent_items_sidebar %>
         <% end %>
 

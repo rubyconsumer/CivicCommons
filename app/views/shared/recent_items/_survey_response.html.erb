@@ -1,4 +1,8 @@
-<p>
-  <%= survey_response.person.name %> has participated in this <%= survey_response.survey.type %>:
-  <%= link_to( survey_response.survey.title, send("#{survey_response.survey.type.underscore}_path".to_sym,survey_response.survey.id)) %>
-</p>
+<div class="recent-item">
+  <h4><%= survey_response.survey.title %></h4>
+  <div class="bd">
+    <p><%= survey_response.person.name %> has participated in this <%= survey_response.survey.type %></p>
+    <p><%= link_to( "View the results", send("#{survey_response.survey.type.underscore}_path".to_sym,survey_response.survey.id), :class => "read-more") %></p>
+  </div>
+</div>
+

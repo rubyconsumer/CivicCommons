@@ -2,20 +2,9 @@
   <div class="mod">
     <h3>Recent Activity <%= "By #{person.first_name}" if defined? person %></h3>
     <div class='mod-content'>
-      <% collection = ActivityPresenter.new(recent_items) %>
-      <% collection.each_with_type do |item, type| %>
-        <%= render :partial => 'shared/recent_item', locals: { recent_item: item, type: type } %>
+      <% @recent_items.each do |item| %>
+        <%= render :partial => 'shared/recent_item', locals: { recent_item: item, type: item.class.to_s } %>
       <% end %>
-      
-      <!-- This needs to replace the voting entry in recent items -->
-      <div class="recent-item">
-        <h4>Title of the Vote</h4>
-        <div class="bd">
-          <p>Voting has ended and the results are in.</p>
-          <p><a class="read-more" href="#">View the Results</a></p>
-        </div>
-      </div>
-      
     </div>
   </div>
 <% end %>
