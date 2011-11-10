@@ -10,7 +10,7 @@ module CivicCommonsDriver
 
       def has_filed?(issue, options)
         within "div.issue-details[data-issue-id='#{issue.id}']" do
-          has_content? "Filed Under: #{options[:under].name}"
+          has_content? options[:under].name
         end
       end
     end
