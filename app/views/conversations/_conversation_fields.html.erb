@@ -17,8 +17,4 @@
   <%= form.text_area :summary, :rows => 5 %>
 </fieldset>
 
-<p>Just so we know where you are, what’s your zip code?</p>
-<fieldset class="form-group">
-  <%= form.label :zip_code, "Zip Code" %>
-  <%= form.text_field :zip_code %>
-</fieldset>
+<%= form.hidden_field :zip_code, value: 'ALL' %>
