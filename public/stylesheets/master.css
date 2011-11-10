@@ -1438,21 +1438,43 @@ margin-bottom:0.5em;
 }
 div.contrib_tool_container .section {
 float: left;
-width: 48%;
+position: relative;
+width: 30%;
 }
+div.contrib_tool_container .section.active {
+float: none;
+width: 81.6%;
+}
+div.contrib_tool_container .section.active #contribution-add-link, div.contrib_tool_container .section.active #contribution-add-file {display: none;}
 div.contrib_tool_container .section.section-two {float: right;}
-#contribution-add-link, #contribution-add-file {
+div.contrib_tool_container .section {
 background-color: #fff;
 background-repeat: no-repeat;
-background-position: 10px 15px;
+background-position: 15px 10px;
 border: 1px solid #ccc;
 border-radius: 4px;
 font-weight: bold;
-padding: 15px 20px 15px 40px;
+padding: 15px 20px 15px 75px;
 text-decoration: none;
 }
-#contribution-add-link {background-image: url(/images/link.png);}
-#contribution-add-file {background-image: url(/images/image.png);}
+.section-one {background-image: url(/images/icons/link-btn.png);}
+/* #contribution-add-link:hover {background-image: url(/images/icons/link-btn-hvr.png);} */
+.section-two {
+background-image: url(/images/icons/image-btn.png);
+background-position: 15px 13px;
+}
+/* #contribution-add-file:hover {background-image: url(/images/icons/image-btn-hvr.png);} */
+div.contrib_tool_container .section .close {
+background: url(/images/close.png) no-repeat 0 0;
+display: none;
+height: 16px;
+position: absolute;
+right: 15px;
+text-indent: -9999px;
+top: 10px;
+width: 16px;
+}
+div.contrib_tool_container .section.active .close {display: block;}
 div.contribution-container.collapsed > .comment > .edit-contribution,
 div.contribution-container.collapsed > .comment > .convo-utility,
 div.contribution-container.collapsed > .comment > .content ol,
