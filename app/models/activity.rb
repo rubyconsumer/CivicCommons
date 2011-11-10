@@ -144,28 +144,22 @@ class Activity < ActiveRecord::Base
     activities.collect{|a| a.item}.compact
   end
 
-  def self.most_recent_activity_for_issue(issue, limit = nil)
-    if limit.nil?
-      Activity.where(issue_id: issue.id).order('item_created_at DESC')
-    else
-      Activity.where(issue_id: issue.id).limit(limit).order('item_created_at DESC')
-    end
+  def self.most_recent_activity_items_for_issue(issue, limit = nil)
+    activities = Activity.where(issue_id: issue.id).order('item_created_at DESC')
+    activities = activities.limit(limit) if limit
+    activities.collect{|a| a.item}.compact
   end
 
-  def self.most_recent_activity_for_conversation(conversation, limit = nil)
-    if limit.nil?
-      Activity.where(conversation_id: conversation.id).order('item_created_at DESC')
-    else
-      Activity.where(conversation_id: conversation.id).limit(limit).order('item_created_at DESC')
-    end
+  def self.most_recent_activity_items_for_conversation(conversation, limit = nil)
+    activities = Activity.where(conversation_id: conversation.id).order('item_created_at DESC')
+    activities = activities.limit(limit) if limit
+    activities.collect{|a| a.item}.compact
   end
 
-  def self.recent_items_for_person(person, limit = nil)
-    if limit.nil?
-      Activity.where(person_id: person.id).order('item_created_at DESC')
-    else
-      Activity.where(person_id: person.id).limit(limit).order('item_created_at DESC')
-    end
+  def self.most_recent_activity_items_for_person(person, limit = nil)
+    activities = Activity.where(person_id: person.id).order('item_created_at DESC')
+    activities = activities.limit(limit) if limit
+    activities.collect{|a| a.item}.compact
   end
 
   private

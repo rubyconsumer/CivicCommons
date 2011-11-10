@@ -7,7 +7,7 @@ class IssuesController < ApplicationController
     @search = Issue.sort(params[:sort]).where(:type => 'Issue').where(:exclude_from_result => false)
     @issues = @search.paginate(:page => params[:page], :per_page => 20)
 
-    @recent_items = Activity.most_recent_activity(3).collect{|a| a.item}
+    @recent_items = Activity.most_recent_activity_items(3)
   end
 
   # GET /issues/1
@@ -28,7 +28,7 @@ class IssuesController < ApplicationController
       @people = @issue.participants.uniq
       @conversation_comments = @issue.conversation_comments.most_recent
       @contributions = @issue.contributions.most_recent
-      @recent_items = Activity.most_recent_activity_for_issue(@issue, 5).collect{|a| a.item}
+      @recent_items = Activity.most_recent_activity_items_for_issue(@issue, 5)
     end
   end
 
