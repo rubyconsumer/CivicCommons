@@ -1,4 +1,5 @@
 class ConversationsController < ApplicationController
+  layout 'category_index'
   before_filter :require_user, :only => [
     :new,
     :create,

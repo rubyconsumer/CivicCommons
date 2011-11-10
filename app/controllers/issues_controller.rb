@@ -1,4 +1,5 @@
 class IssuesController < ApplicationController
+  layout 'category_index'
   before_filter :require_user, :only => [:create_contribution]
 
   # GET /issues
