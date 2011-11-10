@@ -133,12 +133,15 @@ class Activity < ActiveRecord::Base
   ############################################################
   # custom finders
 
-  def self.most_recent_activity(limit = nil)
-    if limit.nil?
-      Activity.order('item_created_at DESC')
-    else
-      Activity.order('item_created_at DESC').limit(limit)
-    end
+  # Retrieves the most recent activity items
+  #
+  # If any of the items do not exist, they will not be returned. Hence
+  # it is possible to get less than the requested amount of activity
+  # items.
+  def self.most_recent_activity_items(limit = nil)
+    activities = Activity.order('item_created_at DESC')
+    activities = activities.limit(limit) if limit
+    activities.collect{|a| a.item}.compact
   end
 
   def self.most_recent_activity_for_issue(issue, limit = nil)
