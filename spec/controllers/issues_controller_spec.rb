@@ -18,10 +18,7 @@ describe IssuesController do
         Factory.create(:region)
       end
 
-      @main_article = Factory.create(:article, :current => true, :issue_article => true, :main => true)
-      @sub_articles = []
       (1..2).each do
-        @sub_articles << Factory.create(:article, :current => true, :issue_article => true, :main => false)
       end
 
     end
@@ -31,16 +28,6 @@ describe IssuesController do
       assigns(:issues).should == Issue.where(:exclude_from_result => false).all
     end
 
-    it "assigns the first main article to @main_article" do
-      get :index
-      assigns(:main_article).should == @main_article
-    end
-
-    it "assigns all articles to @sub_articles" do
-      get :index
-      assigns(:sub_articles).collect # because of active record lazy loading
-      assigns(:sub_articles).first.should be_instance_of Article
-      assigns(:sub_articles).size.should == @sub_articles.size
     end
 
     it "assigns activity items to @recent_items" do
