@@ -11,23 +11,18 @@ describe IssuesController do
       end
 
       (1..2).each do
+        Factory.create(:managed_issue)
+      end
+
+      (1..2).each do
         Factory.create(:issue, :exclude_from_result => true)
-      end
-
-      (1..2).each do
-        Factory.create(:region)
-      end
-
-      (1..2).each do
       end
 
     end
 
     it "assigns all issues as @issues" do
       get :index
-      assigns(:issues).should == Issue.where(:exclude_from_result => false).all
-    end
-
+      assigns(:issues).should == Issue.where(:type => 'Issue').where(:exclude_from_result => false).all
     end
 
     it "assigns activity items to @recent_items" do
@@ -64,7 +59,7 @@ describe IssuesController do
 
     end
 
-    context "with managed issues" do
+    context "with managed issues (aka Projects)" do
 
       let(:issue) do
         Factory.create(:managed_issue)

@@ -124,6 +124,8 @@ Civiccommons::Application.routes.draw do
     resources :pages, controller: :managed_issue_pages, only: [:show]
   end
 
+  resources :projects, only: [:index]
+
   resources :conversations, only: [:index, :show, :new, :create] do
     resources :contributions, only: [:create, :edit, :show, :update, :destroy] do
       get '/moderate', to: 'contributions#moderate', on: :member

@@ -4,7 +4,7 @@ class IssuesController < ApplicationController
 
   # GET /issues
   def index
-    @search = Issue.sort(params[:sort]).where(:exclude_from_result => false)
+    @search = Issue.sort(params[:sort]).where(:type => 'Issue').where(:exclude_from_result => false)
     @issues = @search.paginate(:page => params[:page], :per_page => 20)
 
     @recent_items = Activity.most_recent_activity(3)

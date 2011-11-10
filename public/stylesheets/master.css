@@ -751,7 +751,7 @@ text-decoration: none;
 /*- ISSUE STYLES
 ----------------------------------------------------------------------*/
 
-.issue-container {
+.issue-container, .project-container {
 margin-bottom: 25px;
 -moz-border-radius: 4px;
 -webkit-border-radius: 4px;
@@ -762,7 +762,7 @@ border-radius: 4px;
 -o-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 }
-.issue-details {
+.issue-details, .project-details {
 background: #fff;
 border: 1px solid #ccc;
 overflow: hidden;
@@ -772,12 +772,12 @@ padding: 15px 15px 10px;
 -o-border-radius: 4px 4px 0 0;
 border-radius: 4px 4px 0 0;
 }
-.issue-details h4 {
+.issue-details h4, .project-details h4{
 font-size: 1.8em;
 font-weight: normal;
 }
-.issue-details h4, .issue-details p {padding-left: 210px;}
-.issue-details img {
+.issue-details h4, .issue-details p, .project-details h4, .project-details p {padding-left: 210px;}
+.issue-details img, .project-details img {
 float: left;
 margin-bottom: 10px;
 -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
@@ -785,7 +785,7 @@ margin-bottom: 10px;
 -o-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 }
-.issue-meta {
+.issue-meta, .project-meta {
 background: #e6e6e6;
 border: 1px solid #ccc;
 border-top: none;
@@ -797,7 +797,7 @@ text-align: right;
 -o-border-radius: 0 0 4px 4px;
 border-radius: 0 0 4px 4px;
 }
-.issue-meta p {
+.issue-meta p, .project-meta p {
 color: #666;
 float: right;
 font-weight: bold;
@@ -805,11 +805,11 @@ margin-left: 20px;
 text-shadow: 0 1px 1px rgba(255,255,255,.9);
 text-transform: uppercase;
 }
-.issue-contrib {
+.issue-contrib, .project-contrib {
 background: url(/images/people-i.png) no-repeat 0 2px;
 padding: 2px 0 2px 31px;
 }
-.issue-conv {
+.issue-conv, .project-conv {
 background: url(/images/conv-i.png) no-repeat 0 2px;
 padding: 2px 0 2px 24px;
 }
@@ -1229,6 +1229,11 @@ padding-left: 27px;
 }
 ul#main-nav li.issues {
 background: url(../images/nav_issues.png) no-repeat 0 17px;
+display: block;
+padding-left: 23px;
+}
+ul#main-nav li.projects {
+background: url(../images/nav_build.png) no-repeat 0 17px;
 display: block;
 padding-left: 23px;
 }

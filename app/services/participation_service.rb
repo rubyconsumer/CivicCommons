@@ -62,7 +62,6 @@ class ParticipationService
     end
 
     return count
-
   end
 
   def participants_by_issue(issue_id)
@@ -82,7 +81,6 @@ class ParticipationService
     end
 
     return count
-
   end
 
   private

@@ -1,0 +1,28 @@
+<div class="wrapper">
+  <div class="content-container">
+    <h1>Projects</h1>
+    <div class="main-content">
+      <% svc = ParticipationService.new %>
+      <% @projects.each do |project| %>
+        <div class="project-container">
+          <div class="project-details">
+            <%= image_tag project.image.url(:panel) %>
+            <h4><%= link_to project.name, issue_path(project) %></h4>
+            <p><%= raw(truncate(project.summary, length: 255)) %></p>
+          </div>
+          <div class="project-meta">
+            <p class="project-contrib"><%= pluralize(svc.participants_by_issue(project.id), "Participant") %></p>
+            <p class="project-conv"><%= pluralize(svc.conversations_by_issue(project.id), "Conversation") %></p>
+          </div>
+        </div>
+      <% end %>
+      <div class="pagination">
+        <%= will_paginate @issues, :inner_window => 3, :previous_label => "Previous", :next_label => "Next" %>
+      </div>
+    </div><!-- /.main-content -->
+    <div class='aside supplementary'>
+      <%= render :partial => '/search/search', locals: { filter_type: 'projects' } %>
+      <%= render_recent_items_sidebar %>
+    </div><!-- /.aside -->
+  </div><!-- /.content-container -->
+</div>
