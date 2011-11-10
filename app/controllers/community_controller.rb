@@ -3,7 +3,6 @@ class CommunityController < ApplicationController
   def index
     ordered_people
     @regions = Region.all
-    @recent_items = Activity.most_recent_activity(3)
   end
 
 

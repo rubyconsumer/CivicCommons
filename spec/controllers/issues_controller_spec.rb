@@ -25,12 +25,14 @@ describe IssuesController do
       assigns(:issues).should == Issue.where(:type => 'Issue').where(:exclude_from_result => false).all
     end
 
-    it "assigns activity items to @recent_items" do
+    it "assigns items to @recent_items" do
+      item = mock_model(Contribution)
       activity = mock_model(Activity)
+      activity.should_receive(:item).and_return(item)
       Activity.should_receive(:most_recent_activity).and_return([activity])
       get :index
 
-      assigns(:recent_items).should == [activity]
+      assigns(:recent_items).should == [item]
     end
 
   end
