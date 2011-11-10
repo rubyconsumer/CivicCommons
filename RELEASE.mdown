@@ -39,5 +39,11 @@
 
 #### Post Deployment Instructions
   * There have been changes to the content that is indexed and Solr will need to be reindexed:
+    * Restart Solr on Utility Server instance
+        * SSH into Utility server instance and run:
+            * %/engineyard/bin/solr stop
+            * %/engineyard/bin/solr start
     * bundle exec rake sunspot:reindex
-    * bundle exec rake activity:update_activity_cache
+  * There were changes to what models activity cache caches so we need
+    to update the cache
+    * bundle exec rake activity:update\_activity\_cache
