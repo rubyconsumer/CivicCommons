@@ -1,5 +1,5 @@
 <div class="recent-item rating">
-<p class="title">
+  <p class="title">
   <%# TODO:  Refactor model call %>
   <%
     contribution = Contribution.find(rating_group.contribution_id)
@@ -7,15 +7,17 @@
     rating = Rating.find_by_rating_group_id(rating_group.id)
   %>
   <strong><%= rating_group.person.name %> rated a response from <%= contribution.person.name %> as <span class="rating-type"><%= rating && rating.rating_descriptor.title %></span></strong>:
-</p>
+  </p>
 
-<p>
-  <%= link_to( "\"#{truncate( Sanitize.clean( contribution.content, :remove_contents => ['script'] ).strip, :length => 100, :separator => ' ' )}\"", conversation_node_path(contribution) ) %>
-</p>
+  <div style="background:#fff;padding:10px">
+    <p>
+    <%= link_to( "\"#{truncate( Sanitize.clean( contribution.content, :remove_contents => ['script'] ).strip, :length => 100, :separator => ' ' )}\"", conversation_node_path(contribution) ) %>
+    </p>
 
-<% unless controller.controller_name == 'conversations' && controller.action_name == 'show' %>
-  <span class="posted">
-    Posted on: <%= link_to( conversation.title, conversation_path(contribution.conversation.id) ) %>
-  </span>
-<% end %>
+    <% unless controller.controller_name == 'conversations' && controller.action_name == 'show' %>
+      <span class="posted">
+        Posted on: <%= link_to( conversation.title, conversation_path(contribution.conversation.id) ) %>
+      </span>
+    <% end %>
+  </div>
 </div>
