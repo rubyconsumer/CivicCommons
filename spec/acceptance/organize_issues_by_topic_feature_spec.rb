@@ -5,10 +5,12 @@ feature 'Organize Issues By Topic', %q{
   As anyone browsing the site
   I would like to see which topics an issue is related to 
 } do
+
   background do
     database.has_a_topic
     database.has_an_issue :topics => [topic]
-  end 
+  end
+
   scenario "topic visible on issue detail page" do
     goto :issue_detail, :for=>issue
     current_page.should have_filed(issue, :under=> topic)
@@ -19,11 +21,23 @@ feature 'Organize Issues By Topic', %q{
     current_page.should have_filed(issue, :under=>topic)
   end
 
+  scenario "clicking a topic takes you to the issues page filtered to that topic" do
+    goto :issue_detail, :for=>issue
+    follow_topic_link_for topic
+    current_page.should be_filtered_by topic
+  end
+
   def issue
     database.latest_issue
   end
-  
+
   def topic
-    database.latest_topic
+    topic = database.latest_topic
+    topic.instance_eval do
+      def container
+        "[data-topic-id='#{self.id}']"
+      end
+    end
+    topic
   end
 end

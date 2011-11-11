@@ -7,8 +7,15 @@ module CivicCommonsDriver
       attr_accessor :url
       include Page
       include SearchBox
+
+      add_link_for(:topic, '*', :issues_index)
+
       def initialize attributes
         self.url = "/issues/#{attributes[:for].cached_slug}"
+      end
+      def follow_topic_link_for topic
+        click_link topic.name
+        CivicCommonsDriver.set_current_page_to :issues_index
       end
       def has_filed? issue, options
         has_content? options[:under].name

@@ -13,6 +13,10 @@ module CivicCommonsDriver
           has_content? options[:under].name
         end
       end
+
+      def filtered_by?(topic)
+        current_url.include? "topic=#{topic.id}"
+      end
     end
   end
 end
