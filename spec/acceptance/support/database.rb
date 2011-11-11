@@ -24,6 +24,10 @@ module CivicCommonsDriver
       create_topic
     end
 
+    def self.has_an_issue attributes={}
+      create_issue attributes 
+    end
+
     def self.create_topic(attributes={})
       Factory.create :topic, attributes
     end
