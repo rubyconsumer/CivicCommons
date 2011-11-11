@@ -10,20 +10,19 @@ module CivicCommonsDriver
 
   def self.set_current_page_to page
     raise "OH NOES NO PAGE FOR #{page}" unless @@available_pages.has_key?(page)
-    self.current_page = @@available_pages[page].new 
+    self.current_page = @@available_pages[page].new
   end
 
   def set_current_page_to page
     CivicCommonsDriver.set_current_page_to page
   end
 
-
   def create_user(type)
     Factory.create(type, declined_fb_auth: true)
   end
 
   def login_as(type = :person)
-    self.user = create_user type 
+    self.user = create_user type
     login logged_in_user
   end
 
@@ -48,21 +47,24 @@ module CivicCommonsDriver
     end
     topic
   end
+
   def goto_admin_page_as_admin
     login_as :admin
     goto :admin
   end
+
   def current_page
     @@current_page
   end
 
-
   def topic_i_added
     Topic.last
   end
+
   def submitted_topic
     Topic.find_by_name "WOOHOO!"
   end
+
   def the_current_page
     current_page
   end
@@ -79,27 +81,30 @@ module CivicCommonsDriver
     @@contribution
   end
 
-
   def conversation
     Conversation.last
   end
+
   def user=(user)
     @@user =(user)
   end
+
   def logged_in_user
     @@user
   end
+
   def create_subcontribution_for contribution
     Factory.create(:contribution, :conversation=>contribution.conversation, :parent=> contribution)
   end
+
   def method_missing(method, *args, &block)
-    if current_page and current_page.respond_to? method 
-      current_page.send(method, *args, &block) 
+    if current_page and current_page.respond_to? method
+      current_page.send(method, *args, &block)
     else
       super
     end
   end
-  
+
   :private
   def login(user)
     goto :login

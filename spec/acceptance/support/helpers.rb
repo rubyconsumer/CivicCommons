@@ -1,6 +1,5 @@
 module HelperMethods
 
-
   def should_be_on(path)
     page.current_url.should match(Regexp.new(path))
   end
@@ -14,7 +13,7 @@ module HelperMethods
       fill_in field,  :with => value
     end
   end
-  
+
   def should_have_the_following(*contents)
     contents.each do |content|
       page.should have_content(content)
@@ -29,7 +28,6 @@ module HelperMethods
     end
   end
 
-  
   def clear_mail_queue
     ActionMailer::Base.deliveries.clear
   end
@@ -48,7 +46,7 @@ module HelperMethods
 end
 
 RSpec::Matchers.define :exist_in_the_database do
-  match do | actual | 
+  match do | actual |
     actual.id != nil
   end
 end

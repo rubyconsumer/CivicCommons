@@ -1,20 +1,16 @@
 require 'acceptance/acceptance_helper'
 
-
-
 feature "Topic Admin", %q{
   In order to Administer Topics
   As a an Admin user
   I want to access the topic admin feature
 } do
 
-    
-
   scenario "creating a topic" do
     goto_admin_page_as_admin
     follow_add_topic_link
     submit_topic "WOOHOO!"
-     
+
     submitted_topic.should exist_in_the_database
     current_page.should be_for submitted_topic
   end
@@ -28,9 +24,8 @@ feature "Topic Admin", %q{
 
     topic.should be_removed_from page
     database.should_not have_any_topics
-
   end
-  
+
   scenario "updating a topic" do
     database.create_topic name: "bla"
 
@@ -38,25 +33,21 @@ feature "Topic Admin", %q{
     follow_topics_link
 
     follow_edit_link_for topic
-    
+
     submit_topic 'bork bork bork'
     topic.name.should == "bork bork bork"
     current_page.should be_for topic
-    
-    
   end
-  
-  scenario "submitting an empty topic" do
 
+  scenario "submitting an empty topic" do
     goto_admin_page_as_admin
-    
+
     follow_add_topic_link
-    
+
     submit_blank_topic
-    current_page.should have_an_error 
+    current_page.should have_an_error
     database.should_not have_any :topics
   end
-  
 
 end
 
