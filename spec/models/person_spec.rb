@@ -554,6 +554,28 @@ describe Person do
     end
   end
 
+  context "when finding by the most active" do 
+
+    before(:each) do
+      @person1 = Factory.create(:sequence_user, name: "Lazy Sue")
+      @person2 = Factory.create(:sequence_user, name: "Hyper Fred")
+    end
+
+    let(:convo) do
+      Factory.create(:conversation)
+    end
+
+    it "will return the most active to least active users" do
+      Factory.create(:contribution_activity, item_id: convo.id, person: @person2);
+      results = Person.find_confirmed_order_by_most_active
+
+      # Check order of objects in the results
+      results[0].first_name.should == "Hyper"
+      results[1].first_name.should == "Lazy"
+    end
+
+  end
+
   context "when deleting an account" do
     after(:each) do
       Person.delete_all
