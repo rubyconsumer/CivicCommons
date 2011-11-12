@@ -1445,7 +1445,7 @@ div.contrib_tool_container .section.active {
 float: none;
 width: 81.6%;
 }
-div.contrib_tool_container .section.active #contribution-add-link, div.contrib_tool_container .section.active #contribution-add-file {display: none;}
+/* div.contrib_tool_container .section.active #contribution-add-link, div.contrib_tool_container .section.active #contribution-add-file {display: none;} */
 div.contrib_tool_container .section.section-two {float: right;}
 div.contrib_tool_container .section {
 background-color: #fff;

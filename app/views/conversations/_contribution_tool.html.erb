@@ -25,13 +25,15 @@
       // This JS can be refactored and integrated with contribution_tool.js
       
       $('.section-one #contribution-add-link').click(function() {
-        $('.section-two').hide();
-        $(this).parent().addClass('active');
+        $('.section-two').toggleClass('hide');
+        $(this).parent().toggleClass('active');
+        $(this).toggleClass('close');
       });
       
       $('.section-two #contribution-add-file').click(function() {
-        $('.section-one').hide();
-        $(this).parent().addClass('active');
+        $('.section-one').toggleClass('hide');
+        $(this).parent().toggleClass('active');
+        $(this).toggleClass('close');
       });
       $('div.contrib_tool_container .section .close').click(function() {
         $(this).parent('.section').removeClass('active');
@@ -57,15 +59,13 @@
       <%= f.text_area(:content, :placeholder => "Leave a Comment...", :class => 'tinymce') %>
 
       <div class="section section-one">
-        <a href="#" id="contribution-add-link">Add a link to a related<br /> website</a>
+        <a href="#" id="contribution-add-link">Add a link to a related website</a>
         <%= f.text_field(:url, :type => "text", :class => "textbox link", :style => 'display:none;') %>
-        <a href="#" class="close">Close</a>
       </div>
 
       <div class="section section-two">
         <a href="#" id="contribution-add-file">Upload a photograph, document, or other file</a>
         <%= f.file_field(:attachment, :style => 'display:none;') %>
-        <a href="#" class="close">Close</a>
       </div>
     </fieldset>
 
