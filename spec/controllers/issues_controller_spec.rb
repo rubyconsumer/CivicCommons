@@ -9,9 +9,17 @@ describe IssuesController do
       (1..2).each do
         Factory.create(:issue)
       end
+      
+      (1..2).each do
+        Factory.create(:topic)
+      end
 
       (1..2).each do
         Factory.create(:managed_issue)
+      end
+      
+      (1..2).each do
+        Factory.create(:issue, :exclude_from_result => false, :topics => [Topic.first])
       end
 
       (1..2).each do
@@ -32,7 +40,36 @@ describe IssuesController do
 
       assigns(:recent_items).should == [activity]
     end
-
+    
+    it "includes topics" do
+      Topic.should_receive(:including_public_issues)
+      get :index
+    end
+    
+    it "assigns topics" do
+      get :index
+      assigns(:topics).should == Topic.including_public_issues.all
+    end
+    
+    it "assigns current_topic if there is a param[:topic]" do
+      get :index, :topic => Topic.first.id
+      assigns(:current_topic).should == Topic.first
+    end
+    
+    it "assigns subtitle if there is a topic" do
+      get :index, :topic => Topic.first.id
+      assigns(:subtitle).should == Topic.first.name
+    end
+    
+    it "uses issues on a particular topic if there is a current topic" do
+      get :index, :topic => Topic.first.id
+      assigns(:issues).should == Topic.first.issues.type_is_issue.published.all
+    end
+    
+    it "uses all issues if there is no current topic" do
+      get :index
+      assigns(:issues).should == Issue.type_is_issue.published.all
+    end
   end
 
   describe "GET show" do

@@ -62,6 +62,8 @@ class Issue < ActiveRecord::Base
   scope :custom_order, {:order => 'position ASC'}
   scope :most_recent, {:order => 'created_at DESC'}
   scope :most_recent_update, {:order => 'updated_at DESC'}
+  scope :published, where(:exclude_from_result => false)
+  scope :type_is_issue, where(:type => 'Issue')
   scope :alphabetical, {:order => 'name ASC'}
   scope :sort, lambda { |sort_type|
       case sort_type

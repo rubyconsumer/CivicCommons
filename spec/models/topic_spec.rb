@@ -27,4 +27,39 @@ describe Topic do
       end
     end
   end
+  describe "For Sidebar" do
+    def given_topics_with_issues_for_sidebar
+      @topic1 = Factory.create(:topic)
+      @topic2 = Factory.create(:topic)
+      @issue1 = Factory.create(:issue, :topics => [@topic1], :exclude_from_result=> true)
+      @issue2 = Factory.create(:issue, :topics => [@topic1], :exclude_from_result=> false)
+      @issue2 = Factory.create(:issue, :topics => [@topic1], :exclude_from_result=> false)
+      @managed_issue1 = Factory.create(:managed_issue, :topics => [@topic1], :exclude_from_result=> false)
+      
+      @topic_result = Topic.including_public_issues.first
+      Topic.including_public_issues.length.should == 1
+    end
+    it "should return topics that has an issue count of 1(one) or more" do
+      given_topics_with_issues_for_sidebar
+      @topic_result.issue_count == 1
+    end
+    it "should return only Issue type" do
+      given_topics_with_issues_for_sidebar
+      @topic_result.issues.first.type == 'Issue'
+    end
+    it "should only return issues where exclude_from_result = false" do
+      @topic = Factory.create(:topic)
+      @issue = Factory.create(:issue, :topics => [@topic], :exclude_from_result=> false)
+      Topic.including_public_issues.length.should == 1
+    end
+    it "should not return anything when issues are exclude_from_result = true" do
+      @topic = Factory.create(:topic)
+      @issue = Factory.create(:issue, :topics => [@topic], :exclude_from_result=> true)
+      Topic.including_public_issues.length.should == 0
+    end
+    it "should have issue_count as an additional select field" do
+      given_topics_with_issues_for_sidebar
+      @topic_result.respond_to?(:issue_count).should be_true
+    end
+  end
 end

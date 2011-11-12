@@ -175,6 +175,19 @@ describe Issue do
     end
     
   end
+  
+  context "scopes" do
+    describe "published" do
+      it "should query based on exclude_from_result = false" do
+        Issue.published.to_sql.include?('`exclude_from_result` = 0').should be_true
+      end
+    end
+    describe "type_is_issue" do
+      it "should query based on type is Issue" do
+        Issue.type_is_issue.to_sql.include?('`type` = \'Issue\'').should be_true
+      end
+    end    
+  end
 
   context "Top Issues" do
 

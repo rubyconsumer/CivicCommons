@@ -1,0 +1,8 @@
+<div class="mod">
+  <h3>Only show issues about:</h3>
+  <ul class="site-filter">
+    <% topics.each do |topic| %>
+      <li><%= issue_topic_filter(topic) %></li>
+    <% end %>
+  </ul>
+</div>

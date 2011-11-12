@@ -1,8 +1,10 @@
 <div class="wrapper">
   <div class="content-container">
     <h1>Issues</h1>
-    <!--  <p class="subtitle">Topic: Education</p> -->
-    <div class="main-content">      
+    <% if @subtitle %>
+      <p class="subtitle">Topic: <%= @subtitle %></p>
+    <% end %>
+    <div class="main-content">
       <% svc = ParticipationService.new %>
       <% @issues.each do |issue| %>
         <div class="issue-container">
@@ -24,6 +26,7 @@
       </div>
     </div><!-- /.main-content -->
     <div class='aside supplementary'>
+      <%= render_issue_topics_sidebar %>
       <%= render :partial => '/search/search', locals: { filter_type: 'issues' } %>
       <!-- THIS IS FOR A LATER CARD -->
       <!--
