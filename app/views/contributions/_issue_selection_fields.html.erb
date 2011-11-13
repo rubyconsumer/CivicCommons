@@ -5,8 +5,9 @@
       <tr>
         <% slice.each do |issue| %>
           <td>
-            <%= check_box_tag "conversation[issue_ids][]", issue.id, conversation.issues.include?(issue) %>
-            <label for="conversation_issue_ids_">
+            <%= check_box_tag "conversation[issue_ids][]", issue.id,
+              conversation.issues.include?(issue), { id: "conversation_issue_ids_#{issue.id}" } %>
+            <label class="plain" for="conversation_issue_ids_<%= issue.id %>">
               <%= issue.name %>
             </label>
           </td>

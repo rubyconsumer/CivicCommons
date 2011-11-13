@@ -186,6 +186,15 @@ padding-top: 8px;
 text-align: right;
 width: 140px;
 }
+label.plain {
+display: inline;
+float: none;
+font-weight: normal;
+margin-right: 0;
+padding-top: 0;
+text-align: left;
+width: auto;
+}
 .form-label-offset {margin: 5px 0 5px 160px;}
 .form-label-offset .title{
 display:block;
