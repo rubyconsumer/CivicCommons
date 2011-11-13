@@ -1439,27 +1439,50 @@ margin-bottom:0.5em;
 div.contrib_tool_container .section {
 float: left;
 position: relative;
-width: 30%;
-}
-div.contrib_tool_container .section.active {
-float: none;
-width: 81.6%;
-}
-/* div.contrib_tool_container .section.active #contribution-add-link, div.contrib_tool_container .section.active #contribution-add-file {display: none;} */
-div.contrib_tool_container .section.section-two {float: right;}
-div.contrib_tool_container .section {
-background-color: #fff;
-background-repeat: no-repeat;
-background-position: 15px 10px;
+width: 45%;
 border: 1px solid #ccc;
 border-radius: 4px;
 font-weight: bold;
-padding: 15px 20px 15px 75px;
 text-decoration: none;
+min-height: 52px;
+height: auto !important;
+height: 52px;
+transition: width 0s;
+-moz-transition: width 0s; /* Firefox 4 */
+-webkit-transition: width 0s; /* Safari and Chrome */
+-o-transition: width 0s; /* Opera */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #fff), color-stop(0.5, #eee));
+background: -webkit-linear-gradient(center top , #fff, #eee);
+background: -o-linear-gradient(center top , #fff, #eee);
+background: -moz-linear-gradient(center top , #fff, #eee);
+background: linear-gradient(center top , #fff, #eee);
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#fffffffff', endColorstr='#ffeeeeee');
+-webkit-box-shadow: 0 1px 1px rgba(255, 255, 255, 1);
+-moz-box-shadow: 0 1px 1px rgba(255, 255, 255, 1);
+-o-box-shadow: 0 1px 1px rgba(255, 255, 255, 1);
+box-shadow: 0 1px 1px rgba(255, 255, 255, 1);
 }
-.section-one {background-image: url(/images/icons/link-btn.png);}
+div.contrib_tool_container .section input {outline: none;}
+div.contrib_tool_container .section a {text-decoration: none;}
+div.contrib_tool_container input#contribution_submit {margin-right: 10px;}
+div.contrib_tool_container .section.active {
+float: none;
+width: 99%;
+transition: width .2s;
+-moz-transition: width .2s; /* Firefox 4 */
+-webkit-transition: width .2s; /* Safari and Chrome */
+-o-transition: width .2s; /* Opera */
+}
+.ie7_body .button-group {margin-top: 10px;}
+div.contrib_tool_container .section.section-two {float: right;}
+div.contrib_tool_container .section div {
+background-repeat: no-repeat;
+background-position: 20px 15px;
+padding: 10px 20px 0 60px;
+}
+.section-one div {background-image: url(/images/icons/link-btn.png);}
 /* #contribution-add-link:hover {background-image: url(/images/icons/link-btn-hvr.png);} */
-.section-two {
+.section-two div {
 background-image: url(/images/icons/image-btn.png);
 background-position: 15px 13px;
 }

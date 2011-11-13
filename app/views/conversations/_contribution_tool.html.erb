@@ -26,13 +26,13 @@
       
       $('.section-one #contribution-add-link').click(function() {
         $('.section-two').toggleClass('hide');
-        $(this).parent().toggleClass('active');
+        $(this).parent().parent().toggleClass('active');
         $(this).toggleClass('close');
       });
       
       $('.section-two #contribution-add-file').click(function() {
         $('.section-one').toggleClass('hide');
-        $(this).parent().toggleClass('active');
+        $(this).parent().parent().toggleClass('active');
         $(this).toggleClass('close');
       });
       $('div.contrib_tool_container .section .close').click(function() {
@@ -58,23 +58,23 @@
     <fieldset>
       <%= f.text_area(:content, :placeholder => "Leave a Comment...", :class => 'tinymce') %>
 
-      <div class="section section-one">
+      <div class="section section-one"><div>
         <a href="#" id="contribution-add-link">Add a link to a related website</a>
         <%= f.text_field(:url, :type => "text", :class => "textbox link", :style => 'display:none;') %>
-      </div>
+      </div></div>
 
-      <div class="section section-two">
+      <div class="section section-two"><div>
         <a href="#" id="contribution-add-file">Upload a photograph, document, or other file</a>
         <%= f.file_field(:attachment, :style => 'display:none;') %>
-      </div>
+      </div></div>
     </fieldset>
 
     <fieldset>
       <ul class="errors"></ul>
     </fieldset>
 
-    <fieldset>
-      <%= f.submit 'Leave my response', :class => 'submit' %>
+    <fieldset class="button-group">
+      <%= f.submit 'Leave my response', :class => 'submit' %> or 
       <%= link_to "Cancel", '#', :id => 'cancel-contribution' %>
     </fieldset>
 
