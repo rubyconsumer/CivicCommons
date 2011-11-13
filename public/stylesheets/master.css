@@ -121,6 +121,8 @@ font-size: 1.3em;
 margin: -15px 0 0 0;
 }
 p.subtitle {margin-bottom: 18px;}
+p.subtitle a {color: #999;}
+p.subtitle a:hover {color: #2c87b7;}
 .contribution-form-headline h3 {
 border-bottom: none;
 margin: .5em 0 .2em;
@@ -156,7 +158,7 @@ ul.block-link-list a:hover {
 background: #fff;
 color: #6291ac;
 }
-ul.block-link-list a:active, ul.block-link-list a.current {
+ul.block-link-list a:active, ul.block-link-list a.active {
 background: #95b6ca;
 color: #fff;
 text-shadow: 0 -1px 0px rgba(0, 0, 0, .3);

@@ -7,6 +7,6 @@ module TopicsHelper
     active = @current_topic == topic
     css_class = active ? 'active' : ''
     topic_id = active ? nil : topic.id
-    link_to "#{topic.name} (#{topic.issue_count})", issues_path(:topic => topic_id), :class=> css_class
+    link_to raw("<span>#{topic.name}</span> <em>(#{topic.issue_count})</em>"), issues_path(:topic => topic_id), :class=> css_class
   end
 end
