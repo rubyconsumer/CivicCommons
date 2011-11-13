@@ -9,7 +9,7 @@
   <strong><%= rating_group.person.name %> rated a response from <%= contribution.person.name %> as <span class="rating-type"><%= rating && rating.rating_descriptor.title %></span></strong>:
   </p>
 
-  <div style="background:#fff;padding:10px">
+  <div class="bd">
     <p>
     <%= link_to( "\"#{truncate( Sanitize.clean( contribution.content, :remove_contents => ['script'] ).strip, :length => 100, :separator => ' ' )}\"", conversation_node_path(contribution) ) %>
     </p>
