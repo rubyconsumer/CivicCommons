@@ -11,8 +11,8 @@ describe TopicsHelper do
   
   describe "issue_topic_filter" do
     before(:each) do
-      @topic = mock_model(Topic,:issue_count => 1, :name => 'Topic One')
-      @current_topic = mock_model(Topic,:issue_count => 1, :name => 'Topic Two')
+      @topic = mock(Topic,:issue_count => 1, :name => 'Topic One', :id => 1001)
+      @current_topic = mock(Topic,:issue_count => 1, :name => 'Topic Two', :id => 1002)
     end
     it "should display the correct link tag" do
       helper.issue_topic_filter(@topic).should == "<a href=\"/issues?topic=1001\" class=\"\">Topic One (1)</a>"
@@ -21,7 +21,7 @@ describe TopicsHelper do
       helper.issue_topic_filter(@current_topic).should == "<a href=\"/issues\" class=\"active\">Topic Two (1)</a>"
     end
     it "should not have 'active' css class if the current topic has not match" do
-      helper.issue_topic_filter(@topic).should == "<a href=\"/issues?topic=1005\" class=\"\">Topic One (1)</a>"
+      helper.issue_topic_filter(@topic).should == "<a href=\"/issues?topic=1001\" class=\"\">Topic One (1)</a>"
     end
     
   end
