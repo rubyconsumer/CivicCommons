@@ -11,8 +11,8 @@ describe TopicsHelper do
   describe "issue_topic_filter" do
 
     context "with a topic that is not selected" do
-      let :topic { mock(Topic,:issue_count => 1, :name => 'Topic One', :id => 1001) }
-      let :topic_filter_element {  helper.issue_topic_filter(topic) }
+      let(:topic) { mock(Topic,:issue_count => 1, :name => 'Topic One', :id => 1001) }
+      let(:topic_filter_element) {  helper.issue_topic_filter(topic) }
 
       it "should link to topic 1001" do
         topic_filter_element.should include "/issues?topic=1001"
@@ -24,10 +24,10 @@ describe TopicsHelper do
       end
     end
     context "with a selected topic" do
-      let :currently_selected_topic =  { mock(Topic,:issue_count => 1, :name => 'Topic Two', :id => 1002) }
-      let :topic_filter_element {  helper.issue_topic_filter(currently_selected_topic) }
-
+      let(:currently_selected_topic) { mock(Topic,:issue_count => 1, :name => 'Topic Two', :id => 1002) }
+      let(:topic_filter_element) {  helper.issue_topic_filter(currently_selected_topic) }
       it "should have an 'active' class" do
+        @current_topic = currently_selected_topic
         topic_filter_element.should include 'class="active"'
       end
     end
