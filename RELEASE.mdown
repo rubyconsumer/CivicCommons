@@ -6,6 +6,8 @@
   * [Removed zip code from Start Conversation Page](https://agilezen.com/project/18091/story/271)
   * [Move Managed Issues to Projects](https://agilezen.com/project/26499/story/57)
     * [Ability to see Projects on a Projects Index Page](https://agilezen.com/project/18091/story/269)
+  * Bug Fixes
+    * [Adding a link or video no longer appears above the search box](https://agilezen.com/projects/18091/story/241)
 ### 1.7.3
 #### External Changes
   * Bug fixes
