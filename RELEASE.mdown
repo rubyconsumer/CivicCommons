@@ -1,4 +1,5 @@
 ### 1.8.0
+
 #### External Changes
   * [Organize Issues By Topic](https://agilezen.com/project/26499/story/8)
     * [Topic on Issue Detail and Issues Index pages](https://agilezen.com/project/18091/story/255)
@@ -8,7 +9,10 @@
     * [Ability to see Projects on a Projects Index Page](https://agilezen.com/project/18091/story/269)
   * Bug Fixes
     * [Adding a link or video no longer appears above the search box](https://agilezen.com/projects/18091/story/241)
+
+
 ### 1.7.3
+
 #### External Changes
   * Bug fixes
     * [Zip Code required when user edits profile](https://agilezen.com/project/18091/story/224)
@@ -44,6 +48,7 @@
     * Change collapsed contributions to be 3 lines when collapsed.
     * Changed "Sign up" to be called "register" to line up with the way it's used elsewhere on the site.
     * Swap out "Disconnect with Facebook" to "Disconnect From Facebook"
+
 #### Internal Changes
  * [Strip HTML when indexing search results instead of when presenting the search results](https://agilezen.com/project/18091/story/223)
 
