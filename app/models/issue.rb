@@ -62,6 +62,8 @@ class Issue < ActiveRecord::Base
   scope :custom_order, {:order => 'position ASC'}
   scope :most_recent, {:order => 'created_at DESC'}
   scope :most_recent_update, {:order => 'updated_at DESC'}
+  scope :published, where(:exclude_from_result => false)
+  scope :type_is_issue, where(:type => 'Issue')
   scope :alphabetical, {:order => 'name ASC'}
   scope :sort, lambda { |sort_type|
       case sort_type
@@ -136,6 +138,10 @@ class Issue < ActiveRecord::Base
     Contribution.joins(:conversation).where({:conversations => {:id => self.conversation_ids}})
   end
 
+  def managed?
+    false
+  end
+
   def has_topic?(topic)
     topics.include?(topic)
   end
@@ -161,6 +167,7 @@ class Issue < ActiveRecord::Base
       self.position = Issue.maximum('position') ? Issue.maximum('position') + 1 : 0
     end
   end
+
 
   define_method(:title) do
     name

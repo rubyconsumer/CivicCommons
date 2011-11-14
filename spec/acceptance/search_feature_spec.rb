@@ -10,8 +10,6 @@ feature "Search the web site", %q{
   let(:community_page)      {CommunityPage.new(page)}
   let(:conversation_page)   {ConversationPage.new(page)}
   let(:conversations_page)  {ConversationsPage.new(page)}
-  let(:issue_page)          {IssuePage.new(page)}
-  let(:issues_page)         {IssuesPage.new(page)}
   let(:search_results_page) {SearchResultsPage.new(page)}
 
   scenario "Search Filter for the conversations page" do
@@ -59,32 +57,20 @@ feature "Search the web site", %q{
   end
 
   scenario "Search Filter for the issues page" do
-    # Given I am on the issues page
-    issues_page.visit
-    # When I enter a search query
-    issues_page.fill_in 'q', :with => 'search term here'
-    # And I press search button
-    issues_page.click_link_or_button 'Search'
-    # Then I should be redirected to the search results page
+    goto :issues_index
+    search_for 'search term here'
     page.current_path.include?(search_results_page.path).should be_true
-    # And I should see 'Issues' as the highlighted filter
-    search_results_page.has_filter_selected?('Issues').should be_true
+    current_page.should have_issues_filter_selected
   end
 
   scenario "Search Filter for an issue page" do
-    # Given a issue
     issue = Factory.create(:issue)
-    # And I am on the issue page
-    issue_page.visit_page(issue)
-    # When I enter a search query
-    issue_page.fill_in 'q', :with => 'search term here'
-    # And I press search button
-    issue_page.click_link_or_button 'Search'
-    # Then I should be redirected to the search results page
-    page.current_path.include?(search_results_page.path).should be_true
-    # And I should see 'Issues' as the highlighted filter
-    search_results_page.has_filter_selected?('Issues').should be_true
+    goto :issue_detail, :for=> issue
+    search_for 'search term here'
+    current_page.should be :search_results
+    current_page.should have_issues_filter_selected
   end
+
 
 =begin
 ### commented out because the test always fails when sunspot is invoked at any point

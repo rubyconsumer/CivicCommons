@@ -1,13 +1,17 @@
 <div class="wrapper">
   <div class="content-container">
     <h1>Issues</h1>
+    <% if @subtitle %>
+      <p class="subtitle">Topic: <%= @subtitle %></p>
+    <% end %>
     <div class="main-content">
       <% svc = ParticipationService.new %>
       <% @issues.each do |issue| %>
         <div class="issue-container">
-          <div class="issue-details">
+          <div class="issue-details" <%=issue.container_attribute%>>
             <%= image_tag issue.image.url(:panel) %>
             <h4><%= link_to issue.name, issue_path(issue) %></h4>
+            <p class="issue-tags">Topic: <%=raw(issue.filed_under)%></p>
             <p><%= raw(truncate(issue.summary, length: 255)) %></p>
           </div>
           <div class="issue-meta">
@@ -22,7 +26,24 @@
       </div>
     </div><!-- /.main-content -->
     <div class='aside supplementary'>
+      <%= render_issue_topics_sidebar %>
       <%= render :partial => '/search/search', locals: { filter_type: 'issues' } %>
+      <!-- THIS IS FOR A LATER CARD -->
+      <!--
+      <div class="mod">
+
+
+        <h3>Only Show Issues About</h3>
+        <ul class="simple-list block-link-list">
+          <li><a href="#" class="current"><span>Education</span> <em>32</em></a></li>
+          <li><a href="#"><span>Entrepreneurship</span> <em>34</em></a></li>
+          <li><a href="#"><span>Mothers of Famous People</span> <em>12</em></a></li>
+          <li><a href="#"><span>Philanthropy</span> <em>9</em></a></li>
+          <li><a href="#"><span>Political Systems</span> <em>14</em></a></li>
+          <li><a href="#"><span>Transportation</span> <em>4</em></a></li>
+        </ul>
+      </div>
+      -->
       <%= render_recent_items_sidebar %>
     </div><!-- /.aside -->
   </div><!-- /.content-container -->
