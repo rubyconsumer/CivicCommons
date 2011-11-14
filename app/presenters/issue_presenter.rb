@@ -12,4 +12,7 @@ class IssuePresenter < PresenterBase
       end
     end.join(", ")
   end
+  def container_attribute
+    "data-issue-id='#{id}'"
+  end
 end

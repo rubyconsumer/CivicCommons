@@ -12,12 +12,12 @@ feature "Issue Admin", %q{
   end
   scenario "forgetting to assign topics to issues" do
     submit_an_issue_without_a_topic
-    current_page.should have_reminder_to_add_topics 
+    current_page.should have_reminder_to_add_topics
     database.should_not have_any_issues
   end
 
   scenario "assign topics to issues", :js => true do
-    submit_an_issue_with_topics 
+    submit_an_issue_with_topics
     database.latest_issue.should have_topic database.latest_topic
   end
 

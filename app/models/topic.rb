@@ -7,5 +7,4 @@ class Topic < ActiveRecord::Base
       select('topics.*,count(issues.id) AS issue_count').
       where(:issues=>{:exclude_from_result => false,:type => 'Issue'}).
       group('topics.id').having('count(issues.id) > 0')
-    
 end

@@ -17,7 +17,13 @@ module CivicCommonsDriver
     end
 
     def self.latest_topic
-      Topic.last
+      topic = Topic.last
+      topic.instance_eval do
+        def container
+          "[data-topic-id='#{self.id}']"
+        end
+      end
+      topic
     end
 
     def self.has_a_topic
@@ -37,9 +43,11 @@ module CivicCommonsDriver
     end
 
     def self.latest_issue
-      Issue.last
+      IssuePresenter.new Issue.last
     end
-
+    def self.issues 
+      Issue.all.map! { |i| IssuePresenter.new i }
+    end
     def self.topics
       Topic.all
     end

@@ -32,12 +32,6 @@ feature 'Organize Issues By Topic', %q{
   end
 
   def topic
-    topic = database.latest_topic
-    topic.instance_eval do
-      def container
-        "[data-topic-id='#{self.id}']"
-      end
-    end
-    topic
+    database.latest_topic
   end
 end

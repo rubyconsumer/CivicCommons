@@ -7,15 +7,44 @@ module CivicCommonsDriver
       LOCATION = '/issues'
       include Page
       include SearchBox
+      include Database
+
 
       def has_filed?(issue, options)
-        within "div.issue-details[data-issue-id='#{issue.id}']" do
-          has_content? options[:under].name
-        end
+        showing_within? issue, options[:under]
       end
 
       def filtered_by?(topic)
+        filtered = true
+        filtered = false unless at_filtered_issue_page_for? topic
+        filtered = false unless link_highlighted_for? topic
+
+        database.issues.each do | issue | 
+          filtered = false if not showing_within? issue, topic
+        end
+        return filtered
+      end
+
+      private
+
+      def showing_within? issue, topic
+          within "[#{issue.container_attribute}]" do
+            showing? topic
+          end
+      end
+
+      def link_highlighted_for? topic
+        within 'a.active' do
+          showing? topic
+        end
+      end
+
+      def at_filtered_issue_page_for? topic
         current_url.include? "topic=#{topic.id}"
+      end
+
+      def showing? topic
+        has_content? topic.name
       end
     end
   end
