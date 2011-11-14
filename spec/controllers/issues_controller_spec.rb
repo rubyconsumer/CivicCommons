@@ -28,8 +28,7 @@ describe IssuesController do
     it "assigns items to @recent_items" do
       item = mock_model(Contribution)
       activity = mock_model(Activity)
-      activity.should_receive(:item).and_return(item)
-      Activity.should_receive(:most_recent_activity_items).and_return([activity])
+      Activity.should_receive(:most_recent_activity_items).and_return([item])
       get :index
 
       assigns(:recent_items).should == [item]

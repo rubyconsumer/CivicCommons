@@ -13,7 +13,7 @@ class HomepageController < ApplicationController
     @recent_radio_shows = ContentItem.recent_radio_shows.limit(1)
     @regions = Region.all
 
-    @recent_items = Activity.most_recent_activity_items(50)
+    @recent_items = Activity.most_recent_activity_items(3)
 
     respond_to do |format|
       format.html
