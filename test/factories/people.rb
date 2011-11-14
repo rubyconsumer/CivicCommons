@@ -24,7 +24,10 @@ FactoryGirl.define do |f|
     u.skip_email_marketing true
   end
 
-  
+  factory :sequence_user, :parent => :registered_user do |u|
+    u.sequence(:id)
+  end
+
   factory :person_without_zip_code, :parent => :registered_user do |u|
     u.zip_code nil
     to_create do |instance|

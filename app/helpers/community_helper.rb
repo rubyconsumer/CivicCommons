@@ -5,6 +5,8 @@ module CommunityHelper
       title = 'Alphabetical'
     when 'newest-member'
       title = 'Newest Members'
+    when 'active-member'
+      title = 'Most Active'
     end
 
     link_to title, 
