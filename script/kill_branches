@@ -1,0 +1,20 @@
+#!/bin/bash
+
+cards="243"
+local_branches=""
+remote_branches=""
+
+for card in $cards; do
+  echo "checking branches for card: $card"
+  local_branches="$local_branches $(git branch | grep $card)"
+  remote_branches="$remote_branches $(git branch -r | grep $card)"
+done
+
+$FOR_SERIOUS && git branch -D $local_branches
+if $REMOTE; then
+  for branch in $remote_branches; do
+    branch=${branch#origin/}
+    echo "Deleting remote branch: $branch"
+    $FOR_SERIOUS && git push origin :$branch
+  done
+fi
