@@ -15,6 +15,7 @@
 
 #### Miscellaneous
   * [Update Activity Stream for All Sidebars](https://agilezen.com/project/18091/story/266)
+  * [Copy Recent Activity Stream to Recent Blog Post stream](https://agilezen.com/project/18091/story/278)
   * [Flash Message Redesign](https://agilezen.com/project/26499/story/50)
   * [Removed zip code from Start Conversation Page](https://agilezen.com/project/18091/story/271)
 
@@ -22,6 +23,7 @@
   * [Adding a link or video no longer appears above the search box](https://agilezen.com/projects/18091/story/241)
   * [Removed "Presenter" from follow this issue text](https://agilezen.com/projects/18091/story/274)
   * [Clarified error message when adding an invalid link to a contribution or conversation](https://agilezen.com/projects/18091/story/237)
+
 ### Post Deployment Instructions
   * There have been changes to the content that is indexed and Solr will need to be reindexed:
     * Restart Solr on Utility Server instance
