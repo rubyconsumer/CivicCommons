@@ -44,4 +44,9 @@ module ApplicationHelper
     end
   end
 
+  def pluralize_without_count(count, singular, plural=nil, options={})
+    plural = pluralize count, singular, plural
+    plural.gsub(/\d+ /, "")
+  end
+
 end

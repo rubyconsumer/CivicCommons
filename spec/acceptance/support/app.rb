@@ -38,9 +38,6 @@ module CivicCommonsDriver
         page.has_no_css? container
       end
 
-      def has_been_removed_from_the_database?
-      end
-
       def container
         "tr[data-topic-id='#{id}']"
       end

@@ -31,7 +31,7 @@ module CivicCommonsDriver
     end
 
     def self.has_an_issue attributes={}
-      create_issue attributes 
+      create_issue attributes
     end
 
     def self.create_topic(attributes={})
@@ -45,9 +45,11 @@ module CivicCommonsDriver
     def self.latest_issue
       IssuePresenter.new Issue.last
     end
-    def self.issues 
+
+    def self.issues
       Issue.all.map! { |i| IssuePresenter.new i }
     end
+
     def self.topics
       Topic.all
     end

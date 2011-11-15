@@ -20,7 +20,7 @@ module CivicCommonsDriver
         filtered = false unless link_highlighted_for? topic
 
         database.issues.each do | issue | 
-          filtered = false if not showing_within? issue, topic
+          filtered = false unless showing_within? issue, topic
         end
         return filtered
       end

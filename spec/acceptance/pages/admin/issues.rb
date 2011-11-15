@@ -7,17 +7,16 @@ class Issues
     include Page
     include Database
 
-    add_field(:name, 'Name')
-    add_wysiwyg_editor_field(:summary, 'issue_summary')
-    add_field(:zip_code, 'Zip code')
-    add_button(:create_issue, 'Create Issue', :admin_view_issues)
-    add_button(:create_issue_while_in_invalid_state, 'Create Issue', :admin_add_issue)
-
+    has_field(:name, 'Name')
+    has_wysiwyg_editor_field(:summary, 'issue_summary')
+    has_field(:zip_code, 'Zip code')
+    has_button(:create_issue, 'Create Issue', :admin_view_issues)
+    has_button(:create_issue_while_in_invalid_state, 'Create Issue', :admin_add_issue)
     def attach_image file_name
       attach_file 'issue[image]', File.join(attachments_path, file_name) 
     end
     def select_topic topic
-      check topic  
+      check topic
     end
     def has_reminder_to_add_topics?
       within '#error_explanation' do
@@ -45,6 +44,5 @@ class Issues
       }
     end
   end
-    
 end
 end end end
