@@ -1,22 +1,28 @@
-### 1.8.0
+## 1.8.0
 
-#### External Changes
-  * [Organize Issues By Topic](https://agilezen.com/project/26499/story/8)
-    * [Topic on Issue Detail and Issues Index pages](https://agilezen.com/project/18091/story/255)
-    * [Link topic to issues page filtered by topic](https://agilezen.com/project/18091/story/257)
+### External Changes
+
+#### [Organize Issues By Topic](https://agilezen.com/project/26499/story/8)
+  * [Topic on Issue Detail and Issues Index pages](https://agilezen.com/project/18091/story/255)
+  * [Link topic to issues page filtered by topic](https://agilezen.com/project/18091/story/257)
+
+#### [Move Managed Issues to Projects](https://agilezen.com/project/26499/story/57)
+  * [Ability to see Projects on a Projects Index Page](https://agilezen.com/project/18091/story/269)
+  * [Searching the Projects Page Results in Filtered Search Results for Projects](https://agilezen.com/project/18091/story/270)
+
+#### [Community Index Page Redesign](https://agilezen.com/projects/26499/story/1)
+  * [List community by most active](https://agilezen.com/project/18091/story/228)
+
+#### Miscellaneous
   * [Update Activity Stream for All Sidebars](https://agilezen.com/project/18091/story/266)
   * [Flash Message Redesign](https://agilezen.com/project/26499/story/50)
   * [Removed zip code from Start Conversation Page](https://agilezen.com/project/18091/story/271)
-  * [Move Managed Issues to Projects](https://agilezen.com/project/26499/story/57)
-    * [Ability to see Projects on a Projects Index Page](https://agilezen.com/project/18091/story/269)
-    * [Searching the Projects Page Results in Filtered Search Results for Projects](https://agilezen.com/project/18091/story/270)
-  * [Community Index Page Redesign](https://agilezen.com/projects/26499/story/1)
-    * [List community by most active](https://agilezen.com/project/18091/story/228)
-  * Bug Fixes
-    * [Adding a link or video no longer appears above the search box](https://agilezen.com/projects/18091/story/241)
-    * [Removed "Presenter" from follow this issue text](https://agilezen.com/projects/18091/story/274)
 
-#### Post Deployment Instructions
+#### Bug Fixes
+  * [Adding a link or video no longer appears above the search box](https://agilezen.com/projects/18091/story/241)
+  * [Removed "Presenter" from follow this issue text](https://agilezen.com/projects/18091/story/274)
+  * [Clarified error message when adding an invalid link to a contribution or conversation](https://agilezen.com/projects/18091/story/237)
+### Post Deployment Instructions
   * There have been changes to the content that is indexed and Solr will need to be reindexed:
     * Restart Solr on Utility Server instance
         * SSH into Utility server instance and run:
@@ -24,9 +30,9 @@
             * %/engineyard/bin/solr start
     * bundle exec rake sunspot:reindex
 
-### 1.7.3
+## 1.7.3
 
-#### External Changes
+### External Changes
   * Bug fixes
     * [Zip Code required when user edits profile](https://agilezen.com/project/18091/story/224)
     * [HTML Tags no longer show up in invite to conversation email](https://agilezen.com/project/18091/story/238)
@@ -62,10 +68,10 @@
     * Changed "Sign up" to be called "register" to line up with the way it's used elsewhere on the site.
     * Swap out "Disconnect with Facebook" to "Disconnect From Facebook"
 
-#### Internal Changes
+### Internal Changes
  * [Strip HTML when indexing search results instead of when presenting the search results](https://agilezen.com/project/18091/story/223)
 
-#### Post Deployment Instructions
+### Post Deployment Instructions
   * There have been changes to the content that is indexed and Solr will need to be reindexed:
     * Restart Solr on Utility Server instance
         * SSH into Utility server instance and run:
