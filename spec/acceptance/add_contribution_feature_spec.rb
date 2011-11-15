@@ -12,14 +12,14 @@ feature "Add contribution", %q{
 } do
 
   let(:content) do
-    content = 'This is my contribution...'
+    'This is my contribution...'
   end
   let(:file_and_url_error_message) do
-    content = "Woops! We only let you submit one link or file per contribution"
+    "Woops! We only let you submit one link or file per contribution"
   end
 
   let(:file_only_error_message) do
-    content = "Sorry! You must also write a comment above when you upload a file."
+    "Sorry! You must also write a comment above when you upload a file."
   end
 
   let(:url) do
