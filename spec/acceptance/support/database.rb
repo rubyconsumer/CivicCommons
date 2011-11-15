@@ -19,6 +19,9 @@ module CivicCommonsDriver
     def self.latest_topic
       topic = Topic.last
       topic.instance_eval do
+        def removed_from? page
+          page.has_no_css? container
+        end
         def container
           "[data-topic-id='#{self.id}']"
         end

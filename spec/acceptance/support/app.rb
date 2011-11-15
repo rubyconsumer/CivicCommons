@@ -32,19 +32,6 @@ module CivicCommonsDriver
     current_page.goto
   end
 
-  def topic
-    topic = Topic.first
-    topic.instance_eval do
-      def removed_from? page
-        page.has_no_css? container
-      end
-
-      def container
-        "tr[data-topic-id='#{id}']"
-      end
-    end
-    topic
-  end
 
   def goto_admin_page_as_admin
     login_as :admin

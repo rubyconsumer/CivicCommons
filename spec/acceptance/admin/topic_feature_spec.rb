@@ -35,8 +35,8 @@ feature "Topic Admin", %q{
     follow_edit_link_for topic
 
     submit_topic 'bork bork bork'
-    topic.name.should == "bork bork bork"
-    current_page.should be_for topic
+    database.latest_topic.name.should == "bork bork bork"
+    current_page.should be_for database.latest_topic
   end
 
   scenario "submitting an empty topic" do
@@ -49,5 +49,11 @@ feature "Topic Admin", %q{
     database.should_not have_any :topics
   end
 
+  before do
+    @topic = nil
+  end
+  def topic
+    @topic ||= database.latest_topic
+  end
 end
 
