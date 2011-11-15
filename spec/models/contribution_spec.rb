@@ -495,6 +495,14 @@ describe Contribution do
       contribution.errors.count.should == 1
     end
 
+    context "when a url is provided" do
+      it "rejects invalid urls" do
+        person = Factory.create(:normal_person)
+        contribution = Contribution.create_node({:url=>'asdf'}, person)
+        contribution.should have_validation_error :url
+      end
+    end
+
   end
 
   describe "validating a contribution for an issue" do

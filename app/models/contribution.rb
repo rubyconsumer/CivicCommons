@@ -65,7 +65,7 @@ class Contribution < ActiveRecord::Base
   # Embedly
   before_save :create_embeddly_info
 
-  validates_format_of :url, :with => URI::regexp(%w(http https)), :allow_blank => true
+  validates_format_of :url, :with => URI::regexp(%w(http https)), :allow_blank => true, :message => "The link you provided is invalid"
 
   def base_url
     match = /^(?<base_url>http[s]?:\/\/(\w|[^\?\/:])+(:\d+)?).*$/i.match(url)

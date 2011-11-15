@@ -9,6 +9,7 @@ module CivicCommonsDriver
   end
 
   def self.set_current_page_to page, options={}
+    return if page == :current
     raise "OH NOES NO PAGE FOR #{page}" unless @@available_pages.has_key?(page)
     self.current_page = @@available_pages[page].new options
   end

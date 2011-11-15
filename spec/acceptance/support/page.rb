@@ -35,7 +35,7 @@ module CivicCommonsDriver
       end
       alias :add_field :has_field
 
-      def has_link_for(name, locator, resulting_page)
+      def has_link_for(name, locator, resulting_page=:current)
         define_method "follow_#{name}_link_for" do | item |
           within item.container do
             click_link locator
@@ -45,7 +45,7 @@ module CivicCommonsDriver
       end
       alias :add_link_for :has_link_for
 
-      def has_link(name, locator, resulting_page)
+      def has_link(name, locator, resulting_page=:current)
         define_method "follow_#{name}_link" do
           click_link locator
           set_current_page_to resulting_page
