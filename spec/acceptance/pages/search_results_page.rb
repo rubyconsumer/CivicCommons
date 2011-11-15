@@ -7,14 +7,17 @@ class SearchResultsPage < PageObject
   end
 
   def has_filter_selected?(filter)
+    selector = nil
     if filter == 'Conversations'
       selector = 'li a#conv-s.active'
     elsif filter == 'Issues'
       selector = 'li a#issues-s.active'
     elsif filter == 'Community'
       selector = 'li a#comm-s.active'
+    elsif filter == 'Projects'
+      selector = 'li a#project-s.active'
     end
-    @page.has_selector?(selector, :content => filter) if defined?(selector)
+    not selector.nil? and @page.has_selector?(selector, :content => filter)
   end
 
 end

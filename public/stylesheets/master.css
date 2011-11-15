@@ -2297,6 +2297,12 @@ background-image: url(../images/search/contrib-f.png);
 background-position: 11px 7px;
 }
 .aside .search-filter ul li a#contrib-s:hover, .aside .search-filter ul li a#contrib-s.active {background-position: 11px -59px;}
+.aside .search-filter ul li a#project-s {
+background-image: url(../images/search/project-f.png);
+background-position: 11px 4px;
+}
+.aside .search-filter ul li a#project-s:hover, .aside .search-filter ul li a#project-s.active {background-position: 11px -56px;}
+
 
 /*- Create Conversation Feature ----------*/
 

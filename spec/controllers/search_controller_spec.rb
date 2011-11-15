@@ -24,13 +24,16 @@ describe SearchController do
       assigns[:models_to_search].should == Person
 
       get :results, q: '', filter: 'issues'
-      assigns[:models_to_search].should == [Issue, ManagedIssuePage]
+      assigns[:models_to_search].should == Issue
 
       get :results, q: '', filter: 'blogs'
       assigns[:models_to_search].should == ContentItem
 
       get :results, q: '', filter: 'radioshows'
       assigns[:models_to_search].should == ContentItem
+
+      get :results, q: '', filter: 'projects'
+      assigns[:models_to_search].should == [Issue, ManagedIssuePage]
     end
 
     it "will search all models if invalid filter requested" do

@@ -32,11 +32,13 @@ class SearchController < ApplicationController
     when "community"
       return Person
     when "issues"
-      return [Issue, ManagedIssuePage]
+      return Issue
     when "blogs"
       return ContentItem
     when "radioshows"
       return ContentItem
+    when "projects"
+      return [Issue, ManagedIssuePage]
     end
   end
 end

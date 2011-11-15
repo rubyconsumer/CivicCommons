@@ -10,6 +10,7 @@ class Issue < ActiveRecord::Base
     text :summary, :stored => true, :boost => 2, :default_boost => 2 do
       Sanitize.clean(summary, :remove_contents => ['style','script'])
     end
+    string :type
   end
 
   ALL_TYPES = ['Issue', 'ManagedIssue']

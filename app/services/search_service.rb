@@ -30,6 +30,13 @@ class SearchService
     results = @search.search(models) do
       with(:content_type, 'BlogPost') if filter == 'blogs'
       with(:content_type, 'RadioShow') if filter == 'radioshows'
+      with(:type, 'Issue') if filter == 'issues'
+      if filter == 'projects'
+        any_of do
+          with(:type, 'ManagedIssue')
+          with(:type, 'ManagedIssuePage')
+        end
+      end
       keywords(query) do
         highlight fields
       end

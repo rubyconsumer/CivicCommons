@@ -27,5 +27,8 @@ class ManagedIssuePage < ActiveRecord::Base
       text = Sanitize.clean(template, :remove_contents => ['style','script'])
       CCML.sanitize_tags(text)
     end
+    string :type do
+      'ManagedIssuePage'
+    end
   end
 end

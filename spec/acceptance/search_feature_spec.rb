@@ -10,6 +10,7 @@ feature "Search the web site", %q{
   let(:community_page)      {CommunityPage.new(page)}
   let(:conversation_page)   {ConversationPage.new(page)}
   let(:conversations_page)  {ConversationsPage.new(page)}
+  let(:projects_page)       {ProjectsPage.new(page)}
   let(:search_results_page) {SearchResultsPage.new(page)}
 
   scenario "Search Filter for the conversations page" do
@@ -71,6 +72,18 @@ feature "Search the web site", %q{
     current_page.should have_issues_filter_selected
   end
 
+  scenario "Search Filter for the projects page" do
+    # Given I am on the conversation page
+    projects_page.visit
+    # When I enter a search query
+    projects_page.fill_in 'q', :with => 'search term here'
+    # And I press search button
+    projects_page.click_link_or_button 'Search'
+    # Then I should be redirected to the search results page
+    page.current_path.include?(search_results_page.path).should be_true
+    # And I should see 'Projects' as the highlighted filter
+    search_results_page.has_filter_selected?('Projects').should be_true
+  end
 
 =begin
 ### commented out because the test always fails when sunspot is invoked at any point
