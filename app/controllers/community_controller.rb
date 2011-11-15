@@ -9,7 +9,7 @@ class CommunityController < ApplicationController
   private
 
   def ordered_people
-    @order = params[:order] || 'active-member'
+    @order = params[:order] || 'newest-member'
     case @order
     when 'alphabetical'
       @subtitle = 'Alphabetical'
