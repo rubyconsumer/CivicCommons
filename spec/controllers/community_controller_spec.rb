@@ -52,14 +52,15 @@ describe CommunityController do
         end
       end
       context "default" do
-        it "should sort by the most active members" do 
-          Person.should_receive(:find_confirmed_order_by_most_active).and_return(mock_person)
+        it "should sort by the most recent newest members who have confirmed" do 
+          Person.should_receive(:find_confirmed_order_by_recency).and_return(mock_person)
           get :index
           response.should be_success
         end
-        it "should set the subtitle to 'Most Active'" do
+
+        it "should set the subtitle to 'Newest Members'" do
           get :index
-          assigns(:subtitle).should == 'Most Active'
+          assigns(:subtitle).should == 'Newest Members'
         end
       end
     end
