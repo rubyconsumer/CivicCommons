@@ -2,9 +2,7 @@
   <div class="mod">
     <h3>Recent Activity <%= "By #{person.first_name}" if defined? person %></h3>
     <div class='mod-content'>
-      <% @recent_items.each do |item| %>
-        <%= render :partial => 'shared/recent_item', locals: { recent_item: item, type: item.class.to_s } %>
-      <% end %>
+      <%= render :partial => 'shared/recent_item', collection: recent_items %>
     </div>
   </div>
 <% end %>

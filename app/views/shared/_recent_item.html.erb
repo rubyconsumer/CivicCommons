@@ -1,3 +1,2 @@
-
-  <%= render :partial => "shared/recent_items/#{type.underscore}", :object => recent_item %>
-
+<% type = recent_item.class.to_s %>
+<%= render :partial => "shared/recent_items/#{type.underscore}", :object => recent_item %>
