@@ -16,6 +16,14 @@
     * [Adding a link or video no longer appears above the search box](https://agilezen.com/projects/18091/story/241)
     * [Removed "Presenter" from follow this issue text](https://agilezen.com/projects/18091/story/274)
 
+#### Post Deployment Instructions
+  * There have been changes to the content that is indexed and Solr will need to be reindexed:
+    * Restart Solr on Utility Server instance
+        * SSH into Utility server instance and run:
+            * %/engineyard/bin/solr stop
+            * %/engineyard/bin/solr start
+    * bundle exec rake sunspot:reindex
+
 ### 1.7.3
 
 #### External Changes
