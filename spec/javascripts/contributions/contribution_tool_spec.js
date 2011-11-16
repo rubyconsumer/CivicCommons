@@ -32,16 +32,20 @@ describe("The Conversation Tool", function() {
     });
 
   });
-  describe('cancelling the addition of a link', function() {
-    it('removes the link value from the textbox', function() {
-      subject.$linkField.val('http://www.google.com/');
-      subject.$('#contribution-add-link.close').click();
-      expect(subject.$linkField.val()).toEqual('');
+  describe('canceling', function() {
+    context('adding a link', function() {
+      it('removes the value from the textbox', function() {
+        subject.$linkField.val('http://www.google.com/');
+        subject.$('#contribution-add-link.close').click();
+        expect(subject.$linkField.val()).toEqual('');
+      });
     });
-    it('removes the file value from the textbox', function() {
-      subject.$fileUploadField.val('/path/to/somewhere');
-      subject.$('#contribution-add-file.close').click();
-      expect(subject.$fileUploadField.val()).toEqual('');
+    context('adding a file', function() {
+      it('removes the file value from input field', function() {
+        subject.$fileUploadField.val('/path/to/somewhere');
+        subject.$('#contribution-add-file.close').click();
+        expect(subject.$fileUploadField.val()).toEqual('');
+      });
     });
   });
   describe('submitting the form with valid information', function() {
