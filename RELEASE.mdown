@@ -2,6 +2,9 @@
 
 ### External Changes
 
+#### [Community Index Page Redesign](https://agilezen.com/projects/26499/story/1)
+  * [List community by most active](https://agilezen.com/project/18091/story/228)
+
 #### [Organize Issues By Topic](https://agilezen.com/project/26499/story/8)
   * [Topic on Issue Detail and Issues Index pages](https://agilezen.com/project/18091/story/255)
   * [Link topic to issues page filtered by topic](https://agilezen.com/project/18091/story/257)
@@ -10,19 +13,17 @@
   * [Ability to see Projects on a Projects Index Page](https://agilezen.com/project/18091/story/269)
   * [Searching the Projects Page Results in Filtered Search Results for Projects](https://agilezen.com/project/18091/story/270)
 
-#### [Community Index Page Redesign](https://agilezen.com/projects/26499/story/1)
-  * [List community by most active](https://agilezen.com/project/18091/story/228)
-
 #### Miscellaneous
-  * [Update Activity Stream for All Sidebars](https://agilezen.com/project/18091/story/266)
-  * [Copy Recent Activity Stream to Recent Blog Post stream](https://agilezen.com/project/18091/story/278)
   * [Flash Message Redesign](https://agilezen.com/project/26499/story/50)
+  * [Update Activity Stream for All Sidebars](https://agilezen.com/project/18091/story/266)
   * [Removed zip code from Start Conversation Page](https://agilezen.com/project/18091/story/271)
+  * [Copy Recent Activity Stream to Recent Blog Post stream](https://agilezen.com/project/18091/story/278)
 
 #### Bug Fixes
-  * [Adding a link or video no longer appears above the search box](https://agilezen.com/projects/18091/story/241)
-  * [Removed "Presenter" from follow this issue text](https://agilezen.com/projects/18091/story/274)
   * [Clarified error message when adding an invalid link to a contribution or conversation](https://agilezen.com/projects/18091/story/237)
+  * [Adding a link or video no longer appears above the search box](https://agilezen.com/projects/18091/story/241)
+  * [Managed Issues cannot be updated due to errors on the Admin Page.](https://agilezen.com/project/18091/story/273)
+  * [Removed "Presenter" from follow this issue text](https://agilezen.com/projects/18091/story/274)
 
 ### Post Deployment Instructions
   * There have been changes to the content that is indexed and Solr will need to be reindexed:
