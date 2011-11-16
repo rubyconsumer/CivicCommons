@@ -7,14 +7,26 @@ class ContributionTool < PageObject
   end
 
   def visible?
-   
+
    @page.find('.contrib_tool_container').visible?
   end
-  
+
   def post_to_link
     @page.find_link('post_to_conversation')
   end
-
+  def add_url url
+    add_url_link.click
+    fill_in_url_field url
+    cancel_adding_url
+  end
+  def add_file file_path
+    add_file_link.click
+    select_file(file_path)
+    cancel_adding_url
+  end
+  def cancel_adding_url
+    @page.find('a.close').click
+  end
   def respond_to_link(contribution)
     if contribution.is_a? Contribution
       id = contribution.id

@@ -164,7 +164,7 @@ feature "Add contribution", %q{
 
     # Then the link field should be visible
     contrib.url_field.should be_visible
-
+    contrib.cancel_adding_url
     # When I click the 'Add a file...' link
     contrib.add_file_link.click
 
@@ -188,18 +188,6 @@ feature "Add contribution", %q{
 
     # When I fill in the content field
     contrib.fill_in_content_field(content)
-
-    # When I click the 'Add a link...' link
-    contrib.add_url_link.click
-
-    # When I fill in the url field
-    contrib.fill_in_url_field(url)
-
-    # When I click the 'Add a file...' link
-    contrib.add_file_link.click
-
-    # When I fill in the file field
-    contrib.select_file(file_path)
 
     # When I click the Cancel link
     contrib.cancel_link.click
@@ -246,11 +234,7 @@ feature "Add contribution", %q{
     contrib.post_to_link.click
 
     # When I click the 'Add a link...' link
-    contrib.add_url_link.click
-
-    # When I fill in the url field
-    contrib.fill_in_url_field(url)
-
+    contrib.add_url url
     # And I press the submit button
     contrib.submit_button.click
 
@@ -275,11 +259,7 @@ feature "Add contribution", %q{
     # When I click on the post to conversation button
     contrib.post_to_link.click
 
-    # When I click the 'Add a file...' link
-    contrib.add_file_link.click
-
-    # When I fill in the file field
-    contrib.select_file(file_path)
+    contrib.add_file file_path
 
     # And I press the submit button
     contrib.submit_button.click
@@ -341,12 +321,7 @@ feature "Add contribution", %q{
     # When I fill in the content field
     contrib.fill_in_content_field(content)
 
-    # When I click the 'Add a file...' link
-    contrib.add_file_link.click
-
-    # When I fill in the file field
-    contrib.select_file(file_path)
-
+    contrib.add_file file_path
     # And I press the submit button
     contrib.submit_button.click
 
@@ -374,17 +349,8 @@ feature "Add contribution", %q{
     # When I click on the post to conversation button
     contrib.post_to_link.click
 
-    # When I click the 'Add a link...' link
-    contrib.add_url_link.click
-
-    # When I fill in the url field
-    contrib.fill_in_url_field(url)
-
-    # When I click the 'Add a file...' link
-    contrib.add_file_link.click
-
-    # When I fill in the file field
-    contrib.select_file(file_path)
+    contrib.add_url url
+    contrib.add_file file_path
 
     # And I press the submit button
     contrib.submit_button.click
@@ -410,17 +376,9 @@ feature "Add contribution", %q{
     # When I fill in the content field
     contrib.fill_in_content_field(content)
 
-    # When I click the 'Add a link...' link
-    contrib.add_url_link.click
+    contrib.add_url url
+    contrib.add_file file_path
 
-    # When I fill in the url field
-    contrib.fill_in_url_field(url)
-
-    # When I click the 'Add a file...' link
-    contrib.add_file_link.click
-
-    # When I fill in the file field
-    contrib.select_file(file_path)
 
     # And I press the submit button
     contrib.submit_button.click
