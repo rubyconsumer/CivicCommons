@@ -29,4 +29,23 @@ run "echo '  cd #{release_path} && bundle exec script/delayed_job restart'"
 run "cd #{release_path} && bundle exec script/delayed_job restart"
 run "echo 'Finished restarting delayed_job process.'"
 
+# restart and reindex solr process
+if current_environment != "production"
+  run "echo 'Starting solr recycling process (stop/start/reindex).'"
+
+  run "echo '* Stopping solr process...'"
+  run "echo '  cd #{release_path} && bundle exec rake sunspot:solr:stop'"
+  run "cd #{release_path} && bundle exec rake sunspot:solr:stop"
+
+  run "echo '* Starting solr process...'"
+  run "echo '  cd #{release_path} && bundle exec rake sunspot:solr:start'"
+  run "cd #{release_path} && bundle exec rake sunspot:solr:start"
+
+  run "echo '* Reindexing with solr...'"
+  run "echo '  cd #{release_path} && bundle exec rake sunspot:solr:reindex'"
+  run "cd #{release_path} && bundle exec rake sunspot:solr:reindex"
+
+  run "echo 'Finished solr recycling process.'"
+end
+
 run "echo ~~~ Custom Before Restart Hooks - Complete..."
