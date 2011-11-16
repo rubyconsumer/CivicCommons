@@ -175,7 +175,8 @@ module Admin
 
         before(:each) do
           params['name'] = new_name
-          put :update, :id => params['id'], :issue => params, :topics => issue.topics
+          params[:topic_ids] = issue.topics.collect(&:id)
+          put :update, :id => params['id'], :issue => params
         end
 
         it "updates the requested issue" do
@@ -200,7 +201,8 @@ module Admin
 
         before(:each) do
           params['name'] = ''
-          put :update, :id => params['id'], :issue => params, :topics => issue.topics
+          params[:topic_ids] = issue.topics.collect(&:id)
+          put :update, :id => params['id'], :issue => params
         end
 
         it "assigns the issue as @issue" do
@@ -227,7 +229,8 @@ module Admin
           issue = Factory.create(:issue)
           params = issue.attributes
           params[:type] = 'ManagedIssue'
-          put :update, :id => params['id'], :issue => params, :topics => issue.topics
+          params[:topic_ids] = issue.topics.collect(&:id)
+          put :update, :id => params['id'], :issue => params
           assigns[:issue].should be_kind_of Issue
           assigns[:issue].type.should == 'ManagedIssue'
         end
@@ -235,8 +238,9 @@ module Admin
         it "converts a managed issue to an issue" do
           issue = Factory.create(:managed_issue)
           params = issue.attributes
+          params[:topic_ids] = issue.topics.collect(&:id)
           params[:type] = 'Issue'
-          put :update, :id => params['id'], :managed_issue => params, :topics => issue.topics
+          put :update, :id => params['id'], :issue => params
           assigns[:issue].should be_kind_of Issue
           assigns[:issue].type.should == 'Issue'
         end

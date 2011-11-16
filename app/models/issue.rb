@@ -19,6 +19,7 @@ class Issue < ActiveRecord::Base
 
   has_and_belongs_to_many :conversations
   has_and_belongs_to_many :topics
+  
   # Contributions directly related to this Issue
   has_many :contributions
   has_many :suggested_actions
@@ -51,7 +52,7 @@ class Issue < ActiveRecord::Base
   before_create :assign_position
 
   validates :name, :presence => true, :length => { :minimum => 5 }
-  validates :topics, :presence => true, :length => { :minimum => 1 }
+  validate :require_topic
   validates_uniqueness_of :name
   validates_attachment_presence :image
   
@@ -146,12 +147,12 @@ class Issue < ActiveRecord::Base
   def has_topic?(topic)
     topics.include?(topic)
   end
-
-  def topic_ids=(topic_ids)
-    self.topics = topic_ids.collect do |id|
-      Topic.find id
-    end
+  
+  #validation
+  def require_topic
+    errors.add(:base, "Please select at least one Topic") if self.topic_ids.blank?
   end
+  
   private
 
   def self.update_positions(current, new_index, comparison)

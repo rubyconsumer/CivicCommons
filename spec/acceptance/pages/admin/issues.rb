@@ -20,7 +20,7 @@ class Issues
     end
     def has_reminder_to_add_topics?
       within '#error_explanation' do
-        has_content? "Topics can't be blank"
+        has_content? "Please select at least one Topic"
       end
     end
     def fill_in_issue_with details

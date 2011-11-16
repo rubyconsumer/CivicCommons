@@ -13,11 +13,12 @@ class Admin::IssuesController < Admin::DashboardController
 
   #POST admin/issues
   def create
-    attributes = params[:issue]
-    @issue = Issue.new(attributes)
-    # manually manage single table inheritance since Rails won't do it automatically
-    @issue.type = attributes['type'] if attributes.has_key?('type') and Issue::ALL_TYPES.include?(attributes['type'])
-    @issue.type = attributes[:type] if attributes.has_key?(:type) and Issue::ALL_TYPES.include?(attributes[:type])
+    @issue = Issue.new(params[:issue])
+    
+    params[:issue][:topic_ids] ||= []
+    @issue.attributes = params[:issue]
+    @issue.type = params[:issue][:type] if Issue::ALL_TYPES.include?(params[:issue][:type])
+    
     if @issue.save
       redirect_to admin_issues_path
       flash[:notice] = "Thank you for submitting an issue"
@@ -29,18 +30,18 @@ class Admin::IssuesController < Admin::DashboardController
 
   #GET admin/issues/:id/edit
   def edit
-    @issue = Issue.find(params[:id])
+    @issue = Issue.find(params[:id]).becomes(Issue)
     @topics = Topic.all
   end
   
   #PUT admin/issues/:id
   def update
     @issue = Issue.find(params[:id])
-    # manually manage single table inheritance since Rails won't do it automatically
-    attributes = params[@issue.type.underscore.to_sym]
-    @issue.attributes = attributes
-    @issue.type = attributes['type'] if attributes.has_key?('type') and Issue::ALL_TYPES.include?(attributes['type'])
-    @issue.type = attributes[:type] if attributes.has_key?(:type) and Issue::ALL_TYPES.include?(attributes[:type])
+    
+    params[:issue][:topic_ids] ||= []
+    @issue.attributes = params[:issue]
+    @issue.type = params[:issue][:type] if Issue::ALL_TYPES.include?(params[:issue][:type])
+    
     if @issue.save
       redirect_to admin_issues_path
       flash[:notice] = "Thank you for updating the issue"

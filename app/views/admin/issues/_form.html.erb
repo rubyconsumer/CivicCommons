@@ -1,13 +1,4 @@
-<%
-  if @issue.id.nil?
-    url = [ :admin, @issue ]
-    method = :post
-  else
-    url = admin_issue_path(@issue)
-    method = :put
-  end
-%>
-<%= form_for @issue, :url => url, :html =>{ :method => method, :multipart => true } do |f| %>
+<%= form_for [:admin, @issue], :html =>{ :multipart => true } do |f| %>
   <%= show_errors @issue %>
   <p>
     <%= f.label :name %>
@@ -42,7 +33,7 @@
     <%= f.select :type, Issue::ALL_TYPES %>
   </p>
 
-  <% if @issue.is_a?(ManagedIssue) %>
+  <% if @issue.type == 'ManagedIssue' %>
     <p>
       <%= f.label :index %>
       <br />
