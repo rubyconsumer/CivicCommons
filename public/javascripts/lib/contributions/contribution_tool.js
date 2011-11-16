@@ -148,8 +148,9 @@ function enable_add_file_toggle(link, file_field, content_field) {
 
   this.ContributionTool = Backbone.View.extend({
     events: {
-      'submit form#contribution_new': 'submit'
-
+      'submit form#contribution_new': 'submit',
+      'click #contribution-add-link.close': 'cancelUrl',
+      'click #contribution-add-file.close': 'cancelUpload'
     },
     initialize: function() {
       this.tabstrip = this.options.tabstrip;
@@ -189,7 +190,13 @@ function enable_add_file_toggle(link, file_field, content_field) {
 
     clearPreviousErrors: function() {
       this.$('.errors').html('');
-    }
+    },
 
+    cancelUrl: function() {
+      this.$linkField.val('');
+    },
+    cancelUpload: function() {
+      this.$fileUploadField.val('');
+    }
   });
 }).call(this);

@@ -3,7 +3,7 @@ describe("The Conversation Tool", function() {
   var result;
   var $subject; 
   beforeEach(function() {
-    $subject = $('<div><p>morkmorkmork</p><form id="contribution_new"><input placeholder="asdf" id="contribution_url"  /><input id="contribution_content" /><input id="contribution_attachment" /></form><ul class="errors"></ul></div>');
+    $subject = $('<div><a href="#" id="contribution-add-file" class="close"><a href="#" id="contribution-add-link" class="close">Add a link to a related website</a><p>morkmorkmork</p><form id="contribution_new"><input placeholder="asdf" id="contribution_url"  /><input id="contribution_content" /><input id="contribution_attachment" /></form><ul class="errors"></ul></div>');
     spyOn($subject, 'maskMe');
     var tabstrip = $('<p>borkborkbork</p>');
     spyOn(tabstrip,'maskMe');  
@@ -32,7 +32,18 @@ describe("The Conversation Tool", function() {
     });
 
   });
-
+  describe('cancelling the addition of a link', function() {
+    it('removes the link value from the textbox', function() {
+      subject.$linkField.val('http://www.google.com/');
+      subject.$('#contribution-add-link.close').click();
+      expect(subject.$linkField.val()).toEqual('');
+    });
+    it('removes the file value from the textbox', function() {
+      subject.$fileUploadField.val('/path/to/somewhere');
+      subject.$('#contribution-add-file.close').click();
+      expect(subject.$fileUploadField.val()).toEqual('');
+    });
+  });
   describe('submitting the form with valid information', function() {
     beforeEach(function() {
        result = subject.submit();
