@@ -24,7 +24,10 @@ end
 
   <div class="offset-2">
     <%= avatar_profile(contribution.person, 40) %>
-    <p><%= link_text %></p>
+    <p>
+      <strong><%= link_to(contribution.person_name, user_url(contribution.person)) %></strong> -
+      <%= link_text %>
+    </p>
     <p><%= link_to("Continue Reading", url_to_contribution(contribution), :class => "read-more") %></p>
   </div>
 
