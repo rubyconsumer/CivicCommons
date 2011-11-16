@@ -9,8 +9,10 @@
 
   <div class="offset-2">
     <%= avatar_profile(blog_post.author, 40) %>
-    <p><span class="posted">Posted by <%= link_to(blog_post.author.name, user_url(blog_post.author)) %> on <%= format_publish_date(blog_post) %></span></p>
-    <p><%= link_text %></p>
+    <p>
+      <strong><%= link_to(blog_post.author.name, user_url(blog_post.author)) %></strong> -
+      <%= link_text %>
+    </p>
     <p><%= link_to("Continue Reading", blog_path(blog_post), :class => "read-more") %></p>
   </div>
 
