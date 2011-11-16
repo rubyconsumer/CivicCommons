@@ -1217,44 +1217,40 @@ padding: 5px 0 5px 27px;
 }
 #login-status h4, .important p {margin-bottom: .1em;}
 #header #header-utility #login-status div.offset-2 {border: none;}
+
+/*- Flash Notice ----------*/
+
 .flash-notice {
-  background-image: linear-gradient(bottom, #484E57 30%, #575D68 70%);
-  background-image: -o-linear-gradient(bottom, #484E57 30%, #575D68 70%);
-  background-image: -moz-linear-gradient(bottom, #484E57 30%, #575D68 70%);
-  background-image: -webkit-linear-gradient(bottom, #484E57 30%, #575D68 70%);
-  background-image: -ms-linear-gradient(bottom, #484E57 30%, #575D68 70%);
-  background-image: -webkit-gradient(
-    linear,
-    left bottom,
-    left top,
-    color-stop(0.3, #484E57),
-    color-stop(0.7, #575D68)
-  );
-
-  -webkit-border-radius:4px;
-  -moz-border-radius: 4px;
-  color:#fff;
-  font-weight:bold;
-  position:fixed;
-  width: 210px;
-  padding:1em;
-  padding-right: 40px;
-  bottom:1em;
-  right:1em;
-  font-size:0.9em;
-  line-height:1.4em;
-  box-shadow:0 3px 3px rgba(0,0,0,0.5);
-  -webkit-box-shadow:0 3px 3px rgba(0,0,0,0.5);
-  -moz-box-shadow:0 3px 3px rgba(0,0,0,0.5);
-  border:1px solid #545454;
-  text-shadow:0 1px 1px #333;
-  cursor: pointer;
+background-image: linear-gradient(bottom, #484E57 30%, #575D68 70%);
+background-image: -o-linear-gradient(bottom, #484E57 30%, #575D68 70%);
+background-image: -moz-linear-gradient(bottom, #484E57 30%, #575D68 70%);
+background-image: -webkit-linear-gradient(bottom, #484E57 30%, #575D68 70%);
+background-image: -ms-linear-gradient(bottom, #484E57 30%, #575D68 70%);
+background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.3, #484E57), color-stop(0.7, #575D68));
+filter: progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorStr=#FF484E57, endColorStr=#FF575D68);  
+-webkit-border-radius:4px;
+-moz-border-radius: 4px;
+color:#fff;
+font-weight:bold;
+position:fixed;
+width: 210px;
+padding:1em;
+padding-right: 40px;
+bottom:1em;
+right:1em;
+font-size:0.9em;
+line-height:1.4em;
+box-shadow:0 3px 3px rgba(0,0,0,0.5);
+-webkit-box-shadow:0 3px 3px rgba(0,0,0,0.5);
+-moz-box-shadow:0 3px 3px rgba(0,0,0,0.5);
+border:1px solid #545454;
+text-shadow:0 1px 1px #333;
+cursor: pointer;
 }
-
 .flash-notice img {
-  position:absolute;
-  right:10px;
-  top:40%;
+position:absolute;
+right:10px;
+top:40%;
 }
 
 /*- Main Navigation ----------*/
