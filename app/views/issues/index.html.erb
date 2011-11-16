@@ -30,8 +30,8 @@
       </div>
     </div><!-- /.main-content -->
     <div class='aside supplementary'>
-      <%= render_issue_topics_sidebar %>
       <%= render :partial => '/search/search', locals: { filter_type: 'issues' } %>
+      <%= render_issue_topics_sidebar %>
       <%= render_recent_items_sidebar %>
     </div><!-- /.aside -->
   </div><!-- /.content-container -->
