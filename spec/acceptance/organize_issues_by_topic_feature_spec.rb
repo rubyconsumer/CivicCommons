@@ -28,20 +28,23 @@ feature 'Organize Issues By Topic', %q{
   end
 
   scenario "topics with no issues should not show up" do
-    pending 'these are skeleton tests for Perry' 
     database.has_a_topic_without_issues
     goto :issues_index
-    current_page.should_not list topic_without_issue
+    current_page.should_not have_listed topic_without_issues
   end
 
   scenario "issues that shouldnt exist dont get counted" do
-    pending 'these are skeleton tests for Perry' 
     database.has_an_issue :topics => [topic], :exclude_from_result=>true
     goto :issues_index
-    number_of_issues_for(topic).should == 1
+    current_page.should have_number_of_issues_for(topic, 1)
   end
+  
   def issue
     database.latest_issue
+  end
+  
+  def topic_without_issues
+    database.latest_topic
   end
 
   def topic
