@@ -13,11 +13,11 @@ module CivicCommonsDriver
       def has_filed?(issue, options)
         showing_within? issue, options[:under]
       end
-      
+
       def has_listed?(topic)
         showing? topic
       end
-      
+
       def filtered_by?(topic)
         filtered = true
         filtered = false unless at_filtered_issue_page_for? topic
@@ -28,10 +28,10 @@ module CivicCommonsDriver
         end
         return filtered
       end
-      
+
       def has_number_of_issues_for?(topic, number)
         within 'ul.simple-list.block-link-list' do
-           has_content? "#{topic.name} (#{number})"
+           has_content? "#{topic.name} #{number}"
         end
       end
 

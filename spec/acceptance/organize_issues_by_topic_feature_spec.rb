@@ -38,11 +38,11 @@ feature 'Organize Issues By Topic', %q{
     goto :issues_index
     current_page.should have_number_of_issues_for(topic, 1)
   end
-  
+
   def issue
     database.latest_issue
   end
-  
+
   def topic_without_issues
     database.latest_topic
   end
