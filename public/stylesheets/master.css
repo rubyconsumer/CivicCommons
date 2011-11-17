@@ -322,7 +322,11 @@ margin-left: 0;
 padding-left: 90px;
 width: 480px;
 }
-.aside .general-aside input.textbox, .aside .general-aside textarea {width: 97%;}
+.aside .general-aside input.textbox-side, .aside .general-aside textarea {
+border: 1px solid #aaa;
+padding: 2px;
+width: 97%;
+}
 .aside .general-aside .submit {margin-left: 0;}
 .general-aside div.radio label, .general-aside div.form-block-radio label {
 float: none;

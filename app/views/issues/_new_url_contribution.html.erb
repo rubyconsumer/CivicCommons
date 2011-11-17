@@ -3,9 +3,9 @@
                                 :multipart => true,
                                 :id => "new-url-contribution"} do |f| %>
   <div class='form-block'>
-    <%= f.text_field(:title, :placeholder => "Title of URL") %>
-    <%= f.text_field(:url) %>
-    <%= f.text_area(:content, :rows => 2, :placeholder => "Description of URL") %>
+    <%= f.text_field(:title, :placeholder => "Title of Link", :class => "textbox-side") %>
+    <%= f.text_field(:url, :placeholder => "Link", :class => "textbox-side") %>
+    <%= f.text_area(:content, :rows => 2, :placeholder => "Description of Link") %>
   </div>
   <div class="errors"></div>
   <%= f.submit("Submit", :class => "submit") %>
