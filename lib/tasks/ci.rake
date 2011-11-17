@@ -6,6 +6,6 @@ namespace :ci do
     Rake::Task["db:create"].invoke
     Rake::Task["db:migrate"].invoke
     Rake::Task["spec"].invoke
-    Rake::Task["jasmine:ci"].invoke
+    Rake::Task["jasmine:headless"].invoke
   end
 end
