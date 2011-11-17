@@ -80,6 +80,7 @@ group :development, :test do
   gem "capybara"
   gem 'webrat', "~> 0.7.3"
   gem 'rspec-spies'
+  gem "jasmine-headless-webkit"
 end
 
 group :cool_toys do
@@ -87,7 +88,6 @@ group :cool_toys do
   gem 'autotest-rails' 
   gem 'autotest-growl'
   gem 'autotest-fsevent'
-  gem "jasmine-headless-webkit"
   gem 'query_reviewer', :git => 'git://github.com/nesquena/query_reviewer.git'
   gem 'launchy'
   gem "ruby-debug19"
