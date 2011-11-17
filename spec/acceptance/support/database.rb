@@ -15,7 +15,7 @@ module CivicCommonsDriver
     def self.first_topic
       Topic.first
     end
-
+    
     def self.latest_topic
       topic = Topic.last
       topic.instance_eval do
@@ -39,6 +39,10 @@ module CivicCommonsDriver
 
     def self.create_topic(attributes={})
       Factory.create :topic, attributes
+    end
+    
+    def self.has_a_topic_without_issues
+      create_topic({:issues => []})
     end
 
     def self.create_issue(attributes= {})
