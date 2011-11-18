@@ -12,6 +12,7 @@
 #### [Move Managed Issues to Projects](https://agilezen.com/project/26499/story/57)
   * [Ability to see Projects on a Projects Index Page](https://agilezen.com/project/18091/story/269)
   * [Searching the Projects Page Results in Filtered Search Results for Projects](https://agilezen.com/project/18091/story/270)
+  * [Update Project Icon](https://agilezen.com/project/18091/story/277)
 
 #### Miscellaneous
   * [Flash Message Redesign](https://agilezen.com/project/26499/story/50)
