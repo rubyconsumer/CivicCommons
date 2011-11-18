@@ -15,9 +15,9 @@
     </p>
 
     <% unless controller.controller_name == 'conversations' && controller.action_name == 'show' %>
-      <span class="posted">
+      <p class="posted">
         Posted on: <%= link_to( conversation.title, conversation_path(contribution.conversation.id) ) %>
-      </span>
+      </p>
     <% end %>
   </div>
 </div>
