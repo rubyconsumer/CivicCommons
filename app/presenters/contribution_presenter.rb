@@ -27,6 +27,10 @@ class ContributionPresenter < PresenterBase
     end
   end
 
+  def parent_type
+    parent.class.name.downcase
+  end
+
   def parent_url
     if parent_conversation?
       conversation_url(parent, host: request.host)

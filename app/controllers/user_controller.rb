@@ -24,10 +24,7 @@ class UserController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.xml do
-        @recent_items = Activity.most_recent_activity_items_for_person(@user).paginate(page: params[:page], per_page: 10)
-        @user
-      end
+      format.xml
     end
   end
 

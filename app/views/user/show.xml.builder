@@ -21,18 +21,16 @@ xml.rss :version => "2.0", 'xmlns:atom' => "http://www.w3.org/2005/Atom" do
     xml.pubDate Time.now.rfc822
     xml.lastBuildDate Time.now.rfc822
 
-    recent_items_collection = ActivityPresenter.new(@recent_items)
-    recent_items_collection.each_with_type do |recent_item, item_type|
+    @recent_items.each do |recent_item|
 
       xml.item do
-        case
-        when item_type == "Conversation" then
+        if recent_item.kind_of? Conversation
           xml.title recent_item.title
           xml.link conversation_url(recent_item.id)
           xml.guid conversation_url(recent_item.id)
           xml.description recent_item.summary
-        when item_type == "RatingGroup" then
 
+        elsif recent_item.kind_of? RatingGroup
           contribution = recent_item.contribution
           contribution.conversation = recent_item.conversation
 
@@ -40,12 +38,13 @@ xml.rss :version => "2.0", 'xmlns:atom' => "http://www.w3.org/2005/Atom" do
           xml.link path_to_url conversation_node_path(contribution)
           xml.guid path_to_url conversation_node_path(contribution)
 
-        when item_type == "Contribution" then
+        elsif recent_item.kind_of? Contribution
           recent_item = ContributionPresenter.new(recent_item)
-          xml.title "#{@user.name} responded to the conversation '#{recent_item.parent_title}'"
-          xml.link path_to_url conversation_node_path(recent_item)
-          xml.guid path_to_url conversation_node_path(recent_item)
-         xml.description Sanitize.clean(recent_item.content, :remove_contents => ['script']).strip
+          xml.title "#{@user.name} responded to the #{recent_item.parent_type} '#{recent_item.parent_title}'"
+          xml.link path_to_url recent_item.node_path
+          xml.guid path_to_url recent_item.node_path
+          xml.description Sanitize.clean(recent_item.content, :remove_contents => ['script']).strip
+
         else
           xml.title "#{@user.name} participated in a conversation at The Civic Commons"
           xml.link user_url(@user)
