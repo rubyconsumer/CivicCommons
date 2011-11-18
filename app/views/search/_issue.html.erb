@@ -1,4 +1,5 @@
-<div class="result issue-result">
+<% css_class = hit.result.type == 'Issue' ? 'issue-result' : 'project-result' %>
+<div class="result <%= css_class %>">
   <h4><%= link_to hit.result.name, issue_path(hit.result) %></h4>
   <p><%= best_hit_description(hit, :summary) %></p>
 </div>
