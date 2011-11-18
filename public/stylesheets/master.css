@@ -1299,7 +1299,7 @@ display: block;
 padding-left: 23px;
 }
 ul#main-nav li.projects {
-background: url(../images/nav_build.png) no-repeat 0 17px;
+background: url(../images/nav_project.png) no-repeat 0 17px;
 display: block;
 padding-left: 23px;
 }
@@ -1902,6 +1902,7 @@ padding: 2px 0 2px 35px;
 }
 .community-result {background: url("/images/people-r.png") no-repeat 0 2px;}
 .issue-result {background: url("/images/issues-r.png") no-repeat 4px 2px;}
+.project-result {background: url("/images/project-s.png") no-repeat 4px 2px;}
 .conversation-result {background: url("/images/conv-r.png") no-repeat 2px 4px;}
 .contribution-result {background: url("/images/contrib-r.png") no-repeat 2px 2px;}
 .radio-result {background: url("/images/search/radio-s.png") no-repeat 2px 2px;}
