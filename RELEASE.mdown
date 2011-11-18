@@ -25,6 +25,8 @@
   * [Adding a link or video no longer appears above the search box](https://agilezen.com/projects/18091/story/241)
   * [Managed Issues cannot be updated due to errors on the Admin Page.](https://agilezen.com/project/18091/story/273)
   * [Removed "Presenter" from follow this issue text](https://agilezen.com/projects/18091/story/274)
+  * [Redesign Adding Link to an Issue](https://agilezen.com/projects/18091/story/285)
+  * [Recent Activity for Rating Design Adjustment](https://agilezen.com/projects/18091/story/286)
 
 ### Post Deployment Instructions
   * There have been changes to the content that is indexed and Solr will need to be reindexed:
