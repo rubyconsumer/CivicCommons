@@ -7,6 +7,7 @@
   * [input fields with placeholder text show gray text in IE](https://agilezen.com/project/18091/story/354)
   * [changed links to be secure for edit user profile page](https://agilezen.com/project/18091/story/352)
   * [Prevent certain email addresses from registering.](https://agilezen.com/project/18091/story/349)
+  * [Design Refinements](https://agilezen.com/project/18091/story/341)
 
 #### Miscellaneous
 
