@@ -1,6 +1,6 @@
 module Regionable
-  
-  def region 
+
+  def region
     region = Region.find_by_zip_code(self.zip_code)
     region ||= Region.default
   end

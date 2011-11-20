@@ -27,5 +27,6 @@ module Visitable
   def calculate_recent_visits
     self.visits.where("created_at >= '#{(Time.now - 30.days)}'").count
   end
+
 end
 
