@@ -14,18 +14,6 @@ describe("The Conversation Tool", function() {
     it('is a togglable section', function() {
       expect(subject.addLinkSection).toBeTogglable()
     });
-    context('when the link field is hidden', function() {
-      beforeEach(function() {
-        subject.$linkField.addClass('hide');
-        subject.$addLink.click();
-      });
-      it('unhides the link field', function() {
-        expect(subject.$linkField).not.toHaveClass('hide');
-      });
-      it('activates the add link section', function() {
-        expect(subject.$addLinkSection).toHaveClass('active');
-      });
-    });
     context('cancelling', function() {
       it('removes the value from the textbox', function() {
         subject.$linkField.val('http://www.google.com/');
