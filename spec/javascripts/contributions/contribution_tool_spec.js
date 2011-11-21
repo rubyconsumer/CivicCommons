@@ -3,44 +3,31 @@ describe("The Conversation Tool", function() {
   var result;
   var $subject; 
   beforeEach(function() {
-    $subject = $('<div><a href="#" id="contribution-add-file" class="close"><a href="#" id="contribution-add-link" class="close">Add a link to a related website</a><p>morkmorkmork</p><form id="contribution_new"><input placeholder="asdf" id="contribution_url"  /><input id="contribution_content" /><input id="contribution_attachment" /></form><ul class="errors"></ul></div>');
-    spyOn($subject, 'maskMe');
-    var tabstrip = $('<p>borkborkbork</p>');
-    spyOn(tabstrip,'maskMe');  
+    $.jasmine.inject('<div class="contribution_tool"><a href="#" id="contribution-add-file" class="close"><a href="#" id="contribution-add-link" class="contribution-add-link close">Add a link to a related website</a><p>morkmorkmork</p><form id="contribution_new"><input placeholder="asdf" id="contribution_url"  /><input id="contribution_content" /><input id="contribution_attachment" /></form><ul class="errors"></ul></div>');
+    $subject = $('.contribution_tool');
     subject = new ContributionTool({
-      tabstrip: tabstrip,
       el: $subject
     });
   });
 
-  describe('initialization', function() {
-
-    it('sets up the masking for the tabstrip ', function() {
-      expect(subject.tabstrip.maskMe).toHaveBeenCalledWith({
-        startOn: 'ajax:loading',
-        endOn: 'ajax:complete',
-        message: 'Loading...',
-        eventHandler: $(subject.el)
+  describe('adding a link', function() {
+    context('when the link field is hidden', function() {
+      it('shows the link field', function() {
+        subject.$linkField.addClass('hidden');
+        subject.$addLink.click();
+        expect(subject.$linkField).not.toHaveClass('hidden');
       });
     });
-    it('sets up masking for itself', function() {
-      expect($subject.maskMe).toHaveBeenCalledWith({
-        startOn: 'ajax:loading',
-        endOn: 'ajax:complete',
-        message: 'Loading...',
-      });
-    });
-
-  });
-  describe('canceling', function() {
-    context('adding a link', function() {
+    context('cancelling', function() {
       it('removes the value from the textbox', function() {
         subject.$linkField.val('http://www.google.com/');
         subject.$('#contribution-add-link.close').click();
         expect(subject.$linkField.val()).toEqual('');
       });
     });
-    context('adding a file', function() {
+  });
+  describe('adding a file', function() {
+    context('cancelling', function() {
       it('removes the file value from input field', function() {
         subject.$fileUploadField.val('/path/to/somewhere');
         subject.$('#contribution-add-file.close').click();
