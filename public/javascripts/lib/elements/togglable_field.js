@@ -4,6 +4,7 @@
       $(this.el).parent().find('.section').addClass('hide');
       $(this.el).addClass('active');
       $(this.el).removeClass('hide');
+      this.$('a').addClass('close');
     },
     toggleOff: function() {
       $(this.el).removeClass('active');

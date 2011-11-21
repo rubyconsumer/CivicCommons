@@ -1,7 +1,7 @@
 describe('a togglable section', function() {
   var section1, section2
   beforeEach(function() {
-    $.jasmine.inject('<div><div class="section section-1">bla</div><div class="section section-2">bla</div></div>');
+    $.jasmine.inject('<div><div class="section section-1"><a href="#">bla</a></div><div class="section section-2"><a href="#">bla</a></div></div>');
     section1 = new TogglableSection({ el: '.section-1'});
     section2 = new TogglableSection({ el: '.section-2'});
   });
@@ -17,6 +17,9 @@ describe('a togglable section', function() {
     });
     it('activates itself', function() {
       expect($(section1.el)).toHaveClass('active');
+    });
+    it('adds the close class to its link', function() {
+      expect(section1.$('a')).toHaveClass('close');
     });
   });
   describe('toggling off a section', function() {
