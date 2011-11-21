@@ -150,7 +150,9 @@ function enable_add_file_toggle(link, file_field, content_field) {
     initialize: function() {
       this.$contentField = this.$('#contribution_content');
       this.$addLink = this.$('#contribution-add-link');
+      this.$addFile = this.$('#contribution-add-file');
       this.$linkField = this.$('#contribution_url');
+      this.$addLinkSection = this.$('div.add_link.section ')
       this.$fileUploadField = this.$('#contribution_attachment');
     },
     addError: function(text) {
@@ -187,7 +189,8 @@ function enable_add_file_toggle(link, file_field, content_field) {
       this.$fileUploadField.val('');
     },
     toggleLinkField: function() {
-      this.$linkField.removeClass('hidden');
+      this.$linkField.removeClass('hide');
+      this.$addLinkSection.addClass('active');
     }
   });
 }).call(this);

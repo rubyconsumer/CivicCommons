@@ -3,7 +3,7 @@ describe("The Conversation Tool", function() {
   var result;
   var $subject; 
   beforeEach(function() {
-    $.jasmine.inject('<div class="contribution_tool"><a href="#" id="contribution-add-file" class="close"><a href="#" id="contribution-add-link" class="contribution-add-link close">Add a link to a related website</a><p>morkmorkmork</p><form id="contribution_new"><input placeholder="asdf" id="contribution_url"  /><input id="contribution_content" /><input id="contribution_attachment" /></form><ul class="errors"></ul></div>');
+    $.jasmine.inject('<div class="contribution_tool"><div class="section add_link"><input placeholder="asdf" id="contribution_url"  /><a href="#" id="contribution-add-link" class="contribution-add-link close">Add a link to a related website</a></div><a href="#" id="contribution-add-file" class="close"><p>morkmorkmork</p><form id="contribution_new"><input id="contribution_content" /><input id="contribution_attachment" /></form><ul class="errors"></ul></div>');
     $subject = $('.contribution_tool');
     subject = new ContributionTool({
       el: $subject
@@ -12,10 +12,15 @@ describe("The Conversation Tool", function() {
 
   describe('adding a link', function() {
     context('when the link field is hidden', function() {
-      it('shows the link field', function() {
-        subject.$linkField.addClass('hidden');
+      beforeEach(function() {
+        subject.$linkField.addClass('hide');
         subject.$addLink.click();
-        expect(subject.$linkField).not.toHaveClass('hidden');
+      });
+      it('unhides the link field', function() {
+        expect(subject.$linkField).not.toHaveClass('hide');
+      });
+      it('activates the add link section', function() {
+        expect(subject.$addLinkSection).toHaveClass('active');
       });
     });
     context('cancelling', function() {
