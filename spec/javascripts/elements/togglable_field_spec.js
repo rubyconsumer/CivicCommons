@@ -20,9 +20,14 @@ describe('a togglable section', function() {
     });
   });
   describe('toggling off a section', function() {
-    it('deactivates itself', function() {
+    beforeEach(function() {
       section1.toggleOff();
-      expect($(section2.el)).not.toHaveClass('active');
+    });
+    it('deactivates itself', function() {
+      expect($(section1.el)).not.toHaveClass('active');
+    });
+    it('unhides the other section', function() {
+      expect($(section2.el)).not.toHaveClass('hide')
     });
   });
 });
