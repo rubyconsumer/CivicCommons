@@ -10,7 +10,10 @@ describe("The Conversation Tool", function() {
     });
   });
 
-  describe('adding a link', function() {
+  describe('the link field', function() {
+    it('is a togglable section', function() {
+      expect(subject.addLinkSection).toBeTogglable()
+    });
     context('when the link field is hidden', function() {
       beforeEach(function() {
         subject.$linkField.addClass('hide');
