@@ -35,8 +35,8 @@ class CCML::Tag::RouteTag < CCML::Tag::SingleTag
   private
 
   class MyUrlWriter < AbstractController::Base
-    include ActionController::UrlWriter
-
+    include Rails.application.routes.url_helpers
+    
     def initialize(host)
       default_url_options[:host] = (host.nil? ? host : '')
     end

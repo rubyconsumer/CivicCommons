@@ -1,5 +1,4 @@
 class ManagedIssuePage < ActiveRecord::Base
-
   acts_as_revisionable :on_update => true
 
   belongs_to :issue,
@@ -19,6 +18,7 @@ class ManagedIssuePage < ActiveRecord::Base
 
   validates_presence_of :name, :template, :issue, :author
   validates_uniqueness_of :name
+  validate :valid_ccml_tags
 
   has_friendly_id :name, :use_slug => true, :strip_non_ascii => true
 
@@ -31,4 +31,16 @@ class ManagedIssuePage < ActiveRecord::Base
       'ManagedIssuePage'
     end
   end
+  
+  def valid_ccml_tags
+    if !self.template.blank? && !self.issue_id.blank?
+      begin
+        url = issue_page_url('arbitrary-id', :issue_id => issue_id, :host=>'localhost')
+        CCML.parse(self.template, url) 
+      rescue => e
+        self.errors.add(:template,"has a CCML tag error: #{e}" )
+      end
+    end
+  end
+  
 end

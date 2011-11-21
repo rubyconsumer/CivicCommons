@@ -349,8 +349,9 @@ module CCML
 
       # run the method and substitute the results into the ccml
       sub = CCML.run_tag_method(tag, method)
+      
       if sub.nil?
-        raise CCML::Error::TemplateError, "Requested #{method} method but #{method} was not used."
+        raise CCML::Error::TemplateError, "Requested #{clazz} #{method} method but #{method} was not used."
       end
       ccml = ccml.sub(match.to_s, sub)
 
@@ -379,7 +380,7 @@ module CCML
       # run the method and substitute the results into the ccml
       sub = CCML.run_tag_method(tag, method)
       if sub.nil?
-        raise CCML::Error::TemplateError, "Requested #{method} method but #{method} was not used."
+        raise CCML::Error::TemplateError, "Requested #{clazz} #{method} method but #{method} was not used."
       end
       ccml = ccml.sub(match.to_s, sub)
 
