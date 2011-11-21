@@ -116,27 +116,21 @@ function enable_cancel_contribution(element) {
 }
 
 function enable_add_link_toggle(link, url_field, content_field) {
+  enable_toggle_for(link, url_field, content_field)
+}
+function enable_toggle_for(link, attachment_field, content_field) {
   link.click(function(event) {
     event.preventDefault();
-    url_field.toggle();
-    if ('none' != url_field.css('display')) {
-      url_field.focus();
+    attachment_field.toggle();
+    if ('none' != attachment_field.css('display')) {
+      attachment_field.focus();
     } else {
       content_field.tinymce().focus();
     }
   });
 }
-
 function enable_add_file_toggle(link, file_field, content_field) {
-  link.click(function(event) {
-    event.preventDefault();
-    file_field.toggle();
-    if ('none' != file_field.css('display')) {
-      file_field.focus();
-    } else {
-      content_field.tinymce().focus();
-    }
-  });
+  enable_toggle_for(link, file_field, content_field)
 }
 
 (function() {
