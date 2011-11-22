@@ -17,12 +17,10 @@ class ContributionTool < PageObject
   def add_url url
     add_url_link.click
     fill_in_url_field url
-    cancel_adding_url
   end
   def add_file file_path
     add_file_link.click
     select_file(file_path)
-    cancel_adding_url
   end
   def cancel_adding_url
     @page.find('a.close').click

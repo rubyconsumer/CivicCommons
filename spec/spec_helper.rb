@@ -68,6 +68,7 @@ Spork.prefork do
     config.before :suite do
       DatabaseCleaner.strategy = :truncation
       DatabaseCleaner.clean_with :truncation
+      Capybara.javascript_driver = :selenium
     end
 
     config.before :each do
@@ -76,13 +77,11 @@ Spork.prefork do
       stub_amazon_s3_request
       stub_pro_embedly_request
       stub_gravatar
-      Capybara.current_driver = :selenium if example.metadata[:js]
       ActionMailer::Base.deliveries.clear
     end
 
     config.after :each do
       DatabaseCleaner.clean
-      Capybara.use_default_driver if example.metadata[:js]
     end
   end
 

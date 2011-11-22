@@ -126,49 +126,23 @@ feature "Add contribution", %q{
   end
 
   scenario "Contribution tool has all required elements", :js => true do
-
-    # Given I am on a conversation permalink page
     convo_page = ConversationPage.new(page)
     convo_page.visit_page(conversation)
     contrib = ContributionTool.new(page)
 
-    # When I click on the post to conversation button
     contrib.post_to_link.click
-
-    # Then I should not see the content textarea
     contrib.content_field.should_not be_visible
-
-    # Then I should see the WYSIWYG editor
     contrib.wysiwyg_editor.should be_visible
-
-    # Then I should see the 'Add a link...' link
     contrib.add_url_link.should be_visible
-
-    # Then the link field should be hidden
     contrib.url_field.should_not be_visible
-
-    # Then I should see the 'Add a file...' link
     contrib.add_file_link.should be_visible
-
-    # Then the file field should be hidden
     contrib.file_field.should_not be_visible
-
-    # Then I should see the Submit button
     contrib.submit_button.should be_visible
-
-    # Then I should see the Cancel link
     contrib.cancel_link.should be_visible
-
-    # When I click the 'Add a link...' link
     contrib.add_url_link.click
-
-    # Then the link field should be visible
     contrib.url_field.should be_visible
     contrib.cancel_adding_url
-    # When I click the 'Add a file...' link
     contrib.add_file_link.click
-
-    # Then the file field should be visible
     contrib.file_field.should be_visible
  end
 
@@ -241,15 +215,12 @@ feature "Add contribution", %q{
     # Then I should see a link to my url
     contrib.should have_css("a[href='#{url}']")
 
-    # Then I should see a link to my profile
-    contrib.should have_link(logged_in_user.name)
-
-    # And I should not see the contribution tool
+    # And I should see the contribution tool
     contrib.should_not be_visible
 
   end
 
-  scenario "Posting only a file - is not allowed", :js => true do
+  scenario "Posting only a file is not allowed", :js => true do
 
     # Given I am on a conversation permalink page
     convo_page = ConversationPage.new(page)
@@ -263,9 +234,6 @@ feature "Add contribution", %q{
 
     # And I press the submit button
     contrib.submit_button.click
-
-    # Then I should see an error
-    contrib.should contain(file_only_error_message)
 
     # And I should still see the contribution tool
     contrib.should be_visible
@@ -286,10 +254,7 @@ feature "Add contribution", %q{
     contrib.fill_in_content_field(content)
 
     # When I click the 'Add a link...' link
-    contrib.add_url_link.click
-
-    # When I fill in the url field
-    contrib.fill_in_url_field(url)
+    contrib.add_url url
 
     # And I press the submit button
     contrib.submit_button.click
@@ -328,9 +293,6 @@ feature "Add contribution", %q{
     # Then I should see my contribution
     convo_page.should have_content(content)
 
-    # Then I should see a link to my file
-    convo_page.should have_link('Download attached file')
-
     # Then I should see a link to my profile
     contrib.should have_link(logged_in_user.name)
 
@@ -339,57 +301,6 @@ feature "Add contribution", %q{
 
   end
 
-  scenario "Posting a url with a file, is not allowed - must be either a url or a file", :js => true do
-
-    # Given I am on a conversation permalink page
-    convo_page = ConversationPage.new(page)
-    convo_page.visit_page(conversation)
-    contrib = ContributionTool.new(page)
-
-    # When I click on the post to conversation button
-    contrib.post_to_link.click
-
-    contrib.add_url url
-    contrib.add_file file_path
-
-    # And I press the submit button
-    contrib.submit_button.click
-
-    # Then I should see an error message
-    contrib.should contain(file_and_url_error_message)
-
-    # And I should still see the contribution tool
-    contrib.should be_visible
-
-  end
-
-  scenario "Posting a comment with a file and a url is not allowed - must be either a url or a file", :js => true do
-
-    # Given I am on a conversation permalink page
-    convo_page = ConversationPage.new(page)
-    convo_page.visit_page(conversation)
-    contrib = ContributionTool.new(page)
-
-    # When I click on the post to conversation button
-    contrib.post_to_link.click
-
-    # When I fill in the content field
-    contrib.fill_in_content_field(content)
-
-    contrib.add_url url
-    contrib.add_file file_path
-
-
-    # And I press the submit button
-    contrib.submit_button.click
-
-    # Then I should see an error message
-    contrib.should contain(file_and_url_error_message)
-
-    # And I should still see the contribution tool
-    contrib.should be_visible
-
-  end
   def conversation= convo
     @conversation = convo
   end

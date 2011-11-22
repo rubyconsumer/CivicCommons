@@ -143,26 +143,18 @@ function enable_add_file_toggle(link, file_field, content_field) {
   this.ContributionTool = Backbone.View.extend({
     events: {
       'submit form#contribution_new': 'submit',
-      'click .contribution-add-link.close': 'cancelUrl',
-      'click .contribution-add-link': 'toggleLinkField',
-      'click #contribution-add-file.close': 'cancelUpload'
     },
     initialize: function() {
+      this.attachmentSection = new TogglableSection({ el: this.$('div.attachments'), sections: ['.add-file', '.add-link'] } )
       this.$contentField = this.$('#contribution_content');
-      this.$addLink = this.$('#contribution-add-link');
-      this.$addFile = this.$('#contribution-add-file');
       this.$linkField = this.$('#contribution_url');
-      this.addLinkSection = this.$('div.add_link.section ')
       this.$fileUploadField = this.$('#contribution_attachment');
     },
     addError: function(text) {
       this.$('.errors').append('<li>'+text+'</li>');
     },
     validateInputs: function() {
-      if(this.$linkField.val() != '' && this.$fileUploadField.val() != '') {
-        this.addError('Woops! We only let you submit one link or file per contribution');
-        return false;
-      }else if(this.$fileUploadField.val() != '' && this.$contentField.val() == ''){
+      if(this.$fileUploadField.val() != '' && this.$contentField.val() == ''){
         this.addError('Sorry! You must also write a comment above when you upload a file.');
         return false;
       }
@@ -180,16 +172,6 @@ function enable_add_file_toggle(link, file_field, content_field) {
 
     clearPreviousErrors: function() {
       this.$('.errors').html('');
-    },
-
-    cancelUrl: function() {
-      this.$linkField.val('');
-    },
-    cancelUpload: function() {
-      this.$fileUploadField.val('');
-    },
-    toggleLinkField: function() {
-      this.addLinkSection.toggle();
     }
   });
 }).call(this);

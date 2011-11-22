@@ -1474,15 +1474,15 @@ transition: width .2s;
 -o-transition: width .2s; /* Opera */
 }
 .ie7_body .button-group {margin-top: 10px;}
-div.contrib_tool_container .section.section-two {float: right;}
+div.contrib_tool_container .section.add-file{float: right;}
 div.contrib_tool_container .section div {
 background-repeat: no-repeat;
 background-position: 20px 15px;
 padding: 10px 20px 0 60px;
 }
-.section-one div {background-image: url(/images/icons/link-btn.png);}
+.add-link.section div {background-image: url(/images/icons/link-btn.png);}
 /* #contribution-add-link:hover {background-image: url(/images/icons/link-btn-hvr.png);} */
-.section-two div {
+.add-file.section div {
 background-image: url(/images/icons/image-btn.png);
 background-position: 15px 13px;
 }

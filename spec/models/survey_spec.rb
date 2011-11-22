@@ -6,30 +6,30 @@ describe Survey do
       it "should have many options" do
         Survey.reflect_on_association(:options).macro.should == :has_many
       end
-      
+
       it "should have the class name as 'SurveyOption" do
         Survey.reflect_on_association(:options).options[:class_name].should == "SurveyOption"
       end
-      
+
       it "should have foreign_key as 'survey_id" do
         Survey.reflect_on_association(:options).options[:foreign_key].should == 'survey_id'        
       end
-      
+
       it "should destroy dependent when it is destroyed" do
         Survey.reflect_on_association(:options).options[:dependent].should == :destroy
       end
     end
-    
+
     context "belongs_to :surveyable" do
       it "should really belongs to surveyable" do
         Survey.reflect_on_association(:surveyable).macro.should == :belongs_to
       end
-      
+
       it "should be polymorphic " do
         Survey.reflect_on_association(:surveyable).options.should == {:polymorphic=>true, :foreign_type=>"surveyable_type"}
       end
     end
-    
+
     context "accepts_nested_attributes_for :options" do
       it "should correctly create nested models" do
         @survey = Factory.build(:survey)
@@ -38,19 +38,19 @@ describe Survey do
         @survey.should be_valid
         SurveyOption.count.should == 1
       end
-      
+
     end
-    
+
     context "has_many survey_responses" do
       it "should have many survey_responses" do
         Survey.reflect_on_association(:survey_responses).macro == :has_many
       end
-      
+
       it "should not destroy this object if it has dependencies" do
         Survey.reflect_on_association(:survey_responses).options[:dependent].should == :restrict
       end
     end
-    
+
   end
 
   context "Validations" do
@@ -168,7 +168,7 @@ describe Survey do
       end
       it "should set the end_notification_email_sent to true if email is sent" do
         given_a_survey_with_a_response
-        @survey.send_end_notification_email        
+        @survey.send_end_notification_email
         @survey.end_notification_email_sent.should be_true
       end
       it "should not send any email, if email notification has been sent before" do
@@ -184,6 +184,6 @@ describe Survey do
         Notifier.stub_chain(:survey_ended,:deliver)
         @survey.send_end_notification_email
       end
-    end    
+    end
   end
 end
