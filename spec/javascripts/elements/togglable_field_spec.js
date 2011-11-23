@@ -59,6 +59,8 @@ describe('a togglable field', function() {
       });
     });
     describe("when it is not yet active", function() {
+      var inputFocus;
+      var field$;
       beforeEach(function() {
         field.toggle();
       });

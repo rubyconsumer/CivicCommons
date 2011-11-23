@@ -34,6 +34,9 @@
       this.$('input').toggleClass('hide');
       if(!this.active) {
         this.$('input').val('');
+        $('#contribution_content').tinymce().focus();
+      } else {
+        this.$('input').focus();
       }
       this.trigger('toggle', this);
     },

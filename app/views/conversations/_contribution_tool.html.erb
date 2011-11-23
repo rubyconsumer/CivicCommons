@@ -9,17 +9,6 @@
     $(document).ready(function() {
 
       enable_cancel_contribution($('#cancel-contribution'));
-
-      enable_add_link_toggle($('#contribution-add-link'),
-        $('#contribution_url'),
-        $('#contribution_content')
-      );
-
-      enable_add_file_toggle($('#contribution-add-file'),
-        $('#contribution_attachment'),
-        $('#contribution_content')
-      );
-
       init_tiny_mce('#contribution_content');
     });
 
