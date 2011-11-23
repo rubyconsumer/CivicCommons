@@ -1,0 +1,134 @@
+<% content_for :header do %>
+  <%= auto_discovery_link_tag(:rss, user_url(@user, format: :xml), { :title => "#{@user.name} at The Civic Commons" } ) %>
+<% end %>
+
+<%= content_for :main_body do %>
+
+  <div class="wrapper profile">
+    <div class="content-container">
+        <h1>Organization Name</h1>
+      <div class="main-content">
+        <div class="offset-1 profile-mast">
+          <%= profile_image(@user, 70) %>
+          <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin augue nisi, fermentum vitae, imperdiet a, auctor eu, mi. Nulla imperdiet molestie purus. Duis arcu dui, pretium in, molestie id, convallis eget, orci. Praesent eget purus. Nullam sed nunc. Etiam quis orci ac metus consectetuer consequat. Sed pulvinar aliquam sem. Vestibulum convallis. Pellentesque vestibulum dapibus est. Morbi iaculis. Morbi molestie molestie libero. Ut metus. Phasellus pulvinar. Aenean rutrum tristique neque. Morbi vulputate. Curabitur pretium, arcu a accumsan pretium, augue mi ullamcorper ligula, at tristique ligula purus quis mi. Etiam blandit arcu et lorem. Nam ligula. Aliquam nisi sem, euismod id, pharetra vitae, ullamcorper et, pede.</p>
+        </div>
+        <h3>Other folks at this organization</h3>
+        <div class="photobank">
+          <img src="http://placehold.it/50x50" />
+          <img src="http://placehold.it/50x50" />
+          <img src="http://placehold.it/50x50" />
+          <img src="http://placehold.it/50x50" />
+          <img src="http://placehold.it/50x50" />
+          <img src="http://placehold.it/50x50" />
+          <img src="http://placehold.it/50x50" />
+        </div>
+        <div class="main-content">
+          <h3>My Recent Activity</h3>
+          <div class="recent-item contribution">
+            <h4><a href="#">Contribution Title</a></h4>
+            <p>We participated in this conversation</p>
+            <div class="related-article call-out">
+              <div class="offset-2">
+                <a href="http://theciviccommons.com/user/mark-joseph" title="Mark Joseph"><img alt="Mark Joseph" class="callout" height="40" src="http://s3.amazonaws.com/com.theciviccommons.production/avatars/596/standard/MJ close up.jpg?1299292559" title="Mark Joseph" width="40"></a>
+                <p>
+                Often we hear about compelling public policy implemented in cities like Seattle and Portland, but then these achievements seem uniquely possible in the progressive Pacific Northwest.&nbsp; In his experience as Deputy Secretary...
+                  <strong><a href="/conversations/338#node-6790">Continue reading</a></strong>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="recent-item rating">
+            <h4><a href="#">Rating Title</a></h4>
+            <p>We rated a <a href="#">response from a user</a> as <span class="rating-type">Inspiring</span></p>
+            <div class="related-article call-out">
+              <div class="offset-2">
+                <a href="http://theciviccommons.com/user/mark-joseph" title="Mark Joseph"><img alt="Mark Joseph" class="callout" height="40" src="http://s3.amazonaws.com/com.theciviccommons.production/avatars/596/standard/MJ close up.jpg?1299292559" title="Mark Joseph" width="40"></a>
+                <p>
+                Often we hear about compelling public policy implemented in cities like Seattle and Portland, but then these achievements seem uniquely possible in the progressive Pacific Northwest.&nbsp; In his experience as Deputy Secretary...
+                  <strong><a href="/conversations/338#node-6790">Continue reading</a></strong>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="recent-item issue">
+            <h4><a href="#">Issue Title</a></h4>
+            <p>We participated in this conversation</p>
+            <div class="related-article call-out">
+              <div class="offset-2">
+                <a href="http://theciviccommons.com/user/mark-joseph" title="Mark Joseph"><img alt="Mark Joseph" class="callout" height="40" src="http://s3.amazonaws.com/com.theciviccommons.production/avatars/596/standard/MJ close up.jpg?1299292559" title="Mark Joseph" width="40"></a>
+                <p>
+                Often we hear about compelling public policy implemented in cities like Seattle and Portland, but then these achievements seem uniquely possible in the progressive Pacific Northwest.&nbsp; In his experience as Deputy Secretary...
+                  <strong><a href="/conversations/338#node-6790">Continue reading</a></strong>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="recent-item conversation">
+            <h4><a href="#">Conversation Title</a></h4>
+            <p>We participated in this conversation</p>
+            <div class="related-article call-out">
+              <div class="offset-2">
+                <a href="http://theciviccommons.com/user/mark-joseph" title="Mark Joseph"><img alt="Mark Joseph" class="callout" height="40" src="http://s3.amazonaws.com/com.theciviccommons.production/avatars/596/standard/MJ close up.jpg?1299292559" title="Mark Joseph" width="40"></a>
+                <p>
+                Often we hear about compelling public policy implemented in cities like Seattle and Portland, but then these achievements seem uniquely possible in the progressive Pacific Northwest.&nbsp; In his experience as Deputy Secretary...
+                  <strong><a href="/conversations/338#node-6790">Continue reading</a></strong>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="aside">
+        <div class="mod">
+          <p><a href="#" class="button">Follow this Organization</a></p>
+          <p><a href="#" class="button">I'm a member of this Organization</a></p>
+        </div>
+        <div class="mod call-out">
+          <ul class="profile-extras">
+            <li class="website-profile">
+              <p>1159 Main Street<br />
+              Rocky River, OH 44039<br />
+              P: 440-123-4567<br />
+              <a href="#">Organization Website</a></p>
+            </li>
+            <li class="twitter-profile"><a href="#">Organization Twitter Profile</a></li>
+            <li class="fb-profile"><a href="#">Organization Facebooke Profile</a></li>
+          </ul>
+        </div>
+        <div class="mod" id="UserFollowingConversationsModule">
+          <h3>Conversations I am Following</h3>
+          <div class="mod-content">
+            <ul class='link-list'>
+              <% if @conversation_subscriptions.empty? %>
+                <li><%= @user.name%> is just getting started</li>
+              <% else %>
+                <% @conversation_subscriptions.first(10).each do |conversation| %>
+                  <li>
+                  <%= link_to conversation.name, conversation_path(conversation.subscribable_id) %>
+                  </li>
+                <% end %>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+
+        <div class="mod" id="UserFollowingIssuesModule">
+          <h3>Issues I am Following</h3>
+          <div class="mod-content">
+            <ul class='link-list'>
+              <% if @issue_subscriptions.empty? %>
+                <li><%= @user.name %> is just getting started</li>
+              <% else %>
+                <% @issue_subscriptions.first(10).each do |issue| %>
+                  <li>
+                  <%= link_to issue.name, issue_path(issue.subscribable_id) %>
+                  </li>
+                <% end %>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
