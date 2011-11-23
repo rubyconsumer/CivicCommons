@@ -120,8 +120,6 @@ function enable_add_link_toggle(link, url_field, content_field) {
 }
 function enable_toggle_for(link, attachment_field, content_field) {
   link.click(function(event) {
-    event.preventDefault();
-    attachment_field.toggle();
     if ('none' != attachment_field.css('display')) {
       attachment_field.focus();
     } else {

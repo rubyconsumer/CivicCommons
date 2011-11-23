@@ -35,7 +35,7 @@ describe('a togglable section', function() {
 describe('a togglable field', function() {
   var field;
   beforeEach(function() {
-    field = new TogglableField({ el: $('<div class="somefield"><input value="word"><a href="#">word</a></div>') });
+    field = new TogglableField({ el: $('<div class="somefield"><input value="word" class="hide"><a href="#">word</a></div>') });
   });
   describe('toggling the field', function() {
     it('triggers a toggle event', function() {
@@ -54,6 +54,9 @@ describe('a togglable field', function() {
       it('clears its input field', function() {
         expect(field.$('input')).toHaveValue('');
       });
+      it('hides its input field', function() {
+        expect(field.$('input')).toHaveClass('hide');
+      });
     });
     describe("when it is not yet active", function() {
       beforeEach(function() {
@@ -64,6 +67,9 @@ describe('a togglable field', function() {
       });
       it('doesnt clear its input', function() {
         expect(field.$('input')).not.toHaveValue('');
+      });
+      it('unhides its input', function() {
+        expect(field.$('input')).not.toHaveClass('hide');
       });
     });
   });
