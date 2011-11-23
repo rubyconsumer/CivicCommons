@@ -114,8 +114,11 @@ Civiccommons::Application.routes.draw do
   #Declare genericly-matched GET routes after Filters
 
   resources :user, only: [:show, :update, :edit] do
-    delete "destroy_avatar", on: :member
-  end
+    member do
+      get 'mockup'
+      delete "destroy_avatar"
+    end
+ end
 
   resources :feeds, only: [:show]
 
