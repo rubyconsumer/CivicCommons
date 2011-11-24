@@ -12,15 +12,17 @@
           <%= profile_image(@user, 70) %>
           <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin augue nisi, fermentum vitae, imperdiet a, auctor eu, mi. Nulla imperdiet molestie purus. Duis arcu dui, pretium in, molestie id, convallis eget, orci. Praesent eget purus. Nullam sed nunc. Etiam quis orci ac metus consectetuer consequat. Sed pulvinar aliquam sem. Vestibulum convallis. Pellentesque vestibulum dapibus est. Morbi iaculis. Morbi molestie molestie libero. Ut metus. Phasellus pulvinar. Aenean rutrum tristique neque. Morbi vulputate. Curabitur pretium, arcu a accumsan pretium, augue mi ullamcorper ligula, at tristique ligula purus quis mi. Etiam blandit arcu et lorem. Nam ligula. Aliquam nisi sem, euismod id, pharetra vitae, ullamcorper et, pede.</p>
         </div>
-        <h3>Other folks at this organization</h3>
-        <div class="photobank">
-          <img src="http://placehold.it/50x50" />
-          <img src="http://placehold.it/50x50" />
-          <img src="http://placehold.it/50x50" />
-          <img src="http://placehold.it/50x50" />
-          <img src="http://placehold.it/50x50" />
-          <img src="http://placehold.it/50x50" />
-          <img src="http://placehold.it/50x50" />
+        <div class="mod">
+          <h3>Other folks at this organization</h3>
+          <div class="photobank">
+            <img src="http://placehold.it/50x50" />
+            <img src="http://placehold.it/50x50" />
+            <img src="http://placehold.it/50x50" />
+            <img src="http://placehold.it/50x50" />
+            <img src="http://placehold.it/50x50" />
+            <img src="http://placehold.it/50x50" />
+            <img src="http://placehold.it/50x50" />
+          </div>
         </div>
         <div class="main-content">
           <h3>My Recent Activity</h3>
@@ -40,32 +42,6 @@
           <div class="recent-item rating">
             <h4><a href="#">Rating Title</a></h4>
             <p>We rated a <a href="#">response from a user</a> as <span class="rating-type">Inspiring</span></p>
-            <div class="related-article call-out">
-              <div class="offset-2">
-                <a href="http://theciviccommons.com/user/mark-joseph" title="Mark Joseph"><img alt="Mark Joseph" class="callout" height="40" src="http://s3.amazonaws.com/com.theciviccommons.production/avatars/596/standard/MJ close up.jpg?1299292559" title="Mark Joseph" width="40"></a>
-                <p>
-                Often we hear about compelling public policy implemented in cities like Seattle and Portland, but then these achievements seem uniquely possible in the progressive Pacific Northwest.&nbsp; In his experience as Deputy Secretary...
-                  <strong><a href="/conversations/338#node-6790">Continue reading</a></strong>
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="recent-item issue">
-            <h4><a href="#">Issue Title</a></h4>
-            <p>We participated in this conversation</p>
-            <div class="related-article call-out">
-              <div class="offset-2">
-                <a href="http://theciviccommons.com/user/mark-joseph" title="Mark Joseph"><img alt="Mark Joseph" class="callout" height="40" src="http://s3.amazonaws.com/com.theciviccommons.production/avatars/596/standard/MJ close up.jpg?1299292559" title="Mark Joseph" width="40"></a>
-                <p>
-                Often we hear about compelling public policy implemented in cities like Seattle and Portland, but then these achievements seem uniquely possible in the progressive Pacific Northwest.&nbsp; In his experience as Deputy Secretary...
-                  <strong><a href="/conversations/338#node-6790">Continue reading</a></strong>
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="recent-item conversation">
-            <h4><a href="#">Conversation Title</a></h4>
-            <p>We participated in this conversation</p>
             <div class="related-article call-out">
               <div class="offset-2">
                 <a href="http://theciviccommons.com/user/mark-joseph" title="Mark Joseph"><img alt="Mark Joseph" class="callout" height="40" src="http://s3.amazonaws.com/com.theciviccommons.production/avatars/596/standard/MJ close up.jpg?1299292559" title="Mark Joseph" width="40"></a>
@@ -96,7 +72,7 @@
           </ul>
         </div>
         <div class="mod" id="UserFollowingConversationsModule">
-          <h3>Conversations I am Following</h3>
+          <h3>Conversations we are Following</h3>
           <div class="mod-content">
             <ul class='link-list'>
               <% if @conversation_subscriptions.empty? %>
@@ -113,7 +89,7 @@
         </div>
 
         <div class="mod" id="UserFollowingIssuesModule">
-          <h3>Issues I am Following</h3>
+          <h3>Issues we are Following</h3>
           <div class="mod-content">
             <ul class='link-list'>
               <% if @issue_subscriptions.empty? %>
@@ -126,6 +102,25 @@
                 <% end %>
               <% end %>
             </ul>
+          </div>
+        </div>
+        <div class="mod">
+          <h3>People Who Follow this Organization</h3>
+          <div class="photobank">
+            <a href="http://theciviccommons.com/user/dan-moulthrop" title="Dan Moulthrop"><img alt="Dan Moulthrop" class="callout" height="40" src="https://graph.facebook.com/1060895638/picture" title="Dan Moulthrop" width="40"></a>
+            <a href="http://theciviccommons.com/user/claudia-coulton" title="Claudia Coulton"><img alt="Claudia Coulton" class="callout" height="40" src="https://graph.facebook.com/15509286/picture" title="Claudia Coulton" width="40"></a>
+            <a href="http://theciviccommons.com/user/caitlin-johnson" title="Caitlin Johnson"><img alt="Caitlin Johnson" class="callout" height="40" src="https://graph.facebook.com/668146617/picture" title="Caitlin Johnson" width="40"></a>
+            <a href="http://theciviccommons.com/user/arlin-j-wallace" title="Arlin J. Wallace"><img alt="Arlin J. Wallace" class="callout" height="40" src="https://graph.facebook.com/599926870/picture" title="Arlin J. Wallace" width="40"></a>
+            <a href="http://theciviccommons.com/user/nancy-reeves" title="Nancy Reeves"><img alt="Nancy Reeves" class="callout" height="40" src="http://s3.amazonaws.com/com.theciviccommons.production/avatars/893/standard/MS150.jpg?1304999301" title="Nancy Reeves" width="40"></a>
+            <a href="http://theciviccommons.com/user/teleange-thomas" title="Teleange Thomas"><img alt="Teleange Thomas" class="callout" height="40" src="http://s3.amazonaws.com/com.theciviccommons.production/avatars/1781/standard/scf_2-20-09_prf_03.jpg?1321295656" title="Teleange Thomas" width="40"></a>
+            <a href="http://theciviccommons.com/user/gregory-l-brown" title="Gregory L. Brown"><img alt="Gregory L. Brown" class="callout" height="40" src="http://s3.amazonaws.com/com.theciviccommons.production/avatars/1780/standard/Greg%20Brown%20headshot%20jpg%20format[1][1].JPG?1321286051" title="Gregory L. Brown" width="40"></a>
+            <a href="http://theciviccommons.com/user/cindy-wiley" title="Cindy Wiley"><img alt="Cindy Wiley" class="callout" height="40" src="http://s3.amazonaws.com/com.theciviccommons.production/avatars/825/standard/CAW.jpg?1303248412" title="Cindy Wiley" width="40"></a>
+            <a href="http://theciviccommons.com/user/terry-allan" title="Terry Allan"><img alt="Terry Allan" class="callout" height="40" src="http://s3.amazonaws.com/com.theciviccommons.production/avatars/1778/standard/TerryAllan Print.jpg?1320930630" title="Terry Allan" width="40"></a>
+            <a href="http://theciviccommons.com/user/taryn-gress" title="Taryn Gress"><img alt="Taryn Gress" class="callout" height="40" src="https://graph.facebook.com/43201774/picture" title="Taryn Gress" width="40"></a>
+            <a href="http://theciviccommons.com/user/mark-joseph" title="Mark Joseph"><img alt="Mark Joseph" class="callout" height="40" src="http://s3.amazonaws.com/com.theciviccommons.production/avatars/596/standard/MJ close up.jpg?1299292559" title="Mark Joseph" width="40"></a>
+            <a href="http://theciviccommons.com/user/phyllis" title="Phyllis"><img alt="Phyllis" class="callout" height="40" src="http://s3.amazonaws.com/com.theciviccommons.production/avatars/1784/standard/b3.jpg?1321410141" title="Phyllis" width="40"></a>
+            <a href="http://theciviccommons.com/user/daryl-rowland" title="Daryl Rowland"><img alt="Daryl Rowland" class="callout" height="40" src="http://api.twitter.com/1/users/profile_image/darrowlan" title="Daryl Rowland" width="40"></a>
+            <a href="http://theciviccommons.com/user/brian-frederick" title="Brian Frederick"><img alt="Brian Frederick" class="callout" height="40" src="https://graph.facebook.com/674053721/picture" title="Brian Frederick" width="40"></a>
           </div>
         </div>
       </div>

@@ -678,7 +678,7 @@ color: #777;
 
 /*- Surveys/Votes ----------*/
 
-.voting-container ::selection{
+.voting-container ::selection {
 background-color: transparent;
 color: none;
 -moz-user-select: -moz-none;
