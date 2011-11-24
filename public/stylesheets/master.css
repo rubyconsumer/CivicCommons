@@ -667,7 +667,7 @@ color: #777;
 
 /*- Surveys/Votes ----------*/
 
-.voting-container ::selection{
+.voting-container ::selection {
 background-color: transparent;
 color: none;
 -moz-user-select: -moz-none;
@@ -2130,7 +2130,7 @@ border-radius: 6px;
 
 /*- Aside Module ----------*/
 
-.aside .mod {margin-bottom: 30px;}
+.mod {margin-bottom: 30px;}
 .aside .mod h3 {
 font-size: 1em;
 padding-bottom: .2em;
