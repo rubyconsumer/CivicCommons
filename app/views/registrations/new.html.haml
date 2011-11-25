@@ -52,7 +52,6 @@
               = form_presenter.errors[:avatar_content_type].join(", ") if form_presenter.errors[:avatar_content_type].any?
           - else
             = f.file_field :avatar, :class => "textbox"
-      %fieldset.form-group
         .form-block
           = f.label :password, 'Password:'
           = f.password_field :password, :class => "textbox small"

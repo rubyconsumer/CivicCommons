@@ -6,6 +6,6 @@
       = link_to "Logout", destroy_person_session_path
   - else
     %p
-      =facebook_sign_in_link
+      <a href="/people/login" class="cc-login-btn">Login</a>
     or
-    = link_to "login without Facebook", new_person_session_path
+    <a href="/people/register/new">register for an account</a>
