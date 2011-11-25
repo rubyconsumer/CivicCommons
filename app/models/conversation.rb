@@ -31,6 +31,7 @@ class Conversation < ActiveRecord::Base
   has_and_belongs_to_many :issues
   has_one :survey, :as => :surveyable
   belongs_to :person, :foreign_key => "owner"
+  delegate :name, :to => :person, :prefix => true
 
   has_attached_file :image,
     :styles => {

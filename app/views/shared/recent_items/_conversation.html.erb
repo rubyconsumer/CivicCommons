@@ -1,6 +1,16 @@
+<%
+  link_text = '"'
+  link_text << truncate( Sanitize.clean( conversation.summary, :remove_contents => ['script'] ).strip, :length => 100, :separator => ' ' )
+  link_text << '"'
+%>
 <div class="recent-item conversation">
   <h4><%= link_to( conversation.title, conversation_path(conversation.id)) %></h4>
-  <div  class="bd">
-    <%= simple_format( truncate( Sanitize.clean( conversation.summary, :remove_contents => ['script'] ).strip, :length => 100, :separator => ' ' ) ) %>
+  <div class="offset-2">
+    <%= avatar_profile(conversation.person, 40) %>
+    <p>
+      <strong><%= link_to(conversation.person_name, user_url(conversation.person)) %></strong> -
+      <%= link_text %>
+    </p>
+    <p><%= link_to("Continue Reading", conversation_path(conversation), :class => "read-more") %></p>
   </div>
 </div>
