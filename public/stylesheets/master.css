@@ -1479,6 +1479,7 @@ div.contrib_tool_container .section div {
 background-repeat: no-repeat;
 background-position: 20px 15px;
 padding: 10px 20px 0 60px;
+min-height: 30px;
 }
 .add-link.section div {background-image: url(/images/icons/link-btn.png);}
 /* #contribution-add-link:hover {background-image: url(/images/icons/link-btn-hvr.png);} */
