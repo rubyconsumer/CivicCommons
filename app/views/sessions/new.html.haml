@@ -5,9 +5,13 @@
       %p.validation-error
         - flash.each do |name, msg|
           = msg
+      .mod
+        %p
+          Did you register with Facebook?
+        %p
+          <a href="#" class="fb-login-btn">Login with Facebook</a>
       %p
-        = surround "If you don’t have an account, you should ", " first." do
-          = link_to "register", secure_registration_form_url
+        If not, login with your username and password:
       = form_for(resource, :as => resource_name, :url => secure_session_url(resource_name)) do |f|
         %fieldset.form-group
           .form-block

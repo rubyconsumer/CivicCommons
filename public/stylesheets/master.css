@@ -608,7 +608,7 @@ padding: 10px 20px;
 .selected-survey-options .sortable-wrapper {
 border: 1px solid #687a2e;
 border-left: none;
-border-right: 0; 
+border-right: 0;
 margin: 10px 0 10px 0;
 padding: 0;
 background-color: #e1e1e1;
@@ -1222,6 +1222,15 @@ text-indent: -9999px;
 width: 176px;
 }
 a.fb-login-btn:hover, a.fb-login-btn:focus {background-position: bottom;}
+a.cc-login-btn {
+background: url(/images/cc_login_img.png) no-repeat 0 0;
+display: block;
+height: 26px;
+outline: none;
+text-indent: -9999px;
+width: 199px;
+}
+a.cc-login-btn:hover, a.fb-login-btn:focus {background-position: bottom;}
 div.login-actions p {
 font-size: .75em;
 margin-bottom: .2em;
@@ -1274,7 +1283,7 @@ top:40%;
 
 ul#main-nav {
 float: left;
-margin: 0 0 0 67px;
+margin: 0 0 0 40px;
 overflow: hidden;
 }
 ul#main-nav li {
