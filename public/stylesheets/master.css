@@ -363,6 +363,14 @@ margin-right: 5px;
 }
 .top-align input.checkbox, .top-align button.cancel, .top-align input.submit, .top-align input#contribution_submit {margin-left: 0;}
 
+/*- Registration Page ----------*/
+
+.fb-reg {display: none;}
+.form-block.facebook-auth a {
+line-height: 2.8em;
+margin-right: 5px;
+}
+
 /*- Facebook Connect in Settings ----------*/
 
 a.connectacct-link {
