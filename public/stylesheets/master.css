@@ -226,6 +226,10 @@ float: none;
 display: inline;
 width: auto;
 }
+.inset input.checkbox {
+margin-left: 0;
+margin-right: 10px;
+}
 .conversation-input-container input.textbox {width: 400px;}
 .aside label, div.call-out label {width: 70px;}
 .aside input.textbox, div.call-out input.textbox, .aside textarea, div.call-out textarea {width: 176px;}
@@ -438,7 +442,6 @@ border-radius: 4px;
 box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2) inset, 0px 1px 1px rgba(255, 255, 255, 0.9);
 }
 .form-inset {width: 420px;}
-
 
 /*- GROUP OFFSET STYLES
 ----------------------------------------------------------------------*/
