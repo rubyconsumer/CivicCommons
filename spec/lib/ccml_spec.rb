@@ -1,4 +1,5 @@
-require File.expand_path(File.dirname(__FILE__) + "/../spec_helper")
+# require File.expand_path(File.dirname(__FILE__) + "/../spec_helper")
+require 'spec_helper'
 
 class CCML::Tag::TestSingleTag < CCML::Tag::SingleTag
   def index
@@ -29,7 +30,6 @@ class CCML::Tag::TestPairTag < CCML::Tag::TagPair
 end
 
 describe CCML do
-
   describe "module and class hierarchy" do
 
     context "tag classes" do
@@ -305,6 +305,29 @@ describe CCML do
 
       end
 
+      context "error on CCML::Error::ExternalSourceError" do
+        before(:each) do
+          @invalid_rss_url = 'http://feeds.example.com/invalid-rss-feed'
+          @template = "{ccml:rss:items url='#{@invalid_rss_url}' limit='6' refresh='30'}{/ccml:rss:items}"
+          stub_request(:get, @invalid_rss_url).
+            with(:headers => {'Accept'=>'*/*', 'User-Agent'=>'Ruby'}).
+            to_return(:status => 200, :body => '', :headers=>{})
+        end
+        it "should silence external source(i.e. rss) errors  by default" do
+          CCML.parse(@template).should be_blank
+        end
+        it "should not silence the external source errors if silence_external_source_error is set to false" do
+          expect { CCML.parse(@template,nil,{:silence_external_source_errors => false}) }.should raise_error(CCML::Error::ExternalSourceError)
+        end
+        it "should log error to hoptoad(airbrake) when external errors are silenced" do
+          HoptoadNotifier.should_receive(:notify).once
+          CCML.parse(@template)
+        end
+        it "should NOT log error to hoptoad when external errors are not silenced" do
+          HoptoadNotifier.should_not_receive(:notify)
+          expect { CCML.parse(@template,nil,{:silence_external_source_errors => false}) }
+        end
+      end
     end
 
     describe "CCML#sanitize_tags" do

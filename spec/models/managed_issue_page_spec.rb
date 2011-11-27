@@ -57,7 +57,7 @@ describe ManagedIssuePage do
         template = %q[{ccml:rss:items  limit="6" refresh="30"}<p><b><a href="{link}">{title}</a></b> ({date format='%m-%d-%Y %I:%M %p'})<br />{description}</p>{/ccml:rss:items}]
         managed_issue_page = Factory.build(:managed_issue_page,:template => template)
         managed_issue_page.should_not be_valid
-        managed_issue_page.errors[:template].should ==["has a CCML tag error: Requested rss items method but items was not used."]
+        managed_issue_page.errors[:template].should ==["has a CCML tag error: RSS feed url:  is not valid."]
       end
       it "should not error out if there is no problem with ccml" do
         template = %q[{ccml:route:url route="issues"}]

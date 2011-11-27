@@ -11,6 +11,10 @@ describe CCML::Tag::RssTag do
   let(:rss_url) do
     'http://feeds.theciviccommons.com/civiccommonsblog'
   end
+  
+  let(:invalid_rss_url) do
+    'http://feeds.example.com/invalid-rss-feed'
+  end
 
   let(:page_url) do
     'http://www.theciviccommons.com/issues/flats-forward'
@@ -20,6 +24,10 @@ describe CCML::Tag::RssTag do
     stub_request(:get, rss_url).
       with(:headers => {'Accept'=>'*/*', 'User-Agent'=>'Ruby'}).
       to_return(:status => 200, :body => rss_content, :headers => {})
+      
+    stub_request(:get, invalid_rss_url).
+      with(:headers => {'Accept'=>'*/*', 'User-Agent'=>'Ruby'}).
+      to_return(:status => 200, :body => '', :headers=>{})
   end
 
   context "feed retrieval" do
@@ -211,6 +219,11 @@ describe CCML::Tag::RssTag do
   end
 
   context "#items" do
+    before(:all) do
+      stub_request(:get, invalid_rss_url).
+        with(:headers => {'Accept'=>'*/*', 'User-Agent'=>'Ruby'}).
+        to_return(:status => 200, :body => '', :headers=>{})
+    end
 
     let(:tag_body) do
       <<-tag_body
@@ -251,6 +264,12 @@ describe CCML::Tag::RssTag do
       html.should =~ /Link: http:\/\/www\.theciviccommons\.com\/blog\/feedback-loop/i
       html.should =~ /Title: A Great Experiment/i
       html.should =~ /Link: http:\/\/www\.theciviccommons\.com\/blog\/a-great-experiment/i
+    end
+    
+    it "should raise a CCML::Error::ExternalSourceError when it's url result is invalid" do      
+      tag = CCML::Tag::RssTag.new({url: invalid_rss_url, limit: 100}, page_url)
+      tag.tag_body = tag_body
+      expect { tag.items }.should raise_error(CCML::Error::ExternalSourceError)
     end
  end
 

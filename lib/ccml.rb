@@ -259,7 +259,12 @@ module CCML
 
   ILLEGAL_TAGS = ['base', 'single_tag', 'tag_pair']
 
-  def CCML.parse(ccml, url = nil)
+  def CCML.parse(ccml, url = nil, options={})    
+    
+    #silence external source errors to true by default
+    unless options.has_key?(:silence_external_source_errors)
+      options[:silence_external_source_errors] = true 
+    end
 
     # die if ccml data is not a string
     unless ccml.is_a?(String)
@@ -267,10 +272,10 @@ module CCML
     end
 
     # find and process tag pairs
-    ccml = CCML.parse_tag_pairs(ccml, url)
+    ccml = CCML.parse_tag_pairs(ccml, url, options)
 
     # find and process single tags
-    ccml = CCML.parse_single_tags(ccml, url)
+    ccml = CCML.parse_single_tags(ccml, url, options)
 
     # find malformed tags and abend
     if ccml =~ INVALID_TAGS_PATTERN
@@ -327,14 +332,13 @@ module CCML
     return clazz, method, opts
   end
 
-  def CCML.parse_tag_pairs(ccml, url)
+  def CCML.parse_tag_pairs(ccml, url, options={})
 
     # find the first match
     match = TAG_PAIR_PATTERN.match(ccml)
 
     # iterate until no more matches exist
     while not match.nil?
-
       # check for matching open/close method
       if match[:method] != match[:close_method]
         raise CCML::Error::TemplateError, "Open tag '#{match[:method]}' method does not match close tag '#{match[:close_method]}' method."
@@ -348,8 +352,18 @@ module CCML
       tag.tag_body = match[:tag_body]
 
       # run the method and substitute the results into the ccml
-      sub = CCML.run_tag_method(tag, method)
-      
+      begin
+        sub = CCML.run_tag_method(tag, method)
+      rescue CCML::Error::ExternalSourceError => e
+        sub = ''
+        # If CCML::Error::ExternalSourceError then ignore it by default and report it to hoptoad
+        if options[:silence_external_source_errors] == false
+          raise e 
+        else
+          HoptoadNotifier.notify(e) if defined?(HoptoadNotifier)
+        end
+      end
+    
       if sub.nil?
         raise CCML::Error::TemplateError, "Requested #{clazz} #{method} method but #{method} was not used."
       end
@@ -363,7 +377,7 @@ module CCML
     return ccml
   end
 
-  def CCML.parse_single_tags(ccml, url)
+  def CCML.parse_single_tags(ccml, url, options={})
 
     # find the first match
     match = SINGLE_TAG_PATTERN.match(ccml)
@@ -378,7 +392,19 @@ module CCML
       tag = CCML.instanciate_tag(clazz, url, opts)
 
       # run the method and substitute the results into the ccml
-      sub = CCML.run_tag_method(tag, method)
+      begin
+        sub = CCML.run_tag_method(tag, method)
+      rescue CCML::Error::ExternalSourceError => e
+        sub = ''
+        # If CCML::Error::ExternalSourceError then ignore it by default and report it to hoptoad
+        if options[:silence_external_source_errors] == false
+          raise e 
+        else
+          HoptoadNotifier.notify(e) if defined?(HoptoadNotifier)
+        end
+        
+      end
+      
       if sub.nil?
         raise CCML::Error::TemplateError, "Requested #{clazz} #{method} method but #{method} was not used."
       end

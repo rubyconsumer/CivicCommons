@@ -76,7 +76,10 @@ class CCML::Tag::RssTag < CCML::Tag::TagPair
   # {/ccml:rss:items}
   def items
     rss = parse_rss
-    return nil if rss.nil?
+    
+    if rss.nil?
+      raise CCML::Error::ExternalSourceError, "RSS feed url: #{@opts[:url]} is not valid."
+    end
 
     items = []
     limit = [rss.items.size, @opts[:limit].to_i].min

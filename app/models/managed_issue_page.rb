@@ -1,4 +1,6 @@
 class ManagedIssuePage < ActiveRecord::Base
+  include Rails.application.routes.url_helpers #needed by the url helper in this class
+  
   acts_as_revisionable :on_update => true
 
   belongs_to :issue,
@@ -35,8 +37,9 @@ class ManagedIssuePage < ActiveRecord::Base
   def valid_ccml_tags
     if !self.template.blank? && !self.issue_id.blank?
       begin
-        url = issue_page_url('arbitrary-id', :issue_id => issue_id, :host=>'localhost')
-        CCML.parse(self.template, url) 
+        CCML.parse(self.template, 
+          issue_page_url((self.id || 'temporary-id'), :issue_id => issue_id, :host=>'localhost'), # need the url to properly parse it
+          {:silence_external_source_errors => false}) 
       rescue => e
         self.errors.add(:template,"has a CCML tag error: #{e}" )
       end
