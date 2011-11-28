@@ -259,11 +259,11 @@ module CCML
 
   ILLEGAL_TAGS = ['base', 'single_tag', 'tag_pair']
 
-  def CCML.parse(ccml, url = nil, options={})    
-    
+  def CCML.parse(ccml, url = nil, options={})
+
     #silence external source errors to true by default
     unless options.has_key?(:silence_external_source_errors)
-      options[:silence_external_source_errors] = true 
+      options[:silence_external_source_errors] = true
     end
 
     # die if ccml data is not a string
@@ -284,7 +284,7 @@ module CCML
 
     return ccml
   end
-  
+
   # Does sanitizes text of CCML tag.
   def CCML.sanitize_tags(ccml)
     ccml.to_s.gsub(CCML::TAG_PAIR_PATTERN,'').gsub(CCML::SINGLE_TAG_PATTERN,'')
@@ -358,12 +358,12 @@ module CCML
         sub = ''
         # If CCML::Error::ExternalSourceError then ignore it by default and report it to hoptoad
         if options[:silence_external_source_errors] == false
-          raise e 
+          raise e
         else
           HoptoadNotifier.notify(e) if defined?(HoptoadNotifier)
         end
       end
-    
+
       if sub.nil?
         raise CCML::Error::TemplateError, "Requested #{clazz} #{method} method but #{method} was not used."
       end
@@ -398,13 +398,13 @@ module CCML
         sub = ''
         # If CCML::Error::ExternalSourceError then ignore it by default and report it to hoptoad
         if options[:silence_external_source_errors] == false
-          raise e 
+          raise e
         else
           HoptoadNotifier.notify(e) if defined?(HoptoadNotifier)
         end
-        
+
       end
-      
+
       if sub.nil?
         raise CCML::Error::TemplateError, "Requested #{clazz} #{method} method but #{method} was not used."
       end
