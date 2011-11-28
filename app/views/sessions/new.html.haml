@@ -7,11 +7,11 @@
           = msg
       .mod
         %p
-          Did you register with Facebook?
+          %strong Did you register with Facebook?
         %p
           %a{:class => "fb-login-btn", :href => "#", :title => "Login with Facebook"} Login with Facebook
       %p
-        If not, login with your username and password:
+        %strong If not, login with your username and password:
       = form_for(resource, :as => resource_name, :url => secure_session_url(resource_name)) do |f|
         %fieldset.form-group.top-align
           .form-block
