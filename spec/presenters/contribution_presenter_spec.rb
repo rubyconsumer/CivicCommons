@@ -3,7 +3,7 @@ require 'spec_helper'
 describe ContributionPresenter do
 
   before :all do
-    stub_request(:put, /^http\:\/\/s3\.amazonaws\.com\/com\.theciviccommons\.dev\/images\//).to_return(:status => 200, :body => "", :headers => {})
+    stub_request(:put, /^http\:\/\/s3\.amazonaws\.com\/.*\/images\//).to_return(:status => 200, :body => "", :headers => {})
     issue = Factory.create(:issue, name: 'Issue Title')
     @issue_contribution = Factory.build(:issue_contribution, issue: issue)
     conversation = Factory.create(:conversation, title: 'Conversation Title')
