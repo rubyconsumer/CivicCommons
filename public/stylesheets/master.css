@@ -170,6 +170,7 @@ ul.block-link-list em {
   width: 25%;
 }
 
+
 /*- FORM STYLES
 ----------------------------------------------------------------------*/
 
@@ -359,6 +360,15 @@ div#poll_button input.submit {
 }
 .top-align input.checkbox, .top-align button.cancel, .top-align input.submit, .top-align input#contribution_submit {margin-left: 0;}
 
+/*- Style for form tips ----------*/
+
+.tip {
+  color: #999;
+  font-size: .9em;
+  font-style: italic;
+}
+.form-block .tip {margin-left: 165px;}
+
 /*- Registration Page ----------*/
 
 .fb-reg {display: none;}
@@ -366,6 +376,9 @@ div#poll_button input.submit {
   line-height: 2.8em;
   margin-right: 5px;
 }
+.fb-reg #first-name {width: 180px;}
+.fb-reg #last-name {width: 215px;}
+.fb-reg #middle-name {width: 23px;}
 
 /*- Facebook Connect in Settings ----------*/
 
@@ -561,41 +574,41 @@ div.three-col-sm div.photobank img {margin: 0 0 6px 6px;}
 .disabled.selected-survey-options .menu {display: none !important;}
 .disabled .survey-option {cursor: default !important;}
 .survey-option .select {
-  display: block;
-  margin: -10px;
-  height: 100%;
-  min-height: 2em;
-  padding: 10px;
+  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#a2b562), to(#96a957));
+  background: -moz-linear-gradient(center top , #a2b562, #96a957);
   background-color: #99ac5d;
   background-image: url(/images/voting-arrow-background.png);
   color: #fff;
-  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#a2b562), to(#96a957));
-  background: -moz-linear-gradient(center top , #a2b562, #96a957);
-  float:right;
   cursor: pointer;
+  display: block;
+  float: right;
+  height: 100%;
+  margin: -10px;
+  min-height: 2em;
+  padding: 10px;
 }
 .survey-option .unselect {
+  cursor: pointer;
   float: right;
   width: 5%;
-  cursor: pointer;
 }
 .survey-option .clear-both {clear: both;}
 .survey-option .select .select-icon {
   background-image: url(/images/voting-arrow.png);
-  text-indent: -9999px;
+  display: block;
   height: 15px;
-  width: 15px;
+  text-indent: -9999px;
   margin-left: -6px;
   margin-right: -9px;
   margin-top: -3px;
-  display: block;
+  width: 15px;
 }
 .survey-option .unselect .unselect-icon {
   background-image: url(/images/voting-close.png);
-  text-indent: -9999px;
+  display: block;
   height: 22px;
   width: 22px;
-  display: block;
+  text-indent: -9999px;
 }
 .survey-options .sortable {min-height: 15em;}
 .survey-options .sortable.over {background-color: #fff;}

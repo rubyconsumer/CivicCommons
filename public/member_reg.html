@@ -43,6 +43,10 @@
             stepMinute: 15
           });
 
+          $("a.no-fb").click(function() {
+            $(".fb-reg").fadeIn();
+            $(".facebook-auth").hide();
+          });
         });
 
         /* Google Analytics */
@@ -93,19 +97,16 @@
       <div class="content-container">
         <h1>Register</h1>
         <form id="registration" action="submit" method="get" accept-charset="utf-8">
-          <fieldset>
+          <fieldset class="fb-reg">
             <div class="form-block">
-              <label for="org-name">Name of Organization:</label>
-              <input type="text" class="textbox" name="org-name" value="" id="org-name" />
+              <label for="first-name">Your Name:</label>
+              <input type="text" class="textbox" name="first-name" value="" id="first-name" />
+              <input type="text" class="textbox" name="middle-name" value="" id="middle-name" />
+              <input type="text" class="textbox" name="last-name" value="" id="last-name" />
             </div>
             <div class="form-block">
-              <label for="org-email">Email Address:</label>
-              <input type="text" class="textbox" name="org-email" value="" id="org-email">
-              <p class="tip">As an organization your email address will be publicly disclosed.</p>
-            </div>
-            <div class="form-block">
-              <input class="checkbox" type="checkbox" name="org-auth" value="" id="org-auth" />
-              <label class="checkbox" for="org-auth">I am authorized to setup an account for this organization</label>
+              <label for="email">Email Address:</label>
+              <input type="text" class="textbox" name="email" value="" id="email">
             </div>
             <div class="form-block">
               <label for="password">Password</label>
@@ -116,14 +117,14 @@
               <input type="password" class="textbox" name="verify-pw" value="" id="verify-pw">
             </div>
             <div class="form-block">
-              <label for="org-logo">Company Logo:</label>
-              <input class="textbox" id="org-logo" name="org-logo" type="file">
+              <label for="person_avatar">Upload an Image:</label>
+              <input class="textbox" id="person_avatar" name="person[avatar]" type="file">
             </div>
           </fieldset>
           <fieldset>
             <div class="form-block">
-              <label for="org-bio">Tell us a little about your company:</label>
-              <textarea class="textbox" name="org-bio" value="" id="org-bio" rows="10"></textarea>
+              <label for="person_bio">Tell us a little about yourself:</label>
+              <textarea class="textbox" name="person_bio" value="" id="person_bio" rows="10"></textarea>
             </div>
             <div class="form-block">
               <label for="zipcode">Zipcode:</label>
@@ -138,8 +139,11 @@
               <label class="checkbox" for="newsletter">Yes, please send me The Civic Commons weekly newsletter</label>
             </div>
           </fieldset>
-          <div class="form-block">
-            <input type="submit" class="submit" value"Continue" /> or <a href="/">Cancel</a>
+          <div class="form-block facebook-auth">
+            <a href="https://theciviccommons.com/people/auth/facebook" class="connectacct-link facebook-auth" id="facebook-connect">Connect with Facebook</a> or <a class="no-fb" href="#">I don't have a Facebook account</a>
+          </div>
+          <div class="form-block fb-reg">
+            <input type="submit" class="submit" value="Continue" /> or <a href="/">Cancel</a>
           </div>
         </form>
       </div><!-- /.content-container -->

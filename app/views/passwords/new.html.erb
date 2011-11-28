@@ -13,7 +13,6 @@
       <div class="main-content">
         <%= form_for(resource, :as => resource_name, :url => password_path(resource_name)) do |f| %>
           <%= devise_error_messages! %>
-  
           <p>Forgot your password? Just tell us what email address you used when you registered and we’ll help you out.</p>
           <fieldset class="form-group top-align">
             <div class="form-block">
@@ -21,7 +20,6 @@
               <%= f.text_field :email, :placeholder => 'me@johnnyappleseed.com',  :class => 'textbox small' %>
             </div>
           </fieldset>
-  
           <fieldset class="footer top-align">
             <%= f.submit "Send me reset password instructions", :class => 'submit' %> or <%= link_to "Cancel", new_session_path(resource_name) %>
           </fieldset>
