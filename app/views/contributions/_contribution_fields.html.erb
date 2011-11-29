@@ -8,18 +8,9 @@
 
     $(document).ready(function() {
 
-      enable_add_link_toggle($('#contribution-add-link'),
-        $('#conversation_contributions_attributes_0_url'),
-        $('#conversation_contributions_attributes_0_content')
-      );
-
-      enable_add_file_toggle($('#contribution-add-file'),
-        $('#conversation_contributions_attributes_0_attachment'),
-        $('#conversation_contributions_attributes_0_content')
-      );
-
       init_tiny_mce('#conversation_contributions_attributes_0_content');
-
+      new ContributionTool({el: $('.contrib_tool_container').closest('form').parent()});
+      
     }); // end document ready function
 
     //]]>
@@ -34,17 +25,23 @@
     <%= f.text_area(:content, :placeholder => "Leave a Comment...", :class => 'tinymce') %>
     </p>
 
-    <p>
-    <a href="#" id="contribution-add-link">Add a link to a related website</a>
-    <br />
-    <%= f.text_field(:url, :type => "text", :class => "textbox link", :style => 'display:none;') %>
-    </p>
+    
+    <div class="attachments">
+      <div class="add-link"><div>
+        <a href="#" id="contribution-add-link">Add a link to a related website</a>
+        <%= f.text_field(:url, :type => "text", :class => "textbox hide link") %>
+      </div></div>
 
-    <p>
-    <a href="#" id="contribution-add-file">Upload a photograph, document, or other file</a>
-    <br />
-    <%= f.file_field(:attachment, :style => 'display:none;') %>
-    </p>
+      <div class="add-file"><div>
+        <a href="#" id="contribution-add-file">Upload a photograph, document, or other file</a>
+        <%= f.file_field(:attachment, :class=>"hide") %>
+      </div></div>
+    </div>
+    
+    <fieldset>
+      <ul class="errors"></ul>
+    </fieldset>
+    
 
   <% end %>
 

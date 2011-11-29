@@ -1436,7 +1436,7 @@ max-height:4.3em;
 min-height:4.3em;
 margin-bottom:0.5em;
 }
-div.contrib_tool_container .section {
+.contrib_tool_container .section {
 float: left;
 position: relative;
 width: 45%;
@@ -1462,10 +1462,10 @@ filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#fffffffff', en
 -o-box-shadow: 0 1px 1px rgba(255, 255, 255, 1);
 box-shadow: 0 1px 1px rgba(255, 255, 255, 1);
 }
-div.contrib_tool_container .section input {outline: none;}
-div.contrib_tool_container .section a {text-decoration: none;}
-div.contrib_tool_container input#contribution_submit {margin-right: 10px;}
-div.contrib_tool_container .section.active {
+.contrib_tool_container .section input {outline: none;}
+.contrib_tool_container .section a {text-decoration: none;}
+.contrib_tool_container input#contribution_submit {margin-right: 10px;}
+.contrib_tool_container .section.active {
 float: none;
 width: 99%;
 transition: width .2s;
@@ -1474,8 +1474,8 @@ transition: width .2s;
 -o-transition: width .2s; /* Opera */
 }
 .ie7_body .button-group {margin-top: 10px;}
-div.contrib_tool_container .section.add-file{float: right;}
-div.contrib_tool_container .section div {
+.contrib_tool_container .section.add-file{float: right;}
+.contrib_tool_container .section div {
 background-repeat: no-repeat;
 background-position: 20px 15px;
 padding: 10px 20px 0 60px;
@@ -1488,7 +1488,7 @@ background-image: url(/images/icons/image-btn.png);
 background-position: 15px 13px;
 }
 /* #contribution-add-file:hover {background-image: url(/images/icons/image-btn-hvr.png);} */
-div.contrib_tool_container .section .close {
+.contrib_tool_container .section .close {
 background: url(/images/close.png) no-repeat 0 0;
 display: none;
 height: 16px;
@@ -1498,7 +1498,7 @@ text-indent: -9999px;
 top: 10px;
 width: 16px;
 }
-div.contrib_tool_container .section.active .close {display: block;}
+.contrib_tool_container .section.active .close {display: block;}
 div.contribution-container.collapsed > .comment > .edit-contribution,
 div.contribution-container.collapsed > .comment > .convo-utility,
 div.contribution-container.collapsed > .comment > .content ol,

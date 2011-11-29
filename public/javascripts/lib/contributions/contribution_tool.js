@@ -125,12 +125,13 @@ function enable_cancel_contribution(element) {
   this.ContributionTool = Backbone.View.extend({
     events: {
       'submit form#contribution_new': 'submit',
+      'submit form#new_conversation': 'submit'
     },
     initialize: function() {
       this.attachmentSection = new TogglableSection({ el: this.$('div.attachments'), sections: ['.add-file', '.add-link'] } )
-      this.$contentField = this.$('#contribution_content');
-      this.$linkField = this.$('#contribution_url');
-      this.$fileUploadField = this.$('#contribution_attachment');
+      this.$contentField = this.$('#contribution_content, #conversation_contributions_attributes_0_content');
+      this.$linkField = this.$('#contribution_url, #conversation_contributions_attributes_0_url');
+      this.$fileUploadField = this.$('#contribution_attachment, #conversation_contributions_attributes_0_attachment');
     },
     addError: function(text) {
       this.$('.errors').append('<li>'+text+'</li>');
