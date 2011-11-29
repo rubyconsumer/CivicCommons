@@ -15,7 +15,6 @@ describe DigestService do
       @convo_stale_with_subs = Factory.create(:conversation, :title => 'Stale with Subscriptions')
       @convo_stale_without_subs = Factory.create(:conversation, :title => 'Stale without Subscriptions')
 
-
       #create instance of DigestService
       @service = DigestService.new
 

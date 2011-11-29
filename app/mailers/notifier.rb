@@ -57,10 +57,9 @@ class Notifier < Devise::Mailer
          :to => Civiccommons::Config.email["default_email"])
   end
 
-  def daily_digest(person, conversations, new_conversations)
+  def daily_digest(person, conversations)
     @person = person
     @conversations = conversations
-    @new_conversations = new_conversations
     headers['X-SMTPAPI'] = '{"category": "daily_digest"}'
     mail(:subject => "The Civic Commons Daily Digest",
          :from => '"Curator of Conversation" <curator@theciviccommons.com>',
@@ -69,7 +68,7 @@ class Notifier < Devise::Mailer
   
   def survey_confirmation(person, survey)
     @person = person
-    @survey = survey    
+    @survey = survey
     headers['X-SMTPAPI'] = '{"category": "survey_confirmation"}'
     mail(:subject => "Thanks for your #{@survey.type.to_s.downcase} participation.",:from => Devise.mailer_sender,:to => @person.email) do |format|
       format.html do 
@@ -83,7 +82,7 @@ class Notifier < Devise::Mailer
 
   def survey_ended(person, survey)
     @person = person
-    @survey = survey    
+    @survey = survey
     headers['X-SMTPAPI'] = '{"category": "survey_ended"}'
     mail(:subject => "Check out the results of the \"#{survey.title}\" #{@survey.type.to_s.downcase}!",:from => Devise.mailer_sender,:to => @person.email) do |format|
       format.html do 

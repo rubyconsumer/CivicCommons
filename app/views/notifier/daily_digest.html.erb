@@ -25,18 +25,6 @@
     <% end %>
   <% end %>
 <% end %>
-<% unless @new_conversations.empty? %>
-  <% if @conversations.empty? %>
-    <h1>There are some new conversations you might be interested in:</h1>
-  <% else %>
-    <h1>And there are some new conversations you might be interested in:</h1>
-  <% end %>
-  <% @new_conversations.each do |conversation| %>
-    <h2><%= conversation.title %></h2>
-    <p><%= conversation.summary.html_safe %></p>
-    <p>Started by <%= conversation.person.name %> <%= link_to 'Check it out', "#{conversation_url(conversation)}" %></p>
-  <% end %>
-<% end %>
 <h3>Too much information?</h3>
 <p>
 You can opt out of specific conversations by clicking "Stop Following this Conversation" on that conversation page at
