@@ -16,7 +16,7 @@
               <%= pluralize_without_count issue.topics.size, "Topic" %>:
               <%= raw(topics_list_for issue) %>
             </p>
-            <p><%= raw(truncate(issue.summary, length: 255)) %></p>
+            <p><%= raw(truncate(issue.index_summary, length: 255)) %></p>
           </div>
           <div class="issue-meta">
             <p class="issue-res"><%= pluralize(issue.contributions.size, "Resource") %></p>

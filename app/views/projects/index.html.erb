@@ -8,7 +8,7 @@
           <div class="project-details">
             <%= image_tag project.image.url(:panel) %>
             <h4><%= link_to project.name, issue_path(project) %></h4>
-            <p><%= raw(truncate(project.summary, length: 255)) %></p>
+            <p><%= raw(truncate(project.index_summary, length: 255)) %></p>
           </div>
           <div class="project-meta">
             <p class="project-contrib"><%= pluralize(svc.participants_by_issue(project.id), "Participant") %></p>
@@ -17,7 +17,7 @@
         </div>
       <% end %>
       <div class="pagination">
-        <%= will_paginate @issues, :inner_window => 3, :previous_label => "Previous", :next_label => "Next" %>
+        <%= will_paginate @projects, :inner_window => 3, :previous_label => "Previous", :next_label => "Next" %>
       </div>
     </div><!-- /.main-content -->
     <div class='aside supplementary'>

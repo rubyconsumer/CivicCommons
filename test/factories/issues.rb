@@ -4,6 +4,7 @@ Factory.define :issue do |f|
   f.created_at 3.months.ago
   f.updated_at 3.months.ago
   f.summary "All the important stuff happening in our region."
+  f.index_summary "Custom summary for the issue shown on Issue index page."
   f.url_title nil
   f.total_visits 0
   f.recent_visits 0

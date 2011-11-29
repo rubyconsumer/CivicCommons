@@ -51,6 +51,11 @@
   </p>
 
   <p>
+    <%= f.label :index_summary %>
+    <%= f.text_area :index_summary, :class => 'tinymce' %>
+  </p>
+
+  <p>
     <%= f.label :summary %>
     <%= f.text_area :summary, :class => 'tinymce' %>
   </p>
@@ -81,7 +86,7 @@
 
   <script type="text/javascript">
     $().ready(function() {
-      init_tiny_mce('#issue_summary');
+      init_tiny_mce('.tinymce');
     });
   </script>
 <% end %>

@@ -24,6 +24,11 @@
   = image_tag @issue.image.url(:normal)
 
 %p
+  %b Index Summary Description:
+  %br
+  =raw @issue.index_summary
+
+%p
   %b Summary:
   %br
   =raw @issue.summary
