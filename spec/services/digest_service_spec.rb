@@ -107,12 +107,14 @@ describe DigestService do
       @contributor = Factory.create(:registered_user, :name => 'Big Talker', :avatar => nil)
       @convo_fresh_with_subs = Factory.create(:conversation, :title => 'Fresh with Subscriptions')
       @first_contribution = Factory.create(:contribution, :person => @contributor, :conversation => @convo_fresh_with_subs, :created_at => 1.day.ago)
+      @second_contribution = Factory.create(:contribution, :person => @contributor, :conversation => @convo_fresh_with_subs, :created_at => 1.day.ago)
 
       digest = DigestService.new
       digest.generate_digest_set
       digest.group_contributions_by_conversation
       digest.digest_set[@person_with_subs][0][1].should be_an_instance_of Array
       digest.digest_set[@person_with_subs][0][1][0].should == @first_contribution
+      digest.digest_set[@person_with_subs][0][1][1].should == @second_contribution
     end
 
   end
@@ -143,6 +145,13 @@ describe DigestService do
     it "should not send any emails when the data set is empty" do
       service = DigestService.new
       @digest_set = {}
+      service.process_daily_digest(@digest_set)
+      ActionMailer::Base.deliveries.length.should == 0
+    end
+
+    it "should not send any emails when the subscribers conversation array is empty" do
+      service = DigestService.new
+      @digest_set[@person_with_subs] = []
       service.process_daily_digest(@digest_set)
       ActionMailer::Base.deliveries.length.should == 0
     end
