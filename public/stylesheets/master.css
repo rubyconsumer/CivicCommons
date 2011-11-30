@@ -1392,13 +1392,6 @@ padding-top: 15px;
 
 /*- Conversation Divider ----------*/
 
-.hide_contrib_tool {
-position: absolute;
-display: none;
-left: -10000px;
-top: auto;
-overflow: hidden;
-}
 .contrib_tool_container,
 form.contribution_edit {
 background: #e6e6e6;

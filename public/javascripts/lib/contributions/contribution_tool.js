@@ -56,7 +56,7 @@ function show_contribution_tool(container, contribution_id, title) {
     container = $('#contribution_tool_container');
     container.append($('#contrib'));
   }
-  $('#contrib').removeClass('hide_contrib_tool');
+  $('#contrib').removeClass('hide');
   init_tiny_mce('#contribution_content');
   scroll_to_contribution_tool();
   new ContributionTool({ el: container});
@@ -64,7 +64,7 @@ function show_contribution_tool(container, contribution_id, title) {
 
 function hide_contribution_tool() {
   $('.contrib_tool_container .title').html('');
-  $('#contrib').addClass('hide_contrib_tool');
+  $('#contrib').addClass('hide');
 }
 
 function scroll_to_contribution_tool() {
