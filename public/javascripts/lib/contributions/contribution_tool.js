@@ -130,10 +130,12 @@ function enable_cancel_contribution(element) {
       this.attachmentSection = new TogglableSection({ el: this.$('div.attachments'), sections: ['.add-file', '.add-link'] } )
       this.$contentField = this.$('.content');
       this.$linkField = this.$('.add-link input');
-      this.$fileUploadField = this.$('add-file input');
+      this.$fileUploadField = this.$('.add-file input');
     },
-    addError: function(text) {
-      this.$('.errors').append('<li>'+text+'</li>');
+    submit: function() {
+      this.clearPlaceholderValuesFromFields();
+      this.clearPreviousErrors();
+      return this.validateInputs();
     },
     validateInputs: function() {
       if(this.$fileUploadField.val() != '' && this.$contentField.val() == ''){
@@ -142,11 +144,6 @@ function enable_cancel_contribution(element) {
       }
       return true;
     },
-    submit: function() {
-      this.clearPlaceholderValuesFromFields();
-      this.clearPreviousErrors();
-      return this.validateInputs();
-    },
 
     clearPlaceholderValuesFromFields: function() {
       $(_.select(this.$('*[placeholder]'), ElementHasPlaceholderValue)).val('');
@@ -154,6 +151,9 @@ function enable_cancel_contribution(element) {
 
     clearPreviousErrors: function() {
       this.$('.errors').html('');
+    },
+    addError: function(text) {
+      this.$('.errors').append('<li>'+text+'</li>');
     }
   });
 }).call(this);

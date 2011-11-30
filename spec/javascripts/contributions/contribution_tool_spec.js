@@ -1,9 +1,9 @@
 describe("The Conversation Tool", function() {
   var subject;
   var result;
-  var $subject; 
+  var $subject;
   beforeEach(function() {
-     $subject = $('<form><div class="add-link"><input placeholder="asdf" /><a href="#">Add link</a></div><div class="add-file"><a href="#">add file</a><input type="file"></div><input class="content" /><ul class="errors"></ul></form>');
+     $subject = $('<form><div class="add-link"><input placeholder="asdf" /><a href="#">Add link</a></div><div class="add-file"><a href="#">add file</a><input></div><input class="content" /><ul class="errors"></ul></form>');
     subject = new ContributionTool({
       el: $subject
     });
@@ -13,16 +13,24 @@ describe("The Conversation Tool", function() {
     expect(subject.attachmentSection).toHaveSection('.add-link');
   });
   describe('submitting the form with valid information', function() {
-    beforeEach(function() {
-       subject.$contentField.val('asdf');
-       result = subject.submit();
+    context('with only content', function() {
+      beforeEach(function() {
+         subject.$contentField.val('asdf');
+         result = subject.submit();
+      });
+      it('allows the event to bubble up further', function() {
+        expect(result).toEqual(true);
+      });
+      it('doesnt give an error message', function() {
+        expect(subject.$('.errors')).toHaveText('');
+      });
     });
-    it('allows the event to bubble up further', function() {
-      expect(result).toEqual(true);
-    });
-    it('doesnt give an error message', function() {
-      expect(subject.$('.errors')).toHaveText('');
-
+    context('with just a url', function() {
+      it('succeeds', function() {
+        subject.$linkField.val('facebook.com');
+        expect(subject.$('.errors')).toHaveText('');
+        expect(subject.submit()).toBeTruthy();
+      });
     });
     context("when there is placeholder information", function() {
       it("clears the value", function() {
@@ -31,16 +39,17 @@ describe("The Conversation Tool", function() {
     });
     context("when the placeholder value has been replaced", function() {
       it('leaves the values as is', function() {
-        subject.$('*[placeholder]').val('cool') 
+        subject.$('*[placeholder]').val('cool');
         subject.submit();
         expect(subject.$('*[placeholder]')).toHaveValue('cool');
       });
     });
   });
   describe('submitting a form with invalid inputs', function() {
-    context('when uploading a without content',function(){
+    context('when uploading a file without content',function(){
       beforeEach(function() {
-        subject.$fileUploadField.val('whatever.js');
+        subject.$fileUploadField;
+        subject.$('.add-file input').val('whatever.js');
         result = subject.submit();
       });
       it('should give error message',function(){
