@@ -34,12 +34,22 @@ FactoryGirl.define do |f|
       instance.save :validate=>false
     end
   end
+  factory :person_subscribed_to_weekly_newsletter, :parent => :registered_user do |u|
+    u.weekly_newsletter true
+  end
+
+  factory :person_subscribed_to_daily_digest, :parent => :registered_user do |u|
+    u.daily_digest true
+  end
+
   factory :registered_user_with_avatar, :parent => :registered_user do |u|
     u.avatar File.new(Rails.root + 'test/fixtures/images/test_image.jpg')
   end
+
   factory :person, :parent => :registered_user do | u |
     u
   end
+
   factory :admin_person, :parent => :registered_user do |u|
     u.password 'password'
     u.sequence(:email) {|n| "test.admin.account#{n}@mysite.com" }
@@ -48,6 +58,7 @@ FactoryGirl.define do |f|
     u.skip_email_marketing true
     u.confirmed_at '2011-03-04 15:33:33'
   end
+
   factory :admin, :parent => :admin_person do |u|
     u
   end

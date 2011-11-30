@@ -14,6 +14,7 @@ module CivicCommonsDriver
     self.current_page = @@available_pages[page].new options
   end
 
+
   def set_current_page_to page, options = {}
     CivicCommonsDriver.set_current_page_to page, options
   end
@@ -89,7 +90,6 @@ module CivicCommonsDriver
       super
     end
   end
-
   :private
   def login(user)
     goto :login

@@ -80,5 +80,8 @@ module CivicCommonsDriver
     def self.has_any_issues?
       !Issue.all.empty?
     end
+    def self.find_user(user)
+      Person.find(user.id)
+    end
   end
 end

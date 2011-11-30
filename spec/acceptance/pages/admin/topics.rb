@@ -1,6 +1,6 @@
-module CivicCommonsDriver module Pages 
+module CivicCommonsDriver module Pages
 class Admin
-class Topics 
+class Topics
   SHORT_NAME = :admin_topics
   include Page
   add_link_for(:edit, "Edit", :admin_edit_topic)

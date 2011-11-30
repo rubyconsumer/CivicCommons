@@ -16,21 +16,34 @@ feature "User Settings", %q{
 
   scenario "Zipcode validation message on user profile if user had not previously added the zipcode" do
     login_as :person_without_zip_code
-    # When I visit my edit user profile page
-    user_edit_profile_page.visit_user(logged_in_user)
-    # Then I should see the validation on zipcode requirement
-    user_edit_profile_page.should contain 'please enter zipcode, must be 5 characters or higher'
+    goto :edit_profile_page, :for=>logged_in_user
+    current_page.should contain 'please enter zipcode, must be 5 characters or higher'
   end
-
   scenario "Zip Code required on user update on profile page" do
     login_as :person_without_zip_code
-    # And I visit the edit user profile page
-    user_edit_profile_page.visit_user(logged_in_user)
-    # When I have a blank zipcode on the form And I press submit
-    user_edit_profile_page.click_submit
-
-    # Then I should have validation error on zipcode
-    user_edit_profile_page.should contain 'please enter zipcode, must be 5 characters or higher'
+    update_zip_code_to ""
+    current_page.should contain 'please enter zipcode, must be 5 characters or higher'
   end
 
+  scenario "Unsubscribe from weekly newsletter" do
+    login_as :person_subscribed_to_weekly_newsletter
+    remove_subscription_to :weekly_newsletter
+    database.find_user(logged_in_user).should_not be_subscribed_to :weekly_newsletter
+  end
+
+  scenario "unsubscribe from daily digest" do
+    login_as :person_subscribed_to_daily_digest
+    remove_subscription_to :daily_digest
+    database.find_user(logged_in_user).should_not be_subscribed_to :daily_digest
+  end
+  def update_zip_code_to code
+    goto :edit_profile_page, :for=>logged_in_user
+    fill_in_zip_code_with code
+    submit
+  end
+  def remove_subscription_to mailing
+    goto :edit_profile_page, :for=>logged_in_user
+    unsubscribe mailing
+    submit
+  end
 end

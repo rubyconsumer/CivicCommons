@@ -123,6 +123,9 @@ class Person < ActiveRecord::Base
   def newly_confirmed?
     confirmed_at_changed? && confirmed_at_was.blank? && !confirmed_at.blank?
   end
+  def subscribed_to? mailing_type
+    send(mailing_type)
+  end
 
   def check_to_send_welcome_email
     @send_welcome = true if newly_confirmed?
