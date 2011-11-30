@@ -10,10 +10,6 @@ feature "User Settings", %q{
   I want to be able to manage my user profile
 } do
 
-  let (:login_page)                   { LoginPage.new(page) }
-  let (:user_edit_profile_page)       { UserEditProfilePage.new(page) }
-
-
   scenario "Zipcode validation message on user profile if user had not previously added the zipcode" do
     login_as :person_without_zip_code
     goto :edit_profile_page, :for=>logged_in_user
