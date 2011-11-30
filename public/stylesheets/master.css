@@ -343,6 +343,15 @@ float: left;
 margin-right: 5px;
 }
 
+/*- Overrides for Top Aligned Labels ----------*/
+
+.top-align label {
+  float: none;
+  margin-bottom: 5px;
+  text-align: left;
+}
+.top-align input.checkbox, .top-align button.cancel, .top-align input.submit, .top-align input#contribution_submit {margin-left: 0;}
+
 /*- Facebook Connect in Settings ----------*/
 
 a.connectacct-link {
@@ -601,7 +610,7 @@ padding: 10px 20px;
 .selected-survey-options .sortable-wrapper {
 border: 1px solid #687a2e;
 border-left: none;
-border-right: 0;
+border-right: none;
 margin: 10px 0 10px 0;
 padding: 0;
 background-color: #e1e1e1;

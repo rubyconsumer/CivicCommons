@@ -6,6 +6,6 @@
       = link_to "Logout", destroy_person_session_path
   - else
     %p
-      <a href="/people/login" class="cc-login-btn">Login</a>
+      %a{:class => "cc-login-btn", :href => "/people/login"} Login
     or
-    <a href="/people/register/new">register for an account</a>
+    %a{:href => "/people/register/new"} register for an account
