@@ -68,17 +68,7 @@ function hide_contribution_tool() {
 }
 
 function scroll_to_contribution_tool() {
-  $('html, body').animate({
-    scrollTop: $('#contrib').offset().top
-  }, 500);
-}
-
-function scroll_to_element(element) {
-  if(element.length > 0){
-    $('html, body').animate({
-      scrollTop: element.offset().top
-    }, 500);
-  }
+  $('#contrib').scrollTo();
 }
 
 function enable_post_to_conversation(element) {
@@ -111,7 +101,7 @@ function enable_cancel_contribution(element) {
   element.click(function(event) {
     event.preventDefault();
     hide_contribution_tool();
-    scroll_to_element($(this).parents('.contribution-container'));
+    $(this).parents('.contribution-container').scrollTo();
   });
 }
 
