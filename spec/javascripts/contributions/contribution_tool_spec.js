@@ -3,7 +3,7 @@ describe("The Conversation Tool", function() {
   var result;
   var $subject; 
   beforeEach(function() {
-     $subject = $('<div class="contribution_tool"><div class="section add_link"><input placeholder="asdf" id="contribution_url"  /><a href="#" id="contribution-add-link" class="contribution-add-link close">Add a link to a related website</a></div><a href="#" id="contribution-add-file" class="close"><p>morkmorkmork</p><form id="contribution_new"><input id="contribution_content" /><input id="contribution_attachment" /></form><ul class="errors"></ul></div>');
+     $subject = $('<form><div class="add-link"><input placeholder="asdf" /><a href="#">Add link</a></div><div class="add-file"><a href="#">add file</a><input type="file"></div><input class="content" /><ul class="errors"></ul></form>');
     subject = new ContributionTool({
       el: $subject
     });
@@ -14,6 +14,7 @@ describe("The Conversation Tool", function() {
   });
   describe('submitting the form with valid information', function() {
     beforeEach(function() {
+       subject.$contentField.val('asdf');
        result = subject.submit();
     });
     it('allows the event to bubble up further', function() {

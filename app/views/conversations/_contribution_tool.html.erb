@@ -26,11 +26,11 @@
     <%= f.hidden_field(:parent_id) %>
 
     <fieldset>
-      <%= f.text_area(:content, :placeholder => "Leave a Comment...", :class => 'tinymce') %>
+      <%= f.text_area(:content, :placeholder => "Leave a Comment...", :class => 'content') %>
       <div class="attachments">
         <div class="add-link"><div>
           <a href="#" id="contribution-add-link">Add a link to a related website</a>
-          <%= f.text_field(:url, :type => "text", :class => "textbox hide link") %>
+          <%= f.text_field(:url, :type => "text", :class => "textbox hide") %>
         </div></div>
 
         <div class="add-file"><div>
