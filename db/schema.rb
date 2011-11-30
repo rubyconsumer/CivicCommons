@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111129153130) do
+ActiveRecord::Schema.define(:version => 20111129194453) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -313,6 +313,7 @@ ActiveRecord::Schema.define(:version => 20111129153130) do
     t.string   "twitter_username"
     t.string   "website"
     t.string   "avatar_url"
+    t.boolean  "weekly_newsletter",                   :default => true
   end
 
   add_index "people", ["cached_slug"], :name => "index_people_on_cached_slug", :unique => true

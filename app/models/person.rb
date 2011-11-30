@@ -56,16 +56,16 @@ class Person < ActiveRecord::Base
 
   has_one :facebook_authentication, :class_name => 'Authentication', :conditions => {:provider => 'facebook'}
   has_many :authentications, :dependent => :destroy
-  has_many :content_items, :foreign_key => 'person_id', :dependent => :restrict 
-  has_many :content_templates, :foreign_key => 'person_id', :dependent => :restrict 
-  has_many :contributions, :foreign_key => 'owner', :uniq => true, :dependent => :restrict 
-  has_many :managed_issue_pages, :foreign_key => 'person_id', :dependent => :restrict 
+  has_many :content_items, :foreign_key => 'person_id', :dependent => :restrict
+  has_many :content_templates, :foreign_key => 'person_id', :dependent => :restrict
+  has_many :contributions, :foreign_key => 'owner', :uniq => true, :dependent => :restrict
+  has_many :managed_issue_pages, :foreign_key => 'person_id', :dependent => :restrict
   has_many :rating_groups, :dependent => :restrict
   has_many :subscriptions, :dependent => :destroy
   has_many :survey_responses
 
-  has_many :contributed_conversations, :through => :contributions, :source => :conversation, :uniq => true, :dependent => :restrict 
-  has_many :contributed_issues, :through => :contributions, :source => :issue, :uniq => true, :dependent => :restrict 
+  has_many :contributed_conversations, :through => :contributions, :source => :conversation, :uniq => true, :dependent => :restrict
+  has_many :contributed_issues, :through => :contributions, :source => :issue, :uniq => true, :dependent => :restrict
 
   validates_length_of :email, :within => 6..255, :too_long => "please use a shorter email address", :too_short => "please use a longer email address"
 
@@ -143,7 +143,7 @@ class Person < ActiveRecord::Base
   def facebook_unlinking?
     @facebook_unlinking || false
   end
-  
+
   def require_zip_code?
     @require_zip_code || false
   end
@@ -306,7 +306,7 @@ class Person < ActiveRecord::Base
     elsif require_zip_code?
       true
     end
-  end  
+  end
 
   # Add the email subscription signup as a delayed job
   def subscribe_to_marketing_email

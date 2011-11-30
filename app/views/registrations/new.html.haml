@@ -61,10 +61,18 @@
           = f.label :password_confirmation, "Password Again:"
           = f.password_field :password_confirmation, :class => "textbox small"
           %span.required *
+      %fieldset.form-group
+        .form-block.form-no-label
+          = f.check_box :daily_digest
+          Yes, please send me the digest of activity relevant to my interests
+        .form-block.form-no-label
+          = f.check_box :weekly_newsletter
+          Yes, please send me The Civic Commons weekly newsletter
       %fieldset.footer
         = succeed 'or' do
           = f.submit 'Continue', :class => "submit"
         %a.cancel(href="/" title="Cancel Registration") cancel
+
     %div#terms(style="display: none;")
       %fieldset.form-group
         %p.friendly-alert
