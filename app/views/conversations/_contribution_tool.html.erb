@@ -27,17 +27,7 @@
 
     <fieldset>
       <%= f.text_area(:content, :placeholder => "Leave a Comment...", :class => 'content') %>
-      <div class="attachments">
-        <div class="add-link"><div>
-          <a href="#" id="contribution-add-link">Add a link to a related website</a>
-          <%= f.text_field(:url, :type => "text", :class => "textbox hide") %>
-        </div></div>
-
-        <div class="add-file"><div>
-          <a href="#" id="contribution-add-file">Upload a photograph, document, or other file</a>
-          <%= f.file_field(:attachment, :class=>"hide") %>
-        </div></div>
-      </div>
+      <%= render partial: "contributions/contribution_attachment_fields", locals: { form: f } %>
     </fieldset>
 
     <fieldset>
