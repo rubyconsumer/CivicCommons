@@ -9,11 +9,11 @@
         %p
           Did you register with Facebook?
         %p
-          <a href="#" class="fb-login-btn">Login with Facebook</a>
+          %a{:class => "fb-login-btn", :href => "#", :title => "Login with Facebook"} Login with Facebook
       %p
         If not, login with your username and password:
       = form_for(resource, :as => resource_name, :url => secure_session_url(resource_name)) do |f|
-        %fieldset.form-group
+        %fieldset.form-group.top-align
           .form-block
             = f.label :email, 'Email:'
             = f.text_field :email, :placeholder => "me@johnnyappleseed.com", :class => 'textbox small'
@@ -23,7 +23,7 @@
           .form-block
             = f.check_box :remember_me, :class => 'checkbox'
             = f.label :remember_me, 'Remember me on this computer', :class => 'checkbox'
-        %fieldset.footer
+        %fieldset.footer.top-align
           = f.submit 'Login', :class => 'submit'
           %a.cancel{ :href => new_password_url(resource_name),
                      :title => "Forgot your Password?" } Forgot your password?
