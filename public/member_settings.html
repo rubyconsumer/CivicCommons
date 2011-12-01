@@ -37,24 +37,19 @@
     <script type='text/javascript'>
       //<![CDATA[
         $(document).ready(function(){
-        
+
           $("input.datetime").datetimepicker({
             ampm: true,
             stepMinute: 15
           });
-
-          $('input#agree').click(function() {
-            $(this).parent('div.inset').toggleClass('checked');
-          });
-        
         });
-        
+
         /* Google Analytics */
         var _gaq = _gaq || [];
         _gaq.push(['_setAccount', 'UA-19685339-1']);
         _gaq.push(['_setDomainName', '.theciviccommons.com']);
         _gaq.push(['_trackPageview']);
-        
+
         (function() {
           var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
           ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
@@ -62,7 +57,7 @@
         })();
       //]]>
     </script>
-    
+
     <link href="http://feeds.theciviccommons.com/civiccommons_new_conversations" rel="alternate" title="The Civic Commons: Conversations" type="application/rss+xml" />
     <link href="http://feeds.theciviccommons.com/civiccommonsblog" rel="alternate" title="The Civic Commons: Common Blog" type="application/rss+xml" />
     <link href="http://feeds.theciviccommons.com/civiccommonsradio" rel="alternate" title="The Civic Commons Radio Show" type="application/rss+xml" />
@@ -95,55 +90,67 @@
     </div>
     <div class="wrapper">
       <div class="content-container">
-        <h1>Our Guiding Principles</h1>
-        <p class="subtitle">The first thing you should know: This place operates by a few key principles and we'd like you to agree to them.</p>
-        <div class="main-content">
-          <div class="two-col">
-            <div class="cols">
-              <dl>
-                <dt>Diverse</dt>
-                <dd>The Commons is wide open. We prize a diversity of perspectives and experience.</dd>
-                <dt>Transparent</dt>
-                <dd>Introductions are essential. We don't do anonymity. We share biases up front and we don't hide important facts about our interest in particular stories or issues. In fact, we hope to learn as much about each other as we do about the issues themselves.</dd>
-                <dt>Participatory</dt>
-                <dd>Community building, journalism, civic conversation--these are team sports. We believe that each of our talents is essential to solving the problems and taking advantage of the opportunities facing our community. So hop off the sidelines and join the action.</dd>
-              </dl>
+        <h1>Settings</h1>
+        <form id="registration" action="submit" method="get" accept-charset="utf-8">
+          <fieldset>
+            <div class="form-block">
+              <label for="first-name">Your Name:</label>
+              <input type="text" class="textbox" name="first-name" value="" id="first-name" placeholder="Johnny" />
+              <input type="text" class="textbox" name="middle-name" value="" id="middle-name" placeholder="F." />
+              <input type="text" class="textbox" name="last-name" value="" id="last-name" placeholder="Appleseed" />
             </div>
-            <div class="cols">
-              <dl>
-                <dt>Civil</dt>
-                <dd>We tackle the issues, not each other. We're as interested in each othe's opinions as we are in our own. And we act like it.</dd>
-                <dt>Entreprenurial</dt>
-                <dd>We recognize that our ideas and solutions must be as innovative as possible, so we're not afraid to experiment, because every experiment can teach us something.</dd>
-                <dt>Optimistic</dt>
-                <dd>We don't wear rose-colored glases, but we believe in the power of positive thinking, in focusing on what's going right and what can be improved.</dd>
-                <dt>Credible</dt>
-                <dd>We respect the facts. We cite sources. And we hold each other responsible for using both with care.</dd>
-              </dl>
+            <div class="form-block">
+              <label for="email">Email Address:</label>
+              <input type="text" class="textbox" name="email" value="" id="email" placeholder="johnny_appleseed@gmailcom" />
             </div>
+            <div class="form-block">
+              <label for="zipcode">Zipcode:</label>
+              <input class="textbox" type="text" name="zipcode" value="" id="zipcode" placeholder="44114" />
+            </div>
+            <div class="form-block">
+              <label for="password">Password</label>
+              <input type="password" class="textbox" name="password" value="" id="password">
+            </div>
+            <div class="form-block">
+              <label for="verify-pw">Password Again:</label>
+              <input type="password" class="textbox" name="verify-pw" value="" id="verify-pw">
+            </div>
+            <div class="form-block">
+              <label for="person_avatar">Upload an Image:</label>
+              <input class="textbox" id="person_avatar" name="person[avatar]" type="file">
+            </div>
+          </fieldset>
+          <fieldset>
+            <div class="form-block">
+              <label for="person_bio">Tell us a little about yourself:</label>
+              <textarea class="textbox" name="person_bio" value="" id="person_bio" rows="10"></textarea>
+            </div>
+            <div class="form-block input-prepend">
+              <label for="person-twitter">Twitter</label>
+              <span class="add-on">@</span>
+              <input class="textbox" id="person-twitter" name="person-twitter" value="" />
+            </div>
+            <div class="form-block">
+              <label for="person-facebook">Facebook:</label>
+              <input class="textbox" id="person-facebook" name="person-facebook" value="" placeholder="http://www.facebook.com/johnnyappleseed" />
+            </div>
+            <div class="form-block">
+              <label for="person-linkedin">Linked In:</label>
+              <input class="textbox" id="person-linkedin" name="person-linkedin" value="" placeholder="http://www.linkedin.com/johnnyappleseed" />
+            </div>
+            <div class="form-block">
+              <input class="checkbox" type="checkbox" name="digest" value="" id="digest" />
+              <label class="checkbox" for="digest">Yes, please send me the digest of activity relevant to my interests</label>
+            </div>
+            <div class="form-block">
+              <input class="checkbox" type="checkbox" name="newsletter" value="" id="newsletter" />
+              <label class="checkbox" for="newsletter">Yes, please send me The Civic Commons weekly newsletter</label>
+            </div>
+          </fieldset>
+          <div class="form-block">
+            <input type="submit" class="submit" value="Update Settings" /> or <a href="/">Cancel</a>
           </div>
-          <div class="inset mod">
-            <input class="checkbox" type="checkbox" name="agree" value="" id="agree"><label class="checkbox" for="agree">I'm on board, and will do my best to keep these principles in mind.</label>
-          </div>
-          <div class="two-col">
-            <div class="cols">
-              <div class="inset">
-                <h3>I am an individual</h3>
-                <p> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin augue nisi, fermentum vitae, imperdiet a, auctor eu, mi. Nulla imperdiet molestie purus. Duis arcu dui, pretium in, molestie id, convallis eget, orci.</p>
-                <p><a href="/member_reg.html" class="button">Continue</a></p>
-              </div>
-            </div>
-            <div class="cols">
-              <div class="inset">
-                <h3>I am an organization</h3>
-                <p> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin augue nisi, fermentum vitae, imperdiet a, auctor eu, mi. Nulla imperdiet molestie purus. Duis arcu dui, pretium in, molestie id, convallis eget, orci.</p>
-                <p><a href="/org_reg.html" class="button">Continue</a></p>
-              </div>
-            </div>
-          </div>
-        </div><!-- /.main-content -->
-        <div class="aside supplementary">
-        </div><!-- /.aside -->
+        </form>
       </div><!-- /.content-container -->
     </div><!-- /.wrapper -->
     <div class='footer' id='footer'>
@@ -212,7 +219,7 @@
 <script type="text/javascript" charset="utf-8">
   var feedback_widget_options = {};
 
-  feedback_widget_options.display = "overlay";  
+  feedback_widget_options.display = "overlay";
   feedback_widget_options.company = "theciviccommons";
   feedback_widget_options.placement = "left";
   feedback_widget_options.color = "#51778E";
