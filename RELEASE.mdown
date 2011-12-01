@@ -5,6 +5,9 @@
 #### [Contribution Tool Tweaks](https://agilezen.com/projects/26499/story/55)
   * [Contribution File Upload and Link Change](https://agilezen.com/projects/18091/story/279)
 
+#### Miscellaneous
+  * [Daily Digest only contains subscribed conversations](https://agilezen.com/project/18091/story/297)
+
 ## 1.8.0
 
 ### External Changes
