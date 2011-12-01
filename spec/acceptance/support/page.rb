@@ -34,6 +34,15 @@ module CivicCommonsDriver
         end
       end
       alias :add_field :has_field
+      
+      def has_file_field(field, locator)
+        define_method "attach_#{field}_with_file" do | value |
+          file_path = value
+          attach_file(locator, File.expand_path(file_path))
+        end
+      end
+      alias :add_file_field :has_file_field
+      
 
       def has_link_for(name, locator, resulting_page=:current)
         define_method "follow_#{name}_link_for" do | item |

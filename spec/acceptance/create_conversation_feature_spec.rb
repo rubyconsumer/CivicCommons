@@ -35,8 +35,45 @@ feature "User Creates a User-Conversation", %q{
     submit_invalid_conversation :link_to_related_website => "this_isnt_a_good_link"
 
     current_page.should have_an_error_for :invalid_link
-
   end
+  
+  scenario "starting an invalid conversation with an attachment that needs a comment", :js => true do
+    login_as :person
+    follow_start_conversation_link
+    agree_to_responsibilities
+    add_contribution_attachment
+    click_start_invalid_conversation_button
+    current_page.should have_an_error_for :attachment_needs_comment
+  end
+  
+  context "on Blog posts" do
+    background do
+      database.create_blog_post title: "Blog post title here"
+    end
+    scenario "starting an invalid conversation with an attachment that needs a comment", :js => true do
+      login_as :person
+      follow_blog_link
+      follow_the_blog_post_link_for database.latest_blog_post
+      add_contribution_attachment
+      click_start_invalid_conversation_button
+      current_page.should have_an_error_for :attachment_needs_comment
+    end
+  end
+
+  context "on Radio Shows" do
+    background do
+      database.create_radio_show title: "Radio show title here"
+    end
+    scenario "starting an invalid conversation with an attachment that needs a comment", :js => true do
+      login_as :person
+      follow_radio_show_link
+      follow_the_radio_show_link_for database.latest_radio_show
+      add_contribution_attachment
+      click_start_invalid_conversation_button
+      current_page.should have_an_error_for :attachment_needs_comment
+    end
+  end
+  
   def friend
     Friend.new('bla@goolge.com') 
   end

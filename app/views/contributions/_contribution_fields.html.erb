@@ -7,10 +7,10 @@
     //<![CDATA[
 
     $(document).ready(function() {
-
+      $('form').scrubPlaceholderText();
       init_tiny_mce('#conversation_contributions_attributes_0_content');
+
       new ContributionTool({el: $('.contrib_tool_container').closest('form').parent()});
-      
     }); // end document ready function
 
     //]]>
@@ -22,7 +22,7 @@
   <%= form.fields_for :contributions, contributions do |f| %>
 
     <p>
-    <%= f.text_area(:content, :placeholder => "Leave a Comment...", :class => 'tinymce') %>
+    <%= f.text_area(:content, :placeholder => "Leave a Comment...", :class => 'content') %>
     </p>
 
     <%= render partial: "contributions/contribution_attachment_fields", locals: { form: f } %>

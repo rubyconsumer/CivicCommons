@@ -16,6 +16,14 @@ module CivicCommonsDriver
       Topic.first
     end
     
+    def self.latest_blog_post
+      ContentItem.blog_post.last
+    end
+
+    def self.latest_radio_show
+      ContentItem.radio_show.last
+    end
+    
     def self.latest_topic
       topic = Topic.last
       topic.instance_eval do
@@ -47,6 +55,14 @@ module CivicCommonsDriver
 
     def self.create_issue(attributes= {})
       Factory.create :issue, attributes
+    end
+    
+    def self.create_blog_post(attributes = {})
+      Factory.create :blog_post, attributes
+    end
+
+    def self.create_radio_show(attributes = {})
+      Factory.create :radio_show, attributes
     end
 
     def self.latest_issue
