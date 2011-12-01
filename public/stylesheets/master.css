@@ -215,6 +215,7 @@ input.textbox, input.textbox.small, textarea.textbox {
   margin-left: 160px;
   outline: none;
 }
+input#zipcode.textbox {width: 10em;}
 input.textbox#contribution_url {width: 80% !important;}
 input[type="file"] {border: none;}
 input.checkbox {margin-left: 160px;}
@@ -335,6 +336,26 @@ ul.issue-list {
   padding: 2px;
   width: 97%;
 }
+.input-prepend .add-on {
+  background: #eee;
+  border: 1px solid #ccc;
+  color: #aaa;
+  display: block;
+  float: left;
+  font-weight: normal;
+  height: 16px;
+  line-height: 16px;
+  margin-right: -1px;
+  min-width: 16px;
+  padding: 4px 4px 4px 5px;
+  position: relative;
+  text-align: center;
+  text-shadow: 0 1px 0 #fff;
+  top: 2px;
+  width: 18px;
+  z-index: 2;
+}
+.input-prepend input.textbox {width: 420px;}
 .aside .general-aside .submit {margin-left: 0;}
 .general-aside div.radio label, .general-aside div.form-block-radio label {
   float: none;
@@ -376,9 +397,9 @@ div#poll_button input.submit {
   line-height: 2.8em;
   margin-right: 5px;
 }
-.fb-reg #first-name {width: 180px;}
-.fb-reg #last-name {width: 215px;}
-.fb-reg #middle-name {width: 23px;}
+form #first-name {width: 180px;}
+form #last-name {width: 215px;}
+form #middle-name {width: 23px;}
 
 /*- Facebook Connect in Settings ----------*/
 
@@ -449,7 +470,8 @@ p.topic-selection a {margin-left: 1em;}
 a.see-more {float: right;}
 .inset {
   padding: 20px;
-  background: white;
+  background-color: rgba(255,255,255,.6);
+  background-color: fff;
   border: 1px solid #CCC;
   border-radius: 4px;
   -webkit-box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2) inset, 0px 1px 1px rgba(255, 255, 255, 0.9);
@@ -457,7 +479,11 @@ a.see-more {float: right;}
   -o-box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2) inset, 0px 1px 1px rgba(255, 255, 255, 0.9);
   box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2) inset, 0px 1px 1px rgba(255, 255, 255, 0.9);
 }
-.form-inset {width: 420px;}
+.inset.checked {
+background-color: rgba(169,219,169,.6);
+background-color: #a9dba9;
+border-color: #46a546;
+}
 
 /*- GROUP OFFSET STYLES
 ----------------------------------------------------------------------*/
@@ -2178,7 +2204,7 @@ div.three-col-sm div.cols.call-out p {word-wrap: break-word;}
 .recent-item a:hover {text-decoration: underline;}
 .recent-item .offset-2, .recent-item .bd {
   background: #fff;
-  border: 1px solid #e3e3e3;
+  border: 1px solid #ccc;
   padding: 10px 10px 0 60px;
   margin-bottom: .5em;
   min-height: 50px;
