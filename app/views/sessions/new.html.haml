@@ -5,9 +5,9 @@
       %p.validation-error
         - flash.each do |name, msg|
           = msg
-      .mod
+      .mod.inset.form-inset
         %p
-          Did you register with Facebook?
+          %strong Did you register with Facebook?
         %p
           %a{:class => "fb-login-btn", :href => "#", :title => "Login with Facebook"} Login with Facebook
       %p
