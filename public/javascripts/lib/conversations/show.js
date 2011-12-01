@@ -230,8 +230,8 @@
       var $target = $(this.getAttribute("data-target"));
 
       $form = $target.html(xhr.responseText).find('form');
+      new ContributionTool({el: $form});
       $form
-        .maskChildOnSubmit()
         .bind("ajax:success", function(evt, data, status, xhr){
           var $responseNode;
           $responseNode = $(xhr.responseText);
@@ -240,10 +240,6 @@
         })
         .bindValidationErrorOnAjaxFailure();
       init_tiny_mce($form.find('textarea.tinymce'));
-      $form.find('.add-file, .add-link').click(function(event){
-        event.preventDefault();
-        $(this).next().toggleClass('hide');
-      });
     })
     .liveAlertOnAjaxFailure();
 

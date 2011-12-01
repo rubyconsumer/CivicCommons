@@ -1,3 +1,4 @@
+<div class="contrib_tool_container">
 <%= form_for @contribution, :as => :contribution,
       :url => conversation_contribution_path(@contribution.conversation),
       :remote => true, :method => :put,
@@ -21,3 +22,4 @@
   </fieldset>
 
 <% end %>
+</div>
