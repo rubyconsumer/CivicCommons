@@ -4,6 +4,7 @@ class Conversation < ActiveRecord::Base
   include Regionable
   include GeometryForStyle
   include HomepageFeaturable
+  include Thumbnail
 
   searchable :ignore_attribute_changes_of => [ :total_visits, :recent_visits, :last_visit_date, :updated_at, :recent_rating ] do
     text :title, :boost => 3, :default_boost => 3
@@ -117,14 +118,6 @@ class Conversation < ActiveRecord::Base
     staff_picks_length = staff_picks.length
     others.each_with_index do |conversation, i|
       Conversation.where('id = ?', conversation.id).update_all(position: i + staff_picks_length)
-    end
-  end
-
-  def default_image?(style='original')
-    if self.class.attachment_definitions[:image][:default_url]
-      self.image.to_s == self.class.attachment_definitions[:image][:default_url].gsub(/\:style/, style).to_s
-    else
-      false
     end
   end
 

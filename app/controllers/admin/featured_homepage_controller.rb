@@ -8,7 +8,7 @@ class Admin::FeaturedHomepageController < Admin::DashboardController
         created_at: conversation.created_at,
         featured: conversation.featured?,
         id: conversation.id,
-        custom_image: conversation.image && !conversation.default_image?,
+        custom_image: conversation.custom_image?,
         title: conversation.title,
         type: conversation.class.to_s,
         url: admin_conversation_path(conversation)
@@ -21,7 +21,7 @@ class Admin::FeaturedHomepageController < Admin::DashboardController
         created_at: issue.created_at,
         featured: issue.featured?,
         id: issue.id,
-        custom_image: issue.image && !issue.default_image?,
+        custom_image: issue.custom_image?,
         title: issue.name,
         type: issue.class.to_s,
         url: admin_issue_path(issue)
