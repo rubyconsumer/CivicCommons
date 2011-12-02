@@ -120,6 +120,14 @@ class Conversation < ActiveRecord::Base
     end
   end
 
+  def default_image?(style='original')
+    if self.class.attachment_definitions[:image][:default_url]
+      self.image.to_s == self.class.attachment_definitions[:image][:default_url].gsub(/\:style/, style).to_s
+    else
+      false
+    end
+  end
+
   def user_generated?
     from_community
   end

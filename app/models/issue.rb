@@ -140,6 +140,14 @@ class Issue < ActiveRecord::Base
     Contribution.joins(:conversation).where({:conversations => {:id => self.conversation_ids}})
   end
 
+  def default_image?(style='original')
+    if self.class.attachment_definitions[:image][:default_url]
+      self.image.to_s == self.class.attachment_definitions[:image][:default_url].gsub(/\:style/, style).to_s
+    else
+      false
+    end
+  end
+
   def managed?
     false
   end
