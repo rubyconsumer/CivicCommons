@@ -37,14 +37,19 @@
     <script type='text/javascript'>
       //<![CDATA[
         $(document).ready(function(){
-        
+                  
           $("input.datetime").datetimepicker({
             ampm: true,
             stepMinute: 15
           });
 
           $('input#agree').click(function() {
-            $(this).parent('div.inset').toggleClass('checked');
+            $(this).parent('div.inset').toggleClass('checked').removeClass('cbx-error');
+          });
+          
+          $('a.verify').click(function () {
+            $('input#agree:not(:checked)').parent('div.inset').addClass('cbx-error');
+            return false;
           });
         
         });
@@ -130,14 +135,14 @@
               <div class="inset">
                 <h3>I am an individual</h3>
                 <p> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin augue nisi, fermentum vitae, imperdiet a, auctor eu, mi. Nulla imperdiet molestie purus. Duis arcu dui, pretium in, molestie id, convallis eget, orci.</p>
-                <p><a href="/member_reg.html" class="button">Continue</a></p>
+                <p><a href="/member_reg.html" class="button verify">Continue</a></p>
               </div>
             </div>
             <div class="cols">
               <div class="inset">
                 <h3>I am an organization</h3>
                 <p> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin augue nisi, fermentum vitae, imperdiet a, auctor eu, mi. Nulla imperdiet molestie purus. Duis arcu dui, pretium in, molestie id, convallis eget, orci.</p>
-                <p><a href="/org_reg.html" class="button">Continue</a></p>
+                <p><a href="/org_reg.html" class="button verify">Continue</a></p>
               </div>
             </div>
           </div>

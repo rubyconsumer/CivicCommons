@@ -480,9 +480,14 @@ a.see-more {float: right;}
   box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2) inset, 0px 1px 1px rgba(255, 255, 255, 0.9);
 }
 .inset.checked {
-background-color: rgba(169,219,169,.6);
-background-color: #a9dba9;
-border-color: #46a546;
+  background-color: rgba(169,219,169,.6);
+  background-color: #a9dba9;
+  border-color: #46a546;
+}
+.inset.cbx-error {
+  background-color: rgba(242,134,131,.6);
+  background-color: #f28683;
+  border-color: #b0362f;
 }
 
 /*- GROUP OFFSET STYLES
