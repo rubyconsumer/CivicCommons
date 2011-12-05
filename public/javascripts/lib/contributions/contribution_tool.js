@@ -120,7 +120,8 @@ function enable_cancel_contribution(element) {
       this.attachmentSection = new TogglableSection({ sections: ['.add-file', '.add-link'] } )
       this.attachmentSection.render();
       this.$contentField = this.$('.content');
-      this.$contentField.after(this.attachmentSection.el);
+      this.$('.attachments').remove();
+      this.$('fieldset.errors').before(this.attachmentSection.el);
       this.$linkField = this.$('.add-link input');
       this.$fileUploadField = this.$('.add-file input');
     },

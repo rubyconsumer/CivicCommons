@@ -147,7 +147,6 @@ feature "Add contribution", %q{
  end
 
   scenario "Cancelling a contribution", :js => true do
-    # NOTE: This test occationally has timing issues
 
     # Given I am on a conversation permalink page
     convo_page = ConversationPage.new(page)

@@ -3,7 +3,7 @@ describe("The Conversation Tool", function() {
   var result;
   var $subject;
   beforeEach(function() {
-     $.jasmine.inject('<script id="attachment-fields-template" type="text/tmpl"><div class="add-link"><input placeholder="asdf" /><a href="#">Add link</a></div><div class="add-file"><a href="#">add file</a><input></div></script><form><input class="content" /><ul class="errors"></ul></form>');
+     $.jasmine.inject('<script id="attachment-fields-template" type="text/tmpl"><div class="attachments"><div class="add-link"><input placeholder="asdf" /><a href="#">Add link</a></div><div class="add-file"><a href="#">add file</a><input></div></div></script><form><input class="content" /><fieldset class="errors"><ul class="errors"></ul></fieldset></form>');
 
     subject = new ContributionTool({
       el: 'form'
