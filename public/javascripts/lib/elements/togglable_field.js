@@ -1,16 +1,9 @@
 (function() {
   this.TogglableSection = Backbone.View.extend({
+    templateId: "attachment-fields-template",
     initialize: function(options) {
+      this.template = _.template($("#" + this.templateId).html());
       this.sections = {};
-      var section;
-      _.each(options.sections, function(sectionLocator) {
-        section = new TogglableField({ el: this.$(sectionLocator) });
-        var self = this;
-        section.bind('toggle', function(field) {
-          self.toggle(field);
-        });
-        this.sections[sectionLocator] = section
-      }, this);
     },
     toggle: function(field) {
       $(field.el).toggleClass('active');
@@ -19,6 +12,24 @@
           $(section.el).toggleClass('hide');
         }
       });
+    },
+    setUp: function() {
+      var options = this.options;
+      var section;
+      _.each(options.sections, function(sectionLocator) {
+        section = new TogglableField({ el: this.$(sectionLocator) });
+        var self = this;
+        section.bind('toggle', function(field) {
+          self.toggle(field);
+        });
+        if($(section.el).hasClass('active')) { section.toggle(); }
+        this.sections[sectionLocator] = section;
+      }, this);
+    },
+    render: function() {
+      $(this.el).html(this.template());
+      this.setUp();
+      return this;
     }
   });
   this.TogglableField = Backbone.View.extend({
@@ -27,6 +38,7 @@
     },
     initialize: function() {
         $(this.el).addClass('section');
+        if($(this.el).hasClass('active')) { this.toggle(); }
     },
     toggle: function() {
       this.active = this.active ? false : true
