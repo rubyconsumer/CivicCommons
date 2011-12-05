@@ -19,7 +19,7 @@
           $(section.el).toggleClass('hide');
         }
       });
-    },
+    }
   });
   this.TogglableField = Backbone.View.extend({
     events: {
