@@ -3,14 +3,25 @@ describe("The Conversation Tool", function() {
   var result;
   var $subject;
   beforeEach(function() {
-     $subject = $('<form><div class="add-link"><input placeholder="asdf" /><a href="#">Add link</a></div><div class="add-file"><a href="#">add file</a><input></div><input class="content" /><ul class="errors"></ul></form>');
+     $.jasmine.inject('<script id="attachment-fields-template" type="text/tmpl"><div class="attachments"><div class="add-link"><input placeholder="asdf" /><a href="#">Add link</a></div><div class="add-file"><a href="#">add file</a><input></div></div></script><form><input class="content" /><fieldset class="errors"><ul class="errors"></ul></fieldset></form>');
+
     subject = new ContributionTool({
-      el: $subject
+      el: 'form'
     });
   });
   it('has a togglable sections for add-link and add-file', function() {
     expect(subject.attachmentSection).toHaveSection('.add-file');
     expect(subject.attachmentSection).toHaveSection('.add-link');
+  });
+  it('clears out the link field', function() {
+    subject.$linkField.val('asdf');
+    subject.initialize();
+    expect(subject.$linkField).toHaveValue('');
+  });
+  it('clears out the link field', function() {
+    subject.$fileUploadField.val('asdf');
+    subject.initialize();
+    expect(subject.$fileUploadField).toHaveValue('');
   });
   describe('submitting the form with valid information', function() {
     context('with only content', function() {
@@ -48,7 +59,6 @@ describe("The Conversation Tool", function() {
   describe('submitting a form with invalid inputs', function() {
     context('when uploading a file without content',function(){
       beforeEach(function() {
-        subject.$fileUploadField;
         subject.$('.add-file input').val('whatever.js');
         result = subject.submit();
       });

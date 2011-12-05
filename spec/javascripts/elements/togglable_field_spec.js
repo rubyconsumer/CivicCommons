@@ -1,19 +1,20 @@
 describe('a togglable section', function() {
-  var sections, section1, section2
+  var sections, field1, field2
   beforeEach(function() {
-    $.jasmine.inject('<div class="sections"><div class="section-1"><a href="#">bla</a><input value="asdf"/></div><div class="section-2"><a href="#">bla</a></div></div>');
-    section = new TogglableSection({ el: 'sections', sections: ['.section-1', '.section-2'] });
-    section1 = section.sections['.section-1'];
-    section2 = section.sections['.section-2'];
+    $.jasmine.inject('<script id="attachment-fields-template" type="text/tmp"><div class="section-1"><a href="#">bla</a><input value="asdf"/></div><div class="section-2"><a href="#">bla</a></div></script>');
+    section = new TogglableSection({ sections: ['.section-1', '.section-2'] });
+    section.render();
+    field1 = section.sections['.section-1'];
+    field2 = section.sections['.section-2'];
   });
   describe('toggling a section', function() {
     context('when it is active already', function() {
       beforeEach(function() {
-        section1.toggle();
-        section1.toggle();
+        field1.toggle();
+        field1.toggle();
       });
       it('deactivates itself', function() {
-        expect($(section1.el)).not.toHaveClass('active');
+        expect($(field1.el)).not.toHaveClass('active');
       });
       it('unhides all sections', function() {
         expect($(section.el).find('.hide').length).toEqual(0);
@@ -21,13 +22,13 @@ describe('a togglable section', function() {
     });
     context('when it is not yet active', function() {
       beforeEach(function() {
-        section1.toggle();
+        field1.toggle();
       });
       it('hides the other sections', function() {
-        expect($(section2.el)).toHaveClass('hide');
+        expect($(field2.el)).toHaveClass('hide');
       });
       it('activates itself', function() {
-        expect($(section1.el)).toHaveClass('active');
+        expect($(field1.el)).toHaveClass('active');
       });
     });
   });
