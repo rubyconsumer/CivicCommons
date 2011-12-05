@@ -91,7 +91,6 @@ module CivicCommonsDriver
       end
 
       def equal?(page_name)
-        p self
         [self.class::SHORT_NAME == page_name,
         current_path.end_with?(url)].all?
       end
