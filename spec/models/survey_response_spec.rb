@@ -26,6 +26,12 @@ describe SurveyResponse do
     it "should validate presence of person_id" do
       @survey_response.errors[:person_id].should == ["can't be blank"]
     end
+    it "should validate uniqueness of person_id and survey_id" do
+      @survey_response1 = Factory.create(:survey_response)
+      @survey_response2 = @survey_response1.clone
+      @survey_response2.valid?
+      @survey_response2.errors[:person_id].should == ["already exists"]
+    end
   end
   
   context "scope" do

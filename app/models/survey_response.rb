@@ -3,6 +3,7 @@ class SurveyResponse < ActiveRecord::Base
   belongs_to :person
   belongs_to :survey
   validates_presence_of :person_id
+  validates_uniqueness_of :person_id, :scope => :survey_id, :allow_blank => true, :allow_nil => true, :message => 'already exists'
   after_create :send_survey_confirmation
 
   scope :sort_last_created_first, {:order=> 'created_at DESC'}
