@@ -810,7 +810,9 @@ text-decoration: none;
 .no-rgba .t-img a:hover div {background: url(/images/t_grid_bg_hover.png) repeat;}
 .t-img.sm p {font-size: 80%;}
 .t-img.lrg p {font-size: 120%;}
-
+.t-img.sm img { width: 140px; height: 90px; }
+.t-img.med img { width: 220px; height: 145px; }
+.t-img.lrg img { width: 300px; height: 200px; }
 
 /*- ISSUE STYLES
 ----------------------------------------------------------------------*/

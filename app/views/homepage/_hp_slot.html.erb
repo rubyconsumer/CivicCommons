@@ -8,9 +8,7 @@
 <div class="t-img <%= slot_class %>">
   <%= link_to(hsp.url) do %>
     <% if defined?(hsp.image) %>
-      <img src="<%= hsp.image %>" width=<%=width%> height=<%=height%> />
-    <% else %>
-      <img src="http://placehold.it/<%= width %>x<%= height %>"/>
+      <img src="<%= hsp.image %>" />
     <% end %>
     <div>
       <p><%= hsp.title %></p>
