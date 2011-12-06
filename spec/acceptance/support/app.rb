@@ -19,8 +19,8 @@ module CivicCommonsDriver
     CivicCommonsDriver.set_current_page_to page, options
   end
 
-  def create_user(type)
-    Factory.create(type, declined_fb_auth: true)
+  def create_user(type, options={})
+    Factory.create(type, options)
   end
 
   def login_as(type = :person)
@@ -82,12 +82,14 @@ module CivicCommonsDriver
   def create_subcontribution_for contribution
     Factory.create(:contribution, :conversation=>contribution.conversation, :parent=> contribution)
   end
-
+  def page_header
+    @header = (@header || Header.new)
+  end
   def method_missing(method, *args, &block)
     if current_page and current_page.respond_to? method
       current_page.send(method, *args, &block)
     else
-      super
+      throw "#{current_page} can't do #{method}"
     end
   end
   :private
