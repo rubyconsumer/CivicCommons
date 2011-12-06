@@ -45,10 +45,12 @@
 
           $('input#agree').click(function() {
             $(this).parent('div.inset').toggleClass('checked').removeClass('cbx-error');
+            $('p.cbx-error-message').hide();
           });
           
           $('a.verify').click(function () {
             $('input#agree:not(:checked)').parent('div.inset').addClass('cbx-error');
+            $('input#agree:not(:checked)').parent().siblings('p.cbx-error-message').show();
             return false;
           });
         
@@ -127,6 +129,7 @@
               </dl>
             </div>
           </div>
+          <p class="cbx-error-message">You must agree to our principles to register for an account</p>
           <div class="inset mod">
             <input class="checkbox" type="checkbox" name="agree" value="" id="agree"><label class="checkbox" for="agree">I'm on board, and will do my best to keep these principles in mind.</label>
           </div>

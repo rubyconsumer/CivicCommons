@@ -103,21 +103,25 @@
               <input type="text" class="textbox" name="first-name" value="" id="first-name" />
               <input type="text" class="textbox" name="middle-name" value="" id="middle-name" />
               <input type="text" class="textbox" name="last-name" value="" id="last-name" />
+              <span class="required">*</span>
             </div>
             <div class="form-block">
               <label for="email">Email Address:</label>
               <input type="text" class="textbox" name="email" value="" id="email">
+              <span class="required">*</span>
             </div>
             <div class="form-block">
               <label for="password">Password</label>
               <input type="password" class="textbox" name="password" value="" id="password">
+              <span class="required">*</span>
             </div>
             <div class="form-block">
               <label for="verify-pw">Password Again:</label>
               <input type="password" class="textbox" name="verify-pw" value="" id="verify-pw">
+              <span class="required">*</span>
             </div>
             <div class="form-block">
-              <label for="person_avatar">Upload an Image:</label>
+              <label for="person_avatar">Your Photo:</label>
               <input class="textbox" id="person_avatar" name="person[avatar]" type="file">
             </div>
           </fieldset>
@@ -129,13 +133,14 @@
             <div class="form-block">
               <label for="zipcode">Zipcode:</label>
               <input class="textbox" type="text" name="zipcode" value="" id="zipcode" />
+              <span class="required">*</span>
             </div>
             <div class="form-block">
-              <input class="checkbox" type="checkbox" name="digest" value="" id="digest" />
+              <input class="checkbox" type="checkbox" name="digest" value="" checked="checked" id="digest" />
               <label class="checkbox" for="digest">Yes, please send me the digest of activity relevant to my interests</label>
             </div>
             <div class="form-block">
-              <input class="checkbox" type="checkbox" name="newsletter" value="" id="newsletter" />
+              <input class="checkbox" type="checkbox" name="newsletter" value="" checked="checked" id="newsletter" />
               <label class="checkbox" for="newsletter">Yes, please send me The Civic Commons weekly newsletter</label>
             </div>
           </fieldset>

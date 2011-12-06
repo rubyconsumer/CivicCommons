@@ -488,6 +488,21 @@ a.see-more {float: right;}
   background-color: rgba(242,134,131,.6);
   background-color: #f28683;
   border-color: #b0362f;
+  -moz-border-radius: 0 0 4px 4px;
+  -webkit-border-radius: 0 0 4px 4px;
+  -o-border-radius: 0 0 4px 4px;
+  border-radius: 0 0 4px 4px;
+}
+.cbx-error-message {
+  background: #b0362f;
+  color: #fff;
+  display: none;
+  padding: 7px 20px 5px;
+  margin-bottom: 0;
+  -moz-border-radius: 4px 4px 0 0;
+  -webkit-border-radius: 4px 4px 0 0;
+  -o-border-radius: 4px 4px 0 0;
+  border-radius: 4px 4px 0 0;
 }
 
 /* @group Offset Styles */
@@ -1474,7 +1489,7 @@ div.convo-summary {
   margin-bottom: 0.8em;
   padding-top: 15px;
 }
-.convo-mast-buttons a.button {width: 150px;}
+.convo-mast-buttons a.button {width: 200px;}
 
 /*- Conversation Divider ----------*/
 

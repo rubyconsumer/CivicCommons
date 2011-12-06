@@ -97,23 +97,28 @@
             <div class="form-block">
               <label for="org-name">Name of Organization:</label>
               <input type="text" class="textbox" name="org-name" value="" id="org-name" />
+              <span class="required">*</span>
             </div>
             <div class="form-block">
               <label for="org-email">Email Address:</label>
               <input type="text" class="textbox" name="org-email" value="" id="org-email">
+              <span class="required">*</span>
               <p class="tip">As an organization your email address will be publicly disclosed.</p>
             </div>
             <div class="form-block">
               <input class="checkbox" type="checkbox" name="org-auth" value="" id="org-auth" />
               <label class="checkbox" for="org-auth">I am authorized to setup an account for this organization</label>
+              <span class="required">*</span>
             </div>
             <div class="form-block">
               <label for="password">Password</label>
               <input type="password" class="textbox" name="password" value="" id="password">
+              <span class="required">*</span>
             </div>
             <div class="form-block">
               <label for="verify-pw">Password Again:</label>
               <input type="password" class="textbox" name="verify-pw" value="" id="verify-pw">
+              <span class="required">*</span>
             </div>
             <div class="form-block">
               <label for="org-logo">Company Logo:</label>
@@ -128,13 +133,14 @@
             <div class="form-block">
               <label for="zipcode">Zipcode:</label>
               <input class="textbox" type="text" name="zipcode" value="" id="zipcode" />
+              <span class="required">*</span>
             </div>
             <div class="form-block">
-              <input class="checkbox" type="checkbox" name="digest" value="" id="digest" />
+              <input class="checkbox" type="checkbox" name="digest" value="" checked="checked" id="digest" />
               <label class="checkbox" for="digest">Yes, please send me the digest of activity relevant to my interests</label>
             </div>
             <div class="form-block">
-              <input class="checkbox" type="checkbox" name="newsletter" value="" id="newsletter" />
+              <input class="checkbox" type="checkbox" name="newsletter" value="" checked="checked" id="newsletter" />
               <label class="checkbox" for="newsletter">Yes, please send me The Civic Commons weekly newsletter</label>
             </div>
           </fieldset>
