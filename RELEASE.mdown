@@ -3,10 +3,10 @@
 ### External Changes
 
 #### [Contribution Tool Tweaks](https://agilezen.com/projects/26499/story/55)
-  * [Contribution File Upload and Link Change](https://agilezen.com/projects/18091/story/279)
   * [Add Contribution to existing conversation uses new Add File/Add Link UI](https://agilezen.com/projects/18091/story/294)
   * [Create conversation uses fancy new add file/add link UI](https://agilezen.com/projects/18091/story/295)
   * [Edit conversation uses fancy new add file/add link UI](https://agilezen.com/projects/18091/story/296)
+
 #### [Add Opt Out for Daily Digest and Weekly Newsletter](https://agilezen.com/projects/18091/story/287)
 #### [Ability to Add Summary to an Issue Panel](https://agilezen.com/projects/18091/story/293)
 #### [Featured Homepage Items - Add Links](https://agilezen.com/projects/18091/story/304)
@@ -18,20 +18,14 @@
   * rake load_producation_data replaces database with latest.sql from dropbox
 
 #### Bug Fixes
-  * [[AB:19017645] CCML::Error::TemplateError: Requested pages method but pages was not used.](https://agilezen.com/project/18091/story/280)
-  * [[AB:23955034] ActionView::MissingTemplate: Missing partial sessions/close_modal_on_exit](https://agilezen.com/project/18091/story/282)
-  * [Avatar / Username - Recent Activity Conversation](https://agilezen.com/project/18091/story/292)
-  * fixed contribution_presenter_spec so it does not have a hardcoded S3 bucket name
-  * [Voting counted twice ](https://agilezen.com/projects/18091/story/299)
-
-#### Bug Fixes
   * [AB:19017645 CCML::Error::TemplateError: Requested pages method but pages was not used.](https://agilezen.com/project/18091/story/280)
   * [AB:23955034 ActionView::MissingTemplate: Missing partial sessions/close_modal_on_exit](https://agilezen.com/project/18091/story/282)
   * [Avatar / Username - Recent Activity Conversation](https://agilezen.com/project/18091/story/292)
   * [Vote Getting Counted Twice](https://agilezen.com/project/18091/story/299)
   * [Home Page Grid 7 & 9 - Blank photos](https://agilezen.com/project/18091/story/302)
   * [Home Grid Picture Duplication](https://agilezen.com/project/18091/story/306)
-  
+  * fixed contribution_presenter_spec so it does not have a hardcoded S3 bucket name
+
 ### Post Deployment Instructions
   * We need to delete duplicate survey_responses records on due to the ticket [299](https://agilezen.com/project/18091/story/299)
     Pair with Perry on this.
@@ -40,8 +34,7 @@
       group by person_id, survey_id
       having count(person_id) > 1"
     * go to console and delete the duplicates
-      * SurveyResponse.where(:survey_id=> survey-id-here,:person_id=> person-id-here).last.destroy 
-    
+      * SurveyResponse.where(:survey_id=> survey-id-here,:person_id=> person-id-here).last.destroy
 
 
 ## 1.8.0
