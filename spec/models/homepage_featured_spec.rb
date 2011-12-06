@@ -29,7 +29,7 @@ describe HomepageFeatured do
     end
   end
 
-  describe 'min_sample' do
+  describe 'sample_and_filtered' do
     let(:homepage_featured) {Factory.create(:homepage_featured)}
     let(:homepage_featured2) {Factory.create(:homepage_featured)}
     let(:homepage_featured3) {Factory.create(:homepage_featured)}
@@ -38,22 +38,28 @@ describe HomepageFeatured do
       HomepageFeatured.stub(:all).and_return([homepage_featured2, homepage_featured, homepage_featured3])
     end
 
-    it 'returns a minimum sample of results' do
-      hpf = HomepageFeatured.min_sample(2)
-      hpf.include?(homepage_featured.homepage_featureable).should be_true
-      hpf.include?(homepage_featured2.homepage_featureable).should be_true
-      hpf.include?(homepage_featured3.homepage_featureable).should be_true
+    it 'returns a sample of results' do
+      hpf = HomepageFeatured.sample_and_filtered(2)
+
+      sample_count = 0
+      sample_count += 1 if hpf.include?(homepage_featured.homepage_featureable)
+      sample_count += 1 if hpf.include?(homepage_featured2.homepage_featureable)
+      sample_count += 1 if hpf.include?(homepage_featured3.homepage_featureable)
+
+      sample_count.should == 2
     end
 
     it 'filters out a result' do
-      hpf = HomepageFeatured.min_sample(2, homepage_featured2.homepage_featureable)
+      hpf = HomepageFeatured.sample_and_filtered(2, homepage_featured2.homepage_featureable)
+
       hpf.include?(homepage_featured.homepage_featureable).should be_true
       hpf.include?(homepage_featured2.homepage_featureable).should be_false
       hpf.include?(homepage_featured3.homepage_featureable).should be_true
     end
 
     it 'filters out an array of results' do
-      hpf = HomepageFeatured.min_sample(2, [homepage_featured.homepage_featureable, homepage_featured2.homepage_featureable])
+      hpf = HomepageFeatured.sample_and_filtered(2, [homepage_featured.homepage_featureable, homepage_featured2.homepage_featureable])
+
       hpf.include?(homepage_featured.homepage_featureable).should be_false
       hpf.include?(homepage_featured2.homepage_featureable).should be_false
       hpf.include?(homepage_featured3.homepage_featureable).should be_true

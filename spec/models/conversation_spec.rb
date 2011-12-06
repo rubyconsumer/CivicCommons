@@ -13,7 +13,7 @@ describe Conversation do
         Conversation.reflect_on_association(:survey).options[:as].should == :surveyable
       end
     end
-  end  
+  end
   describe "a valid conversation" do
     before :each do
       @conversation = Factory.build(:conversation)
@@ -326,6 +326,59 @@ describe Conversation do
     end
   end
 
+  describe "recommended" do
+    before(:each) do
+      @conversation_nr1 = Factory.create(:conversation)
+      @conversation_nr2 = Factory.create(:conversation)
+      @conversation_r1 = Factory.create(:conversation, :staff_pick => true)
+      @conversation_r2 = Factory.create(:conversation, :staff_pick => true)
+    end
+
+    it "will select all recommanded conversations" do
+      cr = Conversation.recommended
+      cr.include?(@conversation_nr1).should be_false
+      cr.include?(@conversation_nr2).should be_false
+      cr.include?(@conversation_r1).should be_true
+      cr.include?(@conversation_r2).should be_true
+    end
+
+    context "filted" do
+      it "will select all recommanded conversations that are not filtered out" do
+        cr = Conversation.random_recommended(1, @conversation_r1)
+        cr.include?(@conversation_nr1).should be_false
+        cr.include?(@conversation_nr2).should be_false
+        cr.include?(@conversation_r1).should be_false
+        cr.include?(@conversation_r2).should be_true
+      end
+    end
+  end
+
+  describe "random active" do
+    before(:each) do
+      @conversation_1 = Factory.create(:conversation, :updated_at => (Time.now - 1.seconds))
+      @conversation_2 = Factory.create(:conversation, :updated_at => (Time.now - 2.seconds))
+      @conversation_3 = Factory.create(:conversation, :updated_at => (Time.now - 3.seconds))
+      @conversation_4 = Factory.create(:conversation, :updated_at => (Time.now - 4.seconds))
+      @conversation_5 = Factory.create(:conversation, :updated_at => (Time.now - 5.seconds))
+
+      Conversation.stub(:most_active).and_return([@conversation_1, @conversation_2, @conversation_3, @conversation_4, @conversation_5])
+    end
+
+    it "will select a random number of active conversations" do
+      c_ra = Conversation.random_active(2, 4)
+
+      c_ra_count = 0
+      c_ra_count += 1 if c_ra.include?(@conversation_1)
+      c_ra_count += 1 if c_ra.include?(@conversation_2)
+      c_ra_count += 1 if c_ra.include?(@conversation_3)
+      c_ra_count += 1 if c_ra.include?(@conversation_4)
+      c_ra_count.should == 2
+
+      c_ra.include?(@conversation5).should be_false
+    end
+
+  end
+
   describe "after saving a new conversation" do
     before(:each) do
       Conversation.delete_all
@@ -362,15 +415,15 @@ describe Conversation do
       Conversation.latest_created.include?(@excluded_conversation).should be_false
     end
   end
-  
+
   context "paperclip" do
-    
+
     it "will have necessary db columns for paperclip" do
       should have_db_column(:image_file_name).of_type(:string)
       should have_db_column(:image_content_type).of_type(:string)
       should have_db_column(:image_file_size).of_type(:integer)
     end
-    
+
     it "will only allow image attachments" do
       # allowed image mimetypes are based on what we have seen in production
       should validate_attachment_content_type(:image).
@@ -384,12 +437,12 @@ describe Conversation do
         paperclip_default_file_exists?(style.to_s).should be_true
       end
     end
-    
+
     def paperclip_default_file_exists?(style)
       default_url = Conversation.attachment_definitions[:image][:default_url].gsub(/\:style/, style)
       default_file = File.join(Rails.root, 'public', default_url)
       File.exist?(default_file)
     end
   end
-  
+
 end

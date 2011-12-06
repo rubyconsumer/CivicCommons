@@ -85,15 +85,27 @@ class Conversation < ActiveRecord::Base
       order('count_all DESC, max_contributions_created_at DESC')
   end
 
-  def self.random_active(select=2, limit=4)
+  # From the top active conversations, select a random sample.
+  #
+  # limit = number of most active conversations to select from (default 4)
+  # select = number of random conversations to select (default 2)
+  def self.random_active(select=2, limit=4, filter = [])
+    filter = [filter] unless filter.respond_to?(:flatten)
+    filter.flatten!
+
     limit = select if select > limit
 
-    actives = Conversation.most_active.limit(limit)
+    actives = Conversation.most_active - filter
+    actives = actives[0,limit]
     actives.sample(select)
   end
 
-  def self.random_recommended(select=1)
+  def self.random_recommended(select=1, filter = [])
+    filter = [filter] unless filter.respond_to?(:flatten)
+    filter.flatten!
+
     r = Conversation.recommended
+    r = r - filter
     r.sample(select)
   end
 
