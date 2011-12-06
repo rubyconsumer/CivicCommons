@@ -22,6 +22,7 @@
   * [[AB:23955034] ActionView::MissingTemplate: Missing partial sessions/close_modal_on_exit](https://agilezen.com/project/18091/story/282)
   * [Avatar / Username - Recent Activity Conversation](https://agilezen.com/project/18091/story/292)
   * fixed contribution_presenter_spec so it does not have a hardcoded S3 bucket name
+  * [Voting counted twice ](https://agilezen.com/projects/18091/story/299)
 
 #### Bug Fixes
   * [AB:19017645 CCML::Error::TemplateError: Requested pages method but pages was not used.](https://agilezen.com/project/18091/story/280)
@@ -30,6 +31,18 @@
   * [Vote Getting Counted Twice](https://agilezen.com/project/18091/story/299)
   * [Home Page Grid 7 & 9 - Blank photos](https://agilezen.com/project/18091/story/302)
   * [Home Grid Picture Duplication](https://agilezen.com/project/18091/story/306)
+  
+### Post Deployment Instructions
+  * We need to delete duplicate survey_responses records on due to the ticket [299](https://agilezen.com/project/18091/story/299)
+    Pair with Perry on this.
+    * Check to see which of them contains duplicates in sql:
+      * "select *, count(survey_responses.id) AS num_of_occurance from survey_responses join people on people.id = survey_responses.person_id
+      group by person_id, survey_id
+      having count(person_id) > 1"
+    * go to console and delete the duplicates
+      * SurveyResponse.where(:survey_id=> survey-id-here,:person_id=> person-id-here).last.destroy 
+    
+
 
 ## 1.8.0
 
