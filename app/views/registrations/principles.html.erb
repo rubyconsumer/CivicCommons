@@ -1,0 +1,57 @@
+<%= content_for :header do %>
+  <%= javascript_include_tag 'lib/registrations' %>
+<% end %>
+<div class="wrapper">
+  <div class="content-container">
+    <h1>Our Guiding Principles</h1>
+    <p class="subtitle">The first thing you should know: This place operates by a few key principles and we'd like you to agree to them.</p>
+    <div class="main-content">
+      <div class="two-col">
+        <div class="cols">
+          <dl>
+            <dt>Diverse</dt>
+            <dd>The Commons is wide open. We prize a diversity of perspectives and experience.</dd>
+            <dt>Transparent</dt>
+            <dd>Introductions are essential. We don't do anonymity. We share biases up front and we don't hide important facts about our interest in particular stories or issues. In fact, we hope to learn as much about each other as we do about the issues themselves.</dd>
+            <dt>Participatory</dt>
+            <dd>Community building, journalism, civic conversation--these are team sports. We believe that each of our talents is essential to solving the problems and taking advantage of the opportunities facing our community. So hop off the sidelines and join the action.</dd>
+          </dl>
+        </div>
+        <div class="cols">
+          <dl>
+            <dt>Civil</dt>
+            <dd>We tackle the issues, not each other. We're as interested in each othe's opinions as we are in our own. And we act like it.</dd>
+            <dt>Entreprenurial</dt>
+            <dd>We recognize that our ideas and solutions must be as innovative as possible, so we're not afraid to experiment, because every experiment can teach us something.</dd>
+            <dt>Optimistic</dt>
+            <dd>We don't wear rose-colored glases, but we believe in the power of positive thinking, in focusing on what's going right and what can be improved.</dd>
+            <dt>Credible</dt>
+            <dd>We respect the facts. We cite sources. And we hold each other responsible for using both with care.</dd>
+          </dl>
+        </div>
+      </div>
+      <p class="cbx-error-message">You must agree to our principles to register for an account</p>
+      <div class="inset mod">
+        <input class="checkbox" type="checkbox" name="agree" value="" id="agree"><label class="checkbox" for="agree">I'm on board, and will do my best to keep these principles in mind.</label>
+      </div>
+      <div class="two-col">
+        <div class="cols">
+          <div class="inset">
+            <h3>I am an individual</h3>
+            <p> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin augue nisi, fermentum vitae, imperdiet a, auctor eu, mi. Nulla imperdiet molestie purus. Duis arcu dui, pretium in, molestie id, convallis eget, orci.</p>
+            <p><%= link_to 'Continue', new_person_registration_path, :class=> 'button verify' %></p>
+          </div>
+        </div>
+        <div class="cols">
+          <div class="inset">
+            <h3>I am an organization</h3>
+            <p> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin augue nisi, fermentum vitae, imperdiet a, auctor eu, mi. Nulla imperdiet molestie purus. Duis arcu dui, pretium in, molestie id, convallis eget, orci.</p>
+            <p><a href="/org_reg.html" class="button verify">Continue</a></p>
+          </div>
+        </div>
+      </div>
+    </div><!-- /.main-content -->
+    <div class="aside supplementary">
+    </div><!-- /.aside -->
+  </div><!-- /.content-container -->
+</div><!-- /.wrapper -->

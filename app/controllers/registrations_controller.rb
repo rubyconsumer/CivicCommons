@@ -7,4 +7,8 @@ class RegistrationsController < Devise::RegistrationsController
   def form_presenter
     @presenter = RegistrationFormPresenter.new(resource)
   end
+  
+  def principles
+  end
+  
 end
