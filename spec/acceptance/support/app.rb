@@ -85,11 +85,12 @@ module CivicCommonsDriver
   def page_header
     @header = (@header || Header.new)
   end
+
   def method_missing(method, *args, &block)
     if current_page and current_page.respond_to? method
       current_page.send(method, *args, &block)
     else
-      throw "#{current_page} can't do #{method}"
+      super
     end
   end
   :private

@@ -21,6 +21,7 @@ FactoryGirl.define do |f|
   end
   factory :registered_user, :parent => :normal_person do |u|
     u.confirmed_at { Time.now }
+    u.declined_fb_auth true
     u.skip_email_marketing true
   end
 
@@ -51,7 +52,6 @@ FactoryGirl.define do |f|
   end
   factory :registered_user_with_conflicting_facebook_email, :parent => :registered_user do | u |
     u.email 'johnd-conflicting-email@test.com'
-    u.declined_fb_auth true
   end
 
   factory :admin_person, :parent => :registered_user do |u|

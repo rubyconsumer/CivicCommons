@@ -72,8 +72,6 @@ feature "Voting system", %q{
 
     # When I click submit
     vote_page.click_submit
-    sleep 1
-
     # Then a vote confirmation dialog should show up
     vote_page.should have_selector('div.modal')
 
@@ -165,10 +163,6 @@ feature "Voting system", %q{
     # When I click on the cast ballot button
     vote_page.select_one_option
     vote_page.click_submit
-
-    # Then I will have finished voting.
-    sleep 1
-    vote_confirmation_page.should have_selector('a', :content => 'Yes')
     vote_page.click_link_or_button('Yes')
     sleep 1
     vote_page.should have_selector('h2', :content => 'Thank you for voting!')
@@ -192,8 +186,6 @@ feature "Voting system", %q{
     vote_page.visit_a_vote(@survey)
     vote_page.select_one_option
     vote_page.click_submit
-    sleep 1
-    vote_confirmation_page.should have_selector('a', :content => 'Yes')
 
     # When I click yes
     vote_page.click_link_or_button('Yes')
@@ -210,8 +202,6 @@ feature "Voting system", %q{
     vote_page.visit_a_vote(@survey)
     vote_page.select_one_option
     vote_page.click_submit
-    sleep 1
-    vote_confirmation_page.should have_selector('a', :content => 'Yes')
 
     # When I click no
     vote_page.click_link_or_button('Cancel')
@@ -222,7 +212,6 @@ feature "Voting system", %q{
   end
 
   scenario "Receiving an email when finished voting.", :js => true do
-    # Given I am a registered user
     login_as :person
     Notifier.deliveries  = []
     given_an_survey_with_an_issue
@@ -232,12 +221,8 @@ feature "Voting system", %q{
     vote_page.select_one_option
 
     vote_page.click_submit
-    sleep 1
-    vote_confirmation_page.should have_selector('a', :content => 'Yes')
     vote_page.click_link_or_button('Yes')
-    sleep 1
-
-    # Then I will receive a confirmation email
+    wait_until { Notifier.deliveries.last != nil }
     Notifier.deliveries.last.subject.should == "Thanks for your vote participation."
   end
 
