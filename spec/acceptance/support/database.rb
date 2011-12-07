@@ -4,6 +4,10 @@ module CivicCommonsDriver
       Database
     end
 
+    def self.delete_all_person
+      Person.delete_all
+    end
+    
     def self.has_any?(type)
       !Topic.count.zero?
     end
