@@ -23,11 +23,14 @@ module CivicCommonsDriver
     Factory.create(type, options)
   end
 
-  def login_as(type = :person)
-    self.user = create_user type
+  def login_as(type = :person, options={})
+    self.user = create_user type, options
     login logged_in_user
   end
 
+  def reload_logged_in_user
+    self.user = database.find_user(logged_in_user)
+  end
   def goto screen, options={}
     set_current_page_to screen, options
     current_page.goto

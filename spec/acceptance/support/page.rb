@@ -75,8 +75,12 @@ module CivicCommonsDriver
     alias :add_link :has_link
     def has_button(name, locator, resulting_page=:current)
       define_method "click_#{name}_button" do
+        wait_until { send("#{name}_button").visible? }
         click_button "#{locator}"
         set_current_page_to resulting_page
+      end
+      define_method "#{name}_button" do
+        find_button locator
       end
     end
     alias :add_button :has_button

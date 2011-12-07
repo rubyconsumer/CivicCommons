@@ -12,7 +12,7 @@ feature "8457517 link local account with facebook", %q{
     login_page.sign_out
   end
 
-  let (:facebook_auth_page)         { FacebookAuthPage.new(page) }
+  let (:facebook_auth_page) { FacebookAuthPage.new(page) }
   let (:login_page)                 { LoginPage.new(page) }
   let (:settings_page)              { SettingsPage.new(page) }
   let (:fb_linking_success_page)    { FbLinkingSuccessPage.new(page) }
@@ -31,28 +31,30 @@ feature "8457517 link local account with facebook", %q{
 
   context "When I have not linked my account to Facebook" do
 
-    def given_a_registered_user
-      @person = Factory.create(:registered_user,:email => 'johnd@test.com')
-    end
-
     scenario "use facebook email if conflicting", :js=>true do
-      login_as :registered_user_with_conflicting_facebook_email
+      login_as :registered_user
       begin_connecting_to_facebook
       use_facebook_email
-      database.find_user(logged_in_user).email.should == 'johnd@test.com'
+      reload_logged_in_user
+      logged_in_user.email.should == 'johnd@test.com'
     end
 
-    context "Facebook suggest modal dialogue" do
+
+    scenario "I should be able to link my account to facebook from the 'accounts' page", :js=>true do
+      login_as :registered_user, email: 'johnd@test.com'
+      connect_account_to_facebook
+      logged_in_user.should be_facebook_authenticated
+      page.should_not have_link 'Connect with Facebook'
+      page.should have_link "Unlink from Facebook"
+    end
+
+    describe "Facebook suggest modal dialogue" do
       scenario "should be displayed if I have not linked my account to facebook" do
-        login_as :registered_user
+        login_as :registered_user_who_hasnt_declined_fb
         page.should contain suggest_facebook_auth_page.modal
       end
       scenario "should be not be displayed when I have declined the suggestion to link to Facebook" do
-        # Given I am a registered user
-        given_a_registered_user
-
-        # And I logged in
-        login_page.sign_in(@person)
+        login_as :registered_user_with_facebook_email
 
         # Then I should see a suggestion for Facebook link modal
         page.should contain suggest_facebook_auth_page.modal
@@ -70,42 +72,6 @@ feature "8457517 link local account with facebook", %q{
         page.should_not contain suggest_facebook_auth_page.modal
       end
     end
-
-    scenario "I should be able to link my account to facebook from the 'accounts' page" do
-      # Given I am a registered user
-      given_a_registered_user
-
-      # When I visit the hompage
-      visit homepage
-
-      # And I logged in
-      login_page.sign_in(@person)
-
-      # And I go to the settings page
-      settings_page.visit(@person)
-
-      # Then I should be on the settings page
-      should_be_on edit_user_path(@person)
-
-      # And it should have the link 'Connect with Facebook'
-      page.should have_link 'Connect with Facebook'
-
-      # When I click on 'Connect with Facebook'
-      facebook_auth_page.click_connect_with_facebook
-
-      # Then it should  open a modal dialog of Facebook linking success 
-      response_should_js_open_colorbox(fb_linking_success_path)
-
-      # When I go to settings page 
-      settings_page.visit(@person)
-
-      # Then it should not have 'Connect with Facebook' link
-      page.should_not have_link 'Connect with Facebook'
-
-      # And it should have 'Unlink Account' link
-      page.should have_link "Unlink from Facebook"
-    end
-
   end
 
   context "When I already have linked my account to facebook previously" do
@@ -198,6 +164,11 @@ feature "8457517 link local account with facebook", %q{
       # then the modal should have link to sign in using facebook
       page.should have_link "Sign in with Facebook"
     end
+  end
+  def connect_account_to_facebook
+    begin_connecting_to_facebook
+    submit
+    reload_logged_in_user
   end
   def begin_connecting_to_facebook
     page_header.follow_settings_link :for => logged_in_user
