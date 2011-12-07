@@ -7,5 +7,4 @@
   - else
     %p
       %a{:class => "cc-login-btn", :href => "/people/login"} Login
-    or
-    %a{:href => "/principles.html"} register for an account
+    == or #{link_to 'register for an account', registrations_principles_path}
