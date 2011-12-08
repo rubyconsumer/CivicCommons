@@ -1,8 +1,9 @@
 class Registrations::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   
   def facebook
+    p "IZ IN FACEBOOK"
     if signed_in? && !current_person.facebook_authenticated?
-      link_with_facebook      
+      link_with_facebook
     else
       if authentication = Authentication.find_from_auth_hash(env['omniauth.auth'])
         successful_authentication(authentication)

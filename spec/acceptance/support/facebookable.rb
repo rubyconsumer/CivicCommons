@@ -7,6 +7,6 @@ module Facebookable
     'extra' => { 'user_hash' => { 'email' => "johnd@test.com" } } 
   }
   def stub_facebook_auth
-    OmniAuth.config.add_mock(:facebook, FACEBOOK_AUTH_HASH)
+    #OmniAuth.config.add_mock(:facebook, FACEBOOK_AUTH_HASH)
   end
 end
