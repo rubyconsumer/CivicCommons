@@ -6,32 +6,36 @@ feature "Register Feature", %q{
   So that I can interact with The Civic Commons community
 } do
 
+  include Facebookable
+
   background do
-    # clean up
-    Person.delete_all
     clear_mail_queue
   end
 
-  scenario "User signs up for account with valid credentials" do
+  scenario "User signs up without facebook" do
+    pending
+    goto :registration_page
+    fill_in_bio_with "Im a hoopy frood!"
+    fill_in_zip_code_with "47134"
+    uncheck_weekly_newsletter_checkbox
 
-    # Given I am on the registration page
-    reg_page = RegistrationPage.new(page)
-    reg_page.visit
+    follow_i_dont_want_to_use_facebook_link
+    zip_code_field.should have_value "47134"
+    bio_field.should have_value "47134"
+    weekly_newsletter_checkbox.should_not be_checked
+    daily_digest_checkbox.should be_checked
 
-    # And I sign up with valid credentials
-    person = Factory.attributes_for(:normal_person)
-    reg_page.fill_registration_form_and_submit(person)
+    #The actual assertion stuff should be part of card #311
+  end
 
-    # Then a user should be created with my credentials
-    Person.where(email: person[:email]).count.should == 1
+  scenario "User signs up with facebook" do
+    goto :registration_page
+    fill_in_bio_with "Im a hoopy frood!"
+    fill_in_zip_code_with "47134"
+    follow_connect_with_facebook_link
 
-    # And a confirmation email should be sent
-    email, subject = mask_with_intercept_email(person[:email], 'Confirmation instructions')
-    should_send_an_email({
-      'To' => email,
-      'Subject' => subject
-    })
-
+    current_page.should be_for :thanks_go_check_your_email
+    newly_registered_user.should have_been_sent :registration_confirmation_email
   end
 
   scenario "User signs up for account with invalid credentials" do

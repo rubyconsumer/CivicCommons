@@ -1,0 +1,31 @@
+<div class="wrapper">
+  <div class="content-container">
+    <h1>Register</h1>
+    <%= form_for(form_presenter, :as => resource_name, :url => secure_registration_url(resource_name), :method => "post", "data-remote" => 'true', :html => { :multipart => 'true', :class => "register" }) do |f| %>
+      <fieldset>
+        <div class="form-block">
+          <%= f.label :bio, 'Tell us a little about yourself:' %>
+          <%= f.text_area :bio, class: 'textbox', rows: 10 %>
+        </div>
+        <div class="form-block">
+          <%= f.label :zip_code, 'Zipcode:' %>
+          <%= f.text_field :zip_code, class: 'textbox' %>
+          <span class="required">*</span>
+        </div>
+        <div class="form-block">
+          <%= f.check_box :daily_digest, class: 'checkbox' %>
+          <%= f.label :daily_digest, 'Yes, please send me the digest of activity relevant to my interests', class: 'checkbox' %>
+        </div>
+        <div class="form-block">
+          <%= f.check_box :weekly_newsletter, class: 'checkbox' %>
+          <%= f.label :weekly_newsletter, 'Yes, please send me The Civic Commons weekly newsletter', class: 'checkbox' %>
+        </div>
+      </fieldset>
+      <div class="form-block facebook-auth">
+        <%= link_with_facebook_link %>
+        or
+        <%= f.submit "I don't have a Facebook account", :class => "no-fb" %>
+      </div>
+    <% end %>
+  </div>
+</div>
