@@ -29,7 +29,7 @@ feature "Register Feature", %q{
     #The actual assertion stuff should be part of card #311
   end
 
-  scenario "User signs up with facebook" do
+  scenario "User signs up with facebook", :js=>true do
     goto :registration_page
     fill_in_bio_with "Im a hoopy frood!"
     fill_in_zip_code_with "47134"

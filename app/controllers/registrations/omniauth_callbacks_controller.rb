@@ -1,7 +1,6 @@
 class Registrations::OmniauthCallbacksController < Devise::OmniauthCallbacksController
-  
+
   def facebook
-    p "IZ IN FACEBOOK"
     if signed_in? && !current_person.facebook_authenticated?
       link_with_facebook
     else
@@ -15,7 +14,7 @@ class Registrations::OmniauthCallbacksController < Devise::OmniauthCallbacksCont
 
   def failure
     text = "#{I18n.t('devise.omniauth_callbacks.failure', :kind => failed_strategy.name.to_s.humanize, :reason => failure_message)}"
-    render_popup(text) 
+    render_popup(text)
   end
 
 private
@@ -68,7 +67,7 @@ private
 
   def successfully_linked_but_conflicting_email
     session[:other_email] = @other_email
-    render_js_conflicting_email    
+    render_js_conflicting_email
   end
 
   def successful_authentication(authentication)
