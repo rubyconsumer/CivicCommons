@@ -23,13 +23,9 @@ private
   end
 
   def create_account_using_facebook_credentials
-    person = Person.create_from_auth_hash(env['omniauth.auth'])
+    person = Person.build_from_auth_hash(env['omniauth.auth'])
     if person.valid?
-      flash[:notice] = I18n.t "devise.omniauth_callbacks.success", :kind => "Facebook"
-      flash[:successful_fb_registration_modal] = true
-      person.remember_me = true
-      sign_in person, :event => :authentication
-      render_js_redirect_to((env['omniauth.origin'] || root_path),:text => 'Registering to CivicCommons account using your Facebook Credentials...')
+      send_finish_data_to_the_opening_window(env['omniauth.auth'])
     elsif person.errors[:email].to_s.include?("has already been taken")
       flash[:email] = person.email
       render_js_registering_email_taken
@@ -100,7 +96,7 @@ private
           window.close();
         }});
         }"
-    render_popup(@text, @script) 
+    render_popup(@text, @script)
   end
 
   def render_js_redirect_to(path = '', options={})
@@ -111,11 +107,15 @@ private
           };
           window.opener.location = '#{path}';
           }"
-   render_popup(@text, @script) 
+   render_popup(@text, @script)
   end
 
   def render_popup(text,script = nil)
     render :partial => '/authentication/fb_interstitial_message', :layout => 'fb_popup', :locals => {:text => text, :script => script}
   end
 
+  def send_finish_data_to_the_opening_window(facebook_data)
+    p facebook_data.to_json
+    render :partial => '/plain_old_javascript', locals: {script: "window.opener.console.log(#{facebook_data.to_json})" }
+  end
 end

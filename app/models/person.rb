@@ -327,12 +327,16 @@ class Person < ActiveRecord::Base
     end
   end
 
-  def self.create_from_auth_hash(auth_hash)
+  def self.build_from_auth_hash(auth_hash)
     new_person = new(:name => auth_hash['user_info']['name'],
         :email => Authentication.email_from_auth_hash(auth_hash),
         :encrypted_password => '',
         :create_from_auth => true
       )
+    new_person
+  end
+  def self.create_from_auth_hash(auth_hash)
+    new_person = build_from_auth_hash(auth_hash)
     new_person.save
     new_person.confirm! if new_person.persisted?
     new_person.authentications << Authentication.new_from_auth_hash(auth_hash)
