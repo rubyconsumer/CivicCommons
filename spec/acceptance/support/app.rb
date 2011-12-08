@@ -99,9 +99,13 @@ module CivicCommonsDriver
   :private
   def login(user)
     goto :login
-    fill_in_email_with user.email
-    fill_in_password_with user.password
-    click_login_button
+    if user.on_facebook_auth?
+      follow_login_with_facebook_link
+    else
+      fill_in_email_with user.email
+      fill_in_password_with user.password
+      click_login_button
+    end
   end
 
   def self.current_page= page
