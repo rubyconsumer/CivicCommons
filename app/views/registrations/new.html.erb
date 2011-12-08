@@ -1,8 +1,22 @@
+
+<%=javascript_include_tag "lib/registration_page" %>
 <div class="wrapper">
   <div class="content-container">
     <h1>Register</h1>
     <%= form_for(form_presenter, :as => resource_name, :url => secure_registration_url(resource_name), :method => "post", "data-remote" => 'true', :html => { :multipart => 'true', :class => "register" }) do |f| %>
       <fieldset>
+        <div class="hide form-block">
+          <%= f.label :first_name, 'First Name:' %>
+          <%= f.text_field :first_name, class: 'textbox' %>
+        </div>
+        <div class="hide form-block">
+          <%= f.label :last_name, 'Last Name:' %>
+          <%= f.text_field :last_name, class: 'textbox' %>
+        </div>
+        <div class="hide form-block">
+          <%= f.label :email, 'Email:' %>
+          <%= f.text_field :email, class: 'textbox' %>
+        </div>
         <div class="form-block">
           <%= f.label :bio, 'Tell us a little about yourself:' %>
           <%= f.text_area :bio, class: 'textbox', rows: 10 %>

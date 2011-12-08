@@ -115,7 +115,6 @@ private
   end
 
   def send_finish_data_to_the_opening_window(facebook_data)
-    p facebook_data.to_json
-    render :partial => '/plain_old_javascript', locals: {script: "window.opener.console.log(#{facebook_data.to_json})" }
+    render :partial => '/plain_old_javascript', locals: {script: "window.opener.RegistrationPage.submitWithFacebookData(#{facebook_data.to_json})" }
   end
 end

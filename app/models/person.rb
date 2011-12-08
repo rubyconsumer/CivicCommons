@@ -13,7 +13,6 @@ class Person < ActiveRecord::Base
     end
   end
 
-
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable, and :timeoutable
   devise :database_authenticatable,
@@ -55,7 +54,10 @@ class Person < ActiveRecord::Base
   attr_protected :admin
 
   has_one :facebook_authentication, :class_name => 'Authentication', :conditions => {:provider => 'facebook'}
+
   has_many :authentications, :dependent => :destroy
+  accepts_nested_attributes_for :authentications
+
   has_many :content_items, :foreign_key => 'person_id', :dependent => :restrict
   has_many :content_templates, :foreign_key => 'person_id', :dependent => :restrict
   has_many :contributions, :foreign_key => 'owner', :uniq => true, :dependent => :restrict
