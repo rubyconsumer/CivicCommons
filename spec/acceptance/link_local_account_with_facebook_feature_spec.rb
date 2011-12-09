@@ -77,7 +77,7 @@ feature "8457517 link local account with facebook", %q{
 
     scenario "I should not be able to login using my existing account anymore", :js=>true do
       user = create_user :registered_user_with_facebook_authentication
-      goto :login_page
+      goto :login
       sign_in(user)
       page.should have_content 'It looks like you registered using Facebook, please login with Facebook.'
     end
