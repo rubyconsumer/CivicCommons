@@ -14,4 +14,15 @@ $(document).ready(function(){
       return false;
     }
   });
+  
+  // user registration form
+  $("a.no-fb").click(function() {
+    $(".fb-reg").fadeIn();
+    $(".facebook-auth").hide();
+  });
+  
+  $('a.cancel').click(function() {
+    $(".fb-reg").fadeOut();
+    $(".facebook-auth").show();
+  })
 });

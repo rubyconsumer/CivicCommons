@@ -1,7 +1,37 @@
+<%= content_for :header do %>
+  <%= javascript_include_tag 'lib/registrations' %>
+<% end %>
 <div class="wrapper">
   <div class="content-container">
     <h1>Register</h1>
     <%= form_for(form_presenter, :as => resource_name, :url => secure_registration_url(resource_name), :method => "post", "data-remote" => 'true', :html => { :multipart => 'true', :class => "register" }) do |f| %>
+      <fieldset class="fb-reg">
+        <div class="form-block">
+          <%= f.label :first_name, 'Your Name:' %>
+          <%= f.text_field :first_name, :class => 'textbox first-name'%>
+          <%= f.text_field :last_name, :class => 'textbox last-name'%>
+          <span class="required">*</span>
+        </div>
+        <div class="form-block">
+          <%= f.label :email, 'Email Address:' %>
+          <%= f.text_field :email, :class => 'textbox'%>
+          <span class="required">*</span>
+        </div>
+        <div class="form-block">
+          <%= f.label :password %>
+          <%= f.password_field :password, :class=> 'textbox' %>
+          <span class="required">*</span>
+        </div>
+        <div class="form-block">
+          <%= f.label :password_confirmation %>
+          <%= f.password_field :password_confirmation, :class=> 'textbox' %>
+          <span class="required">*</span>
+        </div>
+        <div class="form-block">
+          <%= f.label :avatar, "Your Photo:" %>
+          <%= f.file_field :avatar, :class => 'textbox' %>
+        </div>
+      </fieldset>
       <fieldset>
         <div class="form-block">
           <%= f.label :bio, 'Tell us a little about yourself:' %>
@@ -24,8 +54,15 @@
       <div class="form-block facebook-auth">
         <%= link_with_facebook_link %>
         or
-        <%= f.submit "I don't have a Facebook account", :class => "no-fb" %>
+        <%= link_to "I don't have a Facebook account", '#', :class => 'no-fb' %>
+      </div>
+      <div class="form-block fb-reg">
+        <%= f.submit "Continue", :class => 'submit' %> 
+        or
+        <%= link_to 'Cancel', '/', :class=> 'cancel' %>
       </div>
     <% end %>
   </div>
 </div>
+
+

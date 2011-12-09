@@ -397,9 +397,9 @@ div#poll_button input.submit {
   line-height: 2.8em;
   margin-right: 5px;
 }
-form #first-name {width: 180px;}
-form #last-name {width: 215px;}
-form #middle-name {width: 23px;}
+form .first-name {width: 180px;}
+form .last-name {width: 252px; /* was 215px with middle name*/}
+form .middle-name {width: 23px;}
 
 /*- Facebook Connect in Settings ----------*/
 
