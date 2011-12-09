@@ -1,6 +1,6 @@
 class Authentication < ActiveRecord::Base
   belongs_to :person
-  validates_presence_of :uid, :provider
+  validates_presence_of :uid, :provider, :person_id
   validates_uniqueness_of :uid, :scope => :provider
 
   def self.new_from_auth_hash(auth_hash)
