@@ -44,31 +44,24 @@ feature "8457517 link local account with facebook", %q{
       login_as :registered_user, email: 'johnd@test.com'
       connect_account_to_facebook
       logged_in_user.should be_facebook_authenticated
+      goto :edit_profile_page, :for => logged_in_user
       page.should_not have_link 'Connect with Facebook'
       page.should have_link "Unlink from Facebook"
     end
 
-    describe "Facebook suggest modal dialogue" do
+    describe "Facebook suggest modal dialogue", :js=>true do
       scenario "should be displayed if I have not linked my account to facebook" do
         login_as :registered_user_who_hasnt_declined_fb
         page.should contain suggest_facebook_auth_page.modal
       end
-      scenario "should be not be displayed when I have declined the suggestion to link to Facebook" do
-        login_as :registered_user_with_facebook_email
+      scenario "should be not be displayed when I have declined the suggestion to link to Facebook", :js=>true do
+        login_as :registered_user_who_hasnt_declined_fb
 
-        # Then I should see a suggestion for Facebook link modal
         page.should contain suggest_facebook_auth_page.modal
 
-        # And I declined the Suggest Facebook auth page
         suggest_facebook_auth_page.click_decline
-
-        # And I logged out
         login_page.sign_out
-
-        # When I logged in again
-        login_page.sign_in(@person)
-
-        # Then I should not see the suggest modal
+        login_page.sign_in(logged_in_user)
         page.should_not contain suggest_facebook_auth_page.modal
       end
     end
@@ -76,50 +69,16 @@ feature "8457517 link local account with facebook", %q{
 
   context "When I already have linked my account to facebook previously" do
 
-    def given_a_registered_user_w_facebook_auth
-      @person = Factory.create(:registered_user)
-      @facebook_auth = Factory.build(:facebook_authentication)
-      @person.link_with_facebook(@facebook_auth)
-    end
-
-    scenario "I should be able to login using facebook and to existing account" do
-      # Given I am a registered user with Facebook Auth
-      given_a_registered_user_w_facebook_auth
-
-      # When I visit the homepage
-      visit homepage
-
-      # Then I should have the link 'Sign in with Facebook'
-      page.should have_link 'Sign in with Facebook'
-
-      # And I should not have my name on the site(because I haven't logged in yet)
-      page.should_not have_content "John Doe"
-
-      # When I sign in using Facebook
-      facebook_auth_page.sign_in
-
-      # Then it should give me a javascript to redirect me to the homepage
-      response_should_js_redirect_to(homepage)
-      visit homepage
-
-      # And I should not see the link 'Sign in with Facebook' anymore
-      page.should_not have_link 'Sign in with Facebook'
-
-      # And I should see my name there
+    scenario "I should be able to login using facebook and to existing account", :js=>true do
+      login_as :registered_user_with_facebook_authentication
+      page.should_not have_link 'Login to Civic Commons'
       page.should have_content "John Doe"
     end
 
-    scenario "I should not be able to login using my existing account anymore" do
-      # Given I am a registered user that have connected my account with facebook
-      given_a_registered_user_w_facebook_auth
-
-      # When I am on the homepage
-      visit homepage
-
-      # And I try to sign in
-      login_page.sign_in(@person)
-
-      # Then I should not be able to login, and should display the proper message
+    scenario "I should not be able to login using my existing account anymore", :js=>true do
+      user = create_user :registered_user_with_facebook_authentication
+      goto :login_page
+      sign_in(user)
       page.should have_content 'It looks like you registered using Facebook, please login with Facebook.'
     end
 
@@ -127,41 +86,22 @@ feature "8457517 link local account with facebook", %q{
 
   context "Facebook profile picture" do
 
-    def user_profile_picture
-      page.find('#login-status a img')['src']
-    end
 
-    scenario "I should my facebook profile picture if I've connected to Facebook" do
-      login_as :registered_user_with_avatar
-      connect_account_to_facebook
-      header.user_profile_picture.should be_of "https://graph.facebook.com/12345/picture"
+    scenario "I should my facebook profile picture if I've connected to Facebook", :js=>true do
+      login_as :registered_user_with_facebook_authentication
+      page_header.user_profile_picture.should be_of "https://graph.facebook.com/12345/picture"
     end
   end
 
   context "Forgot password" do
-    def given_a_registered_user_w_facebook_auth_w_email(email)
-      @person = Factory.create(:registered_user,:email => email)
-      @facebook_auth = Factory.build(:facebook_authentication)
-      @person.link_with_facebook(@facebook_auth)
-    end
-    scenario "I should see a modal dialog prompting me to login to facebook." do
-      # Given I am a registered user with facebook account
-      given_a_registered_user_w_facebook_auth_w_email('johnd@example.com')
-
-      # when I am on the forgot password page
+    scenario "I should see a modal dialog prompting me to login to facebook.", :js=>true do
+      create_user :registered_user_with_facebook_authentication
       forgot_password_page.visit
-
-      # when I enter my email
       forgot_password_page.enter_email('johnd@example.com')
-
-      # when I click submit
       forgot_password_page.click_submit
-
-      # then I should see modal dialog prompting me to login using Facebook instead
+      sleep 3
       response_should_js_open_colorbox(fb_auth_forgot_password_path)
       fb_auth_forgot_password_modal_page.visit
-
-      # then the modal should have link to sign in using facebook
       page.should have_link "Sign in with Facebook"
     end
   end

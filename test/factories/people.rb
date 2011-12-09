@@ -57,7 +57,7 @@ FactoryGirl.define do |f|
     u.email 'johnd-conflicting-email@test.com'
   end
 
-  factory :registered_user_without_conflicting_facebook_email, :parent => :registered_user do | u |
+  factory :registered_user_with_facebook_email, :parent => :registered_user do | u |
     u.email 'johnd@test.com'
   end
   factory :registered_user_with_facebook_authentication, :parent => :registered_user do |u|
