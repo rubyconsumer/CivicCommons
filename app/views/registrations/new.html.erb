@@ -6,6 +6,9 @@
   <div class="content-container">
     <h1>Register</h1>
     <%= form_for(form_presenter, :as => resource_name, :url => secure_registration_url(resource_name), :method => "post", "data-remote" => 'true', :html => { :multipart => 'true', :class => "register" }) do |f| %>
+      <% resource.errors.full_messages.each do |msg| %>
+        <p><%= msg %></p>
+      <% end %>
       <fieldset class="regular-reg <%= 'show' if form_presenter.show_normal_fields? %>">
         <div class="form-block">
           <%= f.label :first_name, 'Your Name:' %>

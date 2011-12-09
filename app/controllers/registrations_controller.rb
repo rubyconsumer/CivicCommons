@@ -5,8 +5,8 @@ class RegistrationsController < Devise::RegistrationsController
   helper_method :form_presenter
 
   def create
-    params[:person][:create_from_auth] = true
-    params[:person][:encrypted_password] = ''
+    params['person']['create_from_auth'] = true
+    params['person']['encrypted_password'] = ''
     super
   end
 

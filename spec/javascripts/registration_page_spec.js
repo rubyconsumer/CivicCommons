@@ -33,16 +33,13 @@ describe('RegistrationPage', function () {
       expect($('#person_email').val()).toEqual('zee@zach');
     });
     it('adds in the facebook uid', function() {
-      expect($('#authentication_uid').val()).toEqual('1234');
+      expect($('#person_authentications_attributes_0_uid').val()).toEqual('1234');
     });
     it('adds the facebook token', function() {
-      expect($('#authentication_token').val()).toEqual('ABC123');
+      expect($('#person_authentications_attributes_0_token').val()).toEqual('ABC123');
     });
     it('adds the provider', function() {
-      expect($('#authentication_provider').val()).toEqual('facebook');
-    });
-    it('adds create_from_auth', function() {
-      expect($('#person_create_from_auth').val()).toEqual('true');
+      expect($('#person_authentications_attributes_0_provider').val()).toEqual('facebook');
     });
     it('submits the form', function() {
       expect('submit').toHaveBeenTriggeredOn($('form#person_new'));
