@@ -98,30 +98,30 @@ describe Registrations::OmniauthCallbacksController, "handle facebook authentica
           sign_in @person
           get :facebook
         end
-        
+
         it "should not have link the account with facebook" do
           @person.facebook_authenticated?.should be_false
         end
-        
+
         it "should redirect to homegape" do
           # response.should redirect_to root_path
           response_should_js_redirect_to(root_path)
         end
-        
+
         it "should display failed to link message" do
           flash[:notice].should == "Could not link your accaunt to Facebook"
         end
-        
+
       end
     end
     context "Not logged in and logging in using facebook" do
-            
+
       def given_a_registered_user_w_facebook_auth
         @person = Factory.create(:registered_user)
         @authentication = Factory.build(:authentication)
         @person.facebook_authentication = @authentication
       end
-      
+
       context "and successfully logging in using facebook" do
         before(:each) do
           stub_successful_auth
@@ -131,7 +131,7 @@ describe Registrations::OmniauthCallbacksController, "handle facebook authentica
           sign_in @person
           get :facebook
         end
-      
+
         it "should redirect to the previous page" do
           response_should_js_redirect_to(conversations_path)
         end
@@ -148,26 +148,9 @@ describe Registrations::OmniauthCallbacksController, "handle facebook authentica
           stub_successful_auth
           @controller.stub(:signed_in?).and_return(false)
           Authentication.should_receive(:find_from_auth_hash).and_return(nil)
-          Person.stub(:create_from_auth_hash).and_return(Factory.create(:registered_user))                    
         end
 
-        it "should redirect to the previous page" do
-
-          get :facebook
-          response_should_js_redirect_to(conversations_path)
-        end
-
-        it "should display successful login using facebook" do  
-          get :facebook
-          flash[:notice].should == 'Successfully authorized from Facebook account.'
-        end
-        
-        it "should set the flag to display the successful confirmation modal" do
-          get :facebook
-          flash[:successful_fb_registration_modal].should be_true 
-        end
       end
-
       context "unsuccessfully due to email already existing in the system" do
         before(:each) do
           stub_successful_auth
@@ -176,22 +159,22 @@ describe Registrations::OmniauthCallbacksController, "handle facebook authentica
           @mock_person = mock_person
           @mock_person.stub(:valid?).and_return(false)
           @mock_person.stub(:errors).and_return({:email => "has already been taken"})
-          Person.stub(:create_from_auth_hash).and_return(@mock_person)
+          Person.stub(:build_from_auth_hash).and_return(@mock_person)
           @controller.stub(:render)
-          
+
         end
 
         it "should open a colorbox that tells user to login using facebook instead" do
           get :facebook
           response_should_js_open_colorbox(registering_email_taken_path)
         end
-        
+
         it "should NOT set the flag to display the successful confirmation modal" do
           get :facebook
           flash[:successful_fb_registration_modal].should_not be_true 
         end
       end
-      
+
       context "unsuccessfuly due to other misc errors" do
         before(:each) do
           stub_successful_auth
@@ -199,15 +182,15 @@ describe Registrations::OmniauthCallbacksController, "handle facebook authentica
           Authentication.should_receive(:find_from_auth_hash).and_return(nil)
           @mock_person = mock_person
           @mock_person.stub(:valid?).and_return(false)
-          Person.stub(:create_from_auth_hash).and_return(@mock_person)
+          Person.stub(:build_from_auth_hash).and_return(@mock_person)
           @controller.stub(:render)
         end
-        
+
         it "should redirect to back" do
           @controller.stub(:render_js_redirect_to).with("/conversations", anything)
           get :facebook
         end
-        
+
         it "should display the message 'Something went wrong, your account cannot be created'" do
           @controller.should_receive(:render_popup).with('Something went wrong, your account cannot be created', anything)
           get :facebook
