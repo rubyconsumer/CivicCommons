@@ -17,12 +17,14 @@ $(document).ready(function(){
   
   // user registration form
   $("a.no-fb").click(function() {
-    $(".fb-reg").fadeIn();
+    $(".regular-reg").fadeIn();
     $(".facebook-auth").hide();
+    return false;
   });
   
   $('a.cancel').click(function() {
-    $(".fb-reg").fadeOut();
+    $(".regular-reg").hide();
     $(".facebook-auth").show();
+    return false;
   })
 });
