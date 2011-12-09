@@ -10,6 +10,7 @@ feature "Register Feature", %q{
 
   background do
     database.delete_all_person
+    stub_facebook_auth
     clear_mail_queue
   end
 
@@ -29,14 +30,19 @@ feature "Register Feature", %q{
     #The actual assertion stuff should be part of card #311
   end
 
-  scenario "User signs up with facebook" do
+  scenario "User signs up with facebook", :js=>true do
     goto :registration_page
     fill_in_bio_with "Im a hoopy frood!"
     fill_in_zip_code_with "47134"
     follow_connect_with_facebook_link
 
-    current_page.should be_for :thanks_go_check_your_email
+    wait_until { Person.last }
+
+    newly_registered_user.bio.should == "Im a hoopy frood!"
+    newly_registered_user.zip_code.should == "47134"
     newly_registered_user.should have_been_sent :registration_confirmation_email
+
+    current_page.should be_for :thanks_for_registering
   end
 
   scenario "User signs up for account with invalid credentials" do

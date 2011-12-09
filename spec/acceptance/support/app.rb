@@ -28,6 +28,10 @@ module CivicCommonsDriver
     login logged_in_user
   end
 
+  def newly_registered_user
+    Person.last
+  end
+
   def reload_logged_in_user
     self.user = database.find_user(logged_in_user)
   end

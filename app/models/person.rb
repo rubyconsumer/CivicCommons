@@ -13,7 +13,6 @@ class Person < ActiveRecord::Base
     end
   end
 
-
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable, and :timeoutable
   devise :database_authenticatable,
@@ -55,7 +54,10 @@ class Person < ActiveRecord::Base
   attr_protected :admin
 
   has_one :facebook_authentication, :class_name => 'Authentication', :conditions => {:provider => 'facebook'}
+
   has_many :authentications, :dependent => :destroy
+  accepts_nested_attributes_for :authentications
+
   has_many :content_items, :foreign_key => 'person_id', :dependent => :restrict
   has_many :content_templates, :foreign_key => 'person_id', :dependent => :restrict
   has_many :contributions, :foreign_key => 'owner', :uniq => true, :dependent => :restrict
@@ -327,12 +329,16 @@ class Person < ActiveRecord::Base
     end
   end
 
-  def self.create_from_auth_hash(auth_hash)
+  def self.build_from_auth_hash(auth_hash)
     new_person = new(:name => auth_hash['user_info']['name'],
         :email => Authentication.email_from_auth_hash(auth_hash),
         :encrypted_password => '',
         :create_from_auth => true
       )
+    new_person
+  end
+  def self.create_from_auth_hash(auth_hash)
+    new_person = build_from_auth_hash(auth_hash)
     new_person.save
     new_person.confirm! if new_person.persisted?
     new_person.authentications << Authentication.new_from_auth_hash(auth_hash)
