@@ -30,4 +30,10 @@ module CustomMatchers
       match_errors(object,field,pattern)
     end
   end
+  
+  RSpec::Matchers.define :have_value do |expected|
+    match do |object|
+      assert_match(object.value, expected)
+    end
+  end
 end
