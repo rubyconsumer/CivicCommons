@@ -9,6 +9,10 @@ class UserController < ApplicationController
     end
   end
 
+  def mockup
+    show
+  end
+  
   def edit
     @person = Person.find(params[:id])
     @person.require_zip_code = true  #did this So that there is a validation error on the view.

@@ -10,6 +10,7 @@ feature "Register Feature", %q{
 
   background do
     stub_facebook_auth
+    database.delete_all_person
     clear_mail_queue
   end
 
@@ -61,5 +62,25 @@ feature "Register Feature", %q{
     should_not_send_an_email
 
   end
-
+  
+  context "principles" do
+    scenario "Visitor sees principle before signing up as a user", :js => true do
+      goto :home
+      follow_account_registration_link
+      should_be_on registrations_principles_path
+    end
+    scenario "When a visitor accepts the principle, they can continue on to the registration page", :js => true do
+      goto :registration_principles
+      check_agree
+      follow_continue_as_person_link
+      should_be_on new_person_registration_path
+    end
+    scenario "When a visitor did not accept the principle, they cannot continue on to the registration page", :js => true do
+      goto :registration_principles
+      follow_continue_as_person_link
+      should_not_be_on new_person_registration_path
+      should_be_on registrations_principles_path
+      current_page.should have_an_error_for :must_agree_to_principles
+    end
+  end
 end
