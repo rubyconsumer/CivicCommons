@@ -5,7 +5,7 @@ feature "Unlink Account From Facebook", %q{
   As a current user who have already connected to Facebook
   I want to unlink my account
 } do
-  
+  include Facebookable
   let (:facebook_auth_page)               { FacebookAuthPage.new(page) }
   let (:fb_unlinking_success_page)        { FbUnlinkingSuccessPage.new(page)}
   let (:before_facebook_unlinking_page)   { BeforeFacebookUnlinkingPage.new(page) }
@@ -13,25 +13,13 @@ feature "Unlink Account From Facebook", %q{
   let (:confirm_facebook_unlinking_page)  { ConfirmFacebookUnlinkingPage.new(page) }
   
   
-  def given_a_registered_user_w_facebook_auth
-    @person = Factory.create(:registered_user, :email => 'johnd@example.com')
-    @facebook_auth = Factory.build(:facebook_authentication)
-    @person.link_with_facebook(@facebook_auth)
+  before do
+    stub_facebook_auth
   end
 
   scenario "Unlinking process" do
-    # Given I am a registered user at The Civic Commons that has connected with Facebook
-    given_a_registered_user_w_facebook_auth
-    
-    # And no email in the queue
     Notifier.deliveries  = []
-    
-    # And I am on the home page
-    page.visit(homepage)
-    
-    # And I am logged in
-    facebook_auth_page.sign_in
-    
+    login_as :registered_user_with_facebook_authentication
     # When I go to the settings page
     settings_page.visit(@person)
     
@@ -79,28 +67,11 @@ feature "Unlink Account From Facebook", %q{
   end
   
   scenario "Should throw validation error when user does not enter password" do
-    # Given I am a registered user at The Civic Commons that has connected with Facebook
-    given_a_registered_user_w_facebook_auth
-
-    # And I am on the home page
-    page.visit(homepage)
-    
-    # And I am logged in
-    facebook_auth_page.sign_in
-    
-    # When I go to the settings page
-    settings_page.visit(@person)
-    
-    # And I click on the Unlink from Facebook link
+    login_as :registered_user_with_facebook_authentication
+    goto :edit_profile_page, :for => logged_in_user
     settings_page.click_unlink_from_facebook
-    
-    # And I click yes
     confirm_facebook_unlinking_page.click_yes
-        
-    # And I click submit
     before_facebook_unlinking_page.click_link_or_button('Submit')
-    
-    # And I should see an error on missing password
     before_facebook_unlinking_page.should have_selector('.field-with-error input#person_password')
   end
 end

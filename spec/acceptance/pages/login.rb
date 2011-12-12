@@ -7,6 +7,7 @@ module Pages
     add_field :email, "Email"
     add_field :password, "Password"
 
+    add_link :login_with_facebook, "Login with Facebook", :home
     add_button :login, "Login", :home
   end
 end

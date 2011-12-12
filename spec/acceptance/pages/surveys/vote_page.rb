@@ -5,12 +5,16 @@ class VotePage < PageObject
   VOTE_RESULTS = 'ul.survey_results'
   BALLOT_FORM_DISABLED = '.selected-survey-options.disabled'
   SUBMIT_BUTTON_TITLE = 'Cast Ballot'
-  
-  
+
+
+  def has_vote_dialog?
+    find('a', :content => 'Yes').visible?
+  end
+
   def visit_a_vote(vote)
     visit independent_vote_path(vote)
   end
-  
+
   def independent_vote_path(vote)
     "/votes/#{vote.id}"
   end
@@ -18,7 +22,7 @@ class VotePage < PageObject
   def visit_vote_on_an_issue(issue)
     visit "/issues/#{issue.id}/vote"
   end
-  
+
   def drag_from_to(from_locator, to_locator)
     script ="
       //taken from surveys.js 
@@ -37,6 +41,7 @@ class VotePage < PageObject
   
   def click_submit
     page.click_button SUBMIT_BUTTON_TITLE
+    wait_until { has_vote_dialog? }
   end
   
   def available_options(options)

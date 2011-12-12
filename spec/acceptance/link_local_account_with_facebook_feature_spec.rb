@@ -6,15 +6,15 @@ feature "8457517 link local account with facebook", %q{
   I want to authenticate through Facebook
   So that I only have to remember one login and password
 } do
-
+  include Facebookable
   before do
+    stub_facebook_auth
     login_page.sign_out
   end
 
-  let (:facebook_auth_page)         { FacebookAuthPage.new(page) }
+  let (:facebook_auth_page) { FacebookAuthPage.new(page) }
   let (:login_page)                 { LoginPage.new(page) }
   let (:settings_page)              { SettingsPage.new(page) }
-  let (:conflicting_email_page)     { ConflictingEmailPage.new(page) }
   let (:fb_linking_success_page)    { FbLinkingSuccessPage.new(page) }
   let (:suggest_facebook_auth_page) { SuggestFacebookAuthPage.new(page) }
   let (:forgot_password_page)       { ForgotPasswordPage.new(page) }
@@ -31,59 +31,30 @@ feature "8457517 link local account with facebook", %q{
 
   context "When I have not linked my account to Facebook" do
 
-    def given_a_registered_user
-      @person = Factory.create(:registered_user,:email => 'johnd@test.com')
+    scenario "use facebook email if conflicting", :js=>true do
+      login_as :registered_user
+      begin_connecting_to_facebook
+      use_facebook_email
+      reload_logged_in_user
+      logged_in_user.email.should == 'johnd@test.com'
     end
 
-    def given_a_registered_user_for_conflicting_fb_email
-      @person = Factory.create(:registered_user, :email => "johnd-conflicting-email@test.com") 
+
+    scenario "I should be able to link my account to facebook from the 'accounts' page", :js=>true do
+      login_as :registered_user, email: 'johnd@test.com'
+      connect_account_to_facebook
+      logged_in_user.should be_facebook_authenticated
+      page.should_not have_link 'Connect with Facebook'
+      page.should have_link "Unlink from Facebook"
     end
 
-    scenario "I should be allowed to resolve my conflicting email when I'm linking with Facebook" do
-      # Given I am a registered user that also has an unlinked Facebook account with a different email address
-      given_a_registered_user_for_conflicting_fb_email
-
-      # And I login
-      login_page.sign_in(@person)
-
-      # And I go to the settings page
-      settings_page.visit(@person)
-
-     # When I click on 'Connect with Facebook'
-      facebook_auth_page.click_connect_with_facebook
-
-      # Then it should  open a modal dialog of Facebook linking success 
-      response_should_js_open_colorbox(conflicting_email_path)
-      conflicting_email_page.visit
-
-      # When I click yes
-      conflicting_email_page.click_yes
-
-      # Then it should show me the successful confirmation dialog box
-      # (this is a cheat, because the js is supposed to post and then redirect to fb_linking_success page on success)
-      page.driver.response.status.should == 200
-      fb_linking_success_page.visit
-      page.should contain 'Successfully linked your account to Facebook'
-
-    end
-
-    context "Facebook suggest modal dialogue" do
+    describe "Facebook suggest modal dialogue" do
       scenario "should be displayed if I have not linked my account to facebook" do
-        # Given I am a newly registered user
-        given_a_registered_user
-
-        # And I logged in
-        login_page.sign_in(@person)
-
-        # Then I should see a suggestion for Facebook link modal
+        login_as :registered_user_who_hasnt_declined_fb
         page.should contain suggest_facebook_auth_page.modal
       end
       scenario "should be not be displayed when I have declined the suggestion to link to Facebook" do
-        # Given I am a registered user
-        given_a_registered_user
-
-        # And I logged in
-        login_page.sign_in(@person)
+        login_as :registered_user_with_facebook_email
 
         # Then I should see a suggestion for Facebook link modal
         page.should contain suggest_facebook_auth_page.modal
@@ -101,42 +72,6 @@ feature "8457517 link local account with facebook", %q{
         page.should_not contain suggest_facebook_auth_page.modal
       end
     end
-
-    scenario "I should be able to link my account to facebook from the 'accounts' page" do
-      # Given I am a registered user
-      given_a_registered_user
-
-      # When I visit the hompage
-      visit homepage
-
-      # And I logged in
-      login_page.sign_in(@person)
-
-      # And I go to the settings page
-      settings_page.visit(@person)
-
-      # Then I should be on the settings page
-      should_be_on edit_user_path(@person)
-
-      # And it should have the link 'Connect with Facebook'
-      page.should have_link 'Connect with Facebook'
-
-      # When I click on 'Connect with Facebook'
-      facebook_auth_page.click_connect_with_facebook
-
-      # Then it should  open a modal dialog of Facebook linking success 
-      response_should_js_open_colorbox(fb_linking_success_path)
-
-      # When I go to settings page 
-      settings_page.visit(@person)
-
-      # Then it should not have 'Connect with Facebook' link
-      page.should_not have_link 'Connect with Facebook'
-
-      # And it should have 'Unlink Account' link
-      page.should have_link "Unlink from Facebook"
-    end
-
   end
 
   context "When I already have linked my account to facebook previously" do
@@ -192,38 +127,14 @@ feature "8457517 link local account with facebook", %q{
 
   context "Facebook profile picture" do
 
-    def given_a_registered_user_without_avatar
-      @person = Factory.create(:registered_user,:email => 'johnd@test.com', :avatar => nil)
-    end
-
     def user_profile_picture
       page.find('#login-status a img')['src']
     end
 
     scenario "I should my facebook profile picture if I've connected to Facebook" do
-      # Given I am a registered user
-      given_a_registered_user_without_avatar
-
-      # And I logged in
-      login_page.sign_in(@person)
-
-      # When I'm on the homepage
-      visit homepage
-
-      # Then I should see my avatar(Non Facebook)
-      user_profile_picture.should contain "/images/avatar_70.gif"
-
-      # When I go to the settings page
-      settings_page.visit(@person)
-
-      # And I click on 'Connect with Facebook'
-      facebook_auth_page.click_connect_with_facebook
-
-      # And I go to the homepage again
-      visit homepage
-
-      # Then I should see my Facebook profile picture
-      user_profile_picture.should contain "https://graph.facebook.com/12345/picture"
+      login_as :registered_user_with_avatar
+      connect_account_to_facebook
+      header.user_profile_picture.should be_of "https://graph.facebook.com/12345/picture"
     end
   end
 
@@ -253,5 +164,14 @@ feature "8457517 link local account with facebook", %q{
       # then the modal should have link to sign in using facebook
       page.should have_link "Sign in with Facebook"
     end
+  end
+  def connect_account_to_facebook
+    begin_connecting_to_facebook
+    submit
+    reload_logged_in_user
+  end
+  def begin_connecting_to_facebook
+    page_header.follow_settings_link :for => logged_in_user
+    follow_connect_to_facebook_link
   end
 end

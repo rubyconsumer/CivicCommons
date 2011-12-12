@@ -21,6 +21,7 @@ FactoryGirl.define do |f|
   end
   factory :registered_user, :parent => :normal_person do |u|
     u.confirmed_at { Time.now }
+    u.declined_fb_auth true
     u.skip_email_marketing true
   end
 
@@ -49,7 +50,21 @@ FactoryGirl.define do |f|
   factory :person, :parent => :registered_user do | u |
     u
   end
+  factory :registered_user_who_hasnt_declined_fb, :parent => :registered_user do | u| 
+    u.declined_fb_auth false
+  end
+  factory :registered_user_with_conflicting_facebook_email, :parent => :registered_user do | u |
+    u.email 'johnd-conflicting-email@test.com'
+  end
 
+  factory :registered_user_without_conflicting_facebook_email, :parent => :registered_user do | u |
+    u.email 'johnd@test.com'
+  end
+  factory :registered_user_with_facebook_authentication, :parent => :registered_user do |u|
+    u.facebook_authentication Factory.build :facebook_authentication
+    u.create_from_auth true
+    u.encrypted_password ''
+  end
   factory :admin_person, :parent => :registered_user do |u|
     u.password 'password'
     u.sequence(:email) {|n| "test.admin.account#{n}@mysite.com" }

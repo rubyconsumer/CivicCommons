@@ -6,32 +6,37 @@ feature "Register Feature", %q{
   So that I can interact with The Civic Commons community
 } do
 
+  include Facebookable
+
   background do
-    # clean up
-    Person.delete_all
+    database.delete_all_person
     clear_mail_queue
   end
 
-  scenario "User signs up for account with valid credentials" do
+  scenario "User signs up without facebook" do
+    pending
+    goto :registration_page
+    fill_in_bio_with "Im a hoopy frood!"
+    fill_in_zip_code_with "47134"
+    uncheck_weekly_newsletter_checkbox
 
-    # Given I am on the registration page
-    reg_page = RegistrationPage.new(page)
-    reg_page.visit
+    follow_i_dont_want_to_use_facebook_link
+    zip_code_field.should have_value "47134"
+    bio_field.should have_value "47134"
+    weekly_newsletter_checkbox.should_not be_checked
+    daily_digest_checkbox.should be_checked
 
-    # And I sign up with valid credentials
-    person = Factory.attributes_for(:normal_person)
-    reg_page.fill_registration_form_and_submit(person)
+    #The actual assertion stuff should be part of card #311
+  end
 
-    # Then a user should be created with my credentials
-    Person.where(email: person[:email]).count.should == 1
+  scenario "User signs up with facebook" do
+    goto :registration_page
+    fill_in_bio_with "Im a hoopy frood!"
+    fill_in_zip_code_with "47134"
+    follow_connect_with_facebook_link
 
-    # And a confirmation email should be sent
-    email, subject = mask_with_intercept_email(person[:email], 'Confirmation instructions')
-    should_send_an_email({
-      'To' => email,
-      'Subject' => subject
-    })
-
+    current_page.should be_for :thanks_go_check_your_email
+    newly_registered_user.should have_been_sent :registration_confirmation_email
   end
 
   scenario "User signs up for account with invalid credentials" do
@@ -51,5 +56,25 @@ feature "Register Feature", %q{
     should_not_send_an_email
 
   end
-
+  
+  context "principles" do
+    scenario "Visitor sees principle before signing up as a user", :js => true do
+      goto :home
+      follow_account_registration_link
+      should_be_on registrations_principles_path
+    end
+    scenario "When a visitor accepts the principle, they can continue on to the registration page", :js => true do
+      goto :registration_principles
+      check_agree
+      follow_continue_as_person_link
+      should_be_on new_person_registration_path
+    end
+    scenario "When a visitor did not accept the principle, they cannot continue on to the registration page", :js => true do
+      goto :registration_principles
+      follow_continue_as_person_link
+      should_not_be_on new_person_registration_path
+      should_be_on registrations_principles_path
+      current_page.should have_an_error_for :must_agree_to_principles
+    end
+  end
 end
