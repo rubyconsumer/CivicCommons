@@ -27,7 +27,9 @@ module CivicCommonsDriver
     self.user = create_user type, options
     login logged_in_user
   end
-
+  def log_back_in
+    login logged_in_user
+  end
   def newly_registered_user
     Person.last
   end
@@ -97,7 +99,11 @@ module CivicCommonsDriver
     if current_page and current_page.respond_to? method
       current_page.send(method, *args, &block)
     else
-      super
+      begin
+        super
+      rescue NameError
+        raise "#{current_page} doesnt respond to #{method}"
+      end
     end
   end
   :private
