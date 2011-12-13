@@ -1,10 +1,7 @@
 require 'spec_helper'
+include ControllerMacros
 
 describe RegistrationsController do
-  def setup_person
-    request.env["devise.mapping"] = Devise.mappings[:person]
-  end
-
   before(:each) do
     setup_person
   end
