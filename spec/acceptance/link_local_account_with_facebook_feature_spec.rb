@@ -90,15 +90,15 @@ feature "8457517 link local account with facebook", %q{
     scenario "I should not be able to login using my existing account anymore", :js=>true do
       user = create_user :registered_user_with_facebook_authentication
       goto :login
+      puts user.authentications
       login_without_facebook user
-      sleep 3
+      save_and_open_page
       page.should have_content 'It looks like you registered using Facebook, please login with Facebook.'
     end
 
   end
 
   context "Facebook profile picture" do
-
 
     scenario "I should my facebook profile picture if I've connected to Facebook", :js=>true do
       login_as :registered_user_with_facebook_authentication
