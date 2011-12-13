@@ -1,5 +1,7 @@
-
-<%=javascript_include_tag "lib/registration_page" %>
+<%= content_for :header do %>
+  <%= javascript_include_tag 'lib/registrations' %>
+  <%=javascript_include_tag "lib/registration_page" %>
+<% end %>
 <div class="wrapper">
   <div class="content-container">
     <h1>Register</h1>
@@ -7,19 +9,34 @@
       <% resource.errors.full_messages.each do |msg| %>
         <p><%= msg %></p>
       <% end %>
+      <fieldset class="regular-reg <%= 'show' if form_presenter.show_normal_fields? %>">
+        <div class="form-block">
+          <%= f.label :first_name, 'Your Name:' %>
+          <%= f.text_field :first_name, :class => 'textbox first-name'%>
+          <%= f.text_field :last_name, :class => 'textbox last-name'%>
+          <span class="required">*</span>
+        </div>
+        <div class="form-block">
+          <%= f.label :email, 'Email Address:' %>
+          <%= f.text_field :email, :class => 'textbox'%>
+          <span class="required">*</span>
+        </div>
+        <div class="form-block">
+          <%= f.label :password %>
+          <%= f.password_field :password, :class=> 'textbox' %>
+          <span class="required">*</span>
+        </div>
+        <div class="form-block">
+          <%= f.label :password_confirmation, 'Password Again:' %>
+          <%= f.password_field :password_confirmation, :class=> 'textbox' %>
+          <span class="required">*</span>
+        </div>
+        <div class="form-block">
+          <%= f.label :avatar, "Your Photo:" %>
+          <%= f.file_field :avatar, :class => 'textbox' %>
+        </div>
+      </fieldset>
       <fieldset>
-        <div class="hide form-block">
-          <%= f.label :first_name, 'First Name:' %>
-          <%= f.text_field :first_name, class: 'textbox' %>
-        </div>
-        <div class="hide form-block">
-          <%= f.label :last_name, 'Last Name:' %>
-          <%= f.text_field :last_name, class: 'textbox' %>
-        </div>
-        <div class="hide form-block">
-          <%= f.label :email, 'Email:' %>
-          <%= f.text_field :email, class: 'textbox' %>
-        </div>
         <div class="form-block">
           <%= f.label :bio, 'Tell us a little about yourself:' %>
           <%= f.text_area :bio, class: 'textbox', rows: 10 %>
@@ -38,11 +55,18 @@
           <%= f.label :weekly_newsletter, 'Yes, please send me The Civic Commons weekly newsletter', class: 'checkbox' %>
         </div>
       </fieldset>
-      <div class="form-block facebook-auth">
+      <div class="form-block facebook-auth <%= 'hide' if !form_presenter.show_facebook_fields? %>">
         <%= link_with_facebook_link %>
         or
-        <%= f.submit "I don't have a Facebook account", :class => "no-fb" %>
+        <%= link_to "I don't have a Facebook account", '#', :class => 'no-fb' %>
+      </div>
+      <div class="form-block regular-reg  <%= 'show' if form_presenter.show_normal_fields? %>">
+        <%= f.submit "Continue", :class => 'submit' %> 
+        or
+        <%= link_to 'Cancel', '/', :class=> 'cancel' %>
       </div>
     <% end %>
   </div>
 </div>
+
+

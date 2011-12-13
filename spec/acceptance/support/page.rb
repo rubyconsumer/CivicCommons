@@ -32,6 +32,10 @@ module CivicCommonsDriver
       define_method "fill_in_#{field}_with" do | value |
         fill_in locator, :with=> value
       end
+
+      define_method "#{field}_field" do
+        find_field locator
+      end
     end
     alias :add_field :has_field
 
@@ -40,6 +44,11 @@ module CivicCommonsDriver
         file_path = value
         attach_file(locator, File.expand_path(file_path))
       end
+      
+      define_method "#{field}_file_field" do
+        find_field locator
+      end
+      
     end
     alias :add_file_field :has_file_field
 
@@ -49,6 +58,9 @@ module CivicCommonsDriver
       end
       define_method "check_#{field}" do
         check locator
+      end
+      define_method "#{field}_checkbox" do
+        find_field locator
       end
     end
 

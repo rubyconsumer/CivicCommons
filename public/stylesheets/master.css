@@ -392,14 +392,16 @@ div#poll_button input.submit {
 
 /*- Registration Page ----------*/
 
-.fb-reg {display: none;}
+.regular-reg {display: none;}
 .form-block.facebook-auth a {
   line-height: 2.8em;
   margin-right: 5px;
 }
-form #first-name {width: 180px;}
-form #last-name {width: 215px;}
-form #middle-name {width: 23px;}
+form .first-name {width: 180px;}
+form .last-name {width: 252px; /* was 215px with middle name*/}
+form .middle-name {width: 23px;}
+form .hide {display: none;}
+form .show {display: block;}
 
 /*- Facebook Connect in Settings ----------*/
 
