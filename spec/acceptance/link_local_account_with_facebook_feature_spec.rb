@@ -88,11 +88,11 @@ feature "8457517 link local account with facebook", %q{
     end
 
     scenario "I should not be able to login using my existing account anymore", :js=>true do
+      puts Authentication.all
       user = create_user :registered_user_with_facebook_authentication
+      puts Authentication.all
       goto :login
-      puts user.authentications
       login_without_facebook user
-      save_and_open_page
       page.should have_content 'It looks like you registered using Facebook, please login with Facebook.'
     end
 
@@ -112,7 +112,6 @@ feature "8457517 link local account with facebook", %q{
       forgot_password_page.visit
       forgot_password_page.enter_email('johnd@example.com')
       forgot_password_page.click_submit
-      sleep 3
       response_should_js_open_colorbox(fb_auth_forgot_password_path)
       fb_auth_forgot_password_modal_page.visit
       page.should have_link "Sign in with Facebook"
