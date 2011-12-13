@@ -18,6 +18,9 @@ feature "Add contribution", %q{
     "Woops! We only let you submit one link or file per contribution"
   end
 
+
+  let(:contrib) { ContributionTool.new(page) }
+  let(:convo_page) { ConversationPage.new(page) }
   let(:file_only_error_message) do
     "Sorry! You must also write a comment above when you upload a file."
   end
@@ -33,6 +36,9 @@ feature "Add contribution", %q{
     'test/fixtures/cc_logos.pdf'
   end
 
+  def contribution_tool
+    contrib
+  end
   background do
 
     login_as :person
@@ -40,45 +46,23 @@ feature "Add contribution", %q{
     self.conversation = contribution.conversation
   end
   scenario "Contribution tool is hidden by default", :js => true do
-
-    # Given I am on a conversation permalink page
-    convo_page = ConversationPage.new(page)
-    convo_page.visit_page(conversation)
-    contrib = ContributionTool.new(page)
-
-    # Then I should not see the contribution tool
-    contrib.should_not be_visible
+    goto_convo_page_for conversation
+    contribution_tool.should_not be_visible
   end
 
   scenario "Contribution tool appears when a user posts to a conversation", :js => true do
-
-    # Given I am on a conversation permalink page
-    convo_page = ConversationPage.new(page)
-    convo_page.visit_page(conversation)
-    contrib = ContributionTool.new(page)
-
-    # When I click on the post to button
-    contrib.post_to_link.click
-
-    # Then I should see the contribution tool
-    contrib.should be_visible
+    start_posting_to_conversation
+    contribution_tool.should be_visible
   end
 
   scenario "Contribution tool appears when a user responds to a root-level contribution", :js => true do
 
-    # Given I am on a conversation permalink page
-    convo_page = ConversationPage.new(page)
-    convo_page.visit_page(conversation)
-    contrib = ContributionTool.new(page)
-
-    # When I click on the respond-to button
+    goto_convo_page_for conversation
     contrib.respond_to_link(contribution).click
-
-    # Then I should see the contribution tool
     contrib.should be_visible
     contrib.should be_within_container convo_page.contribution_subthread(contribution)
   end
- 
+
   scenario "Contribution tool appears when a user responds to a child contribution", :js => true do
 
     # Given a child contribution exists
@@ -87,7 +71,6 @@ feature "Add contribution", %q{
                            :conversation => conversation,
                            :parent => contribution)
 
-    # Given I am on a conversation node permalink page
     convo_page = ConversationPage.new(page)
     convo_page.visit_node(conversation, child)
     sleep(1)
@@ -147,156 +130,66 @@ feature "Add contribution", %q{
  end
 
   scenario "Cancelling a contribution", :js => true do
+    start_posting_to_conversation
 
-    # Given I am on a conversation permalink page
-    convo_page = ConversationPage.new(page)
-    convo_page.visit_page(conversation)
-    contrib = ContributionTool.new(page)
-
-    # When I click on the post to conversation button
-    contrib.post_to_link.click
-
-    # Then I should see the contribution tool
-    contrib.should be_visible
-
-    # When I fill in the content field
     contrib.fill_in_content_field(content)
-
-    # When I click the Cancel link
     contrib.cancel_link.click
-
-    # Then I should not see the contribution tool
     contrib.should_not be_visible
+    convo_page.should_not have_content content
   end
 
   scenario "Posting only a comment", :js => true do
+    start_posting_to_conversation
 
-    # Given I am on a conversation permalink page
-    convo_page = ConversationPage.new(page)
-    convo_page.visit_page(conversation)
-    contrib = ContributionTool.new(page)
-
-    # When I click on the post to conversation button
-    contrib.post_to_link.click
-
-    # When I fill in the content field
-    contrib.fill_in_content_field(content)
-
-    # And I press the submit button
-    contrib.submit_button.click
-
-    # Then I should see my contribution
+    contribution_tool.fill_in_content_field(content)
+    contribution_tool.submit_button.click
     convo_page.should have_content(content)
-
-    # Then I should see a link to my profile
-    contrib.should have_link(logged_in_user.name)
-
-    # And I should not see the contribution tool
-    contrib.should_not be_visible
+    contribution_tool.wysiwyg_editor.should_not be_visible
 
   end
 
   scenario "Posting only a url", :js => true do
+    start_posting_to_conversation
 
-    # Given I am on a conversation permalink page
-    convo_page = ConversationPage.new(page)
-    convo_page.visit_page(conversation)
-    contrib = ContributionTool.new(page)
-
-    # When I click on the post to conversation button
-    contrib.post_to_link.click
-
-    # When I click the 'Add a link...' link
     contrib.add_url url
-    # And I press the submit button
     contrib.submit_button.click
-
-    # Then I should see a link to my url
     contrib.should have_css("a[href='#{url}']")
-
-    # And I should see the contribution tool
     contrib.should_not be_visible
 
   end
 
   scenario "Posting only a file is not allowed", :js => true do
 
-    # Given I am on a conversation permalink page
-    convo_page = ConversationPage.new(page)
-    convo_page.visit_page(conversation)
-    contrib = ContributionTool.new(page)
-
-    # When I click on the post to conversation button
-    contrib.post_to_link.click
+    start_posting_to_conversation
 
     contrib.add_file file_path
-
-    # And I press the submit button
     contrib.submit_button.click
-
-    # And I should still see the contribution tool
     contrib.should be_visible
 
   end
 
   scenario "Posting a comment with a url", :js => true do
 
-    # Given I am on a conversation permalink page
-    convo_page = ConversationPage.new(page)
-    convo_page.visit_page(conversation)
-    contrib = ContributionTool.new(page)
+    start_posting_to_conversation
 
-    # When I click on the post to conversation button
-    contrib.post_to_link.click
-
-    # When I fill in the content field
     contrib.fill_in_content_field(content)
-
-    # When I click the 'Add a link...' link
     contrib.add_url url
-
-    # And I press the submit button
     contrib.submit_button.click
-
-    # Then I should see my contribution
     convo_page.should have_content(content)
-
-    # Then I should see a link to my url
     contrib.should have_css("a[href='#{url}']")
-
-    # Then I should see a link to my profile
-    contrib.should have_link(logged_in_user.name)
-
-    # And I should not see the contribution tool
     contrib.should_not be_visible
 
   end
 
   scenario "Posting a comment with a file", :js => true do
+    start_posting_to_conversation
 
-    # Given I am on a conversation permalink page
-    convo_page = ConversationPage.new(page)
-    convo_page.visit_page(conversation)
-    contrib = ContributionTool.new(page)
-
-    # When I click on the post to conversation button
-    contrib.post_to_link.click
-
-    # When I fill in the content field
     contrib.fill_in_content_field(content)
 
     contrib.add_file file_path
-    # And I press the submit button
     contrib.submit_button.click
-
-    # Then I should see my contribution
     convo_page.should have_content(content)
-
-    # Then I should see a link to my profile
     contrib.should have_link(logged_in_user.name)
-
-    # And I should not see the contribution tool
-    contrib.should_not be_visible
 
   end
 
@@ -312,5 +205,15 @@ feature "Add contribution", %q{
     2.times { contributions << create_subcontribution_for(contribution)}
     2.times { contributions << create_subcontribution_for(contributions.first)}
     contributions
+  end
+  def start_posting_to_conversation
+
+    convo_page = ConversationPage.new(page)
+    convo_page.visit_page(conversation)
+
+    contribution_tool.post_to_link.click
+  end
+  def goto_convo_page_for conversation
+    convo_page.visit_page conversation
   end
 end
