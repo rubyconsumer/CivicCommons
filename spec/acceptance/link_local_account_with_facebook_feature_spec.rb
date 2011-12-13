@@ -88,9 +88,7 @@ feature "8457517 link local account with facebook", %q{
     end
 
     scenario "I should not be able to login using my existing account anymore", :js=>true do
-      puts Authentication.all
       user = create_user :registered_user_with_facebook_authentication
-      puts Authentication.all
       goto :login
       login_without_facebook user
       page.should have_content 'It looks like you registered using Facebook, please login with Facebook.'
@@ -101,8 +99,9 @@ feature "8457517 link local account with facebook", %q{
   context "Facebook profile picture" do
 
     scenario "I should my facebook profile picture if I've connected to Facebook", :js=>true do
-      login_as :registered_user_with_facebook_authentication
-      page_header.user_profile_picture.should be_of "https://graph.facebook.com/12345/picture"
+      login_as :registered_user, email: 'johnd@test.com'
+      connect_account_to_facebook
+      page_header.user_profile_picture.should eq "https://graph.facebook.com/12345/picture"
     end
   end
 
