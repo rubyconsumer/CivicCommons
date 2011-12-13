@@ -20,9 +20,6 @@ class RegistrationsController < Devise::RegistrationsController
     @presenter = RegistrationFormPresenter.new(resource)
   end
 
-  def principles
-  end
-
   def new_organization
     resource = build_resource
     respond_with_navigational(resource){ render_with_scope :new_organization }

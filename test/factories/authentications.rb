@@ -5,7 +5,7 @@ Factory.define :authentication do |f|
   f.uid "12345"
   f.token "token_here"
   f.secret "secret_here"
-  f.person_id 1
+  # f.association :person, :factory => :normal_person
 end
 
 Factory.define :facebook_authentication, :parent => :authentication do |f|
