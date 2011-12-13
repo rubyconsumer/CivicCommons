@@ -107,13 +107,11 @@ feature "8457517 link local account with facebook", %q{
 
   context "Forgot password" do
     scenario "I should see a modal dialog prompting me to login to facebook.", :js=>true do
-      create_user :registered_user_with_facebook_authentication
+      user = create_user :registered_user_with_facebook_authentication
       forgot_password_page.visit
-      forgot_password_page.enter_email('johnd@example.com')
+      forgot_password_page.enter_email(user.email)
       forgot_password_page.click_submit
-      response_should_js_open_colorbox(fb_auth_forgot_password_path)
-      fb_auth_forgot_password_modal_page.visit
-      page.should have_link "Sign in with Facebook"
+      wait_until { page.has_content? "we cannot reset your password because your account with The Civic Commons was registered using Facebook." }
     end
   end
   def connect_account_to_facebook
