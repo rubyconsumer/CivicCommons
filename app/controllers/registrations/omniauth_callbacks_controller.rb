@@ -24,14 +24,7 @@ private
 
   def create_account_using_facebook_credentials
     person = Person.build_from_auth_hash(env['omniauth.auth'])
-    if person.valid?
-      send_finish_data_to_the_opening_window(env['omniauth.auth'])
-    elsif person.errors[:email].to_s.include?("has already been taken")
-      flash[:email] = person.email
-      render_js_registering_email_taken
-    else
-      render_js_redirect_to((env['omniauth.origin'] || root_path),:text => "Something went wrong, your account cannot be created")
-    end
+    send_finish_data_to_the_opening_window(env['omniauth.auth'])
   end
 
   def failed_linked_to_facebook

@@ -5,8 +5,10 @@ class RegistrationsController < Devise::RegistrationsController
   helper_method :form_presenter
 
   def create
-    params['person']['create_from_auth'] = true
-    params['person']['encrypted_password'] = ''
+    if params['person'].has_key?('authentications_attributes')
+      params['person']['create_from_auth'] = true
+      params['person']['encrypted_password'] = ''
+    end
     super
   end
 

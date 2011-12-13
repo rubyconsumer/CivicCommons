@@ -71,10 +71,8 @@ class Person < ActiveRecord::Base
 
   validates_length_of :email, :within => 6..255, :too_long => "please use a shorter email address", :too_short => "please use a longer email address"
 
-  validates_presence_of :zip_code, :message => ' please enter zipcode', :on => :create, :if => :validate_zip_code_on_create?
-  validates_presence_of :zip_code, :message => ' please enter zipcode', :on => :update, :if => :validate_zip_code_on_update?
-  validates_length_of :zip_code, :message => ' must be 5 characters or higher', :within => (5..10), :allow_blank => false, :allow_nil => false, :on => :create, :if => :validate_zip_code_on_create?
-  validates_length_of :zip_code, :message => ' must be 5 characters or higher', :within => (5..10), :allow_blank => false, :allow_nil => false, :on => :update, :if => :validate_zip_code_on_update?
+  validates_presence_of :zip_code, :message => ' please enter zipcode'
+  validates_length_of :zip_code, :message => ' must be 5 characters or higher', :within => (5..10), :allow_blank => false, :allow_nil => false
   validates_presence_of :name
   validate :check_twitter_username_format
 
@@ -295,22 +293,6 @@ class Person < ActiveRecord::Base
   # due to needing to set encrypted_password to blank, so that it doesn't error out when it is set to nil
   def valid_password?(password)
     encrypted_password.blank? ? false : super
-  end
-
-  def validate_zip_code_on_create?
-    if on_facebook_auth?
-      false
-    else
-      new_record? ? true : false
-    end
-  end
-
-  def validate_zip_code_on_update?
-    if on_facebook_auth?
-      false
-    elsif require_zip_code?
-      true
-    end
   end
 
   # Add the email subscription signup as a delayed job
