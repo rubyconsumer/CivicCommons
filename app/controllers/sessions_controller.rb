@@ -17,7 +17,6 @@ class SessionsController < Devise::SessionsController
   def ajax_new
     session[:close_modal_on_exit] = true
     session[:previous] = request.headers['Referer'] if RedirectHelper.valid?(request.headers['Referer'])
-    
     render :partial => 'sessions/new', :layout => false
   end
 

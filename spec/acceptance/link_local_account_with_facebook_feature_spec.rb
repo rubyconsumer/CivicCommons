@@ -3,17 +3,16 @@ require File.expand_path(File.dirname(__FILE__) + '/acceptance_helper')
 feature "8457517 link local account with facebook", %q{
   In order use CivicCommons
   As an existing user with a local account
-  I want to authenticate through Facebook
+ ve I want to authenticate through Facebook
   So that I only have to remember one login and password
 } do
   include Facebookable
   before do
     stub_facebook_auth
-    login_page.sign_out
+    sign_out
   end
 
   let (:facebook_auth_page) { FacebookAuthPage.new(page) }
-  let (:login_page)                 { LoginPage.new(page) }
   let (:settings_page)              { SettingsPage.new(page) }
   let (:fb_linking_success_page)    { FbLinkingSuccessPage.new(page) }
   let (:suggest_facebook_auth_page) { SuggestFacebookAuthPage.new(page) }
@@ -38,12 +37,11 @@ feature "8457517 link local account with facebook", %q{
     end
   end
   class InvisibleObject
-    def visible? 
+    def visible?
       false
     end
   end
   context "When I have not linked my account to Facebook" do
-
     scenario "use facebook email if conflicting", :js=>true do
       login_as :registered_user
       begin_connecting_to_facebook
@@ -52,7 +50,6 @@ feature "8457517 link local account with facebook", %q{
       reload_logged_in_user
       logged_in_user.email.should == 'johnd@test.com'
     end
-
 
     scenario "I should be able to link my account to facebook from the 'accounts' page", :js=>true do
       login_as :registered_user, email: 'johnd@test.com'
@@ -79,9 +76,6 @@ feature "8457517 link local account with facebook", %q{
         suggestion_to_connect_to_facebook.should_not be_visible
       end
 
-      def follow_decline_link
-        click_link "Continue without linking account"
-      end
     end
   end
 
@@ -90,14 +84,14 @@ feature "8457517 link local account with facebook", %q{
     scenario "I should be able to login using facebook and to existing account", :js=>true do
       login_as :registered_user_with_facebook_authentication
       page.should_not have_link 'Login to Civic Commons'
-      save_and_open_page
       page.should have_content "John Doe"
     end
 
     scenario "I should not be able to login using my existing account anymore", :js=>true do
       user = create_user :registered_user_with_facebook_authentication
       goto :login
-      sign_in(user)
+      login_without_facebook user
+      sleep 3
       page.should have_content 'It looks like you registered using Facebook, please login with Facebook.'
     end
 
@@ -132,5 +126,8 @@ feature "8457517 link local account with facebook", %q{
   def begin_connecting_to_facebook
     page_header.follow_settings_link :for => logged_in_user
     follow_connect_to_facebook_link
+  end
+  def follow_decline_link
+    click_link "Continue without linking account"
   end
 end

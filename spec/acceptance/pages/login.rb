@@ -7,8 +7,21 @@ module Pages
     add_field :email, "Email"
     add_field :password, "Password"
 
-    add_link :login_with_facebook, "Login with Facebook", :home
+    add_link :login_with_facebook, "Sign in with Facebook", :home
     add_button :login, "Login", :home
+    def login user
+      if user.on_facebook_auth?
+        follow_login_with_facebook_link
+      else
+        login_without_facebook user
+      end
+    end
+    def login_without_facebook user
+        fill_in_email_with user.email
+        fill_in_password_with user.password
+        click_login_button
+    end
   end
+
 end
 end

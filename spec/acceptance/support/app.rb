@@ -24,10 +24,15 @@ module CivicCommonsDriver
   end
 
   def login_as(type = :person, options={})
+    goto :login
     self.user = create_user type, options
     login logged_in_user
   end
+  def sign_out
+    visit '/people/logout'
+  end
   def log_back_in
+    goto :login
     login logged_in_user
   end
   def newly_registered_user
@@ -107,16 +112,6 @@ module CivicCommonsDriver
     end
   end
   :private
-  def login(user)
-    goto :login
-    if user.on_facebook_auth?
-      follow_login_with_facebook_link
-    else
-      fill_in_email_with user.email
-      fill_in_password_with user.password
-      click_login_button
-    end
-  end
 
   def self.current_page= page
     @@current_page = page
