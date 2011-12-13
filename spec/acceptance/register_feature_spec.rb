@@ -26,24 +26,24 @@ feature "Register Feature", %q{
     bio_field.should have_value "Im a hoopy frood!"
     weekly_newsletter_checkbox.should_not be_checked
     daily_digest_checkbox.should be_checked
-    
+
     fill_in_first_name_with'John'
     fill_in_last_name_with 'Doe'
     fill_in_email_with 'johndoe@test.com'
     fill_in_password_with 'passwordhere123'
     fill_in_password_confirmation_with 'passwordhere123'
-    
+
     click_continue_button
     should_be_on root_path
   end
-  
+
   scenario "User signs up without facebook and with invalid information", :js => true do
     goto :registration_page
     follow_i_dont_want_to_use_facebook_link
     click_continue_with_invalid_information_button
     current_page.should have_an_error_for :invalid_name
-    current_page.should have_an_error_for :invalid_email 
-    
+    current_page.should have_an_error_for :invalid_email
+
     # TODO as part of ticket 309 - password needs to be validated on non-facebook signup.
     # current_page.should have_an_error_for :invalid_password
   end
