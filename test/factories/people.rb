@@ -61,10 +61,9 @@ FactoryGirl.define do |f|
     u.email 'johnd@example.com'
   end
   factory :registered_user_with_facebook_authentication, :parent => :registered_user_with_facebook_email do |u|
-    u.association :facebook_authentication
-    u.create_from_auth true
-    u.encrypted_password ''
-    u.password ''
+    after_create { | u |
+      u.link_with_facebook(Factory.create :facebook_authentication )
+    }
   end
   factory :admin_person, :parent => :registered_user do |u|
     u.password 'password'
