@@ -1,9 +1,9 @@
 source 'http://rubygems.org'
 
 gem 'mysql2', '< 0.3'
-gem 'devise'
-gem "oa-oauth", :require => "omniauth/oauth"
-gem 'omniauth', '~>0.2.0'
+gem 'devise', '1.5.2'
+gem 'omniauth', '1.0.1'
+gem 'omniauth-facebook'
 
 gem 'rails', "3.0.3"
 gem 'jquery-rails', '>= 1.0.3'
@@ -67,7 +67,6 @@ group :test do
   gem 'email_spec'
   gem 'simplecov'
   gem 'timecop'
-  gem 'selenium-webdriver'
   gem 'rspec-spies'
   gem 'spork'
 end
@@ -77,7 +76,7 @@ group :development, :test do
   gem "jasmine"
   gem "rspec-rails", "~> 2.5.0"
   gem 'steak'
-  gem "capybara"
+  gem "capybara", '1.1.2'
   gem 'webrat', "~> 0.7.3"
   gem 'rspec-spies'
   gem "jasmine-headless-webkit"
