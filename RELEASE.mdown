@@ -1,3 +1,11 @@
+## 1.9.0
+
+### External Changes
+
+#### Miscellaneous
+  * [User Profile Subscriptions sorted in reverse chronological order](https://agilezen.com/projects/18091/story/313)
+
+
 ## 1.8.1
 
 ### External Changes
