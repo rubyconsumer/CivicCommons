@@ -64,6 +64,7 @@ FactoryGirl.define do |f|
     u.association :facebook_authentication
     u.create_from_auth true
     u.encrypted_password ''
+    u.password ''
   end
   factory :admin_person, :parent => :registered_user do |u|
     u.password 'password'

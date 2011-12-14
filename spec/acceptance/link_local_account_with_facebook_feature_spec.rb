@@ -10,6 +10,7 @@ feature "8457517 link local account with facebook", %q{
   before do
     stub_facebook_auth
     sign_out
+    page.execute_script('jQuery.ajaxSetup({async: false})')
   end
 
   let (:facebook_auth_page) { FacebookAuthPage.new(page) }
@@ -46,8 +47,7 @@ feature "8457517 link local account with facebook", %q{
       login_as :registered_user
       begin_connecting_to_facebook
       use_facebook_email
-      sleep 2
-      reload_logged_in_user
+      wait_until { reload_logged_in_user.email == 'johnd@test.com' }
       logged_in_user.email.should == 'johnd@test.com'
     end
 

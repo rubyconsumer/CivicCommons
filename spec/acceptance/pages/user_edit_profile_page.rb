@@ -29,6 +29,7 @@ module CivicCommonsDriver
         send("uncheck_#{mailing}")
       end
       def use_facebook_email
+        wait_until { yes_use_conflicting_email_link.visible? }
         follow_yes_use_conflicting_email_link
       end
       def has_password_required_error?
