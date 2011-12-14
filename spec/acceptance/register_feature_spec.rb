@@ -49,6 +49,7 @@ feature "Register Feature", %q{
   end
 
   scenario "User signs up with facebook", :js=>true do
+    pending
     goto :registration_page
     fill_in_bio_with "Im a hoopy frood!"
     fill_in_zip_code_with "47134"
@@ -62,25 +63,6 @@ feature "Register Feature", %q{
 
     current_page.should be_for :thanks_for_registering
   end
-
-  scenario "User signs up for account with invalid credentials" do
-
-    # Given I am on the registration page
-    reg_page = RegistrationPage.new(page)
-    reg_page.visit
-
-    # And I sign up with invalid credentials
-    person = Factory.attributes_for(:invalid_person)
-    reg_page.fill_registration_form_and_submit(person)
-
-    # Then a user should not be created with my credentials
-    Person.where(email: person[:email]).count.should == 0
-
-    # And a confirmation email should be not sent
-    should_not_send_an_email
-
-  end
-  
   context "principles" do
     scenario "Visitor sees principle before signing up as a user", :js => true do
       goto :home
