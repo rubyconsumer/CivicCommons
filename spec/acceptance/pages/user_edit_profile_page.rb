@@ -11,7 +11,8 @@ module CivicCommonsDriver
       has_link(:connect_to_facebook, "facebook-connect")
       has_link(:yes_use_conflicting_email, "Yes, thanks")
       has_link(:unlink_from_facebook, "facebook-connect")
-      has_link(:confirm_unlink_from_facebook_link, "Yes")
+      has_link(:confirm_unlink_from_facebook, "confirm-facebook-unlinking")
+      has_field(:email, 'person_email')
       has_field(:password, "person_password")
       has_field(:confirm_password, "person_password_confirmation")
       has_field(:zip_code, "Zip code")
@@ -28,14 +29,12 @@ module CivicCommonsDriver
         send("uncheck_#{mailing}")
       end
       def use_facebook_email
-        wait_until { yes_use_conflicting_email_link.visible? }
         follow_yes_use_conflicting_email_link
       end
       def has_password_required_error?
-        has_locator? '.field-with-error input#person_password'
+        has_css? '.field-with-error input#person_password'
       end
       def url
-        puts 'woohoo'
         @url
       end
     end

@@ -12,6 +12,7 @@ module Pages
     def login user
       if user.on_facebook_auth?
         follow_login_with_facebook_link
+        wait_until { page.has_content? user.name }
       else
         login_without_facebook user
       end

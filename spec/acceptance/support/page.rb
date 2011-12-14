@@ -44,11 +44,11 @@ module CivicCommonsDriver
         file_path = value
         attach_file(locator, File.expand_path(file_path))
       end
-      
+
       define_method "#{field}_file_field" do
         find_field locator
       end
-      
+
     end
     alias :add_file_field :has_file_field
 

@@ -54,13 +54,13 @@ FactoryGirl.define do |f|
     u.declined_fb_auth false
   end
   factory :registered_user_with_conflicting_facebook_email, :parent => :registered_user do | u |
-    u.email 'johnd-conflicting-email@test.com'
+    u.email 'johnd-conflicting-email@example.com'
   end
 
   factory :registered_user_with_facebook_email, :parent => :registered_user do | u |
-    u.email 'johnd@test.com'
+    u.email 'johnd@example.com'
   end
-  factory :registered_user_with_facebook_authentication, :parent => :registered_user do |u|
+  factory :registered_user_with_facebook_authentication, :parent => :registered_user_with_facebook_email do |u|
     u.association :facebook_authentication
     u.create_from_auth true
     u.encrypted_password ''
