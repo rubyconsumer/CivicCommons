@@ -17,61 +17,38 @@ feature "Unlink Account From Facebook", %q{
     stub_facebook_auth
   end
 
-  scenario "Unlinking process" do
+  scenario "Unlinking process", :js=>true do
     Notifier.deliveries  = []
     login_as :registered_user_with_facebook_authentication
-    # When I go to the settings page
-    settings_page.visit(@person)
-    
-    # Then I should see the Unlink from Facebook link
-    settings_page.should have_link 'Unlink from Facebook'
-    
-    # When I click on the Unlink from Facebook link
-    settings_page.click_unlink_from_facebook
-    
-    # Then I should be prompted with a modal dialog of the consequences of unlnking, and if I want to continue or not
-    confirm_facebook_unlinking_page.should be_visited
-    
-    # When I click yes
-    confirm_facebook_unlinking_page.click_yes
-    
-    # Then I should see a modal dialog prompting me to update my login email and password and password confirmation
-    before_facebook_unlinking_page.should be_visited
-    
-    # When I changed my email to a different email
-    before_facebook_unlinking_page.fill_in 'person_email', :with => 'johnd-new-email@example.com'
-    
-    # And I enter my password
-    before_facebook_unlinking_page.fill_in 'person_password', :with => 'password123'
-    
-    # And I enter my password confirmation
-    before_facebook_unlinking_page.fill_in 'person_password_confirmation', :with => 'password123'
-    
-    # And I click submit
-    before_facebook_unlinking_page.click_link_or_button('Submit')
-    
-    # Then I should see an unlink confirmation modal dialog
+    goto :edit_profile_page, :for=>logged_in_user
+    puts url
+    save_and_open_page
+    unlink_from_facebook email: "johnd-new-email@example.com"
+
     fb_unlinking_success_page.should be_displayed
-    
-    # And 1 email change confirmation should be sent
     Notifier.deliveries.length.should == 1
-    
-    # And the email should be sent to the old email
     Notifier.deliveries.first.to.should contain 'johnd@example.com'
-    
-    # And the email should also be sent to the new email
     Notifier.deliveries.first.to.should contain 'johnd-new-email@example.com'
-    
-    # And the email should have the correct subject
     Notifier.deliveries.first.subject.should contain "You've recently changed your email with The Civic Commons"
   end
-  
-  scenario "Should throw validation error when user does not enter password" do
+
+  scenario "Should throw validation error when user does not enter password", :js=>true do
     login_as :registered_user_with_facebook_authentication
     goto :edit_profile_page, :for => logged_in_user
-    settings_page.click_unlink_from_facebook
-    confirm_facebook_unlinking_page.click_yes
-    before_facebook_unlinking_page.click_link_or_button('Submit')
-    before_facebook_unlinking_page.should have_selector('.field-with-error input#person_password')
+    begin_unlinking_from_facebook
+    click_submit_invalid_form_button
+    current_page.should have_password_required_error
+    #current_page.should have_css 
+  end
+  def unlink_from_facebook options
+    begin_unlinking_from_facebook
+    fill_in_email_field_with options[:email]
+    fill_in_password_field_with "password123"
+    fill_in_confirm_password_field_with "password123"
+    click_submit_button
+  end
+  def begin_unlinking_from_facebook
+    follow_unlink_from_facebook_link
+    follow_confirm_unlink_from_facebook_link
   end
 end
