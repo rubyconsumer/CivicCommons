@@ -24,7 +24,15 @@ private
 
   def create_account_using_facebook_credentials
     person = Person.build_from_auth_hash(env['omniauth.auth'])
-    send_finish_data_to_the_opening_window(env['omniauth.auth'])
+    if we_came_from_the_registration_page?(request)
+      send_person_data_to_the_opening_window(person)
+    else
+      render_js_redirect_to(new_person_registration_path)
+    end
+  end
+
+  def we_came_from_the_registration_page? request
+     request.env['omniauth.origin'] == new_person_registration_url or request.env['omniauth.origin'] == person_registration_url
   end
 
   def failed_linked_to_facebook
@@ -107,7 +115,7 @@ private
     render :partial => '/authentication/fb_interstitial_message', :layout => 'fb_popup', :locals => {:text => text, :script => script}
   end
 
-  def send_finish_data_to_the_opening_window(facebook_data)
-    render :partial => '/plain_old_javascript', locals: {script: "window.opener.RegistrationPage.submitWithFacebookData(#{facebook_data.to_json})" }
+  def send_person_data_to_the_opening_window(person)
+    render :partial => '/plain_old_javascript', locals: {script: "window.opener.RegistrationPage.submitWithFacebookData(#{person.to_json(:include=>:authentications)})" }
   end
 end

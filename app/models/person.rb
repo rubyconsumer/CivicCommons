@@ -53,8 +53,7 @@ class Person < ActiveRecord::Base
   # Setup protected attributes
   attr_protected :admin
 
-  has_one :facebook_authentication, :class_name => 'Authentication', :conditions => {:provider => 'facebook'}
-
+  has_one :facebook_authentication, :class_name => 'Authentication', :conditions => {:provider => 'facebook'}, :dependent => :destroy
   has_many :authentications, :dependent => :destroy
   accepts_nested_attributes_for :authentications
 
@@ -317,12 +316,6 @@ class Person < ActiveRecord::Base
         :encrypted_password => '',
         :create_from_auth => true
       )
-    new_person
-  end
-  def self.create_from_auth_hash(auth_hash)
-    new_person = build_from_auth_hash(auth_hash)
-    new_person.save
-    new_person.confirm! if new_person.persisted?
     new_person.authentications << Authentication.new_from_auth_hash(auth_hash)
     new_person
   end

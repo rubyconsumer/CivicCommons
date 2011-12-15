@@ -17,13 +17,13 @@
       <fieldset class="regular-reg <%= 'show' if form_presenter.show_normal_fields? %>">
         <div class="form-block">
           <%= f.label :first_name, 'Your Name:' %>
-          <%= f.text_field :first_name, :class => 'textbox first-name'%>
-          <%= f.text_field :last_name, :class => 'textbox last-name'%>
+          <%= f.text_field :first_name, :class => 'textbox first-name', :readonly => form_presenter.show_facebook_fields? %>
+          <%= f.text_field :last_name, :class => 'textbox last-name', :readonly => form_presenter.show_facebook_fields? %>
           <span class="required">*</span>
         </div>
         <div class="form-block">
           <%= f.label :email, 'Email Address:' %>
-          <%= f.text_field :email, :class => 'textbox'%>
+          <%= f.text_field :email, :class => 'textbox', :readonly => form_presenter.show_facebook_fields? %>
           <span class="required">*</span>
         </div>
         <div class="form-block <%= 'hide' if form_presenter.show_facebook_fields? %>">

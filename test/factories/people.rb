@@ -81,7 +81,7 @@ FactoryGirl.define do |f|
   end
   factory :registered_user_with_facebook_authentication, :parent => :registered_user_with_facebook_email do |u|
     after_create { | u |
-      u.link_with_facebook(Factory.create :facebook_authentication )
+      u.link_with_facebook(Factory.create :facebook_authentication, person: u )
     }
   end
   factory :admin_person, :parent => :registered_user do |u|

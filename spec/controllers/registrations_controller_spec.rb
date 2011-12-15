@@ -15,17 +15,31 @@ describe RegistrationsController do
   end
 
   context 'POST create' do
-    it 'will store Facebook authentication if authentications_attributes set' do
-      attributes = Factory.attributes_for(:normal_person, email: 'facebook@theciviccommons.com')
-      attributes['authentications_attributes'] = [Factory.attributes_for(:facebook_authentication, person: nil)]
-      post :create, person: attributes
-      Person.find_by_email('facebook@theciviccommons.com').should be_facebook_authenticated
+    context "with facebook authentication attributes" do
+      before do
+        attributes = Factory.attributes_for(:normal_person, email: 'facebook@theciviccommons.com')
+        attributes['authentications_attributes'] = [Factory.attributes_for(:facebook_authentication, person: nil)]
+        post :create, person: attributes
+      end
+      it 'will store Facebook authentication' do
+        Person.find_by_email('facebook@theciviccommons.com').should be_facebook_authenticated
+      end
+      it "will confirm the person" do
+        Person.find_by_email('facebook@theciviccommons.com').should be_confirmed
+      end
     end
 
-    it 'will not Facebook authentication if authentications_attributes is not set' do
-      attributes = Factory.attributes_for(:normal_person, email: 'normal@theciviccommons.com')
-      post :create, person: attributes
-      Person.find_by_email('normal@theciviccommons.com').should_not be_facebook_authenticated
+    context "without facebook authentication" do
+      before do
+        attributes = Factory.attributes_for(:normal_person, email: 'normal@theciviccommons.com')
+        post :create, person: attributes
+      end
+      it 'will not store facebook authentication' do
+        Person.find_by_email('normal@theciviccommons.com').should_not be_facebook_authenticated
+      end
+      it 'will not be confirmd' do
+        Person.find_by_email('normal@theciviccommons.com').should_not be_confirmed
+      end
     end
 
     it 'will render #new if there was a validation error' do
