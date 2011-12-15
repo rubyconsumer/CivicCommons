@@ -1,5 +1,8 @@
 <%= form_for [:admin, @issue], :html =>{ :multipart => true } do |f| %>
   <%= show_errors @issue %>
+
+  <%= render :partial => "/admin/shared/meta_info", :locals => {:meta_object => f} %>
+
   <p>
     <%= f.label :name %>
     <br />

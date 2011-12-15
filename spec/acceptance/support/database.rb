@@ -15,7 +15,7 @@ module CivicCommonsDriver
     def self.first_topic
       Topic.first
     end
-    
+
     def self.latest_blog_post
       ContentItem.blog_post.last
     end
@@ -23,7 +23,7 @@ module CivicCommonsDriver
     def self.latest_radio_show
       ContentItem.radio_show.last
     end
-    
+
     def self.latest_topic
       topic = Topic.last
       topic.instance_eval do
@@ -37,18 +37,14 @@ module CivicCommonsDriver
       topic
     end
 
-    def self.has_a_topic
-      create_topic
-    end
-
-    def self.has_an_issue attributes={}
-      create_issue attributes
+    def self.create_conversation attributes={}
+      Factory.create :conversation, attributes
     end
 
     def self.create_topic(attributes={})
       Factory.create :topic, attributes
     end
-    
+
     def self.has_a_topic_without_issues
       create_topic({:issues => []})
     end
@@ -56,13 +52,21 @@ module CivicCommonsDriver
     def self.create_issue(attributes= {})
       Factory.create :issue, attributes
     end
-    
+
     def self.create_blog_post(attributes = {})
       Factory.create :blog_post, attributes
     end
 
     def self.create_radio_show(attributes = {})
       Factory.create :radio_show, attributes
+    end
+
+    class << self
+      alias :has_a_blog_post :create_blog_post
+      alias :has_a_radio_show :create_radio_show
+      alias :has_a_conversation :create_conversation
+      alias :has_an_issue :create_issue
+      alias :has_a_topic :create_topic
     end
 
     def self.latest_issue
@@ -80,8 +84,21 @@ module CivicCommonsDriver
     def self.has_any_issues?
       !Issue.all.empty?
     end
+
     def self.find_user(user)
       Person.find(user.id)
+    end
+
+    def self.conversation
+      Conversation.last
+    end
+
+    def self.blog_post
+      ContentItem.where(:content_type => 'BlogPost').last
+    end
+
+    def self.radio_show
+      ContentItem.where(:content_type => 'RadioShow').last
     end
   end
 end

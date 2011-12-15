@@ -3,6 +3,7 @@ class RadioshowController < ApplicationController
   # GET /radioshow/1
   def show
     @radioshow = ContentItem.find(params[:id])
+    setup_meta_info(@radioshow)
   end
 
   # GET /radioshow

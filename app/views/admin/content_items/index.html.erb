@@ -15,7 +15,7 @@
   <thead>
   <tbody>
     <% @content_items.each do |item| %>
-    <tr>
+    <tr data-<%= item.content_type.underscore.sub(/_/,"-") %>-id=<%=item.id%>>
       <td><%= link_to item.title, admin_content_item_path(item) %></td>
       <td><%= item.author.first_name + " " + item.author.last_name %></td>
       <td><%= item.content_type %></td>

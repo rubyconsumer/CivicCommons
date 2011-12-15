@@ -13,7 +13,7 @@ class ContentItem < ActiveRecord::Base
     end
     string :content_type
   end
-  
+
   scope :blog_post, where(:content_type => 'BlogPost')
   scope :radio_show, where(:content_type => 'RadioShow' )
   scope :news_item, where(:content_type => 'NewsItem')

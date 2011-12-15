@@ -71,6 +71,10 @@ module CivicCommonsDriver
     Conversation.last
   end
 
+  def issue
+    Issue.last
+  end
+
   def user=(user)
     @@user =(user)
   end

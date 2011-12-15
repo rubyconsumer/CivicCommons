@@ -4,6 +4,12 @@ class Conversation
   class View
     SHORT_NAME = :view_conversation
     include Page
+    def initialize options
+      @conversation = options[:for]
+    end
+    def url
+      "/conversations/#{@conversation.cached_slug}"
+    end
   end
   class Start
     SHORT_NAME = :start_conversation
@@ -32,7 +38,7 @@ class Conversation
       follow_show_add_link_field_link
       fill_in_link_to_related_with link
     end
-    
+
     def add_contribution_attachment
       follow_show_add_file_field_link
       attach_contribution_attachment_with_file File.join(attachments_path, 'imageAttachment.png')
@@ -57,7 +63,7 @@ class Conversation
         error_msg = "The link you provided is invalid"
       when :attachment_needs_comment
         error_msg = 'Sorry! You must also write a comment above when you upload a file.'
-      end 
+      end
       has_content? error_msg
     end
   end

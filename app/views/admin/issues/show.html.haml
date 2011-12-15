@@ -4,6 +4,8 @@
   %b Type:
   =@issue.type
 
+= render :partial => "/admin/shared/show_meta_info", :locals => {:meta_object => @issue }
+
 %p
   %b Exclude From Result:
   =@issue.exclude_from_result

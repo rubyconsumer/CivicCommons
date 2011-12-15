@@ -94,6 +94,15 @@ module CivicCommonsDriver
         [self.class::SHORT_NAME == page_name,
         current_path.end_with?(url)].all?
       end
+      def has_meta_description? description
+        page.has_selector? "meta[name='description'][content='#{description}']"
+      end
+      def has_page_title? title
+        page.has_selector? "meta[name='title'][content='#{title}']"
+      end
+      def has_meta_tags? tags
+        page.has_selector? "meta[name='keywords'][content='#{tags}']"
+      end
     end
   end
 end

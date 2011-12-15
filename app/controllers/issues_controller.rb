@@ -20,6 +20,7 @@ class IssuesController < ApplicationController
     issue = Issue.includes(:conversations, :participants).find(params[:id])
     @issue = IssuePresenter.new(issue)
     @issue.visit!((current_person.nil? ? nil : current_person.id))
+    setup_meta_info(@issue)
 
     if @issue.managed? and @issue.index
       @page = @issue.index

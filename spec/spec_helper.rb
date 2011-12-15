@@ -79,7 +79,7 @@ Spork.prefork do
       stub_gravatar
       ActionMailer::Base.deliveries.clear
     end
-
+    config.filter_run_excluding :wip=>true unless ENV['WIP']
     config.after :each do
       DatabaseCleaner.clean
     end

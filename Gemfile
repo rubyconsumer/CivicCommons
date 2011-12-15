@@ -79,7 +79,6 @@ group :development, :test do
   gem 'steak'
   gem "capybara"
   gem 'webrat', "~> 0.7.3"
-  gem 'rspec-spies'
   gem "jasmine-headless-webkit"
 end
 

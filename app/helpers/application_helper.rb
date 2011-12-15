@@ -1,5 +1,18 @@
 module ApplicationHelper
 
+  # Meta Information Helpers
+  def page_title
+    @meta_info && @meta_info[:page_title] ? @meta_info[:page_title].chomp : "The Civic Commons"
+  end
+
+  def meta_description
+    @meta_info && @meta_info[:meta_description] ? @meta_info[:meta_description].chomp : "The Civic Commons is a new way to bring communities together with conversation and emerging technology. We are focused on building conversations and connections that have the power to become informed, productive collective civic action."
+  end
+
+  def meta_keywords
+    @meta_info && @meta_info[:meta_tags] ? @meta_info[:meta_tags].chomp : "community, conversation, civic action"
+  end
+
   def show_errors(model)
     rv = ""
     all_errors = model.errors.full_messages

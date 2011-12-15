@@ -12,6 +12,8 @@
     </div>
   <% end %>
 
+  <%= render :partial => "/admin/shared/meta_info", :locals => {:meta_object => f} %>
+
   <p>
   <%= f.label :title %><br>
   <%= f.text_field :title, :size => 100 %>

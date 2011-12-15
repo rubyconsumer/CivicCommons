@@ -1,6 +1,6 @@
 %h2 Conversations
-%table.conversations.tablesorter(summary="List of Conversations") 
-  %thead  
+%table.conversations.tablesorter(summary="List of Conversations")
+  %thead
     %tr
       %th.handle_header
       %th ID
@@ -10,7 +10,7 @@
       %th.actions_header(colspan="2") Actions
   %tbody
     - @conversations.each do |conversation|
-      %tr{ :class => conversation.staff_pick ? '' : 'ui-state-disabled' }
+      %tr{ "data-conversation-id" => conversation.id, :class => conversation.staff_pick ? '' : 'ui-state-disabled' }
         %td.handle &#11021;
         %td= conversation.id
         %td= link_to conversation.title, admin_conversation_path(conversation)
@@ -20,3 +20,4 @@
         %td= link_to "Delete", admin_conversation_url(conversation), :method => :delete, :confirm => "Are you sure?"
 =javascript_include_tag 'lib/admin/conversation_sorting'
 %br
+

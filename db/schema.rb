@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111129194453) do
+ActiveRecord::Schema.define(:version => 20111208145719) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -64,6 +64,9 @@ ActiveRecord::Schema.define(:version => 20111129194453) do
     t.string   "image_file_name"
     t.string   "image_content_type"
     t.integer  "image_file_size"
+    t.string   "page_title"
+    t.text     "meta_description"
+    t.text     "meta_tags"
   end
 
   add_index "content_items", ["cached_slug"], :name => "index_content_items_on_cached_slug", :length => {"cached_slug"=>10}
@@ -150,6 +153,9 @@ ActiveRecord::Schema.define(:version => 20111129194453) do
     t.boolean  "from_community",           :default => false
     t.string   "cached_slug"
     t.boolean  "exclude_from_most_recent", :default => false
+    t.string   "page_title"
+    t.text     "meta_description"
+    t.text     "meta_tags"
   end
 
   add_index "conversations", ["cached_slug"], :name => "index_conversations_on_cached_slug", :unique => true
@@ -246,6 +252,9 @@ ActiveRecord::Schema.define(:version => 20111129194453) do
     t.string   "sponsor_name"
     t.boolean  "exclude_from_result",   :default => false
     t.text     "index_summary"
+    t.string   "page_title"
+    t.text     "meta_description"
+    t.text     "meta_tags"
   end
 
   add_index "issues", ["cached_slug"], :name => "index_issues_on_cached_slug", :unique => true
@@ -437,8 +446,8 @@ ActiveRecord::Schema.define(:version => 20111129194453) do
     t.datetime "updated_at"
     t.integer  "conversation_id"
     t.integer  "issue_id"
-    t.text     "activity_cache",  :limit => 2147483647
     t.integer  "person_id"
+    t.text     "activity_cache",  :limit => 2147483647
   end
 
   add_index "top_items", ["conversation_id"], :name => "conversations_index"

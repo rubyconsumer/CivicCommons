@@ -8,6 +8,9 @@
     <p>Published: <%= @content_item.published.strftime("%B %d, %Y") %></p>
   </header>
   <p>Content Type: <%= @content_item.content_type %>
+
+  <%= render :partial => "/admin/shared/show_meta_info", :locals => {:meta_object => @content_item } %>
+
   <% if @content_item.external_link %>
     <p>External Link: <%= link_to(@content_item.external_link, @content_item.external_link) %>
   <% end %>

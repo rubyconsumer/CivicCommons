@@ -12,7 +12,7 @@
       %th &nbsp;
   %tbody
     -@issues.each do |issue|
-      %tr
+      %tr{ "data-issue-id" => issue.id }
         %td.handle &#11021;
         %td= issue.id
         %td= link_to issue.name, admin_issue_path(issue)
