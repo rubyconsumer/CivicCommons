@@ -1,7 +1,11 @@
-module CivicCommonsDriver module Pages class Admin 
+module CivicCommonsDriver
+module Pages
+class Admin
 class Issues
-  SHORT_NAME = :admin_view_issues
+  SHORT_NAME = :admin_issues
   include Page
+  add_link_for(:edit, "Edit", :admin_issues_edit)
+
   class Add
     SHORT_NAME = :admin_add_issue
     include Page
@@ -10,10 +14,11 @@ class Issues
     has_field(:name, 'Name')
     has_wysiwyg_editor_field(:summary, 'issue_summary')
     has_field(:zip_code, 'Zip code')
-    has_button(:create_issue, 'Create Issue', :admin_view_issues)
+    has_button(:create_issue, 'Create Issue', :admin_issues)
     has_button(:create_issue_while_in_invalid_state, 'Create Issue', :admin_add_issue)
+
     def attach_image file_name
-      attach_file 'issue[image]', File.join(attachments_path, file_name) 
+      attach_file 'issue[image]', File.join(attachments_path, file_name)
     end
     def select_topic topic
       check topic
@@ -43,6 +48,15 @@ class Issues
         :postal_code => "48867"
       }
     end
+  end
+
+  class Edit
+    SHORT_NAME = :admin_issues_edit
+    include Page
+    has_field(:page_title, "Page Title")
+    has_field(:meta_description, "Page Description")
+    has_field(:meta_tags, "Page Meta Tags")
+    has_button(:update_issue, "Update Issue")
   end
 end
 end end end

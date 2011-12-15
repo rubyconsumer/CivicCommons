@@ -12,7 +12,6 @@ class Conversation < ActiveRecord::Base
       Sanitize.clean(summary, :remove_contents => ['style','script'])
     end
   end
-
   has_many :contributions, :dependent => :destroy
   has_many :confirmed_contributions, :class_name => 'Contribution',
            :conditions => ['confirmed = ?', true]

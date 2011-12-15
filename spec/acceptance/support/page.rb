@@ -94,6 +94,15 @@ module CivicCommonsDriver
       define_method "#{name}_button" do
         find_button locator
       end
+      def has_meta_description? description
+        page.has_selector? "meta[name='description'][content='#{description}']"
+      end
+      def has_page_title? title
+        page.has_selector? "meta[name='title'][content='#{title}']"
+      end
+      def has_meta_tags? tags
+        page.has_selector? "meta[name='keywords'][content='#{tags}']"
+      end
     end
     alias :add_button :has_button
 

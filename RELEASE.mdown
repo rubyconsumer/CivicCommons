@@ -9,6 +9,7 @@
 
 #### Miscellaneous
   * [User Profile Subscriptions sorted in reverse chronological order](https://agilezen.com/projects/18091/story/313)
+  * [Add Meta Fields](https://agilezen.com/projects/18091/story/298)
 
 #### Bug Fixes
 

@@ -3,6 +3,7 @@ class BlogController < ApplicationController
   # GET /blog/1
   def show
     @blog_post = ContentItem.find(params[:id])
+    setup_meta_info(@blog_post)
   end
 
   # GET /blog

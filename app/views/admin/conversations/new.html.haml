@@ -1,59 +1,7 @@
 %h1 New Conversation
 
-=form_for [:admin, @conversation], :html =>{:multipart => true} do |conversation|
-  - all_errors = @conversation.errors.full_messages + @presenter.errors.full_messages
-  - if all_errors.any?
-    #error_explanation
-      %h2
-        = pluralize(all_errors.size, "error")
-        prohibited this conversation from being saved:
-      %ul
-        - all_errors.each do |msg|
-          %li= msg
-  %p
-    =conversation.label :title
-    %br
-    =conversation.text_field :title
+=render "admin/conversations/form"
 
-  %p
-    =conversation.label :image, "Attach an Image (Looks best at 3:2 ratio)"
-    %br
-    =conversation.file_field :image
+%div
+  =link_to "Back", admin_conversations_path
 
-  %p
-    =conversation.label :summary
-    %br
-    =conversation.text_area :summary
-    
-  %p
-    =label_tag 'Transcript'
-    %br
-    =file_field_tag 'transcript_file'
-    
-  %p
-    =conversation.label :zip_code, "Enter Zip Code"
-    %br
-    =conversation.text_field :zip_code
-
-  %p
-    =conversation.label :exclude_from_most_recent, "Exclude from Most Recent"
-    %br
-    =conversation.check_box :exclude_from_most_recent
-
-  %p
-    =conversation.label :issues, "Select Issues"
-    %br
-    %table
-      - Issue.alphabetical.each_slice(2) do |slice|
-        %tr
-          -slice.each do |issue|
-            %td
-              =check_box_tag "conversation[issue_ids][]", issue.id, @conversation.issues.include?(issue), id: "issue_#{ issue.id }"
-              =issue.name
-
-  %p
-    =conversation.submit
-
-
-=link_to "Back", admin_conversations_path
-    

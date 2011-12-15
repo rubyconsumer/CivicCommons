@@ -5,7 +5,7 @@ class PageObject
   attr_reader :page
 
   def initialize(page)
-    @page = page 
+    @page = page
   end
 
   def body

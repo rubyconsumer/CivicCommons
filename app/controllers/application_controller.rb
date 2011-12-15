@@ -54,4 +54,12 @@ protected
     end
   end
 
+  def setup_meta_info(meta_data)
+    @meta_info = {:page_title => nil, :meta_description => nil, :meta_tags => nil, :image_url => nil}
+    @meta_info[:page_title] = meta_data.page_title if meta_data.page_title
+    @meta_info[:meta_description] = meta_data.meta_description if meta_data.meta_description
+    @meta_info[:meta_tags] = meta_data.meta_tags if meta_data.meta_tags
+    @meta_info[:image_url] = meta_data.image.url(:panel) if meta_data.respond_to?(:image)
+  end
+
 end

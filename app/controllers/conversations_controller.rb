@@ -62,10 +62,12 @@ class ConversationsController < ApplicationController
 
     @recent_items = Activity.most_recent_activity_items_for_conversation(@conversation, 5)
 
+    setup_meta_info(@conversation)
+
     render :show
   end
 
-  def node_conversation
+ def node_conversation
     @contribution = Contribution.find(params[:id])
     @contributions = @contribution.descendants.confirmed.includes(:person)
     @contribution.visit!((current_person.nil? ? nil : current_person.id))

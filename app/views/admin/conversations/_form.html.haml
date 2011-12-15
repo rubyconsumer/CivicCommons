@@ -8,10 +8,15 @@
       %ul
         - all_errors.each do |msg|
           %li= msg
+
+  =render :partial => "/admin/shared/meta_info", :locals => {:meta_object => conversation}
+
   %p
-    =conversation.label :title
-    %br
-    =conversation.text_field :title
+    =conversation.label :"Title:"
+    =conversation.text_field :title, :size => 70
+
+  -if @conversation.image.exists?
+    =image_tag @conversation.image.url(:normal)
 
   %p
     =conversation.label :image, "Attach an Image (looks best at 3:2 ratio)"
@@ -22,16 +27,21 @@
     =conversation.label :summary
     %br
     =conversation.text_area :summary
-    
-  %p
-    =label_tag 'Transcript'
-    %br
-    =file_field_tag 'transcript_file'
-    
+
+  -if controller.action_name == 'new'
+    %p
+      =label_tag 'Transcript'
+      %br
+      =file_field_tag 'transcript_file'
+
   %p
     =conversation.label :zip_code, "Enter Zip Code"
     %br
     =conversation.text_field :zip_code
+
+  %p
+    =conversation.check_box :exclude_from_most_recent
+    =conversation.label :exclude_from_most_recent, "Exclude from Most Recent"
 
   %p
     =conversation.label :issues, "Select Issues"
@@ -41,8 +51,11 @@
         %tr
           -slice.each do |issue|
             %td
-              =check_box_tag "conversation[issue_ids][]", issue.id
+              =check_box_tag "conversation[issue_ids][]", issue.id, @conversation.issues.include?(issue), id: "issue_#{ issue.id }"
               =issue.name
+
+    =hidden_field_tag 'conversation[issue_ids][]', ''
 
   %p
     =conversation.submit
+

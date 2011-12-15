@@ -44,6 +44,7 @@ class Admin::ConversationsController < Admin::DashboardController
 
   #PUT admin/conversations/:id
   def update
+
     @conversation = Conversation.find(params[:id])
     if @conversation.update_attributes(params[:conversation])
       flash[:notice] = "Successfully updated conversation"
@@ -60,7 +61,7 @@ class Admin::ConversationsController < Admin::DashboardController
     current_position = format_param(params[:current])
     next_position = format_param(params[:next])
     previous_position = format_param(params[:prev])
-    
+
     raise "Current position cannot be nil" if current_position.nil?
 
     if previous_position.nil?
@@ -80,7 +81,7 @@ class Admin::ConversationsController < Admin::DashboardController
   #GET admin/conversations/:id
   def show
     @conversation = Conversation.find(params[:id])
-  end 
+  end
 
   #DELETE admin/conversations/:id
   def destroy

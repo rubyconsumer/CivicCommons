@@ -1,6 +1,7 @@
 class ContentController < ApplicationController
   def show
     @content_item = ContentItem.find(params[:id])
+    setup_meta_info(@content_item)
   end
 
   def index
