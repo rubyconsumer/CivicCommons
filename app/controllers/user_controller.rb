@@ -23,8 +23,8 @@ class UserController < ApplicationController
     @user = Person.includes(:contributions, :subscriptions).find(params[:id])
     @recent_items = Activity.most_recent_activity_items_for_person(@user).paginate(page: params[:page], per_page: 10)
 
-    @issue_subscriptions = @user.subscriptions.where(:subscribable_type => 'Issue')
-    @conversation_subscriptions = @user.subscriptions.where(:subscribable_type => 'Conversation')
+    @issue_subscriptions = @user.subscriptions.where(:subscribable_type => 'Issue').reverse
+    @conversation_subscriptions = @user.subscriptions.where(:subscribable_type => 'Conversation').reverse
 
     respond_to do |format|
       format.html

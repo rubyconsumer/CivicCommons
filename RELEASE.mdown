@@ -4,15 +4,15 @@
 
 #### [Organization Profiles](https://agilezen.com/project/26499/story/2)
   * [Display Principles before Registration Process](https://agilezen.com/project/18091/story/308)
+
 #### [Login Flow Redesign] (https://agilezenc.om/project/26499/story/58)
-  
+
 #### Miscellaneous
+  * [User Profile Subscriptions sorted in reverse chronological order](https://agilezen.com/projects/18091/story/313)
 
 #### Bug Fixes
 
 ### Post Deployment Instructions
-
-
 
 ## 1.8.1
 
