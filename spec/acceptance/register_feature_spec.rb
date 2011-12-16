@@ -63,24 +63,61 @@ feature "Register Feature", %q{
 
     current_page.should be_for :thanks_for_registering
   end
-  context "principles" do
-    scenario "Visitor sees principle before signing up as a user", :js => true do
+  describe 'signing up as an organization' do
+    def begin_registering_as_organization
+      begin_registering_as_organization
+      goto :registration_principles
+      agree_to_terms
+      follow_continue_as_organization_link
+      fill_in_organization_details_with organization_details
+    end
+    def organization_details
+      {
+        name: 'Crute Farms',
+        email: 'dwight@example.com',
+        password: 'dwightisyoursavior',
+        confirm_password: 'dwightisyoursavior',
+        logo: 'beets_are_awesome.png',
+        description: "i raise beets with my cousin mose. You may use it as a bed and breakfast",
+        zipcode: '18512'
+      }
+    end
+    scenario "when I have the authority" do
+      pending
+      check_i_am_authorized_checkbox
+      click_continue_button
+      database.should have_organization_matching organization_details
+    end
+    scenario "when I do not have the authority" do
+      pending
+      click_continue_button
+      database.should_not have_organization_matching organization_details
+    end
+  end
+  describe "principles" do
+
+
+    scenario "user sees principle before registering", :js => true do
       goto :home
       follow_account_registration_link
       should_be_on registrations_principles_path
     end
-    scenario "When a visitor accepts the principle, they can continue on to the registration page", :js => true do
-      goto :registration_principles
-      check_agree
-      follow_continue_as_person_link
-      should_be_on new_person_registration_path
+    context "when not accepted" do
+      scenario "user cannot continue to registration page", :js => true do
+        goto :registration_principles
+        follow_continue_as_person_link
+        should_not_be_on new_person_registration_path
+        should_be_on registrations_principles_path
+        current_page.should have_an_error_for :must_agree_to_principles
+      end
     end
-    scenario "When a visitor did not accept the principle, they cannot continue on to the registration page", :js => true do
-      goto :registration_principles
-      follow_continue_as_person_link
-      should_not_be_on new_person_registration_path
-      should_be_on registrations_principles_path
-      current_page.should have_an_error_for :must_agree_to_principles
+    context "when accepted" do
+      scenario "user continues to registration page", :js => true do
+        goto :registration_principles
+        check_agree
+        follow_continue_as_person_link
+        should_be_on new_person_registration_path
+      end
     end
   end
 end
