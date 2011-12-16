@@ -21,6 +21,28 @@
         </p>
         -->
         <div class="community">
+
+            <!-- Static Info for Org Entries -->
+            
+            <div id="" class="buddyimg">
+              <div class="img-container" id="imgcontainer_">
+                <a href="#" title="Org Name"><img alt="org-name" class="callout" src="http://placehold.it/70x70" title="Org Name"></a>
+              </div>
+              <div class="text-container" id="">
+                <h4><a href="#">Organization Name</a></h4>
+                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin augue nisi, fermentum vitae, imperdiet a, auctor eu, mi. Nulla imperdiet molestie purus.</p>
+              </div>
+              <div class="photobank">
+                <img src="http://placehold.it/40x40" />
+                <img src="http://placehold.it/40x40" />
+                <img src="http://placehold.it/40x40" />
+                <img src="http://placehold.it/40x40" />
+                <img src="http://placehold.it/40x40" />
+                <img src="http://placehold.it/40x40" />
+                <img src="http://placehold.it/40x40" />
+              </div>
+            </div>
+            
           <% @people.each do |person| %>
             <div id="<%=person.id %>" class ="buddyimg">
               <div class="img-container" id="imgcontainer_<%= person.id %>">
@@ -38,8 +60,16 @@
     </div>
 
     <div class="aside supplementary">
-      <%= render :partial => '/search/search', locals: { filter_type: 'community' } %>
 
+      <div class="mod">
+        <h3>Filter by:</h3>
+        <ul class="simple-list block-link-list">
+            <li><a href="#" class="active"><span>People &amp; Organizations</span></a></li>
+            <li><a href="#" class=""><span>People Only</span></a></li>
+            <li><a href="#" class=""><span>Organizations Only</span></a></li>
+        </ul>
+      </div>
+      
       <div class="mod">
         <h3>Sort By:</h3>
         <ul class="site-filter">
