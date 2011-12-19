@@ -41,7 +41,8 @@ feature "Register Feature", %q{
     goto :registration_page
     follow_i_dont_want_to_use_facebook_link
     click_continue_with_invalid_information_button
-    current_page.should have_an_error_for :invalid_name
+    current_page.should have_an_error_for :invalid_first_name
+    current_page.should have_an_error_for :invalid_last_name
     current_page.should have_an_error_for :invalid_email
 
     # TODO as part of ticket 309 - password needs to be validated on non-facebook signup.
@@ -82,7 +83,6 @@ feature "Register Feature", %q{
       }
     end
     scenario "when I have the authority" do
-      pending
       begin_registering_as_organization
       check_i_am_authorized
       click_continue_button
