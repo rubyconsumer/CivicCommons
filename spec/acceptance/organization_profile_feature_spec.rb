@@ -16,10 +16,10 @@ feature "Organization Profiles", %q{
 
   end
 
-  scenario "Viewing an Organization Profile", :pending=>true do
+  scenario "Viewing an Organization Profile" do
     goto :organization_profile, for: organization
-    current_page.should have_pluralized_itself
     current_page.should have_contact_info_for organization
+    current_page.should have_pluralized_itself
   end
 
   def organization
