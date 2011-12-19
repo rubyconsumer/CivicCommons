@@ -32,6 +32,7 @@ feature "Register Feature", %q{
       'Subject' => subject
     })
 
+    page.should have_content "Thanks, go check your email."
   end
 
   scenario "User signs up for account with invalid credentials" do
