@@ -1,4 +1,18 @@
 <% content_for(:main_body) do %>
+  <div class="wrapper">
+    <div class="content-container">
+      <h1>Thanks, go check your email.</h1>
+      <p class="subtitle">Please check your email and click on confirmation link.</p>
+      <div class="main-content">
+        <h3>Didn't get an email?</h3>
+        <ol>
+          <li><strong>Check your spam folder.</strong> Sometimes these emails get flagged as spam, so check your spam folder to see if it's there.</li>
+          <li><strong>Keep waiting.</strong> Sometimes it can take a few minutes for the email to arrive.</li>
+          <li><strong>Didn't receive the email?</strong> <a href="#resend_confirmation_email">Let us know</a> and we'll send the email again.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
   <div class="feature-mast">
     <div class="wrapper">
       <div class="content-container">
@@ -11,6 +25,7 @@
   <div class="wrapper">
     <div class="content-container">
       <div class="main-content">
+        <a name="resend_confirmation_email"></a>
         <%= form_for(resource, :as => resource_name, :url => confirmation_path(resource_name)) do |f| %>
           <%= devise_error_messages! %>
 
