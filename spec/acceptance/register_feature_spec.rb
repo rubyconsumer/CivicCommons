@@ -65,7 +65,6 @@ feature "Register Feature", %q{
   end
   describe 'signing up as an organization' do
     def begin_registering_as_organization
-      begin_registering_as_organization
       goto :registration_principles
       agree_to_terms
       follow_continue_as_organization_link
@@ -76,15 +75,15 @@ feature "Register Feature", %q{
         name: 'Crute Farms',
         email: 'dwight@example.com',
         password: 'dwightisyoursavior',
-        confirm_password: 'dwightisyoursavior',
-        logo: 'beets_are_awesome.png',
+        password_confirmation: 'dwightisyoursavior',
+        logo: 'imageAttachment.png',
         description: "i raise beets with my cousin mose. You may use it as a bed and breakfast",
-        zipcode: '18512'
+        zip_code: '18512'
       }
     end
     scenario "when I have the authority" do
-      pending
-      check_i_am_authorized_checkbox
+      begin_registering_as_organization
+      check_i_am_authorized
       click_continue_button
       database.should have_organization_matching organization_details
     end

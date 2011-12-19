@@ -34,7 +34,7 @@
       <div class="inset mod">
         <input class="checkbox" type="checkbox" name="agree" value="" id="agree"><label class="checkbox" for="agree">I'm on board, and will do my best to keep these principles in mind.</label>
       </div>
-      <div class="one-col">
+      <div class="two-col">
         <div class="cols">
           <div class="inset">
             <h3>I am an individual</h3>
@@ -42,25 +42,14 @@
             <p><%= link_to 'Continue', new_person_registration_path, :class=> 'button verify', :id=> 'continue-as-individual' %></p>
           </div>
         </div>
-      </div>
-      
-      <!-- uncomment this when you want to add the organizations profile
-      <div class="two-col">
-        <div class="cols">
-          <div class="inset">
-            <h3>I am an individual</h3>
-            <p> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin augue nisi, fermentum vitae, imperdiet a, auctor eu, mi. Nulla imperdiet molestie purus. Duis arcu dui, pretium in, molestie id, convallis eget, orci.</p>
-            <p><%# link_to 'Continue', new_person_registration_path, :class=> 'button verify', :id=> 'continue-as-individual' %></p>
-          </div>
-        </div>
         <div class="cols">
           <div class="inset">
             <h3>I am an organization</h3>
             <p> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin augue nisi, fermentum vitae, imperdiet a, auctor eu, mi. Nulla imperdiet molestie purus. Duis arcu dui, pretium in, molestie id, convallis eget, orci.</p>
-            <p><a href="/org_reg.html" class="button verify" id="continue-as-organization">Continue</a></p>
+            <p><%= link_to 'Continue', new_organization_registration_path, :class=> 'button verify', :id=> 'continue-as-organization' %></p>
           </div>
         </div>
-      </div> -->
+      </div>
     </div><!-- /.main-content -->
     <div class="aside supplementary">
     </div><!-- /.aside -->
