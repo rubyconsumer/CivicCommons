@@ -2,11 +2,13 @@
 
 ### External Changes
 
-####
+#### Organization Registration
+  * [Check Your Email Page After Registration](https://agilezen.com/projects/18091/story/324)
+
+#### Miscellaneous
   * [Add Meta Fields](https://agilezen.com/projects/18091/story/298)
   * [User Profile Subscriptions sorted in reverse chronological order](https://agilezen.com/projects/18091/story/313)
 
-#### Miscellaneous
 
 #### Bug Fixes
 
