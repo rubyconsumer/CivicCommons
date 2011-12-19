@@ -5,6 +5,7 @@ FactoryGirl.define do |f|
     o.email 'leandog@leandog.com'
     o.password 'password'
     o.zip_code '44114'
+    o.twitter_username 'leandog'
     o.association :organization_detail, {
       street: '1100 N Marginal Ave',
       city: 'Cleveland',
