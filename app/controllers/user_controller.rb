@@ -9,10 +9,6 @@ class UserController < ApplicationController
     end
   end
 
-  def mockup
-    show
-  end
-  
   def edit
     @person = Person.find(params[:id])
     @person.require_zip_code = true  #did this So that there is a validation error on the view.
@@ -23,8 +19,8 @@ class UserController < ApplicationController
     @user = Person.includes(:contributions, :subscriptions).find(params[:id])
     @recent_items = Activity.most_recent_activity_items_for_person(@user).paginate(page: params[:page], per_page: 10)
 
-    @issue_subscriptions = @user.subscriptions.where(:subscribable_type => 'Issue').reverse
-    @conversation_subscriptions = @user.subscriptions.where(:subscribable_type => 'Conversation').reverse
+    @issue_subscriptions = @user.subscribed_issues.reverse
+    @conversation_subscriptions = @user.subscribed_conversations.reverse
 
     respond_to do |format|
       format.html

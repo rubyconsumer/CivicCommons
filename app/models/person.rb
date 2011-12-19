@@ -347,4 +347,11 @@ protected
     end
   end
 
+  def subscribed_conversations
+    subscriptions.where(:subscribable_type => 'Conversation').reverse
+  end
+
+  def subscribed_issues
+    subscriptions.where(:subscribable_type => 'Issue')
+  end
 end
