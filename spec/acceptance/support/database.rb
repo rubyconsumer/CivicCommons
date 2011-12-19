@@ -11,9 +11,13 @@ module CivicCommonsDriver
     def self.has_any?(type)
       !Topic.count.zero?
     end
-
+    
     def self.has_any_topics?
       !Topic.count.zero?
+    end
+    
+    def self.has_organization_matching?(org)
+      Organization.find_by_id(org.id)
     end
 
     def self.first_topic
