@@ -7,15 +7,15 @@ module CivicCommonsDriver
     def self.delete_all_person
       Person.delete_all
     end
-    
+
     def self.has_any?(type)
       !Topic.count.zero?
     end
-    
+
     def self.has_any_topics?
       !Topic.count.zero?
     end
-    
+
     def self.has_organization_matching?(org_detail)
       org = Organization.find_by_email(org_detail[:email])
       org.present?
@@ -58,6 +58,9 @@ module CivicCommonsDriver
       create_topic({:issues => []})
     end
 
+    def self.has_an_organization(attributes={})
+      Factory.create :organization, attributes
+    end
     def self.create_issue(attributes= {})
       Factory.create :issue, attributes
     end

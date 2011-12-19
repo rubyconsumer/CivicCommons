@@ -82,6 +82,7 @@ feature "Register Feature", %q{
       }
     end
     scenario "when I have the authority" do
+      pending
       begin_registering_as_organization
       check_i_am_authorized
       click_continue_button
