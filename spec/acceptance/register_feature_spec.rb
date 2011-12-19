@@ -88,7 +88,7 @@ feature "Register Feature", %q{
       database.should have_organization_matching organization_details
     end
     scenario "when I do not have the authority" do
-      pending
+      begin_registering_as_organization
       click_continue_button
       database.should_not have_organization_matching organization_details
     end

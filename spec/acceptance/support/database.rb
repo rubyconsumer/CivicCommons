@@ -16,8 +16,9 @@ module CivicCommonsDriver
       !Topic.count.zero?
     end
     
-    def self.has_organization_matching?(org)
-      Organization.find_by_id(org.id)
+    def self.has_organization_matching?(org_detail)
+      org = Organization.find_by_email(org_detail[:email])
+      org.present?
     end
 
     def self.first_topic

@@ -1,7 +1,6 @@
 require 'spec_helper'
 
-describe Organization do
-  pending
+describe Organization, :pending => true do
   # subject { Factory.build(:organization) }
 
   it { should be_valid }
@@ -10,8 +9,7 @@ describe Organization do
 	.rejecting(['text/plain']) }
 end
 
-describe Organization do
-  pending
+describe Organization, :pending => true do
   context "Inheritance" do
     it "should be a subclass of Person" do
       Organization.superclass.should == Person
