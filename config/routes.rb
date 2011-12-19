@@ -97,21 +97,21 @@ Civiccommons::Application.routes.draw do
 
   DEVISE_DEFAULTS = {:controllers => { :registrations => 'registrations', :confirmations => 'confirmations', :sessions => 'sessions', :omniauth_callbacks => "registrations/omniauth_callbacks", :passwords => 'passwords'},
                      :path_names => { :sign_in => 'login', :sign_out => 'logout', :password => 'secret', :confirmation => 'verification', :registration => 'register', :sign_up => 'new' }}
-  
+
   devise_for :people, DEVISE_DEFAULTS
 
   devise_scope :person do
     # get '/organizations/register/new', to: 'registrations#new_organization', as: 'new_organization_registration'
     # post '/organizations/register', to: 'register#create_organization', as: 'organization_registration'
-    
+
     match '/people/ajax_login', :to=>'sessions#ajax_create', :via=>[:post]
     match '/people/ajax_new_login', :to=>'sessions#ajax_new', :via=>[:get]
     get '/people/secret/fb_auth_forgot_password', to: 'passwords#fb_auth_forgot_password', as: 'fb_auth_forgot_password'
     get "/registrations/omniauth_callbacks/failure", to: "registrations/omniauth_callbacks#failure"
     get '/registrations/principles',                     to: 'registrations#principles'
-    
+
   end
-  
+
   devise_for :organizations, 
              DEVISE_DEFAULTS.merge({
                :class_name => 'Organization', 

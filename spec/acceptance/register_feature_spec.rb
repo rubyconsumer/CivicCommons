@@ -34,7 +34,7 @@ feature "Register Feature", %q{
     fill_in_password_confirmation_with 'passwordhere123'
 
     click_continue_button
-    should_be_on root_path
+    page.should have_content "Thanks, go check your email."
   end
 
   scenario "User signs up without facebook and with invalid information", :js => true do

@@ -10,18 +10,22 @@ class RegistrationsController < Devise::RegistrationsController
     super
   end
 
+  def after_inactive_sign_up_path_for(resource)
+    url_for :new_person_confirmation
+  end
+
   def form_presenter
     @presenter = RegistrationFormPresenter.new(resource)
   end
-  
+
   def principles
   end
-  
+
   def new_organization
     resource = build_resource
     respond_with_navigational(resource){ render_with_scope :new_organization }
   end
-  
+
   def create_organization
     build_resource
 
@@ -40,5 +44,5 @@ class RegistrationsController < Devise::RegistrationsController
       respond_with_navigational(resource) { render_with_scope :new_organization }
     end
   end
-  
+
 end
