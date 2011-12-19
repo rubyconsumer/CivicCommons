@@ -6,10 +6,8 @@ describe Organization do
   it { should be_valid }
   it { should have_attached_file :avatar }
   it { should validate_attachment_content_type(:avatar).allowing(["image/gif", "image/jpeg", "image/png", "image/bmp"])
-	.rejecting(['text/plain']) }
-end
+    .rejecting(['text/plain']) }
 
-describe Organization do
   context "Inheritance" do
     it "should be a subclass of Person" do
       Organization.superclass.should == Person
