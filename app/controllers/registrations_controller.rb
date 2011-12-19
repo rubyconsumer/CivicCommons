@@ -10,11 +10,13 @@ class RegistrationsController < Devise::RegistrationsController
     super
   end
 
+  def after_inactive_sign_up_path_for(resource)
+    url_for :new_person_confirmation
+  end
+
   def form_presenter
     @presenter = RegistrationFormPresenter.new(resource)
   end
-  
   def principles
   end
-  
 end
