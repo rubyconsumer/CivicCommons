@@ -21,7 +21,7 @@ xml.rss :version => "2.0", 'xmlns:atom' => "http://www.w3.org/2005/Atom" do
     xml.pubDate Time.now.rfc822
     xml.lastBuildDate Time.now.rfc822
 
-    @recent_items.each do |recent_item|
+    @user.all_recent_activity.each do |recent_item|
 
       xml.item do
         if recent_item.kind_of? Conversation

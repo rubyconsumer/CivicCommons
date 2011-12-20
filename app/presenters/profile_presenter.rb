@@ -1,5 +1,5 @@
 class ProfilePresenter < Delegator
-
+  include Rails.application.routes.url_helpers
   PER_PAGE = 10
 
   def initialize(user, params={})
@@ -27,11 +27,21 @@ class ProfilePresenter < Delegator
     not conversation_subscriptions.empty?
   end
 
+  def all_recent_activity
+    @user.most_recent_activity
+  end
+
   def recent_activity
     @user.most_recent_activity.paginate(page: @page, per_page: PER_PAGE)
   end
 
   def has_recent_activities?
     not recent_activity.empty?
+  end
+  def feed_path
+    user_path(@user, format: :xml)
+  end
+  def feed_title
+    "#{@user.name} at The Civic Commons"
   end
 end
