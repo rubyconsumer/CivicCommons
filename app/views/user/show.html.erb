@@ -1,5 +1,5 @@
 <% content_for :header do %>
-  <%= auto_discovery_link_tag(:rss, user_url(@user, format: :xml), { :title => "#{@user.name} at The Civic Commons" } ) %>
+  <%= auto_discovery_link_tag(:rss, @user.feed_path, { :title => @user.feed_title } ) %>
 <% end %>
 
 <%= content_for :main_body do %>
