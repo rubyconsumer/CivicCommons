@@ -25,7 +25,12 @@ private
   def create_account_using_facebook_credentials
     person = Person.build_from_auth_hash(env['omniauth.auth'])
     if we_came_from_the_registration_page?(request)
-      send_person_data_to_the_opening_window(person)
+      if Person.where(email: person.email).size == 0
+        send_person_data_to_the_opening_window(person)
+      else
+        flash[:email] = person.email
+        render_js_registering_email_taken
+      end
     else
       render_js_redirect_to(new_person_registration_path)
     end
