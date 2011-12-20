@@ -19,14 +19,17 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def principles
+    
   end
 
   def new_organization
+    # taken from devise's registration_controller#new
     resource = build_resource
     respond_with_navigational(resource){ render_with_scope :new_organization }
   end
 
   def create_organization
+    # taken from devise's registration_controller#create
     build_resource
 
     if resource.save

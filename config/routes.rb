@@ -95,10 +95,10 @@ Civiccommons::Application.routes.draw do
 
 #Devise Routes
 
-  AUTH_DEFAULTS = {:controllers => { :registrations => 'registrations', :confirmations => 'confirmations', :sessions => 'sessions', :omniauth_callbacks => "registrations/omniauth_callbacks", :passwords => 'passwords'},
+  auth_defaults = {:controllers => { :registrations => 'registrations', :confirmations => 'confirmations', :sessions => 'sessions', :omniauth_callbacks => "registrations/omniauth_callbacks", :passwords => 'passwords'},
                      :path_names => { :sign_in => 'login', :sign_out => 'logout', :password => 'secret', :confirmation => 'verification', :registration => 'register', :sign_up => 'new' }}
 
-  devise_for :people, AUTH_DEFAULTS
+  devise_for :people, auth_defaults
 
   devise_scope :person do
     match '/people/ajax_login', :to=>'sessions#ajax_create', :via=>[:post]
@@ -109,7 +109,7 @@ Civiccommons::Application.routes.draw do
   end
 
   devise_for :organizations, 
-             AUTH_DEFAULTS.merge({
+             auth_defaults.merge({
                :class_name => 'Organization', 
                :path => 'organizations',
                :singular => :organization,

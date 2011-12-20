@@ -28,14 +28,8 @@ describe Organization do
     end
   end
   context "Associations" do
-    it "should has_many Authentications" do
-      Organization.reflect_on_association(:authentications).macro == :has_many
-    end
     it "should have organization details" do
       Organization.reflect_on_association(:organization_detail).macro == :has_one
-    end
-    it "should have many survey_responses" do
-      Organization.reflect_on_association(:survey_responses).macro == :has_many
     end
   end
 end
