@@ -361,6 +361,13 @@ class Person < ActiveRecord::Base
   def subscribed_issues
     subscriptions.where(:subscribable_type => 'Issue')
   end
+  def has_website?
+    attribute_present? :website
+  end
+
+  def has_twitter?
+    attribute_present? :twitter_username
+  end
 protected
 
   def check_twitter_username_format
