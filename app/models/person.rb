@@ -179,7 +179,9 @@ class Person < ActiveRecord::Base
     Notifier.welcome(self).deliver
     @send_welcome = false
   end
-
+  def most_recent_activity
+    Activity.most_recent_activity_items_for_person(self)
+  end
   def self.find_all_by_name(name)
     first, last = parse_name(name)
     where(:first_name => first, :last_name => last)
@@ -332,6 +334,13 @@ class Person < ActiveRecord::Base
     recoverable
   end
 
+  def subscribed_conversations
+    subscriptions.where(:subscribable_type => 'Conversation').reverse
+  end
+
+  def subscribed_issues
+    subscriptions.where(:subscribable_type => 'Issue')
+  end
 protected
 
   def check_twitter_username_format
@@ -347,11 +356,4 @@ protected
     end
   end
 
-  def subscribed_conversations
-    subscriptions.where(:subscribable_type => 'Conversation').reverse
-  end
-
-  def subscribed_issues
-    subscriptions.where(:subscribable_type => 'Issue')
-  end
 end
