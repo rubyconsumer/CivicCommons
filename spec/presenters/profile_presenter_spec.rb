@@ -66,4 +66,37 @@ describe ProfilePresenter do
       presenter.feed_title.should == "Bob at The Civic Commons"
     end
   end
+  describe "#needs_to_fill_out_bio?" do
+    context "when it is a different user" do
+      let(:different_user) { stub() }
+      it "is false" do
+        presenter.prompt_to_fill_out_bio?(different_user).should == false
+      end
+    end
+    context "when the same user" do
+      context "bio is empty" do
+        let(:same_user) { stub(:== => true) }
+        let(:presenter) { ProfilePresenter.new stub(bio: stub(empty?: true)) }
+        it "is false" do
+          presenter.prompt_to_fill_out_bio?(same_user).should == true
+        end
+      end
+    end
+  end
+  describe "#has_profile?" do
+    context "without a website or twitter" do
+      subject { ProfilePresenter.new stub(has_website?: false,
+                                          has_twitter?: false) }
+        it { should_not have_profile }
+    end
+    context "with a website" do
+      subject { ProfilePresenter.new stub(has_website?: true) }
+      it { should have_profile }
+    end
+    context "with twitter" do
+      subject { ProfilePresenter.new stub(has_website?: false,
+                                          has_twitter?: true) }
+      it { should have_profile }
+    end
+  end
 end

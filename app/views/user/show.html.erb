@@ -10,7 +10,7 @@
       <div class="main-content">
         <div class="offset-1 profile-mast">
           <%= profile_image(@user, 70) %>
-          <% if @user.bio.blank? && @user == current_person %>
+          <% if @user.prompt_to_fill_out_bio? current_person %>
             <p class="empty">Looks like you haven't filled out your bio&hellip; Head over to your <%= link_to_settings(current_person).html_safe.downcase %> and tell us a little bit about yourself.</p>
           <% elsif %>
             <p><%= @user.bio %></p>
@@ -18,16 +18,15 @@
       </div>
       </div>
       <div class="aside">
-        <% unless @user.website.blank? && @user.twitter_username.blank? %>
+        <% if @user.has_profile? %>
         <div class="mod call-out">
           <ul class="profile-extras">
-            <% unless @user.website.blank? %>
+            <% if @user.has_website? %>
               <li class="website-profile"><%= link_to @user.website, @user.website %></li>
-             <% end %>
-             <% unless @user.twitter_username.blank? %>
-                <li class="twitter-profile"><%= link_to "@#{@user.twitter_username}", "http://twitter.com/#!/#{@user.twitter_username}" %></li>
-             <% end %>
-             <!--<li class="fb-profile"><a href="#"><%= @user.name %></a></li>-->
+            <% end %>
+            <% if @user.has_twitter? %>
+               <li class="twitter-profile"><%= link_to "@#{@user.twitter_username}", "http://twitter.com/#!/#{@user.twitter_username}" %></li>
+            <% end %>
           </ul>
         </div>
         <% end %>
@@ -35,40 +34,15 @@
     </div>
 
     <div class="content-container">
-
       <div class="main-content">
         <h3>My Recent Activity</h3>
-        <% unless @user.has_recent_activities? %>
-          <p><%= @user.name %> is just getting started</p>
-        <% else %>
-          <% @user.recent_activity.each do |item| %>
-            <%= render :partial => "/shared/my_recent_item", locals: { recent_item: item, type: item.class.to_s }%>
-          <% end %>
-          <div class="pagination">
-            <%= will_paginate @user.recent_activity, :inner_window => 3, previous_label: 'Previous', next_label: 'Next' %>
-          </div>
-        <% end %>
+        <%= render :partial => "/profile/recent_activity", locals: { profile: @user } %>
       </div>
-
       <div class="aside supplementary">
-
         <div class="mod" id="UserFollowingConversationsModule">
           <h3>Conversations I am Following</h3>
-          <div class="mod-content">
-            <ul class='link-list'>
-              <% unless @user.has_conversation_subscriptions? %>
-                <li><%= @user.name%> is just getting started</li>
-              <% else %>
-                <% @user.conversation_subscriptions.each do |conversation| %>
-                  <li>
-                  <%= link_to conversation.name, conversation_path(conversation.subscribable_id) %>
-                  </li>
-                <% end %>
-              <% end %>
-            </ul>
-          </div>
+          <%= render :partial => "/profile/conversation_subscriptions", locals: { profile: @user } %>
         </div>
-
         <div class="mod" id="UserFollowingIssuesModule">
           <h3>Issues I am Following</h3>
           <div class="mod-content">

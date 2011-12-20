@@ -1,0 +1,10 @@
+<% if profile.has_recent_activities? %>
+  <% profile.recent_activity.each do |item| %>
+    <%= render :partial => "/shared/my_recent_item", locals: { recent_item: item, type: item.class.to_s }%>
+  <% end %>
+  <div class="pagination">
+    <%= will_paginate profile.recent_activity, :inner_window => 3, previous_label: 'Previous', next_label: 'Next' %>
+  </div>
+<% else %>
+  <p><%= profile.name %> is just getting started</p>
+<% end %>

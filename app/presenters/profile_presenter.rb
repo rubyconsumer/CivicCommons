@@ -35,6 +35,10 @@ class ProfilePresenter < Delegator
     @user.most_recent_activity.paginate(page: @page, per_page: PER_PAGE)
   end
 
+  def has_profile?
+    has_website? || has_twitter?
+  end
+
   def has_recent_activities?
     not recent_activity.empty?
   end
@@ -43,5 +47,8 @@ class ProfilePresenter < Delegator
   end
   def feed_title
     "#{@user.name} at The Civic Commons"
+  end
+  def prompt_to_fill_out_bio? user
+    user == @user and bio.empty?
   end
 end
