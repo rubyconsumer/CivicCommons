@@ -69,18 +69,15 @@ group :test do
   gem 'timecop'
   gem 'selenium-webdriver'
   gem 'rspec-spies'
-  gem 'spork'
-end
-
-
-group :development, :test do
-  gem "jasmine"
   gem "rspec-rails", "~> 2.5.0"
+  gem 'spork'
+  gem "jasmine"
   gem 'steak'
   gem "capybara"
   gem 'webrat', "~> 0.7.3"
   gem "jasmine-headless-webkit"
 end
+
 
 group :cool_toys do
   gem 'autotest'
