@@ -38,14 +38,14 @@
 
       <div class="main-content">
         <h3>My Recent Activity</h3>
-        <% if @recent_items.empty? %>
+        <% unless @user.has_recent_activities? %>
           <p><%= @user.name %> is just getting started</p>
         <% else %>
-          <% @recent_items.each do |item| %>
+          <% @user.recent_activity.each do |item| %>
             <%= render :partial => "/shared/my_recent_item", locals: { recent_item: item, type: item.class.to_s }%>
           <% end %>
           <div class="pagination">
-            <%= will_paginate @recent_items, :inner_window => 3, previous_label: 'Previous', next_label: 'Next' %>
+            <%= will_paginate @user.recent_activity, :inner_window => 3, previous_label: 'Previous', next_label: 'Next' %>
           </div>
         <% end %>
       </div>
@@ -56,10 +56,10 @@
           <h3>Conversations I am Following</h3>
           <div class="mod-content">
             <ul class='link-list'>
-              <% if @conversation_subscriptions.empty? %>
+              <% unless @user.has_conversation_subscriptions? %>
                 <li><%= @user.name%> is just getting started</li>
               <% else %>
-                <% @conversation_subscriptions.first(10).each do |conversation| %>
+                <% @user.conversation_subscriptions.each do |conversation| %>
                   <li>
                   <%= link_to conversation.name, conversation_path(conversation.subscribable_id) %>
                   </li>
@@ -73,10 +73,10 @@
           <h3>Issues I am Following</h3>
           <div class="mod-content">
             <ul class='link-list'>
-              <% if @issue_subscriptions.empty? %>
+              <% unless @user.has_issue_subscriptions? %>
                 <li><%= @user.name %> is just getting started</li>
               <% else %>
-                <% @issue_subscriptions.first(10).each do |issue| %>
+                <% @user.issue_subscriptions.each do |issue| %>
                   <li>
                   <%= link_to issue.name, issue_path(issue.subscribable_id) %>
                   </li>

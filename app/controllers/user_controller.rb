@@ -16,11 +16,8 @@ class UserController < ApplicationController
   end
 
   def show
-    @user = Person.includes(:contributions, :subscriptions).find(params[:id])
-    @recent_items = Activity.most_recent_activity_items_for_person(@user).paginate(page: params[:page], per_page: 10)
-
-    @issue_subscriptions = @user.subscribed_issues.reverse
-    @conversation_subscriptions = @user.subscribed_conversations.reverse
+    user = Person.includes(:contributions, :subscriptions).find(params[:id])
+    @user = ProfilePresenter.new(user, page: params[:page])
 
     respond_to do |format|
       format.html
