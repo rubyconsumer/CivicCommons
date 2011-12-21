@@ -35,12 +35,12 @@ describe Person do
       @person.email = ''
       @person.should_not be_valid
     end
-    
+
     context "zip code" do
       def given_a_person_with_no_zip_code
         @person = Factory.build(:normal_person,:zip_code =>'')
       end
-      
+
       def given_a_registered_person_without_a_zip_code
         @person = Factory :registered_user
         @person.zip_code = nil

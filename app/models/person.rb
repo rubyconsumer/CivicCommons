@@ -54,6 +54,7 @@ class Person < ActiveRecord::Base
   attr_protected :admin
 
   has_one :facebook_authentication, :class_name => 'Authentication', :conditions => {:provider => 'facebook'}
+  has_one :organization_detail
 
   has_many :authentications, :dependent => :destroy
   accepts_nested_attributes_for :authentications
@@ -367,6 +368,9 @@ class Person < ActiveRecord::Base
 
   def has_twitter?
     attribute_present? :twitter_username
+  end
+  def is_organization?
+    type.is_a(Organization)
   end
 protected
 
