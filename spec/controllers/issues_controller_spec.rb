@@ -7,19 +7,16 @@ describe IssuesController do
     before(:each) do
 
       (1..2).each do
-        Factory.create(:issue)
-      end
-      
-      (1..2).each do
         Factory.create(:topic)
       end
 
       (1..2).each do
         Factory.create(:managed_issue)
       end
-      
-      (1..2).each do
-        Factory.create(:issue, :exclude_from_result => false, :topics => [Topic.first])
+
+      factory_limit = 2
+      (1..factory_limit).each do |i|
+        Factory.create(:issue, :exclude_from_result => false, :topics => [Topic.first], :position => factory_limit-i)
       end
 
       (1..2).each do
@@ -28,9 +25,9 @@ describe IssuesController do
 
     end
 
-    it "assigns all issues as @issues" do
+    it "uses all issues if there is no current topic" do
       get :index
-      assigns(:issues).should == Issue.where(:type => 'Issue').where(:exclude_from_result => false).all
+      assigns(:issues).should == Issue.where(:type => 'Issue').where(:exclude_from_result => false).order(:position).all
     end
 
     it "assigns items to @recent_items" do
@@ -41,36 +38,32 @@ describe IssuesController do
 
       assigns(:recent_items).should == [item]
     end
-    
+
     it "includes topics" do
       Topic.should_receive(:including_public_issues)
       get :index
     end
-    
+
     it "assigns topics" do
       get :index
       assigns(:topics).should == Topic.including_public_issues.all
     end
-    
+
     it "assigns current_topic if there is a param[:topic]" do
       get :index, :topic => Topic.first.id
       assigns(:current_topic).should == Topic.first
     end
-    
+
     it "assigns subtitle if there is a topic" do
       get :index, :topic => Topic.first.id
       assigns(:subtitle).should == Topic.first.name
     end
-    
+
     it "uses issues on a particular topic if there is a current topic" do
       get :index, :topic => Topic.first.id
-      assigns(:issues).should == Topic.first.issues.type_is_issue.published.all
+      assigns(:issues).should == Topic.first.issues.type_is_issue.published.order(:position).all
     end
-    
-    it "uses all issues if there is no current topic" do
-      get :index
-      assigns(:issues).should == Issue.type_is_issue.published.all
-    end
+
   end
 
   describe "GET show" do

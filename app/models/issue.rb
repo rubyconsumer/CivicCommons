@@ -20,7 +20,7 @@ class Issue < ActiveRecord::Base
 
   has_and_belongs_to_many :conversations
   has_and_belongs_to_many :topics
-  
+
   # Contributions directly related to this Issue
   has_many :contributions
   has_many :suggested_actions
@@ -56,7 +56,7 @@ class Issue < ActiveRecord::Base
   validate :require_topic
   validates_uniqueness_of :name
   validates_attachment_presence :image
-  
+
   scope(:most_active, :select =>
         'count(1) as contribution_count, issues.*',
         :joins => [:contributions],
@@ -148,12 +148,12 @@ class Issue < ActiveRecord::Base
   def has_topic?(topic)
     topics.include?(topic)
   end
-  
+
   #validation
   def require_topic
     errors.add(:base, "Please select at least one Topic") if self.topic_ids.blank?
   end
-  
+
   private
 
   def self.update_positions(current, new_index, comparison)
