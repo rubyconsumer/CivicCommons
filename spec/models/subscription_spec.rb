@@ -9,9 +9,7 @@ describe Subscription do
     conversation = Factory.create(:conversation, title: 'Convo Title')
     subscription = Subscription.subscribe(conversation.class.to_s, conversation.id, @normal_person)
 
-    # requires calling .reload to change the subscribable_type back to a string
-    # TODO this should be corrected
-    subscription.reload.subscribable.title.should == 'Convo Title'
+    subscription.subscribable.title.should == 'Convo Title'
   end
 
   it "should have a person and conversation" do

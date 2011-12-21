@@ -1,6 +1,6 @@
 module Subscribable
   def subscribe(subscriber)
-    Subscription.find_or_create_by_subscribable_id_and_subscribable_type_and_person_id(self.id, self.class, subscriber.id)
+    Subscription.find_or_create_by_subscribable_id_and_subscribable_type_and_person_id(self.id, self.class.to_s, subscriber.id)
   end
 
   def unsubscribe(subscriber)
