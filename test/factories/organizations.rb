@@ -1,20 +1,20 @@
 FactoryGirl.define do |f|
   factory :organization, :class => Organization do |o|
-    o.name 'Leandog Inc'
-    o.email 'leandog@leandog.com'
+    o.name 'The Civic Commons'
+    o.email 'us@theciviccommons.com'
     o.password 'password'
-    o.zip_code '44114'
+    o.zip_code '44115'
     o.association :organization_detail, {
-      street: '1100 N Marginal Ave',
+      street: '2254 Euclid Avenue',
       city: 'Cleveland',
       region: 'OH',
-      postal_code: '44114',
-      phone: '1-800-do-agile',
-      facebook_page: 'http://www.facebook.com/leandogsoftware'
+      postal_code: '44115',
+      phone: '800-530-8507',
+      facebook_page: 'https://www.facebook.com/pages/The-Civic-Commons/139623022730390'
     }
     o.after_create do |oo|
       oo.authorized_to_setup_an_account = true
     end
   end
-  
+
 end
