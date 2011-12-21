@@ -542,6 +542,18 @@ a.see-more {float: right;}
 
 /*- GROUP OFFSET STYLES
 ----------------------------------------------------------------------*/
+.frame {
+background: #fff;
+border: 1px solid #ccc;
+padding: 4px;
+-webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
+-moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
+-o-box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
+box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
+}
+
+
+/* @group Offset Styles */
 
 /*- Image Offset ----------*/
 
@@ -596,7 +608,7 @@ zoom: 1;
 }
 .media .img {
 float: left;
-margin-right: 10px;
+margin-right: 20px;
 }
 .media .img img {display: block;}
 .media .imgExt {
@@ -2145,7 +2157,7 @@ div#search.main-search-bar input.submit {
 .results a img.callout {border: 1px solid #bbb;}
 .results a:hover img.callout {border-color: #999;}
 
-/*- Remove Search Filter ----------*/
+/*- Remove Filter ----------*/
 
 a.remove-search-filter:link, a.remove-search-filter:visited {
   color: #777;
@@ -2156,6 +2168,19 @@ a.remove-search-filter:link, a.remove-search-filter:visited {
 a.remove-search-filter:hover {
   background-position: 0 -64px;
   color: #51778e;
+}
+
+/* This version is more generic and can be used to clear any type of filter */
+
+a.remove-filter:link, a.remove-filter:visited {
+color: #777;
+background: url(../images/close.png) no-repeat 0 0;
+padding: 0 0 2px 20px;
+text-decoration: none;
+}
+a.remove-filter:hover {
+background-position: 0 -64px;
+color: #51778e;
 }
 
 
@@ -2405,6 +2430,7 @@ p.create-title {
   -o-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
 }
+.site-filter.full li a {padding-left: 10px;}
 .aside .f-conv ul.feat-list li a, .aside .search-filter a.remove-search-filter {margin-left:5px}
 .aside .f-conv ul.feat-list li a:hover, .aside .f-conv ul.feat-list li a.active, .aside .search-filter ul li a:hover, .aside .search-filter ul li a.active, .site-filter li a:hover, .site-filter li a.active {
   background-color: #dbedf5;
@@ -2412,6 +2438,10 @@ p.create-title {
   color: #51778e;
 }
 .aside .f-conv ul.feat-list li a:active, .aside .search-filter ul li a:active, .site-filter li a:active {background-color: #c1d9e4;}
+.mem-img {
+margin-right: 10px;
+vertical-align: middle;
+}
 
 /*- Conversation Filters ----------*/
 
