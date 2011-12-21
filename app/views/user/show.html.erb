@@ -3,7 +3,6 @@
 <% end %>
 
 <%= content_for :main_body do %>
-
   <div class="wrapper profile">
     <div class="content-container">
         <h1><%= @user.name %></h1>
@@ -21,6 +20,9 @@
         <% if @user.has_profile? %>
         <div class="mod call-out">
           <ul class="profile-extras">
+            <% if @user.has_address? %>
+              <li><%=@user.address %></li>
+            <% end %>
             <% if @user.has_website? %>
               <li class="website-profile"><%= link_to @user.website, @user.website %></li>
             <% end %>
@@ -35,16 +37,16 @@
 
     <div class="content-container">
       <div class="main-content">
-        <h3>My Recent Activity</h3>
+        <h3><%=@user.possessive_pronoun%> Recent Activity</h3>
         <%= render :partial => "/profile/recent_activity", locals: { profile: @user } %>
       </div>
       <div class="aside supplementary">
         <div class="mod" id="UserFollowingConversationsModule">
-          <h3>Conversations I am Following</h3>
+          <h3>Conversations <%=@user.action_phrase%> Following</h3>
           <%= render :partial => "/profile/conversation_subscriptions", locals: { profile: @user } %>
         </div>
         <div class="mod" id="UserFollowingIssuesModule">
-          <h3>Issues I am Following</h3>
+          <h3>Issues <%=@user.action_phrase%> Following</h3>
           <div class="mod-content">
             <ul class='link-list'>
               <% unless @user.has_issue_subscriptions? %>

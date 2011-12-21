@@ -15,7 +15,38 @@ describe ProfilePresenter do
       name: "Bob"
   end
   let(:presenter) { ProfilePresenter.new(user, page: 1) }
-
+  context "as an organization" do
+    subject { ProfilePresenter.new(stub(is_organization?: true)) }
+    it "has Our for possessive pronoun" do
+      subject.possessive_pronoun.should == "Our"
+    end
+    it "has We Are for action phrase" do
+      subject.action_phrase.should == "We Are"
+    end
+  end
+  context "with an address" do
+    let(:organization_details) do
+      stub(street: '1530 Corunna Ave',
+        city: 'Owosso',
+        region: 'MI',
+        postal_code: '48867')
+    end
+    subject { ProfilePresenter.new stub(organization_details: organization_details) }
+    it "forms the address cleanly" do
+      subject.address.should =~ /1530 Corunna Ave/
+      subject.address.should =~ /Owosso, MI 48867/
+    end
+    it { should have_address }
+  end
+  context "as an individual" do
+    subject { ProfilePresenter.new(stub(is_organization?: false)) }
+    it "has My for possessive pronoun" do
+      subject.possessive_pronoun.should == "My"
+    end
+    it "has I Am for action phrase" do
+      subject.action_phrase.should == "I Am"
+    end
+  end
   it "#has_issue_subscriptions?" do
     presenter.should have_issue_subscriptions
   end

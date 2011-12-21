@@ -1,6 +1,7 @@
 class CreateOrganizationDetails < ActiveRecord::Migration
   def self.up
     create_table :organization_details do |t|
+      t.integer :person_id
       t.string :street
       t.string :city
       t.string :region
@@ -9,6 +10,7 @@ class CreateOrganizationDetails < ActiveRecord::Migration
       t.string :facebook_page
       t.references :organization
       t.timestamps
+
     end
   end
 

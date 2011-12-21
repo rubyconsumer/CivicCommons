@@ -284,6 +284,7 @@ ActiveRecord::Schema.define(:version => 20111219194949) do
   add_index "managed_issue_pages", ["person_id"], :name => "index_managed_issue_pages_on_person_id"
 
   create_table "organization_details", :force => true do |t|
+    t.integer  "person_id"
     t.string   "street"
     t.string   "city"
     t.string   "region"

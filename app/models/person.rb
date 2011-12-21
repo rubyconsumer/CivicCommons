@@ -53,9 +53,13 @@ class Person < ActiveRecord::Base
   # Setup protected attributes
   attr_protected :admin
 
-  has_one :facebook_authentication, :class_name => 'Authentication', :conditions => {:provider => 'facebook'}, :dependent => :destroy
   has_many :authentications, :dependent => :destroy
   accepts_nested_attributes_for :authentications
+
+  has_one :facebook_authentication, :class_name => 'Authentication', :conditions => {:provider => 'facebook'}, :dependent => :destroy
+
+  has_one :organization_detail
+
 
   has_many :content_items, :foreign_key => 'person_id', :dependent => :restrict
   has_many :content_templates, :foreign_key => 'person_id', :dependent => :restrict
@@ -347,6 +351,9 @@ class Person < ActiveRecord::Base
 
   def has_twitter?
     attribute_present? :twitter_username
+  end
+  def is_organization?
+    type.is_a(Organization)
   end
 protected
 

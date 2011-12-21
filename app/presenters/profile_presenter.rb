@@ -48,7 +48,29 @@ class ProfilePresenter < Delegator
   def feed_title
     "#{@user.name} at The Civic Commons"
   end
+
   def prompt_to_fill_out_bio? user
     user == @user and bio.empty?
+  end
+
+  def possessive_pronoun
+    is_organization? ? "Our" : "My"
+  end
+
+  def action_phrase
+    is_organization? ? "We Are" : "I Am"
+  end
+  def address
+    <<-eos
+      #{organization_details.street}
+      #{organization_details.city}, #{organization_details.region} #{organization_details.postal_code}
+    eos
+  end
+
+  def has_address?
+    !organization_details.street.empty? or
+    !organization_details.city or
+    !organization_details.region or
+    !organization_details.postal_code
   end
 end
