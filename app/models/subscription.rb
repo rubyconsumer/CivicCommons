@@ -5,13 +5,15 @@ class Subscription < ActiveRecord::Base
   scope :conversations, where(subscribable_type: 'Conversation')
   scope :issues, where(subscribable_type: 'Issue')
 
-  def self.subscribable?(subscription_type, subscription_id, subscriber)
+  delegate :title, :to => :subscribable
+
+  def self.subscribable?(subscription_type, subscription_id=nil, subscriber=nil)
     subscribable_model = subscription_type.camelize.constantize
     return subscribable_model.include? Subscribable
   end
 
   def self.subscribe(subscription_type, subscription_id, subscriber)
-    if self.subscribable?(subscription_type, subscription_id, subscriber)
+    if self.subscribable?(subscription_type)
       subscribable_model = subscription_type.camelize.constantize
       subscribable_model.find(subscription_id).subscribe(subscriber)
     else
@@ -20,7 +22,7 @@ class Subscription < ActiveRecord::Base
   end
 
   def self.unsubscribe(subscription_type, subscription_id, subscriber)
-    if self.subscribable?(subscription_type, subscription_id, subscriber)
+    if self.subscribable?(subscription_type)
       subscribable_model = subscription_type.camelize.constantize
       subscribable_model.find(subscription_id).unsubscribe(subscriber)
     else
@@ -31,16 +33,6 @@ class Subscription < ActiveRecord::Base
   def self.create_unless_exists(person, subscribable)
     unless person.subscriptions.collect{|sub| sub.subscribable}.include?(subscribable)
       person.subscriptions.create(subscribable: subscribable)
-    end
-  end
-
-  def name
-    if subscribable.respond_to?(:title)
-      subscribable.title
-    elsif subscribable.respond_to?(:name)
-      subscribable.name
-    else
-      raise(ArgumentError, "#{subscribable} does not have a valid display attribute")
     end
   end
 
