@@ -95,29 +95,18 @@ Civiccommons::Application.routes.draw do
 
 #Devise Routes
 
-  auth_defaults = {:controllers => { :registrations => 'registrations', :confirmations => 'confirmations', :sessions => 'sessions', :omniauth_callbacks => "registrations/omniauth_callbacks", :passwords => 'passwords'},
-                     :path_names => { :sign_in => 'login', :sign_out => 'logout', :password => 'secret', :confirmation => 'verification', :registration => 'register', :sign_up => 'new' }}
+  devise_for :people, :controllers => { :registrations => 'registrations', :confirmations => 'confirmations', :sessions => 'sessions', :omniauth_callbacks => "registrations/omniauth_callbacks", :passwords => 'passwords'},
+                      :path_names => { :sign_in => 'login', :sign_out => 'logout', :password => 'secret', :confirmation => 'verification', :registration => 'register', :sign_up => 'new' }
 
-  devise_for :people, auth_defaults
-
-  devise_scope :person do
+  devise_scope :person do    
     match '/people/ajax_login', :to=>'sessions#ajax_create', :via=>[:post]
     match '/people/ajax_new_login', :to=>'sessions#ajax_new', :via=>[:get]
     get '/people/secret/fb_auth_forgot_password', to: 'passwords#fb_auth_forgot_password', as: 'fb_auth_forgot_password'
     get "/registrations/omniauth_callbacks/failure", to: "registrations/omniauth_callbacks#failure"
     get '/registrations/principles',                     to: 'registrations#principles'
+    get  "/organizations/register/new", :to => "registrations#new_organization", :as => "new_organization_registration"
+    post "/organizations/register", :to => "registrations#create_organization", :as => "organization_registration"
   end
-
-  devise_for :organizations, 
-             auth_defaults.merge({
-               :class_name => 'Organization', 
-               :path => 'organizations',
-               :singular => :organization,
-               :skip_helpers => true
-             }) do
-               get  "/organizations/register/new", :to => "registrations#new_organization", :as => "new_organization_registration"
-               post "/organizations/register", :to => "registrations#create_organization", :as => "organization_registration"
-             end
 
   #Sort and Filters
   constraints FilterConstraint do

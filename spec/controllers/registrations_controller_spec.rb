@@ -13,7 +13,7 @@ describe RegistrationsController do
   context "GET new_organization" do
     it "should have instance" do
       get :new_organization
-      assigns(:person).should be_an_instance_of(Person)
+      assigns(:person).should be_an_instance_of(Organization)
     end
     it "should render view new_organization" do
       get :new_organization

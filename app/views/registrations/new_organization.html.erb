@@ -5,7 +5,7 @@
 <div class="wrapper">
   <div class="content-container">
     <h1>Register for an Org</h1>
-    <%= form_for(form_presenter, :as => resource_name, :url => secure_registration_url(resource_name), :method => "post", "data-remote" => 'true', :html => { :multipart => 'true', :class => "register" }) do |f| %>
+    <%= form_for(form_presenter, :as => 'organization', :url => secure_registration_url('organization'), :method => "post", "data-remote" => 'true', :html => { :multipart => 'true', :class => "register" }) do |f| %>
       <% resource.errors.full_messages.each do |msg| %>
         <p><%= msg %></p>
       <% end %>
