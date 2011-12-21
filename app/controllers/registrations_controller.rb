@@ -19,15 +19,18 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def principles
+    
   end
 
   def new_organization
-    resource = build_resource
+    # taken from devise's registration_controller#new and modified
+    resource = build_organization_resource
     respond_with_navigational(resource){ render_with_scope :new_organization }
   end
 
   def create_organization
-    build_resource
+    # taken from devise's registration_controller#create and modified
+    build_organization_resource
 
     if resource.save
       if resource.active_for_authentication?
@@ -45,4 +48,11 @@ class RegistrationsController < Devise::RegistrationsController
     end
   end
 
+  private
+  def build_organization_resource(hash=nil)
+    # taken from devise and modified
+    hash ||= params[:organization] || {}
+    self.resource = Organization.new(hash)
+  end
+  
 end

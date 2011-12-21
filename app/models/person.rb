@@ -76,7 +76,7 @@ class Person < ActiveRecord::Base
   validates_presence_of :zip_code, :message => ' please enter zipcode', :on => :update, :if => :validate_zip_code_on_update?
   validates_length_of :zip_code, :message => ' must be 5 characters or higher', :within => (5..10), :allow_blank => false, :allow_nil => false, :on => :create, :if => :validate_zip_code_on_create?
   validates_length_of :zip_code, :message => ' must be 5 characters or higher', :within => (5..10), :allow_blank => false, :allow_nil => false, :on => :update, :if => :validate_zip_code_on_update?
-  validates_presence_of :name
+  validates_presence_of :first_name, :last_name, :if => Proc.new{|record| record.type != 'Organization'}
   validate :check_twitter_username_format
 
   has_friendly_id :name, :use_slug => true, :strip_non_ascii => true

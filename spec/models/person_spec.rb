@@ -25,7 +25,7 @@ describe Person do
       @person = Factory.build(:normal_person)
     end
 
-    it "should require first name or last name" do
+    it "should require first name and last name" do
       @person.first_name = ''
       @person.last_name = ''
       @person.should_not be_valid
@@ -148,13 +148,13 @@ describe Person do
       person.name = name
       person.password = "password"
       person.email = "wendy@example.com"
-      person.save!
+      person.save
       person
     end
 
-    it "should find when only first name exists" do
-      person = given_a_person_with_name "Wendy"
-      Person.find_all_by_name("Wendy").should == [person]
+    it "should not find when only first name exists" do
+      given_a_person_with_name "Wendy"
+      Person.find_all_by_name("Wendy").should be_blank
     end
 
     it "should find when first and last name" do
