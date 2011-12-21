@@ -86,9 +86,6 @@ describe ProfilePresenter do
   end
   describe "#feed_path" do
     it "is /user_path/user_slug.xml" do
-      presenter.stub(:user_path) do |u, opts| 
-        "/blarp/#{u.cached_slug}.#{opts[:format]}"
-      end
       presenter.feed_path.should == "/blarp/bob.xml"
     end
   end
