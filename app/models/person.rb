@@ -370,7 +370,7 @@ class Person < ActiveRecord::Base
     attribute_present? :twitter_username
   end
   def is_organization?
-    type.is_a(Organization)
+    is_a? Organization
   end
 protected
 

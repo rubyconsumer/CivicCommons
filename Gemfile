@@ -69,8 +69,8 @@ group :test do
   gem 'timecop'
   gem 'selenium-webdriver'
   gem 'rspec-spies'
-  gem "rspec-rails", "~> 2.5.0"
   gem 'spork'
+  gem "rspec-rails", "~> 2.5.0"
   gem "jasmine"
   gem 'steak'
   gem "capybara"

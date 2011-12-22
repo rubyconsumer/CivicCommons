@@ -1,5 +1,5 @@
 class ProfilePresenter < Delegator
-  include Rails.application.routes.url_helpers
+  Rails.application.routes.url_helpers
   PER_PAGE = 10
 
   def initialize(user, params={})
@@ -43,7 +43,7 @@ class ProfilePresenter < Delegator
     not recent_activity.empty?
   end
   def feed_path
-    user_path(@user, format: :xml)
+    user_path(@user.cached_slug, format: :xml)
   end
   def feed_title
     "#{@user.name} at The Civic Commons"
@@ -62,15 +62,16 @@ class ProfilePresenter < Delegator
   end
   def address
     <<-eos
-      #{organization_details.street}
-      #{organization_details.city}, #{organization_details.region} #{organization_details.postal_code}
+      #{organization_detail.street}
+      #{organization_detail.city}, #{organization_detail.region} #{organization_detail.postal_code}
     eos
   end
 
   def has_address?
-    !organization_details.street.empty? or
-    !organization_details.city or
-    !organization_details.region or
-    !organization_details.postal_code
+    organization_detail.present? and
+      (!organization_detail.street.empty? or
+      !organization_detail.city.empty? or
+      !organization_detail.region.empty? or
+      !organization_detail.postal_code)
   end
 end
