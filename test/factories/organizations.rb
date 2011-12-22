@@ -16,5 +16,8 @@ FactoryGirl.define do |f|
       oo.authorized_to_setup_an_account = true
     end
   end
-
+  factory :newly_confirmed_organization, :parent => :organization do |o|
+    o.confirmed_at { Time.now }
+    o.skip_email_marketing true
+  end
 end

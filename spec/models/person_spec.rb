@@ -640,4 +640,11 @@ describe Person do
     
   end
   
+  context "defaults" do
+    it "should have allow_facebook_connect? to be true by default" do
+      Person.new.allow_facebook_connect?.should be_true
+    end
+  end
+  
+  
 end

@@ -60,6 +60,13 @@ feature "8457517 link local account with facebook", %q{
       sleep 3
       page.should have_link "Unlink from Facebook"
     end
+    
+    context "and I am an organization" do
+      scenario "I should not see the modal dialog to 'link the account to facebook'", :js => true do
+        login_as :newly_confirmed_organization, email: 'info@testorg.com'
+        page.should_not have_link 'Connect with Facebook'
+      end
+    end
 
     describe "Facebook suggest modal dialogue", :js=>true do
       scenario "should be displayed if I have not linked my account to facebook" do

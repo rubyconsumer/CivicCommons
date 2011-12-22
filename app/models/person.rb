@@ -267,6 +267,11 @@ class Person < ActiveRecord::Base
   def facebook_profile_pic_url(type = :square)
     "https://graph.facebook.com/#{facebook_authentication.uid}/picture?type=#{type}" if facebook_authenticated?
   end
+  
+  def allow_facebook_connect?
+    # override this in the subclass
+    true
+  end
 
   def facebook_authenticated?
     !facebook_authentication.blank?
