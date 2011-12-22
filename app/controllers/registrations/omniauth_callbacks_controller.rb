@@ -24,15 +24,11 @@ private
 
   def create_account_using_facebook_credentials
     person = Person.build_from_auth_hash(env['omniauth.auth'])
-    if we_came_from_the_registration_page?(request)
-      if Person.where(email: person.email).size == 0
-        send_person_data_to_the_opening_window(person)
-      else
-        flash[:email] = person.email
-        render_js_registering_email_taken
-      end
+    if Person.where(email: person.email).size == 0
+      send_person_data_to_the_opening_window(person, new_person_registration_path)
     else
-      render_js_redirect_to(new_person_registration_path)
+      flash[:email] = person.email
+      render_js_registering_email_taken
     end
   end
 
@@ -120,7 +116,8 @@ private
     render :partial => '/authentication/fb_interstitial_message', :layout => 'fb_popup', :locals => {:text => text, :script => script}
   end
 
-  def send_person_data_to_the_opening_window(person)
-    render :partial => '/plain_old_javascript', locals: {script: "window.opener.RegistrationPage.submitWithFacebookData(#{person.to_json(:include=>:authentications)})" }
+  def send_person_data_to_the_opening_window(person, redirect_path)
+    render :partial => '/plain_old_javascript', locals: {
+      script: "window.opener.OmniAuthHandler.handleAccountCreation(#{person.to_json(:include=>:authentications)}, '#{redirect_path}')" }
   end
 end
