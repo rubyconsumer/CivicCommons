@@ -13,13 +13,13 @@ module CivicCommonsDriver
     has_file_field :avatar, 'person_avatar'
     has_button :continue, 'Continue', :home
     has_button :continue_with_invalid_information, 'Continue', :registration_page
-    
+
     has_checkbox :weekly_newsletter, 'person_weekly_newsletter'
     has_checkbox :daily_digest, 'person_daily_digest'
 
     has_link :connect_with_facebook, "facebook-connect", :home
     has_link :i_dont_want_to_use_facebook, "I don't have a Facebook account", :registration_page
-    
+
     def has_an_error_for? field
       case field
       when :invalid_name
