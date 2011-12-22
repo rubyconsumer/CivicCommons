@@ -18,6 +18,7 @@ module CivicCommonsDriver
     has_checkbox :daily_digest, 'person_daily_digest'
 
     has_link :connect_with_facebook, "facebook-connect", :home
+    has_link :failing_connect_with_facebook, "facebook-connect"
     has_link :i_dont_want_to_use_facebook, "I don't have a Facebook account", :registration_page
 
     def has_an_error_for? field
@@ -33,6 +34,16 @@ module CivicCommonsDriver
       end
       has_content? error_msg
     end
-    
+    def conflicting_email_modal
+      ConflictingEmailModal.new
+    end
+    class ConflictingEmailModal
+      SHORT_NAME = :conflicting_email_modal
+      include Page
+      def has_become_visible?
+        wait_until { has_css? ".registering-email-taken" }
+        true
+      end
+    end
   end
 end

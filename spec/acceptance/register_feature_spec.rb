@@ -50,19 +50,36 @@ feature "Register Feature", %q{
   end
 
   describe "Signing up with facebook" do
-    scenario "User signs up with facebook", :js=>true do
+    scenario "when email is not taken", :js=>true do
       goto :registration_page
-      fill_in_bio_with "Im a hoopy frood!"
-      fill_in_zip_code_with "47134"
-      follow_connect_with_facebook_link
-
+      connect_with_facebook
       wait_until { Person.last }
 
       newly_registered_user.bio.should == "Im a hoopy frood!"
-      newly_registered_user.zip_code.should == "47134"
+      newly_registered_user.zip_code.should == "12345"
 
       current_page.should be_for :home
 
+    end
+    scenario "when email is taken", :js=>true do
+      existing_user = create_user :registered_user
+      stub_facebook_auth_with_email_for existing_user
+      goto :registration_page
+      try_to_connect_with_facebook
+      conflicting_email_modal.should have_become_visible
+
+    end
+    def try_to_connect_with_facebook
+      fill_in_registration_field
+      follow_failing_connect_with_facebook_link
+    end
+    def fill_in_registration_field
+      fill_in_bio_with "Im a hoopy frood!"
+      fill_in_zip_code_with "12345"
+    end
+    def connect_with_facebook
+      fill_in_registration_field
+      follow_connect_with_facebook_link
     end
   end
   describe 'signing up as an organization' do
