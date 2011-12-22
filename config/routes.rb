@@ -27,7 +27,6 @@ Civiccommons::Application.routes.draw do
   get   '/authentication/fb_linking_success',          to: 'authentication#fb_linking_success',              as: 'fb_linking_success'
   get   '/authentication/registering_email_taken',     to: 'authentication#registering_email_taken',         as: 'registering_email_taken'
   get   '/authentication/successful_registration',     to: 'authentication#successful_registration',         as: 'successful_registration'
-  get   '/authentication/successful_fb_registration',  to: 'authentication#successful_fb_registration',      as: 'successful_fb_registration'
   get   '/authentication/confirm_facebook_unlinking',  to: 'authentication#confirm_facebook_unlinking',      as: 'confirm_facebook_unlinking'
   get   '/authentication/before_facebook_unlinking',   to: 'authentication#before_facebook_unlinking',       as: 'before_facebook_unlinking'
   delete '/authentication/process_facebook_unlinking', to: 'authentication#process_facebook_unlinking',      as: 'process_facebook_unlinking'

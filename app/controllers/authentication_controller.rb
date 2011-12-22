@@ -41,11 +41,6 @@ class AuthenticationController < ApplicationController
     render :layout => false
   end
 
-  def successful_fb_registration
-    @person = current_person
-    render :layout => false
-  end
-
   def update_conflicting_email
     if !session[:other_email].blank? && current_person.update_attribute(:email, session[:other_email]) 
       session[:other_email] = nil

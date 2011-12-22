@@ -27,10 +27,6 @@ describe AuthenticationController do
       { get: '/authentication/successful_registration' }.should route_to(controller: "authentication", action: "successful_registration")      
     end
     
-    it "recognizes and generates GET #successful_fb_registration" do
-      { get: '/authentication/successful_fb_registration' }.should route_to(controller: "authentication", action: "successful_fb_registration")      
-    end
-    
     it "recognizes and generates GET #confirm_facebook_unlinking" do
       { get: '/authentication/confirm_facebook_unlinking' }.should route_to(controller: "authentication", action: "confirm_facebook_unlinking")      
     end

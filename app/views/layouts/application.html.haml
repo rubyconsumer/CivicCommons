@@ -153,8 +153,6 @@
         = render :partial => 'layouts/creative_commons'
 
 = render :partial => '/shared/suggest_facebook_auth.js' if signed_in? && !current_person.declined_fb_auth? && !current_person.facebook_authenticated?
-= render :partial => '/shared/show_colorbox.js', :locals => {:path => successful_fb_registration_path} if flash[:successful_fb_registration_modal]
-    
 = render :partial => 'layouts/get_satisfaction'
 
 - if flash[:notice]
