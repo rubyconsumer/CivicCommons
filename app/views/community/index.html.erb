@@ -27,7 +27,7 @@
                 <%= user_profile(person) %>
               </div>
               <div class="text-container" id="label_<%= person.id %>">
-                <% name = ( person.last_name.blank? ? person.name : person.last_name + ", " + person.first_name ) %>
+                <% name = ( person.is_a?(Organization) ? person.name : (person.last_name.blank? ? person.name : person.last_name.to_s + ", " + person.first_name.to_s) ) %>
                 <h4><%= link_to name, user_path(person), title: person.name%></h4>
                   <p><%= truncate(person.bio,:length => 290) if person.bio %></p>
               </div>
