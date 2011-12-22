@@ -5,8 +5,11 @@ class RegistrationsController < Devise::RegistrationsController
   helper_method :form_presenter
 
   def create
-    params['person']['create_from_auth'] = true
-    params['person']['encrypted_password'] = ''
+    if params['person'].has_key?('authentications_attributes')
+      params['person']['create_from_auth'] = true
+      params['person']['encrypted_password'] = ''
+      params['person']['confirmed_at'] = DateTime.now
+    end
     super
   end
 
@@ -16,10 +19,6 @@ class RegistrationsController < Devise::RegistrationsController
 
   def form_presenter
     @presenter = RegistrationFormPresenter.new(resource)
-  end
-
-  def principles
-    
   end
 
   def new_organization

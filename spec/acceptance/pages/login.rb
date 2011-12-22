@@ -4,6 +4,8 @@ module Pages
     SHORT_NAME = :login
     LOCATION = '/people/login'
     include Page
+    include Facebookable
+
     add_field :email, "Email"
     add_field :password, "Password"
 
@@ -11,6 +13,7 @@ module Pages
     add_button :login, "Login", :home
     def login user
       if user.on_facebook_auth?
+        stub_facebook_auth_for user
         follow_login_with_facebook_link
         wait_until { page.has_content? user.name }
       else

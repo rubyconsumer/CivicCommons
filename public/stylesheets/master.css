@@ -215,6 +215,7 @@ input.textbox, input.textbox.small, textarea.textbox {
   margin-left: 160px;
   outline: none;
 }
+input:read-only { background-color: #DEDEDE; }
 input#zipcode.textbox {width: 10em;}
 input.textbox#contribution_url {width: 80% !important;}
 input[type="file"] {border: none;}

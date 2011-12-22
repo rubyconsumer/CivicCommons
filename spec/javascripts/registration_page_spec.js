@@ -11,16 +11,16 @@ describe('RegistrationPage', function () {
       $('form').bind('submit', function() {return false; })
       spyOnEvent($('form'), 'submit');
       RegistrationPage.submitWithFacebookData({ 
-        user_info: {
+        person: {
           email: 'zee@zach',
           first_name: "blarp",
-          last_name: "narp"
-        },
-        credentials: {
-            token: 'ABC123'
-        },
-        provider: 'facebook',
-        uid: 1234
+          last_name: "narp",
+          authentications: [ {
+            provider: 'facebook',
+            token: 'ABC123',
+            uid: 1234
+          }]
+        }
       });
     });
     it('populates the form with the persons first name', function() {

@@ -27,8 +27,6 @@ Civiccommons::Application.routes.draw do
   get   '/authentication/fb_linking_success',          to: 'authentication#fb_linking_success',              as: 'fb_linking_success'
   get   '/authentication/registering_email_taken',     to: 'authentication#registering_email_taken',         as: 'registering_email_taken'
   get   '/authentication/successful_registration',     to: 'authentication#successful_registration',         as: 'successful_registration'
-  get   '/authentication/successful_fb_registration',  to: 'authentication#successful_fb_registration',      as: 'successful_fb_registration'
-  put   '/authentication/update_account',              to: 'authentication#update_account',                  as: 'auth_update_account'
   get   '/authentication/confirm_facebook_unlinking',  to: 'authentication#confirm_facebook_unlinking',      as: 'confirm_facebook_unlinking'
   get   '/authentication/before_facebook_unlinking',   to: 'authentication#before_facebook_unlinking',       as: 'before_facebook_unlinking'
   delete '/authentication/process_facebook_unlinking', to: 'authentication#process_facebook_unlinking',      as: 'process_facebook_unlinking'
@@ -98,12 +96,12 @@ Civiccommons::Application.routes.draw do
   devise_for :people, :controllers => { :registrations => 'registrations', :confirmations => 'confirmations', :sessions => 'sessions', :omniauth_callbacks => "registrations/omniauth_callbacks", :passwords => 'passwords'},
                       :path_names => { :sign_in => 'login', :sign_out => 'logout', :password => 'secret', :confirmation => 'verification', :registration => 'register', :sign_up => 'new' }
 
-  devise_scope :person do    
+  devise_scope :person do
     match '/people/ajax_login', :to=>'sessions#ajax_create', :via=>[:post]
     match '/people/ajax_new_login', :to=>'sessions#ajax_new', :via=>[:get]
     get '/people/secret/fb_auth_forgot_password', to: 'passwords#fb_auth_forgot_password', as: 'fb_auth_forgot_password'
     get "/registrations/omniauth_callbacks/failure", to: "registrations/omniauth_callbacks#failure"
-    get '/registrations/principles',                     to: 'registrations#principles'
+    get '/registrations/principles', to: 'registrations#principles'
     get  "/organizations/register/new", :to => "registrations#new_organization", :as => "new_organization_registration"
     post "/organizations/register", :to => "registrations#create_organization", :as => "organization_registration"
   end

@@ -57,58 +57,41 @@ describe Person do
         @person.errors.should have_key(:zip_code)
       end
 
-      it "should not be validated when the person already exists" do
+      it "should be validated when the person already exists" do
         given_a_registered_person_without_a_zip_code
         @person.valid?
-        @person.errors.should_not have_key(:zip_code)
+        @person.errors.should have_key(:zip_code)
       end
 
-      it "should not be validated when the person already exists and has a short (invalid) zip code" do
+      it "should be validated when the person already exists and has a short (invalid) zip code" do
         given_a_registered_person_with_a_short_zip_code
         @person.valid?
-        @person.errors.should_not have_key(:zip_code)
+        @person.errors.should have_key(:zip_code)
       end
 
-      it "should not be validated when facebook unlinking" do
+      it "should be validated when facebook unlinking" do
         given_a_person_with_no_zip_code
         @person.stub(:facebook_unlinking?).and_return(true)
         @person.valid?
-        @person.errors.should_not have_key(:zip_code)
+        @person.errors.should have_key(:zip_code)
       end
-      
-      it "should not be validated when creating from auth" do
+
+      it "should be validated when creating from auth" do
         given_a_person_with_no_zip_code
         @person.stub(:create_from_auth?).and_return(true)
         @person.valid?
-        @person.errors.should_not have_key(:zip_code)
-      end
-
-      it "strips the @ symbol from the front of the Twitter username" do
-        @person.twitter_username = '@SomeTwitterUser'
-        @person.twitter_username.should == '@SomeTwitterUser'
-        @person.should be_valid
-        @person.twitter_username.should == 'SomeTwitterUser'
-      end
-      
-      context "require_zip_code" do
-        it "should validate zip code when require_zip_code is true" do
-          @person = Factory.create(:registered_user)
-          @person.zip_code = nil
-          @person.require_zip_code = true
-          @person.save
-          @person.errors.should have_key(:zip_code)
-        end
-        it "should NOT validate zip code when require_zip_code is not true" do
-          @person = Factory.create(:registered_user)
-          @person.zip_code = nil
-          @person.save
-          @person.errors.should_not have_key(:zip_code)
-        end
+        @person.errors.should have_key(:zip_code)
       end
     end
-
-
+    
+    it "strips the @ symbol from the front of the Twitter username" do
+      @person.twitter_username = '@SomeTwitterUser'
+      @person.twitter_username.should == '@SomeTwitterUser'
+      @person.should be_valid
+      @person.twitter_username.should == 'SomeTwitterUser'
+    end
   end
+
 
   describe "when parsing the name" do
     it "should parse simple name" do
@@ -224,14 +207,24 @@ describe Person do
       @person.last_name = 'Doe'
       @person.save
     end
-    it "should send a confirmation email" do
-      given_a_new_user_registered
-      mailing = ActionMailer::Base.deliveries.first
-      mailing[:from].to_s.should == Civiccommons::Config.devise['email']
-      mailing.to.should == [@person.email]
-      mailing.subject.should == "Confirmation instructions"
+    context "when not from facebook" do
+      it "should send a confirmation email" do
+        given_a_new_user_registered
+        mailing = ActionMailer::Base.deliveries.first
+        mailing[:from].to_s.should == Civiccommons::Config.devise['email']
+        mailing.to.should == [@person.email]
+        mailing.subject.should == "Confirmation instructions"
+      end
+      
     end
-
+    context "from facebook" do
+      it "does not send a confirmation email" do
+          @person = Factory.build(:registered_user_with_facebook_authentication)
+          ActionMailer::Base.deliveries.any? do | mail |
+            mail.subject.include? "Confirmation"
+          end.should == false
+      end
+    end
     it "should not send a welcome email" do
       given_a_new_user_registered
       mailing = ActionMailer::Base.deliveries.last
@@ -374,34 +367,15 @@ describe Person do
       end
     end
     describe "create account with facebook hash" do
-      def given_creating_account_from_auth_hash
-        @person = Person.create_from_auth_hash(@auth_hash)
-      end
-      it "should create a valid account" do
-        given_creating_account_from_auth_hash
-        @person.should be_valid
-      end
+      let(:person) { Person.build_from_auth_hash(@auth_hash)}
       it "should have first name" do
-        given_creating_account_from_auth_hash
-        @person.first_name.should == 'John'
+        person.first_name.should == 'John'
       end
       it "should have last name" do
-        given_creating_account_from_auth_hash
-        @person.last_name.should == 'Doe'
+        person.last_name.should == 'Doe'
       end
       it "should have email" do
-        given_creating_account_from_auth_hash
-        @person.email.should == "johnd@test.com"
-      end
-      it "should not require to be confirmed by email" do
-        given_creating_account_from_auth_hash
-        @person.should be_confirmed
-      end
-      it "should return an invalid person record if there is an error" do
-        Factory.create(:registered_user, :email => "johnd@test.com")
-        given_creating_account_from_auth_hash
-        @person.should_not be_valid
-        @person.errors[:email].should == ["has already been taken"]
+        person.email.should == "johnd@test.com"
       end
     end
     describe "Change Password" do
@@ -409,9 +383,8 @@ describe Person do
         ActionMailer::Base.deliveries = []
       end
       def given_a_person_with_facebook_auth
-        @person = Factory.build(:registered_user, :email => 'johnd@example.com')
-        @authentication = Factory.build(:authentication, :provider => 'facebook')
-        @person.link_with_facebook(@authentication)
+        @person = Factory.build(:registered_user_with_facebook_authentication, :email => 'johnd@example.com')
+
       end
       
       def given_a_regular_person
