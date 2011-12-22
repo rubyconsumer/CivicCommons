@@ -120,47 +120,25 @@ describe AuthenticationController do
       response.should render_template(:layout => false)
     end
   end
-  
-  context "PUT update_account" do
-    before(:each) do
-      @person = mock_person
-      @controller.stub(:current_person).and_return(@person)
-    end
-        
-    it "should render colorbox for confirmation if successful" do
-      @person.should_receive(:update_attributes).with(hash_including(:zip_code => 1234)).and_return(true)
-      put :update_account, :person => {:zip_code => 1234}
-      response.should be_ok
-      response.body.should contain "$.colorbox({href:'/authentication/successful_registration'})"
-    end
-    
-    it "should render the form if unsuccessful" do
-      @person.should_receive(:update_attributes).and_return(false)
-      put :update_account, :person => {:zip_code => 1234}
-      response.should be_ok
-      response.body.should render_template 'authentication/_update_account_form'
-    end
-  end
 
   context "GET confirm_facebook_unlinking" do
     before(:each) do
       @person = mock_person
       @controller.stub(:current_person).and_return(@person)
     end
-    
+
     context "XHR" do
       it "should render the layout for XHR request" do
         xhr :get, :confirm_facebook_unlinking
         response.should render_template('layouts/content_for/main_body')
       end
     end
-    
+
     context "not XHR" do
       it "should render regular layout" do
         get :confirm_facebook_unlinking
         response.should render_template('layouts/application')
       end
-      
     end
   end
   

@@ -46,13 +46,6 @@ class AuthenticationController < ApplicationController
     render :layout => false
   end
 
-  def update_account
-    @person = current_person
-    if params['person'] && @person.update_attributes({:zip_code => params['person']['zip_code']})
-      render :js => "<script type='text/javascript'>$.colorbox({href:'#{successful_registration_path}'})</script>"
-    end
-  end
-
   def update_conflicting_email
     if !session[:other_email].blank? && current_person.update_attribute(:email, session[:other_email]) 
       session[:other_email] = nil
