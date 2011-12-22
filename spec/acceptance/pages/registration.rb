@@ -17,7 +17,7 @@ module CivicCommonsDriver
     has_checkbox :weekly_newsletter, 'person_weekly_newsletter'
     has_checkbox :daily_digest, 'person_daily_digest'
 
-    has_link :connect_with_facebook, "facebook-connect", :thanks_for_registering
+    has_link :connect_with_facebook, "facebook-connect", :home
     has_link :i_dont_want_to_use_facebook, "I don't have a Facebook account", :registration_page
     
     def has_an_error_for? field
@@ -28,6 +28,8 @@ module CivicCommonsDriver
         error_msg = "Email can't be blank"
       when :invalid_password
         error_msg = "Password can't be blank"
+      when :invalid_zip
+        error_msg = "please enter zipcode"
       end
       has_content? error_msg
     end
