@@ -50,8 +50,6 @@ class AuthenticationController < ApplicationController
     @person = current_person
     if params['person'] && @person.update_attributes({:zip_code => params['person']['zip_code']})
       render :js => "<script type='text/javascript'>$.colorbox({href:'#{successful_registration_path}'})</script>"
-    else
-      render :template => '/authentication/_update_account_form.html', :layout => false
     end
   end
 

@@ -10,15 +10,9 @@ feature "8457517 link local account with facebook", %q{
   before do
     stub_facebook_auth
     sign_out
-    page.execute_script('jQuery.ajaxSetup({async: false})')
   end
 
-  let (:facebook_auth_page) { FacebookAuthPage.new(page) }
-  let (:settings_page)              { SettingsPage.new(page) }
-  let (:fb_linking_success_page)    { FbLinkingSuccessPage.new(page) }
-  let (:suggest_facebook_auth_page) { SuggestFacebookAuthPage.new(page) }
   let (:forgot_password_page)       { ForgotPasswordPage.new(page) }
-  let (:fb_auth_forgot_password_modal_page) { FbAuthForgotPasswordModalPage.new(page)}
 
   def response_should_js_redirect_to(path)
     page.should contain "window.opener.location = '#{path}'"

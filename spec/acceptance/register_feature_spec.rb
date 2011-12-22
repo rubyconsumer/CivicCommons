@@ -14,6 +14,7 @@ feature "Register Feature", %q{
     clear_mail_queue
   end
 
+
   scenario "User signs up without facebook", :js => true do
     goto :registration_page
     fill_in_bio_with "Im a hoopy frood!"
@@ -36,7 +37,6 @@ feature "Register Feature", %q{
     click_continue_button
     page.should have_content "Thanks, go check your email."
   end
-
   scenario "User signs up without facebook and with invalid information", :js => true do
     goto :registration_page
 
@@ -49,19 +49,21 @@ feature "Register Feature", %q{
     current_page.should have_an_error_for :invalid_zip
   end
 
-  scenario "User signs up with facebook", :js=>true do
-    goto :registration_page
-    fill_in_bio_with "Im a hoopy frood!"
-    fill_in_zip_code_with "47134"
-    follow_connect_with_facebook_link
+  describe "Signing up with facebook" do
+    scenario "User signs up with facebook", :js=>true do
+      goto :registration_page
+      fill_in_bio_with "Im a hoopy frood!"
+      fill_in_zip_code_with "47134"
+      follow_connect_with_facebook_link
 
-    wait_until { Person.last }
+      wait_until { Person.last }
 
-    newly_registered_user.bio.should == "Im a hoopy frood!"
-    newly_registered_user.zip_code.should == "47134"
+      newly_registered_user.bio.should == "Im a hoopy frood!"
+      newly_registered_user.zip_code.should == "47134"
 
-    current_page.should be_for :home
+      current_page.should be_for :home
 
+    end
   end
   describe 'signing up as an organization' do
     def begin_registering_as_organization
