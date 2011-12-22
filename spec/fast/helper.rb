@@ -21,8 +21,5 @@ unless defined? Rails
   end
 
   module Fake
-    def user_path(user, options)
-        "/blarp/#{user.cached_slug}.#{options[:format]}"
-    end
   end
 end

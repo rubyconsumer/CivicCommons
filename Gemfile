@@ -68,8 +68,8 @@ group :test do
   gem 'simplecov'
   gem 'timecop'
   gem 'rspec-spies'
-  gem "rspec-rails", "~> 2.5.0"
   gem 'spork'
+  gem "rspec-rails", "~> 2.5.0"
   gem "jasmine"
   gem 'steak'
   gem "capybara", '1.1.2'

@@ -24,14 +24,19 @@ describe ProfilePresenter do
       subject.action_phrase.should == "We Are"
     end
   end
+  context "without an adddress" do
+    subject { ProfilePresenter.new(stub(organization_detail: stub(present?: false))) }
+    it { should_not have_address }
+  end
   context "with an address" do
-    let(:organization_details) do
-      stub(street: '1530 Corunna Ave',
+    let(:organization_detail) do
+      stub(present?: true,
+        street: '1530 Corunna Ave',
         city: 'Owosso',
         region: 'MI',
         postal_code: '48867')
     end
-    subject { ProfilePresenter.new stub(organization_details: organization_details) }
+    subject { ProfilePresenter.new stub(organization_detail: organization_detail) }
     it "forms the address cleanly" do
       subject.address.should =~ /1530 Corunna Ave/
       subject.address.should =~ /Owosso, MI 48867/
@@ -86,6 +91,7 @@ describe ProfilePresenter do
   end
   describe "#feed_path" do
     it "is /user_path/user_slug.xml" do
+      presenter.stub(:user_path) { |u, opts| "/blarp/#{u}.#{opts[:format]}" }
       presenter.feed_path.should == "/blarp/bob.xml"
     end
   end
