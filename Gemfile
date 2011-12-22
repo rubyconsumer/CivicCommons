@@ -4,6 +4,7 @@ gem 'mysql2', '< 0.3'
 gem 'devise'
 gem "oa-oauth", :require => "omniauth/oauth"
 gem 'omniauth', '~>0.2.0'
+gem 'rack-ssl'
 
 gem 'rails', "3.0.3"
 gem 'jquery-rails', '>= 1.0.3'

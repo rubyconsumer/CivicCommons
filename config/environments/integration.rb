@@ -33,4 +33,6 @@ Civiccommons::Application.configure do
   # For devise gem
   config.action_mailer.default_url_options = { :host => Civiccommons::Config.devise['mailer_host'] }
 
+  # change http to https
+  config.middleware.insert_before ActionDispatch::Static, "Rack::SSL"
 end
