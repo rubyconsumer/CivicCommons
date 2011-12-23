@@ -32,7 +32,7 @@ describe Organization do
       Organization.reflect_on_association(:organization_detail).macro == :has_one
     end
   end
-  
+
   context "defaults" do
     it "should have allow_facebook_connect? to be false always" do
       Organization.new.allow_facebook_connect?.should be_false
