@@ -120,6 +120,8 @@ Civiccommons::Application.routes.draw do
     member do
       get 'mockup'
       delete "destroy_avatar"
+      post 'join_as_member'
+      delete 'remove_membership'
     end
  end
 

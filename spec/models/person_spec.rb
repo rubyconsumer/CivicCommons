@@ -17,6 +17,12 @@ describe Person do
     it "should have many survey_responses" do
       Person.reflect_on_association(:survey_responses).macro == :has_many
     end
+    it "should have and belongs to many organizations" do
+      Person.reflect_on_association(:organizations).macro.should == :has_and_belongs_to_many
+    end
+    it "should be have uniqueness constraint on habtm organiazation" do
+      Person.reflect_on_association(:organizations).options[:uniq].should be_true
+    end
   end
 
   describe "validate required data" do

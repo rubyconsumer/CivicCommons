@@ -56,6 +56,7 @@ class Person < ActiveRecord::Base
   has_one :facebook_authentication, :class_name => 'Authentication', :conditions => {:provider => 'facebook'}
 
   has_many :authentications, :dependent => :destroy
+  has_and_belongs_to_many :organizations, :uniq => true, :join_table => 'organization_members'
   accepts_nested_attributes_for :authentications
 
   has_many :content_items, :foreign_key => 'person_id', :dependent => :restrict

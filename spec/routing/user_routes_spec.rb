@@ -16,6 +16,13 @@ describe UserController do
       { get: "/user/1/edit" }.should route_to(controller: "user", action: "edit", id: "1")
     end
 
+    it "recognizes and generates #edit" do
+      { post: "/user/1/join_as_member" }.should route_to(controller: "user", action: "join_as_member", id: "1")
+    end
+    
+    it "recognizes and generates #edit" do
+      { delete: "/user/1/remove_membership" }.should route_to(controller: "user", action: "remove_membership", id: "1")
+    end
   end
 
 end
