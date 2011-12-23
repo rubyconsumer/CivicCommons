@@ -45,6 +45,8 @@ gem 'fitter-happier', '= 0.0.1'
 
 gem 'sixarm_ruby_email_address_validation'
 
+gem 'profanity_filter'
+
 group :development do
   gem "rails3-generators"
   gem "hpricot"

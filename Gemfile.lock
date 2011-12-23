@@ -207,6 +207,7 @@ GEM
       activesupport
     polyglot (0.3.3)
     pr_geohash (1.0.0)
+    profanity_filter (0.1.1)
     rack (1.2.4)
     rack-mount (0.6.14)
       rack (>= 1.0.0)
@@ -363,6 +364,7 @@ DEPENDENCIES
   omniauth (= 1.0.1)
   omniauth-facebook
   paperclip (= 2.3.8)
+  profanity_filter
   query_reviewer!
   rack-test
   rails (= 3.0.3)
