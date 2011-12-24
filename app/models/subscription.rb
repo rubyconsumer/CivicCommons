@@ -3,8 +3,10 @@ class Subscription < ActiveRecord::Base
   belongs_to :person
 
   scope :conversations, where(subscribable_type: 'Conversation')
-  scope :issues, where(subscribable_type: 'Issue')
+  scope :issues,        where(subscribable_type: 'Issue')
+  scope :organizations, where(subscribable_type: 'Organizations')
 
+  delegate :name, :to => :person, :prefix => true
   delegate :title, :to => :subscribable
 
   def self.subscribable?(subscription_type, subscription_id=nil, subscriber=nil)
@@ -17,7 +19,7 @@ class Subscription < ActiveRecord::Base
       subscribable_model = subscription_type.camelize.constantize
       subscribable_model.find(subscription_id).subscribe(subscriber)
     else
-      raise(ArgumentError, "#{model}'s can not be subscribed to.")
+      raise(ArgumentError, "Invalid attempt made to subscribe to:#{subscription_type}. #{subscription_type} must implement subscribable.")
     end
   end
 
