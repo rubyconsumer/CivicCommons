@@ -26,5 +26,31 @@ require 'spec_helper'
         item.subscriptions.blank?.should be_true
       end
     end
+
+    context "subscribers" do
+      it "returns an array with a person after they follow a #{model_type.to_s}" do
+        item.subscribe(@person)
+        item.subscribers.should == [@person]
+        item.subscribers.size.should == 1
+      end
+      it "returns an unordered array of people following a #{model_type.to_s}" do
+        person2 = Factory.create(:normal_person)
+        item.subscribe(@person)
+        item.subscribe(person2)
+
+        item_subscribers = item.subscribers
+        expected_subscribers = [person2, @person]
+
+        (item_subscribers - expected_subscribers).should == []
+      end
+      it "returns an empty array if no one is following." do
+        # Conversations start with one follower, the creator
+        if model_type == Conversation
+          item.subscribers.size.should == 1
+        else
+          item.subscribers.size.should == 0
+        end
+      end
+    end
   end
 end

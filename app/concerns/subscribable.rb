@@ -6,4 +6,8 @@ module Subscribable
   def unsubscribe(subscriber)
     Subscription.where(:subscribable_id => self.id, :subscribable_type => self.class, :person_id => subscriber).delete_all
   end
+
+  def subscribers
+    Subscription.where(:subscribable_id => self.id, :subscribable_type => self.class).collect{|subscription| subscription.person}
+  end
 end
