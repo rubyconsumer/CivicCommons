@@ -14,11 +14,21 @@
           <% if @user.bio.blank? && @user == current_person %>
             <p class="empty">Looks like you haven't filled out your bio&hellip; Head over to your <%= link_to_settings(current_person).html_safe.downcase %> and tell us a little bit about yourself.</p>
           <% elsif %>
-            <p><%= @user.bio %></p>
+            <p>
+              <%= @user.bio %>
+            </p>
           <% end %>
       </div>
       </div>
       <div class="aside">
+        
+        <% if @user.is_a?(Organization) %>
+        <p>
+          <span id="subscription">
+            <%= render :partial => '/subscriptions/subscription', :locals => {:subscribable => @user} %>
+          </span>
+        </p>
+        <% end %>
         <%= organization_membership_button(@user,current_person) if @user.is_a?(Organization) %>
         <% unless @user.website.blank? && @user.twitter_username.blank? %>
         <div class="mod call-out">

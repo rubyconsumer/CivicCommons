@@ -24,14 +24,16 @@ private
 
   def create_account_using_facebook_credentials
     person = Person.build_from_auth_hash(env['omniauth.auth'])
-    if person.valid?
-      send_finish_data_to_the_opening_window(env['omniauth.auth'])
-    elsif person.errors[:email].to_s.include?("has already been taken")
+    if Person.where(email: person.email).size == 0
+      send_person_data_to_the_opening_window(person, new_person_registration_path)
+    else
       flash[:email] = person.email
       render_js_registering_email_taken
-    else
-      render_js_redirect_to((env['omniauth.origin'] || root_path),:text => "Something went wrong, your account cannot be created")
     end
+  end
+
+  def we_came_from_the_registration_page? request
+     request.env['omniauth.origin'] == new_person_registration_url or request.env['omniauth.origin'] == person_registration_url
   end
 
   def failed_linked_to_facebook
@@ -114,7 +116,8 @@ private
     render :partial => '/authentication/fb_interstitial_message', :layout => 'fb_popup', :locals => {:text => text, :script => script}
   end
 
-  def send_finish_data_to_the_opening_window(facebook_data)
-    render :partial => '/plain_old_javascript', locals: {script: "window.opener.RegistrationPage.submitWithFacebookData(#{facebook_data.to_json})" }
+  def send_person_data_to_the_opening_window(person, redirect_path)
+    render :partial => '/plain_old_javascript', locals: {
+      script: "window.opener.OmniAuthHandler.handleAccountCreation(#{person.to_json(:include=>:authentications)}, '#{redirect_path}')" }
   end
 end

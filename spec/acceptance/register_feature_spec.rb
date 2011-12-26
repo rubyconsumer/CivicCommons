@@ -14,6 +14,7 @@ feature "Register Feature", %q{
     clear_mail_queue
   end
 
+
   scenario "User signs up without facebook", :js => true do
     goto :registration_page
     fill_in_bio_with "Im a hoopy frood!"
@@ -36,33 +37,50 @@ feature "Register Feature", %q{
     click_continue_button
     page.should have_content "Thanks, go check your email."
   end
-
   scenario "User signs up without facebook and with invalid information", :js => true do
     goto :registration_page
+
     follow_i_dont_want_to_use_facebook_link
     click_continue_with_invalid_information_button
     current_page.should have_an_error_for :invalid_first_name
     current_page.should have_an_error_for :invalid_last_name
     current_page.should have_an_error_for :invalid_email
-
-    # TODO as part of ticket 309 - password needs to be validated on non-facebook signup.
-    # current_page.should have_an_error_for :invalid_password
+    current_page.should have_an_error_for :invalid_password
+    current_page.should have_an_error_for :invalid_zip
   end
 
-  scenario "User signs up with facebook", :js=>true do
-    pending
-    goto :registration_page
-    fill_in_bio_with "Im a hoopy frood!"
-    fill_in_zip_code_with "47134"
-    follow_connect_with_facebook_link
+  describe "Signing up with facebook" do
+    scenario "when email is not taken", :js=>true do
+      goto :registration_page
+      connect_with_facebook
+      wait_until { Person.last }
 
-    wait_until { Person.last }
+      newly_registered_user.bio.should == "Im a hoopy frood!"
+      newly_registered_user.zip_code.should == "12345"
 
-    newly_registered_user.bio.should == "Im a hoopy frood!"
-    newly_registered_user.zip_code.should == "47134"
-    newly_registered_user.should have_been_sent :registration_confirmation_email
+      current_page.should be_for :home
 
-    current_page.should be_for :thanks_for_registering
+    end
+    scenario "when email is taken", :js=>true do
+      existing_user = create_user :registered_user
+      stub_facebook_auth_with_email_for existing_user
+      goto :registration_page
+      try_to_connect_with_facebook
+      conflicting_email_modal.should have_become_visible
+
+    end
+    def try_to_connect_with_facebook
+      fill_in_registration_field
+      follow_failing_connect_with_facebook_link
+    end
+    def fill_in_registration_field
+      fill_in_bio_with "Im a hoopy frood!"
+      fill_in_zip_code_with "12345"
+    end
+    def connect_with_facebook
+      fill_in_registration_field
+      follow_connect_with_facebook_link
+    end
   end
   describe 'signing up as an organization' do
     def begin_registering_as_organization

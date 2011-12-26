@@ -53,8 +53,7 @@ class Person < ActiveRecord::Base
   # Setup protected attributes
   attr_protected :admin
 
-  has_one :facebook_authentication, :class_name => 'Authentication', :conditions => {:provider => 'facebook'}
-
+  has_one :facebook_authentication, :class_name => 'Authentication', :conditions => {:provider => 'facebook'}, :dependent => :destroy
   has_many :authentications, :dependent => :destroy
   has_and_belongs_to_many :organizations, :uniq => true, :join_table => 'organization_members'
   accepts_nested_attributes_for :authentications
@@ -72,10 +71,8 @@ class Person < ActiveRecord::Base
 
   validates_length_of :email, :within => 6..255, :too_long => "please use a shorter email address", :too_short => "please use a longer email address"
 
-  validates_presence_of :zip_code, :message => ' please enter zipcode', :on => :create, :if => :validate_zip_code_on_create?
-  validates_presence_of :zip_code, :message => ' please enter zipcode', :on => :update, :if => :validate_zip_code_on_update?
-  validates_length_of :zip_code, :message => ' must be 5 characters or higher', :within => (5..10), :allow_blank => false, :allow_nil => false, :on => :create, :if => :validate_zip_code_on_create?
-  validates_length_of :zip_code, :message => ' must be 5 characters or higher', :within => (5..10), :allow_blank => false, :allow_nil => false, :on => :update, :if => :validate_zip_code_on_update?
+  validates_presence_of :zip_code, :message => ' please enter zipcode'
+  validates_length_of :zip_code, :message => ' must be 5 characters or higher', :within => (5..10), :allow_blank => false, :allow_nil => false
   validates_presence_of :first_name, :last_name, :if => Proc.new{|record| record.type != 'Organization'}
   validate :check_twitter_username_format
 
@@ -303,22 +300,6 @@ class Person < ActiveRecord::Base
     encrypted_password.blank? ? false : super
   end
 
-  def validate_zip_code_on_create?
-    if on_facebook_auth?
-      false
-    else
-      new_record? ? true : false
-    end
-  end
-
-  def validate_zip_code_on_update?
-    if on_facebook_auth?
-      false
-    elsif require_zip_code?
-      true
-    end
-  end
-
   # Add the email subscription signup as a delayed job
   def subscribe_to_marketing_email
     if Civiccommons::Config.mailer['mailchimp']
@@ -341,12 +322,6 @@ class Person < ActiveRecord::Base
         :encrypted_password => '',
         :create_from_auth => true
       )
-    new_person
-  end
-  def self.create_from_auth_hash(auth_hash)
-    new_person = build_from_auth_hash(auth_hash)
-    new_person.save
-    new_person.confirm! if new_person.persisted?
     new_person.authentications << Authentication.new_from_auth_hash(auth_hash)
     new_person
   end

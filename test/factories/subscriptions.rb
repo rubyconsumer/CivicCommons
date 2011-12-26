@@ -9,3 +9,10 @@ Factory.define :issue_subscription, :class => Subscription do |f|
   f.association :person, :factory => :normal_person, :first_name => 'Marc', :last_name => 'Canter'
   f.association :subscribable, :factory => :issue, :summary => 'The Civic Commons'
 end
+
+Factory.define :organization_subscription, :class => Subscription do |f|
+  f.association :person, :factory => :normal_person, :first_name => 'Marc', :last_name => 'Canter'
+  f.association :subscribable, :factory => :organization
+end
+
+

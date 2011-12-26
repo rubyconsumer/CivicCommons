@@ -9,9 +9,13 @@ module CommunityHelper
       title = 'Most Active'
     end
 
-    link_to title, 
-      community_path(:order => (@order == order ? nil : order), :page => params[:page]), 
-      :id => order, 
+    link_to title,
+      community_path(:order => (@order == order ? nil : order), :page => params[:page]),
+      :id => order,
       :class => (@order == order ? 'active' : nil )
+  end
+
+  def display_name(entity)
+    entity.last_name.blank? || entity.first_name.blank? ? entity.name : "#{entity.last_name}, #{entity.first_name}"
   end
 end

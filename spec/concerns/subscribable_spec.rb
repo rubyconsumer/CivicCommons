@@ -1,27 +1,55 @@
 require 'spec_helper'
 
-[Conversation, Issue].each do |model_type|
+[Conversation, Issue, Organization].each do |model_type|
   describe model_type.to_s do
+    let(:item) {Factory.create(model_type.to_s.downcase)}
+
     before(:each) do
       @person = Factory.create(:normal_person)
-      @item = Factory.create(model_type.to_s.downcase)
     end
+
     context "is subscribed to a by the current user" do
       it "adds a subscription to the #{model_type.to_s} for the current user" do
-        subscription = @item.subscribe(@person)
-        
+        subscription = item.subscribe(@person)
+
         subscription.class.should == Subscription
         subscription.person.should == @person
         subscription.subscribable_type == model_type.to_s
       end
     end
-    
+
     context 'is unsubscribed to by the current user' do
       it "should remove a subscription to the #{model_type.to_s} for the current user" do
-        subscription = @item.subscribe(@person)
-        @item.unsubscribe(@person)
-      
-        @item.subscriptions.blank?.should be_true
+        subscription = item.subscribe(@person)
+        item.unsubscribe(@person)
+
+        item.subscriptions.blank?.should be_true
+      end
+    end
+
+    context "subscribers" do
+      it "returns an array with a person after they follow a #{model_type.to_s}" do
+        item.subscribe(@person)
+        item.subscribers.should == [@person]
+        item.subscribers.size.should == 1
+      end
+      it "returns an unordered array of people following a #{model_type.to_s}" do
+        person2 = Factory.create(:normal_person)
+        item.subscribe(@person)
+        item.subscribe(person2)
+
+        item_subscribers = item.subscribers
+        expected_subscribers = [person2, @person]
+
+        (item_subscribers - expected_subscribers).should == []
+      end
+      it "returns an empty array if no one is following." do
+        # Conversations start with one follower, the creator
+        if model_type == Conversation
+          item.subscribers.size.should == 1
+        else
+          item.subscribers.size.should == 0
+        end
       end
     end
   end

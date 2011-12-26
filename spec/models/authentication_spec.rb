@@ -1,6 +1,15 @@
 require 'spec_helper'
 
 describe Authentication do
+  context "factories" do
+    it 'should be valid' do
+      Factory.build(:authentication).should be_valid
+      Factory.create(:authentication).should be_valid
+      Factory.build(:facebook_authentication).should be_valid
+      Factory.create(:facebook_authentication).should be_valid
+    end
+  end
+
   context "Associations" do
     it "should only belongs to a Person" do
       Authentication.reflect_on_association(:person).macro == :belongs_to
@@ -13,9 +22,6 @@ describe Authentication do
     end
     it "should not have blank provider" do
       blank_authentication.errors[:provider].first.should == "can't be blank"
-    end
-    it "should not have blank person_id" do
-      blank_authentication.errors[:person_id].first.should == "can't be blank"
     end
     it "can only have one unique provider and uid at any given time" do
       auth1 = Factory.create(:authentication, :uid => '123',:provider => 'facebook')

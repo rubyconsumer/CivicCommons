@@ -13,13 +13,14 @@ module CivicCommonsDriver
     has_file_field :avatar, 'person_avatar'
     has_button :continue, 'Continue', :home
     has_button :continue_with_invalid_information, 'Continue', :registration_page
-    
+
     has_checkbox :weekly_newsletter, 'person_weekly_newsletter'
     has_checkbox :daily_digest, 'person_daily_digest'
 
-    has_link :connect_with_facebook, "facebook-connect", :thanks_for_registering
+    has_link :connect_with_facebook, "facebook-connect", :home
+    has_link :failing_connect_with_facebook, "facebook-connect"
     has_link :i_dont_want_to_use_facebook, "I don't have a Facebook account", :registration_page
-    
+
     def has_an_error_for? field
       case field
       when :invalid_first_name
@@ -30,9 +31,21 @@ module CivicCommonsDriver
         error_msg = "Email can't be blank"
       when :invalid_password
         error_msg = "Password can't be blank"
+      when :invalid_zip
+        error_msg = "please enter zipcode"
       end
       has_content? error_msg
     end
-    
+    def conflicting_email_modal
+      ConflictingEmailModal.new
+    end
+    class ConflictingEmailModal
+      SHORT_NAME = :conflicting_email_modal
+      include Page
+      def has_become_visible?
+        wait_until { has_css? ".registering-email-taken" }
+        true
+      end
+    end
   end
 end

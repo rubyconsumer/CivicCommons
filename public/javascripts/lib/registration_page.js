@@ -7,12 +7,14 @@
   var RegistrationPage = {
 
     submitWithFacebookData: function(data) {
-      $('#person_first_name').val(data.user_info.first_name);
-      $('#person_last_name').val(data.user_info.last_name);
-      $('#person_email').val(data.user_info.email);
-      $('form#person_new').append(authentication_input('uid',data.uid));
-      $('form#person_new').append(authentication_input('token', data.credentials.token));
-      $('form#person_new').append(authentication_input('provider', data.provider));
+      person = data.person
+      person.authentication = person.authentications[0];
+      $('#person_first_name').val(person.first_name);
+      $('#person_last_name').val(person.last_name);
+      $('#person_email').val(person.email);
+      $('form#person_new').append(authentication_input('uid', person.authentication.uid));
+      $('form#person_new').append(authentication_input('token', person.authentication.token));
+      $('form#person_new').append(authentication_input('provider', person.authentication.provider));
       $('form#person_new').trigger('submit');
     }
   }

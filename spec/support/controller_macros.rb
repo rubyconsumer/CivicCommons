@@ -5,8 +5,12 @@ module ControllerMacros
   end
 
   def login_user
-    @request.env["devise.mapping"] = Devise.mappings[:person]
+    setup_person
     @user = Factory.create(:registered_user)
     sign_in @user
+  end
+
+  def setup_person
+    @request.env["devise.mapping"] = Devise.mappings[:person]
   end
 end
