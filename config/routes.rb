@@ -123,6 +123,9 @@ Civiccommons::Application.routes.draw do
       post 'join_as_member'
       delete 'remove_membership'
     end
+    collection do
+      get 'confirm_membership'
+    end
  end
 
   resources :feeds, only: [:show]

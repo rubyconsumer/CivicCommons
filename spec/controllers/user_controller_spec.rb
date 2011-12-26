@@ -4,6 +4,10 @@ describe UserController do
   def stub_person(stubs={})
     stub_model(Person, stubs)
   end
+  def stub_organization(stubs ={})
+    stub_model(Organization,stubs).as_null_object
+  end
+  
   context "POST destroy_avatar" do
     
     def given_user_with_facebook_authenticated_and_without_avatar
@@ -43,6 +47,42 @@ describe UserController do
       
       delete :destroy_avatar, :id => '1234', :format => :js
       response.status.should == 500
+    end
+  end
+  
+  context "POST join_as_member" do
+    before(:each) do
+      @person = stub_person
+      controller.stub!(:current_person).and_return(@person)
+      @organization = stub_organization
+      Organization.stub!(:find).and_return(@organization)
+    end
+    it "should add the user to the organization's members" do
+      @organization.should_receive(:join_as_member).with(@person)
+      post :join_as_member, :id => '1234'
+    end
+    it "should render template membership_button " do
+      @organization.stub!(:join_as_member).and_return(true)
+      post :join_as_member, :id => '1234', :format => 'js'
+      response.should render_template '/organizations/_membership_button'
+    end
+  end
+  
+  context "DELETE remove_membership" do
+    before(:each) do
+      @person = stub_person
+      controller.stub!(:current_person).and_return(@person)
+      @organization = stub_organization
+      Organization.stub!(:find).and_return(@organization)
+    end
+    it "should remove the user from the organization's members" do
+      @organization.should_receive(:remove_member).with(@person).and_return(true)
+      delete :remove_membership, :id => '1234'
+    end
+    it "should render template membership_button" do
+      @organization.stub!(:remove_member).and_return(true)
+      delete :remove_membership, :id => '1234', :format => 'js'
+      response.should render_template '/organizations/_membership_button'
     end
   end
 end

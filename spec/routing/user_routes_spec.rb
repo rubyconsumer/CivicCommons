@@ -23,6 +23,11 @@ describe UserController do
     it "recognizes and generates #edit" do
       { delete: "/user/1/remove_membership" }.should route_to(controller: "user", action: "remove_membership", id: "1")
     end
+    
+    it "recognizes and generates #confirm_membership" do
+      { get: "/user/confirm_membership" }.should route_to(controller: "user", action: "confirm_membership")
+    end
+    
   end
 
 end

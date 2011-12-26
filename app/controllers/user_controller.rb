@@ -1,5 +1,5 @@
 class UserController < ApplicationController
-
+  include OrganizationsHelper
   before_filter :require_ssl, :only => [:update]
   before_filter :verify_ownership?, :only => [:edit, :update, :destroy_avatar]
 
@@ -7,6 +7,37 @@ class UserController < ApplicationController
     unless(current_person && current_person == Person.find(params[:id]))
       redirect_to community_path
     end
+  end
+  
+  def join_as_member
+    @organization = Organization.find(params[:id])
+    if @organization && @organization.join_as_member(current_person) 
+      respond_to do |format|
+        format.js { render :partial => '/organizations/membership_button.html' } 
+      end
+    else
+      respond_to do |format|
+        format.js { render :nothing => true, :status => 500 }
+      end
+    end
+  end
+  
+  def remove_membership
+    @organization = Organization.find(params[:id])
+    if @organization && @organization.remove_member(current_person)
+      respond_to do |format|
+        format.js { render :partial => '/organizations/membership_button.html' }
+      end
+    else
+      respond_to do |format|
+        format.js { render :nothing => true, :status => 500 }
+      end
+      
+    end
+  end
+  
+  def confirm_membership
+    render :template => '/organizations/confirm_membership_modal', :layout => false
   end
 
   def mockup
