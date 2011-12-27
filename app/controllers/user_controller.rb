@@ -12,7 +12,7 @@ class UserController < ApplicationController
   def mockup
     show
   end
-  
+
   def edit
     @person = Person.find(params[:id])
     @person.require_zip_code = true  #did this So that there is a validation error on the view.
@@ -45,17 +45,18 @@ class UserController < ApplicationController
     end
   end
 
- def destroy_avatar
-  @person = Person.find(params[:id])
-  @person.avatar = nil
-  if @person.save
-    respond_to do |format|
-      format.js { render :json => { :avatarUrl => ( @person.facebook_authenticated? && !@person.avatar? ? @person.facebook_profile_pic_url : @person.avatar.url )} }
-    end
-  else
-    respond_to do |format|
-      format.js { render :nothing => true, :status => 500 }
+  def destroy_avatar
+    @person = Person.find(params[:id])
+    @person.avatar = nil
+    if @person.save
+      respond_to do |format|
+        format.js { render :json => { :avatarUrl => ( @person.facebook_authenticated? && !@person.avatar? ? @person.facebook_profile_pic_url : @person.avatar.url )} }
+      end
+    else
+      respond_to do |format|
+        format.js { render :nothing => true, :status => 500 }
+      end
     end
   end
- end
+
 end
