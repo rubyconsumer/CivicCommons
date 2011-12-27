@@ -16,6 +16,11 @@
 #### Bug Fixes
 
 ### Post Deployment Instructions
+  * Due to an error found in integration server related to 312, we need to recreate the solr index.
+    [our error similar to this](http://stackoverflow.com/questions/8345580/error-in-task-sunspotmongoreindex-in-sunspot-solr-with-mongoid)
+    Need to do this: 
+      Stop Solr, delete the solr/data/development/index folder, and re-run sunspot:solr:start to recreate it.
+      Also, need to reindex.
 
 ## 1.8.1
 
