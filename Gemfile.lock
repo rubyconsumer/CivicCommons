@@ -128,6 +128,7 @@ GEM
       addressable (~> 2.2.4)
       multipart-post (~> 1.1.0)
       rack (>= 1.1.0, < 2)
+    fattr (2.2.0)
     ffi (1.0.11)
     fitter-happier (0.0.1)
     friendly_id (3.2.1.1)
@@ -201,6 +202,8 @@ GEM
     omniauth-oauth2 (1.0.0)
       oauth2 (~> 0.5.0)
       omniauth (~> 1.0)
+    options (2.3.0)
+      fattr
     orm_adapter (0.0.5)
     paperclip (2.3.8)
       activerecord
@@ -208,6 +211,9 @@ GEM
     polyglot (0.3.3)
     pr_geohash (1.0.0)
     profanity_filter (0.1.1)
+    progress_bar (0.4.0)
+      highline (~> 1.6.1)
+      options (~> 2.3.0)
     rack (1.2.4)
     rack-mount (0.6.14)
       rack (>= 1.0.0)
@@ -296,6 +302,8 @@ GEM
     sunspot_rails (1.3.0)
       nokogiri
       sunspot (= 1.3.0)
+    sunspot_solr (1.3.0)
+      escape (~> 0.0.4)
     sys-uname (0.9.0)
       ffi (>= 1.0.0)
     thor (0.14.6)
@@ -365,6 +373,7 @@ DEPENDENCIES
   omniauth-facebook
   paperclip (= 2.3.8)
   profanity_filter
+  progress_bar
   query_reviewer!
   rack-test
   rails (= 3.0.3)
@@ -381,6 +390,7 @@ DEPENDENCIES
   spork
   steak
   sunspot_rails
+  sunspot_solr
   timecop
   webmock
   webrat (~> 0.7.3)
