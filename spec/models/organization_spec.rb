@@ -64,6 +64,9 @@ describe Organization do
         @organization.reload
         @organization.has_member?(@person).should be_true
       end
+      it "should return false when nil is passed in" do
+        @organization.has_member?(nil).should be_false
+      end
     end
     context "join_as_members" do
       it "should add a person as a member" do

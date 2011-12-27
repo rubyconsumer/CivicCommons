@@ -1,0 +1,6 @@
+<%= render :partial => '/organizations/replace_membership_button.js'%>
+$('.org-members .empty').remove();
+$photobank = $('.org-members .photobank');
+if ($photobank.find('.img-container[data-member-id=<%=current_person.id%>]').length < 1){
+  $photobank.append("<%= escape_javascript (render :partial => '/organizations/member_avatar.html', :object => current_person, :as => :member) %>");
+}

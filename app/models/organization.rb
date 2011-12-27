@@ -18,8 +18,8 @@ class Organization < Person
     false
   end
   
-  def has_member?(user)
-    self.members.exists?(user)
+  def has_member?(person)
+    !person.blank? && self.members.exists?(person)
   end
   
   def join_as_member(person)

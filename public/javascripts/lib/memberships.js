@@ -8,7 +8,6 @@ $(document).ready(function(){
     
     $('a.confirm_membership').live('click', function(){
       $.post(join_url, function(data) {
-        $membership_button.replaceWith(data);
         $.colorbox.close();
       });
       return false
@@ -19,9 +18,5 @@ $(document).ready(function(){
         return false
       });
     return false
-    });
-  
-  $(".membership a.remove").live("ajax:success", function(e, data, status, xhr) {
-      $(this).closest('.membership').replaceWith(data);
-    });
+    });  
 });

@@ -18,7 +18,19 @@
               <%= @user.bio %>
             </p>
           <% end %>
-      </div>
+        </div>
+        <% if @user.is_a?(Organization) %>
+          <div class="mod org-members">
+            <h3>Other folks at this organization</h3>
+            <div class="photobank">
+            <% if @user.members.count < 1 %>
+              <p class="empty">Nobody is a member of this organization yet. If you are, please click on the button "I'm a member of this organization"</p>
+            <% else %>
+                <%= render :partial => '/organizations/member_avatar', :collection => @user.members, :as => :member %>
+            <% end %>
+            </div>
+          </div>
+        <% end %>
       </div>
       <div class="aside">
         

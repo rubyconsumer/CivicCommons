@@ -64,7 +64,7 @@ describe UserController do
     it "should render template membership_button " do
       @organization.stub!(:join_as_member).and_return(true)
       post :join_as_member, :id => '1234', :format => 'js'
-      response.should render_template '/organizations/_membership_button'
+      response.should render_template 'organizations/join_as_member'
     end
   end
   
@@ -82,7 +82,7 @@ describe UserController do
     it "should render template membership_button" do
       @organization.stub!(:remove_member).and_return(true)
       delete :remove_membership, :id => '1234', :format => 'js'
-      response.should render_template '/organizations/_membership_button'
+      response.should render_template 'organizations/remove_membership'
     end
   end
 end

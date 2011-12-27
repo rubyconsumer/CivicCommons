@@ -1,5 +1,6 @@
 class UserController < ApplicationController
   include OrganizationsHelper
+  before_filter :require_user, :only => [:join_as_member, :remove_membership]
   before_filter :require_ssl, :only => [:update]
   before_filter :verify_ownership?, :only => [:edit, :update, :destroy_avatar]
 
@@ -13,7 +14,7 @@ class UserController < ApplicationController
     @organization = Organization.find(params[:id])
     if @organization && @organization.join_as_member(current_person) 
       respond_to do |format|
-        format.js { render :partial => '/organizations/membership_button.html' } 
+        format.js { render :template => '/organizations/join_as_member.js'  } 
       end
     else
       respond_to do |format|
@@ -26,7 +27,7 @@ class UserController < ApplicationController
     @organization = Organization.find(params[:id])
     if @organization && @organization.remove_member(current_person)
       respond_to do |format|
-        format.js { render :partial => '/organizations/membership_button.html' }
+        format.js { render :template => '/organizations/remove_membership.js' }
       end
     else
       respond_to do |format|
