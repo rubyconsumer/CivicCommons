@@ -82,7 +82,7 @@ integration:
     intercept: true
     intercept_email: "myemail@example.com"
   omniauth:
-    full_host: 'http://integration.com'
+    full_host: 'https://integration.com'
   rails_secret_token: "randonStuffThatsAtLeast30CharachtersYo128DirtyWithTh"
   smtp:
     address: "smtp.sendsomemail.net"
@@ -114,7 +114,7 @@ staging:
     intercept: true
     intercept_email: "myemail@example.com"
   omniauth:
-    full_host: 'http://staging.com'
+    full_host: 'https://staging.com'
   rails_secret_token: "randonStuffThatsAtLeast30CharachtersYo128DirtyWithTh"
   smtp:
     address: "smtp.sendsomemail.net"
@@ -146,7 +146,7 @@ production:
     intercept: false
     intercept_email: "myemail@example.com"
   omniauth:
-    full_host: 'http://production.com'
+    full_host: 'https://production.com'
   rails_secret_token: "randonStuffThatsAtLeast30CharachtersYo128DirtyWithTh"
   smtp:
     address: "smtp.sendsomemail.net"
