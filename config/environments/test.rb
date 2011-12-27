@@ -6,6 +6,7 @@ Civiccommons::Application.configure do
   # your test database is "scratch space" for the test suite and is wiped
   # and recreated between test runs.  Don't rely on the data there!
   config.cache_classes = true
+  config.cache_classes = false if Spork.using_spork?  # for spork
 
   # Log error messages when you accidentally call methods on nil.
   config.whiny_nils = true
@@ -29,7 +30,7 @@ Civiccommons::Application.configure do
   # This is necessary if your schema can't be completely dumped by the schema dumper,
   # like if you have constraints or database-specific column types
   # config.active_record.schema_format = :sql
-  
+
   # outputs deprecation errors to stderr stream
   config.active_support.deprecation = :stderr
   ActiveSupport::Deprecation.debug = true

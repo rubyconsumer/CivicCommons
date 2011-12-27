@@ -37,17 +37,18 @@ class UserController < ApplicationController
     end
   end
 
- def destroy_avatar
-  @person = Person.find(params[:id])
-  @person.avatar = nil
-  if @person.save
-    respond_to do |format|
-      format.js { render :json => { :avatarUrl => ( @person.facebook_authenticated? && !@person.avatar? ? @person.facebook_profile_pic_url : @person.avatar.url )} }
-    end
-  else
-    respond_to do |format|
-      format.js { render :nothing => true, :status => 500 }
+  def destroy_avatar
+    @person = Person.find(params[:id])
+    @person.avatar = nil
+    if @person.save
+      respond_to do |format|
+        format.js { render :json => { :avatarUrl => ( @person.facebook_authenticated? && !@person.avatar? ? @person.facebook_profile_pic_url : @person.avatar.url )} }
+      end
+    else
+      respond_to do |format|
+        format.js { render :nothing => true, :status => 500 }
+      end
     end
   end
- end
+
 end

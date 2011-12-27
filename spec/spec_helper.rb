@@ -2,36 +2,36 @@ require 'rubygems'
 require 'spork'
 
 Spork.prefork do
-  if ENV['__test_coverage__']
-    require 'simplecov'
-    SimpleCov.start do
-      add_filter '/autotest/'
-      add_filter '/config/'
-      add_filter '/db/'
-      add_filter '/deploy/'
-      add_filter '/doc/'
-      add_filter '/features/'
-      add_filter '/lib/jobs/'
-      add_filter '/lib/tasks/'
-      add_filter '/log/'
-      add_filter '/public/'
-      add_filter '/script/'
-      add_filter '/spec/'
-      add_filter '/test/'
-      add_filter '/tmp/'
-      add_filter '/vendor/'
-      add_group 'Concerns', 'app/concerns'
-      add_group 'Controllers', 'app/controllers'
-      add_group 'Helpers', 'app/helpers'
-      add_group 'Libraries', 'lib'
-      add_group 'Mailers', 'app/mailers'
-      add_group 'Models', 'app/models'
-      add_group 'Observers', 'app/observers'
-      add_group 'Services', 'app/services'
-      add_group 'Presenters', 'app/presenters'
-      #add_group 'Views', 'app/views'
-    end
-  end
+  #if ENV['__test_coverage__']
+    #require 'simplecov'
+    #SimpleCov.start do
+      #add_filter '/autotest/'
+      #add_filter '/config/'
+      #add_filter '/db/'
+      #add_filter '/deploy/'
+      #add_filter '/doc/'
+      #add_filter '/features/'
+      #add_filter '/lib/jobs/'
+      #add_filter '/lib/tasks/'
+      #add_filter '/log/'
+      #add_filter '/public/'
+      #add_filter '/script/'
+      #add_filter '/spec/'
+      #add_filter '/test/'
+      #add_filter '/tmp/'
+      #add_filter '/vendor/'
+      #add_group 'Concerns', 'app/concerns'
+      #add_group 'Controllers', 'app/controllers'
+      #add_group 'Helpers', 'app/helpers'
+      #add_group 'Libraries', 'lib'
+      #add_group 'Mailers', 'app/mailers'
+      #add_group 'Models', 'app/models'
+      #add_group 'Observers', 'app/observers'
+      #add_group 'Services', 'app/services'
+      #add_group 'Presenters', 'app/presenters'
+      ##add_group 'Views', 'app/views'
+    #end
+  #end
 
   # This file is copied to ~/spec when you run 'ruby script/generate rspec'
   # from the project root directory.
@@ -90,8 +90,17 @@ Spork.prefork do
   def fixture_content(path)
     File.open(File.dirname(__FILE__) + '/../test/fixtures/' + path, 'rb') { |f| f.read }
   end
-  
+
+
 end
 
-Spork.each_run do
+if Spork.using_spork?
+  Spork.each_run do
+    # This code will be run each time you run your specs.
+    ActiveSupport::Dependencies.clear
+    #Dir["#{Rails.root}/app/models/**/*.rb"].each do |model|
+      #load model
+    #end
+  end
 end
+

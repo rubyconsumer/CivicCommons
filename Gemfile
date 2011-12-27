@@ -40,10 +40,14 @@ gem 'highline'
 gem "gchart", "~> 1.0.0"
 
 gem 'sunspot_rails' 
+gem 'sunspot_solr'
+gem 'progress_bar'
 
 gem 'fitter-happier', '= 0.0.1'
 
 gem 'sixarm_ruby_email_address_validation'
+
+gem 'profanity_filter'
 
 group :development do
   gem "rails3-generators"
