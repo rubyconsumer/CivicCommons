@@ -25,7 +25,7 @@ private
   def create_account_using_facebook_credentials
     person = Person.build_from_auth_hash(env['omniauth.auth'])
     if Person.where(email: person.email).size == 0
-      send_person_data_to_the_opening_window(person, new_person_registration_path)
+      send_person_data_to_the_opening_window(person, registrations_principles_path)
     else
       flash[:email] = person.email
       render_js_registering_email_taken

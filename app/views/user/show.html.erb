@@ -46,19 +46,12 @@
         </div>
         <div class="mod" id="UserFollowingIssuesModule">
           <h3>Issues <%=@user.action_phrase%> Following</h3>
-          <div class="mod-content">
-            <ul class='link-list'>
-              <% unless @user.has_issue_subscriptions? %>
-                <li><%= @user.name %> is just getting started</li>
-              <% else %>
-                <% @user.issue_subscriptions.each do |issue| %>
-                  <li>
-                  <%= link_to issue.title, issue_path(issue.subscribable_id) %>
-                  </li>
-                <% end %>
-              <% end %>
-            </ul>
-          </div>
+          <%= render :partial => "following", :locals => {:user_name => @user.name, :subscriptions => @user.issue_subscriptions } %>
+        </div>
+
+        <div class="mod" id="UserFollowingOrganizationsModule">
+          <h3>Organizations <%=@user.action_phrase%> Following</h3>
+          <%= render :partial => "following", :locals => {:user_name => @user.name, :subscriptions => @organization_subscriptions } %>
         </div>
 
       </div>

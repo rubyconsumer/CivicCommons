@@ -23,6 +23,7 @@ config/people_aggregator.yml
 .jhw-cache
 .idea
 solr/data
+solr/*
 log
 sunspot-solr.pid
 .rspec

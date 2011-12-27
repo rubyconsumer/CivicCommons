@@ -1,0 +1,14 @@
+<div class="mod-content">
+  <ul class='link-list'>
+    <% if subscriptions.blank? %>
+      <li><%= user_name %> is just getting started</li>
+    <% else %>
+      <% subscriptions.first(10).each do |subscription| %>
+        <li>
+        <%= link_to subscription.title, send("#{subscription.subscribable_type == "Organization" ? "user" : subscription.subscribable_type.downcase}_path", subscription.subscribable_id) %>
+        </li>
+      <% end %>
+    <% end %>
+  </ul>
+</div>
+

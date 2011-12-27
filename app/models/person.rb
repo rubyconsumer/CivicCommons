@@ -108,6 +108,10 @@ class Person < ActiveRecord::Base
   scope :confirmed_accounts, where("confirmed_at is not null")
   scope :unconfirmed_accounts, where(:confirmed_at => nil)
 
+  delegate :conversations, :to => :subscriptions, :prefix => true
+  delegate :issues,        :to => :subscriptions, :prefix => true
+  delegate :organizations, :to => :subscriptions, :prefix => true
+
   # All these emails could be moved to an observer - Jerry
   after_create :notify_civic_commons
   before_save :check_to_send_welcome_email
@@ -268,7 +272,7 @@ class Person < ActiveRecord::Base
   def facebook_profile_pic_url(type = :square)
     "https://graph.facebook.com/#{facebook_authentication.uid}/picture?type=#{type}" if facebook_authenticated?
   end
-  
+
   def allow_facebook_connect?
     # override this in the subclass
     true
