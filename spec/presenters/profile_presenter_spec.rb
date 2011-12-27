@@ -46,10 +46,6 @@ describe ProfilePresenter do
       subject { ProfilePresenter.new(stub_person(twitter_username: 'asdf', organization_detail: stub_organization_detail)).profile_data }
       it { should have_key :twitter }
     end
-    context "with twitter" do
-      subject { ProfilePresenter.new(stub_person(website: 'http://google.com', organization_detail: stub_organization_detail)).profile_data }
-      it { should have_key :website }
-    end
   end
   context "as an organization" do
     subject { ProfilePresenter.new(stub(is_organization?: true)) }
@@ -127,7 +123,7 @@ describe ProfilePresenter do
     context "when the same user" do
       context "bio is empty" do
         let(:same_user) { stub(:== => true) }
-        let(:presenter) { ProfilePresenter.new stub(bio: stub(empty?: true)) }
+        let(:presenter) { ProfilePresenter.new stub(bio: stub(present?: false)) }
         it "is false" do
           presenter.prompt_to_fill_out_bio?(same_user).should == true
         end

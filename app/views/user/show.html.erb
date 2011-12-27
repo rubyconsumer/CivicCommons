@@ -17,19 +17,19 @@
       </div>
       </div>
       <div class="aside">
-        <% if @user.is_a?(Organization) %>
-        <p>
-          <span id="subscription">
-            <%= render :partial => '/subscriptions/subscription', :locals => {:subscribable => @user} %>
-          </span>
-        </p>
+        <% if @user.is_organization? %>
+          <p>
+            <span id="subscription">
+              <%= render :partial => '/subscriptions/subscription', :locals => {:subscribable => @user} %>
+            </span>
+          </p>
         <% end %>
         <% if @user.has_profile? %>
-        <div class="mod call-out">
-          <ul class="profile-extras">
-            <%= raw(contact_info_for(@user)) %>
-          </ul>
-        </div>
+          <div class="mod call-out">
+            <ul class="profile-extras">
+              <%= raw(contact_info_for(@user)) %>
+            </ul>
+          </div>
         <% end %>
       </div>
     </div>

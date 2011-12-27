@@ -61,7 +61,7 @@ class ProfilePresenter < Delegator
   end
 
   def prompt_to_fill_out_bio? user
-    user == @user and bio.empty?
+    user == @user and !bio.present?
   end
 
   def possessive_pronoun

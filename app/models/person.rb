@@ -58,9 +58,6 @@ class Person < ActiveRecord::Base
 
   has_one :facebook_authentication, :class_name => 'Authentication', :conditions => {:provider => 'facebook'}, :dependent => :destroy
 
-  has_one :organization_detail
-
-
   has_many :content_items, :foreign_key => 'person_id', :dependent => :restrict
   has_many :content_templates, :foreign_key => 'person_id', :dependent => :restrict
   has_many :contributions, :foreign_key => 'owner', :uniq => true, :dependent => :restrict
@@ -68,6 +65,7 @@ class Person < ActiveRecord::Base
   has_many :rating_groups, :dependent => :restrict
   has_many :subscriptions, :dependent => :destroy
   has_many :survey_responses
+  has_one :organization_detail
 
   has_many :contributed_conversations, :through => :contributions, :source => :conversation, :uniq => true, :dependent => :restrict
   has_many :contributed_issues, :through => :contributions, :source => :issue, :uniq => true, :dependent => :restrict
