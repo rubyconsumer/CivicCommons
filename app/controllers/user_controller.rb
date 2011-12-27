@@ -20,15 +20,23 @@ class UserController < ApplicationController
   end
 
   def show
-    @user = Person.includes(:contributions, :subscriptions).find(params[:id])
-    @recent_items = Activity.most_recent_activity_items_for_person(@user).paginate(page: params[:page], per_page: 10)
+    begin
+      @user = Person.includes(:contributions, :subscriptions).find(params[:id])
+    rescue
+      redirect_to community_path
+    end
 
-    @issue_subscriptions = @user.subscriptions.where(:subscribable_type => 'Issue').reverse
-    @conversation_subscriptions = @user.subscriptions.where(:subscribable_type => 'Conversation').reverse
+    if @user
+      @recent_items = Activity.most_recent_activity_items_for_person(@user).paginate(page: params[:page], per_page: 10)
 
-    respond_to do |format|
-      format.html
-      format.xml
+      @conversation_subscriptions = @user.subscriptions_conversations.reverse
+      @issue_subscriptions        = @user.subscriptions_issues.reverse
+      @organization_subscriptions = @user.subscriptions_organizations.reverse
+
+      respond_to do |format|
+        format.html
+        format.xml
+      end
     end
   end
 
