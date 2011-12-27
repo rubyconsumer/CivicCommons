@@ -16,9 +16,8 @@ class UserController < ApplicationController
   end
 
   def show
-    user = Person.includes(:contributions, :subscriptions).find(params[:id])
+    user = Person.includes(:contributions, :subscriptions, :organization_detail).find(params[:id])
     @user = ProfilePresenter.new(user, page: params[:page])
-
     respond_to do |format|
       format.html
       format.xml

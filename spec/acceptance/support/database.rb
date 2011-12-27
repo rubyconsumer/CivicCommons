@@ -59,7 +59,7 @@ module CivicCommonsDriver
     end
 
     def self.has_an_organization(attributes={})
-      Factory.create :organization, attributes
+      Factory :organization, attributes
     end
     def self.create_issue(attributes= {})
       Factory.create :issue, attributes

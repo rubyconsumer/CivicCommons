@@ -1,5 +1,4 @@
 module ApplicationHelper
-
   # Meta Information Helpers
   def page_title
     @meta_info && !@meta_info[:page_title].blank? ? @meta_info[:page_title].chomp : "The Civic Commons"

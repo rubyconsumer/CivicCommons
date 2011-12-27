@@ -7,6 +7,18 @@ class ProfilePresenter < Delegator
     @page = params.fetch(:page, 1)
   end
 
+  def profile_data
+    data = {}
+    data[:address] = address  unless address.empty?
+    if organization_detail
+      data[:phone] = organization_detail.phone unless organization_detail.phone.empty?
+      data[:facebook] = organization_detail.facebook_page unless organization_detail.facebook_page.empty?
+    end
+    data[:website] = website if website
+    data[:twitter] = twitter_username if twitter_username
+    data
+  end
+
   def __getobj__
     @user
   end
@@ -34,9 +46,8 @@ class ProfilePresenter < Delegator
   def recent_activity
     @user.most_recent_activity.paginate(page: @page, per_page: PER_PAGE)
   end
-
   def has_profile?
-    has_website? || has_twitter?
+    has_website? || has_twitter? || has_address?
   end
 
   def has_recent_activities?
@@ -60,7 +71,9 @@ class ProfilePresenter < Delegator
   def action_phrase
     is_organization? ? "We Are" : "I Am"
   end
+  private
   def address
+    return "" unless has_address?
     <<-eos
       #{organization_detail.street}
       #{organization_detail.city}, #{organization_detail.region} #{organization_detail.postal_code}
@@ -68,10 +81,6 @@ class ProfilePresenter < Delegator
   end
 
   def has_address?
-    organization_detail.present? and
-      (!organization_detail.street.empty? or
-      !organization_detail.city.empty? or
-      !organization_detail.region.empty? or
-      !organization_detail.postal_code)
+    organization_detail != nil and organization_detail.present? and organization_detail.has_address?
   end
 end

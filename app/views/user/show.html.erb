@@ -11,7 +11,7 @@
           <%= profile_image(@user, 70) %>
           <% if @user.prompt_to_fill_out_bio? current_person %>
             <p class="empty">Looks like you haven't filled out your bio&hellip; Head over to your <%= link_to_settings(current_person).html_safe.downcase %> and tell us a little bit about yourself.</p>
-          <% elsif %>
+          <% else %>
             <p><%= @user.bio %></p>
           <% end %>
       </div>
@@ -20,15 +20,7 @@
         <% if @user.has_profile? %>
         <div class="mod call-out">
           <ul class="profile-extras">
-            <% if @user.has_address? %>
-              <li><%=@user.address %></li>
-            <% end %>
-            <% if @user.has_website? %>
-              <li class="website-profile"><%= link_to @user.website, @user.website %></li>
-            <% end %>
-            <% if @user.has_twitter? %>
-               <li class="twitter-profile"><%= link_to "@#{@user.twitter_username}", "http://twitter.com/#!/#{@user.twitter_username}" %></li>
-            <% end %>
+            <%= raw(contact_info_for(@user)) %>
           </ul>
         </div>
         <% end %>

@@ -15,6 +15,42 @@ describe ProfilePresenter do
       name: "Bob"
   end
   let(:presenter) { ProfilePresenter.new(user, page: 1) }
+  describe "#profile_data" do
+    context "without an address" do
+      subject { ProfilePresenter.new(stub_person(organization_detail: stub_organization_detail)).profile_data }
+      it { should_not have_key :address  }
+    end
+    context "with an address" do
+      let(:organization_detail) do
+        stub_organization_detail(has_address?: true,
+          street: '1530 Corunna Ave',
+          city: 'Owosso',
+          region: 'MI',
+          postal_code: '48867')
+      end
+      subject { ProfilePresenter.new(stub_person(organization_detail: organization_detail)).profile_data }
+      it "forms the address cleanly" do
+        subject[:address].should =~ /1530 Corunna Ave/
+        subject[:address].should =~ /Owosso, MI 48867/
+      end
+    end
+    context "with a facebook profile" do
+      subject { ProfilePresenter.new(stub_person(organization_detail: stub_organization_detail(facebook_page: 'http://facebook.com'))).profile_data }
+      it { should have_key :facebook }
+    end
+    context "with a phone number" do
+      subject { ProfilePresenter.new(stub_person(organization_detail: stub_organization_detail(phone: "1-234-567"))).profile_data }
+      it { should have_key :phone }
+    end
+    context "with twitter" do
+      subject { ProfilePresenter.new(stub_person(twitter_username: 'asdf', organization_detail: stub_organization_detail)).profile_data }
+      it { should have_key :twitter }
+    end
+    context "with twitter" do
+      subject { ProfilePresenter.new(stub_person(website: 'http://google.com', organization_detail: stub_organization_detail)).profile_data }
+      it { should have_key :website }
+    end
+  end
   context "as an organization" do
     subject { ProfilePresenter.new(stub(is_organization?: true)) }
     it "has Our for possessive pronoun" do
@@ -23,25 +59,6 @@ describe ProfilePresenter do
     it "has We Are for action phrase" do
       subject.action_phrase.should == "We Are"
     end
-  end
-  context "without an adddress" do
-    subject { ProfilePresenter.new(stub(organization_detail: stub(present?: false))) }
-    it { should_not have_address }
-  end
-  context "with an address" do
-    let(:organization_detail) do
-      stub(present?: true,
-        street: '1530 Corunna Ave',
-        city: 'Owosso',
-        region: 'MI',
-        postal_code: '48867')
-    end
-    subject { ProfilePresenter.new stub(organization_detail: organization_detail) }
-    it "forms the address cleanly" do
-      subject.address.should =~ /1530 Corunna Ave/
-      subject.address.should =~ /Owosso, MI 48867/
-    end
-    it { should have_address }
   end
   context "as an individual" do
     subject { ProfilePresenter.new(stub(is_organization?: false)) }
@@ -118,19 +135,37 @@ describe ProfilePresenter do
     end
   end
   describe "#has_profile?" do
-    context "without a website or twitter" do
-      subject { ProfilePresenter.new stub(has_website?: false,
-                                          has_twitter?: false) }
+    context "without a anything" do
+      subject { ProfilePresenter.new stub_person }
         it { should_not have_profile }
     end
     context "with a website" do
-      subject { ProfilePresenter.new stub(has_website?: true) }
+      subject { ProfilePresenter.new stub_person(has_website?: true) }
       it { should have_profile }
     end
     context "with twitter" do
-      subject { ProfilePresenter.new stub(has_website?: false,
-                                          has_twitter?: true) }
+      subject { ProfilePresenter.new stub_person(has_twitter?: true) }
+      it { should have_profile }
+    end
+    context "with address" do
+      subject { ProfilePresenter.new stub_person(organization_detail: stub_organization_detail(has_address?: true )) }
       it { should have_profile }
     end
   end
+  def stub_person options={}
+    defaults = {
+      organization_detail: nil,
+      has_twitter?: false,
+      has_website?: false,
+      twitter_username: "",
+      website: ""
+    }
+    stub defaults.merge(options)
+  end
+    def stub_organization_detail options={}
+      defaults = { present?: true, has_address?: false,
+                   facebook_page: '',
+                   phone: ''}
+      stub defaults.merge(options)
+    end
 end
