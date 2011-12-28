@@ -35,6 +35,10 @@ class ProfilePresenter < Delegator
     @user.subscribed_conversations.reverse.first(10)
   end
 
+  def organization_subscriptions
+    @user.subscribed_organizations.reverse
+  end
+
   def has_conversation_subscriptions?
     not conversation_subscriptions.empty?
   end

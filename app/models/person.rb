@@ -347,6 +347,9 @@ class Person < ActiveRecord::Base
   def subscribed_issues
     subscriptions.where(:subscribable_type => 'Issue')
   end
+  def subscribed_organizations
+    subscriptions.where(:subscribable_type => 'Organization')
+  end
   def has_website?
     attribute_present? :website
   end

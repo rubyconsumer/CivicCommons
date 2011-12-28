@@ -7,9 +7,11 @@ describe ProfilePresenter do
   let(:most_recent_activity) { stub(paginate: [1,2,3]) }
   let(:subscribed_issues) { [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] }
   let(:subscribed_conversations) { [:a,:b,:c,:d,:e,:f,:g,:h,:i,:j,:k] }
+  let(:subscribed_organizations) { [:cat, :dog] }
   let(:user) do
     stub subscribed_issues: subscribed_issues,
       subscribed_conversations: subscribed_conversations,
+      subscribed_organizations: subscribed_organizations,
       most_recent_activity: most_recent_activity,
       cached_slug: "bob",
       name: "Bob"
@@ -78,6 +80,11 @@ describe ProfilePresenter do
   end
   it "#has_conversation_subscriptions?" do
     presenter.should have_conversation_subscriptions
+  end
+  describe "#organization_subscriptions" do
+    it "reverses the order" do
+      presenter.organization_subscriptions.should == subscribed_organizations.reverse
+    end
   end
   describe "#conversation_subscriptions" do
     it "reverses the order" do
