@@ -5,6 +5,7 @@
 #### [Global Navigation Login Redesign](https://agilezen.com/project/26499/story/58)
 
 #### [Organization Profiles](https://agilezen.com/project/26499/story/2)
+  * [Organization Profile includes Contact Information](https://agilezen.com/project/18091/story/314)
   * [Display Principles before Registration Process](https://agilezen.com/project/18091/story/308)
   * [Registration Landing Page Redesign](https://agilezen.com/projects/18091/story/309)
   * [Update User Registration Form](https://agilezen.com/projects/18091/story/311)
