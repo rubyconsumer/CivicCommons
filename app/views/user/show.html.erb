@@ -12,8 +12,10 @@
         <div class="offset-1 profile-mast">
           <%= profile_image(@user, 70) %>
           <% if @user.bio.blank? && @user == current_person %>
-            <p class="empty">Looks like you haven't filled out your bio&hellip; Head over to your <%= link_to_settings(current_person).html_safe.downcase %> and tell us a little bit about yourself.</p>
-          <% elsif %>
+            <p class="empty">
+            Looks like you haven't filled out your bio&hellip; Head over to your <%= link_to_settings(current_person).html_safe.downcase %> and tell us a little bit about yourself.
+            </p>
+          <% else %>
             <p>
               <%= @user.bio %>
             </p>
@@ -33,8 +35,7 @@
         <% end %>
       </div>
       <div class="aside">
-        
-        <% if @user.is_a?(Organization) %>
+        <% if @user.is_a?(Organization) && @user != current_person %>
         <p>
           <span id="subscription">
             <%= render :partial => '/subscriptions/subscription', :locals => {:subscribable => @user} %>
@@ -78,36 +79,17 @@
 
         <div class="mod" id="UserFollowingConversationsModule">
           <h3>Conversations I am Following</h3>
-          <div class="mod-content">
-            <ul class='link-list'>
-              <% if @conversation_subscriptions.empty? %>
-                <li><%= @user.name%> is just getting started</li>
-              <% else %>
-                <% @conversation_subscriptions.first(10).each do |conversation| %>
-                  <li>
-                  <%= link_to conversation.name, conversation_path(conversation.subscribable_id) %>
-                  </li>
-                <% end %>
-              <% end %>
-            </ul>
-          </div>
+          <%= render :partial => "following", :locals => {:user_name => @user.name, :subscriptions => @conversation_subscriptions } %>
         </div>
 
         <div class="mod" id="UserFollowingIssuesModule">
           <h3>Issues I am Following</h3>
-          <div class="mod-content">
-            <ul class='link-list'>
-              <% if @issue_subscriptions.empty? %>
-                <li><%= @user.name %> is just getting started</li>
-              <% else %>
-                <% @issue_subscriptions.first(10).each do |issue| %>
-                  <li>
-                  <%= link_to issue.name, issue_path(issue.subscribable_id) %>
-                  </li>
-                <% end %>
-              <% end %>
-            </ul>
-          </div>
+          <%= render :partial => "following", :locals => {:user_name => @user.name, :subscriptions => @issue_subscriptions } %>
+        </div>
+
+        <div class="mod" id="UserFollowingOrganizationsModule">
+          <h3>Organizations I am Following</h3>
+          <%= render :partial => "following", :locals => {:user_name => @user.name, :subscriptions => @organization_subscriptions } %>
         </div>
 
       </div>

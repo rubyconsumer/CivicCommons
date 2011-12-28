@@ -30,7 +30,7 @@ Civiccommons::Application.routes.draw do
   get   '/authentication/confirm_facebook_unlinking',  to: 'authentication#confirm_facebook_unlinking',      as: 'confirm_facebook_unlinking'
   get   '/authentication/before_facebook_unlinking',   to: 'authentication#before_facebook_unlinking',       as: 'before_facebook_unlinking'
   delete '/authentication/process_facebook_unlinking', to: 'authentication#process_facebook_unlinking',      as: 'process_facebook_unlinking'
-  
+
   #Contributions
   post '/contributions/create_confirmed_contribution', to: 'contributions#create_confirmed_contribution',    as: 'create_confirmed_contribution'
 
@@ -141,15 +141,15 @@ Civiccommons::Application.routes.draw do
       put '/moderate', to: 'contributions#moderated', on: :member
     end
   end
-  
+
   resources :contributions, only: [:destroy]
-  
+
   resources :votes, controller: :surveys, :only => :show do
     post 'create_response', on: :member
     get 'vote_successful', on: :collection, :as => :successful
   end
-  
-  
+
+
   resources :regions, only: [:index, :show]
   resources :invites, only: [:new, :create]
   resources :pages, only: [:show]

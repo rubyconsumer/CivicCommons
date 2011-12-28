@@ -40,6 +40,8 @@ gem 'highline'
 gem "gchart", "~> 1.0.0"
 
 gem 'sunspot_rails' 
+gem 'sunspot_solr'
+gem 'progress_bar'
 
 gem 'fitter-happier', '= 0.0.1'
 

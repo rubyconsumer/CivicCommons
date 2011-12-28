@@ -44,7 +44,7 @@ class UserController < ApplicationController
   def mockup
     show
   end
-  
+
   def edit
     @person = Person.find(params[:id])
     @person.require_zip_code = true  #did this So that there is a validation error on the view.
@@ -52,15 +52,23 @@ class UserController < ApplicationController
   end
 
   def show
-    @user = Person.includes(:contributions, :subscriptions).find(params[:id])
-    @recent_items = Activity.most_recent_activity_items_for_person(@user).paginate(page: params[:page], per_page: 10)
+    begin
+      @user = Person.includes(:contributions, :subscriptions).find(params[:id])
+    rescue
+      redirect_to community_path
+    end
 
-    @issue_subscriptions = @user.subscriptions.where(:subscribable_type => 'Issue').reverse
-    @conversation_subscriptions = @user.subscriptions.where(:subscribable_type => 'Conversation').reverse
+    if @user
+      @recent_items = Activity.most_recent_activity_items_for_person(@user).paginate(page: params[:page], per_page: 10)
 
-    respond_to do |format|
-      format.html
-      format.xml
+      @conversation_subscriptions = @user.subscriptions_conversations.reverse
+      @issue_subscriptions        = @user.subscriptions_issues.reverse
+      @organization_subscriptions = @user.subscriptions_organizations.reverse
+
+      respond_to do |format|
+        format.html
+        format.xml
+      end
     end
   end
 
@@ -77,17 +85,18 @@ class UserController < ApplicationController
     end
   end
 
- def destroy_avatar
-  @person = Person.find(params[:id])
-  @person.avatar = nil
-  if @person.save
-    respond_to do |format|
-      format.js { render :json => { :avatarUrl => ( @person.facebook_authenticated? && !@person.avatar? ? @person.facebook_profile_pic_url : @person.avatar.url )} }
-    end
-  else
-    respond_to do |format|
-      format.js { render :nothing => true, :status => 500 }
+  def destroy_avatar
+    @person = Person.find(params[:id])
+    @person.avatar = nil
+    if @person.save
+      respond_to do |format|
+        format.js { render :json => { :avatarUrl => ( @person.facebook_authenticated? && !@person.avatar? ? @person.facebook_profile_pic_url : @person.avatar.url )} }
+      end
+    else
+      respond_to do |format|
+        format.js { render :nothing => true, :status => 500 }
+      end
     end
   end
- end
+
 end

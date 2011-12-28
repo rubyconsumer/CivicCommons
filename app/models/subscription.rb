@@ -4,7 +4,7 @@ class Subscription < ActiveRecord::Base
 
   scope :conversations, where(subscribable_type: 'Conversation')
   scope :issues,        where(subscribable_type: 'Issue')
-  scope :organizations, where(subscribable_type: 'Organizations')
+  scope :organizations, where(subscribable_type: 'Organization')
 
   delegate :name, :to => :person, :prefix => true
   delegate :title, :to => :subscribable
