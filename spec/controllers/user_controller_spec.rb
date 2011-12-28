@@ -10,26 +10,14 @@ describe UserController do
   end
 
   context "GET 'show'" do
-    it "retrieves users conversation, issues, and organization subscriptions" do
-      Array.should_receive(:reverse).exactly(3).times
-      Subscription.should_receive(:conversations).and_return(Array)
-      Subscription.should_receive(:issues       ).and_return(Array)
-      Subscription.should_receive(:organizations).and_return(Array)
-
-      get :show, :id => user
-    end
-
-    it "retrieves most recent activity for the user" do
-      Array.should_receive(:paginate).once
-      array_of_activity = Array
-      Activity.stub(:most_recent_activity_items_for_person).with(user).and_return(array_of_activity)
-
-      get :show, :id => user
+    it "puts the user in a ProfilePresenter" do
+      get :show, :id => user.cached_slug
+      assigns(:user).should be_a ProfilePresenter
+      assigns(:user).__getobj__.should == user
     end
 
     it "takes you to the community page if a user doesn't exist" do
       get :show, :id => 0
-
       response.should redirect_to(community_path)
     end
   end

@@ -12,7 +12,7 @@ describe Survey do
       end
 
       it "should have foreign_key as 'survey_id" do
-        Survey.reflect_on_association(:options).options[:foreign_key].should == 'survey_id'        
+        Survey.reflect_on_association(:options).options[:foreign_key].should == 'survey_id'
       end
 
       it "should destroy dependent when it is destroyed" do
@@ -124,18 +124,18 @@ describe Survey do
       @survey.should be_expired
     end
   end
-  context "days_until_end_date" do
-    it "should display the number of days until end date if end_date is in the future" do
+  describe "#days_until_end_date" do
+    it "counts number of days to end date" do
       end_date = Date.today + 1.day
       @survey = Factory.create(:survey, :end_date => end_date, :show_progress => false)
       @survey.days_until_end_date.should == 1
     end
-    it "should display nil if end_date is today" do
+    it "is nil when end_date is today" do
       @survey = Factory.create(:survey, :end_date => Date.today, :show_progress => false)
       @survey.days_until_end_date.should be_nil
     end
   end
-  
+
   describe "sending emails to survey respondents that the survey has ended" do
     context "sending to background job" do
       it "should send to background job on save" do

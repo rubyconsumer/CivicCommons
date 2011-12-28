@@ -16,6 +16,10 @@ class UserController < ApplicationController
   end
 
   def show
+    unless Person.exists? cached_slug: params[:id]
+      redirect_to community_path
+      return
+    end
     user = Person.includes(:contributions, :subscriptions, :organization_detail).find(params[:id])
     @user = ProfilePresenter.new(user, page: params[:page])
     @organization_subscriptions = @user.subscriptions_organizations.reverse
