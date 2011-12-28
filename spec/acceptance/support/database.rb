@@ -24,6 +24,11 @@ module CivicCommonsDriver
     def self.first_topic
       Topic.first
     end
+    
+    def self.latest_person
+      # so that it doesn't select the subclass(e.g: Organization)
+      Person.where(:type=> nil).last
+    end
 
     def self.latest_blog_post
       ContentItem.blog_post.last

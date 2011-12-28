@@ -9,9 +9,25 @@ feature "Organization Profiles", %q{
   background do
     @organization = database.has_an_organization
   end
-  scenario "Joining an Organization", :pending=>true do
-
+  scenario "Joining an Organization", :js => true do
+    login_as :person
+    goto :organization_profile, for: organization
+    follow_join_organization_link
+    sleep 3
+    follow_confirm_joining_organization_link
+    leave_organization_link.should be_visible
+    current_page.should have_avatar person
   end
+  scenario "Leaving an Organization", :js => true do
+    login_as :person
+    goto :organization_profile, for: organization_with_member(person)
+    current_page.should have_avatar person
+    follow_leave_organization_link
+    join_organization_link.should be_visible
+    current_page.should have_content "member of this Organization"
+    current_page.should_not have_avatar person
+  end
+  
   scenario "Following an organization", :pending=>true do
 
   end
@@ -24,6 +40,15 @@ feature "Organization Profiles", %q{
 
   def organization
     @organization
+  end
+  
+  def organization_with_member(person)
+    @organization.join_as_member(person)
+    return @organization
+  end
+  
+  def person
+    database.latest_person
   end
 
     #current_page.should have_content "Conversations we are following"
