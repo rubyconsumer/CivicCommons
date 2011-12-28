@@ -5,7 +5,7 @@
     <% else %>
       <% subscriptions.first(10).each do |subscription| %>
         <li>
-        <%= link_to subscription.title, send("#{subscription.subscribable_type == "Organization" ? "user" : subscription.subscribable_type.downcase}_path", subscription.subscribable_id) %>
+        <%= link_to subscription.title, send("#{subscription.subscribable_type == "Organization" ? "user" : subscription.subscribable_type.downcase}_path", subscription.subscribable) %>
         </li>
       <% end %>
     <% end %>
