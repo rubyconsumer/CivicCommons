@@ -10,4 +10,7 @@ module Subscribable
   def subscribers
     Subscription.where(:subscribable_id => self.id, :subscribable_type => self.class).collect{|subscription| subscription.person}
   end
+  def friendly_name
+    self.class.to_s
+  end
 end

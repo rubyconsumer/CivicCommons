@@ -1068,7 +1068,6 @@ ul.profile-extras {
   overflow: hidden;
 }
 ul.profile-extras li {
-  float: left;
   list-style-type: none;
   margin-right: 1.5em;
   padding-left: 20px;

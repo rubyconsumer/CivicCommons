@@ -9,13 +9,13 @@ class ProfilePresenter < Delegator
 
   def profile_data
     data = {}
-    data[:address] = address  unless address.empty?
+    data[:address] = address if address.present?
     if organization_detail
-      data[:phone] = organization_detail.phone unless organization_detail.phone.empty?
-      data[:facebook] = organization_detail.facebook_page unless organization_detail.facebook_page.empty?
+      data[:phone] = organization_detail.phone if organization_detail.phone.present?
+      data[:facebook] = organization_detail.facebook_page if organization_detail.facebook_page.present?
     end
-    data[:website] = website if website
-    data[:twitter] = twitter_username if twitter_username
+    data[:website] = website if website.present?
+    data[:twitter] = twitter_username if twitter_username.present?
     data
   end
 
@@ -74,10 +74,8 @@ class ProfilePresenter < Delegator
   private
   def address
     return "" unless has_address?
-    <<-eos
-      #{organization_detail.street}
-      #{organization_detail.city}, #{organization_detail.region} #{organization_detail.postal_code}
-    eos
+    """#{organization_detail.street}
+      #{organization_detail.city}, #{organization_detail.region} #{organization_detail.postal_code}"""
   end
 
   def has_address?

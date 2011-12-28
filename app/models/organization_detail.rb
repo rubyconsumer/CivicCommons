@@ -1,5 +1,5 @@
 class OrganizationDetail < ActiveRecord::Base
   def has_address?
-        !street.empty? or !city.empty? or !region.empty? or !postal_code.empty?
+        street.present? or city.present? or region.present? or postal_code.present?
   end
 end
