@@ -2,10 +2,17 @@
 
 ### External Changes
 
+#### [Global Navigation Login Redesign](https://agilezen.com/project/26499/story/58)
+
 #### [Organization Profiles](https://agilezen.com/project/26499/story/2)
   * [Display Principles before Registration Process](https://agilezen.com/project/18091/story/308)
-  * [Check Your Email Page After Registration](https://agilezen.com/projects/18091/story/324)
   * [Registration Landing Page Redesign](https://agilezen.com/projects/18091/story/309)
+  * [Update User Registration Form](https://agilezen.com/projects/18091/story/311)
+  * [Ability to Register as an Organization](https://agilezen.com/projects/18091/story/312)
+  * [Check Your Email Page After Registration](https://agilezen.com/projects/18091/story/324)
+  * [Ability to Follow an Organization](https://agilezen.com/projects/18091/story/326)
+  * [Ability to Display Organizations A User is Following](https://agilezen.com/projects/18091/story/327)
+  * [Disabling facebook linking when registering as an organization](https://agilezen.com/projects/18091/story/330)
 
 #### [Login Flow Redesign] (https://agilezenc.om/project/26499/story/58)
 
@@ -14,6 +21,9 @@
   * [User Profile Subscriptions sorted in reverse chronological order](https://agilezen.com/projects/18091/story/313)
 
 #### Bug Fixes
+  * [Sort Issues on Issue Index Page by Curated Order](https://agilezen.com/projects/18091/story/329)
+  * [Cross Domain Javascript Error when logging in with Facebook](https://agilezen.com/projects/18091/story/331)
+
 
 ### Post Deployment Instructions
   * Due to an error found in integration server related to 312, we need to recreate the solr index.
