@@ -11,18 +11,19 @@ class Organization < Person
   define_method(:title) do
     name
   end
+
   def allow_facebook_connect?
     false
   end
-  
+
   def has_member?(person)
     !person.blank? && self.members.exists?(person)
   end
-  
+
   def join_as_member(person)
     self.members << person
   end
-  
+
   def remove_member(person)
     self.members.delete(person)
   end
