@@ -16,7 +16,7 @@ gem 'httparty'
 
 gem 'geokit'
 
-gem "friendly_id", "~> 3.2.1"
+gem "friendly_id", "~> 3.2"
 gem 'acts_as_revisionable'
 gem 'awesome_nested_set'
 gem 'embedly', '<0.4'
@@ -73,17 +73,14 @@ group :test do
   gem 'timecop'
   gem 'rspec-spies'
   gem 'spork'
-end
-
-
-group :development, :test do
-  gem "jasmine"
   gem "rspec-rails", "~> 2.5.0"
+  gem "jasmine"
   gem 'steak'
   gem "capybara", '1.1.2'
   gem 'webrat', "~> 0.7.3"
   gem "jasmine-headless-webkit"
 end
+
 
 group :cool_toys do
   gem 'autotest'

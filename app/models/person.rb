@@ -53,10 +53,11 @@ class Person < ActiveRecord::Base
   # Setup protected attributes
   attr_protected :admin
 
-  has_one :facebook_authentication, :class_name => 'Authentication', :conditions => {:provider => 'facebook'}, :dependent => :destroy
   has_many :authentications, :dependent => :destroy
   has_and_belongs_to_many :organizations, :uniq => true, :join_table => 'organization_members'
   accepts_nested_attributes_for :authentications
+
+  has_one :facebook_authentication, :class_name => 'Authentication', :conditions => {:provider => 'facebook'}, :dependent => :destroy
 
   has_many :content_items, :foreign_key => 'person_id', :dependent => :restrict
   has_many :content_templates, :foreign_key => 'person_id', :dependent => :restrict
@@ -65,6 +66,7 @@ class Person < ActiveRecord::Base
   has_many :rating_groups, :dependent => :restrict
   has_many :subscriptions, :dependent => :destroy
   has_many :survey_responses
+  has_one :organization_detail
 
   has_many :contributed_conversations, :through => :contributions, :source => :conversation, :uniq => true, :dependent => :restrict
   has_many :contributed_issues, :through => :contributions, :source => :issue, :uniq => true, :dependent => :restrict
@@ -184,7 +186,9 @@ class Person < ActiveRecord::Base
     Notifier.welcome(self).deliver
     @send_welcome = false
   end
-
+  def most_recent_activity
+    Activity.most_recent_activity_items_for_person(self)
+  end
   def self.find_all_by_name(name)
     first, last = parse_name(name)
     where(:first_name => first, :last_name => last)
@@ -337,6 +341,23 @@ class Person < ActiveRecord::Base
     recoverable
   end
 
+  def subscribed_conversations
+    subscriptions.where(:subscribable_type => 'Conversation').reverse
+  end
+
+  def subscribed_issues
+    subscriptions.where(:subscribable_type => 'Issue')
+  end
+  def has_website?
+    attribute_present? :website
+  end
+
+  def has_twitter?
+    attribute_present? :twitter_username
+  end
+  def is_organization?
+    is_a? Organization
+  end
 protected
 
   def check_twitter_username_format

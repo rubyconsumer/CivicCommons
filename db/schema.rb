@@ -284,6 +284,7 @@ ActiveRecord::Schema.define(:version => 20111223051250) do
   add_index "managed_issue_pages", ["person_id"], :name => "index_managed_issue_pages_on_person_id"
 
   create_table "organization_details", :force => true do |t|
+    t.integer  "person_id"
     t.string   "street"
     t.string   "city"
     t.string   "region"
@@ -466,8 +467,8 @@ ActiveRecord::Schema.define(:version => 20111223051250) do
     t.datetime "updated_at"
     t.integer  "conversation_id"
     t.integer  "issue_id"
-    t.integer  "person_id"
     t.text     "activity_cache",  :limit => 2147483647
+    t.integer  "person_id"
   end
 
   add_index "top_items", ["conversation_id"], :name => "conversations_index"

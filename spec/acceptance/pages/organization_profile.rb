@@ -2,7 +2,6 @@ module CivicCommonsDriver
   class OrganizationProfile
     SHORT_NAME= :organization_profile
     include Page
-    
     has_link :join_organization, "I'm a member of this Organization", :organization_profile
     has_link :leave_organization, 'Leave this organization', :organization_profile
     has_link :confirm_joining_organization, "I agree", :organization_profile
@@ -38,4 +37,3 @@ module CivicCommonsDriver
     end
   end
 end
-

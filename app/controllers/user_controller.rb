@@ -41,10 +41,6 @@ class UserController < ApplicationController
     render :template => '/organizations/confirm_membership_modal', :layout => false
   end
 
-  def mockup
-    show
-  end
-
   def edit
     @person = Person.find(params[:id])
     @person.require_zip_code = true  #did this So that there is a validation error on the view.
@@ -52,23 +48,16 @@ class UserController < ApplicationController
   end
 
   def show
-    begin
-      @user = Person.includes(:contributions, :subscriptions).find(params[:id])
-    rescue
+    unless Person.exists? cached_slug: params[:id]
       redirect_to community_path
+      return
     end
-
-    if @user
-      @recent_items = Activity.most_recent_activity_items_for_person(@user).paginate(page: params[:page], per_page: 10)
-
-      @conversation_subscriptions = @user.subscriptions_conversations.reverse
-      @issue_subscriptions        = @user.subscriptions_issues.reverse
-      @organization_subscriptions = @user.subscriptions_organizations.reverse
-
-      respond_to do |format|
-        format.html
-        format.xml
-      end
+    user = Person.includes(:contributions, :subscriptions, :organization_detail).find(params[:id])
+    @user = ProfilePresenter.new(user, page: params[:page])
+    @organization_subscriptions = @user.subscriptions_organizations.reverse
+    respond_to do |format|
+      format.html
+      format.xml
     end
   end
 

@@ -1,0 +1,13 @@
+<div class="mod-content">
+  <ul class="link-list">
+    <% unless @user.has_conversation_subscriptions? %>
+      <li><%= @user.name%> is just getting started</li>
+    <% else %>
+      <% @user.conversation_subscriptions.each do |conversation| %>
+        <li>
+        <%= link_to conversation.title, conversation_path(conversation.subscribable_id) %>
+        </li>
+      <% end %>
+    <% end %>
+  </ul>
+</div>
