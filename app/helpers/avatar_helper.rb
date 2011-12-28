@@ -21,6 +21,10 @@ module AvatarHelper
     end
   end
 
+  def member_profile(person, css_class='callout')
+    avatar_profile(person, 40, css_class)
+  end
+
   def conversation_profile(person, css_class='callout')
     avatar_profile(person, 40, css_class)
   end

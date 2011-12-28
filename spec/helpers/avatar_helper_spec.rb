@@ -63,4 +63,11 @@ describe AvatarHelper do
 
   end
 
+  context "member profile" do
+    it "calls avatar profile" do
+      view.stub(:avatar_profile).with(@me, 40, 'callout').and_return('my member profile')
+      helper.member_profile(@me).should =~ /my member profile/
+    end
+  end
+
 end

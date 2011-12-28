@@ -1,107 +1,76 @@
 <% content_for :main_body do %>
-<div class="wrapper">
-  <h1>Community</h1>
-  <% if @subtitle %>
-    <p class="subtitle"><%= @subtitle %></p>
-  <% end %>
-  <div class="content-container">
-    <div class="main-content">
+  <div class="wrapper">
+    <h1>Community</h1>
+    <% if @subtitle %>
+      <p class="subtitle"><%= @subtitle %></p>
+    <% end %>
+    <div class="content-container">
+      <div class="main-content">
 
         <!--
         <p>
-          <%= link_to "View by Name", community_path %> |
-          <%= link_to "Recently Joined", community_path(:order => 'recent') %>
+        <%= link_to "View by Name", community_path %> |
+        <%= link_to "Recently Joined", community_path(:order => 'recent') %>
         </p>
 
         <p>
-          Last Name |
-          <% ('A'..'Z').each do |letter| %>
-            <%= link_to letter, community_path(:order => 'alpha', :letter => letter) %> |
-          <% end %>
+        Last Name |
+        <% ('A'..'Z').each do |letter| %>
+          <%= link_to letter, community_path(:order => 'alpha', :letter => letter) %> |
+        <% end %>
         </p>
         -->
         <div class="community">
 
-            <!-- Static Info for Org Entries -->
-            
-            <div id="" class="buddyimg">
-              <div class="img-container" id="imgcontainer_">
-                <a href="#" title="Org Name"><img alt="org-name" class="callout" src="http://placehold.it/70x70" title="Org Name"></a>
+          <% @community.each do |community_member| %>
+
+            <div id="<%=community_member.id %>" class ="buddyimg">
+              <div class="img-container" id="imgcontainer_<%= community_member.id %>">
+                <%= user_profile(community_member) %>
               </div>
-              <div class="text-container" id="">
-                <h4><a href="#">Organization Name</a></h4>
-                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin augue nisi, fermentum vitae, imperdiet a, auctor eu, mi. Nulla imperdiet molestie purus.</p>
+              <div class="text-container" id="label_<%= community_member.id %>">
+                <h4><%= link_to display_name(community_member), user_path(community_member), title: community_member.name%></h4>
+                <p><%= truncate(community_member.bio,:length => 290) if community_member.bio %></p>
               </div>
-              <div class="photobank">
-                <img src="http://placehold.it/40x40" />
-                <img src="http://placehold.it/40x40" />
-                <img src="http://placehold.it/40x40" />
-                <img src="http://placehold.it/40x40" />
-                <img src="http://placehold.it/40x40" />
-                <img src="http://placehold.it/40x40" />
-                <img src="http://placehold.it/40x40" />
-              </div>
+
+              <% if community_member.is_a?(Organization) && community_member.respond_to?(:members) %>
+                <%= render :partial => "/community/photobank", :locals => {:members => community_member.members} %>
+              <% end %>
+
             </div>
-            
-          <% @people.each do |person| %>
-            <div id="<%=person.id %>" class ="buddyimg">
-              <div class="img-container" id="imgcontainer_<%= person.id %>">
-                <%= user_profile(person) %>
-              </div>
-              <div class="text-container" id="label_<%= person.id %>">
-                <h4><%= link_to display_name(person), user_path(person), title: person.name%></h4>
-                  <p><%= truncate(person.bio,:length => 290) if person.bio %></p>
-              </div>
-            </div>
+
           <% end %>
 
-        <%= will_paginate @people, :inner_window => 3, :previous_label => "Previous", :next_label => "Next" %>
+          <%= will_paginate @community, :inner_window => 3, :previous_label => "Previous", :next_label => "Next" %>
         </div>
-    </div>
-
-    <div class="aside supplementary">
-
-      <div class="mod">
-        <h3>Filter by:</h3>
-        <ul class="simple-list block-link-list">
-            <li><a href="#" class="active"><span>People &amp; Organizations</span></a></li>
-            <li><a href="#" class=""><span>People Only</span></a></li>
-            <li><a href="#" class=""><span>Organizations Only</span></a></li>
-        </ul>
       </div>
-      
-      <div class="mod">
-        <h3>Sort By:</h3>
-        <ul class="site-filter">
-          <li><%= community_site_filter_link('newest-member') %></li>
-          <li><%= community_site_filter_link('active-member') %></li>
-          <li><%= community_site_filter_link('alphabetical') %></a></li>
+
+      <div class="aside supplementary">
+        <%= render :partial => '/search/search', locals: { filter_type: 'community' } %>
+
+        <!-- ~~~~~~~~~~~~~~~~~~~~ Future Filter ~~~~~~~~~~~~~~~~~~~~~~-->
+        <%#<div class="mod">%>
+          <%#<h3>Filter by:</h3>%>
+          <%#<ul class="simple-list block-link-list">%>
+            <%#<li><a href="#" class="active"><span>People &amp; Organizations</span></a></li>%>
+            <%#<li><a href="#" class=""><span>People Only</span></a></li>%>
+            <%#<li><a href="#" class=""><span>Organizations Only</span></a></li>%>
+            <%#</ul>%>
+          <%#</div>%>
+
+        <div class="mod">
+          <h3>Sort By:</h3>
+          <ul class="site-filter">
+            <li><%= community_site_filter_link('newest-member') %></li>
+            <li><%= community_site_filter_link('active-member') %></li>
+            <li><%= community_site_filter_link('alphabetical') %></a></li>
           <!--li><a href="#" class="" id="persuasive-member">Most Persuasive</a></li-->
           <!--li><a href="#" class="" id="informative-member">Most Informative</a></li-->
           <!--li><a href="#" class="" id="inspiring-member">Most Inspiring</a></li-->
         </ul>
       </div>
 
-      <!--<div class="mod">
-
-        <h3>Filter By:</h3>
-        <form class="region-filter" action="post">
-          <select>
-            <option value="">All Counties</option>
-            <option value="">Cuyahoga, Lorain and Medina</option>
-            <option value="">Lake, Geauga and Ashtabula</option>
-            <option value="">Richland, Ashland and Wayne</option>
-            <option value="">Summit, Portage and Stark</option>
-            <option value="">Trumbull, Mahoning, Columbiana and Carroll</option>
-          </select>
-        </form>
-      </div-->
-
-      <%#= render :partial => '/regions/index' %>
-
-      </div>
-
     </div>
+
   </div>
-</div>
 <% end %>
