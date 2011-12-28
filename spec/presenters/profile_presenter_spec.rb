@@ -172,8 +172,3 @@ describe ProfilePresenter do
       stub defaults.merge(options)
     end
 end
-class Object
-  def present?
-    !empty?
-  end
-end
