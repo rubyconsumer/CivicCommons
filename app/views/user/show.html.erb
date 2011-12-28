@@ -78,7 +78,7 @@
 
         <div class="mod" id="UserFollowingOrganizationsModule">
           <h3>Organizations <%=@user.action_phrase%> Following</h3>
-          <%= render :partial => "following", :locals => {:user_name => @user.name, :subscriptions => @organization_subscriptions } %>
+          <%= render :partial => "following", :locals => {:user_name => @user.name, :subscriptions => @user.organization_subscriptions } %>
         </div>
 
       </div>

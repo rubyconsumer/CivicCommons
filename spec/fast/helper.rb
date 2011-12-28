@@ -22,4 +22,9 @@ unless defined? Rails
 
   module Fake
   end
+  class Object
+    def present?
+      !empty?
+    end
+  end
 end
