@@ -1,4 +1,4 @@
-<% unless current_person && ! current_person.subscriptions_include?(subscribable).blank? %>
+<% unless current_person && ! subscribable.subscribers.include?(current_person).blank? %>
   <%= render :partial => "subscriptions/notsubscribed.html", :locals => {:subscribable_type => subscribable.friendly_name, :subscribable_id => subscribable.id} %>
 <% else %>
   <%= render :partial => "subscriptions/subscribed.html", :locals => {:subscribable_type => subscribable.friendly_name, :subscribable_id => subscribable.id} %>

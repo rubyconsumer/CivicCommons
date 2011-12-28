@@ -30,14 +30,14 @@
         <% end %>
       </div>
       <div class="aside">
-        <% if @user.is_organization? %>
+        <% if @user.is_organization? && @user != current_person %>
           <p>
             <span id="subscription">
               <%= render :partial => '/subscriptions/subscription', :locals => {:subscribable => @user} %>
             </span>
           </p>
         <% end %>
-        <%= organization_membership_button(@user,current_person) if @user.is_organization? %>
+        <%= organization_membership_button(@user,current_person) if @user.is_organization? && @user != current_person %>
         <% unless @user.website.blank? && @user.twitter_username.blank? %>
         <div class="mod call-out">
           <ul class="profile-extras">
@@ -66,11 +66,14 @@
         <h3><%=@user.possessive_pronoun%> Recent Activity</h3>
         <%= render :partial => "/profile/recent_activity", locals: { profile: @user } %>
       </div>
+
       <div class="aside supplementary">
+
         <div class="mod" id="UserFollowingConversationsModule">
           <h3>Conversations <%=@user.action_phrase%> Following</h3>
           <%= render :partial => "/profile/conversation_subscriptions", locals: { profile: @user } %>
         </div>
+
         <div class="mod" id="UserFollowingIssuesModule">
           <h3>Issues <%=@user.action_phrase%> Following</h3>
           <%= render :partial => "following", :locals => {:user_name => @user.name, :subscriptions => @user.issue_subscriptions } %>
