@@ -24,13 +24,13 @@ module CivicCommonsDriver
     def has_an_error_for? field
       case field
       when :invalid_first_name
-        error_msg = "First name can't be blank"
+        error_msg = "can't be blank"
       when :invalid_last_name
-        error_msg = "Last name can't be blank"
+        error_msg = "can't be blank"
       when :invalid_email
-        error_msg = "Email can't be blank"
+        error_msg = "can't be blank"
       when :invalid_password
-        error_msg = "Password can't be blank"
+        error_msg = "can't be blank"
       when :invalid_zip
         error_msg = "please enter zipcode"
       end

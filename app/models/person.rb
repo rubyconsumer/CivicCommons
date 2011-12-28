@@ -325,7 +325,7 @@ class Person < ActiveRecord::Base
   end
 
   def self.build_from_auth_hash(auth_hash)
-    new_person = new(:name => auth_hash['user_info']['name'],
+    new_person = new(:name => auth_hash['info']['name'],
         :email => Authentication.email_from_auth_hash(auth_hash),
         :encrypted_password => '',
         :create_from_auth => true

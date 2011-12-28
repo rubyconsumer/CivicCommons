@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'acceptance/support/facebookable'
 
 describe Authentication do
   context "factories" do
@@ -33,27 +34,9 @@ describe Authentication do
   end
   context "omniauth" do
     before(:each) do
-      #This hash is taken from an actual facebook hash. scrubbed of personal identifiable information.
-      @auth_hash = {"provider"=>"facebook",
-              "uid"=>"123456107280617",
-              "credentials"=>{
-                "token"=>"1234567890"},
-              "user_info"=>{ "nickname"=>"profile.php?id=123456107280617",
-                "first_name"=>"John",
-                "last_name"=>"Doe",
-                "name"=>"John Doe",
-                "urls"=>{"Facebook"=>"http://www.facebook.com/profile.php?id=123456107280617", "Website"=>nil}},
-              "extra"=>{"user_hash"=>{
-                "id"=>"123456107280617",
-                "name"=>"John Doe",
-                "first_name"=>"John",
-                "last_name"=>"Doe",
-                "link"=>"http://www.facebook.com/profile.php?id=123456107280617",
-                "gender"=>"male",
-                "email"=>"apps+123456789012345.123456107280617.e649a19ed7c6b5433a88eb00a653d08e@proxymail.facebook.com",
-                "timezone"=>-5,
-                "locale"=>"en_US",
-                "updated_time"=>"2010-03-10T23:53:20+0000"}}}
+      include Facebookable
+      facebookable = Class.new { include Facebookable }.new
+      @auth_hash = facebookable.auth_hash
     end
     describe "building authentication model from omniauth hash" do
       def given_an_authentication_from_hash
@@ -61,7 +44,7 @@ describe Authentication do
       end
       it "should have uid" do
         given_an_authentication_from_hash
-        @authentication.uid.should == "123456107280617"
+        @authentication.uid.should == "12345"
       end
       it "should have provider" do
         given_an_authentication_from_hash
@@ -78,7 +61,7 @@ describe Authentication do
 
   context "email_from_auth_hash" do
     it "should return the email if it exists in the hash" do
-      hash = {"extra"=>{"user_hash"=>{ "email"=>"johnd@test.com"}}}
+      hash = {"info"=>{ "email"=>"johnd@test.com"}}
       Authentication.email_from_auth_hash(hash).should == 'johnd@test.com'
     end
     it "should return nil if it doesn't exist in the hash" do

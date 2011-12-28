@@ -1,17 +1,30 @@
 module Facebookable
   FACEBOOK_AUTH_HASH = {
-    'credentials' => {'token'=>"1234567890"}, 
+    'credentials' => {
+      'token'=>"1234567890"
+    },
     'provider' => "facebook",
     'uid' => "12345",
-    'user_info' => { 'first_name' => 'John', 'last_name' => 'doe', 'name' => 'John Doe'},
-    'extra' => { 'user_hash' => { 'email' => "johnd@test.com" } } 
+    'info' => {
+      'email' => 'johnd@test.com',
+      'first_name' => 'John',
+      'last_name' => 'doe',
+      'name' => 'John Doe'
+    }
   }
+
+  def auth_hash
+    FACEBOOK_AUTH_HASH.clone
+  end
+
   def stub_facebook_auth
-    enact_stub FACEBOOK_AUTH_HASH
+    enact_stub auth_hash
   end
 
   def stub_facebook_auth_with_email_for user
-    enact_stub FACEBOOK_AUTH_HASH.merge({ 'extra' => { 'user_hash' => { 'email' => user.email } } })
+    hash = auth_hash
+    hash['info']['email'] = user.email
+    enact_stub hash
   end
   def enact_stub hash
     OmniAuth.config.add_mock(:facebook, hash)
@@ -21,8 +34,12 @@ module Facebookable
       credentials: { token: user.facebook_authentication.token },
       provider: :facebook,
       uid: user.facebook_authentication.uid,
-      user_info: { first_name: user.first_name, last_name: user.last_name, name: user.name },
-      extra: { user_hash: { email: user.email }}
+      info: {
+        email: user.email,
+        first_name: user.first_name,
+        last_name: user.last_name,
+        name: user.name
+      }
     })
   end
   

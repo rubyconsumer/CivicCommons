@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'acceptance/support/facebookable'
 
 describe Registrations::OmniauthCallbacksController, "handle facebook authentication callback" do
 
@@ -14,16 +15,12 @@ describe Registrations::OmniauthCallbacksController, "handle facebook authentica
     # inspired by https://gist.github.com/792715
     # See https://github.com/plataformatec/devise/issues/closed#issue/608
     request.env["devise.mapping"] = Devise.mappings[:person]
-    env = { "omniauth.auth" => { "provider" => "facebook",
-                                 "uid" => "12345",
-                                 "extra" => {
-                                   "user_hash" => {
-                                      "email" =>
-                                      "johnd@test.com"
-                                   }
-                                 }
-                               },
-            "omniauth.origin" => conversations_path}
+    include Facebookable
+    facebookable = Class.new { include Facebookable }.new
+    env = {
+      "omniauth.auth" => facebookable.auth_hash,
+      "omniauth.origin" => conversations_path
+    }
     @controller.stub!(:env).and_return(env)
   end
 
@@ -41,7 +38,11 @@ describe Registrations::OmniauthCallbacksController, "handle facebook authentica
     # inspired by https://gist.github.com/792715
     # See https://github.com/plataformatec/devise/issues/closed#issue/608
     request.env["devise.mapping"] = Devise.mappings[:person]
-    env = { "omniauth.auth" => { "provider" => "facebook", "uid" => "12345", "extra" => { "user_hash" => { "email" => "johnd-different-email@test.com" } } } }
+    include Facebookable
+    facebookable = Class.new { include Facebookable }.new
+    hash = facebookable.auth_hash.clone
+    hash['info']['email'] = "johnd-different-email@test.com"
+    env = { "omniauth.auth" => hash }
     @controller.stub!(:env).and_return(env)
   end
 
@@ -64,7 +65,7 @@ describe Registrations::OmniauthCallbacksController, "handle facebook authentica
 
     context "logged in and linking account with facebook" do
       def given_a_registered_user
-        @person = Factory.create(:registered_user,:email => 'johnd@test.com')
+        @person = Factory.create(:registered_user, :email => 'johnd@test.com')
       end
 
       context "when successfully authenticated to facebook" do

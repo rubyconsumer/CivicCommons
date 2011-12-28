@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'acceptance/support/facebookable'
 
 describe Person do
   subject { Factory.build(:normal_person) }
@@ -271,27 +272,9 @@ describe Person do
 
   context "Facebook authentication" do
     before(:each) do
-      #This hash is taken from an actual facebook hash. scrubbed of personal identifiable information.
-      @auth_hash = {"provider"=>"facebook", 
-              "uid"=>"123456107280617", 
-              "credentials"=>{
-                "token"=>"1234567890"}, 
-              "user_info"=>{ "nickname"=>"profile.php?id=123456107280617", 
-                "first_name"=>"John", 
-                "last_name"=>"Doe", 
-                "name"=>"John Doe", 
-                "urls"=>{"Facebook"=>"http://www.facebook.com/profile.php?id=123456107280617", "Website"=>nil}}, 
-              "extra"=>{"user_hash"=>{
-                "id"=>"123456107280617", 
-                "name"=>"John Doe", 
-                "first_name"=>"John", 
-                "last_name"=>"Doe", 
-                "link"=>"http://www.facebook.com/profile.php?id=123456107280617", 
-                "gender"=>"male", 
-                "email"=>"johnd@test.com", 
-                "timezone"=>-5, 
-                "locale"=>"en_US", 
-                "updated_time"=>"2010-03-10T23:53:20+0000"}}}
+      include Facebookable
+      facebookable = Class.new { include Facebookable }.new
+      @auth_hash = facebookable.auth_hash
     end
     describe "when having a facebook authentication associated" do
       def given_a_person_with_facebook_auth

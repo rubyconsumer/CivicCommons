@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '/acceptance_helper')
 feature "8457517 link local account with facebook", %q{
   In order use CivicCommons
   As an existing user with a local account
- ve I want to authenticate through Facebook
+  I want to authenticate through Facebook
   So that I only have to remember one login and password
 } do
   include Facebookable

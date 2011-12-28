@@ -6,9 +6,6 @@
   <div class="content-container">
     <h1>Register</h1>
     <%= form_for(form_presenter, :as => resource_name, :url => secure_registration_url(resource_name), :method => "post", "data-remote" => 'true', :html => { :multipart => 'true', :class => "register" }) do |f| %>
-      <% resource.errors.full_messages.each do |msg| %>
-        <p><%= msg %></p>
-      <% end %>
       <%= f.fields_for :authentications do |authentication_form| %>
         <%= authentication_form.hidden_field :token %>
         <%= authentication_form.hidden_field :uid %>

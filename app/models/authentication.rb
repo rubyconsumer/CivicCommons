@@ -14,7 +14,7 @@ class Authentication < ActiveRecord::Base
   end
 
   def self.email_from_auth_hash(auth_hash)
-    auth_hash && auth_hash['extra'] && auth_hash['extra']['user_hash'] && auth_hash['extra']['user_hash']['email'].to_s.downcase.strip
+    auth_hash && auth_hash['info'] && auth_hash['info']['email'] && auth_hash['info']['email'].to_s.downcase.strip
   end
 
 end
