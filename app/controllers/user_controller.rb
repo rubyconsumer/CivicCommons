@@ -9,7 +9,7 @@ class UserController < ApplicationController
       redirect_to community_path
     end
   end
-  
+
   def join_as_member
     @organization = Organization.find(params[:id])
     if @organization && @organization.join_as_member(current_person) 
@@ -22,7 +22,7 @@ class UserController < ApplicationController
       end
     end
   end
-  
+
   def remove_membership
     @organization = Organization.find(params[:id])
     if @organization && @organization.remove_member(current_person)
@@ -33,10 +33,9 @@ class UserController < ApplicationController
       respond_to do |format|
         format.js { render :nothing => true, :status => 500 }
       end
-      
     end
   end
-  
+
   def confirm_membership
     render :template => '/organizations/confirm_membership_modal', :layout => false
   end

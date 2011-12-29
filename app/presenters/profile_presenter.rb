@@ -50,6 +50,7 @@ class ProfilePresenter < Delegator
   def recent_activity
     @user.most_recent_activity.paginate(page: @page, per_page: PER_PAGE)
   end
+
   def has_profile?
     has_website? || has_twitter? || has_address?
   end

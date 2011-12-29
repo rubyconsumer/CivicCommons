@@ -1,4 +1,6 @@
-require 'fast/helper'
+$LOAD_PATH << '.'
+require 'spec/fast/helper'
+require 'lib/unsubscribe_someone'
 class TestUnsubscribeSomeone
   include UnsubscribeSomeone
   attr_accessor(:daily_digest)
@@ -15,7 +17,6 @@ describe UnsubscribeSomeone do
     it 'unsubscribes the person from the daily digest' do
       subject.should_not be_subscribed_to_daily_digest
     end
-    
     it 'force saves the person' do
       subject.should have_received(:save).with(:validate => false)
     end

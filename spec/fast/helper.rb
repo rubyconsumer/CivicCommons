@@ -1,6 +1,5 @@
 $LOAD_PATH << "."
 require 'rspec-spies'
-require 'lib/unsubscribe_someone'
 unless defined? Rails
   class Rails
 
