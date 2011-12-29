@@ -8,10 +8,10 @@ describe UserController do
   def stub_person(stubs={})
     stub_model(Person, stubs)
   end
+
   def stub_organization(stubs ={})
     stub_model(Organization,stubs).as_null_object
   end
-  
 
   context "GET 'show'" do
     it "puts the user in a ProfilePresenter" do
@@ -23,6 +23,30 @@ describe UserController do
     it "takes you to the community page if a user doesn't exist" do
       get :show, :id => 0
       response.should redirect_to(community_path)
+    end
+  end
+
+  describe "PUT update" do
+    context "as a registered user" do
+      it "should update attributes" do
+        person = Factory.create(:registered_user, zip_code: '11111')
+        controller.stub!(:current_person).and_return(person)
+        changes = person.attributes
+        changes["zip_code"] = '55555'
+        put :update, id: person.id, person: changes
+        person.reload.zip_code.should == '55555'
+      end
+    end
+
+    context "as an organization" do
+      it "should update attributes" do
+        organization = Factory.create(:organization, zip_code: '11111')
+        controller.stub!(:current_person).and_return(organization)
+        changes = organization.attributes
+        changes["zip_code"] = '55555'
+        put :update, id: organization.id, organization: changes
+        organization.reload.zip_code.should == '55555'
+      end
     end
   end
 
@@ -40,7 +64,7 @@ describe UserController do
       controller.stub(:verify_ownership?).and_return(true)
     end
 
-    it "should return the avatar if have not been authenticated with Facebook " do
+    it "should return the avatar if have not been authenticated with Facebook" do
       given_user_without_facebook_authenticated
       Person.stub(:find).and_return(@person)
       @person.stub(:save).and_return(true)
@@ -67,7 +91,7 @@ describe UserController do
       response.status.should == 500
     end
   end
-  
+
   context "POST join_as_member" do
     before(:each) do
       @person = stub_person
@@ -85,7 +109,7 @@ describe UserController do
       response.should render_template 'organizations/join_as_member'
     end
   end
-  
+
   context "DELETE remove_membership" do
     before(:each) do
       @person = stub_person

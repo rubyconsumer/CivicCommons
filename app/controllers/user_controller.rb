@@ -62,8 +62,9 @@ class UserController < ApplicationController
   def update
     @person = Person.find(params[:id])
     @person.require_zip_code = true
+    attributes = params[:person] || params[:organization]
     respond_to do |format|
-      if @person.update_attributes(params[:person])
+      if @person.update_attributes(attributes)
         flash[:notice] = "Successfully edited your profile"
         format.html { redirect_to user_url(@person) }
       else
