@@ -115,6 +115,16 @@ describe ProfilePresenter do
       presenter.feed_path.should == "/blarp/bob.xml"
     end
   end
+  describe "#website" do
+    context "without a prefix" do
+      subject { ProfilePresenter.new(stub(website: 'google.com')).website }
+      it { should == 'http://google.com' }
+    end
+    context "with a prefix" do
+      subject { ProfilePresenter.new(stub(website: 'http://google.com')).website }
+      it { should == 'http://google.com' }
+    end
+  end
   describe "#feed_title" do
     it "is Name at The Civic Commons" do
       presenter.feed_title.should == "Bob at The Civic Commons"

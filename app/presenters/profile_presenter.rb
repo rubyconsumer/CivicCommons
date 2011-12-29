@@ -76,12 +76,17 @@ class ProfilePresenter < Delegator
   def action_phrase
     is_organization? ? "We Are" : "I Am"
   end
+  def website
+    return "http://#{@user.website}" if !@user.website.match /^http/
+    return @user.website
+  end
   private
   def address
     return "" unless has_address?
     """#{organization_detail.street}
       #{organization_detail.city}, #{organization_detail.region} #{organization_detail.postal_code}"""
   end
+
 
   def has_address?
     organization_detail != nil and organization_detail.present? and organization_detail.has_address?
