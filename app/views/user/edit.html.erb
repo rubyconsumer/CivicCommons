@@ -50,6 +50,7 @@
             <%= person.text_field :twitter_username, :class => 'textbox' %>
           </div>
         </fieldset>
+        <% unless person.object.is_organization?  %>
         <fieldset class="form-group">
           <div class="form-block facebook-auth">
             <% if person.object.facebook_authenticated? %>
@@ -59,6 +60,7 @@
             <% end %>
           </div>
         </fieldset>
+        <% end %>
         <fieldset class="form-group">
           <div class="form-block form-no-label">
             <%= person.check_box :daily_digest %> Yes, please send me the digest of activity relevant to my interests

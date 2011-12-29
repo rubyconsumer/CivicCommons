@@ -23,6 +23,12 @@ describe '/user/edit.html.erb' do
     view.stub(:current_person).and_return(@person)
   end
   
+  def given_an_organization
+    @person = stub_person(:is_organization? => true)
+    view.stub(:current_person).and_return(@person)
+    
+  end
+  
   context "profile picture" do
     
     it "should display profile image" do
@@ -50,6 +56,12 @@ describe '/user/edit.html.erb' do
     
     before(:each) do
       view.stub(:profile_image).and_return('')
+    end
+    
+    it "should not display 'connect with facebook' if user is an organization" do
+      given_an_organization
+      render
+      content_for(:main_body).should_not have_selector 'a.connectacct-link.facebook-auth', :content => "Connect with Facebook"
     end
     
     it "should display 'Connect with facebook' button if the user is not authenticated with Facebook" do
