@@ -459,8 +459,8 @@ ActiveRecord::Schema.define(:version => 20111219194949) do
     t.datetime "updated_at"
     t.integer  "conversation_id"
     t.integer  "issue_id"
-    t.integer  "person_id"
     t.text     "activity_cache",  :limit => 2147483647
+    t.integer  "person_id"
   end
 
   add_index "top_items", ["conversation_id"], :name => "conversations_index"
