@@ -5,7 +5,7 @@
       <%= form_for @person, :url => secure_user_url(@person), :method => :put, :html=> {:multipart => true} do |person| %>
         <fieldset class="form-group">
           <div class="form-block">
-            <%= person.label :name, "Your Name" %>
+            <%= person.label :name, name_label_text %>
             <%= person.text_field :name, :class => 'textbox' %> 
           </div>
           <div class="form-block">
@@ -25,20 +25,20 @@
             </fieldset>
           <% end %>
           <div class="form-block">
-            <%= person.label "Current Image" %>
+            <%= person.label 'curr_image', current_image_label_text %>
             <div class="curr_image form-label-offset">
               <a id="profileImage" href="<%= user_path(@person) %>">
                 <%= profile_image @person, 70 %>
               </a>
-              <%= link_to "Remove Picture", destroy_avatar_user_path(@person), id: "delete", remote: true, method: :delete, confirm: "Are you sure?" if @person.avatar? %>
+              <%= link_to remove_avatar_text, destroy_avatar_user_path(@person), id: "delete", remote: true, method: :delete, confirm: "Are you sure?" if @person.avatar? %>
             </div>
           </div>
           <div class="form-block">
-            <%= person.label :avatar, "Upload Image" %>
+            <%= person.label :avatar, avatar_label_text %>
             <%= person.file_field :avatar, :class => 'textbox' %>
           </div>
           <div class="form-block">
-            <%= person.label "tell us a little about yourself" %>
+            <%= person.label bio_label_text %>
             <%= person.text_area :bio, :class => 'short textbox', :cols => 20, :rows => 10 %>
           </div>
           <div class="form-block">
@@ -46,7 +46,7 @@
             <%= person.text_field :website, :class => 'textbox' %>
           </div>
           <div class="form-block">
-            <%= person.label :twitter_username %>
+            <%= person.label :twitter_username, 'Twitter' %>
             <%= person.text_field :twitter_username, :class => 'textbox' %>
           </div>
         </fieldset>
