@@ -27,6 +27,7 @@ module Facebookable
     enact_stub hash
   end
   def enact_stub hash
+    OmniAuth.config.mock_auth.reject! { |k,v| k != :default }
     OmniAuth.config.add_mock(:facebook, hash)
   end
   def stub_facebook_auth_for user
@@ -42,5 +43,4 @@ module Facebookable
       }
     })
   end
-  
 end
