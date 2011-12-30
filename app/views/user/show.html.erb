@@ -83,6 +83,14 @@
           <h3>Organizations <%=@user.action_phrase%> Following</h3>
           <%= render :partial => "following", :locals => {:user_name => @user.name, :subscriptions => @user.organization_subscriptions } %>
         </div>
+        <% if @user.is_organization? %>
+          <div class="mod org-subscribers">
+            <h3>People Who Follow this Organization</h3>
+            <div class="photobank">
+              <%= render :partial => '/organizations/subscriber_avatar', :collection => @user.subscribers, :as => :subscriber %>
+            </div>
+          </div>
+        <% end %>
 
       </div>
 

@@ -1,3 +1,5 @@
 $('#follow').replaceWith("<%= escape_javascript(
   render :partial => 'notsubscribed', :locals => {:subscribable_type => params[:type], :subscribable_id => params[:id]}
 ) %>");
+
+<%= render :partial=> '/subscriptions/unsubscribe_organization' if params[:type] == 'Organization' %>

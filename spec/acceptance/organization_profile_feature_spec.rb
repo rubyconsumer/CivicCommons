@@ -13,7 +13,7 @@ feature "Organization Profiles", %q{
     login_as :person
     goto :organization_profile, for: organization
     follow_join_organization_link
-    sleep 3
+    sleep 1
     follow_confirm_joining_organization_link
     leave_organization_link.should be_visible
     current_page.should have_avatar person
@@ -28,8 +28,22 @@ feature "Organization Profiles", %q{
     current_page.should_not have_avatar person
   end
   
-  scenario "Following an organization", :pending=>true do
-
+  scenario "Following an organization", :js => true do
+    login_as :person
+    goto :organization_profile, for: organization
+    current_page.should_not have_subscriber_avatar person
+    follow_subscribe_organization_link
+    unsubscribe_organization_link.should be_visible
+    current_page.should have_subscriber_avatar person
+  end
+  
+  scenario "Un-following an organization", :js => true do
+    login_as :person
+    goto :organization_profile, for: organization_with_subscriber(person)
+    current_page.should have_subscriber_avatar person
+    follow_unsubscribe_organization_link
+    subscribe_organization_link.should be_visible
+    current_page.should_not have_subscriber_avatar person
   end
 
   scenario "Viewing an Organization Profile" do
@@ -44,6 +58,12 @@ feature "Organization Profiles", %q{
   
   def organization_with_member(person)
     @organization.join_as_member(person)
+    return @organization
+  end
+  
+  def organization_with_subscriber(person)
+    Subscription.subscribe(@organization.type, @organization.id, person)
+    @organization.reload
     return @organization
   end
   
