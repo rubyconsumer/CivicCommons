@@ -48,5 +48,9 @@ describe ProfileHelper do
       subject { helper.contact_info_for(stub(profile_data: { facebook: "http://facebook.com/" })) }
       it { should include "<li class=\"fb-profile\"><a href=\"http://facebook.com/\">Facebook</a></li>" }
     end
+    context "with an email and being an organization" do
+      subject { helper.contact_info_for(stub(profile_data: { email: "email@example.com" })) }
+      it { should include "<li class=\"email-profile\"><a href=\"mailto:email@example.com\">email@example.com</a></li>" }
+    end
   end
 end

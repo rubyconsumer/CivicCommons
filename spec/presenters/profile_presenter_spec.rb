@@ -24,11 +24,13 @@ describe ProfilePresenter do
     end
     context "with an address" do
       let(:organization_detail) do
-        stub_organization_detail(has_address?: true,
+        stub_organization_detail(
+          has_address?: true,
           street: '1530 Corunna Ave',
           city: 'Owosso',
           region: 'MI',
-          postal_code: '48867')
+          postal_code: '48867'
+        )
       end
       subject { ProfilePresenter.new(stub_person(organization_detail: organization_detail)).profile_data }
       it "forms the address cleanly" do
@@ -47,6 +49,14 @@ describe ProfilePresenter do
     context "with twitter" do
       subject { ProfilePresenter.new(stub_person(twitter_username: 'asdf', organization_detail: stub_organization_detail)).profile_data }
       it { should have_key :twitter }
+    end
+    context "with email for an organization" do
+      subject { ProfilePresenter.new(stub_person(email: 'email@example.com', organization_detail: stub_organization_detail, is_organization?: true)).profile_data }
+      it { should have_key :email }
+    end
+    context "with email for a person" do
+      subject { ProfilePresenter.new(stub_person(email: 'email@example.com', organization_detail: stub_organization_detail, is_organization?: false)).profile_data }
+      it { should_not have_key :email }
     end
   end
   context "as an organization" do
@@ -171,14 +181,15 @@ describe ProfilePresenter do
       has_twitter?: false,
       has_website?: false,
       twitter_username: "",
-      website: ""
+      website: "",
+      email: ''
     }
     stub defaults.merge(options)
   end
     def stub_organization_detail options={}
       defaults = { present?: true, has_address?: false,
                    facebook_page: '',
-                   phone: ''}
+                   phone: '' }
       stub defaults.merge(options)
     end
 end

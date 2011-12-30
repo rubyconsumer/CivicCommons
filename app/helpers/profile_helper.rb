@@ -17,14 +17,16 @@ module ProfileHelper
   private
 
   def fold_address_together data
-    data[:address] = "" unless data[:address]
+    address_parts = []
+    address_parts.push(data[:address]) if data[:address]
     DATA_TO_FOLD_INTO_ADDRESS.each do |type|
       if data.has_key? type
-        data[:address] += "#{prep(data[type], type)}"
+        address_parts.push("#{prep(data[type], type)}")
         data.reject! { |(k,v)| k == type }
       end
     end
-    data[:address] += "#{prep(data[:website], :website)}" if data[:website]
+    address_parts.push("#{prep(data[:website], :website)}") if data[:website]
+    data[:address] = address_parts.join('<br />');
     data
   end
   def class_for type
