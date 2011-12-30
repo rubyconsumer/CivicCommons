@@ -216,7 +216,8 @@ input.textbox, input.textbox.small, textarea.textbox {
   outline: none;
 }
 input:read-only { background-color: #DEDEDE; }
-input#zipcode.textbox {width: 10em;}
+input#person_zip_code.textbox,
+input#organization_zip_code.textbox {width: 10em;}
 input.textbox#contribution_url {width: 80% !important;}
 input[type="file"] {border: none;}
 input.checkbox {margin-left: 160px;}
@@ -1074,6 +1075,7 @@ ul.profile-extras li {
 }
 li.website-profile {background: url(/images/globe.png) no-repeat 0 0;}
 li.twitter-profile {background: url(/images/twitter.png) no-repeat 0 0;}
+li.email-profile {background: url(/images/email.png) no-repeat 0 0;}
 li.fb-profile {background: url(/images/facebook.png) no-repeat 0 0;}
 ul.profile-extras a:link {
   color: #858383;

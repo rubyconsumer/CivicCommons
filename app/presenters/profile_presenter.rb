@@ -14,6 +14,7 @@ class ProfilePresenter < Delegator
       data[:phone] = organization_detail.phone if organization_detail.phone.present?
       data[:facebook] = organization_detail.facebook_page if organization_detail.facebook_page.present?
     end
+    data[:email] = email if email.present? and is_organization?
     data[:website] = website if website.present?
     data[:twitter] = twitter_username if twitter_username.present?
     data
