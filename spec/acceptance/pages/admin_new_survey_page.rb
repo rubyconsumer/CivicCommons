@@ -1,4 +1,3 @@
-require File.expand_path(File.dirname(__FILE__) + '/page_object')
 class AdminNewSurveyPage < PageObject
 
   def path
