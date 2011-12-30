@@ -1075,6 +1075,7 @@ ul.profile-extras li {
 }
 li.website-profile {background: url(/images/globe.png) no-repeat 0 0;}
 li.twitter-profile {background: url(/images/twitter.png) no-repeat 0 0;}
+li.email-profile {background: url(/images/email.png) no-repeat 0 0;}
 li.fb-profile {background: url(/images/facebook.png) no-repeat 0 0;}
 ul.profile-extras a:link {
   color: #858383;

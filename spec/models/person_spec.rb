@@ -361,7 +361,6 @@ describe Person do
         person.last_name.should == 'Doe'
       end
       it "should have email" do
-        puts auth_hash
         person.email.should == auth_hash["info"]["email"]
       end
     end

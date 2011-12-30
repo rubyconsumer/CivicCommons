@@ -1,10 +1,11 @@
 module ProfileHelper
   CUSTOM_CLASSES = {
+    email: "email-profile",
     twitter: "twitter-profile",
     address: "website-profile",
     facebook: "fb-profile"
   }
-  DATA_TO_FOLD_INTO_ADDRESS = [:phone,:website]
+  DATA_TO_FOLD_INTO_ADDRESS = [:phone, :website]
   def contact_info_for profile
     data = fold_address_together(profile.profile_data)
     data.reject! { |k, v| v.empty? }
@@ -19,11 +20,11 @@ module ProfileHelper
     data[:address] = "" unless data[:address]
     DATA_TO_FOLD_INTO_ADDRESS.each do |type|
       if data.has_key? type
-        data[:address] += "<br />#{prep(data[type], type)}"
+        data[:address] += "#{prep(data[type], type)}"
         data.reject! { |(k,v)| k == type }
       end
     end
-    data[:address] += "<br />#{prep(data[:website], :website)}" if data[:website]
+    data[:address] += "#{prep(data[:website], :website)}" if data[:website]
     data
   end
   def class_for type
@@ -31,6 +32,7 @@ module ProfileHelper
   end
   def prep data, type
     data.gsub! /\n/, "<br />"
+    return link_to(data, 'mailto:' + data) if type == :email
     return twitter_url(data) if type == :twitter
     return link_to("Website", data) if type == :website
     return link_to("Facebook", data) if type == :facebook
