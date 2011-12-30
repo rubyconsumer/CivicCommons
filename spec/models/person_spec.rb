@@ -6,11 +6,13 @@ describe Person do
 
   it { should be_valid }
   it { should have_attached_file :avatar }
-  it { should validate_attachment_content_type(:avatar).allowing(["image/gif", "image/jpeg", "image/png", "image/bmp"])
-	.rejecting(['text/plain']) }
+  it { should validate_attachment_content_type(:avatar).allowing([
+              "image/gif", "image/jpeg", "image/png", "image/bmp"])
+              .rejecting(['text/plain']) }
 end
 
 describe Person do
+  include Facebookable
   context "Associations" do
     it "should has_many Authentications" do
       Person.reflect_on_association(:authentications).macro == :has_many
@@ -271,11 +273,6 @@ describe Person do
   end
 
   context "Facebook authentication" do
-    before(:each) do
-      include Facebookable
-      facebookable = Class.new { include Facebookable }.new
-      @auth_hash = facebookable.auth_hash
-    end
     describe "when having a facebook authentication associated" do
       def given_a_person_with_facebook_auth
         @person = Factory.build(:normal_person)
@@ -356,7 +353,7 @@ describe Person do
       end
     end
     describe "create account with facebook hash" do
-      let(:person) { Person.build_from_auth_hash(@auth_hash)}
+      let(:person) { Person.build_from_auth_hash(auth_hash)}
       it "should have first name" do
         person.first_name.should == 'John'
       end
@@ -364,7 +361,8 @@ describe Person do
         person.last_name.should == 'Doe'
       end
       it "should have email" do
-        person.email.should == "johnd@test.com"
+        puts auth_hash
+        person.email.should == auth_hash["info"]["email"]
       end
     end
     describe "Change Password" do
@@ -375,20 +373,17 @@ describe Person do
         @person = Factory.build(:registered_user_with_facebook_authentication, :email => 'johnd@example.com')
 
       end
-      
       def given_a_regular_person
         @person = Factory.create(:registered_user, :email => 'johnd@example.com')
       end
-      
       it "should not send email when account is facebook authenticated" do
         given_a_person_with_facebook_auth
         reset_email_deliveries_count
         Person.send_reset_password_instructions({:email => 'johnd@example.com'})
         ActionMailer::Base.deliveries.length.should == 0
       end
-      
       it "should send email when it's not facebook authenticated" do
-        given_a_regular_person        
+        given_a_regular_person
         reset_email_deliveries_count
         Person.send_reset_password_instructions({:email => 'johnd@example.com'})
         ActionMailer::Base.deliveries.length.should == 1
