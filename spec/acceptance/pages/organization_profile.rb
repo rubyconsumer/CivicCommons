@@ -24,7 +24,7 @@ module CivicCommonsDriver
       has_content? organization.organization_detail.postal_code and
       has_content? organization.organization_detail.region and
       has_content? "#{organization.organization_detail.phone}" and
-      has_link? "Website", href: organization.website and
+      has_link? organization.website, href: organization.website and
       has_link? "Facebook", href: organization.organization_detail.facebook_page and
       has_link? "@#{organization.twitter_username}"
     end

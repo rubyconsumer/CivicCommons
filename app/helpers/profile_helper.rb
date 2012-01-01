@@ -36,7 +36,7 @@ module ProfileHelper
     data.gsub! /\n/, "<br />"
     return link_to(data, 'mailto:' + data) if type == :email
     return twitter_url(data) if type == :twitter
-    return link_to("Website", data) if type == :website
+    return link_to(data, data) if type == :website
     return link_to("Facebook", data) if type == :facebook
     return "P: #{data}" if type == :phone
     data
