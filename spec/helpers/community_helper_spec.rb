@@ -2,6 +2,31 @@ require 'spec_helper'
 
 describe CommunityHelper do
 
+  context "community_site_people_filter_link" do
+    describe "when filter is matched with the current filter" do
+      it "should display the correct link with 'active' css class" do
+        helper.stub!(:params).and_return({})
+        @current_filter = 'people'
+        helper.community_site_people_filter_link('people').should == "<a href=\"/community?filter=people\" class=\"active\"><span>People Only</span></a>"
+      end
+    end
+
+    describe "when an filter is not matched with the current filter" do
+      it "should display the correct link with no 'active' css class" do
+        helper.stub!(:params).and_return({})
+        @current_filter = 'organizations'
+        helper.community_site_people_filter_link('people').should == "<a href=\"/community?filter=people\" class=\"\"><span>People Only</span></a>"
+      end
+    end
+    describe "when a page param is found" do
+      it "should not preserve it" do
+        helper.stub_chain(:request,:parameters).and_return({:page => 2})
+        @current_filter = 'organizations'
+        helper.community_site_people_filter_link('people').should == "<a href=\"/community?filter=people\" class=\"\"><span>People Only</span></a>"
+      end
+    end
+  end
+
   context "community_site_filter_link" do
     describe "when an order is found" do
       it "should display the correct link with 'active' css class" do

@@ -48,15 +48,15 @@
       <div class="aside supplementary">
         <%= render :partial => '/search/search', locals: { filter_type: 'community' } %>
 
-        <!-- ~~~~~~~~~~~~~~~~~~~~ Future Filter ~~~~~~~~~~~~~~~~~~~~~~-->
-        <%#<div class="mod">%>
-          <%#<h3>Filter by:</h3>%>
-          <%#<ul class="simple-list block-link-list">%>
-            <%#<li><a href="#" class="active"><span>People &amp; Organizations</span></a></li>%>
-            <%#<li><a href="#" class=""><span>People Only</span></a></li>%>
-            <%#<li><a href="#" class=""><span>Organizations Only</span></a></li>%>
-            <%#</ul>%>
-          <%#</div>%>
+
+        <div class="mod">
+          <h3>Filter by:</h3>
+          <ul class="simple-list block-link-list">
+            <li><%= community_site_people_filter_link('all') %></li>
+            <li><%= community_site_people_filter_link('people') %></li>
+            <li><%= community_site_people_filter_link('organizations') %></li>
+          </ul>
+        </div>
 
         <div class="mod">
           <h3>Sort By:</h3>

@@ -108,6 +108,8 @@ class Person < ActiveRecord::Base
   scope :proxy_accounts, where(:proxy => true)
   scope :confirmed_accounts, where("confirmed_at is not null")
   scope :unconfirmed_accounts, where(:confirmed_at => nil)
+  scope :only_people, where(:type => nil)
+  scope :only_organizations, where(:type => 'Organization')
 
   delegate :conversations, :to => :subscriptions, :prefix => true
   delegate :issues,        :to => :subscriptions, :prefix => true
@@ -199,24 +201,23 @@ class Person < ActiveRecord::Base
   end
 
   def self.find_confirmed_order_by_most_active
-    Person.find(:all,
-                :select => "*, count(ti.person_id)",# IF(last_name IS NULL OR last_name='' OR UCASE(SUBSTR(last_name, 1) NOT BETWEEN 'A' AND 'Z'), 1, 0) as blank_last_name",
-                :conditions => 'confirmed_at IS NOT NULL and locked_at IS NULL',
-                :joins => 'left outer join top_items ti on people.id = ti.person_id',
-                :group => 'people.id',
-                :order => 'count(ti.person_id) DESC'
-               )
+    Person.select("*, count(ti.person_id)"). # IF(last_name IS NULL OR last_name='' OR UCASE(SUBSTR(last_name, 1) NOT BETWEEN 'A' AND 'Z'), 1, 0) as blank_last_name",
+      where('confirmed_at IS NOT NULL and locked_at IS NULL').
+      joins('left outer join top_items ti on people.id = ti.person_id').
+      group('people.id').
+      order('count(ti.person_id) DESC')
   end
 
   def self.find_confirmed_order_by_last_name(letter = nil)
     if letter.nil?
-      Person.find(:all,
-                  :select => "*, IF(last_name IS NULL OR last_name='' OR UCASE(SUBSTR(last_name, 1) NOT BETWEEN 'A' AND 'Z'), 1, 0) as blank_last_name",
-                  :conditions => 'confirmed_at IS NOT NULL and locked_at IS NULL',
-                  :order => 'blank_last_name, last_name, first_name ASC'
-                 )
+      Person.order('blank_last_name, last_name, first_name ASC').
+        where('confirmed_at IS NOT NULL and locked_at IS NULL').
+        select("*, IF(last_name IS NULL OR last_name='' OR UCASE(SUBSTR(last_name, 1) NOT BETWEEN 'A' AND 'Z'), 1, 0) as blank_last_name")
     else
-      Person.order('last_name, first_name ASC').where('confirmed_at IS NOT NULL').where("last_name like '#{letter}%'").where('locked_at IS NULL')
+      Person.order('last_name, first_name ASC').
+        where('confirmed_at IS NOT NULL').
+        where("last_name like '#{letter}%'").
+        where('locked_at IS NULL')
     end
   end
 

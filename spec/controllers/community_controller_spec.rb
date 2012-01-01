@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe CommunityController do
   def mock_person
-    mock_model(Person).as_null_object
+    @person ||= mock_model(Person).as_null_object
   end
   describe "index" do
     it "should be successful" do
@@ -11,6 +11,8 @@ describe CommunityController do
     end
     it "should order the people" do
       controller.should_receive(:ordered_people)
+      controller.should_receive(:filtered_people)
+      controller.should_receive(:paginated_people)
       get :index
     end
     it "should get all region" do
@@ -19,6 +21,24 @@ describe CommunityController do
     end
   end
 
+  describe "Filtered based on organization or people" do
+    context "with people" do
+      it "should be only return people" do
+        Person.should_receive(:find_confirmed_order_by_recency).and_return(mock_person)
+        mock_person.should_receive(:only_people).and_return(mock_person)
+        get :index, :filter => 'people'
+        response.should be_success        
+      end
+    end
+    context "with organizations" do
+      it "should return only organizations" do
+        Person.should_receive(:find_confirmed_order_by_recency).and_return(mock_person)
+        mock_person.should_receive(:only_organizations).and_return(mock_person)
+        get :index, :filter => 'organizations'
+        response.should be_success        
+      end
+    end
+  end
   describe "ordered_people" do
     context "with newest-member" do
       it "should sort by the most recent newest members who have confirmed" do
