@@ -14,6 +14,9 @@
   * [Ability to Follow an Organization](https://agilezen.com/projects/18091/story/326)
   * [Ability to Display Organizations A User is Following](https://agilezen.com/projects/18091/story/327)
   * [Disabling facebook linking when registering as an organization](https://agilezen.com/projects/18091/story/330)
+  * [Organization profile filter on community pages ](https://agilezen.com/projects/18091/story/334)
+  * [Paragraph Bio for People and Orgs ](https://agilezen.com/projects/18091/story/338)
+  * [Profile website to use actual name, instead of 'website' ](https://agilezen.com/projects/18091/story/337)  
 
 #### [Login Flow Redesign] (https://agilezenc.om/project/26499/story/58)
 
