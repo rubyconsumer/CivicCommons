@@ -25,7 +25,7 @@ describe ProfileHelper do
     end
     context "with a website" do
       subject { helper.contact_info_for(stub(profile_data: { website: "http://www.google.com/" })) }
-      it { should include "<a href=\"http://www.google.com/\">Website</a>" }
+      it { should include "<a href=\"http://www.google.com/\">http://www.google.com/</a>" }
     end
     context "with a phone number" do
       subject { helper.contact_info_for(stub(profile_data: { phone: "1-234-567-8901" })) }
@@ -38,7 +38,7 @@ describe ProfileHelper do
                           website: "http://www.zacharyspencer.com"
                         }))
      }
-     it { should == "<li class=\"website-profile\">615 W King St, Owosso MI 48867<br />P: 1234<br /><a href=\"http://www.zacharyspencer.com\">Website</a></li>" }
+     it { should == "<li class=\"website-profile\">615 W King St, Owosso MI 48867<br />P: 1234<br /><a href=\"http://www.zacharyspencer.com\">http://www.zacharyspencer.com</a></li>" }
     end
     context "with a twitter profile" do
       subject { helper.contact_info_for(stub(profile_data: { twitter: "1234" })) }
