@@ -2,7 +2,7 @@
 <%= form_for @contribution, :as => :contribution,
       :url => conversation_contribution_path(@contribution.conversation),
       :remote => true, :method => :put,
-      :html => {:multipart => true},
+      :html => {:multipart => true, 'data-type' => 'html'},
         do |contribution_form| %>
 
   <p class="title">Edit your response:</p>
