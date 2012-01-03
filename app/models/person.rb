@@ -343,14 +343,14 @@ class Person < ActiveRecord::Base
   end
 
   def subscribed_conversations
-    subscriptions.where(:subscribable_type => 'Conversation').reverse
+    subscriptions.where(:subscribable_type => 'Conversation').order('created_at desc')
   end
 
   def subscribed_issues
-    subscriptions.where(:subscribable_type => 'Issue')
+    subscriptions.where(:subscribable_type => 'Issue').order('created_at desc')
   end
   def subscribed_organizations
-    subscriptions.where(:subscribable_type => 'Organization')
+    subscriptions.where(:subscribable_type => 'Organization').order('created_at desc')
   end
   def has_website?
     attribute_present? :website

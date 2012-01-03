@@ -24,24 +24,24 @@ class ProfilePresenter < Delegator
     @user
   end
 
-  def issue_subscriptions
-    @user.subscribed_issues.reverse.first(PER_PAGE)
-  end
-
   def has_issue_subscriptions?
     not issue_subscriptions.empty?
   end
 
-  def conversation_subscriptions
-    @user.subscribed_conversations.reverse.first(10)
-  end
-
-  def organization_subscriptions
-    @user.subscribed_organizations.reverse
+  def issue_subscriptions
+    @user.subscribed_issues.first(PER_PAGE)
   end
 
   def has_conversation_subscriptions?
     not conversation_subscriptions.empty?
+  end
+
+  def conversation_subscriptions
+    @user.subscribed_conversations.first(10)
+  end
+
+  def organization_subscriptions
+    @user.subscribed_organizations.first(10)
   end
 
   def all_recent_activity

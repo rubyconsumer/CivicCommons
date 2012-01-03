@@ -5,9 +5,11 @@ require 'app/presenters/profile_presenter'
 describe ProfilePresenter do
 
   let(:most_recent_activity) { stub(paginate: [1,2,3]) }
+
   let(:subscribed_issues) { [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] }
   let(:subscribed_conversations) { [:a,:b,:c,:d,:e,:f,:g,:h,:i,:j,:k] }
-  let(:subscribed_organizations) { [:cat, :dog] }
+  let(:subscribed_organizations) { [:woof, :yap, :nnn, :ruff, :bowwow, :zzzz, :rrowff, :aaaooo, :raow, :mrow] }
+
   let(:user) do
     stub subscribed_issues: subscribed_issues,
       subscribed_conversations: subscribed_conversations,
@@ -81,9 +83,6 @@ describe ProfilePresenter do
     presenter.should have_issue_subscriptions
   end
   describe "#issue_subscriptions" do
-    it "reverses the order" do
-      presenter.issue_subscriptions.should == subscribed_issues.reverse[0..9]
-    end
     it "limits to 10" do
       presenter.issue_subscriptions.length.should == 10
     end
@@ -92,14 +91,11 @@ describe ProfilePresenter do
     presenter.should have_conversation_subscriptions
   end
   describe "#organization_subscriptions" do
-    it "reverses the order" do
-      presenter.organization_subscriptions.should == subscribed_organizations.reverse
+    it "limits to 10 items" do
+      presenter.organization_subscriptions.size.should == 10
     end
   end
   describe "#conversation_subscriptions" do
-    it "reverses the order" do
-      presenter.conversation_subscriptions.should == subscribed_conversations.reverse[0..9]
-    end
     it "limits to 10 items" do
       presenter.conversation_subscriptions.size.should == 10
     end
