@@ -28,6 +28,7 @@
   * [Sort Issues on Issue Index Page by Curated Order](https://agilezen.com/projects/18091/story/329)
   * [Cross Domain Javascript Error when logging in with Facebook](https://agilezen.com/projects/18091/story/331)
   * [conversations I am following is not showing latest conversation](https://agilezen.com/projects/18091/story/340)
+  * [Js Error on Edit Contribution](https://agilezen.com/projects/18091/story/305)
 
 
 ### Post Deployment Instructions

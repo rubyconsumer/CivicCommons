@@ -83,7 +83,13 @@ class ContributionsController < ApplicationController
     respond_to do |format|
       if success
         ratings = RatingGroup.ratings_for_conversation_by_contribution_with_count(@contribution.conversation, current_person)
-        format.html { redirect_to conversation_node_path(@contribution) }
+        format.html do 
+          if request.xhr?
+            render(:partial => "conversations/threaded_contribution_template", :locals => { :ratings => ratings }, :collection => @contributions, :as => :contribution)
+          else
+            redirect_to conversation_node_path(@contribution) 
+          end
+        end
         format.js { render(:partial => "conversations/threaded_contribution_template", :locals => { :ratings => ratings }, :collection => @contributions, :as => :contribution) }
       else
         format.js { render :json => @contribution.errors, :status => :unprocessable_entity }

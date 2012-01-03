@@ -11,4 +11,15 @@ require 'spec_helper'
 #   end
 # end
 describe ContributionsHelper do
+  let(:conversation){ stub_model(Conversation).as_null_object}
+  let(:contribution){ stub_model(Contribution, { :conversation => conversation} ).as_null_object}
+  
+  describe "link_to_edit_contribution" do
+    it "should return the correct link tag" do
+      helper.link_to_edit_contribution(contribution).should == "<a href=\"/conversations/#{conversation.id}/contributions/#{contribution.id}/edit\" class=\"edit-contribution-action\" data-method=\"get\" data-remote=\"true\" data-target=\"#show-contribution-#{contribution.id}\" data-type=\"html\" id=\"edit-#{contribution.id}\">Edit</a>"
+    end
+    it "should allow for js confirmation" do
+      helper.link_to_edit_contribution(contribution, :confirm => 'are you sure?').should == "<a href=\"/conversations/#{conversation.id}/contributions/#{contribution.id}/edit\" class=\"edit-contribution-action\" data-confirm=\"are you sure?\" data-method=\"get\" data-remote=\"true\" data-target=\"#show-contribution-#{contribution.id}\" data-type=\"html\" id=\"edit-#{contribution.id}\">Edit</a>"
+    end
+  end
 end
