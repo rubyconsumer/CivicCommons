@@ -70,7 +70,7 @@ describe Registrations::OmniauthCallbacksController, "handle facebook authentica
         end
 
         it "should display the success message" do
-          flash[:notice].should == "Successfully linked your accaunt to Facebook"
+          flash[:notice].should == "Successfully linked your account to Facebook"
         end
 
       end
