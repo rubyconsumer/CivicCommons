@@ -92,7 +92,7 @@ describe Person do
         @person.errors.should have_key(:zip_code)
       end
     end
-    
+
     it "strips the @ symbol from the front of the Twitter username" do
       @person.twitter_username = '@SomeTwitterUser'
       @person.twitter_username.should == '@SomeTwitterUser'
@@ -224,7 +224,7 @@ describe Person do
         mailing.to.should == [@person.email]
         mailing.subject.should == "Confirmation instructions"
       end
-      
+
     end
     context "from facebook" do
       it "does not send a confirmation email" do
@@ -293,7 +293,7 @@ describe Person do
         @person.valid_password?('password').should be_true
         @authentication = Factory.build(:authentication, :provider => 'facebook')
         @person.link_with_facebook(@authentication)
-        @person.valid_password?('password').should be_false 
+        @person.valid_password?('password').should be_false
       end
     end
     describe "link_with_facebook" do
@@ -311,7 +311,7 @@ describe Person do
     describe "when an account is not facebook authenticated" do
       it "should return false if we check for it" do
         @person = Factory.build(:normal_person)
-        @person.facebook_authenticated?.should be_false 
+        @person.facebook_authenticated?.should be_false
       end
     end
     describe "conflicting_email?" do
@@ -325,11 +325,11 @@ describe Person do
       end
       it "should return false if other_email is the same as existing email" do
         given_a_normal_person
-        @person.conflicting_email?('JohnD@Test.com').should be_false        
+        @person.conflicting_email?('JohnD@Test.com').should be_false
       end
       it "should return true if other_email is same NOT the same as existing email " do
         given_a_normal_person
-        @person.conflicting_email?('johnd.different.email@test.com').should be_true                
+        @person.conflicting_email?('johnd.different.email@test.com').should be_true
       end
     end
     describe "facebook_profile_pic_url" do
@@ -395,32 +395,32 @@ describe Person do
       @person = Factory.build(:normal_person, :email => 'johnd@example.com')
       @authentication = Factory.build(:authentication, :provider => 'facebook')
       @person.link_with_facebook(@authentication)
-      
+
       # makes sure that password is nil first
       @person.encrypted_password.should be_blank
     end
-    
+
     def when_unlinking_from_facebook_successfully(email = 'johnd-new-email@example.com')
       @person.unlink_from_facebook(:email => email, :password => 'test123', :password_confirmation => 'test123')
       @person.reload
     end
-    
+
     def when_unlinking_from_facebook_unsuccessfully(person_hash = {})
       @person.unlink_from_facebook(person_hash)
     end
-            
+
     it "should update the person's email and password and password confirmation" do
       given_a_person_with_facebook_auth
       when_unlinking_from_facebook_successfully
       @person.email.should == "johnd-new-email@example.com"
     end
-    
+
     it "should destroy the authentication record" do
       given_a_person_with_facebook_auth
       when_unlinking_from_facebook_successfully
       @person.facebook_authentication.should be_blank
     end
-    
+
     it "should return the person object" do
       given_a_person_with_facebook_auth
       when_unlinking_from_facebook_successfully
@@ -433,14 +433,14 @@ describe Person do
         when_unlinking_from_facebook_successfully
         Notifier.deliveries.length.should == 1
       end
-      
+
       it "should be sent to the old email address, and the new email address" do
         given_a_person_with_facebook_auth
         Notifier.deliveries = []
         when_unlinking_from_facebook_successfully
         Notifier.deliveries.first.to.should == ["johnd@example.com", "johnd-new-email@example.com"]
       end
-      
+
       it "should be not be sent if email is the same" do
         given_a_person_with_facebook_auth
         Notifier.deliveries = []
@@ -449,7 +449,7 @@ describe Person do
         Notifier.deliveries.length.should == 0
       end
     end
-    
+
     context "failure" do
       context "on email" do
         it "should err out when email is not present" do
@@ -483,23 +483,23 @@ describe Person do
       @authentication = Factory.build(:authentication, :provider => 'facebook')
       @person.link_with_facebook(@authentication)
     end
-    
+
     it "should return return false if facebook_authenticated? is true" do
       given_a_person_with_facebook_auth
       @person.send(:password_required?).should be_false
     end
-    
+
     it "should return true if facebook_unlinking? is true" do
       given_a_person_with_facebook_auth
       @person.facebook_unlinking = true
       @person.send(:password_required?).should be_true
     end
-    
+
     it "should return true if not persisted and not create from auth" do
       @person = Factory.build(:normal_person)
       @person.send(:password_required?).should be_true
     end
-    
+
     it "should return true if user is changing password by having password and password confirmation field present" do
       Factory.create(:registered_user)
       @person = Person.last
@@ -510,7 +510,7 @@ describe Person do
     end
   end
 
-  context "when finding by the most active" do 
+  context "when finding by the most active" do
 
     before(:each) do
       @person1 = Factory.create(:sequence_user, name: "Lazy Sue")
@@ -565,9 +565,9 @@ describe Person do
     @person.unsubscribe_from_daily_digest
     @person.should_not be_subscribed_to_daily_digest
   end
-  
+
   context "paperclip" do
-    
+
     it "will have necessary db columns for paperclip" do
       should have_db_column(:avatar_file_name).of_type(:string)
       should have_db_column(:avatar_content_type).of_type(:string)
@@ -580,7 +580,7 @@ describe Person do
         allowing('image/bmp', 'image/gif', 'image/jpeg', 'image/png', 'image/pjpeg', 'image/x-png').
         rejecting('text/plain', 'text/xml')
     end
-    
+
     it "will have an existing default image" do
       paperclip_default_file_exists?('original').should be_true
       Person.attachment_definitions[:avatar][:styles].each do |style, size|
@@ -593,14 +593,29 @@ describe Person do
       default_file = File.join(Rails.root, 'public', default_url)
       File.exist?(default_file)
     end
-    
+
   end
-  
+
   context "defaults" do
     it "should have allow_facebook_connect? to be true by default" do
       Person.new.allow_facebook_connect?.should be_true
     end
   end
-  
-  
+
+  context "subscribed" do
+    it "conversations returns a users conversation subscriptions sorted decending" do
+      subject.subscriptions_conversations.should_receive(:order).with('created_at desc')
+      subject.subscribed_conversations
+    end
+    it "issues returns a users issue subscriptions sorted decending" do
+      subject.subscriptions_issues.should_receive(:order).with('created_at desc')
+      subject.subscribed_issues
+    end
+    it "organizations returns a users organization subscriptions sorted decending" do
+      subject.subscriptions_organizations.should_receive(:order).with('created_at desc')
+      subject.subscribed_organizations
+    end
+  end
+
+
 end

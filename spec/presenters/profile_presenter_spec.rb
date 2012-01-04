@@ -19,6 +19,7 @@ describe ProfilePresenter do
       name: "Bob"
   end
   let(:presenter) { ProfilePresenter.new(user, page: 1) }
+
   describe "#profile_data" do
     context "without an address" do
       subject { ProfilePresenter.new(stub_person(organization_detail: stub_organization_detail)).profile_data }
@@ -61,6 +62,7 @@ describe ProfilePresenter do
       it { should_not have_key :email }
     end
   end
+
   context "as an organization" do
     subject { ProfilePresenter.new(stub(is_organization?: true)) }
     it "has Our for possessive pronoun" do
@@ -70,6 +72,7 @@ describe ProfilePresenter do
       subject.action_phrase.should == "We Are"
     end
   end
+
   context "as an individual" do
     subject { ProfilePresenter.new(stub(is_organization?: false)) }
     it "has My for possessive pronoun" do
@@ -79,48 +82,58 @@ describe ProfilePresenter do
       subject.action_phrase.should == "I Am"
     end
   end
+
   it "#has_issue_subscriptions?" do
     presenter.should have_issue_subscriptions
   end
+
   describe "#issue_subscriptions" do
     it "limits to 10" do
       presenter.issue_subscriptions.length.should == 10
     end
   end
+
   it "#has_conversation_subscriptions?" do
     presenter.should have_conversation_subscriptions
   end
+
   describe "#organization_subscriptions" do
     it "limits to 10 items" do
       presenter.organization_subscriptions.size.should == 10
     end
   end
+
   describe "#conversation_subscriptions" do
     it "limits to 10 items" do
       presenter.conversation_subscriptions.size.should == 10
     end
   end
+
   it "#has_recent_activities?" do
     presenter.should have_recent_activities
   end
+
   describe "#recent_activity" do
     it "is paginated" do
       presenter.recent_activity
       most_recent_activity.should have_received(:paginate).with(page: 1, per_page: 10)
     end
   end
+
   describe "#all_recent_activity" do
     it "is not paginated" do
       presenter.all_recent_activity
       most_recent_activity.should_not have_received(:paginate)
     end
   end
+
   describe "#feed_path" do
     it "is /user_path/user_slug.xml" do
       presenter.stub(:user_path) { |u, opts| "/blarp/#{u}.#{opts[:format]}" }
       presenter.feed_path.should == "/blarp/bob.xml"
     end
   end
+
   describe "#website" do
     context "without a prefix" do
       subject { ProfilePresenter.new(stub(website: 'google.com')).website }
@@ -131,11 +144,13 @@ describe ProfilePresenter do
       it { should == 'http://google.com' }
     end
   end
+
   describe "#feed_title" do
     it "is Name at The Civic Commons" do
       presenter.feed_title.should == "Bob at The Civic Commons"
     end
   end
+
   describe "#needs_to_fill_out_bio?" do
     context "when it is a different user" do
       let(:different_user) { stub() }
@@ -153,10 +168,11 @@ describe ProfilePresenter do
       end
     end
   end
+
   describe "#has_profile?" do
     context "without a anything" do
       subject { ProfilePresenter.new stub_person }
-        it { should_not have_profile }
+      it { should_not have_profile }
     end
     context "with a website" do
       subject { ProfilePresenter.new stub_person(has_website?: true) }
@@ -171,6 +187,7 @@ describe ProfilePresenter do
       it { should have_profile }
     end
   end
+
   def stub_person options={}
     defaults = {
       organization_detail: nil,
@@ -182,10 +199,11 @@ describe ProfilePresenter do
     }
     stub defaults.merge(options)
   end
-    def stub_organization_detail options={}
-      defaults = { present?: true, has_address?: false,
-                   facebook_page: '',
-                   phone: '' }
-      stub defaults.merge(options)
-    end
+
+  def stub_organization_detail options={}
+    defaults = { present?: true, has_address?: false,
+      facebook_page: '',
+      phone: '' }
+    stub defaults.merge(options)
+  end
 end

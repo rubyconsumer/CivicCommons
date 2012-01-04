@@ -343,15 +343,17 @@ class Person < ActiveRecord::Base
   end
 
   def subscribed_conversations
-    subscriptions.where(:subscribable_type => 'Conversation').order('created_at desc')
+    subscriptions_conversations.order('created_at desc')
   end
 
   def subscribed_issues
-    subscriptions.where(:subscribable_type => 'Issue').order('created_at desc')
+    subscriptions_issues.order('created_at desc')
   end
+
   def subscribed_organizations
-    subscriptions.where(:subscribable_type => 'Organization').order('created_at desc')
+    subscriptions_organizations.order('created_at desc')
   end
+
   def has_website?
     attribute_present? :website
   end
@@ -359,11 +361,12 @@ class Person < ActiveRecord::Base
   def has_twitter?
     attribute_present? :twitter_username
   end
+
   def is_organization?
     is_a? Organization
   end
-protected
 
+protected
   def check_twitter_username_format
     match = /^@?(?<username>.*)$/.match(self.twitter_username)
     self.twitter_username = match[:username] unless match.nil?
