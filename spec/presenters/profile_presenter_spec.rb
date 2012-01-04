@@ -143,6 +143,24 @@ describe ProfilePresenter do
       subject { ProfilePresenter.new(stub(website: 'http://google.com')).website }
       it { should == 'http://google.com' }
     end
+    context "no website" do
+      subject { ProfilePresenter.new(stub(website: '')).website }
+      it { should == '' }
+    end
+  end
+  describe "#has_email?" do
+    context "as an individual" do
+      subject { ProfilePresenter.new(stub({is_organization?: false})) }
+      it "should be false if it is an individual" do
+        subject.has_email?.should be_false
+      end
+    end
+    context "as an organization" do
+      subject { ProfilePresenter.new(stub({is_organization?: true})) }
+      it "should be true if it is an organization", :pending=>true do
+        subject.has_email?.should be_true
+      end
+    end
   end
 
   describe "#feed_title" do
@@ -186,13 +204,25 @@ describe ProfilePresenter do
       subject { ProfilePresenter.new stub_person(organization_detail: stub_organization_detail(has_address?: true )) }
       it { should have_profile }
     end
+    context "with email" do
+      context "is an individual" do
+        subject { ProfilePresenter.new stub_person(has_email?: true ) }
+        it { should_not have_profile }
+      end
+      context "is an organization" do
+        subject { ProfilePresenter.new stub_person(has_email?: true, is_organization?: true ) }
+        it { should have_profile }
+      end
+    end
   end
 
   def stub_person options={}
     defaults = {
       organization_detail: nil,
+      is_organization?: false,
       has_twitter?: false,
       has_website?: false,
+      has_email?: false,
       twitter_username: "",
       website: "",
       email: ''

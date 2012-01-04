@@ -1,3 +1,15 @@
+## 1.9.1
+
+### External Changes
+
+#### Miscellaneous
+
+#### Bug Fixes
+  * [User Profile page shows http:// even though there is no URL](https://agilezen.com/projects/18091/story/351)
+
+### Post Deployment Instructions
+
+
 ## 1.9.0
 
 ### External Changes

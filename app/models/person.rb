@@ -361,7 +361,11 @@ class Person < ActiveRecord::Base
   def has_twitter?
     attribute_present? :twitter_username
   end
-
+  
+  def has_email?
+    attribute_present? :email
+  end
+  
   def is_organization?
     is_a? Organization
   end

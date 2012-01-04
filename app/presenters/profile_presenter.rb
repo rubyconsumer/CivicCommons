@@ -53,7 +53,7 @@ class ProfilePresenter < Delegator
   end
 
   def has_profile?
-    has_website? || has_twitter? || has_address?
+    has_website? || has_twitter? || has_address? || has_email?
   end
 
   def has_recent_activities?
@@ -78,9 +78,17 @@ class ProfilePresenter < Delegator
     is_organization? ? "We Are" : "I Am"
   end
   def website
-    return "http://#{@user.website}" if !@user.website.match /^http/
-    return @user.website
+    if @user.website.present? && !@user.website.match(/^http/)
+      "http://#{@user.website}" 
+    else
+      @user.website
+    end
   end
+  
+  def has_email?
+    @user.email if is_organization?
+  end
+  
   private
   def address
     return "" unless has_address?
