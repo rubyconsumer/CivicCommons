@@ -11,6 +11,7 @@
   * [Add Title to Person Profile Page](https://agilezen.com/project/18091/story/342)
 
 #### Miscellaneous
+  * [347 - Update Solr restart/reindex execution timing on non-production systems.](https://agilezen.com/project/18091/story/347)
 
 #### Bug Fixes
   * [User Profile page shows http:// even though there is no URL](https://agilezen.com/projects/18091/story/351)
@@ -18,12 +19,9 @@
 ### Post Deployment Instructions
 
 
-## 1.9.0-hotfix1
-
-### External Changes
+## 1.9.0.1-hotfix1
 
 #### Bug Fixes
-
   * [Non-FB login not working outside of HeaderLogin](https://agilezen.com/project/18091/story/357)
 
 

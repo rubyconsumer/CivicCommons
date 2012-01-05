@@ -33,17 +33,29 @@ run "echo 'Finished restarting delayed_job process.'"
 if current_environment != "production"
   run "echo 'Starting solr recycling process (stop/start/reindex).'"
 
-  run "echo '* Stopping solr process...'"
-  run "echo '  cd #{release_path} && bundle exec rake sunspot:solr:stop'"
-  run "cd #{release_path} && bundle exec rake sunspot:solr:stop"
+  run "echo Listing Current Solr Processes..."
+  run "echo '  ps aux | grep solr'"
+  run "        ps aux | grep solr"
+
+  run "echo '* Stopping previous solr process...'"
+  run "echo '  cd #{previous_release} && bundle exec rake sunspot:solr:stop'"
+  run "        cd #{previous_release} && bundle exec rake sunspot:solr:stop"
+
+  run "echo Listing Current Solr Processes..."
+  run "echo '  ps aux | grep solr'"
+  run "        ps aux | grep solr"
 
   run "echo '* Starting solr process...'"
   run "echo '  cd #{release_path} && bundle exec rake sunspot:solr:start'"
-  run "cd #{release_path} && bundle exec rake sunspot:solr:start"
+  run "        cd #{release_path} && bundle exec rake sunspot:solr:start"
+
+  run "echo Listing Current Solr Processes..."
+  run "echo '  ps aux | grep solr'"
+  run "        ps aux | grep solr"
 
   run "echo '* Reindexing with solr...'"
   run "echo '  cd #{release_path} && bundle exec rake sunspot:solr:reindex'"
-  run "cd #{release_path} && bundle exec rake sunspot:solr:reindex"
+  run "        cd #{release_path} && bundle exec rake sunspot:solr:reindex"
 
   run "echo 'Finished solr recycling process.'"
 end
