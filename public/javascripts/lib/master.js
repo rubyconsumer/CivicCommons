@@ -50,7 +50,7 @@ jQuery(function ($) {
 
 $(document).ready(function(){
   if(typeof(Modernizr) != "undefined" && !Modernizr.input.placeholder) {
-    $('[placeholder]').placeholder({className: 'placeholder'});
+    $('[placeholder]').addClass('placeholder');
   }
   $('a[data-colorbox]').live('click', function(e){
     $.colorbox({ 
