@@ -9,7 +9,7 @@
   </p>
   <p class="fb-cnct-links">
     <%= link_to "Yes", before_facebook_unlinking_path, :id=>'confirm-facebook-unlinking', :class => 'confirm-facebook-unlinking' %>
-    <%= link_to "No", edit_user_path(current_person), :class => 'cancel' %>
+    <%= link_to "No", secure_edit_user_url(current_person), :class => 'cancel' %>
   </p>
 </div>
 <% end %>

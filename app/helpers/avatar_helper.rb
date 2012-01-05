@@ -64,7 +64,7 @@ module AvatarHelper
   end
 
   def link_to_settings(person, css_class='user-link')
-    link_to "Settings", edit_user_url(person), title: "Profile Settings", class: css_class
+    link_to "Settings", secure_edit_user_url(person), title: "Profile Settings", class: css_class
   end
 
   # Creates an image_tag for a particular person

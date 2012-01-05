@@ -4,6 +4,6 @@ class SettingsPage < PageObject
   end
 
   def visit(user)
-    @page.visit edit_user_path(user)
+    @page.visit secure_edit_user_url(user)
   end
 end

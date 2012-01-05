@@ -5,7 +5,7 @@ class AdminSurveyPage < PageObject
   end
   
   def visit_new_surveys(user)
-    @page.visit edit_user_path(user)
+    @page.visit secure_edit_user_url(user)
   end
 
 end
