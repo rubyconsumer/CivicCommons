@@ -53,7 +53,6 @@
           }
         })
         .bindValidationErrorOnAjaxFailure()
-        .find('[placeholder]').addClass('placeholder');
         return this;
       },
 

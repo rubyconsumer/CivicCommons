@@ -16,7 +16,6 @@
 
     $forms.find('input:text,textarea').val('');
     $forms.find('.errors').empty();
-    $forms.find('[placeholder]').addClass('placeholder');
 
     <% unless @contribution.comment_only? %>
       $forms.hide();
