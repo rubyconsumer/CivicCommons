@@ -22,7 +22,6 @@ src_files:
   - vendor/jquery/jquery.loadmask.min.js
   - vendor/jquery/jquery.hashchange.min.js
   - vendor/jquery/jquery.easytabs
-  - vendor/placeholder-1.0.1.min.js
   - vendor/modernizr-1.5.min.js
   - vendor/underscore.js
   - vendor/backbone-0.5.3.js
