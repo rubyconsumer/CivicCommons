@@ -37,6 +37,10 @@
     Need to do this: 
       Stop Solr, delete the solr/data/development/index folder, and re-run sunspot:solr:start to recreate it.
       Also, need to reindex.
+  * We have changed the facebook authentication callback url to use "http" instead of "https"
+    * Need to update the civic_commons.yml's omniauth.full_host to use "https://" instead of "http://"
+    * We also have to update the Facebook Application to use "https://" instead of "http://" at http://developers.facebook.com
+    * **WARNING:** Make sure to update every server that runs the application (ssh into each and check), then restart the server by clicking "Apply" in the Cloud Console
 
 ## 1.8.1
 
