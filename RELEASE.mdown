@@ -1,6 +1,8 @@
 ## 1.9.1
 
 ### External Changes
+  * [Limit curated feeds to 5 most recent](https://agilezen.com/projects/18091/story/253)
+  * [Update Avatar Image priority](https://agilezen.com/projects/18091/story/339)
 
 #### Miscellaneous
 
