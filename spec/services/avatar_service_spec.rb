@@ -7,9 +7,64 @@ module Services
     before(:each) do
       @person = Factory.create(:registered_user, :twitter_username => "civiccommons")
     end
+    
+    
 
     context "Determining avatar url" do
-
+      context "by order of priorities" do
+        before(:each) do
+          AvatarService.stub!(:create_email_hash).and_return(5)
+        end
+        
+        it "should return their uploaded avatar picture first" do
+          @person = Factory.create(:registered_user_with_avatar, :twitter_username => "civiccommons")
+          @person.update_attributes(:twitter_username => 'twitterusername')
+          @person.stub_chain(:authentications, :present?).and_return(:true)
+          
+          AvatarService.stub!(:gravatar_available?).and_return(true)
+          avatar_url = AvatarService.avatar_image_url(@person)
+          avatar_url.should match(/avatars/)
+        end
+        it "should return their facebook profile pic second" do
+          @person.stub!(:avatar?).and_return(false)
+          @person.update_attributes(:twitter_username => 'twitterusername')
+          @person.stub_chain(:authentications, :present?).and_return(true)
+          @person.stub_chain(:authentications, :first, :uid).and_return(1)
+          AvatarService.stub!(:gravatar_available?).and_return(true)
+          
+          avatar_url = AvatarService.avatar_image_url(@person)
+          avatar_url.should == "https://graph.facebook.com/1/picture"
+        end
+        it "should return their twitter profile pic third" do
+          @person.stub!(:avatar?).and_return(false)
+          @person.stub_chain(:authentications, :present?).and_return(false)
+          @person.update_attributes(:twitter_username => 'twitterusername')
+          AvatarService.stub!(:gravatar_available?).and_return(true)
+          
+          avatar_url = AvatarService.avatar_image_url(@person)
+          avatar_url.should == "http://api.twitter.com/1/users/profile_image/twitterusername"
+        end
+        it "should return their gravatar pic fourth" do
+          @person.stub!(:avatar?).and_return(false)
+          @person.update_attributes(:twitter_username => 'twitterusername')
+          @person.stub_chain(:authentications, :present?).and_return(false)
+          @person.stub_chain(:twitter_username, :present?).and_return(false)
+          AvatarService.stub!(:gravatar_available?).and_return(true)
+          
+          avatar_url = AvatarService.avatar_image_url(@person)
+          avatar_url.should == "http://gravatar.com/avatar/5?d=404"
+        end
+        it "should return a default picture last" do
+          @person.stub!(:avatar?).and_return(false)
+          @person.update_attributes(:twitter_username => 'twitterusername')
+          @person.stub_chain(:authentications, :present?).and_return(false)
+          @person.stub_chain(:twitter_username, :present?).and_return(false)
+          AvatarService.stub!(:gravatar_available?).and_return(false)
+          
+          avatar_url = AvatarService.avatar_image_url(@person)
+          avatar_url.should match(/images/)
+        end
+      end
 
       it "When a person has linked their Facebook account, returns a FB graph url" do
         @person.stub_chain(:authentications, :empty?).and_return(false)

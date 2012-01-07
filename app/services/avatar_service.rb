@@ -5,15 +5,17 @@ require 'uri'
 class AvatarService
 
   def self.avatar_image_url(person)
-    if !person.authentications.empty?
-      self.facebook_image_url(person)
-    elsif person.twitter_username && !person.twitter_username.blank?
-      self.twitter_image_url(person)
-    elsif self.gravatar_available?(person)
-      self.gravatar_image_url(person)
-    else
-      person.avatar.url(:standard)
-    end
+    # Image displayed by order of priority    
+    # 1. image uploaded
+    return person.avatar.url(:standard) if person.avatar?
+    # 2. facebook
+    return self.facebook_image_url(person) if person.authentications.present?
+    # 3. twitter
+    return self.twitter_image_url(person) if person.twitter_username.present?
+    # 4. gravatar
+    return self.gravatar_image_url(person) if self.gravatar_available?(person)
+    # 5. default
+    person.avatar.url(:standard)
   end
 
   def self.facebook_image_url(person)

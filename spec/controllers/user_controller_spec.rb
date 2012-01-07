@@ -73,13 +73,14 @@ describe UserController do
       response.should contain "{\"avatarUrl\":\"/images/avatar_70.gif\"}"
     end
 
-    it "should return the Facebook url if account has already authenticated with Facebook" do
+    it "should return the Avatar based on the AvatarService" do
       given_user_with_facebook_authenticated_and_without_avatar
       Person.stub(:find).and_return(@person)
+      AvatarService.should_receive(:avatar_image_url).with(@person).and_return('http://avatar/url/here')
       @person.stub(:save).and_return(true)
 
       delete :destroy_avatar, :id => "1234", :format => :js
-      response.should contain "{\"avatarUrl\":\"graph.facebook.com/1234/picture\"}"
+      response.should contain "{\"avatarUrl\":\"http://avatar/url/here\"}"
     end
 
     it "should return 500 if unable to save" do
