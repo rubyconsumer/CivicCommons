@@ -113,8 +113,6 @@ feature "Register Feature", %q{
     end
   end
   describe "principles" do
-
-
     scenario "user sees principle before registering", :js => true do
       goto :home
       follow_account_registration_link
@@ -137,5 +135,39 @@ feature "Register Feature", %q{
         should_be_on new_person_registration_path
       end
     end
+  end
+  describe "Prevent certain email addresses from registering" do
+    def begin_registering_as_a_person(email)
+      goto :registration_page
+      fill_in_bio_with "Im a hoopy frood!"
+      fill_in_zip_code_with "47134"
+      uncheck_weekly_newsletter
+
+      follow_i_dont_want_to_use_facebook_link
+
+      zip_code_field.should have_value "47134"
+      bio_field.should have_value "Im a hoopy frood!"
+      weekly_newsletter_checkbox.should_not be_checked
+      daily_digest_checkbox.should be_checked
+
+      fill_in_first_name_with'John'
+      fill_in_last_name_with 'Doe'
+      fill_in_email_with email
+      fill_in_password_with 'passwordhere123'
+      fill_in_password_confirmation_with 'passwordhere123'
+
+      click_continue_button
+      page.should have_content "Thanks, go check your email."
+    end
+
+    scenario "user registering as a spammer 'spammer@yeah.net' ", :js => true do
+      begin_registering_as_a_person('spammer@yeah.net')
+      ActionMailer::Base.deliveries.any?{|mail| mail.subject == 'Confirmation instructions'}.should be_false
+    end    
+    scenario "user registering NOT as a spammer 'nospammer@legit.com' ", :js => true do
+      begin_registering_as_a_person('nospammer@legit.com')
+      ActionMailer::Base.deliveries.any?{|mail| mail.subject == 'Confirmation instructions'}.should be_true
+    end
+    
   end
 end

@@ -127,6 +127,11 @@ class Person < ActiveRecord::Base
     yield
     Notifier.email_changed(old_email, new_email).deliver if old_email && new_email
   end
+  
+  def send_confirmation_instructions
+    # if spam don't send confirmation
+    SpamService.spam?(email) ? false : super
+  end
 
   def newly_confirmed?
     confirmed_at_changed? && confirmed_at_was.blank? && !confirmed_at.blank?
