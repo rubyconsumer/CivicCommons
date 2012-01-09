@@ -1,5 +1,7 @@
 class SessionsController < Devise::SessionsController
 
+  prepend_before_filter :require_no_authentication, :only => [:new, :create, :ajax_new, :ajax_create]
+  prepend_before_filter :allow_params_authentication!, :only => [:create, :ajax_create]
   before_filter :require_ssl, :only => [:new, :create]
 
   def new
@@ -22,7 +24,7 @@ class SessionsController < Devise::SessionsController
 
   # POST /resource/ajax_login
   def ajax_create
-    resource = warden.authenticate!(:scope => resource_name, :recall => "new")
+    resource = warden.authenticate!(:scope => resource_name, :recall => "#{controller_path}#new")
     sign_in(resource_name, resource)
     if session.has_key?(:close_modal_on_exit) and session[:close_modal_on_exit]
       @notice = "You have successfully logged in."
