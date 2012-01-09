@@ -215,6 +215,16 @@ describe ProfilePresenter do
       end
     end
   end
+  describe "title" do
+    context "when a person" do
+      subject { ProfilePresenter.new stub_person(:title=>'abc') }
+      it { subject.title.should == 'abc' }
+    end
+    context "with an organization" do
+      subject { ProfilePresenter.new stub_person(:is_organization? => true) }
+      it { subject.title.should be_nil }
+    end
+  end
 
   def stub_person options={}
     defaults = {

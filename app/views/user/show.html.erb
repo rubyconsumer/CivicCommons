@@ -7,6 +7,9 @@
   <div class="wrapper profile">
     <div class="content-container">
         <h1><%= @user.name %></h1>
+        <% if @user.title %>
+          <p class="subtitle"><%= @user.title %></p>
+        <% end %>
       <div class="main-content">
         <div class="offset-1 profile-mast">
           <%= profile_image(@user, 70) %>

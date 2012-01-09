@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111223051250) do
+ActiveRecord::Schema.define(:version => 20120109145423) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -344,6 +344,7 @@ ActiveRecord::Schema.define(:version => 20111223051250) do
     t.string   "avatar_url"
     t.boolean  "weekly_newsletter",                   :default => true
     t.string   "type"
+    t.string   "title"
   end
 
   add_index "people", ["cached_slug"], :name => "index_people_on_cached_slug", :unique => true
@@ -467,8 +468,8 @@ ActiveRecord::Schema.define(:version => 20111223051250) do
     t.datetime "updated_at"
     t.integer  "conversation_id"
     t.integer  "issue_id"
-    t.text     "activity_cache",  :limit => 2147483647
     t.integer  "person_id"
+    t.text     "activity_cache",  :limit => 2147483647
   end
 
   add_index "top_items", ["conversation_id"], :name => "conversations_index"

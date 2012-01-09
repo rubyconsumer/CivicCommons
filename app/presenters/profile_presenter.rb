@@ -55,6 +55,10 @@ class ProfilePresenter < Delegator
   def has_profile?
     has_website? || has_twitter? || has_address? || has_email?
   end
+  
+  def title
+    @user.title if !@user.is_organization?
+  end
 
   def has_recent_activities?
     not recent_activity.empty?

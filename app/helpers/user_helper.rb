@@ -47,6 +47,10 @@ module UserHelper
       "Your Name"
     end
   end
+  
+  def title_label_text
+    "Your Title" if !@person.is_organization?
+  end
 
   def remove_avatar_text
     if @person.is_organization?

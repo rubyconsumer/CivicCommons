@@ -10,6 +10,7 @@ FactoryGirl.define do |f|
 
   factory :normal_person, :class=>Person do |u|
     u.first_name 'John'
+    u.title 'staff at CivicCommons'
     u.last_name 'Doe'
     u.zip_code '44313'
     u.password 'password'

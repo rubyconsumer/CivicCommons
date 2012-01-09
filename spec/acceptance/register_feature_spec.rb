@@ -30,6 +30,7 @@ feature "Register Feature", %q{
 
     fill_in_first_name_with'John'
     fill_in_last_name_with 'Doe'
+    fill_in_title_with 'Staff at ACME Inc'
     fill_in_email_with 'johndoe@test.com'
     fill_in_password_with 'passwordhere123'
     fill_in_password_confirmation_with 'passwordhere123'
@@ -152,6 +153,7 @@ feature "Register Feature", %q{
 
       fill_in_first_name_with'John'
       fill_in_last_name_with 'Doe'
+      fill_in_title_with 'Staff at Acme Inc'
       fill_in_email_with email
       fill_in_password_with 'passwordhere123'
       fill_in_password_confirmation_with 'passwordhere123'

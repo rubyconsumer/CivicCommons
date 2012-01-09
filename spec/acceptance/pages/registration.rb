@@ -7,6 +7,7 @@ module CivicCommonsDriver
     has_field :zip_code, "person_zip_code"
     has_field :first_name,  'person_first_name'
     has_field :last_name, 'person_last_name'
+    has_field :title, 'person_title'
     has_field :email, 'person_email'
     has_field :password, 'person_password'
     has_field :password_confirmation, 'person_password_confirmation'
