@@ -26,7 +26,46 @@ describe Topic do
         @topic.issues.count.should == 2
       end
     end
+
+    context "has_and_belongs_to_many radioshows" do
+      def given_a_topic_with_radioshows
+        @topic = Factory.create(:topic)
+        @radioshow1 = Factory.create(:radio_show)
+        @radioshow2 = Factory.create(:radio_show)
+        @topic.radioshows = [@radioshow1, @radioshow2]
+      end
+      it "should be correct" do
+        Topic.reflect_on_association(:radioshows).macro.should == :has_and_belongs_to_many
+      end
+      it "should correctly count the number of topics" do
+        given_a_topic_with_radioshows
+        @topic.radioshows.count.should == 2
+      end
+    end
   end
+
+  describe 'adding multiple topics' do
+    context 'Issues' do
+      it 'will not allow duplicates' do
+        topic = Factory.create(:topic)
+        issue = Factory.create(:issue)
+        topic.issues = [issue, issue]
+        topic.should be_true
+        topic.issues.count.should == 1
+      end
+    end
+
+    context 'RadioShows' do
+      it 'will not allow duplicates' do
+        topic = Factory.create(:topic)
+        radioshow = Factory.create(:radio_show)
+        topic.radioshows = [radioshow, radioshow]
+        topic.should be_true
+        topic.radioshows.count.should == 1
+      end
+    end
+  end
+
   describe "For Sidebar" do
     def given_topics_with_issues_for_sidebar
       @topic1 = Factory.create(:topic)

@@ -34,6 +34,7 @@ class ContentItem < ActiveRecord::Base
 
   belongs_to :author, :class_name => "Person", :foreign_key => "person_id"
   belongs_to :conversation
+  has_and_belongs_to_many :topics, uniq: true
 
   delegate   :name, :to => :author, :prefix => true
 
