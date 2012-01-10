@@ -29,7 +29,7 @@
                 <%= user_profile(community_member) %>
               </div>
               <div class="text-container" id="label_<%= community_member.id %>">
-                <h4><%= link_to display_name(community_member), user_path(community_member), title: community_member.name%></h4>
+                <h4><%= link_to community_member.display_name, user_path(community_member), title: community_member.name %></h4>
                 <p><%= truncate(community_member.bio,:length => 290) if community_member.bio %></p>
               </div>
 

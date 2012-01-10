@@ -8,7 +8,7 @@
           <div class="posts">
             <div class="post">
               <h3><%= link_to item.title, content_path(item) %></h3>
-              <p class="author"><%= item.author.first_name + " " + item.author.last_name %></p>
+              <p class="author"><%= item.author.name %></p>
               <p class="time"><%= item.created_at.strftime("%m-%d-%Y %I:%M %p") %></p>
               <div class="summary"><%= raw item.summary %></div>
             </div>

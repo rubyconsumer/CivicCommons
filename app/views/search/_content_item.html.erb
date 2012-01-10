@@ -3,7 +3,7 @@
   type = hit.result.content_type
   case type 
   when "BlogPost"
-    author_name = [hit.result.author.first_name, hit.result.author.last_name].join(' ')
+    author_name = ("%s %s" % [hit.result.author.first_name, hit.result.author.last_name]).strip
 %>
 	<div class="result blog-result">
     <h4><%= link_to author_name + ' blogged: ' + title, blog_path(hit.result) %></h4>

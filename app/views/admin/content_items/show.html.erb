@@ -4,7 +4,7 @@
     <div>
       <%= image_tag @content_item.image.url(:panel) %>
     </div>
-    <p>Author: <%= @person.first_name + ' ' +  @person.last_name %></p>
+    <p>Author: <%= @person.name %></p>
     <p>Published: <%= @content_item.published.strftime("%B %d, %Y") %></p>
   </header>
   <p>Content Type: <%= @content_item.content_type %>

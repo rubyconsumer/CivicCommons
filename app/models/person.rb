@@ -143,6 +143,10 @@ class Person < ActiveRecord::Base
     @create_from_auth || false
   end
 
+  def display_name
+    self.last_name.blank? || self.first_name.blank? ? self.name : "#{self.last_name}, #{self.first_name}"
+  end
+
   def avatar_width_for_style(style)
     geometry_for_style(style, :avatar).width.to_i
   end
@@ -188,9 +192,15 @@ class Person < ActiveRecord::Base
     Notifier.welcome(self).deliver
     @send_welcome = false
   end
+
+  def short_name
+    self.first_name.blank? ? self.name : self.first_name
+  end
+
   def most_recent_activity
     Activity.most_recent_activity_items_for_person(self)
   end
+
   def self.find_all_by_name(name)
     first, last = parse_name(name)
     where(:first_name => first, :last_name => last)

@@ -32,9 +32,5 @@ module CommunityHelper
     
     link_to raw("<span>#{filter_name}</span>"), community_path(request.parameters.merge({:filter => filter, :page=>nil})), :class=> css_class
   end
-  
 
-  def display_name(entity)
-    entity.last_name.blank? || entity.first_name.blank? ? entity.name : "#{entity.last_name}, #{entity.first_name}"
-  end
 end
