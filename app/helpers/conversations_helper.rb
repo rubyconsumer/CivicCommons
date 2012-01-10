@@ -168,7 +168,7 @@ module ConversationsHelper
   end
 
   def respond_button_text(contribution)
-    current_person && contribution.person == current_person ? "Add More" : "Respond#{' to ' + contribution.person.first_name if contribution.person}"
+    current_person && contribution.person == current_person ? "Add More" : "Respond#{' to ' + contribution.person.short_name if contribution.person}"
   end
 
   def setup_conversation(conversation)

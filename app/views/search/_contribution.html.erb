@@ -1,7 +1,7 @@
 <div class="result contribution-result">
   <% 
     title =  hit.result.title || "This contribution has no title"
-    user_name = [hit.result.person.first_name, hit.result.person.last_name].join(' ')
+    user_name = ("%s %s" % [hit.result.person.first_name, hit.result.person.last_name]).strip
 
     if(hit.result.conversation_id)
       title = hit.result.conversation.title

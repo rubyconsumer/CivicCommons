@@ -1,6 +1,6 @@
 <% author = defined?(author) ? author : nil %>
 <div class="mod">
-  <h3>Recent Blog Posts <%= "By #{author.first_name}" unless author.nil? %></h3>
+  <h3>Recent Blog Posts <%= "By #{author.short_name}" unless author.nil? %></h3>
   <div class='mod-content'>
     <%= render partial: 'shared/recent_items/blog_post', collection: blog_posts, locals: { author: author } %>
   </div>

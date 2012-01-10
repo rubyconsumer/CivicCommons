@@ -31,7 +31,7 @@
 
   <p>
   <%= f.label :person_id, "Author" %><br>
-  <%= f.select :person_id, @authors.collect{|author| [author.first_name + " " + author.last_name, author.id]} %>
+  <%= f.select :person_id, @authors.collect{|author| [author.name, author.id]} %>
   </p>
 
   <p>

@@ -5,7 +5,7 @@
 
       <div class="main-content">
         <div class="post">
-          <p class="author"><%= @content_item.author.first_name + " " + @content_item.author.last_name %></p>
+          <p class="author"><%= @content_item.author.name %></p>
           <p class="time"><%= @content_item.created_at.strftime("%m-%d-%Y %I:%M %p") %></p>
           <div class="body"><%= raw @content_item.body %></div>
         </div>

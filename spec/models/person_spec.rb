@@ -617,5 +617,24 @@ describe Person do
     end
   end
 
+  context "display_name" do
+    it 'should display the last name first and the first name last' do
+      user = Factory.build(:normal_person, :first_name => "Tom", :last_name => "Kat")
+
+      user.display_name.should == "Kat, Tom"
+    end
+
+    it "should display the full name if the first name is missing" do
+      user = Factory.build(:normal_person, :first_name => nil, :last_name => "Kat")
+
+      user.display_name.should == "Kat"
+    end
+
+    it "should display the full name if the last name is missing" do
+      user = Factory.build(:normal_person, :first_name => "Tom", :last_name => nil)
+
+      user.display_name.should == "Tom"
+    end
+  end
 
 end
