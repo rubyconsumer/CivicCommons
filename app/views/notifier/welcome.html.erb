@@ -1,9 +1,15 @@
 <h1>Welcome to The Civic Commons</h1>
-<p>Welcome to The Civic Commons, we’re really glad you decided to join the conversation</p>
-<p>Now that we’ve got all the formalities out of the way, here’s how to get started:</p>
-<p>If you like to read instructions or you haven’t seen this yet, <%= link_to "check out our video introduction to the Commons",root_url %>.</p>
-<p>If you’re the kind of person who ignores instruction manuals,  feel free to head over to your profile, add a picture of yourself and some other information and then jump into a conversation.</p>
-<p>Cool? </p>
-<p></p>
-<p></p>
-<p><%= link_to root_url, root_url %></p>
+<p>Welcome to The Civic Commons, we’re really glad you decided to join us in our goal of turning talk into action.</p>
+
+<p>Now that we’ve got all the formalities out of the way, here’s some suggestions for what to do next:</p>
+<p>1. Start a conversation. <br/>We know there's something you want to engage your community about, some question you've been wanting feedback on. Go ahead, <%=link_to  'start it up',conversation_responsibilities_url %>.</p>
+
+<p>Or, maybe you want to add your voice to some of the conversations your friends, neighbors and community have already started. <%= link_to 'Go, find them', conversations_url %>.</p>
+<p>Cool? If you need help or a hand to hold, just <%= mail_to 'emilycole@theciviccommons.com', 'email me' %>. I promise to get right back to you (as long as it's not, like, the middle of the night).</p>
+
+<p>See you on the Commons!</p>
+
+<p>
+  Emily Cole<br/>
+  Community Connector
+</p>
