@@ -9,7 +9,7 @@
   * [Prevent certain email addresses from registering.](https://agilezen.com/project/18091/story/349)
   * [Design Refinements](https://agilezen.com/project/18091/story/341)
   * [Add Title to Person Profile Page](https://agilezen.com/project/18091/story/342)
-
+  * [Email Welcome letter text change](https://agilezen.com/project/18091/story/365)
 #### Miscellaneous
   * [347 - Update Solr restart/reindex execution timing on non-production systems.](https://agilezen.com/project/18091/story/347)
 
