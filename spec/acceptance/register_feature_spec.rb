@@ -138,6 +138,7 @@ feature "Register Feature", %q{
     end
   end
   describe "Prevent certain email addresses from registering" do
+
     def begin_registering_as_a_person(email)
       goto :registration_page
       fill_in_bio_with "Im a hoopy frood!"
@@ -160,6 +161,10 @@ feature "Register Feature", %q{
 
       click_continue_button
       page.should have_content "Thanks, go check your email."
+    end
+    
+    background do
+      database.create_email_restriction(:domain => 'yeah.net')
     end
 
     scenario "user registering as a spammer 'spammer@yeah.net' ", :js => true do

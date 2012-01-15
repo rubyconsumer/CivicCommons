@@ -1,0 +1,21 @@
+<%= form_for([:admin,@email_restriction]) do |f| %>
+  <% if @email_restriction.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@email_restriction.errors.count, "error") %> prohibited this email_restriction from being saved:</h2>
+
+      <ul>
+      <% @email_restriction.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :domain,'Domain(ex. hotmail.com - Do not include @ sign)' %><br />
+    <%= f.text_field :domain %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

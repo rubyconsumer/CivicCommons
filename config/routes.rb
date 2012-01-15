@@ -178,6 +178,7 @@ Civiccommons::Application.routes.draw do
     end
     get '/issues/pages/all', to: 'managed_issue_pages#all'
     resources :regions
+    resources :email_restrictions
     resources :surveys do
       get 'progress', on: :member
     end

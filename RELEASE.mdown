@@ -1,15 +1,19 @@
 ## 1.9.2
 
 ### External Changes
+  * [org members not clicking to profile page](https://agilezen.com/projects/18091/story/367)
   
 #### Miscellaneous
+  * [Add "Email address domains to reject" to the Admin section](https://agilezen.com/projects/18091/story/361)
 
 #### Bug Fixes
   * [org members not clicking to profile page](https://agilezen.com/projects/18091/story/367)
 
 ### Post Deployment Instructions
-
-
+  * Need to add the following email restrictions on admin: 
+    * 163.com
+    * yeah.net
+    * 21cn.com
 
 ## 1.9.1
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120109145423) do
+ActiveRecord::Schema.define(:version => 20120113191941) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -218,6 +218,12 @@ ActiveRecord::Schema.define(:version => 20120109145423) do
 
   add_index "delayed_jobs", ["locked_by"], :name => "delayed_jobs_locked_by"
   add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
+
+  create_table "email_restrictions", :force => true do |t|
+    t.string   "domain"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "homepage_featureds", :force => true do |t|
     t.integer  "homepage_featureable_id",   :null => false

@@ -77,6 +77,10 @@ module CivicCommonsDriver
     def self.create_radio_show(attributes = {})
       Factory.create :radio_show, attributes
     end
+    
+    def self.create_email_restriction(attributes={})
+      Factory.create :email_restriction, attributes
+    end
 
     class << self
       alias :has_a_blog_post :create_blog_post

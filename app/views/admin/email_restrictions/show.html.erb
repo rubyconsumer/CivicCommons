@@ -1,0 +1,10 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Domain:</b>
+  <%= @email_restriction.domain %>
+</p>
+
+
+<%= link_to 'Edit', edit_admin_email_restriction_path(@email_restriction) %> |
+<%= link_to 'Back', admin_email_restrictions_path %>

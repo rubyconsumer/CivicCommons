@@ -99,6 +99,11 @@
             %ul
               %li
                 =link_to "Add Survey", new_admin_survey_path
+          %li
+            =link_to "Email Restrictions", admin_email_restrictions_path
+            %ul
+              %li
+                =link_to "Add Email Restrictions", new_admin_email_restriction_path
       %div#main
         =yield
 
