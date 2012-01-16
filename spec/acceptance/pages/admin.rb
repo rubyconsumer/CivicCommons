@@ -16,6 +16,7 @@ module CivicCommonsDriver
       add_link(:radio_shows, "Radio Shows", :admin_radio_shows)
 
       add_link(:blog_posts, "Blog Posts", :admin_blog_posts)
+      has_link(:add_content_item, 'Add Content Item', :admin_add_content_item)
     end
 
   end

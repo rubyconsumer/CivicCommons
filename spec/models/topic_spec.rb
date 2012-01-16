@@ -42,6 +42,23 @@ describe Topic do
         @topic.radioshows.count.should == 2
       end
     end
+
+    context "has_and_belongs_to_many blogs" do
+      def given_a_topic_with_blogs
+        @topic = Factory.create(:topic)
+        @blog1 = Factory.create(:blog_post)
+        @blog2 = Factory.create(:blog_post)
+        @topic.blogposts = [@blog1, @blog2]
+      end
+      it "should be correct" do
+        Topic.reflect_on_association(:blogposts).macro.should == :has_and_belongs_to_many
+      end
+      it "should correctly count the number of blogs" do
+        given_a_topic_with_blogs
+        @topic.blogposts.count.should == 2
+      end
+    end
+    
   end
 
   describe 'adding multiple topics' do

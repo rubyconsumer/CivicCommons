@@ -7,47 +7,75 @@ describe ContentItem do
   end
 
   before(:each) do
-    @attr = Factory.attributes_for(:content_item)
-    @attr[:author] = @author
+    @content_item = Factory.build(:content_item,:author => @author)
   end
 
   context "validations" do
 
     it "creates a valid object" do
-      ContentItem.new(@attr).should be_valid
+      @content_item.should be_valid
     end
 
     it "validates the presence of title" do
-      @attr.delete(:title)
-      ContentItem.new(@attr).should_not be_valid
+      @content_item.title = nil
+      @content_item.should_not be_valid
     end
 
     it "validates the presence of body" do
-      @attr.delete(:body)
-      ContentItem.new(@attr).should_not be_valid
+      @content_item.body = nil
+      @content_item.should_not be_valid
     end
 
     it "validates the presence of published" do
-      @attr.delete(:published)
-      ContentItem.new(@attr).should_not be_valid
+      @content_item.published = nil
+      @content_item.should_not be_valid
     end
 
     it "validates the presence of author" do
-      @attr.delete(:author)
-      ContentItem.new(@attr).should_not be_valid
+      @content_item.author = nil
+      @content_item.should_not be_valid
     end
 
     it "validates the uniqueness of the title" do
-      ContentItem.new(@attr).save
-      ContentItem.new(@attr).should_not be_valid
+      @content_item.save
+      @content_item2 = Factory.build(:content_item, :title => @content_item.title)
+      @content_item2.should_not be_valid
     end
 
     it "validates the presence of an external link for a news item" do
-      @attr[:content_type] = 'NewsItem'
-      @attr.delete(:external_link)
-      ContentItem.new(@attr).should_not be_valid
+      @content_item.content_type = 'NewsItem'
+      @content_item.external_link = nil
+      @content_item.should_not be_valid
     end
+    
+    it 'requires one topic to be assigned' do
+      content_item = Factory.build(:blog_post, topics: [])
+      content_item.should_not be_valid
 
+      topic = Factory.build(:topic)
+      content_item.topics = [topic]
+      content_item.should be_valid
+    end
+    
+
+  end
+  
+  context "has_and_belongs_to_many topics with blog post" do
+    describe "on blog posts" do
+      def given_a_blog_post_with_topics
+        @topic1 = Factory.create(:topic)
+        @topic2 = Factory.create(:topic)
+        @blog = Factory.create(:blog_post)
+        @blog.topics = [@topic1, @topic2]
+      end
+      it "should be correct" do
+        ContentItem.reflect_on_association(:topics).macro.should == :has_and_belongs_to_many
+      end
+      it "should correctly count the number of topics" do
+        given_a_blog_post_with_topics
+        @blog.topics.count.should == 2
+      end
+    end
   end
 
   context "custom finders" do

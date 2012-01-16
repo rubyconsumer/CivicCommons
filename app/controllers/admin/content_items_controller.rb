@@ -16,6 +16,7 @@ class Admin::ContentItemsController < Admin::DashboardController
     @authors = Person.find_all_by_admin(true, :order => 'first_name, last_name ASC')
     @content_item.author = current_person
     @content_item.published = Date.today
+    @topics = Topic.all
   end
 
   def create
@@ -37,6 +38,7 @@ class Admin::ContentItemsController < Admin::DashboardController
       flash[:notice] = "Your #{@content_item.content_type} has been created!"
       redirect_to admin_content_item_path(@content_item)
     else
+      @topics = Topic.all
       render :new
     end
   end
@@ -50,6 +52,7 @@ class Admin::ContentItemsController < Admin::DashboardController
     @content_item = ContentItem.find(params[:id])
     @authors = Person.find_all_by_admin(true, :order => 'first_name, last_name ASC')
     @content_item.url_slug = @content_item.cached_slug
+    @topics = Topic.all
   end
 
   def destroy
@@ -77,6 +80,7 @@ class Admin::ContentItemsController < Admin::DashboardController
       flash[:notice] = "Successfully edited your #{@content_item.content_type}"
       redirect_to admin_content_item_path(@content_item)
     else
+      @topics = Topic.all
       render :edit
     end
   end

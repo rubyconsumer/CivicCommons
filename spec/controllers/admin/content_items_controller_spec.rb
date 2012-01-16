@@ -64,16 +64,20 @@ module Admin
     end
 
     describe "POST create" do
-
+      let(:params) do
+        topic = Factory.create(:topic)
+        attributes = Factory.attributes_for(:content_item)
+        attributes.delete(:topics)
+        attributes[:topic_ids]=[topic.id]
+        attributes
+      end
+      
       describe "with valid params" do
 
         let(:author) do
           Factory.create(:admin_person)
         end
 
-        let(:params) do
-          Factory.attributes_for(:content_item)
-        end
 
         before(:each) do
           params[:author] = author
@@ -99,10 +103,6 @@ module Admin
           Factory.create(:admin_person)
         end
 
-        let(:params) do
-          Factory.attributes_for(:content_item)
-        end
-
         before(:each) do
           params[:author] = author
           params.delete(:title)
@@ -123,10 +123,6 @@ module Admin
 
         let(:author) do
           Factory.create(:admin_person)
-        end
-
-        let(:params) do
-          Factory.attributes_for(:content_item)
         end
 
         before(:each) do
@@ -245,7 +241,7 @@ module Admin
       end
 
       it "redirects to the content_items list" do
-        response.should redirect_to(admin_content_items_url)
+        response.should redirect_to(admin_content_items_path)
       end
 
     end

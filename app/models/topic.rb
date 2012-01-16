@@ -4,6 +4,10 @@ class Topic < ActiveRecord::Base
     class_name: 'ContentItem',
     conditions: 'content_type = "RadioShow"',
     uniq: true
+  has_and_belongs_to_many :blogposts,
+    class_name: 'ContentItem',
+    conditions: 'content_type = "BlogPost"',
+    uniq: true
   validates_presence_of :name
   validates_uniqueness_of :name
   scope :including_public_issues, 

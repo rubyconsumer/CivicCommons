@@ -105,6 +105,10 @@ module CivicCommonsDriver
     def self.has_any_issues?
       !Issue.all.empty?
     end
+    
+    def self.has_any_blog_posts?
+      !ContentItem.blog_post.all.empty?
+    end
 
     def self.find_user(user)
       Person.find(user.id)

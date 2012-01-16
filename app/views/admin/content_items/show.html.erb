@@ -6,6 +6,14 @@
     </div>
     <p>Author: <%= @person.name %></p>
     <p>Published: <%= @content_item.published.strftime("%B %d, %Y") %></p>
+    <p>
+      Topics:
+      <ul>
+        <% @content_item.topics.each do |topic| %>
+          <li><%= topic.name %></li>
+        <% end %>
+      </ul>
+    </p>
   </header>
   <p>Content Type: <%= @content_item.content_type %>
 

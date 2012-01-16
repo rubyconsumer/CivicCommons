@@ -7,6 +7,7 @@ Factory.define :content_item do |f|
   f.created_at 10.days.ago
   f.published 1.day.ago
   f.association :author, :factory => :admin_person
+  f.topics { |topics| [topics.association(:topic)] }
 end
 
 Factory.define :blog_post, :parent => :content_item do |f|

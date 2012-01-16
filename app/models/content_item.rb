@@ -40,14 +40,23 @@ class ContentItem < ActiveRecord::Base
 
   validates_presence_of :title, :body, :author
   validates_uniqueness_of :title
+  validate :require_topic
 
   validates_format_of :external_link, :with => /^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/ix, :allow_blank => true
   validates_presence_of :external_link, :if => :content_type_is_news_item?
-
+  
   validates :published, :date => {:after => Proc.new {Time.now - 1.year} }
 
   has_friendly_id :title, :use_slug => true, :strip_non_ascii => true
-
+  
+  def has_topic?(topic)
+    topics.include?(topic)
+  end
+  
+  def require_topic
+    errors.add(:base, "Please select at least one Topic") if self.topic_ids.blank?
+  end
+  
   def self.recent_blog_posts(author = nil)
     if author.nil?
       ContentItem.where("content_type = 'BlogPost' AND (published <= curdate() OR DAY(published) = DAY(curdate())) ").order("published desc, created_at desc")

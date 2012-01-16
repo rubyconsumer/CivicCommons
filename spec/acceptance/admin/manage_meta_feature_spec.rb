@@ -34,8 +34,7 @@ feature "Meta Content", %q{
     current_page.should have_meta_tags "because,it,would,scare,you"
   end
 
-  scenario "Configure Radio Metadata" do
-    database.has_a_radio_show
+  scenario "Configure Radio Metadata", :js=>true do
     update_radio_show :page_title=>"Welcome to RADIOLAB",
                          :meta_description=>"OK, so it is not really radiolab",
                          :meta_tags=>"we,just,wish,we,were,radiolab"
@@ -45,7 +44,7 @@ feature "Meta Content", %q{
     current_page.should have_meta_tags "we,just,wish,we,were,radiolab"
   end
 
-  scenario "Configure Blog Metadata" do #, :pending=>true do
+  scenario "Configure Blog Metadata", :js=>true do
     update_blog_post :page_title=>"Blogging is fun!",
                      :meta_description=>"Just ask Arianna Huffington",
                      :meta_tags=>"if,you,can,get,past,her,millions,of,dollars"
