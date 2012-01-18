@@ -10,6 +10,7 @@
   
 #### Bug Fixes
   * [org members not clicking to profile page](https://agilezen.com/projects/18091/story/367)
+  * [ADMIN: Can't edit Org Profile - error](https://agilezen.com/projects/18091/story/368)
 
 ### Post Deployment Instructions
   * Need to add the following email restrictions on admin: 

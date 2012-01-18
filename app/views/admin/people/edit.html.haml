@@ -1,5 +1,5 @@
 %h2 Edit Person Information
-=form_for [:admin, @person], :html => {:multipart => true} do |person|
+=form_for [:admin, @person.becomes(Person)], :html => {:multipart => true} do |person|
   =show_errors @person
   %p
     =person.label :name
