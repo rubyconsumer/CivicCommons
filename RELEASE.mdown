@@ -6,6 +6,7 @@
 #### Miscellaneous
   * [Add "Email address domains to reject" to the Admin section](https://agilezen.com/projects/18091/story/361)
   * [Ability to Add Topic(s) to Blogs as an Admin](https://agilezen.com/projects/18091/story/344)
+  
 #### Bug Fixes
   * [org members not clicking to profile page](https://agilezen.com/projects/18091/story/367)
 
