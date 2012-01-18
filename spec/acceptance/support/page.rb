@@ -39,6 +39,17 @@ module CivicCommonsDriver
     end
     alias :add_field :has_field
 
+    def has_select(field, locator)
+      define_method "fill_in_#{field}_with" do | value |
+        select value, :from => locator
+      end
+
+      define_method "#{field}_field" do
+        find_field locator
+      end
+    end
+    alias :add_select :has_select
+
     def has_file_field(field, locator)
       define_method "attach_#{field}_with_file" do | value |
         file_path = value

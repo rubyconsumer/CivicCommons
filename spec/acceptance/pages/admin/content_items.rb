@@ -4,12 +4,11 @@ class Admin
 class ContentItems
   SHORT_NAME = :admin_content_items
   include Page
-  
+
   class Show
     SHORT_NAME = :admin_content_item
     include Page
   end
-  
 
   class Add
     SHORT_NAME = :admin_add_content_item
@@ -21,13 +20,14 @@ class ContentItems
     has_field(:meta_tags, 'Page Meta Tags:')
     has_field(:title, 'content_item_title')
     has_field(:published, 'Publish On (mm/dd/yyyy)')
-    
+
     has_button(:create_content_item, 'Create Content item', :admin_content_item)
     has_button(:create_content_item_while_in_invalid_state, 'Create Content item', :admin_add_content_item)
-    # content_type needed
+
+    has_select(:content_type, 'Content type')
     # author needed
 
-    has_field(:external_link, 'content_item_external_link')    
+    has_field(:external_link, 'content_item_external_link')
     has_wysiwyg_editor_field(:summary, 'content_item_summary')
     has_wysiwyg_editor_field(:body, 'content_item_body')
     has_field(:embed_code, 'Embed code')
@@ -39,11 +39,13 @@ class ContentItems
     def select_topic topic
       check topic
     end
+
     def has_reminder_to_add_topics?
       within '#error_explanation' do
         has_content? "Please select at least one Topic"
       end
     end
+
     def fill_in_content_item_with details
       details = defaults.merge(details)
 
@@ -60,7 +62,19 @@ class ContentItems
       fill_in_embed_code_with details[:embed_code]
       attach_image details[:image]
       fill_in_summary_with details[:summary]
+      fill_in_content_type_with details[:type]
     end
+
+    def fill_in_blog_post_with details
+      details[:type] = 'BlogPost'
+      fill_in_content_item_with details
+    end
+
+    def fill_in_radio_show_with details
+      details[:type] = 'RadioShow'
+      fill_in_content_item_with details
+    end
+
     def defaults
       {
         :page_title => 'titlehere',
@@ -72,10 +86,13 @@ class ContentItems
         :summary => 'Summary here',
         :body => 'Body here',
         :embed_code => 'Embed code here',
-        :image => "imageAttachment.png"
+        :image => "imageAttachment.png",
+        :type => "BlogPost"
       }
     end
   end
 
 end
-end end end
+end
+end
+end

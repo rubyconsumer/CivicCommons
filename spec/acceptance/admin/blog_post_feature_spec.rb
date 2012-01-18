@@ -10,6 +10,7 @@ feature "BlogPost Admin", %q{
     database.has_a_topic
     goto_admin_page_as_admin
   end
+
   scenario "forgetting to assign topics to blog posts" do
     submit_a_blog_post_without_a_topic
     current_page.should have_reminder_to_add_topics
@@ -22,14 +23,14 @@ feature "BlogPost Admin", %q{
   end
 
   def submit_a_blog_post_without_a_topic
-    follow_add_content_item_link  
-    fill_in_content_item_with :topics => []
+    follow_add_content_item_link
+    fill_in_blog_post_with :topics => []
     click_create_content_item_while_in_invalid_state_button
   end
 
   def submit_a_blog_post_with_topic
-    follow_add_content_item_link  
-    fill_in_content_item_with defaults 
+    follow_add_content_item_link
+    fill_in_blog_post_with defaults
     click_create_content_item_button
-  end 
+  end
 end

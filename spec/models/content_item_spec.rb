@@ -56,11 +56,10 @@ describe ContentItem do
       content_item.topics = [topic]
       content_item.should be_valid
     end
-    
 
   end
-  
-  context "has_and_belongs_to_many topics with blog post" do
+
+  context "has_and_belongs_to_many topics" do
     describe "on blog posts" do
       def given_a_blog_post_with_topics
         @topic1 = Factory.create(:topic)
@@ -74,6 +73,22 @@ describe ContentItem do
       it "should correctly count the number of topics" do
         given_a_blog_post_with_topics
         @blog.topics.count.should == 2
+      end
+    end
+
+    describe "on radio shows" do
+      def given_a_radio_show_with_topics
+        @topic1 = Factory.create(:topic)
+        @topic2 = Factory.create(:topic)
+        @radio_show = Factory.create(:radio_show)
+        @radio_show.topics = [@topic1, @topic2]
+      end
+      it "should be correct" do
+        ContentItem.reflect_on_association(:topics).macro.should == :has_and_belongs_to_many
+      end
+      it "should correctly count the number of topics" do
+        given_a_radio_show_with_topics
+        @radio_show.topics.count.should == 2
       end
     end
   end

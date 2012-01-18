@@ -24,7 +24,7 @@ module CivicCommonsDriver
     def self.first_topic
       Topic.first
     end
-    
+
     def self.latest_person
       # so that it doesn't select the subclass(e.g: Organization)
       Person.where(:type=> nil).last
@@ -66,6 +66,7 @@ module CivicCommonsDriver
     def self.has_an_organization(attributes={})
       Factory :organization, attributes
     end
+
     def self.create_issue(attributes= {})
       Factory.create :issue, attributes
     end
@@ -77,7 +78,7 @@ module CivicCommonsDriver
     def self.create_radio_show(attributes = {})
       Factory.create :radio_show, attributes
     end
-    
+
     def self.create_email_restriction(attributes={})
       Factory.create :email_restriction, attributes
     end
@@ -105,9 +106,13 @@ module CivicCommonsDriver
     def self.has_any_issues?
       !Issue.all.empty?
     end
-    
+
     def self.has_any_blog_posts?
       !ContentItem.blog_post.all.empty?
+    end
+
+    def self.has_any_radio_shows?
+      !ContentItem.radio_show.all.empty?
     end
 
     def self.find_user(user)

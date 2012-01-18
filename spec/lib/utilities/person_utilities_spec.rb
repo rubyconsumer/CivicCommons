@@ -131,9 +131,7 @@ module Utilities
 
       it "will associate content_items to the person being merged into" do
         @topic = Factory.create(:topic)
-        @attr = Factory.attributes_for(:content_item)
-        @attr.delete(:topics)
-        @attr[:topic_ids]=[@topic.id]
+        @attr = Factory.attributes_for(:content_item, topics: [@topic])
         @attr[:author] = @person_to_merge
         content_item = ContentItem.new(@attr)
         content_item.should be_valid
