@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120119152337) do
+ActiveRecord::Schema.define(:version => 20120119184602) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -47,6 +47,12 @@ ActiveRecord::Schema.define(:version => 20120119152337) do
   add_index "authentications", ["person_id"], :name => "index_authentications_on_person_id"
   add_index "authentications", ["provider"], :name => "index_authentications_on_provider"
   add_index "authentications", ["uid"], :name => "index_authentications_on_uid"
+
+  create_table "content_item_descriptions", :force => true do |t|
+    t.string "content_type"
+    t.string "description_long"
+    t.string "description_short"
+  end
 
   create_table "content_items", :force => true do |t|
     t.integer  "person_id"
