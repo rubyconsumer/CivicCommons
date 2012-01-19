@@ -101,7 +101,7 @@ describe Registrations::OmniauthCallbacksController, "handle facebook authentica
       end
 
       it "should display failed to link message" do
-        flash[:notice].should == "Could not link your accaunt to Facebook"
+        flash[:notice].should == "Could not link your account to Facebook"
       end
     end
     describe "logging in using facebook" do

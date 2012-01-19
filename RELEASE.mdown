@@ -11,6 +11,7 @@
 #### Bug Fixes
   * [org members not clicking to profile page](https://agilezen.com/projects/18091/story/367)
   * [ADMIN: Can't edit Org Profile - error](https://agilezen.com/projects/18091/story/368)
+  * [On an error with FB Connect, Text popup that comes up has typo "Account".](https://agilezen.com/project/18091/story/364)
 
 ### Post Deployment Instructions
   * Need to add the following email restrictions on admin: 
