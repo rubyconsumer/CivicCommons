@@ -6,6 +6,7 @@ module CivicCommonsDriver
         include Page
 
         add_link_for(:edit, "Edit", :admin_radio_shows_edit)
+        add_link_for(:add_host_or_guest, 'Add Host/Guest', :admin_content_items_people)
 
         class Edit
           SHORT_NAME = :admin_radio_shows_edit
@@ -15,7 +16,6 @@ module CivicCommonsDriver
           has_field(:meta_tags, "Page Meta Tags")
           has_button(:update_content_item, "Update Content item")
         end
-
       end
     end
   end

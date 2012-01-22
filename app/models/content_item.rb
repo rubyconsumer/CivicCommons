@@ -1,4 +1,5 @@
 class ContentItem < ActiveRecord::Base
+  
   attr_accessor :url_slug
 
   CONTENT_TYPES = ["BlogPost", "NewsItem", "RadioShow"]
@@ -35,6 +36,31 @@ class ContentItem < ActiveRecord::Base
   belongs_to :author, :class_name => "Person", :foreign_key => "person_id"
   belongs_to :conversation
   has_and_belongs_to_many :topics, uniq: true
+  
+  # Any radioshow people
+  has_and_belongs_to_many :people, 
+                          :readonly => true,
+                          :uniq => true,
+                          :class_name => 'Person',
+                          :join_table => 'content_items_people'
+  
+  #radioshow hosts
+  has_and_belongs_to_many :hosts, 
+                          :uniq => true,
+                          :class_name => 'Person',
+                          :join_table => 'content_items_people',
+                          :conditions => {:content_items_people => {:role => 'Host'}},
+                          :insert_sql => 'INSERT INTO `content_items_people` (`content_item_id`, `person_id`, `role`,`created_at`,`updated_at`) VALUES (#{id}, #{record.id}, "Host","#{created_at}","#{updated_at}")',
+                          :delete_sql => 'DELETE FROM `content_items_people` WHERE `content_items_people`.`content_item_id` = #{id} AND `content_items_people`.`person_id` IN (#{record.id}) AND `content_items_people`.`role` = "Host"'
+  #radioshow guests
+  has_and_belongs_to_many :guests, 
+                          :uniq => true,
+                          :class_name => 'Person',
+                          :join_table => 'content_items_people',
+                          :conditions => {:content_items_people => {:role => 'Guest'}},
+                          :insert_sql => 'INSERT INTO `content_items_people` (`content_item_id`, `person_id`, `role`,`created_at`,`updated_at`) VALUES (#{id}, #{record.id}, "Guest","#{created_at}","#{updated_at}")',
+                          :delete_sql => 'DELETE FROM `content_items_people` WHERE `content_items_people`.`content_item_id` = #{id} AND `content_items_people`.`person_id` IN (#{record.id}) AND `content_items_people`.`role` = "Guest"'
+
 
   delegate   :name, :to => :author, :prefix => true
 
@@ -48,6 +74,10 @@ class ContentItem < ActiveRecord::Base
   validates :published, :date => {:after => Proc.new {Time.now - 1.year} }
 
   has_friendly_id :title, :use_slug => true, :strip_non_ascii => true
+  
+  def people=(record)
+    raise Exception, ":people is readonly. please use :hosts or :guests habtm association, instead!"
+  end
   
   def has_topic?(topic)
     topics.include?(topic)
@@ -76,8 +106,32 @@ class ContentItem < ActiveRecord::Base
     return radioshow_path(self) if self.content_type == 'RadioShow'
     return content_path(self)
   end
-
-private
+  
+  def add_person(role, person)
+    case role
+    when 'guest'
+      self.guests << person
+      return true
+    when 'host'
+      self.hosts << person
+      return true
+    else
+      return false
+    end
+  end
+  
+  def delete_person(role, person)
+    case role
+    when 'guest'
+      self.guests.delete(person)
+      return true
+    when 'host'
+      self.hosts.delete(person)
+      return true
+    else
+      return false
+    end
+  end
 
   def content_type_is_blog_post?
     content_type == "BlogPost"

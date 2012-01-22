@@ -1,0 +1,38 @@
+<h1><%= @content_item.title %></h1>
+<p><%= link_to 'Back', admin_content_items_type_path('radio_show') %></p>
+<h2>Hosts(<%= link_to 'Add Host', new_admin_content_item_content_items_person_path(:role => 'host') %>)</h2>
+<table class="tablesorter" summary="List of Static Pages">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th></th>
+    </tr>
+  <thead>
+  <tbody>
+    <% @hosts.each do |person| %>
+      <tr>
+        <td><%= link_to person.name, admin_person_path(person) %></td>
+        <td><%= link_to "Remove this host", admin_content_item_content_items_person_path(@content_item, person,:role => 'host'), method:  :delete, confirm: "Are you sure?" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br />
+
+<h2>Guests(<%= link_to 'Add Guest', new_admin_content_item_content_items_person_path(:role => 'guest') %>)</h2>
+<table class="tablesorter" summary="List of Static Pages">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th></th>
+    </tr>
+  <thead>
+  <tbody>
+    <% @guests.each do |person| %>
+      <tr>
+        <td><%= link_to person.name, admin_person_path(person) %></td>
+        <td><%= link_to "Remove this guest", admin_content_item_content_items_person_path(@content_item, person,:role => 'guest'), method:  :delete, confirm: "Are you sure?" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

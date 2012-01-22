@@ -5,12 +5,16 @@
     <tr>
       <th>Content Item Title</th>
       <th>Author</th>
+      <% if @filter == 'RadioShow' %>
+        <th>Hosts/Guests</th>
+      <% end %>
       <th>Type</th>
       <th>Published Date</th>
       <th>Created Date</th>
       <th>Updated Date</th>
       <th>Attached Image?</th>
       <th colspan="2"></th>
+      
     </tr>
   <thead>
   <tbody>
@@ -18,6 +22,16 @@
     <tr data-<%= item.content_type.underscore.sub(/_/,"-") %>-id=<%=item.id%>>
       <td><%= link_to item.title, admin_content_item_path(item) %></td>
       <td><%= item.author.name %></td>
+      <% if @filter == 'RadioShow' %>
+        <td>
+          <% if item.people.count > 0 %>
+            <%= item.people.collect(&:name).join(', ') %>
+            <%= link_to "Manage Host/Guest", admin_content_item_content_items_people_path(item) %>
+          <% else %>
+            <%= link_to "Add Host/Guest", admin_content_item_content_items_people_path(item) %>
+          <% end %>
+        </td>
+      <% end %>
       <td><%= item.content_type %></td>
       <td><%= item.published.blank? ? '' : item.published.strftime("%m-%d-%Y") %></td>
       <td><%= item.created_at.strftime("%m-%d-%Y") %></td>

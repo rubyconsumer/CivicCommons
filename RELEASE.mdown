@@ -1,3 +1,15 @@
+## 1.9.3
+
+### External Changes
+  
+#### Miscellaneous
+  * [Ability to add Hosts and Special Guests to Radio Show as an Admin](https://agilezen.com/projects/18091/story/345)
+  
+#### Bug Fixes
+
+### Post Deployment Instructions
+
+
 ## 1.9.2
 
 ### External Changes

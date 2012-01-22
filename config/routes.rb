@@ -161,7 +161,9 @@ Civiccommons::Application.routes.draw do
   namespace "admin" do
     root      to: "dashboard#show"
     resources :articles
-    resources :content_items #, only: [:index, :show, :new, :create, :update, :destroy]
+    resources :content_items do#, only: [:index, :show, :new, :create, :update, :destroy]
+      resources :content_items_people, :only => [:index, :new, :create, :destroy], :path => 'people' 
+    end
     get '/content_items/type/:type', to: 'content_items#index', as: 'content_items_type'
     resources :content_templates
     resources :conversations do

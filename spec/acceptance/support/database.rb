@@ -35,7 +35,13 @@ module CivicCommonsDriver
     end
 
     def self.latest_radio_show
-      ContentItem.radio_show.last
+      content_item = ContentItem.radio_show.last
+      content_item.instance_eval do
+        def container
+          "[data-radio-show-id='#{self.id}']"
+        end
+      end
+      content_item
     end
 
     def self.latest_topic

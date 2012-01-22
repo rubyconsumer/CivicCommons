@@ -30,3 +30,4 @@ sunspot-solr.pid
 specrunner.*.html
 .jhw-cache
 Guardfile
+rack-test
