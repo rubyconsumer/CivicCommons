@@ -165,6 +165,8 @@ Civiccommons::Application.routes.draw do
       resources :content_items_people, :only => [:index, :new, :create, :destroy], :path => 'people' 
     end
     get '/content_items/type/:type', to: 'content_items#index', as: 'content_items_type'
+    post '/content_items/type/:type/description/create', to: 'content_items#create_description'
+    put '/content_items/type/:type/description/:id', to: 'content_items#update_description'
     resources :content_templates
     resources :conversations do
       put 'toggle_staff_pick', on: :member

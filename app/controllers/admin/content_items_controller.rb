@@ -5,6 +5,7 @@ class Admin::ContentItemsController < Admin::DashboardController
     if params[:type]
       @filter = params[:type].classify
       @content_items = ContentItem.where(content_type: @filter).order('content_type ASC, published DESC, created_at DESC')
+      @content_item_description = ContentItemDescription.find_or_initialize_by_content_type(@filter)
     else
       @filter = 'All'
       @content_items = ContentItem.all(order: 'content_type ASC, published DESC, created_at DESC')
@@ -40,6 +41,18 @@ class Admin::ContentItemsController < Admin::DashboardController
     else
       @topics = Topic.all
       render :new
+    end
+  end
+
+  def create_description
+    @filter = params[:type].classify
+    @content_item_description = ContentItemDescription.new
+
+    if @content_item_description.update_attributes(params['content_item_description'])
+      redirect_to admin_content_items_type_path(@filter.underscore)
+    else
+      @content_items = ContentItem.where(content_type: @filter).order('content_type ASC, published DESC, created_at DESC')
+      render :index
     end
   end
 
@@ -82,6 +95,18 @@ class Admin::ContentItemsController < Admin::DashboardController
     else
       @topics = Topic.all
       render :edit
+    end
+  end
+
+  def update_description
+    @filter = params[:type].classify
+    @content_item_description = ContentItemDescription.find_by_content_type(@filter)
+
+    if @content_item_description.update_attributes(params['content_item_description'])
+      redirect_to admin_content_items_type_path(@filter.underscore)
+    else
+      @content_items = ContentItem.where(content_type: @filter).order('content_type ASC, published DESC, created_at DESC')
+      render :index
     end
   end
 

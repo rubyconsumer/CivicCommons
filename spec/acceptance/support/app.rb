@@ -47,7 +47,6 @@ module CivicCommonsDriver
     current_page.goto
   end
 
-
   def goto_admin_page_as_admin
     login_as :admin
     goto :admin

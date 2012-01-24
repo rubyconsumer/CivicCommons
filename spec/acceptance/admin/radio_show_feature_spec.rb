@@ -1,6 +1,6 @@
 require 'acceptance/acceptance_helper'
 
-feature "BlogPost Admin", %q{
+feature "RadioShow Admin", %q{
   In order to organize our conversations
   As an admin
   I want to be able to modify radio shows

@@ -7,6 +7,23 @@ module CivicCommonsDriver
 
         add_link_for(:edit, "Edit", :admin_radio_shows_edit)
         add_link_for(:add_host_or_guest, 'Add Host/Guest', :admin_content_items_people)
+        has_button(:update_radioshow_descriptions, "Update RadioShow Descriptions", :admin_radio_shows)
+        has_field(:description_long, "Description long")
+        has_field(:description_short, "Description short")
+
+        def fill_in_radio_show_descriptions_with details
+          details = defaults.merge(details)
+
+          fill_in_description_short_with details[:description_short]
+          fill_in_description_long_with details[:description_long]
+        end
+
+        def defaults
+          {
+            :description_short => 'short description',
+            :description_long => 'long description',
+          }
+        end
 
         class Edit
           SHORT_NAME = :admin_radio_shows_edit
