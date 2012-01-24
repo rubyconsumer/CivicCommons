@@ -43,6 +43,7 @@ jQuery(function ($){
           e.preventDefault();
           $(this).ajaxSubmit({
             url: $(this).attr('action'),
+            data: { remotipart_submitted: true },
             dataType: 'script',
             beforeSend: function (xhr) {
               $this.trigger('ajax:loading', xhr);

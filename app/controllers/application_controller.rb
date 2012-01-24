@@ -26,7 +26,7 @@ protected
       if request.xhr? || params[:remotipart_submitted]
         @requested_url = request.url
         respond_to do |format|
-          format.html { render :partial => 'sessions/new' }
+          format.html { render :partial => 'sessions/new_in_modal' }
           format.js { render 'sessions/new_in_modal' }
         end
       else
