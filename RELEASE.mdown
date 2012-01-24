@@ -5,6 +5,7 @@
 #### Miscellaneous
   * [Ability to add Hosts and Special Guests to Radio Show as an Admin](https://agilezen.com/projects/18091/story/345)
   * [Ability for Admin to set Short and Long Description for Radio Show](https://agilezen.com/project/18091/story/348)
+  * [Add "limit" option on CCML curated feeds and show all by default](https://agilezen.com/project/18091/story/372)
   
 #### Bug Fixes
   * [On an error with FB Connect, Text popup that comes up has typo "Account".](https://agilezen.com/project/18091/story/364)
