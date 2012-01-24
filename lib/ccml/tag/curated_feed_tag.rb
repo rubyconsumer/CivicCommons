@@ -35,7 +35,7 @@ class CCML::Tag::CuratedFeedTag < CCML::Tag::TagPair
 
   # Iterates through all the items associated with a given feed
   #
-  # {ccml:curated_feed:items id="really-cool-stuff"}
+  # {ccml:curated_feed:items id="really-cool-stuff" limit="5"}
   # <h2>{title}</h2>
   # <ul>
   # <li>id: {id}</li>
@@ -52,7 +52,10 @@ class CCML::Tag::CuratedFeedTag < CCML::Tag::TagPair
   def items
     @opts[:id] = @segments[1] unless @opts.has_key?(:id)
     curated_feed = CuratedFeed.find(@opts[:id])
-    items = curated_feed.curated_feed_items.limit(5)
+    limit = -1 # default to showing all items
+    limit = @opts[:limit].to_i if @opts.has_key?(:limit)
+    items = curated_feed.curated_feed_items
+    items = items.limit(limit) unless limit < 0
     return process_tag_body(items)
   rescue ActiveRecord::RecordNotFound => e
     return nil
