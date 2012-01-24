@@ -12,12 +12,13 @@ class ManagedIssue < Issue
     :readonly => true
 
   validate :index_is_a_circular_reference
-  
+
   def managed?
     true
   end
-private
 
+
+private
   def index_is_a_circular_reference
     if index and (index.issue.nil? or id != index.issue.id)
       errors.add(:index, 'index page must be associated with this issue')
