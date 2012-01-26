@@ -515,21 +515,24 @@ describe Person do
     before(:each) do
       @person1 = Factory.create(:sequence_user, name: "Lazy Sue")
       @person2 = Factory.create(:sequence_user, name: "Hyper Fred")
+      @person3 = Factory.create(:sequence_user, name: "Super Doug")
+      @convo = Factory.create(:conversation)
+      Factory.create(:contribution_activity, item_id: @convo.id, person: @person2);
     end
 
-    let(:convo) do
-      Factory.create(:conversation)
-    end
-
-    it "will return the most active to least active users" do
-      Factory.create(:contribution_activity, item_id: convo.id, person: @person2);
+    it "will return the most active to least active users and also with an array of person ids" do
       results = Person.find_confirmed_order_by_most_active
-
       # Check order of objects in the results
       results[0].first_name.should == "Hyper"
       results[1].first_name.should == "Lazy"
+      results[2].first_name.should == "Super"
+      
+      results = Person.find_confirmed_order_by_most_active([@person1.id, @person2.id])
+      # Check order of objects in the results
+      results[0].first_name.should == "Hyper"
+      results[1].first_name.should == "Lazy"
+      results[2].should be_nil
     end
-
   end
 
   context "when deleting an account" do

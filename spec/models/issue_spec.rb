@@ -342,6 +342,30 @@ describe Issue do
 
   end
 
+  context "conversation creators" do
+    before(:each) do
+      @person1 = Factory.create(:registered_user, :name => 'John D')
+      @person2 = Factory.create(:registered_user, :name => 'Rick D')
+      @conversation1 = Factory.create(:conversation, :owner => @person1.id)
+      @conversation2 = Factory.create(:conversation, :owner => @person2.id)
+      @conversation3 = Factory.create(:conversation, :owner => @person2.id)
+      @issue = Factory.create(:issue)
+      @issue.conversations = [@conversation1, @conversation2, @conversation3]
+      @issue.save
+    end
+    it "should return the creators of conversation" do
+      @issue.reload.conversations.count.should == 3
+      @issue.conversation_creators.include?(@person1).should be_true
+      @issue.conversation_creators.include?(@person2).should be_true
+    end
+    it "should return sort it by most active" do
+      results = @issue.most_active_conversation_creators
+      results.length.should == 2
+      results[0].name.should == @person1.name
+      results[1].name.should == @person2.name
+    end
+  end
+  
   context "paperclip" do
     it "will have necessary db columns for paperclip" do
       should have_db_column(:image_file_name).of_type(:string)

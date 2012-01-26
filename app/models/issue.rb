@@ -36,7 +36,9 @@ class Issue < ActiveRecord::Base
            :through => :contributions,
            :source => :person,
            :uniq => true)
+           
 
+  
   has_attached_file(:image,
                     :styles => {
                       :normal => "480x300#",
@@ -139,6 +141,19 @@ class Issue < ActiveRecord::Base
 
   def conversation_comments
     Contribution.joins(:conversation).where({:conversations => {:id => self.conversation_ids}})
+  end
+  
+  def conversation_creators
+    Person.select('`people`.*').
+      from('`conversations`').
+      joins('INNER JOIN `conversations_issues` ON `conversations`.id = `conversations_issues`.conversation_id INNER JOIN `people` ON `conversations`.owner = `people`.id').
+      where(['`conversations_issues`.issue_id = ?', self.id]).
+      group('`people`.id')
+  end
+  
+  def most_active_conversation_creators
+    person_ids = self.conversation_creators.collect(&:id)
+    Person.find_confirmed_order_by_most_active(person_ids)
   end
 
   def managed?
