@@ -594,10 +594,10 @@ a.see-more {float: right;}
 /*- PHOTOBANK STYLES
 ----------------------------------------------------------------------*/
 
-div.photobank {margin: 0 0 0 -12px;}
+div.photobank {margin: 0 0 0 -10px;}
 div.photobank img {
   float: left;
-  margin: 0 0 12px 12px;
+  margin: 0 0 10px 10px;
 }
 div.photobank-large {margin: 0 0 0 -20px;}
 div.photobank-large img {

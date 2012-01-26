@@ -1,13 +1,14 @@
 ## 1.9.3
 
 ### External Changes
-  
+
 #### Miscellaneous
   * [Ability to add Hosts and Special Guests to Radio Show as an Admin](https://agilezen.com/projects/18091/story/345)
   * [Ability for Admin to set Short and Long Description for Radio Show](https://agilezen.com/project/18091/story/348)
   * [Add "limit" option on CCML curated feeds and show all by default](https://agilezen.com/project/18091/story/372)
   * [Add Conversation Authors to Issue Detail Page "PEOPLE ACTIVE IN THIS ISSUE"](https://agilezen.com/project/18091/story/374)
-  
+  * [Limit Issue Detail Page "PEOPLE ACTIVE IN THIS ISSUE" to 20 people (5x4)](https://agilezen.com/project/18091/story/375)
+
 #### Bug Fixes
   * [On an error with FB Connect, Text popup that comes up has typo "Account".](https://agilezen.com/project/18091/story/364)
   * [in registration modal not appearing in issues](https://agilezen.com/project/18091/story/369)
