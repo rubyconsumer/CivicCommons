@@ -89,9 +89,8 @@ describe IssuesController do
       end
 
       it "should assign people with most active conversation creators" do
-        issue_presenter = mock(IssuePresenter, {:most_active_conversation_creators => [@user]}).as_null_object
         get :show, :id => @issue.id
-        assigns(:people).first.name.should == @user.name
+        assigns(:people).class == ActiveRecord::Relation
       end
 
       it "will limit the most active conversation creators to 20" do

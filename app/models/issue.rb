@@ -36,9 +36,7 @@ class Issue < ActiveRecord::Base
            :through => :contributions,
            :source => :person,
            :uniq => true)
-           
 
-  
   has_attached_file(:image,
                     :styles => {
                       :normal => "480x300#",
@@ -142,18 +140,25 @@ class Issue < ActiveRecord::Base
   def conversation_comments
     Contribution.joins(:conversation).where({:conversations => {:id => self.conversation_ids}})
   end
-  
-  def conversation_creators
-    Person.select('`people`.*').
-      from('`conversations`').
-      joins('INNER JOIN `conversations_issues` ON `conversations`.id = `conversations_issues`.conversation_id INNER JOIN `people` ON `conversations`.owner = `people`.id').
-      where(['`conversations_issues`.issue_id = ?', self.id]).
-      group('`people`.id')
+
+  def conversation_contributer_ids
+    self.conversations.collect do |conversation|
+      conversation.participant_ids
+    end.uniq
   end
-  
-  def most_active_conversation_creators
-    person_ids = self.conversation_creators.collect(&:id)
-    Person.find_confirmed_order_by_most_active(person_ids)
+
+  def conversation_creators_ids
+    self.conversations.collect do |conversation|
+      conversation.owner
+    end.uniq
+  end
+
+  def most_active_users
+    person_ids = Array.new
+    person_ids += self.participant_ids
+    person_ids += conversation_creators_ids
+    person_ids += conversation_contributer_ids
+    Person.find_confirmed_order_by_most_active(person_ids.flatten.uniq.reject(&:blank?))
   end
 
   def managed?

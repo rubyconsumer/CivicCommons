@@ -216,14 +216,14 @@ class Person < ActiveRecord::Base
   end
 
   def self.find_confirmed_order_by_most_active(person_ids=[])
-    person = Person.select("*, count(ti.person_id)"). 
+    person = Person.select("people.*, count(ti.person_id)").
       joins('left outer join top_items ti on people.id = ti.person_id').
       group('people.id').
-      order('count(ti.person_id) DESC')
-    if person_ids.blank?
-      person = person.where('confirmed_at IS NOT NULL AND locked_at IS NULL')
-    else
-      person = person.where("confirmed_at IS NOT NULL AND locked_at IS NULL AND people.id IN(#{person_ids.join(', ')})" )
+      order('count(ti.person_id) DESC').
+      where('confirmed_at IS NOT NULL AND locked_at IS NULL')
+    if not person_ids.blank?
+      person = person.where("confirmed_at IS NOT NULL AND locked_at IS NULL")
+      person = person.where({ 'people.id' => person_ids})
     end
     return person
   end

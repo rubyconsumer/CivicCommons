@@ -13,9 +13,9 @@ describe Issue do
     @issue1 = Factory.create(:issue, {:created_at => (Time.now - 3.seconds), :updated_at => (Time.now - 3.seconds), :name => 'A first issue'})
     @issue2 = Factory.create(:issue, {:created_at => (Time.now - 2.seconds), :updated_at => (Time.now - 2.seconds), :name => 'Before I had a problem'})
     @issue3 = Factory.create(:issue, {:created_at => (Time.now - 1.second), :updated_at => (Time.now - 1.second), :name => 'Cat in the bag'})
-    @person1 = Factory.create(:normal_person)
-    @person2 = Factory.create(:normal_person)
-    @person3 = Factory.create(:normal_person)
+    @person1 = Factory.create(:registered_user)
+    @person2 = Factory.create(:registered_user)
+    @person3 = Factory.create(:registered_user)
 
     conversation = Factory.create(:conversation, :issues => [@issue1, @issue2, @issue3])
     @contribution1 = Factory.create(:contribution, :conversation => conversation, :parent => nil, :issue => @issue1)
@@ -28,11 +28,23 @@ describe Issue do
     @contribution6 = Factory.create(:contribution, :conversation => conversation, :parent => nil, :issue => @issue3)
   end
 
+  def given_an_issue_with_conversations
+    @person1 = Factory.create(:registered_user, :name => 'John D')
+    @person2 = Factory.create(:registered_user, :name => 'Rick D')
+    @conversation1 = Factory.create(:conversation, :owner => @person1.id)
+    @conversation2 = Factory.create(:conversation, :owner => @person2.id)
+    @conversation3 = Factory.create(:conversation, :owner => @person2.id)
+    @issue = Factory.create(:issue)
+    @issue.conversations = [@conversation1, @conversation2, @conversation3]
+    @issue.save
+  end
+
+  # TODO: I don't think this creates contributions correctly. Should only specify conversation OR issue
   def given_an_issue_with_contributions_and_participants
     @issue = Factory.create(:issue)
-    @person1 = Factory.create(:normal_person)
-    @person2 = Factory.create(:normal_person)
-    @person3 = Factory.create(:normal_person)
+    @person1 = Factory.create(:registered_user)
+    @person2 = Factory.create(:registered_user)
+    @person3 = Factory.create(:registered_user)
     @conversation = Factory.create(:conversation)
     @conversation2 = Factory.create(:conversation)
     @contribution1 = Factory.create(:contribution, :person => @person1, :issue => @issue)
@@ -60,7 +72,7 @@ describe Issue do
   end
 
   def given_an_issue_with_conversations_and_comments
-    @person = Factory.create(:normal_person)
+    @person = Factory.create(:registered_user)
     @issue = Factory.create(:issue)
     @other_issue = Factory.create(:issue)
     @other_conversation = Factory.create(:conversation)
@@ -344,45 +356,65 @@ describe Issue do
 
   context "conversation creators" do
     before(:each) do
-      @person1 = Factory.create(:registered_user, :name => 'John D')
-      @person2 = Factory.create(:registered_user, :name => 'Rick D')
-      @conversation1 = Factory.create(:conversation, :owner => @person1.id)
-      @conversation2 = Factory.create(:conversation, :owner => @person2.id)
-      @conversation3 = Factory.create(:conversation, :owner => @person2.id)
-      @issue = Factory.create(:issue)
-      @issue.conversations = [@conversation1, @conversation2, @conversation3]
-      @issue.save
+      given_an_issue_with_conversations
     end
     it "should return the creators of conversation" do
       @issue.reload.conversations.count.should == 3
-      @issue.conversation_creators.include?(@person1).should be_true
-      @issue.conversation_creators.include?(@person2).should be_true
-    end
-    it "should return sort it by most active" do
-      results = @issue.most_active_conversation_creators
-      results.length.should == 2
-      results[0].name.should == @person1.name
-      results[1].name.should == @person2.name
+      @issue.conversation_creators_ids.include?(@person1.id).should be_true
+      @issue.conversation_creators_ids.include?(@person2.id).should be_true
     end
   end
-  
+
+  context "most active users" do
+    it "returns an ActiveRecord:Relation object" do
+      issue = Factory.build(:issue)
+      issue.most_active_users.class.should == ActiveRecord::Relation
+    end
+
+    it "includes 'participants' / users that add contributions from an issue page" do
+      issue = Factory.create(:issue)
+      person = Factory.create(:registered_user)
+      Factory.create(:issue_contribution, issue: issue, person: person)
+      ([person] - issue.most_active_users.to_a).size.should == 0
+    end
+
+    it "includes issue conversation creators" do
+      given_an_issue_with_conversations
+      ([@person1, @person2] - @issue.most_active_users.to_a).size.should == 0
+    end
+
+    it "includes issue conversation contributors" do
+      issue = Factory.create(:issue)
+      person1 = Factory.create(:registered_user)
+      person2 = Factory.create(:registered_user)
+      conversation1 = Factory.create(:conversation)
+      conversation2 = Factory.create(:conversation)
+      issue.conversations = [conversation1, conversation2]
+      Factory.create(:contribution, :person => person1, :conversation => conversation1)
+      Factory.create(:contribution, :person => person2, :conversation => conversation2)
+      ([person1, person2] - issue.most_active_users.to_a).size.should == 0
+    end
+
+    it "includes issue conversation rating contributors"
+  end
+
   context "paperclip" do
     it "will have necessary db columns for paperclip" do
       should have_db_column(:image_file_name).of_type(:string)
       should have_db_column(:image_content_type).of_type(:string)
       should have_db_column(:image_file_size).of_type(:integer)
     end
-    
+
     it "will only allow image attachments" do
       # allowed image mimetypes are based on what we have seen in production
       should validate_attachment_content_type(:image).
         allowing('image/bmp', 'image/gif', 'image/jpeg', 'image/png', 'image/pjpeg', 'image/x-png').
         rejecting('text/plain', 'text/xml')
     end
-    
+
     it "should validate presence of attachemnt" do
       should validate_attachment_presence(:image)
     end
-    
+
   end
 end
