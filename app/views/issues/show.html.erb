@@ -61,13 +61,17 @@
       </div>
 
       <div class="mod">
-        <h3>People active in this issue</h3>
+        <h3><%= link_to 'People active in this issue', issue_community_path(@issue, :order => 'active-member')  %></h3>
         <div class="mod-content">
           <div class="photobank">
             <% @people.each do |person| %>
               <%= featured_profile(person).html_safe %>
             <% end %>
           </div>
+          <% if @people_count.to_i > 20 %>
+            <h4><%= link_to "More People", issue_community_path(@issue, :order => 'active-member') %></h4>
+          <% end %>
+          
         </div>
       </div>
 

@@ -4,6 +4,9 @@ describe CommunityController do
   def mock_person
     @person ||= mock_model(Person).as_null_object
   end
+  def mock_issue
+    @issue ||= mock_model(Issue).as_null_object
+  end
   describe "index" do
     it "should be successful" do
       get :index
@@ -18,6 +21,16 @@ describe CommunityController do
     it "should get all region" do
       Region.should_receive(:all)
       get :index
+    end
+    it "should not find the Issue if params[:issue_id] is not existing" do
+      Issue.should_not_receive(:find)
+      get :index
+    end
+    context "on issue_id being available" do
+      it "should find the Issue" do
+        Issue.should_receive(:find)
+        get :index, :issue_id => 1
+      end
     end
   end
 
@@ -50,6 +63,13 @@ describe CommunityController do
         get :index, :order => 'newest-member'
         assigns(:subtitle).should == 'Newest Members'
       end
+      context "with params[:issue_id]" do
+        it "should return the correct record" do
+          Issue.stub!(:find).and_return(mock_issue)
+          mock_issue.should_receive(:most_newest_users).and_return([mock_person])
+          get :index, :issue_id => 1
+        end
+      end
     end
     context "with alphabetical" do
       it "should sort by alphabet of last name" do
@@ -61,6 +81,13 @@ describe CommunityController do
         get :index, :order => 'alphabetical'
         assigns(:subtitle).should == 'Alphabetical'
       end
+      context "with params[:issue_id]" do
+        it "should return the correct record" do
+          Issue.stub!(:find).and_return(mock_issue)
+          mock_issue.should_receive(:order_by_alpha_users).and_return([mock_person])
+          get :index, :issue_id => 1, :order => 'alphabetical'
+        end
+      end
     end
     context "with most active" do
       it "should sort by the most active users" do
@@ -71,6 +98,13 @@ describe CommunityController do
       it "should set the subtitle to 'Most Active'" do
         get :index, :order => 'active-member'
         assigns(:subtitle).should == 'Most Active'
+      end
+      context "with params[:issue_id]" do
+        it "should return the correct record" do
+          Issue.stub!(:find).and_return(mock_issue)
+          mock_issue.should_receive(:most_active_users).and_return([mock_person])
+          get :index, :issue_id => 1, :order => 'active-member'
+        end
       end
     end
     context "default" do

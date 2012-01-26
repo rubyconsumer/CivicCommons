@@ -12,10 +12,9 @@ module CommunityHelper
     when 'people'
       title = 'People'
     end
-    merged_params =  request.parameters.merge({:order => (@order == order ? nil : order), :page => params[:page]})
+    merged_params =  request.parameters.except(:controller, :action).merge({:order => (@order == order ? nil : order), :page => params[:page]})
     css_class = @order == order ? 'active' : nil 
-    
-    link_to title, community_path(merged_params), :id => order, :class => css_class 
+    link_to title, polymorphic_path([@issue,:community], merged_params), :id => order, :class => css_class 
   end
   
   def community_site_people_filter_link(filter)
@@ -29,8 +28,8 @@ module CommunityHelper
     else
       filter_name = 'People & Organizations'
     end
-    
-    link_to raw("<span>#{filter_name}</span>"), community_path(request.parameters.merge({:filter => filter, :page=>nil})), :class=> css_class
+    merged_params = request.parameters.except(:controller, :action).merge({:filter => filter, :page=>nil})
+    link_to raw("<span>#{filter_name}</span>"), polymorphic_path([@issue,:community], merged_params), :class=> css_class
   end
 
 end

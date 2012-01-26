@@ -364,7 +364,42 @@ describe Issue do
       @issue.conversation_creators_ids.include?(@person2.id).should be_true
     end
   end
-
+  
+  context "community_user_ids" do
+    before(:each) do
+      @issue = Factory.create(:issue)
+      @person = Factory.create(:registered_user)
+      Factory.create(:issue_contribution, issue: @issue, person: @person)
+    end
+    it "should return an array of person ids" do
+      @issue.community_user_ids.should == [@person.id]
+    end
+  end
+  
+  context "most_newest_users" do
+    before(:each) do
+      @issue = Factory.create(:issue)
+      @person = Factory.create(:registered_user)
+      Factory.create(:issue_contribution, issue: @issue, person: @person)
+    end
+    it "should call Person.find_confirmed_order_by_recency" do
+      Person.should_receive(:find_confirmed_order_by_recency).with([@person.id])
+      @issue.most_newest_users
+    end
+  end
+  
+  context "order_by_alpha_users" do
+    before(:each) do
+      @issue = Factory.create(:issue)
+      @person = Factory.create(:registered_user, :name => 'John Doe')
+      Factory.create(:issue_contribution, issue: @issue, person: @person)
+    end
+    it "should call Person.find_confirmed_order_by_recency" do
+      Person.should_receive(:find_confirmed_order_by_last_name).with(nil, {:person_ids=>[@person.id]})
+      @issue.order_by_alpha_users
+    end
+  end
+  
   context "most active users" do
     it "returns an ActiveRecord:Relation object" do
       issue = Factory.build(:issue)

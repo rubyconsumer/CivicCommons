@@ -152,13 +152,25 @@ class Issue < ActiveRecord::Base
       conversation.owner
     end.uniq
   end
-
-  def most_active_users
+  
+  def community_user_ids
     person_ids = Array.new
     person_ids += self.participant_ids
     person_ids += conversation_creators_ids
     person_ids += conversation_contributer_ids
-    Person.find_confirmed_order_by_most_active(person_ids.flatten.uniq.reject(&:blank?))
+    person_ids.flatten.uniq.reject(&:blank?)
+  end
+
+  def most_active_users
+    Person.find_confirmed_order_by_most_active(self.community_user_ids)
+  end
+  
+  def most_newest_users
+    Person.find_confirmed_order_by_recency(self.community_user_ids)
+  end
+  
+  def order_by_alpha_users(letter = nil)
+    Person.find_confirmed_order_by_last_name(letter, {:person_ids => self.community_user_ids})
   end
 
   def managed?

@@ -61,8 +61,16 @@ module CivicCommonsDriver
       ContentItemDescription.where(:content_type => 'RadioShow').last
     end
 
+    def self.create_contribution attributes={}
+      Factory.create :contribution, attributes
+    end
+
     def self.create_conversation attributes={}
       Factory.create :conversation, attributes
+    end
+    
+    def self.create_registered_user attributes={}
+      Factory.create(:registered_user, attributes)
     end
 
     def self.create_topic(attributes={})

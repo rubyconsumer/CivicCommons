@@ -510,6 +510,36 @@ describe Person do
     end
   end
 
+  context "find_confirmed_order_by_last_name" do
+    before(:each) do
+      @person1 = Factory.create(:registered_user, :name => 'John Abc')
+      @person2 = Factory.create(:registered_user, :name => 'John Bcd')
+      @person3 = Factory.create(:registered_user, :name => 'John Def')
+    end
+    it "should return ordered by last name" do
+      Person.find_confirmed_order_by_last_name.should == [@person1, @person2, @person3]
+    end
+    it "should returned people within person_ids by last name" do
+      Person.find_confirmed_order_by_last_name(nil, {:person_ids => [@person2.id,@person3.id]}).should == [@person2, @person3]
+    end
+    it "should allow for returning last name by letter" do
+      Person.find_confirmed_order_by_last_name('b').should == [@person2]
+    end
+  end
+
+  context "find_confirmed_order_by_recency" do
+    before(:each) do
+      @person1 = Factory.create(:registered_user, :confirmed_at => 3.second.ago)
+      @person2 = Factory.create(:registered_user, :confirmed_at => 2.second.ago)
+      @person3 = Factory.create(:registered_user, :confirmed_at => 1.second.ago)
+    end
+    it "should return the correct people by recency" do
+      Person.find_confirmed_order_by_recency.should == [@person3, @person2, @person1]
+    end
+    it "should return the correct people within person_ids by recency" do
+      Person.find_confirmed_order_by_recency([@person2.id,@person3.id]).should == [@person3, @person2]
+    end
+  end
   context "when finding by the most active" do
 
     before(:each) do

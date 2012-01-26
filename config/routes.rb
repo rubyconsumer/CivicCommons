@@ -131,6 +131,7 @@ Civiccommons::Application.routes.draw do
   resources :issues, only: [:index, :show] do
     post 'create_contribution', on: :member
     resources :pages, controller: :managed_issue_pages, only: [:show]
+    get '/community', to: 'community#index',   as: 'community'
   end
 
   resources :projects, only: [:index]

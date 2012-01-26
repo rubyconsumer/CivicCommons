@@ -211,8 +211,14 @@ class Person < ActiveRecord::Base
     where(:first_name => first, :last_name => last)
   end
 
-  def self.find_confirmed_order_by_recency
-    Person.order('confirmed_at DESC').where('confirmed_at IS NOT NULL').where('locked_at IS NULL')
+  def self.find_confirmed_order_by_recency(person_ids=[])
+    person = Person.order('confirmed_at DESC').where('confirmed_at IS NOT NULL').where('locked_at IS NULL')
+    if not person_ids.blank?
+      person = person.where('confirmed_at IS NOT NULL')
+      person = person.where('locked_at IS NULL')
+      person = person.where({ 'people.id' => person_ids})
+    end
+    return person    
   end
 
   def self.find_confirmed_order_by_most_active(person_ids=[])
@@ -228,17 +234,22 @@ class Person < ActiveRecord::Base
     return person
   end
 
-  def self.find_confirmed_order_by_last_name(letter = nil)
+  def self.find_confirmed_order_by_last_name(letter = nil, options={})
+    person = Person
+    person_ids = options.delete(:person_ids)
+    person = person.where({ 'people.id' => person_ids}) if person_ids.present?
+    
     if letter.nil?
-      Person.order('blank_last_name, last_name, first_name ASC').
+      person = person.order('blank_last_name, last_name, first_name ASC').
         where('confirmed_at IS NOT NULL and locked_at IS NULL').
         select("*, IF(last_name IS NULL OR last_name='' OR UCASE(SUBSTR(last_name, 1) NOT BETWEEN 'A' AND 'Z'), 1, 0) as blank_last_name")
     else
-      Person.order('last_name, first_name ASC').
+      person = person.order('last_name, first_name ASC').
         where('confirmed_at IS NOT NULL').
         where("last_name like '#{letter}%'").
         where('locked_at IS NULL')
     end
+    return person
   end
 
   # Takes a full name and return an array of first and last name
