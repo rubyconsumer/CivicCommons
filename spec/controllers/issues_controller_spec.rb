@@ -87,11 +87,16 @@ describe IssuesController do
         count_after = Visit.where(:person_id => @user.id).where(:visitable_id => @issue.id).where(:visitable_type => "Issue").size
         count_after.should == count_before + 1
       end
-      
+
       it "should assign people with most active conversation creators" do
         issue_presenter = mock(IssuePresenter, {:most_active_conversation_creators => [@user]}).as_null_object
         get :show, :id => @issue.id
         assigns(:people).first.name.should == @user.name
+      end
+
+      it "will limit the most active conversation creators to 20" do
+        get :show, :id => @issue.id
+        assigns(:people).limit_value.should == 20
       end
 
     end
