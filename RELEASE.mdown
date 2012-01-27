@@ -12,6 +12,7 @@
 #### Bug Fixes
   * [On an error with FB Connect, Text popup that comes up has typo "Account".](https://agilezen.com/project/18091/story/364)
   * [in registration modal not appearing in issues](https://agilezen.com/project/18091/story/369)
+  * [IE Prompt Text Issue Upload](https://agilezen.com/project/18091/story/366)
 
 ### Post Deployment Instructions
 

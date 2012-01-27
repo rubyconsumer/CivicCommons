@@ -90,6 +90,19 @@ jQuery(function ($){
         });
         return false;
       });
+      var formSelector = 'form#new-' + type + '-contribution';
+      if(!Modernizr.input.placeholder){
+        $(formSelector).find('[placeholder]').each(function(){
+          var $formElement = $(this);
+          if($(formSelector).find('label[for="' + $formElement.attr('id') + '"]').length == 0) {
+            var labelHTML = '<label for="' + $formElement.attr('id') + '"';
+            labelHTML += ' style="text-align: left; width: 100%;">';
+            labelHTML += $formElement.attr('placeholder');
+            labelHTML += '</label>';
+            $formElement.before(labelHTML);
+          }
+        });
+      }
     };
     toggleForm("url");
     toggleForm("file");

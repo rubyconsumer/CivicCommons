@@ -4,7 +4,7 @@
                                 :id => "new-video-contribution"} do |f| %>
   <div class='form-block'>
     <%= f.text_area(:content, :rows => 2, :placeholder => "Comment on Video") %>
-    <%= f.text_area(:url, :rows => 1, :placeholder => "http://www.youtube.com", :class => "link youtube") %>
+    <%= f.text_field(:url, :placeholder => "Link", :class => "link youtube textbox-side") %>
     <div class="youtube-thumbnail"></div>
   </div>
   <div class="errors"></div>
