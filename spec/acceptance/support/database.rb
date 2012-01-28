@@ -101,6 +101,10 @@ module CivicCommonsDriver
       Factory.create :email_restriction, attributes
     end
 
+    def self.destroy_all_content_items
+      ContentItem.destroy_all
+    end
+    
     class << self
       alias :has_a_blog_post :create_blog_post
       alias :has_a_radio_show :create_radio_show

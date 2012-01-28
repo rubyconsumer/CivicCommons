@@ -31,6 +31,7 @@
       <div class="aside supplementary">
       
         <%= render :partial => '/search/search', locals: { filter_type: 'radioshows' } %>
+        <%= render partial: 'blog/recent_blog_posts_sidebar', locals: { blog_posts: @recent_blog_posts } %>
 
         <div class="mod" id="TwitterProfileModule">
           <%= render :partial => 'shared/twitter_profile_widget' %>

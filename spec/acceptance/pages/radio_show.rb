@@ -3,6 +3,8 @@ module CivicCommonsDriver
 
     class RadioShow
       SHORT_NAME = :radio_show
+      LOCATION = '/radioshow'
+      
       include Page
 
       def follow_the_radio_show_link_for radio_show
