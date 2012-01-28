@@ -9,6 +9,7 @@
   * [Add "limit" option on CCML curated feeds and show all by default](https://agilezen.com/project/18091/story/372)
   * [Add Conversation Authors to Issue Detail Page "PEOPLE ACTIVE IN THIS ISSUE"](https://agilezen.com/project/18091/story/374)
   * [Limit Issue Detail Page "PEOPLE ACTIVE IN THIS ISSUE" to 20 people (5x4)](https://agilezen.com/project/18091/story/375)
+  * [Add Conversation Contributors to Issue Detail Page "PEOPLE ACTIVE IN THIS ISSUE"](https://agilezen.com/project/18091/story/377)
 
 #### Bug Fixes
   * [On an error with FB Connect, Text popup that comes up has typo "Account".](https://agilezen.com/project/18091/story/364)
