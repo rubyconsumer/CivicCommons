@@ -50,8 +50,8 @@ ActiveRecord::Schema.define(:version => 20120119184602) do
 
   create_table "content_item_descriptions", :force => true do |t|
     t.string "content_type"
-    t.string "description_long"
-    t.string "description_short"
+    t.text   "description_long"
+    t.text   "description_short"
   end
 
   create_table "content_items", :force => true do |t|
