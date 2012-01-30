@@ -1,0 +1,3 @@
+<%= auto_discovery_link_tag(:rss, {:action => "curated_feed", :format => "rss"}, {:title => @curated_feed.title}) %>
+
+<meta http-equiv="REFRESH" content="0;url=<%= "/curated_feed_items/#{@curated_feed.id}.rss" %>">
