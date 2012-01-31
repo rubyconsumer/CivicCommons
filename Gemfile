@@ -30,9 +30,11 @@ gem 'hoptoad_notifier'
 gem 'remotipart'
 
 gem 'shoulda'
+# gem 'paperclip', "~>2.5.0"
 gem 'paperclip', "2.3.8"
 gem 'delayed_paperclip', '<0.7'
 gem 'aws-s3'
+# gem 'aws-sdk'
 gem 'nokogiri'
 gem 'sanitize'
 gem 'highline'
@@ -61,7 +63,7 @@ group :test do
   gem "rack-test"
   gem "factory_girl_rails", '~>1.3'
   gem 'no_peeping_toms', :git => 'git://github.com/alindeman/no_peeping_toms.git'
-  gem 'webmock'
+  gem 'webmock', '1.6.2' #, :git => 'git://github.com/CivicCommons/webmock.git', :branch => '1.6.2'
   # Required by WebMock but breaks everything at 2.2.5
   # Can use latest addressable when pull request is accepted: https://github.com/sporkmonger/addressable/pull/33
   gem 'addressable', :git => 'git://github.com/gkellogg/addressable.git', :branch => 'frozen-uri'

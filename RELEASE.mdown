@@ -2,6 +2,7 @@
 
 ### External Changes
   * [Add Ratings Contributors to Issue Detail Page "PEOPLE ACTIVE IN THIS ISSUE"](https://agilezen.com/project/18091/story/378)
+  * [Update Radio Show Index Page Layout](https://agilezen.com/projects/18091/story/384)
 
 #### Miscellaneous
 
@@ -16,8 +17,12 @@
 ### External Changes
   * [Add Link to Custom Community Page When Issue Detail Page "PEOPLE ACTIVE IN THIS ISSUE" is larger than 5x4 (20 people)](https://agilezen.com/projects/18091/story/376)
   * [Add Recent Activity For Blog Posts to Radio Show Index Page](https://agilezen.com/projects/18091/story/381)
+<<<<<<< HEAD
   * [EGN RSS Feed on Curated Feed Page](https://agilezen.com/projects/18091/story/371)
   
+=======
+
+>>>>>>> 6a14e1e... 384 - Update Radio Show Index Page Layout
 #### Miscellaneous
   * [Ability to add Hosts and Special Guests to Radio Show as an Admin](https://agilezen.com/projects/18091/story/345)
   * [Ability for Admin to set Short and Long Description for Radio Show](https://agilezen.com/project/18091/story/348)
@@ -38,18 +43,18 @@
 
 ### External Changes
   * [org members not clicking to profile page](https://agilezen.com/projects/18091/story/367)
-  
+
 #### Miscellaneous
   * [Add "Email address domains to reject" to the Admin section](https://agilezen.com/projects/18091/story/361)
   * [Ability to Add Topic(s) to Blogs as an Admin](https://agilezen.com/projects/18091/story/344)
   * [Ability to Add Topic(s) to Radio Shows as an Admin](https://agilezen.com/project/18091/story/343)
-  
+
 #### Bug Fixes
   * [org members not clicking to profile page](https://agilezen.com/projects/18091/story/367)
   * [ADMIN: Can't edit Org Profile - error](https://agilezen.com/projects/18091/story/368)
 
 ### Post Deployment Instructions
-  * Need to add the following email restrictions on admin: 
+  * Need to add the following email restrictions on admin:
     * 163.com
     * yeah.net
     * 21cn.com
@@ -66,7 +71,7 @@
   * [Design Refinements](https://agilezen.com/project/18091/story/341)
   * [Add Title to Person Profile Page](https://agilezen.com/project/18091/story/342)
   * [Email Welcome letter text change](https://agilezen.com/project/18091/story/365)
-  
+
 #### Miscellaneous
   * [347 - Update Solr restart/reindex execution timing on non-production systems.](https://agilezen.com/project/18091/story/347)
 
@@ -100,7 +105,7 @@
   * [Disabling facebook linking when registering as an organization](https://agilezen.com/projects/18091/story/330)
   * [Organization profile filter on community pages ](https://agilezen.com/projects/18091/story/334)
   * [Paragraph Bio for People and Orgs ](https://agilezen.com/projects/18091/story/338)
-  * [Profile website to use actual name, instead of 'website' ](https://agilezen.com/projects/18091/story/337)  
+  * [Profile website to use actual name, instead of 'website' ](https://agilezen.com/projects/18091/story/337)
 
 #### [Login Flow Redesign] (https://agilezenc.om/project/26499/story/58)
 
@@ -118,7 +123,7 @@
 ### Post Deployment Instructions
   * Due to an error found in integration server related to 312, we need to recreate the solr index.
     [our error similar to this](http://stackoverflow.com/questions/8345580/error-in-task-sunspotmongoreindex-in-sunspot-solr-with-mongoid)
-    Need to do this: 
+    Need to do this:
       Stop Solr, delete the solr/data/development/index folder, and re-run sunspot:solr:start to recreate it.
       Also, need to reindex.
   * We have changed the facebook authentication callback url to use "http" instead of "https"

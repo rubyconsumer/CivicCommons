@@ -75,7 +75,7 @@ dl dt {
   margin-bottom:0.5em;
   font-size:1.2em;
 }
-dl dd {margin-bottom:1em;}
+dl dd {margin-bottom: 1em;}
 h1, h2, h3, h4, h5, h6 {font-weight: bold;}
 h1 {
   color: #555;
@@ -576,6 +576,34 @@ a.see-more {float: right;}
   padding-left: 90px;
 }
 
+/*- Media Block
+
+ (introducing the media object by Nicole Sullivan
+ hopefully it will allow us to remove the various
+ image offset styles)
+
+ --------------------------------------------------*/
+
+.media .bd {
+overflow: hidden;
+*overflow: visible;
+zoom: 1;
+}
+.media {
+overflow: hidden;
+*overflow: visible;
+zoom: 1;
+}
+.media .img {
+float: left;
+margin-right: 10px;
+}
+.media .img img {display: block;}
+.media .imgExt {
+float: right;
+margin-left: 10px;
+}
+
 /*- Media Download Styles ----------*/
 
 .dnld {
@@ -931,84 +959,95 @@ div.three-col-sm div.photobank img {margin: 0 0 6px 6px;}
 .t-img.med img { width: 220px; height: 145px; }
 .t-img.lrg img { width: 300px; height: 200px; }
 
-/*- ISSUE STYLES
+/*- ENTRY STYLES
+    Adding the class of entry to the these containers to eventually
+    replace 'issue' and 'project' specific containers. Need to
+    modularize.
 ----------------------------------------------------------------------*/
 
-.issue-container, .project-container {
-  margin-bottom: 25px;
-  -moz-border-radius: 4px;
-  -webkit-border-radius: 4px;
-  -o-border-radius: 4px;
-  border-radius: 4px;
-  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
-  -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
-  -o-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+.entry-container {
+margin-bottom: 25px;
+-moz-border-radius: 4px;
+-webkit-border-radius: 4px;
+-o-border-radius: 4px;
+border-radius: 4px;
+-webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+-moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+-o-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 }
-.issue-details, .project-details {
-  background: #fff;
-  border: 1px solid #ccc;
-  overflow: hidden;
-  padding: 15px 15px 10px;
-  -moz-border-radius: 4px 4px 0 0;
-  -webkit-border-radius: 4px 4px 0 0;
-  -o-border-radius: 4px 4px 0 0;
-  border-radius: 4px 4px 0 0;
+.entry-details {
+background: #fff;
+border: 1px solid #ccc;
+overflow: hidden;
+padding: 15px 15px 10px;
+-moz-border-radius: 4px 4px 0 0;
+-webkit-border-radius: 4px 4px 0 0;
+-o-border-radius: 4px 4px 0 0;
+border-radius: 4px 4px 0 0;
 }
-.issue-details h4, .project-details h4{
-  font-size: 1.8em;
-  font-weight: normal;
-  margin-bottom: .2em;
+.entry-details.rounded {
+-moz-border-radius: 4px;
+-webkit-border-radius: 4px;
+-o-border-radius: 4px;
+border-radius: 4px;
 }
-.issue-tags {
-  color: #999;
-  font-size: .95em;
-  font-weight: bold;
-  text-transform: uppercase;
+.entry-details h4 {
+font-size: 1.8em;
+font-weight: normal;
+margin-bottom: .2em;
 }
-.issue-details .issue-tags a {color: #999;}
-.issue-details .issue-tags a:hover {color: #2c87b7;}
-.issue-details h4, .issue-details p, .project-details h4, .project-details p {padding-left: 210px;}
-.issue-details img, .project-details img {
-  float: left;
-  margin-bottom: 10px;
-  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
-  -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
-  -o-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+.entry-tags {
+color: #999;
+font-size: .95em;
+font-weight: bold;
+text-transform: uppercase;
 }
-.issue-meta, .project-meta {
-  background: #e6e6e6;
-  border: 1px solid #ccc;
-  border-top: none;
-  overflow: hidden;
-  padding: 10px 15px 0;
-  text-align: right;
-  -moz-border-radius: 0 0 4px 4px;
-  -webkit-border-radius: 0 0 4px 4px;
-  -o-border-radius: 0 0 4px 4px;
-  border-radius: 0 0 4px 4px;
+.entry-tags a {color: #999;}
+.entry-tags a:hover {color: #2c87b7;}
+.entry-details h4, .entry-details p {padding-left: 210px;}
+.entry-details img {
+float: left;
+margin-bottom: 10px;
+-webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+-moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+-o-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 }
-.issue-meta p, .project-meta p {
-  color: #666;
-  float: right;
-  font-weight: bold;
-  margin-left: 20px;
-  text-shadow: 0 1px 1px rgba(255,255,255,.9);
-  text-transform: uppercase;
+.entry-details.full h4, .entry-details.full p {padding-left: 0;}
+.entry-meta {
+background: #e6e6e6;
+border: 1px solid #ccc;
+border-top: none;
+overflow: hidden;
+padding: 10px 15px 0;
+text-align: right;
+-moz-border-radius: 0 0 4px 4px;
+-webkit-border-radius: 0 0 4px 4px;
+-o-border-radius: 0 0 4px 4px;
+border-radius: 0 0 4px 4px;
 }
-.issue-contrib, .project-contrib {
-  background: url(/images/people-i.png) no-repeat 0 2px;
-  padding: 2px 0 2px 31px;
+.entry-meta p {
+color: #666;
+float: right;
+font-weight: bold;
+margin-left: 20px;
+text-shadow: 0 1px 1px rgba(255,255,255,.9);
+text-transform: uppercase;
 }
-.issue-conv, .project-conv {
-  background: url(/images/conv-i.png) no-repeat 0 2px;
-  padding: 2px 0 2px 24px;
+.entry-contrib {
+background: url(/images/people-i.png) no-repeat 0 2px;
+padding: 2px 0 2px 31px;
 }
-.issue-res {
-  background: url(/images/doc-i.png) no-repeat 0 2px;
-  padding: 2px 0 2px 21px;
+.entry-conv {
+background: url(/images/conv-i.png) no-repeat 0 2px;
+padding: 2px 0 2px 24px;
 }
+.entry-res {
+background: url(/images/doc-i.png) no-repeat 0 2px;
+padding: 2px 0 2px 21px;
+}
+
 
 /*- PAGINATION STYLES
 ----------------------------------------------------------------------*/
@@ -1210,6 +1249,24 @@ form.delete-button {
   display: inline;
   margin-left: 8px;
 }
+
+/*- Radio Show Buttons ----------*/
+
+a.button span.itunes {
+background: url(/images/icons/itunes-ico.png) no-repeat 0 2px;
+padding: 2px 0 2px 18px;
+}
+a.button:active span.itunes {background-position: 0 -62px;}
+a.button span.rss {
+background: url(/images/icons/rss-ico.png) no-repeat 0 2px;
+padding: 2px 0 2px 18px;
+}
+a.button:active span.rss {background-position: 0 -63px;}
+a.button span.stitcher {
+background: url(/images/icons/stitcher-ico.png) no-repeat 0 1px;
+padding: 2px 0 2px 18px;
+}
+a.button:active span.stitcher {background-position: 0 -63px;}
 
 /* @end */
 
@@ -2273,9 +2330,6 @@ div.three-col-sm div.cols.call-out p {word-wrap: break-word;}
   line-height:1.4em;
 }
 .recent-item .posted a {color: #2c87b7;}
-.recent-item a {text-decoration: none;}
-.recent-item strong a {text-decoration: underline;}
-.recent-item a:hover {text-decoration: underline;}
 .recent-item .offset-2, .recent-item .bd {
   background: #fff;
   border: 1px solid #ccc;
@@ -2644,7 +2698,8 @@ a.button.moderate:hover, input.submit.moderate:hover {background-color: #d83535;
 div.blog {margin-bottom: 20px;}
 div.blog img.callout {float: left; width: 32px; height: 32px; padding-right: 5px;}
 .blog_inner, .post_info {padding-left: 40px;}
-.blog_inner a, .post_info a {color: #0099FF;}
+.blog_inner a, .post_info a {color: #2C87B7;}
+.blog_inner a:hover, .post_info a:hover {color: #0099FF;}
 .post_info {padding-top: 20px;}
 .region-filter select {
   border: 1px solid #CCC;

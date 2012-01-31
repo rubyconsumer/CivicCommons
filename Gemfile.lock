@@ -392,6 +392,6 @@ DEPENDENCIES
   sunspot_rails
   sunspot_solr
   timecop
-  webmock
+  webmock (= 1.6.2)
   webrat (~> 0.7.3)
   will_paginate (= 2.3.15)
