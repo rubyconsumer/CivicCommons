@@ -13,12 +13,12 @@
 
         <%- @radioshows.each do |radioshow| %>
 
-          <div class="blog" id="outer_block_1"> 
-            <h2><%= link_to radioshow.title, radioshow_path(radioshow) %></h2> 
-            <div class='blog_inner'> 
+          <div class="blog" id="outer_block_1">
+            <h2><%= link_to radioshow.title, radioshow_path(radioshow) %></h2>
+            <div class='blog_inner'>
               <%= raw radioshow.summary %>
               <p><%= link_to "Listen to the podcast...", radioshow_path(radioshow), html: { title: radioshow.title } %></p>
-              <p>Aired on <%= radioshow.published.strftime('%B %d, %Y') %></p> 
+              <p>Aired on <%= radioshow.published.strftime('%B %d, %Y') %></p>
             </div>
           </div>
           <p>&nbsp;</p>
@@ -29,7 +29,7 @@
       </div>
 
       <div class="aside supplementary">
-      
+
         <%= render :partial => '/search/search', locals: { filter_type: 'radioshows' } %>
         <%= render partial: 'blog/recent_blog_posts_sidebar', locals: { blog_posts: @recent_blog_posts } %>
 

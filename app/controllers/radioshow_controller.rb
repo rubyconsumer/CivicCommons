@@ -8,6 +8,8 @@ class RadioshowController < ApplicationController
 
   # GET /radioshow
   def index
+    @radioshow_description = ContentItemDescription.radio_show.first
+
     respond_to do |format|
       format.xml { @radioshows = ContentItem.where("content_type = 'RadioShow' AND (published <= curdate() OR DAY(published) = DAY(curdate())) ").order("published desc").limit(25) }
       format.html do 
