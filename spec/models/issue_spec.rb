@@ -430,7 +430,15 @@ describe Issue do
       ([person1, person2] - issue.most_active_users.to_a).size.should == 0
     end
 
-    it "includes issue conversation rating contributors"
+    it "includes issue conversation rating contributors" do
+      issue = Factory.create(:issue_with_conversation)
+      conversation = issue.conversations.first
+      person1 = conversation.person
+      person2 = Factory.create(:registered_user)
+      contribution = Factory.create(:contribution, :person => person1, :conversation => conversation)
+      rating_group = Factory.create(:rating_group, person: person2, contribution: contribution)
+      ([person2] - issue.most_active_users.to_a).size.should == 0
+    end
   end
 
   context "paperclip" do

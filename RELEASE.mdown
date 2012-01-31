@@ -1,7 +1,8 @@
 ## 1.9.4
 
 ### External Changes
-  
+  * [Add Ratings Contributors to Issue Detail Page "PEOPLE ACTIVE IN THIS ISSUE"](https://agilezen.com/project/18091/story/378)
+
 #### Miscellaneous
 
 #### Bug Fixes

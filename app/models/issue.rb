@@ -152,12 +152,22 @@ class Issue < ActiveRecord::Base
       conversation.owner
     end.uniq
   end
-  
+
+  def conversation_rater_ids
+    contribution_ids = self.conversations.collect do |conversation|
+      conversation.contribution_ids
+    end.uniq
+    RatingGroup.select(:person_id).where(contribution_id: contribution_ids).uniq.collect do |rating_group|
+      rating_group.person_id
+    end
+  end
+
   def community_user_ids
     person_ids = Array.new
     person_ids += self.participant_ids
     person_ids += conversation_creators_ids
     person_ids += conversation_contributer_ids
+    person_ids += conversation_rater_ids
     person_ids.flatten.uniq.reject(&:blank?)
   end
 
