@@ -1905,7 +1905,7 @@ ul.social-media li {
   float: left;
   list-style-type: none;
 }
-ul.social-media li a {
+a.social-media-ico {
   display: block;
   height: 16px;
   margin-right: 15px;
@@ -1913,11 +1913,11 @@ ul.social-media li a {
   text-indent: -9999px;
   width: 16px;
 }
-ul.social-media li a:hover {opacity: 1;}
-a#facebook {background: url(/images/facebook_16.png) no-repeat;}
-a#twitter {background: url(/images/twitter_16.png) no-repeat;}
-a#youtube {background: url(/images/youtube_16.png) no-repeat;}
-a#rss {background: url(/images/rss_16.png) no-repeat;}
+a.social-media-ico:hover {opacity: 1;}
+a.facebook_ico {background: url(/images/facebook_16.png) no-repeat;}
+a.twitter_ico {background: url(/images/twitter_16.png) no-repeat;}
+a.youtube_ico {background: url(/images/youtube_16.png) no-repeat;}
+a.rss_ico {background: url(/images/rss_16.png) no-repeat;}
 div#cc-footer {
   border-top: 1px solid #c3c6cd;
   padding: 20px 0 0 0;
