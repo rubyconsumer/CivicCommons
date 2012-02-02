@@ -1,5 +1,5 @@
 <% content_for :header do %>
-  <%= auto_discovery_link_tag(:rss, "http://feeds.theciviccommons.com/civiccommonsblog", { :title => "The Civic Commons: Common Blog" } ) %>
+  <%= auto_discovery_link_tag(:rss, @blog_rss_url, { :title => "The Civic Commons: Common Blog" } ) %>
 <% end %>
 
 <% content_for :main_body do %>
@@ -37,9 +37,18 @@
 
       <div class="aside">
         <%= render :partial => '/search/search', locals: { filter_type: 'blogs' } %>
+
+        <div class="mod" id="TwitterProfileModule">
+          <%= render :partial => 'shared/twitter_profile_widget' %>
+        </div>
+
+        <div class="mod" id="FacebookActivityModule">
+          <%= render :partial => 'shared/facebook_activity_widget' %>
+        </div>
+
+<!--
         <div class="mod">
           <h3>Only show blog posts about:</h3>
-          <!-- TODO: This will need to be replaced with the actual filters for the radio shows -->
           <ul class="simple-list block-link-list">
               <li><a href="/issues?topic=1" class=""><span>Education</span> <em>2</em></a></li>
               <li><a href="/issues?topic=2" class=""><span>Environment</span> <em>1</em></a></li>
@@ -49,9 +58,9 @@
               <li><a href="/issues?topic=7" class=""><span>Government</span> <em>9</em></a></li>
           </ul>
         </div>
+
         <div class="mod">
           <h3>Filter posts by author:</h3>
-          <!-- TODO: This will need to be replaced with the actual filters for the radio shows -->
           <ul class="site-filter full">
               <li><a href="#" class=""><img src="http://placehold.it/16x16" class="mem-img" /><span>Dan Moulthrop</span></a></li>
               <li><a href="#" class=""><img src="http://placehold.it/16x16" class="mem-img" /><span>Josh Walsh</span></a></li>
@@ -62,6 +71,8 @@
           </ul>
           <a href="" class="remove-filter" title="Remove this filter">Remove Filter</a>
         </div>
+-->
+
       </div>
 
     </div>
