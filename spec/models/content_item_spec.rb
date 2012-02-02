@@ -47,7 +47,7 @@ describe ContentItem do
       @content_item.external_link = nil
       @content_item.should_not be_valid
     end
-    
+
     it 'requires one topic to be assigned' do
       content_item = Factory.build(:blog_post, topics: [])
       content_item.should_not be_valid
@@ -220,7 +220,7 @@ describe ContentItem do
         @radio_show.reload.hosts.count.should == 1
       end
     end
-    
+
     context "has and belongs to many people" do
       it "should be read only" do
         @radio_show = Factory.create(:radio_show)
@@ -250,7 +250,7 @@ describe ContentItem do
       @radio_show = Factory.create(:radio_show)
       @user1 = Factory.create(:registered_user)
     end
-    
+
     it "should add the guest if role is set as a guest" do
       @radio_show.add_person('guest', @user1)
       @radio_show.guests.first.should == @user1
