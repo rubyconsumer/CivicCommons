@@ -4,6 +4,7 @@ class HomepageController < ApplicationController
 
     @conversations = Conversation.latest_created.paginate(:page => params[:page], :per_page => 6)
     @recent_items = Activity.most_recent_activity_items(3)
+    @recent_blog_posts = ContentItem.recent_blog_posts.limit(3)
 
     respond_to do |format|
       format.html
@@ -23,7 +24,7 @@ class HomepageController < ApplicationController
     filters << @random_issues = Issue.all.sample(2)
     filters << @staff_selected = HomepageFeatured.sample_and_filtered(3, filters)
 
-    @recent_blog_posts = ContentItem.recent_blog_posts.limit(1)
-    @recent_radio_shows = ContentItem.recent_radio_shows.limit(1)
+    @recent_blog_post = ContentItem.recent_blog_posts.limit(1)
+    @recent_radio_show = ContentItem.recent_radio_shows.limit(1)
   end
 end
