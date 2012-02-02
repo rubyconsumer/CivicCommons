@@ -2,8 +2,6 @@ class HomepageController < ApplicationController
   def show
     build_featured_items_section
 
-    @regions = Region.all
-
     @conversations = Conversation.latest_created.paginate(:page => params[:page], :per_page => 6)
     @recent_items = Activity.most_recent_activity_items(3)
 

@@ -3,6 +3,7 @@
 ### External Changes
   * [Add Ratings Contributors to Issue Detail Page "PEOPLE ACTIVE IN THIS ISSUE"](https://agilezen.com/project/18091/story/378)
   * [Update Radio Show Index Page Layout](https://agilezen.com/projects/18091/story/384)
+  * [Remove Regions from Home Page Right Nav](https://agilezen.com/projects/18091/story/388)
 
 #### Miscellaneous
 
