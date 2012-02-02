@@ -7,6 +7,20 @@ module CivicCommonsDriver
 
         add_link_for(:edit, "Edit", :admin_blog_show_edit)
 
+        has_button(:update_blogpost_descriptions, "Update BlogPost Descriptions", :admin_blog_posts)
+        has_field(:description_long, "Description long")
+
+        def fill_in_blog_post_descriptions_with details
+          details = defaults.merge(details)
+          fill_in_description_long_with details[:description_long]
+        end
+
+        def defaults
+          {
+            :description_long => 'long description'
+          }
+        end
+
         class Edit
           SHORT_NAME = :admin_blog_show_edit
           include Page

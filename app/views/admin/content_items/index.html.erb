@@ -1,5 +1,6 @@
 <h2>Content Items: <%= @filter %></h2>
 
+<%= render "admin/content_items/blog_post/description_form" if @filter == 'BlogPost' %>
 <%= render "admin/content_items/radio_show/description_form" if @filter == 'RadioShow' %>
 
 <table class="tablesorter" summary="List of Content Items">

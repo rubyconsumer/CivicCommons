@@ -5,11 +5,15 @@ describe ContentItemDescription do
     let(:radio_show_description) { Factory.build(:radio_show_description) }
 
     it "factory creates a valid object" do
+      Factory.build(:blog_post_description).should be_valid
       radio_show_description.should be_valid
     end
 
     it "validates the presence of content_type" do
       radio_show_description.content_type = nil
+      radio_show_description.should_not be_valid
+
+      radio_show_description.content_type = 'NewsItem'
       radio_show_description.should_not be_valid
     end
 

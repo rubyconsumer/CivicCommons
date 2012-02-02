@@ -57,6 +57,10 @@ module CivicCommonsDriver
       topic
     end
 
+    def self.latest_blog_post_description
+      ContentItemDescription.where(:content_type => 'BlogPost').last
+    end
+
     def self.latest_radio_show_description
       ContentItemDescription.where(:content_type => 'RadioShow').last
     end
@@ -135,6 +139,10 @@ module CivicCommonsDriver
 
     def self.has_any_radio_shows?
       !ContentItem.radio_show.all.empty?
+    end
+
+    def self.has_any_blog_post_descriptions?
+      !ContentItemDescription.where(:content_type => 'BlogPost').empty?
     end
 
     def self.has_any_radio_show_descriptions?
