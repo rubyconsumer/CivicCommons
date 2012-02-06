@@ -66,6 +66,32 @@ describe ConversationsController do
         { :get => "/conversations/#{filter_name}" }.should route_to(:controller => "conversations", :action => "filter", :filter => filter_name)
       end
     end
-
   end
+  
+  describe "on blog post" do
+    it "recognizes and generates #responsibilities" do
+      { :get => "/blog/1/conversations/responsibilities" }.should route_to(:controller => "conversations", :action => "responsibilities", :blog_id => '1')
+      
+    end
+    it "recognizes and generates #new" do
+      { :get => "/blog/1/conversations/new" }.should route_to(:controller => "conversations", :action => "new", :blog_id => '1')
+    end
+    it "recognizes and generates #create" do
+      { :post => "/blog/1/conversations" }.should route_to(:controller => "conversations", :action => "create", :blog_id => '1')
+    end
+  end
+
+  describe "on radio shows" do
+    it "recognizes and generates #responsibilities" do
+      { :get => "/radioshow/1/conversations/responsibilities" }.should route_to(:controller => "conversations", :action => "responsibilities", :radioshow_id => '1')
+      
+    end
+    it "recognizes and generates #new" do
+      { :get => "/radioshow/1/conversations/new" }.should route_to(:controller => "conversations", :action => "new", :radioshow_id => '1')
+    end
+    it "recognizes and generates #create" do
+      { :post => "/radioshow/1/conversations" }.should route_to(:controller => "conversations", :action => "create", :radioshow_id => '1')
+    end
+  end
+
 end

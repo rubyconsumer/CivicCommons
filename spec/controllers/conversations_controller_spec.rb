@@ -5,6 +5,10 @@ describe ConversationsController do
   def mock_conversation(stubs={})
     @mock_conversation ||= mock_model(Conversation, stubs).as_null_object
   end
+  
+  def mock_content_item(stubs={})
+    @mock_content_item ||= mock_model(ContentItem, stubs).as_null_object
+  end
 
   describe "not logged in" do
     before(:each) do
@@ -16,7 +20,7 @@ describe ConversationsController do
       methods.each do |method|
         it "redirects to login for #{method} => :#{action}" do
           send(method, action)
-          response.should redirect_to new_person_session_url
+          response.should redirect_to new_person_session_path
         end
       end
     end
@@ -114,15 +118,44 @@ describe ConversationsController do
       Issue.stub(:alphabetical) { :all_issues }
       get :new, :accept => true
     end
+    
+    it "should receive get_content_item" do
+      controller.should_receive(:get_content_item)
+      get :new, :accept => true
+    end
 
     it "redirects to responsibilities if :accept is not true" do
       get :new, :accept => nil
-      response.should redirect_to(conversation_responsibilities_url)
+      response.should redirect_to(conversation_responsibilities_path)
     end
 
     it "assigns new conversation as @conversation" do
       assigns(:conversation).should be mock_conversation
     end
+    
+    describe "on radioshows" do
+      it "should find content_item" do
+        ContentItem.should_receive(:find).with(1).and_return(mock_content_item)
+        get :new, :accept => true, :radioshow_id => 1
+      end
+      
+      it "should not find content_item if radioshow_id is not passed" do
+        ContentItem.should_not_receive(:find).with(1).and_return(mock_content_item)
+        get :new, :accept => true
+      end
+    end
+    describe "on blogpost" do
+      it "should find content_item" do
+        ContentItem.should_receive(:find).with(1).and_return(mock_content_item)
+        get :new, :accept => true, :blog_id => 1
+      end
+      
+      it "should not find content_item if radioshow_id is not passed" do
+        ContentItem.should_not_receive(:find).with(1).and_return(mock_content_item)
+        get :new, :accept => true
+      end
+    end
+    
   end
 
   describe "POST create" do
@@ -133,6 +166,11 @@ describe ConversationsController do
 
     def do_create
       post :create, :conversation => {}
+    end
+    
+    it "should receive get_content_item" do
+      controller.should_receive(:get_content_item)
+      do_create
     end
 
     describe "with valid params" do
@@ -156,8 +194,32 @@ describe ConversationsController do
       it "redirects to invite page to Send Invitations" do
         mock_conversation(:id => '35', :save => true)
         do_create
-        response.should redirect_to new_invite_url(:source_type => :conversations, :source_id => '35', :conversation_created => true)
+        response.should redirect_to new_invite_path(:source_type => :conversations, :source_id => '35', :conversation_created => true)
       end
+      
+      describe "on radioshows" do
+        it "should find content_item" do
+          ContentItem.should_receive(:find).with(1).and_return(mock_content_item)
+          post :create, :conversation => {}, :radioshow_id => 1
+        end
+
+        it "should not find content_item if radioshow_id is not passed" do
+          ContentItem.should_not_receive(:find).with(1).and_return(mock_content_item)
+          post :create, :conversation => {}
+        end
+      end
+      describe "on blogpost" do
+        it "should find content_item" do
+          ContentItem.should_receive(:find).with(1).and_return(mock_content_item)
+          post :create, :conversation => {}, :blog_id => 1
+        end
+
+        it "should not find content_item if radioshow_id is not passed" do
+          ContentItem.should_not_receive(:find).with(1).and_return(mock_content_item)
+          post :create, :conversation => {}
+        end
+      end
+      
     end
 
     describe "with invalid params" do
@@ -173,6 +235,14 @@ describe ConversationsController do
       it "populates error messages" do
       end
     end
+    
+    
   end
 
+  describe "GET responsibilities" do
+    it "should receive get_content_item" do
+      controller.should_receive(:get_content_item)
+      get :responsibilities
+    end
+  end
 end

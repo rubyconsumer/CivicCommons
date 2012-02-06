@@ -155,10 +155,19 @@ Civiccommons::Application.routes.draw do
   resources :regions, only: [:index, :show]
   resources :invites, only: [:new, :create]
   resources :pages, only: [:show]
-  resources :blog, only: [:index, :show]
+  resources :blog, only: [:index, :show] do
+    resources :conversations do
+      get '/responsibilities',  to: 'conversations#responsibilities', on: :collection
+    end
+  end
+  resources :radioshow, only: [:index, :show] do
+    resources :conversations do
+      get '/responsibilities', to: 'conversations#responsibilities', on: :collection
+    end
+  end  
   resources :content, only: [:index, :show]
   resources :news, only: [:index]
-  resources :radioshow, only: [:index, :show]
+
 #Namespaces
   namespace "admin" do
     root      to: "dashboard#show"

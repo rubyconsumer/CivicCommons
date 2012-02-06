@@ -54,9 +54,12 @@ feature "User Creates a User-Conversation", %q{
       login_as :person
       follow_blog_link
       follow_the_blog_post_link_for database.latest_blog_post
-      add_contribution_attachment
-      click_start_invalid_conversation_button
-      current_page.should have_an_error_for :attachment_needs_comment
+      follow_start_conversation_link
+      agree_to_responsibilities
+      submit_conversation
+      conversation.should exist_in_the_database
+      conversation.content_items.should == [database.latest_blog_post]
+      the_current_page.should be_the_invite_a_friend_page_for_the conversation
     end
   end
 
@@ -68,9 +71,12 @@ feature "User Creates a User-Conversation", %q{
       login_as :person
       follow_radio_show_link
       follow_the_radio_show_link_for database.latest_radio_show
-      add_contribution_attachment
-      click_start_invalid_conversation_button
-      current_page.should have_an_error_for :attachment_needs_comment
+      follow_start_conversation_link
+      agree_to_responsibilities
+      submit_conversation
+      conversation.should exist_in_the_database
+      conversation.content_items.should == [database.latest_radio_show]
+      the_current_page.should be_the_invite_a_friend_page_for_the conversation
     end
   end
   

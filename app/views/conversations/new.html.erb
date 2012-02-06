@@ -1,9 +1,9 @@
 <div class="wrapper">
   <div class="content-container">
     <div class="main-content">
-      <h1>Start a Conversation</h1>
+      <h1>Start a Conversation<%= " from #{@start_from}" if @start_from %></h1>
 
-      <%= form_for setup_conversation(@conversation), :html =>{:multipart => true} do |conversation| %>
+      <%= form_for setup_conversation(@conversation),:url => polymorphic_url([get_path_sym(@content_item), :conversations]), :html =>{:multipart => true} do |conversation| %>
         <%= render :partial => 'conversations/creation_errors', :locals => { :conversation => @conversation, :contributions => @conversation.contributions } %>
         <br class="clear" />
 
@@ -17,7 +17,7 @@
         <p>Get the ball rolling with a comment, question, or maybe a thought-provoking video you’ve already uploaded to YouTube.</p>
         <%= render :partial => 'contributions/contribution_fields', :locals => { :form => conversation, :contributions => @conversation.contributions } %>
         <br class="clear" />
-
+        
         <fieldset class="footer">
           <%= conversation.submit 'Start My Conversation', :class => 'submit' %>
           <%= link_to "Cancel", root_url %>

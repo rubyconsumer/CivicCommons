@@ -145,6 +145,15 @@ module ConversationsHelper
       "These are the conversations that match your filter."
     end
   end
+  
+  def path_to_content_item(content_item)
+    if content_item.content_type == 'RadioShow'
+      path = radioshow_path(content_item)
+    elsif content_item.content_type == 'BlogPost'
+      path = blog_path(content_item)
+    end
+    return path
+  end
 
   def rating_buttons(contribution, ratings_hash)
     out = []
@@ -174,6 +183,17 @@ module ConversationsHelper
   def setup_conversation(conversation)
     conversation.tap do |conversation|
       conversation.contributions.build if conversation.contributions.empty?
+    end
+  end
+  
+  def get_path_sym(content_item)
+    if content_item
+      case content_item.content_type 
+      when 'RadioShow'
+        :radioshow
+      when 'BlogPost'
+        :blog 
+      end
     end
   end
 

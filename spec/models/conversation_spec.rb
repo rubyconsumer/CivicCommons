@@ -13,6 +13,22 @@ describe Conversation do
         Conversation.reflect_on_association(:survey).options[:as].should == :surveyable
       end
     end
+    context "has_and_belongs_to_many content_items" do
+      def given_a_radio_show_with_conversations
+        @radioshow = Factory.create(:radio_show)
+        @conversation1 = Factory.create(:conversation)
+        @conversation2 = Factory.create(:conversation)
+        @radioshow.conversations = [@conversation1, @conversation2]
+      end
+      it "should be correct" do
+        Conversation.reflect_on_association(:content_items).macro.should == :has_and_belongs_to_many
+      end
+
+      it "should have the correct conversations" do
+        given_a_radio_show_with_conversations
+        @conversation1.content_items.should == [@radioshow]
+      end
+    end
   end
   describe "a valid conversation" do
     before :each do

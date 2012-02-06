@@ -31,6 +31,10 @@ class ConversationsController < ApplicationController
       format.xml
     end
   end
+  
+  def responsibilities
+    get_content_item(params)
+  end
 
   def filter
     @filter = params[:filter]
@@ -148,8 +152,8 @@ class ConversationsController < ApplicationController
   # GET /conversations/new
   def new
     return redirect_to :conversation_responsibilities unless params[:accept]
+    get_content_item(params)
     @conversation = Conversation.new
-
     render :new
   end
 
@@ -199,16 +203,13 @@ class ConversationsController < ApplicationController
     @radioshow = ContentItem.find(params[:id])
     if request.xhr?
       render partial: 'shared/redirect_after_xhr', locals: { url: radioshow_url(@radioshow) }
-    elsif @radioshow.conversation
-      redirect_to conversation_url(@radioshow.conversation)
     else
       params[:conversation][:summary] = "<em>This is a conversation about The Civic Commons Radio <a href=\"#{radioshow_url(@radioshow)}\">#{@radioshow.title}</a></em><br/><br/>#{@radioshow.summary}"
       params[:conversation][:title] = "The Civic Commons Radio #{@radioshow.title}"
       params[:conversation][:zip_code] = "ALL"
       prep_convo(params)
       if @conversation.save
-        @radioshow.conversation = @conversation
-        @radioshow.save
+        @radioshow.conversations << @conversation
         redirect_to conversation_path(@conversation)
       else
         render 'radioshow/show'
@@ -243,6 +244,9 @@ class ConversationsController < ApplicationController
   def prep_convo(params)
     @conversation = Conversation.new(params[:conversation])
 
+    get_content_item(params)
+    @conversation.content_items = [@content_item] if @content_item.present?
+    
     @conversation.person = current_person
     @conversation.from_community = true
     @conversation.started_at = Time.now
@@ -252,5 +256,12 @@ class ConversationsController < ApplicationController
     end
   end
 
+  def get_content_item(params)
+    if params[:radioshow_id] || params[:blog_id]
+      @content_item = ContentItem.find(params[:radioshow_id]||params[:blog_id]) 
+      @start_from = @content_item.content_type
+    end
+  end
+  
 
 end

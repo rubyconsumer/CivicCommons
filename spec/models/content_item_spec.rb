@@ -58,6 +58,23 @@ describe ContentItem do
     end
 
   end
+  
+  context "has_and_belongs_to_many conversations" do
+    def given_a_radio_show_with_conversations
+      @radioshow = Factory.create(:radio_show)
+      @conversation1 = Factory.create(:conversation)
+      @conversation2 = Factory.create(:conversation)
+      @radioshow.conversations = [@conversation1, @conversation2]
+    end
+    it "should be correct" do
+      ContentItem.reflect_on_association(:conversations).macro.should == :has_and_belongs_to_many
+    end
+    
+    it "should have the correct conversations" do
+      given_a_radio_show_with_conversations
+      @radioshow.conversations.should == [@conversation1,@conversation2]
+    end
+  end
 
   context "has_and_belongs_to_many topics" do
     describe "on blog posts" do

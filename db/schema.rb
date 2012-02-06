@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120119184602) do
+ActiveRecord::Schema.define(:version => 20120206010605) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -79,6 +79,15 @@ ActiveRecord::Schema.define(:version => 20120119184602) do
   add_index "content_items", ["content_type"], :name => "index_content_items_on_content_type", :length => {"content_type"=>4}
   add_index "content_items", ["conversation_id"], :name => "index_content_items_on_conversation_id"
   add_index "content_items", ["person_id"], :name => "index_content_items_on_person_id"
+
+  create_table "content_items_conversations", :id => false, :force => true do |t|
+    t.integer  "conversation_id"
+    t.integer  "content_item_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "content_items_conversations", ["conversation_id", "content_item_id"], :name => "content_items_conversations_ids_index"
 
   create_table "content_items_people", :id => false, :force => true do |t|
     t.integer  "content_item_id"

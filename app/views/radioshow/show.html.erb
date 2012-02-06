@@ -35,21 +35,15 @@
 
         <div>&nbsp;</div>
 
-        <% if @radioshow.conversation %>
-          <h2>Join the conversation about this radioshow</h2>
-          <div class="three-col-sm">
-            <%= render :partial => 'conversations/conversation_band', locals: { conversations: [@radioshow.conversation] } %>
-          </div>
-        <% elsif current_person %>
-          <h2>Start a conversation about this radio show</h2>
-          <%= render partial: 'conversations/short_form', locals: { url: start_conversation_from_radioshow_path(@radioshow) } %>
-        <% else %>
-          <div class="convo-create">
-            <p>It's your <strong>Civic Commons</strong>, so you get to start a conversation about <em><%= @radioshow.title %></em></p>
-            <%= link_to "Start a Conversation from this Radio Show", start_conversation_from_radioshow_path(@radioshow), :class => 'convo-create-btn', 'data-remote' => true, 'data-method' => :post %>
-          </div>
-        <% end %>
-
+        <h2>Respond to the show</h2>
+        
+        <div class="convo-create">
+          <p>It's your <strong>Civic Commons</strong>, so you get to start a conversation about <em><%= @radioshow.title %></em></p>
+          <%= link_to "Start a Conversation from this Radio Show", responsibilities_radioshow_conversations_path(@radioshow), :class => 'convo-create-btn' %>
+        </div>
+        
+        <%= render :partial => 'conversations/conversation_band', locals: { conversations: @radioshow.conversations } %>
+        
       </div>
 
       <div class="aside supplementary">
@@ -69,8 +63,9 @@
         </div>
 
         <div>&nbsp;</div>
-        <% if @radioshow.conversation %>
-          <% @recent_items = Activity.most_recent_activity_items_for_conversation(@radioshow.conversation, 5) %>
+
+        <% if @radioshow.conversation_ids.length > 0 %>
+          <% @recent_items = Activity.most_recent_activity_items_for_conversations(@radioshow.conversation_ids, 5) %>
           <%= render_recent_items_sidebar %>
         <% end %>
 

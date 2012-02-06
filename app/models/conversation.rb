@@ -29,6 +29,8 @@ class Conversation < ActiveRecord::Base
            :order => "contributions.created_at ASC"
 
   has_and_belongs_to_many :issues
+  has_and_belongs_to_many :content_items, uniq: true
+  
   has_one :survey, :as => :surveyable
   belongs_to :person, :foreign_key => "owner"
   delegate :name, :to => :person, :prefix => true

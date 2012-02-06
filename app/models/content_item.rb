@@ -34,8 +34,9 @@ class ContentItem < ActiveRecord::Base
                                     :message => "Not a valid image file."
 
   belongs_to :author, :class_name => "Person", :foreign_key => "person_id"
-  belongs_to :conversation
+
   has_and_belongs_to_many :topics, uniq: true
+  has_and_belongs_to_many :conversations, uniq: true
 
   # Any radioshow people
   has_and_belongs_to_many :people,
