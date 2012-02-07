@@ -7,6 +7,7 @@
   * [Update Radio Show Detail Page](https://agilezen.com/projects/18091/story/385)
   * [Remove Regions from Home Page Right Nav](https://agilezen.com/projects/18091/story/388)
   * [Update Blog Index Page Layout](https://agilezen.com/project/18091/story/392)
+  * [Add Topic to the Radio Show Index Page and Radio Show Detail Page](https://agilezen.com/project/18091/story/382)
 
 #### Miscellaneous
   * [Ability for Admin to set Long Description for a Blog.](https://agilezen.com/project/18091/story/391)

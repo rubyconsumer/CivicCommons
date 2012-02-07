@@ -2,7 +2,11 @@
   <div class="entry-details full rounded">
     <h4><%= link_to radioshow.title, radioshow_path(radioshow) %></h4>
     <p class="entry-tags">
-      <%= radioshow.published.strftime('%B %d, %Y') %> <%#, Topic: Transportation %>
+      <%= radioshow.published.strftime('%B %d, %Y') %>
+      <% if radioshow.topics.size > 0 %>
+        <span class="topic-label"><%= pluralize_without_count radioshow.topics.size, "Topic" %>:</span>
+        <%= raw(topics_list_for radioshow) %>
+      <% end %>
     </p>
     <div>
       <%= image_tag radioshow.image.url(:panel), :alt => 'The Civic Commons Radio Show and Podcast', :height => 130, :width => 198, :class => 'float' %>

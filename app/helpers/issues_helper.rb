@@ -40,11 +40,4 @@ module IssuesHelper
     end
     issue_url(contribution.issue, options)
   end
-
-  def topics_list_for(issue)
-    rendered_list = issue.topics.map do |topic|
-      render partial: "issue_list_item", locals: { topic: topic }
-    end
-    rendered_list.to_sentence(last_word_connector: ", ", two_words_connector: ", ").gsub(/\n/, "")
-  end
 end

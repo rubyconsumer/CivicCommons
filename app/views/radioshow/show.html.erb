@@ -6,7 +6,10 @@
   <div class="wrapper">
     <div class="content-container">
       <h1><%= @radioshow.title %></h1>
-      <p class="subtitle"></p>
+      <p class="subtitle">
+        <%= pluralize_without_count @radioshow.topics.size, "Topic" %>:
+        <%= raw(topics_list_for @radioshow) %>
+      </p>
     </div>
     <div class="content-container">
       <div class="main-content">
@@ -14,8 +17,8 @@
         <%= image_tag @radioshow.image.url(:panel), :alt => @radioshow.title, :height => 130, :width => 198, :class => 'float' %>
         <%= raw @radioshow.body %>
 
-        <div class="radioshow"> 
-          <div class='radioshow_inner'> 
+        <div class="radioshow">
+          <div class='radioshow_inner'>
             <p class="convo-meta"><%= render :partial => 'shared/facebook_like' %></p>
             <p class="convo-meta"><%= render :partial => 'shared/twitter_share', locals: { title: @radioshow.title} %></p>
             <h4>Aired on <%= @radioshow.published.strftime('%B %d, %Y') %></h4>
@@ -53,7 +56,6 @@
 
         <%= render :partial => '/search/search', locals: { filter_type: 'radioshows' } %>
 
-        
         <div class="mod">
           <%= radioshow_hosts(@radioshow) %>
           <%= radioshow_guests(@radioshow) %>
@@ -64,14 +66,13 @@
             <%= raw @radioshow_description.description_short unless @radioshow_description.blank? %>
           </p>
           <%= render partial: 'media_buttons' %>
-        </div>        
+        </div>
 
         <div>&nbsp;</div>
         <% if @radioshow.conversation %>
           <% @recent_items = Activity.most_recent_activity_items_for_conversation(@radioshow.conversation, 5) %>
           <%= render_recent_items_sidebar %>
         <% end %>
-
 
       </div>
 
