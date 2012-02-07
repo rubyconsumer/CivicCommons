@@ -4,6 +4,7 @@
   * [Add Ratings Contributors to Issue Detail Page "PEOPLE ACTIVE IN THIS ISSUE"](https://agilezen.com/project/18091/story/378)
   * [Use the Radio Show Long Descriptor in the Radio Show Index Page](https://agilezen.com/projects/18091/story/383)
   * [Update Radio Show Index Page Layout](https://agilezen.com/projects/18091/story/384)
+  * [Update Radio Show Detail Page](https://agilezen.com/projects/18091/story/385)
   * [Remove Regions from Home Page Right Nav](https://agilezen.com/projects/18091/story/388)
   * [Update Blog Index Page Layout](https://agilezen.com/project/18091/story/392)
 
@@ -11,6 +12,7 @@
   * [Ability for Admin to set Long Description for a Blog.](https://agilezen.com/project/18091/story/391)
 
 #### Bug Fixes
+  * [Issue Upload Bug in IE and fixing http/https problem.](https://agilezen.com/projects/18091/story/386)
   * [Ability to edit Blog Entries over a year old.](https://agilezen.com/projects/18091/story/396)
 
 ### Post Deployment Instructions
@@ -22,12 +24,8 @@
 ### External Changes
   * [Add Link to Custom Community Page When Issue Detail Page "PEOPLE ACTIVE IN THIS ISSUE" is larger than 5x4 (20 people)](https://agilezen.com/projects/18091/story/376)
   * [Add Recent Activity For Blog Posts to Radio Show Index Page](https://agilezen.com/projects/18091/story/381)
-<<<<<<< HEAD
   * [EGN RSS Feed on Curated Feed Page](https://agilezen.com/projects/18091/story/371)
-  
-=======
 
->>>>>>> 6a14e1e... 384 - Update Radio Show Index Page Layout
 #### Miscellaneous
   * [Ability to add Hosts and Special Guests to Radio Show as an Admin](https://agilezen.com/projects/18091/story/345)
   * [Ability for Admin to set Short and Long Description for Radio Show](https://agilezen.com/project/18091/story/348)
