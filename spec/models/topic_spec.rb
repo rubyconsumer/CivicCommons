@@ -84,38 +84,68 @@ describe Topic do
   end
 
   describe "For Sidebar" do
-    def given_topics_with_issues_for_sidebar
-      @topic1 = Factory.create(:topic)
-      @topic2 = Factory.create(:topic)
-      @issue1 = Factory.create(:issue, :topics => [@topic1], :exclude_from_result=> true)
-      @issue2 = Factory.create(:issue, :topics => [@topic1], :exclude_from_result=> false)
-      @issue2 = Factory.create(:issue, :topics => [@topic1], :exclude_from_result=> false)
-      @managed_issue1 = Factory.create(:managed_issue, :topics => [@topic1], :exclude_from_result=> false)
-      
-      @topic_result = Topic.including_public_issues.first
-      Topic.including_public_issues.length.should == 1
+    context "Issues" do
+      def given_topics_with_issues_for_sidebar
+        @topic1 = Factory.create(:topic)
+        @topic2 = Factory.create(:topic)
+        @issue1 = Factory.create(:issue, :topics => [@topic1], :exclude_from_result=> true)
+        @issue2 = Factory.create(:issue, :topics => [@topic1], :exclude_from_result=> false)
+        @managed_issue1 = Factory.create(:managed_issue, :topics => [@topic1], :exclude_from_result=> false)
+        @topic_result = Topic.including_public_issues.first
+        Topic.including_public_issues.length.should == 1
+      end
+      it "should return topics that has an issue count of 1(one) or more" do
+        given_topics_with_issues_for_sidebar
+        @topic_result.issue_count.should == 1
+      end
+      it "should return only Issue type" do
+        given_topics_with_issues_for_sidebar
+        @topic_result.issues.first.type == 'Issue'
+      end
+      it "should only return issues where exclude_from_result = false" do
+        @topic = Factory.create(:topic)
+        @issue = Factory.create(:issue, :topics => [@topic], :exclude_from_result=> false)
+        Topic.including_public_issues.length.should == 1
+      end
+      it "should not return anything when issues are exclude_from_result = true" do
+        @topic = Factory.create(:topic)
+        @issue = Factory.create(:issue, :topics => [@topic], :exclude_from_result=> true)
+        Topic.including_public_issues.length.should == 0
+      end
+      it "should have issue_count as an additional select field" do
+        given_topics_with_issues_for_sidebar
+        @topic_result.respond_to?(:issue_count).should be_true
+      end
     end
-    it "should return topics that has an issue count of 1(one) or more" do
-      given_topics_with_issues_for_sidebar
-      @topic_result.issue_count == 1
-    end
-    it "should return only Issue type" do
-      given_topics_with_issues_for_sidebar
-      @topic_result.issues.first.type == 'Issue'
-    end
-    it "should only return issues where exclude_from_result = false" do
-      @topic = Factory.create(:topic)
-      @issue = Factory.create(:issue, :topics => [@topic], :exclude_from_result=> false)
-      Topic.including_public_issues.length.should == 1
-    end
-    it "should not return anything when issues are exclude_from_result = true" do
-      @topic = Factory.create(:topic)
-      @issue = Factory.create(:issue, :topics => [@topic], :exclude_from_result=> true)
-      Topic.including_public_issues.length.should == 0
-    end
-    it "should have issue_count as an additional select field" do
-      given_topics_with_issues_for_sidebar
-      @topic_result.respond_to?(:issue_count).should be_true
+
+    context "RadioShows" do
+      def given_topics_with_radioshows_for_sidebar
+        topic = Factory.create(:topic)
+        Factory.create(:topic)
+        Factory.create(:radio_show, :topics => [topic])
+        @topic_results = Topic.including_public_radioshows
+      end
+
+      it "should return topics that has a radioshow count of 1 (one) or more" do
+        given_topics_with_radioshows_for_sidebar
+        @topic_results.each do |topic|
+          topic.radioshow_count.should == 1
+        end
+      end
+
+      it "should return only ContentItem type" do
+        given_topics_with_radioshows_for_sidebar
+        @topic_results.each do |topic|
+          topic.radioshows.first.content_type == 'RadioShow'
+        end
+      end
+
+      it "should have radioshow_count as an additional select field" do
+        given_topics_with_radioshows_for_sidebar
+        @topic_results.each do |topic|
+          topic.respond_to?(:radioshow_count).should be_true
+        end
+      end
     end
   end
 end

@@ -24,4 +24,28 @@ describe TopicsHelper do
       issue_topic_filter(@topic).should_not include "active"
     end
   end
+
+  describe "render_radioshow_topics_sidebar" do
+    it "should render the topic/radioshow_topic_sidebar" do
+      @topics = 'topic-id'
+      helper.should_receive(:render).with('topics/radioshow_topic_sidebar', :topics =>'topic-id')
+      helper.render_radioshow_topics_sidebar
+    end
+  end
+  describe "radioshow_topic_filter" do
+    before(:each) do
+      @topic = mock(Topic,:radioshow_count => 1, :name => 'Topic One', :id => 1001)
+      @current_topic = mock(Topic,:radioshow_count => 1, :name => 'Topic Two', :id => 1002)
+    end
+    it "should link to the topic" do
+      radioshow_topic_filter(@topic).should include 'href="/radioshow?topic=1001"'
+      radioshow_topic_filter(@topic).should include 'Topic One'
+    end
+    it "should have an 'active' class if the current topic has matched" do
+      radioshow_topic_filter(@current_topic).should include 'class="active"'
+    end
+    it "should not have 'active' css class if the current topic has not match" do
+      radioshow_topic_filter(@topic).should_not include "active"
+    end
+  end
 end

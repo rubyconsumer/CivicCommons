@@ -20,20 +20,8 @@
       </div>
 
       <div class="aside supplementary">
-        <%#<div class="mod">%>
-          <%#<h3>Only show radio shows about:</h3>%>
-          <%#[> TODO: This will need to be replaced with the actual filters for the radio shows <]%>
-          <%#<ul class="simple-list block-link-list">%>
-            <%#<li><a href="/issues?topic=1" class=""><span>Education</span> <em>2</em></a></li>%>
-            <%#<li><a href="/issues?topic=2" class=""><span>Environment</span> <em>1</em></a></li>%>
-            <%#<li><a href="/issues?topic=4" class=""><span>Economy</span> <em>9</em></a></li>%>
-            <%#<li><a href="/issues?topic=5" class=""><span>Crime &amp; Safety</span> <em>4</em></a></li>%>
-            <%#<li><a href="/issues?topic=6" class=""><span>Community</span> <em>6</em></a></li>%>
-            <%#<li><a href="/issues?topic=7" class=""><span>Government</span> <em>9</em></a></li>%>
-          <%#</ul>%>
-        <%#</div>%>
-
         <%= render :partial => '/search/search', locals: { filter_type: 'radioshows' } %>
+        <%= render_radioshow_topics_sidebar %>
         <%= render partial: 'blog/recent_blog_posts_sidebar', locals: { blog_posts: @recent_blog_posts } %>
       </div>
     </div>

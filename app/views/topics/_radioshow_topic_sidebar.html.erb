@@ -1,0 +1,8 @@
+<div class="mod">
+  <h3>Filter Radio Shows by Topic:</h3>
+  <ul class="simple-list block-link-list">
+    <% topics.each do |topic| %>
+      <li><%= radioshow_topic_filter(topic) %></li>
+    <% end %>
+  </ul>
+</div>
