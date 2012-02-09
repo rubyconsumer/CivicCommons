@@ -68,7 +68,9 @@
               <%= featured_profile(person).html_safe %>
             <% end %>
           </div>
-          <% if @people_count.to_i > 20 %>
+          <% if @people_count == 0 %>
+            <p>Nobody yet, but feel free to start this conversation!</p>
+          <% elsif @people_count > 20 %>
             <h4><%= link_to "More People", issue_community_path(@issue, :order => 'active-member') %></h4>
           <% end %>
           

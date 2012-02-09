@@ -10,6 +10,7 @@
   * [Add Topic to the Radio Show Index Page and Radio Show Detail Page](https://agilezen.com/project/18091/story/382)
   * [Create Conversations from Radio Show and Blog](https://agilezen.com/projects/18091/story/398)
   * [Update Blog Detail Page Layout](https://agilezen.com/projects/18091/story/393)
+  * [update the participant count on issue index page](https://agilezen.com/project/18091/story/400)
 
 #### Miscellaneous
   * [Ability for Admin to set Long Description for a Blog.](https://agilezen.com/project/18091/story/391)

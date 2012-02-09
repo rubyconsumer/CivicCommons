@@ -20,6 +20,11 @@ FactoryGirl.define do |f|
     u.daily_digest false
     u.avatar_url '/images/avatar_70.gif'
   end
+
+  factory :proxy_person, :parent => :normal_person do |u|
+    u.proxy true
+  end
+
   factory :registered_user, :parent => :normal_person do |u|
     u.confirmed_at { Time.now }
     u.declined_fb_auth true

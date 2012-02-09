@@ -374,6 +374,11 @@ describe Issue do
     it "should return an array of person ids" do
       @issue.community_user_ids.should == [@person.id]
     end
+    it "should return same number of IDs as Person.find_confirmed_order_by_most_active with proxies" do
+      Factory.create(:issue_contribution, issue: @issue, person: Factory.create(:proxy_person))
+      community_user_ids = @issue.community_user_ids
+      community_user_ids.length.should == Person.find_confirmed_order_by_most_active(community_user_ids).length
+    end
   end
   
   context "most_newest_users" do
@@ -395,7 +400,7 @@ describe Issue do
       Factory.create(:issue_contribution, issue: @issue, person: @person)
     end
     it "should call Person.find_confirmed_order_by_recency" do
-      Person.should_receive(:find_confirmed_order_by_last_name).with(nil, {:person_ids=>[@person.id]})
+      Person.should_receive(:find_confirmed_order_by_last_name).with(nil, [@person.id])
       @issue.order_by_alpha_users
     end
   end
@@ -438,6 +443,17 @@ describe Issue do
       contribution = Factory.create(:contribution, :person => person1, :conversation => conversation)
       rating_group = Factory.create(:rating_group, person: person2, contribution: contribution)
       ([person2] - issue.most_active_users.to_a).size.should == 0
+    end
+
+    it "includes returns no people if issue has no activity" do
+      issue = Factory.create(:issue)
+      issue.most_active_users.should == []
+    end
+
+    it "includes returns no people if even if there is activity on other issues" do
+      given_an_issue_with_conversations
+      issue = Factory.create(:issue)
+      issue.most_active_users.should == []
     end
   end
 

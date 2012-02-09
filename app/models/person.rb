@@ -211,34 +211,35 @@ class Person < ActiveRecord::Base
     where(:first_name => first, :last_name => last)
   end
 
-  def self.find_confirmed_order_by_recency(person_ids=[])
+  def self.find_confirmed_order_by_recency(person_ids=nil)
     person = Person.order('confirmed_at DESC').where('confirmed_at IS NOT NULL').where('locked_at IS NULL')
-    if not person_ids.blank?
+    if not person_ids.nil?
       person = person.where('confirmed_at IS NOT NULL')
       person = person.where('locked_at IS NULL')
       person = person.where({ 'people.id' => person_ids})
     end
-    return person    
+    return person
   end
 
-  def self.find_confirmed_order_by_most_active(person_ids=[])
+  def self.find_confirmed_order_by_most_active(person_ids=nil)
     person = Person.select("people.*, count(ti.person_id)").
       joins('left outer join top_items ti on people.id = ti.person_id').
       group('people.id').
       order('count(ti.person_id) DESC').
       where('confirmed_at IS NOT NULL AND locked_at IS NULL')
-    if not person_ids.blank?
+    if not person_ids.nil?
       person = person.where("confirmed_at IS NOT NULL AND locked_at IS NULL")
       person = person.where({ 'people.id' => person_ids})
     end
     return person
   end
 
-  def self.find_confirmed_order_by_last_name(letter = nil, options={})
+  def self.find_confirmed_order_by_last_name(letter = nil, person_ids=nil)
     person = Person
-    person_ids = options.delete(:person_ids)
-    person = person.where({ 'people.id' => person_ids}) if person_ids.present?
-    
+    if not person_ids.nil?
+      person = person.where({ 'people.id' => person_ids})
+    end
+
     if letter.nil?
       person = person.order('blank_last_name, last_name, first_name ASC').
         where('confirmed_at IS NOT NULL and locked_at IS NULL').

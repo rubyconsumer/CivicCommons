@@ -25,10 +25,10 @@
           <% end %>
           <p>Copyright &copy; <%= @blog_post.published.strftime('%Y') %> <%= @blog_post.author.name %>; available under the <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons Attribution-NonCommercial-ShareAlike License</a>.</p>
         </div>
-        <% if @blog_post.conversations.count > 0 %>
-          <h2>Related to the post</h2>
-        <% else %>
+        <% if @blog_post.conversations.nil? %>
           <h2>Respond to the post</h2>
+        <% else %>
+          <h2>Related to the post</h2>
         <% end %>
         <div class="convo-create">
           <p>It's your <strong>Civic Commons</strong>, so you get to start a conversation about <em><%= @blog_post.title %></em></p>

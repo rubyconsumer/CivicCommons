@@ -520,10 +520,13 @@ describe Person do
       Person.find_confirmed_order_by_last_name.should == [@person1, @person2, @person3]
     end
     it "should returned people within person_ids by last name" do
-      Person.find_confirmed_order_by_last_name(nil, {:person_ids => [@person2.id,@person3.id]}).should == [@person2, @person3]
+      Person.find_confirmed_order_by_last_name(nil, [@person2.id,@person3.id]).should == [@person2, @person3]
     end
     it "should allow for returning last name by letter" do
       Person.find_confirmed_order_by_last_name('b').should == [@person2]
+    end
+    it "should return no people if person_ids is blank" do
+      Person.find_confirmed_order_by_last_name(nil, []).should == []
     end
   end
 
@@ -538,6 +541,9 @@ describe Person do
     end
     it "should return the correct people within person_ids by recency" do
       Person.find_confirmed_order_by_recency([@person2.id,@person3.id]).should == [@person3, @person2]
+    end
+    it "should return no people if person_ids is blank" do
+      Person.find_confirmed_order_by_recency([]).should == []
     end
   end
   context "when finding by the most active" do
@@ -562,6 +568,10 @@ describe Person do
       results[0].first_name.should == "Hyper"
       results[1].first_name.should == "Lazy"
       results[2].should be_nil
+    end
+
+    it "should return no people if person_ids is blank" do
+      Person.find_confirmed_order_by_most_active([]).should == []
     end
   end
 
