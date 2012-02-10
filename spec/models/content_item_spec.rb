@@ -302,7 +302,6 @@ describe ContentItem do
       @radio_show.guests.length.should == 1
     end
   end
-
   context "link text" do
     it "displays default radioshow link text." do
       radioshow = Factory.build(:radio_show)
@@ -323,6 +322,24 @@ describe ContentItem do
     it "displays inputed text for link text" do
       unknown = Factory.build(:blog_post)
       unknown.link_title("link to this").should == "link to this"
+    end
+  end
+  context "blog_authors" do
+    def given_blogs_and_authors
+       @author1 = Factory.create(:admin_person)
+       @author2 = Factory.create(:admin_person)
+       @author3 = Factory.create(:admin_person)
+       @blog1 = Factory.create(:blog_post, :author => @author1)
+       @blog2 = Factory.create(:blog_post, :author => @author2)
+    end
+
+    it "should return the correct authors" do
+      given_blogs_and_authors
+      ContentItem.blog_authors.should == [@author1,@author2]
+    end
+    it "should not return non authors" do
+      given_blogs_and_authors
+      ContentItem.blog_authors.include?(@author3).should be_false
     end
   end
 end

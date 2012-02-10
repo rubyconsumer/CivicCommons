@@ -4,11 +4,23 @@
 
 <% content_for :main_body do %>
   <div class="wrapper">
-
-    <div class="content-container">
-      <h1>The Civic Commons Blog</h1>
-      <%#= render partial: 'description' %>
-    </div>
+    <% if @current_author %>
+      <div class="content-container">
+        <div class="media mod">
+          <%= link_to profile_image(@current_author,70,'img frame'), user_path(@current_author) %>
+          <div class="bd">
+            <h1>Blog Posts by <%= @current_author.name %></h1>
+            <p><%= @current_author.bio %></p>
+            <strong><%= link_to "View #{@current_author.first_name}'s profile", user_path(@current_author)  %></strong>
+          </div>
+        </div>
+      </div>
+    <% else %>
+      <div class="content-container">
+        <h1>The Civic Commons Blog</h1>
+        <%#= render partial: 'description' %>
+      </div>
+    <% end %>
 
     <div class="content-container">
       <div class="main-content">
@@ -37,6 +49,17 @@
 
       <div class="aside">
         <%= render :partial => '/search/search', locals: { filter_type: 'blogs' } %>
+        
+        <div class="mod">
+          <h3>Filter posts by author:</h3>
+          <ul class="site-filter full">
+            <%- @blog_authors.each do |author| -%>
+              <li><%= blog_filter_by_author_link(author,@current_author) %> </li>
+            <%- end -%>
+          </ul>
+          <%= link_to 'Remove Filter',blog_index_path, :class => 'remove-filter', :title => 'Remove this filter'%>
+        </div>
+        
 
         <div class="mod" id="TwitterProfileModule">
           <%= render :partial => 'shared/twitter_profile_widget' %>
@@ -45,6 +68,8 @@
         <div class="mod" id="FacebookActivityModule">
           <%= render :partial => 'shared/facebook_activity_widget' %>
         </div>
+        
+        
 
 <!--
         <div class="mod">
@@ -57,19 +82,6 @@
               <li><a href="/issues?topic=6" class=""><span>Community</span> <em>6</em></a></li>
               <li><a href="/issues?topic=7" class=""><span>Government</span> <em>9</em></a></li>
           </ul>
-        </div>
-
-        <div class="mod">
-          <h3>Filter posts by author:</h3>
-          <ul class="site-filter full">
-              <li><a href="#" class=""><img src="http://placehold.it/16x16" class="mem-img" /><span>Dan Moulthrop</span></a></li>
-              <li><a href="#" class=""><img src="http://placehold.it/16x16" class="mem-img" /><span>Josh Walsh</span></a></li>
-              <li><a href="#" class=""><img src="http://placehold.it/16x16" class="mem-img" /><span>Robin Byers</span></a></li>
-              <li><a href="#" class=""><img src="http://placehold.it/16x16" class="mem-img" /><span>Winston Tsang</span></a></li>
-              <li><a href="#" class=""><img src="http://placehold.it/16x16" class="mem-img" /><span>Jonathan Knapp</span></a></li>
-              <li><a href="#" class=""><img src="http://placehold.it/16x16" class="mem-img" /><span>Lisa Canter</span></a></li>
-          </ul>
-          <a href="" class="remove-filter" title="Remove this filter">Remove Filter</a>
         </div>
 -->
 

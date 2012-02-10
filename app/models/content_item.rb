@@ -129,7 +129,7 @@ class ContentItem < ActiveRecord::Base
       return false
     end
   end
-
+  
   def delete_person(role, person)
     case role
     when 'guest'
@@ -154,4 +154,10 @@ class ContentItem < ActiveRecord::Base
   def content_type_is_radio_show?
     content_type == "RadioShow"
   end
+  
+  def self.blog_authors
+    blog_author_ids = ContentItem.blog_post.select('DISTINCT(person_id)').collect(&:person_id)
+    Person.find(blog_author_ids)
+  end
+  
 end
