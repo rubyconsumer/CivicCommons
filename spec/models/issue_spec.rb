@@ -31,9 +31,9 @@ describe Issue do
   def given_an_issue_with_conversations
     @person1 = Factory.create(:registered_user, :name => 'John D')
     @person2 = Factory.create(:registered_user, :name => 'Rick D')
-    @conversation1 = Factory.create(:conversation, :owner => @person1.id)
-    @conversation2 = Factory.create(:conversation, :owner => @person2.id)
-    @conversation3 = Factory.create(:conversation, :owner => @person2.id)
+    @conversation1 = Factory.create(:conversation, :person => @person1)
+    @conversation2 = Factory.create(:conversation, :person => @person2)
+    @conversation3 = Factory.create(:conversation, :person => @person2)
     @issue = Factory.create(:issue)
     @issue.conversations = [@conversation1, @conversation2, @conversation3]
     @issue.save

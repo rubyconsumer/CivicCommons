@@ -106,12 +106,12 @@ describe DigestService do
       @person_with_subs = Factory.create(:registered_user, :name => 'I Subscribe', :daily_digest => true, :avatar => nil)
       @contributor = Factory.create(:registered_user, :name => 'Big Talker', :avatar => nil)
       @convo_fresh_with_subs = Factory.create(:conversation, :title => 'Fresh with Subscriptions')
+      Factory.create(:conversation_subscription, person: @person_with_subs, subscribable: @convo_fresh_with_subs)
       @first_contribution = Factory.create(:contribution, :person => @contributor, :conversation => @convo_fresh_with_subs, :created_at => 1.day.ago)
       @second_contribution = Factory.create(:contribution, :person => @contributor, :conversation => @convo_fresh_with_subs, :created_at => 1.day.ago)
 
       digest = DigestService.new
       digest.generate_digest_set
-      digest.group_contributions_by_conversation
       digest.digest_set[@person_with_subs][0][1].should be_an_instance_of Array
       digest.digest_set[@person_with_subs][0][1][0].should == @first_contribution
       digest.digest_set[@person_with_subs][0][1][1].should == @second_contribution

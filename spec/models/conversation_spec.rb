@@ -214,7 +214,7 @@ describe Conversation do
         "6" => Factory.build(:embedly_contribution, :owner => @person.id, :conversation => nil, :parent => nil).attributes,
       }
 
-      @conversation = Factory.build(:user_generated_conversation, :owner => @person)
+      @conversation = Factory.build(:user_generated_conversation, :person => @person)
     end
 
     it "default user_generated_conversation factory should be valid" do
@@ -235,7 +235,7 @@ describe Conversation do
     it "raises an error if conversation created with multiple contributions" do
       @contributions[1] = Factory.build(:question, :conversation => nil, :parent => nil).attributes
       @conversation = Factory.build(:user_generated_conversation,
-                                    :owner => @person,
+                                    :person => @person,
                                     :contributions => [],
                                     :contributions_attributes => Marshal::load(Marshal.dump(@contributions)))
       @conversation.save
@@ -411,11 +411,11 @@ describe Conversation do
 
     it "automatically subscribes owner to conversation" do
       Subscription.delete_all
-      owner = Factory.create(:normal_person)
-      conversation = Factory.build(:conversation, owner: owner.id)
-      owner.subscriptions.length.should == 0
+      person = Factory.create(:normal_person)
+      conversation = Factory.build(:conversation, person: person)
+      person.subscriptions.length.should == 0
       conversation.save
-      owner.reload.subscriptions.length.should == 1
+      person.reload.subscriptions.length.should == 1
     end
   end
 

@@ -22,26 +22,21 @@ require 'spec_helper'
       it "should remove a subscription to the #{model_type.to_s} for the current user" do
         subscription = item.subscribe(@person)
         item.unsubscribe(@person)
-
-        item.subscriptions.blank?.should be_true
+        @person.subscriptions.blank?.should be_true
       end
     end
 
     context "subscribers" do
       it "returns an array with a person after they follow a #{model_type.to_s}" do
         item.subscribe(@person)
-        item.subscribers.should == [@person]
-        item.subscribers.size.should == 1
+        item.subscribers.include?(@person).should be_true
       end
       it "returns an unordered array of people following a #{model_type.to_s}" do
         person2 = Factory.create(:normal_person)
         item.subscribe(@person)
         item.subscribe(person2)
-
-        item_subscribers = item.subscribers
-        expected_subscribers = [person2, @person]
-
-        (item_subscribers - expected_subscribers).should == []
+        item.subscribers.include?(@person).should be_true
+        item.subscribers.include?(person2).should be_true
       end
       it "returns an empty array if no one is following." do
         # Conversations start with one follower, the creator

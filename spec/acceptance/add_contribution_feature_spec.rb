@@ -1,7 +1,7 @@
 require File.expand_path(File.dirname(__FILE__) + '/acceptance_helper')
 
 WebMock.allow_net_connect!
-Capybara.default_wait_time = 10
+Capybara.default_wait_time = 30
 
 feature "Add contribution", %q{
   As a registered user at The Civic Commons

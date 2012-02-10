@@ -50,13 +50,13 @@ class DigestService
 
   def get_updated_conversations
     # extract the individual conversation ids
-    @updated_conversations = updated_contributions.map { |c| c.conversation }
+    @updated_conversations = @updated_contributions.map { |c| c.conversation }
     @updated_conversations.uniq!
   end
 
   def get_recipient_subscriptions
     # get the subscriptions for each person
-    digest_recipients.each do |person|
+    @digest_recipients.each do |person|
 
       subscriptions = person.subscriptions
 
@@ -65,23 +65,23 @@ class DigestService
       subscriptions.each do |sub|
 
         # is the subscription in the list of current conversations?
-        if updated_conversations.include? sub.subscribable
+        if @updated_conversations.include? sub.subscribable
           digest << [sub.subscribable]
         end
       end
 
-      digest_set[person] = digest
+      @digest_set[person] = digest
 
     end
 
   end
 
   def group_contributions_by_conversation
-    digest_set.each do |person, conversations_array|
+    @digest_set.each do |person, conversations_array|
 
       conversations_array.each do |conversation|
 
-        contributions = updated_contributions.select do |contribution|
+        contributions = @updated_contributions.select do |contribution|
           contribution.conversation == conversation.first
         end
 
@@ -89,7 +89,7 @@ class DigestService
       end
     end
 
-    return digest_set
+    return @digest_set
 
   end
 
