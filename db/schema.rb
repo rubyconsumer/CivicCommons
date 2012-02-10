@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120206010605) do
+ActiveRecord::Schema.define(:version => 20120210054403) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -73,6 +73,7 @@ ActiveRecord::Schema.define(:version => 20120206010605) do
     t.string   "page_title"
     t.text     "meta_description"
     t.text     "meta_tags"
+    t.string   "link_text"
   end
 
   add_index "content_items", ["cached_slug"], :name => "index_content_items_on_cached_slug", :length => {"cached_slug"=>10}

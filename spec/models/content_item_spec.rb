@@ -58,7 +58,7 @@ describe ContentItem do
     end
 
   end
-  
+
   context "has_and_belongs_to_many conversations" do
     def given_a_radio_show_with_conversations
       @radioshow = Factory.create(:radio_show)
@@ -69,7 +69,7 @@ describe ContentItem do
     it "should be correct" do
       ContentItem.reflect_on_association(:conversations).macro.should == :has_and_belongs_to_many
     end
-    
+
     it "should have the correct conversations" do
       given_a_radio_show_with_conversations
       @radioshow.conversations.should == [@conversation1,@conversation2]
@@ -300,6 +300,29 @@ describe ContentItem do
       @radio_show.delete_person('othetype',@user1)
       @radio_show.hosts.length.should == 1
       @radio_show.guests.length.should == 1
+    end
+  end
+
+  context "link text" do
+    it "displays default radioshow link text." do
+      radioshow = Factory.build(:radio_show)
+      radioshow.link_title.should == "Listen to the podcast..."
+    end
+
+    it "displays default blog link text." do
+      blogpost = Factory.build(:blog_post)
+      blogpost.link_title.should == "Continue reading..."
+    end
+
+    it "displays default link text for the unknown." do
+      unknown = Factory.build(:blog_post)
+      unknown.content_type = "UNKNOWN"
+      unknown.link_title.should == "Continue reading..."
+    end
+
+    it "displays inputed text for link text" do
+      unknown = Factory.build(:blog_post)
+      unknown.link_title("link to this").should == "link to this"
     end
   end
 end

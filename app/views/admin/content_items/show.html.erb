@@ -20,8 +20,10 @@
   <%= render :partial => "/admin/shared/show_meta_info", :locals => {:meta_object => @content_item } %>
 
   <% if @content_item.external_link %>
-    <p>External Link: <%= link_to(@content_item.external_link, @content_item.external_link) %>
+    <p>External Link: <%= link_to(@content_item.external_link, @content_item.external_link) %></p>
   <% end %>
+
+  <p>Link Text: <%= @content_item.link_text %></p>
 
   <fieldset>
     <legend>Summary:</legend>

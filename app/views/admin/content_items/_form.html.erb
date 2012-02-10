@@ -18,7 +18,7 @@
   <%= f.label :title %><br>
   <%= f.text_field :title, :size => 100 %>
   </p>
-  
+
   <fieldset>
     <legend>Topics</legend>
     <table class="topics">
@@ -61,6 +61,11 @@
   </p>
 
   <p>
+  <%= f.label :link_text %> <br>
+  <%= f.text_field :link_text, :size => 100 %>
+  </p>
+
+  <p>
   <%= f.label :summary %><br>
   <%= f.text_area :summary, :class => 'tinymce' %>
   </p>
@@ -82,5 +87,5 @@
   $().ready(function() {
     init_tiny_mce('#content_item_summary, #content_item_body');
     $('#content_item_published').datepicker();
-	});
+  });
 </script>

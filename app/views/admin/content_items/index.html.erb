@@ -17,9 +17,9 @@
       <th>Updated Date</th>
       <th>Attached Image?</th>
       <th colspan="2"></th>
-      
     </tr>
   <thead>
+
   <tbody>
     <% @content_items.each do |item| %>
     <tr data-<%= item.content_type.underscore.sub(/_/,"-") %>-id=<%=item.id%>>

@@ -88,6 +88,15 @@ class ContentItem < ActiveRecord::Base
     errors.add(:base, "Please select at least one Topic") if self.topic_ids.blank?
   end
 
+  def link_title(title=nil)
+    if title.nil?
+      title = "Listen to the podcast..." if self.content_type_is_radio_show?
+      title = "Continue reading..." if self.content_type_is_blog_post? || title.nil?
+    end
+
+    self.link_text.blank? ? title : self.link_text
+  end
+
   def self.recent_blog_posts(author = nil)
     if author.nil?
       ContentItem.where("content_type = 'BlogPost' AND (published <= curdate() OR DAY(published) = DAY(curdate())) ").order("published desc, created_at desc")

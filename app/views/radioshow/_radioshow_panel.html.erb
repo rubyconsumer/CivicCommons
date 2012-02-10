@@ -13,7 +13,7 @@
       <%= image_tag radioshow.image.url(:panel), :alt => 'The Civic Commons Radio Show and Podcast', :height => 130, :width => 198, :class => 'float' %>
       <%= raw radioshow.summary %>
       <p>
-        <%= link_to "Listen to the podcast...", radioshow_path(radioshow), html: { title: radioshow.title } %>
+        <%= link_to radioshow.link_title, radioshow_path(radioshow), html: { title: radioshow.title } %>
       </p>
     </div>
   </div>
