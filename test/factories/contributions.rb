@@ -1,6 +1,6 @@
 Factory.define :contribution do |f|
   f.datetime "2010-06-30 12:39:43"
-  f.association :person, :factory => :normal_person
+  f.association :person, :factory => :registered_user
   f.top_level false
   f.parent nil
   f.association :conversation, :factory => :conversation
