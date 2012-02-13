@@ -108,6 +108,10 @@ module CivicCommonsDriver
     def self.destroy_all_content_items
       ContentItem.destroy_all
     end
+
+    def self.destroy_all_topics
+      Topic.destroy_all
+    end
     
     class << self
       alias :has_a_blog_post :create_blog_post

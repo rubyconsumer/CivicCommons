@@ -13,6 +13,7 @@
   * [update the participant count on issue index page](https://agilezen.com/project/18091/story/400)
   * [Ability to Customize Content Item Link Text](https://agilezen.com/projects/18091/story/403)
   * [Ability to Filter Posts by Author on Blog Index Page](https://agilezen.com/projects/18091/story/395)
+  * [Add Topics to Blog Index and detail page](https://agilezen.com/projects/18091/story/394)
 
 #### Miscellaneous
   * [Ability for Admin to set Long Description for a Blog.](https://agilezen.com/project/18091/story/391)

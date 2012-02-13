@@ -129,7 +129,7 @@ describe Topic do
       it "should return topics that has a radioshow count of 1 (one) or more" do
         given_topics_with_radioshows_for_sidebar
         @topic_results.each do |topic|
-          topic.radioshow_count.should == 1
+          topic.content_item_count.should == 1
         end
       end
 
@@ -140,12 +140,44 @@ describe Topic do
         end
       end
 
-      it "should have radioshow_count as an additional select field" do
+      it "should have content_item_count as an additional select field" do
         given_topics_with_radioshows_for_sidebar
         @topic_results.each do |topic|
-          topic.respond_to?(:radioshow_count).should be_true
+          topic.respond_to?(:content_item_count).should be_true
         end
       end
     end
+
+    context "BlogPosts" do
+      def given_topics_with_blogposts_for_sidebar
+        topic = Factory.create(:topic)
+        Factory.create(:topic)
+        Factory.create(:blog_post, :topics => [topic])
+        @topic_results = Topic.including_public_blogposts
+      end
+
+      it "should return topics that has a blogpost count of 1 (one) or more" do
+        given_topics_with_blogposts_for_sidebar
+        @topic_results.each do |topic|
+          topic.content_item_count.should == 1
+        end
+      end
+
+      it "should return only ContentItem type" do
+        given_topics_with_blogposts_for_sidebar
+        @topic_results.each do |topic|
+          topic.blogposts.first.content_type == 'RadioShow'
+        end
+      end
+
+      it "should have content_item_count as an additional select field" do
+        given_topics_with_blogposts_for_sidebar
+        @topic_results.each do |topic|
+          topic.respond_to?(:content_item_count).should be_true
+        end
+      end
+    end
+
+    
   end
 end

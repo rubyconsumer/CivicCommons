@@ -18,6 +18,13 @@ module CivicCommonsDriver
         end
       end
 
+      def follow_filter_on_topic(topic)
+        within '.topic-filter' do
+          follow_link topic.name, :blog
+        end
+      end
+      
+
       class Show
         SHORT_NAME = :blog_post
         include Page

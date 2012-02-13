@@ -18,7 +18,7 @@ describe BlogHelper do
     it "should show 'active' when author is the same as current_author" do
       author = mock_person(:name => 'John Author', :id => 123)
       current_author = author
-      helper.blog_filter_by_author_link(author,current_author).should == "<a href=\"/blog?author_id=123\" class=\"active\"><img alt=\"John Author\" class=\"mem-img\" height=\"16\" src=\"/images/avatar.jpg\" title=\"John Author\" width=\"16\" /><span>John Author</span></a>"
+      helper.blog_filter_by_author_link(author,current_author).should == "<a href=\"/blog\" class=\"active\"><img alt=\"John Author\" class=\"mem-img\" height=\"16\" src=\"/images/avatar.jpg\" title=\"John Author\" width=\"16\" /><span>John Author</span></a>"
     end
   end
 end

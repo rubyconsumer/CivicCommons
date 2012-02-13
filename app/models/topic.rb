@@ -29,10 +29,27 @@ class Topic < ActiveRecord::Base
   #     select('topics.*, count(content_items_topics.topic_id) AS radioshow_count').
   #     group('content_items_topics.topic_id')
   #
-  scope :including_public_radioshows,
+  
+  scope :including_public_content_items, lambda {|content_type|
+    case content_type
+    when :blogpost
+      content_type_criteria = 'BlogPost'
+    when :radioshow
+      content_type_criteria = 'RadioShow'
+    end
     joins('INNER JOIN `content_items_topics` ON `content_items_topics`.`topic_id` = `topics`.`id`').
       joins('INNER JOIN content_items ON content_items_topics.content_item_id = content_items.id').
-      select('topics.*, count(content_items_topics.topic_id) AS radioshow_count').
-      where('content_items.content_type = "RadioShow"').
+      select('topics.*, count(content_items_topics.topic_id) AS content_item_count').
+      where(['content_items.content_type = ?', content_type_criteria]).
       group('content_items_topics.topic_id')
+  }  
+  
+  scope :including_public_radioshows, lambda {
+      including_public_content_items(:radioshow)
+  }
+      
+  scope :including_public_blogposts, lambda {
+    including_public_content_items(:blogpost)
+  }
+  
 end

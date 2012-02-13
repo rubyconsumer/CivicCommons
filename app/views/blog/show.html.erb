@@ -9,7 +9,10 @@
         <%= image_tag @blog_post.image.url(:panel), :alt => @blog_post.title, :height => 130, :width => 198, :class => 'float' %>
         <div class="bd">
           <h1><%= @blog_post.title %></h1>
-          <p class="subtitle mbn">Topic: Transportation</p>
+          <p class="subtitle">
+            <%= pluralize_without_count @blog_post.topics.size, "Topic" %>:
+            <%= raw(topics_list_for @blog_post) %>
+          </p>
           <p><strong>By: <%= link_to @blog_post.author.name, user_path(@blog_post.author) %> on <%= format_publish_date(@blog_post) %></strong></p>
         </div>
       </div>

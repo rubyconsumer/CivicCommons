@@ -30,6 +30,7 @@
 
       <div class="aside">
         <%= render :partial => '/search/search', locals: { filter_type: 'blogs' } %>
+        <%= render_blogpost_topics_sidebar %>
         
         <div class="mod">
           <h3>Filter posts by author:</h3>
@@ -40,32 +41,6 @@
           </ul>
           <%= link_to 'Remove Filter',blog_index_path, :class => 'remove-filter', :title => 'Remove this filter'%>
         </div>
-        
-
-        <div class="mod" id="TwitterProfileModule">
-          <%= render :partial => 'shared/twitter_profile_widget' %>
-        </div>
-
-        <div class="mod" id="FacebookActivityModule">
-          <%= render :partial => 'shared/facebook_activity_widget' %>
-        </div>
-        
-        
-
-<!--
-        <div class="mod">
-          <h3>Only show blog posts about:</h3>
-          <ul class="simple-list block-link-list">
-              <li><a href="/issues?topic=1" class=""><span>Education</span> <em>2</em></a></li>
-              <li><a href="/issues?topic=2" class=""><span>Environment</span> <em>1</em></a></li>
-              <li><a href="/issues?topic=4" class=""><span>Economy</span> <em>9</em></a></li>
-              <li><a href="/issues?topic=5" class=""><span>Crime &amp; Safety</span> <em>4</em></a></li>
-              <li><a href="/issues?topic=6" class=""><span>Community</span> <em>6</em></a></li>
-              <li><a href="/issues?topic=7" class=""><span>Government</span> <em>9</em></a></li>
-          </ul>
-        </div>
--->
-
       </div>
 
     </div>

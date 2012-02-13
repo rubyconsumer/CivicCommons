@@ -108,20 +108,34 @@ describe TopicsHelper do
       helper.render_radioshow_topics_sidebar
     end
   end
-  describe "radioshow_topic_filter" do
-    before(:each) do
-      @topic = mock(Topic,:radioshow_count => 1, :name => 'Topic One', :id => 1001)
-      @current_topic = mock(Topic,:radioshow_count => 1, :name => 'Topic Two', :id => 1002)
+
+  describe "render_blogpost_topics_sidebar" do
+    it "should render the topic/blogpost_topic_sidebar" do
+      @topics = 'topic-id'
+      helper.should_receive(:render).with('topics/blogpost_topic_sidebar', :topics =>'topic-id')
+      helper.render_blogpost_topics_sidebar
     end
-    it "should link to the topic" do
-      radioshow_topic_filter(@topic).should include 'href="/radioshow?topic=1001"'
-      radioshow_topic_filter(@topic).should include 'Topic One'
+  end
+  
+  describe "content_item_topic_filter" do
+    before(:each) do
+      @topic = mock(Topic,:content_item_count => 1, :name => 'Topic One', :id => 1001)
+      @current_topic = mock(Topic,:content_item_count => 1, :name => 'Topic Two', :id => 1002)
+    end
+    it "should link to the radioshow topic" do
+      content_item_topic_filter(@topic, :radioshow).should include 'href="/radioshow?topic=1001"'
+      content_item_topic_filter(@topic, :radioshow).should include 'Topic One'
+    end
+    it "should link to the blogpost topic" do
+      self.stub!(:request).and_return(mock('request',{:parameters => {}}))
+      content_item_topic_filter(@topic, :blogpost).should include 'href="/blog?topic=1001"'
+      content_item_topic_filter(@topic, :blogpost).should include 'Topic One'
     end
     it "should have an 'active' class if the current topic has matched" do
-      radioshow_topic_filter(@current_topic).should include 'class="active"'
+      content_item_topic_filter(@current_topic, :radioshow).should include 'class="active"'
     end
     it "should not have 'active' css class if the current topic has not match" do
-      radioshow_topic_filter(@topic).should_not include "active"
+      content_item_topic_filter(@topic, :radioshow).should_not include "active"
     end
   end
 end

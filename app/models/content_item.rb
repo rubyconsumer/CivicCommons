@@ -18,6 +18,14 @@ class ContentItem < ActiveRecord::Base
   scope :blog_post, where(:content_type => 'BlogPost')
   scope :radio_show, where(:content_type => 'RadioShow' )
   scope :news_item, where(:content_type => 'NewsItem')
+  scope :recent_blog_posts, lambda { |author = nil|
+    if author.nil?
+      return where("content_type = 'BlogPost' AND (published <= curdate() OR DAY(published) = DAY(curdate())) ").order("published desc, created_at desc")
+    else
+      author = author.id if author.is_a? Person
+      return where(person_id: author).where("content_type = 'BlogPost' AND (published <= curdate() OR DAY(published) = DAY(curdate())) ").order("published desc, created_at desc")
+    end
+  }
 
   has_attached_file :image,
     :styles => {
@@ -95,15 +103,6 @@ class ContentItem < ActiveRecord::Base
     end
 
     self.link_text.blank? ? title : self.link_text
-  end
-
-  def self.recent_blog_posts(author = nil)
-    if author.nil?
-      ContentItem.where("content_type = 'BlogPost' AND (published <= curdate() OR DAY(published) = DAY(curdate())) ").order("published desc, created_at desc")
-    else
-      author = author.id if author.is_a? Person
-      ContentItem.where(person_id: author).where("content_type = 'BlogPost' AND (published <= curdate() OR DAY(published) = DAY(curdate())) ").order("published desc, created_at desc")
-    end
   end
 
   def self.recent_radio_shows

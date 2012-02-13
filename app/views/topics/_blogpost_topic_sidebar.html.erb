@@ -1,8 +1,8 @@
 <div class="mod">
-  <h3>Filter Radio Shows by Topic:</h3>
+  <h3>Only show blog posts about:</h3>
   <ul class="simple-list block-link-list topic-filter">
     <% topics.each do |topic| %>
-      <li><%= content_item_topic_filter(topic, :radioshow) %></li>
+      <li><%= content_item_topic_filter(topic, :blogpost) %></li>
     <% end %>
   </ul>
 </div>

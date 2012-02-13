@@ -6,6 +6,11 @@ module BlogHelper
   end
   
   def blog_filter_by_author_link(author,current_author)
-    link_to raw("#{profile_image(author,16,  'mem-img')}<span>#{author.name}</span>"), blog_index_path(:author_id => author.id), :class => "#{'active' if current_author.try(:id) == author.id}"
+    if author == current_author
+      path = blog_index_path(request.parameters.merge({:author_id => nil, :page => nil}))
+    else
+      path = blog_index_path(request.parameters.merge({:author_id => author.id, :page => nil}))
+    end
+    link_to raw("#{profile_image(author,16,  'mem-img')}<span>#{author.name}</span>"), path , :class => "#{'active' if current_author.try(:id) == author.id}"
   end
 end

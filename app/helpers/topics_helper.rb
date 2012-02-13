@@ -14,11 +14,35 @@ module TopicsHelper
     render 'topics/radioshow_topic_sidebar', :topics => @topics
   end
 
-  def radioshow_topic_filter(topic)
+  def render_blogpost_topics_sidebar
+    render 'topics/blogpost_topic_sidebar', :topics => @topics
+  end
+
+  def content_item_topic_filter(topic, content_type)
     active = @current_topic == topic
     css_class = active ? 'active' : ''
     topic_id = active ? nil : topic.id
-    link_to raw("<span>#{topic.name}</span> <em>#{topic.radioshow_count}</em>"), radioshow_index_path(:topic => topic_id), :class=> css_class
+    
+    case content_type
+    when :blogpost
+      path = blog_index_path(request.parameters.merge({:topic => topic_id, :page => nil}))
+    when :radioshow
+      path = radioshow_index_path(:topic => topic_id)
+    else
+      path = ''
+    end
+    
+    link_to raw("<span>#{topic.name}</span> <em>#{topic.content_item_count}</em>"), path , :class=> css_class
+  end
+  
+  def topics_one_line(obj)
+    topics = obj.topics.collect{|topic|topic.name}
+    if topics.present?
+      "Topic: #{topics.to_sentence(:last_word_connector => ', ')}"
+    else
+      return nil
+    end
+    
   end
 
   def topics_list_for(obj)
@@ -27,6 +51,8 @@ module TopicsHelper
         render partial: "issues/issue_list_item", locals: { topic: topic }
       elsif obj.class == ContentItem and obj.content_type == 'RadioShow'
         render partial: "radioshow/radioshow_list_item", locals: { topic: topic }
+      elsif obj.class == ContentItem and obj.content_type == 'BlogPost'
+        render partial: "blog/blog_list_item", locals: { topic: topic }
       end
     end
     rendered_list.to_sentence(last_word_connector: ", ", two_words_connector: ", ").gsub(/\n/, "")
