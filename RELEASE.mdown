@@ -20,6 +20,7 @@
 #### Bug Fixes
   * [Issue Upload Bug in IE and fixing http/https problem.](https://agilezen.com/projects/18091/story/386)
   * [Ability to edit Blog Entries over a year old.](https://agilezen.com/projects/18091/story/396)
+  * [Blog Index / Detail Page - Fix Image](https://agilezen.com/projects/18091/story/404)
 
 ### Post Deployment Instructions
 

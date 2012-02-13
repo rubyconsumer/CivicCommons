@@ -24,27 +24,8 @@
 
     <div class="content-container">
       <div class="main-content">
-
-        <%- @blog_posts.each do |blog_post| %>
-
-          <div class="entry-container">
-            <div class="entry-details full rounded">
-              <div class="media">
-                <span class="img"><%= user_profile(blog_post.author) %></span>
-                <div class="bd">
-                  <h4><%= link_to blog_post.title, blog_path(blog_post) %></h4>
-                  <p class="entry-tags"><%= format_publish_date(blog_post) %>, Topic: Transportation</p>
-                  <p><strong>By: <%= link_to blog_post.author.name, user_path(blog_post.author) %></strong></p>
-                  <%= raw blog_post.summary %>
-                  <p><%= link_to "Continue reading...", blog_path(blog_post), :title => blog_post.title %></p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        <%- end %>
+        <%= render :partial => '/blog/blog_panel', :collection => @blog_posts, :as => :blog_post %>
         <%= will_paginate @blog_posts, :inner_window => 3, :previous_label => "Previous", :next_label => "Next" %>
-
       </div>
 
       <div class="aside">
