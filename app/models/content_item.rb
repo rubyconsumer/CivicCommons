@@ -18,6 +18,7 @@ class ContentItem < ActiveRecord::Base
   scope :blog_post, where(:content_type => 'BlogPost')
   scope :radio_show, where(:content_type => 'RadioShow' )
   scope :news_item, where(:content_type => 'NewsItem')
+  scope :newer_than, lambda {|date| where(['published >= ?',date.to_s(:db)])}
   scope :recent_blog_posts, lambda { |author = nil|
     if author.nil?
       return where("content_type = 'BlogPost' AND (published <= curdate() OR DAY(published) = DAY(curdate())) ").order("published desc, created_at desc")
@@ -155,7 +156,8 @@ class ContentItem < ActiveRecord::Base
   end
   
   def self.blog_authors
-    blog_author_ids = ContentItem.blog_post.select('DISTINCT(person_id)').collect(&:person_id)
+    people_query = ContentItem.blog_post.recent_blog_posts.newer_than(6.months.ago).select('DISTINCT(person_id)')
+    blog_author_ids = people_query.collect(&:person_id)
     Person.find(blog_author_ids)
   end
   
