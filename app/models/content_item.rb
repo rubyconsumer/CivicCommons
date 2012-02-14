@@ -156,7 +156,7 @@ class ContentItem < ActiveRecord::Base
   end
   
   def self.blog_authors
-    people_query = ContentItem.blog_post.recent_blog_posts.newer_than(6.months.ago).select('DISTINCT(person_id)')
+    people_query = ContentItem.blog_post.recent_blog_posts.newer_than(3.months.ago).select('DISTINCT(person_id)')
     blog_author_ids = people_query.collect(&:person_id)
     Person.find(blog_author_ids)
   end
