@@ -44,8 +44,8 @@
             <span class="img"><%= user_profile(@blog_post.author) %></span>
             <div class="bd">
               <h4><%= link_to @blog_post.author.name, user_path(@blog_post.author) %></h4>
-              <p>User bio goes here - Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin augue nisi, fermentum vitae, imperdiet a, auctor eu, mi. Nulla imperdiet molestie purus.</p>
-              <p><a href="#">View Dan's Profile</a></p>
+              <p><%= truncate @blog_post.author.bio, :length => 150 %></p>
+              <p><%= link_to "View #{@blog_post.author.first_name}'s Profile", user_path(@blog_post.author) %></p>
             </div>
           </div>
         </div>
