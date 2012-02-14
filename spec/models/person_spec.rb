@@ -616,6 +616,94 @@ describe Person do
     @person.should_not be_subscribed_to_daily_digest
   end
 
+  describe 'weekly_newsletter' do
+    let(:subscribed_person){ Factory.create(:person_subscribed_to_weekly_newsletter) }
+    let(:unsubscribed_person){ Factory.create(:normal_person, weekly_newsletter: false) }
+
+    it 'allows subscribing to weekly newsletter' do
+      unsubscribed_person.weekly_newsletter = true
+      unsubscribed_person.should_receive(:add_newsletter_subscription)
+      unsubscribed_person.save
+      unsubscribed_person.weekly_newsletter.should be_true
+    end
+
+    it 'allows unsubscribing from weekly newsletter' do
+      subscribed_person.weekly_newsletter = false
+      subscribed_person.should_receive(:remove_newsletter_subscription)
+      subscribed_person.save
+      subscribed_person.weekly_newsletter.should be_false
+    end
+
+    it 'will not update subscription if your preference is unchanged' do
+      unsubscribed_person.weekly_newsletter = false
+      unsubscribed_person.should_not_receive(:remove_newsletter_subscription)
+      unsubscribed_person.save
+
+      subscribed_person.weekly_newsletter = true
+      subscribed_person.should_not_receive(:add_newsletter_subscription)
+      subscribed_person.save
+    end
+
+    it 'creates a job request when subscribing to an email list' do
+      Delayed::Worker.delay_jobs = false
+      Delayed::Job.should_receive(:enqueue).twice
+      email = 'test@example.com'
+      first_name = 'First'
+      last_name = 'Last'
+      merge_tags = { :FNAME => first_name, :LNAME => last_name }
+
+      user = Factory.create(:normal_person,
+        email: email,
+        weekly_newsletter: false,
+        first_name: first_name,
+        last_name: last_name)
+      Jobs::SubscribeToEmailListJob.should_receive(:new).with(
+        Civiccommons::Config.mailer['api_token'],
+        Civiccommons::Config.mailer['weekly_newsletter_list_id'],
+        email,
+        merge_tags)
+      user.weekly_newsletter = true
+      user.save
+      Delayed::Worker.delay_jobs = true
+    end
+
+    it 'creates a job request when unsubscribing from email list' do
+      Delayed::Worker.delay_jobs = false
+      Delayed::Job.should_receive(:enqueue).twice
+      email = 'test@example.com'
+      user = Factory.create(:normal_person, email: email, weekly_newsletter: true)
+      Jobs::UnsubscribeFromEmailListJob.should_receive(:new).with(
+        Civiccommons::Config.mailer['api_token'],
+        Civiccommons::Config.mailer['weekly_newsletter_list_id'],
+        email)
+      user.weekly_newsletter = false
+      user.save
+      Delayed::Worker.delay_jobs = true
+    end
+
+    it "changes merge tags from nil to empty string" do
+      Delayed::Worker.delay_jobs = false
+      Delayed::Job.should_receive(:enqueue).twice
+      email = 'test@example.com'
+      first_name = nil
+      last_name = 'Organization Name'
+      merge_tags = { :FNAME => first_name, :LNAME => last_name }
+
+      user = Factory.create(:organization,
+        email: email,
+        weekly_newsletter: false,
+        name: last_name)
+      Jobs::SubscribeToEmailListJob.should_receive(:new).with(
+        Civiccommons::Config.mailer['api_token'],
+        Civiccommons::Config.mailer['weekly_newsletter_list_id'],
+        email,
+        { :FNAME => '', :LNAME => last_name })
+      user.weekly_newsletter = true
+      user.save
+      Delayed::Worker.delay_jobs = true
+    end
+  end
+
   context "paperclip" do
 
     it "will have necessary db columns for paperclip" do

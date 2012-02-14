@@ -118,6 +118,7 @@ class Person < ActiveRecord::Base
   after_create :notify_civic_commons
   before_save :check_to_send_welcome_email
   after_save :send_welcome_email, :if => :send_welcome?
+  around_save :update_newsletter_subscription
 
   around_update :check_to_notify_email_change, :if => :send_email_change_notification?
 
@@ -288,6 +289,21 @@ class Person < ActiveRecord::Base
     self
   end
 
+  def update_newsletter_subscription
+    # store if it's a new record before save since *_changed? only works with existing models
+    new_record = new_record?
+
+    yield
+
+    if new_record or weekly_newsletter_changed?
+      if weekly_newsletter
+        add_newsletter_subscription
+      else
+        remove_newsletter_subscription
+      end
+    end
+  end
+
   def avatar_path(style='')
     self.avatar.path(style)
   end
@@ -389,6 +405,28 @@ protected
       facebook_unlinking? ? true : false
     else
       (!persisted? && !create_from_auth?) || password.present? || password_confirmation.present?
+    end
+  end
+
+  def add_newsletter_subscription
+    if Civiccommons::Config.mailer['mailchimp']
+      merge_tags = { :FNAME => first_name, :LNAME => last_name }
+      merge_tags = merge_tags.each{|key, value| merge_tags[key] = '' if value.nil? }
+
+      Delayed::Job.enqueue Jobs::SubscribeToEmailListJob.new(
+        Civiccommons::Config.mailer['api_token'],
+        Civiccommons::Config.mailer['weekly_newsletter_list_id'],
+        email,
+        merge_tags)
+    end
+  end
+
+  def remove_newsletter_subscription
+    if Civiccommons::Config.mailer['mailchimp']
+      Delayed::Job.enqueue Jobs::UnsubscribeFromEmailListJob.new(
+        Civiccommons::Config.mailer['api_token'],
+        Civiccommons::Config.mailer['weekly_newsletter_list_id'],
+        email)
     end
   end
 

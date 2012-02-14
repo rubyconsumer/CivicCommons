@@ -16,6 +16,7 @@ development:
     api_token: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-us1"
     intercept: true
     intercept_email: "myemail@example.com"
+    weekly_newsletter_list_id: "1234abcd"
   omniauth:
     full_host: 'http://localhost:3000'
   rails_secret_token: "randonStuffThatsAtLeast30CharachtersYo128DirtyWithTh"
@@ -47,6 +48,7 @@ test:
     api_token: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-us1"
     intercept: false
     intercept_email: "my_intercept_email@example.com"
+    weekly_newsletter_list_id: "1234abcd"
   omniauth:
     full_host: 'http://test.com'
   rails_secret_token: "randonStuffThatsAtLeast30CharachtersYo128DirtyWithTh"
@@ -78,6 +80,7 @@ integration:
     api_token: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-us1"
     intercept: true
     intercept_email: "myemail@example.com"
+    weekly_newsletter_list_id: "1234abcd"
   omniauth:
     full_host: 'https://integration.com'
   rails_secret_token: "randonStuffThatsAtLeast30CharachtersYo128DirtyWithTh"
@@ -109,6 +112,7 @@ staging:
     api_token: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-us1"
     intercept: true
     intercept_email: "myemail@example.com"
+    weekly_newsletter_list_id: "1234abcd"
   omniauth:
     full_host: 'https://staging.com'
   rails_secret_token: "randonStuffThatsAtLeast30CharachtersYo128DirtyWithTh"
@@ -140,6 +144,7 @@ production:
     api_token: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-us1"
     intercept: false
     intercept_email: "myemail@example.com"
+    weekly_newsletter_list_id: "1234abcd"
   omniauth:
     full_host: 'https://production.com'
   rails_secret_token: "randonStuffThatsAtLeast30CharachtersYo128DirtyWithTh"

@@ -1,3 +1,13 @@
+## 1.9.5
+
+#### Miscellaneous
+  * [Automate Newsletter Subscription to MailChimp](https://agilezen.com/project/18091/story/405)
+
+### Post Deployment Instructions
+  * add "weekly_newsletter_list_id" (unique ID of newsletter MailChimp list) under "mailer" in the civic_commons.yml file
+
+
+
 ## 1.9.4
 
 ### External Changes
