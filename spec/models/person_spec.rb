@@ -2,13 +2,20 @@ require 'spec_helper'
 require 'acceptance/support/facebookable'
 
 describe Person do
-  subject { Factory.build(:normal_person) }
+  context 'normal_person' do
+    subject { Factory.build(:normal_person) }
 
-  it { should be_valid }
-  it { should have_attached_file :avatar }
-  it { should validate_attachment_content_type(:avatar).allowing([
-              "image/gif", "image/jpeg", "image/png", "image/bmp"])
-              .rejecting(['text/plain']) }
+    it { should be_valid }
+    it { should have_attached_file :avatar }
+    it { should validate_attachment_content_type(:avatar).allowing([
+                "image/gif", "image/jpeg", "image/png", "image/bmp"])
+                .rejecting(['text/plain']) }
+  end
+
+  context 'admin' do
+    subject { Factory.build(:admin) }
+    it { should be_valid }
+  end
 end
 
 describe Person do

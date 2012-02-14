@@ -5,7 +5,6 @@ FactoryGirl.define do |f|
     u.zip_code '44313'
     u.password 'password'
     u.email ''
-    u.skip_email_marketing true
   end
 
   factory :normal_person, :class=>Person do |u|
@@ -16,7 +15,6 @@ FactoryGirl.define do |f|
     u.password 'password'
     u.sequence(:email) {|n| "test.account#{n}@mysite.com" }
     f.sequence(:cached_slug) {|n| "john-doe--#{n}" }
-    u.skip_email_marketing true
     u.daily_digest false
     u.avatar_url '/images/avatar_70.gif'
   end
@@ -28,7 +26,6 @@ FactoryGirl.define do |f|
   factory :registered_user, :parent => :normal_person do |u|
     u.confirmed_at { Time.now }
     u.declined_fb_auth true
-    u.skip_email_marketing true
   end
 
   factory :sequence_user, :parent => :registered_user do |u|
@@ -76,19 +73,9 @@ FactoryGirl.define do |f|
     u.sequence(:email) {|n| "test.admin.account#{n}@mysite.com" }
     u.sequence(:last_name) {|n| "Doe #{n}" }
     u.admin true
-    u.skip_email_marketing true
     u.confirmed_at '2011-03-04 15:33:33'
   end
 
-  factory :admin, :parent => :admin_person do |u|
-    u
-  end
-
-  factory :marketable_person, :parent => :registered_user do |u|
-    u.password 'password'
-    u.sequence(:email) {|n| "test.account#{n}@mysite.com" }
-    u.skip_email_marketing false
-    u.marketable ""
-  end
+  factory :admin, :parent => :admin_person
 
 end

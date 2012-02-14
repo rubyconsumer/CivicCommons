@@ -2,7 +2,6 @@ class Person < ActiveRecord::Base
 
   include Regionable
   include GeometryForStyle
-  include Marketable
   include UnsubscribeSomeone
 
   searchable :ignore_attribute_changes_of => [ :updated_at, :failed_attempts, :current_sign_in_at, :last_sign_in_at, :current_sign_in_ip, :confirmed_at, :sign_in_count ] do
@@ -293,13 +292,6 @@ class Person < ActiveRecord::Base
     self.avatar.path(style)
   end
 
-  # Implement Marketable method
-  def is_marketable?
-    return false if skip_email_marketing
-
-    newly_confirmed? ? true : false
-  end
-
   # https://graph.facebook.com/#{uid}/picture
   # optional params: type=small|square|large
   # square (50x50), small (50 pixels wide, variable height), and large (about 200 pixels wide, variable height):
@@ -339,22 +331,6 @@ class Person < ActiveRecord::Base
   # due to needing to set encrypted_password to blank, so that it doesn't error out when it is set to nil
   def valid_password?(password)
     encrypted_password.blank? ? false : super
-  end
-
-  # Add the email subscription signup as a delayed job
-  def subscribe_to_marketing_email
-    if Civiccommons::Config.mailer['mailchimp']
-      Delayed::Job.enqueue Jobs::SubscribeToMarketingEmailJob.new(Civiccommons::Config.mailer['api_token'],
-                                                                  Civiccommons::Config.mailer['list'],
-                                                                  email,
-                                                                  {:FNAME => first_name, :LNAME => last_name},
-                                                                  'html',
-                                                                  false)
-
-      Rails.logger.info("Success. Added #{name} with email #{email} to email queue.")
-    else
-      Rails.logger.info("Auto-Subscription to MailChimp is off...")
-    end
   end
 
   def self.build_from_auth_hash(auth_hash)

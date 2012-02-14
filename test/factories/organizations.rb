@@ -13,6 +13,5 @@ FactoryGirl.define do |f|
   end
   factory :newly_confirmed_organization, :parent => :organization do |o|
     o.confirmed_at { Time.now }
-    o.skip_email_marketing true
   end
 end

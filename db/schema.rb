@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120210054403) do
+ActiveRecord::Schema.define(:version => 20120214155957) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -374,8 +374,6 @@ ActiveRecord::Schema.define(:version => 20120210054403) do
     t.integer  "failed_attempts",                     :default => 0
     t.string   "unlock_token"
     t.datetime "locked_at"
-    t.boolean  "marketable"
-    t.datetime "marketable_at"
     t.text     "bio"
     t.boolean  "daily_digest",                        :default => true, :null => false
     t.boolean  "declined_fb_auth"

@@ -14,7 +14,6 @@ development:
   mailer:
     mailchimp: true
     api_token: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-us1"
-    list: "planetoftheapes"
     intercept: true
     intercept_email: "myemail@example.com"
   omniauth:
@@ -46,7 +45,6 @@ test:
   mailer:
     mailchimp: true
     api_token: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-us1"
-    list: "planetoftheapes"
     intercept: false
     intercept_email: "my_intercept_email@example.com"
   omniauth:
@@ -78,7 +76,6 @@ integration:
   mailer:
     mailchimp: true
     api_token: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-us1"
-    list: "planetoftheapes"
     intercept: true
     intercept_email: "myemail@example.com"
   omniauth:
@@ -110,7 +107,6 @@ staging:
   mailer:
     mailchimp: true
     api_token: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-us1"
-    list: "planetoftheapes"
     intercept: true
     intercept_email: "myemail@example.com"
   omniauth:
@@ -142,7 +138,6 @@ production:
   mailer:
     mailchimp: true
     api_token: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-us1"
-    list: "planetoftheapes"
     intercept: false
     intercept_email: "myemail@example.com"
   omniauth:
