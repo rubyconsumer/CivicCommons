@@ -77,7 +77,7 @@ describe('a togglable field', function() {
     });
   });
   describe('clicking the fields link', function() {
-    it('toggles the field', function() {
+    xit('toggles the field', function() {
       spyOn(field,'toggle');
       field.$('a').click();
       expect(field.toggle).toHaveBeenCalled();

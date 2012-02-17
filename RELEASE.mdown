@@ -3,9 +3,11 @@
 #### Miscellaneous
   * [Automate Newsletter Subscription to MailChimp](https://agilezen.com/project/18091/story/405)
 
+#### Bug Fixes
+  * [Ability to Login when Inviting a Friend to a Conversation](https://agilezen.com/project/18091/story/408)
+
 ### Post Deployment Instructions
   * add "weekly_newsletter_list_id" (unique ID of newsletter MailChimp list) under "mailer" in the civic_commons.yml file
-
 
 
 ## 1.9.4

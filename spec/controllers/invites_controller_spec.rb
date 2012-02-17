@@ -23,7 +23,8 @@ describe InvitesController do
     context "XHR" do
       it "renders a parital for XHR request" do
         xhr :get, :new, source_type: 'conversations', source_id: @conversation.id
-        response.should render_template(:partial => 'invites/_form')
+        response.should render_template('invites/new')
+        should respond_with_content_type(:js)
       end
     end
 
@@ -31,6 +32,7 @@ describe InvitesController do
       it "renders regular layout" do
         get :new, source_type: 'conversations', source_id: @conversation.id
         response.should render_template('layouts/application')
+        should respond_with_content_type(:html)
       end
     end
   end

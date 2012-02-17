@@ -10,6 +10,7 @@ class InvitesController < ApplicationController
     respond_to do |format|
       if request.xhr?
         format.html { render :partial => 'form', :layout => false }
+        format.js
       else
         format.html
       end

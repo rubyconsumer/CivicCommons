@@ -1,0 +1,12 @@
+<%= remotipart_response do %>
+  $.colorbox({
+    html: "<%= escape_javascript(
+            raw(
+              render( :partial => 'form' )
+            )
+    ) %>",
+    onComplete: function(){
+      $.colorbox.resize();
+    }
+  });
+<% end %>

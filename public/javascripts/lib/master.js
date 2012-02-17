@@ -49,8 +49,8 @@ jQuery(function ($) {
 });
 
 $(document).ready(function(){
-  $('a[data-colorbox]').live('click', function(e){
-    $.colorbox({ 
+  $('a[data-colorbox]:not([data-remote])').live('click', function(e){
+    $.colorbox({
       transition: 'fade', // needed to fix colorbox bug with jquery 1.4.4
       href: $(this).attr('href') 
     });
