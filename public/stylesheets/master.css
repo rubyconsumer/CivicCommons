@@ -40,6 +40,14 @@ form.delete-button {
   margin-left: 8px;
 }
 
+.fl-left {
+	float: left;
+}
+
+.fl-right {
+	float: right;
+}
+
 
 /* Typography
 ---------------------------------*/
@@ -571,22 +579,19 @@ a.see-more {float: right;}
   border-radius: 4px 4px 0 0;
 }
 
-/*- GROUP OFFSET STYLES
-----------------------------------------------------------------------*/
 .frame {
-background: #fff;
-border: 1px solid #ccc;
-padding: 4px;
--webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
--moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
--o-box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
-box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 4px;
+  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
+  -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
+  -o-box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
 }
 
 
-/* @group Offset Styles */
-
-/*- Image Offset ----------*/
+/* Offset Styles
+---------------------------------*/
 
 .offset-1 {
   padding-left: 70px;
@@ -619,35 +624,63 @@ box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
   padding-left: 90px;
 }
 
-/*- Media Block
 
- (introducing the media object by Nicole Sullivan
- hopefully it will allow us to remove the various
+/* Media Object
+
+ (introducing the media object by 
+ Nicole Sullivan hopefully it will 
+ allow us to remove the various
  image offset styles)
 
- --------------------------------------------------*/
+---------------------------------*/
 
 .media .bd {
-overflow: hidden;
-*overflow: visible;
-zoom: 1;
-}
-.media {
-overflow: hidden;
-*overflow: visible;
-zoom: 1;
-}
-.media .img {
-float: left;
-margin-right: 20px;
-}
-.media .img img {display: block;}
-.media .imgExt {
-float: right;
-margin-left: 10px;
+  overflow: hidden;
+  *overflow: visible;
+  zoom: 1;
 }
 
-/*- Media Download Styles ----------*/
+.media {
+  overflow: hidden;
+  *overflow: visible;
+  zoom: 1;
+}
+
+.media .img {
+  float: left;
+  margin-right: 20px;
+}
+
+.media .img img {
+  display: block;
+}
+
+.media .imgExt {
+  float: right;
+  margin-left: 10px;
+}
+
+
+/* Icon Styles
+   (laying groundwork for setting
+   up modular styles for icons)
+---------------------------------*/
+
+.ico-sm {
+  display: inline-block;
+  height: 14px;
+  position: relative;
+  top: 2px;
+  width: 14px;
+}
+
+.ico-sm.ico-person-white {
+	background: url(../images/icons/person-ico-white.png) no-repeat;
+}
+
+
+/* Media Download Styles
+---------------------------------*/
 
 .dnld {
   margin-bottom: 1em;
@@ -662,8 +695,8 @@ margin-left: 10px;
 .dnld p {margin-bottom: .2em;}
 
 
-/*- PHOTOBANK STYLES
-----------------------------------------------------------------------*/
+/* Photobank Styles
+---------------------------------*/
 
 div.photobank {margin: 0 0 0 -10px;}
 div.photobank img {
