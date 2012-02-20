@@ -153,10 +153,10 @@ a.button:active span.stitcher {
   margin: 0 -5px 0 5px;
   padding: 1px 3px;
   text-shadow: none;
-  -moz-border-radius: 2px;
   -webkit-border-radius: 2px;
-  -o-border-radius: 2px;
-  border-radius: 2px;
+     -moz-border-radius: 2px;
+       -o-border-radius: 2px;
+          border-radius: 2px;
 }
 
 .button:active .number, 
@@ -192,17 +192,22 @@ a.button:active span.stitcher {
 
 .btn-group .button:first-child {
 	margin-left: 0;
-  -webkit-border-radius: 4px 0 0 4px;
-     -moz-border-radius: 4px 0 0 4px;
-       -o-border-radius: 4px 0 0 4px;
-          border-radius: 4px 0 0 4px;
+     -webkit-border-top-left-radius: 4px;
+         -moz-border-radius-topleft: 4px;
+             border-top-left-radius: 4px;
+  -webkit-border-bottom-left-radius: 4px;
+      -moz-border-radius-bottomleft: 4px;
+          border-bottom-left-radius: 4px;
 }
 
-.btn-group .button:last-child {
-  -webkit-border-radius: 0 4px 4px 0;
-     -moz-border-radius: 0 4px 4px 0;
-       -o-border-radius: 0 4px 4px 0;
-          border-radius: 0 4px 4px 0;
+.btn-group .button:last-child, 
+.btn-group .button.dropdown-toggle {
+     -webkit-border-top-right-radius: 4px;
+         -moz-border-radius-topright: 4px;
+             border-top-right-radius: 4px;
+  -webkit-border-bottom-right-radius: 4px;
+      -moz-border-radius-bottomright: 4px;
+          border-bottom-right-radius: 4px;
 }
 
 .btn-group .button:hover,
@@ -237,4 +242,46 @@ a.button:active span.stitcher {
 
 .btn-group-large .text-left {
 	text-align: left;
+}
+
+
+/* Caret Styling
+---------------------------------*/
+
+.caret {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  text-indent: -9999px;
+  *text-indent: 0;
+  vertical-align: top;
+  border-left:  4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top:   4px solid #fff;
+  opacity: .7;
+  content: "\2193";
+}
+
+.button:active .caret, 
+.button.active .caret {
+	border-top-color: #9cb050;
+	opacity: 1;
+}
+
+.button.secondary:active .caret, 
+.button.secondary.active .caret {
+	border-top-color: #637988;
+}
+
+.button .caret {
+	margin-top: 6px;
+	margin-left: 5px;
+}
+
+
+/* Button Dropdowns
+---------------------------------*/
+
+.btn-group .dropdown-toggle.full {
+	width: 268px;
 }
