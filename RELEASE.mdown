@@ -6,6 +6,8 @@
 #### Bug Fixes
   * [Ability to Login when Inviting a Friend to a Conversation](https://agilezen.com/project/18091/story/408)
   * [SOLR filter to remove Unconfirmed People](https://agilezen.com/project/18091/story/427)
+  * [reindexing solr displays the error: Association named 'conversation' was not found](https://agilezen.com/project/18091/story/409)
+  * [Adjust Conversation URLs so Google Analytics and Facebook/Twitter counts show up accurately](https://agilezen.com/project/18091/story/389)
 
 ### Post Deployment Instructions
   * add "weekly_newsletter_list_id" (unique ID of newsletter MailChimp list) under "mailer" in the civic_commons.yml file
