@@ -5,9 +5,11 @@
 
 #### Bug Fixes
   * [Ability to Login when Inviting a Friend to a Conversation](https://agilezen.com/project/18091/story/408)
+  * [SOLR filter to remove Unconfirmed People](https://agilezen.com/project/18091/story/427)
 
 ### Post Deployment Instructions
   * add "weekly_newsletter_list_id" (unique ID of newsletter MailChimp list) under "mailer" in the civic_commons.yml file
+  * run `bundle exec rake sunspot:solr:reindex` on the server after deployment
 
 
 ## 1.9.4

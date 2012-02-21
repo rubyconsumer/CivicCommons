@@ -775,4 +775,11 @@ describe Person do
     end
   end
 
+  context "searchable" do
+    it "should only include confirmed and non-locked instances" do
+      Person.sunspot_options[:if].should == :confirmed?
+      Person.sunspot_options[:unless].should == :locked?
+    end
+  end
+
 end
