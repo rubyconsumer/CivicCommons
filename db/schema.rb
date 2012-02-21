@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120214155957) do
+ActiveRecord::Schema.define(:version => 20120219165240) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -53,6 +53,17 @@ ActiveRecord::Schema.define(:version => 20120214155957) do
     t.text   "description_long"
     t.text   "description_short"
   end
+
+  create_table "content_item_links", :force => true do |t|
+    t.string   "title"
+    t.text     "description"
+    t.text     "url"
+    t.integer  "content_item_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "content_item_links", ["content_item_id"], :name => "index_content_item_links_on_content_item_id"
 
   create_table "content_items", :force => true do |t|
     t.integer  "person_id"

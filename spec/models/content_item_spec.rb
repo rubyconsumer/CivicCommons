@@ -108,6 +108,18 @@ describe ContentItem do
         @radio_show.topics.count.should == 2
       end
     end
+    
+    describe "has_many links" do
+      it "should be correct" do
+        ContentItem.reflect_on_association(:links).macro.should == :has_many
+      end
+      it "should have the class name as ContentItemLink" do
+        ContentItem.reflect_on_association(:links).options[:class_name].should == 'ContentItemLink'
+      end
+      it "should set dependent as destroy" do
+        ContentItem.reflect_on_association(:links).options[:dependent].should == :destroy
+      end
+    end
   end
 
   context "custom finders" do

@@ -34,6 +34,16 @@ module CivicCommonsDriver
       ContentItem.blog_post.last
     end
 
+    def self.latest_content_item_link
+      content_item_link = ContentItemLink.last
+      content_item_link.instance_eval do
+        def container
+          "[data-content-item-link-id='#{self.id}']"
+        end
+      end
+      content_item_link
+    end
+
     def self.latest_radio_show
       content_item = ContentItem.radio_show.last
       content_item.instance_eval do

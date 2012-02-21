@@ -1,5 +1,8 @@
 ## 1.9.5
 
+### External Changes
+  * [Add RadioShow Links](https://agilezen.com/project/18091/story/407)
+
 #### Miscellaneous
   * [Automate Newsletter Subscription to MailChimp](https://agilezen.com/project/18091/story/405)
 

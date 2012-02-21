@@ -1,0 +1,30 @@
+<%= form_for [:admin, @content_item, @link] do |f| %>
+  <% if @link.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        It looks like we’re still missing some important information:
+      </h2>
+      <ul>
+        <% @link.errors.each do |attr,msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <p>
+  <%= f.label :title %><br>
+  <%= f.text_field :title, :size => 100 %>
+  </p>
+  <p>
+  <%= f.label :url, "URL(example: http://google.com)" %><br>
+  <%= f.text_field :url %>
+  </p>
+
+  <p>
+  <%= f.label :description %>
+  <%= f.text_area :description, cols: 95, rows: 10 %>
+  </p>
+
+  <%= f.submit %>
+<% end %>

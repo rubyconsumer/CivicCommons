@@ -64,6 +64,13 @@
 
         <div>&nbsp;</div>
 
+        <% if @radioshow.links.count > 0 %>
+          <div class="recent-item">
+            <h3>Show Links:</h3>
+            <%= render :partial => '/radioshow/link', :collection  =>  @radioshow.links %>
+          </div>
+        <% end %>
+
         <% if @radioshow.conversation_ids.length > 0 %>
           <% @recent_items = Activity.most_recent_activity_items_for_conversations(@radioshow.conversation_ids, 5) %>
           <%= render_recent_items_sidebar %>
