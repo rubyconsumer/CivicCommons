@@ -245,43 +245,10 @@ a.button:active span.stitcher {
 }
 
 
-/* Caret Styling
----------------------------------*/
-
-.caret {
-  display: inline-block;
-  width: 0;
-  height: 0;
-  text-indent: -9999px;
-  *text-indent: 0;
-  vertical-align: top;
-  border-left:  4px solid transparent;
-  border-right: 4px solid transparent;
-  border-top:   4px solid #fff;
-  opacity: .7;
-  content: "\2193";
-}
-
-.button:active .caret, 
-.button.active .caret {
-	border-top-color: #9cb050;
-	opacity: 1;
-}
-
-.button.secondary:active .caret, 
-.button.secondary.active .caret {
-	border-top-color: #637988;
-}
-
-.button .caret {
-	margin-top: 6px;
-	margin-left: 5px;
-}
-
-
 /* Button Dropdowns
 ---------------------------------*/
 
-.btn-group .dropdown-toggle.full {
+.btn-group .full {
+  max-width: none;
 	width: 268px;
 }
