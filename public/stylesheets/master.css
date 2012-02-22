@@ -41,11 +41,11 @@ form.delete-button {
 }
 
 .fl-left {
-	float: left;
+  float: left;
 }
 
 .fl-right {
-	float: right;
+  float: right;
 }
 
 
@@ -675,7 +675,7 @@ a.see-more {float: right;}
 }
 
 .ico-sm.ico-person-white {
-	background: url(../images/icons/person-ico-white.png) no-repeat;
+  background: url(../images/icons/person-ico-white.png) no-repeat;
 }
 
 
@@ -1035,6 +1035,7 @@ div.three-col-sm div.photobank img {margin: 0 0 6px 6px;}
 .t-img.med img { width: 220px; height: 145px; }
 .t-img.lrg img { width: 300px; height: 200px; }
 
+
 /*- ENTRY STYLES
     Adding the class of entry to the these containers to eventually
     replace 'issue' and 'project' specific containers. Need to
@@ -1042,86 +1043,137 @@ div.three-col-sm div.photobank img {margin: 0 0 6px 6px;}
 ----------------------------------------------------------------------*/
 
 .entry-container {
-margin-bottom: 25px;
--moz-border-radius: 4px;
--webkit-border-radius: 4px;
--o-border-radius: 4px;
-border-radius: 4px;
--webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
--moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
--o-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  margin-bottom: 25px;
+  -webkit-border-radius: 4px;
+     -moz-border-radius: 4px;
+       -o-border-radius: 4px;
+          border-radius: 4px;
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+     -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+       -o-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 }
+
 .entry-details {
-background: #fff;
-border: 1px solid #ccc;
-overflow: hidden;
-padding: 15px 15px 10px;
--moz-border-radius: 4px 4px 0 0;
--webkit-border-radius: 4px 4px 0 0;
--o-border-radius: 4px 4px 0 0;
-border-radius: 4px 4px 0 0;
+  background: #fff;
+  border: 1px solid #ccc;
+  overflow: hidden;
+  padding: 15px 15px 10px;
+  -webkit-border-radius: 4px 4px 0 0;
+     -moz-border-radius: 4px 4px 0 0;
+       -o-border-radius: 4px 4px 0 0;
+          border-radius: 4px 4px 0 0;
 }
+
+.reverse .entry-details {
+  -webkit-border-radius: 0 0 4px 4px;
+     -moz-border-radius: 0 0 4px 4px;
+       -o-border-radius: 0 0 4px 4px;
+          border-radius: 0 0 4px 4px;
+}
+
 .entry-details.rounded {
--moz-border-radius: 4px;
 -webkit-border-radius: 4px;
--o-border-radius: 4px;
-border-radius: 4px;
+   -moz-border-radius: 4px;
+     -o-border-radius: 4px;
+        border-radius: 4px;
 }
+
 .entry-details h4 {
-font-size: 1.8em;
-font-weight: normal;
-margin-bottom: .2em;
+  font-size: 1.8em;
+  font-weight: normal;
+  margin-bottom: .2em;
 }
+
 .entry-tags {
-color: #999;
-font-size: .95em;
-font-weight: bold;
-text-transform: uppercase;
+  color: #999;
+  font-size: .95em;
+  font-weight: bold;
+  text-transform: uppercase;
 }
-.entry-tags a {color: #999;}
-.entry-tags a:hover {color: #2c87b7;}
-.entry-details h4, .entry-details p {padding-left: 210px;}
+
+.entry-tags a {
+  color: #999;
+}
+
+.entry-tags a:hover {
+  color: #2c87b7;
+}
+
+.entry-details h4, 
+.entry-details p {
+  padding-left: 210px;
+}
+
 .entry-details img {
-float: left;
-margin-bottom: 10px;
--webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
--moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
--o-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  float: left;
+  margin-bottom: 10px;
+  -webkit-border-radius: 0 1px 3px rgba(0, 0, 0, 0.15);
+     -moz-border-radius: 0 1px 3px rgba(0, 0, 0, 0.15);
+       -o-border-radius: 0 1px 3px rgba(0, 0, 0, 0.15);
+          border-radius: 0 1px 3px rgba(0, 0, 0, 0.15);
 }
-.entry-details.full h4, .entry-details.full p {padding-left: 0;}
+
+.entry-details.full h4, 
+.entry-details.full p {
+  padding-left: 0;
+}
+
 .entry-meta {
-background: #e6e6e6;
-border: 1px solid #ccc;
-border-top: none;
-overflow: hidden;
-padding: 10px 15px 0;
-text-align: right;
--moz-border-radius: 0 0 4px 4px;
--webkit-border-radius: 0 0 4px 4px;
--o-border-radius: 0 0 4px 4px;
-border-radius: 0 0 4px 4px;
+  background: #e6e6e6;
+  border: 1px solid #ccc;
+  border-top: none;
+  overflow: hidden;
+  padding: 10px 15px 0;
+  text-align: right;
+  -webkit-border-radius: 0 0 4px 4px;
+     -moz-border-radius: 0 0 4px 4px;
+       -o-border-radius: 0 0 4px 4px;
+          border-radius: 0 0 4px 4px;
 }
+
+.reverse .entry-meta {
+  border-bottom: none;
+  border-top: 1px solid #ccc;
+  -webkit-border-radius: 4px 4px 0 0;
+     -moz-border-radius: 4px 4px 0 0;
+       -o-border-radius: 4px 4px 0 0;
+          border-radius: 4px 4px 0 0;
+}
+
+.entry-meta {
+  color: #666;
+  font-weight: bold;
+  text-shadow: 0 1px 1px rgba(255,255,255,.9);
+}
+
 .entry-meta p {
-color: #666;
-float: right;
-font-weight: bold;
-margin-left: 20px;
-text-shadow: 0 1px 1px rgba(255,255,255,.9);
-text-transform: uppercase;
+  float: right;
+  margin-left: 20px;
+  text-transform: uppercase;
 }
+
+.entry-meta h3 {
+  border-bottom: none;
+  float: left;
+  margin-bottom: 0;
+  text-align: left;
+  width: 500px;
+}
+
 .entry-contrib {
-background: url(/images/people-i.png) no-repeat 0 2px;
-padding: 2px 0 2px 31px;
+  background: url(/images/people-i.png) no-repeat 0 2px;
+  padding: 2px 0 2px 31px;
 }
+
 .entry-conv {
-background: url(/images/conv-i.png) no-repeat 0 2px;
-padding: 2px 0 2px 24px;
+  background: url(/images/conv-i.png) no-repeat 0 2px;
+  padding: 2px 0 2px 24px;
 }
+
 .entry-res {
-background: url(/images/doc-i.png) no-repeat 0 2px;
-padding: 2px 0 2px 21px;
+  background: url(/images/doc-i.png) no-repeat 0 2px;
+  padding: 2px 0 2px 21px;
 }
 
 
@@ -1245,8 +1297,8 @@ ul.profile-extras a:hover {color: #2c87b7;}
 }
 
 .wrapper.wr-divider {
-	border-top: 1px solid #ccc;
-	margin-top: 30px;
+  border-top: 1px solid #ccc;
+  margin-top: 30px;
 }
 
 .content-container {margin: 15px 0;}
