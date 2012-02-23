@@ -9,6 +9,10 @@ describe ConversationsController do
   def mock_content_item(stubs={})
     @mock_content_item ||= mock_model(ContentItem, stubs).as_null_object
   end
+  
+  def mock_activity(stubs={})
+    @mock_activity ||= mock_model(Activity, stubs).as_null_object
+  end
 
   describe "not logged in" do
     before(:each) do
@@ -273,6 +277,46 @@ describe ConversationsController do
     it "should receive get_content_item" do
       controller.should_receive(:get_content_item)
       get :responsibilities
+    end
+  end
+  
+  describe "GET activities" do
+    before(:each) do
+      Conversation.stub!(:find).and_return(mock_conversation)
+      Activity.stub!(:most_recent_activity_items_for_conversation).and_return([mock_activity])
+    end
+    context "page" do
+      it "should set the page as 1 if no :page is passed in the param" do
+        get :activities, :id => 1
+        assigns(:page).should == 1
+      end
+      it "should set convert the page to integer when :page is passed in the param" do
+        get :activities, :id => 1, :page => '123'
+        assigns(:page).should == 123
+      end
+    end
+    it "should set per page to 5" do
+      get :activities, :id => 1
+      assigns(:per_page).should == 5
+    end
+    context "next_page" do
+      it "should set to true if there are more contents" do
+        Activity.stub!(:most_recent_activity_items_for_conversation).and_return([mock_activity, mock_activity, mock_activity, mock_activity, mock_activity, mock_activity])
+        get :activities, :id => 1
+        assigns(:next_page).should be_true
+      end
+      it "should set to false if there are NO more contents" do
+        get :activities, :id => 1
+        assigns(:next_page).should be_false
+      end
+    end
+    it "should pop the latest recent_item on the array" do
+      get :activities, :id => 1
+      assigns(:recent_items).should == []
+    end
+    it "should call render_widget" do
+      controller.should_receive(:render_widget)
+      get :activities, :id => 1, :format => :embed
     end
   end
 end
