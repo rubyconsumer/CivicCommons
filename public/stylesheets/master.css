@@ -48,6 +48,10 @@ form.delete-button {
   float: right;
 }
 
+.fl-none {
+	float: none;
+}
+
 
 /* Typography
 ---------------------------------*/
@@ -1117,6 +1121,11 @@ div.three-col-sm div.photobank img {margin: 0 0 6px 6px;}
 .entry-details.full h4, 
 .entry-details.full p {
   padding-left: 0;
+}
+
+.entry-details.full img, 
+.entry-details.full object {
+	float: none;
 }
 
 .entry-meta {
