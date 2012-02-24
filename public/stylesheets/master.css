@@ -529,7 +529,29 @@ p.fb-cnct-links {padding-top: 5px;}
   padding-bottom: 12px;
 }
 
-/* @end */
+/* Comment Form
+---------------------------------*/
+
+form#comment-form {
+  background: #E6E6E6;
+  border: 1px solid #CCC;
+  margin-top: 20px;
+  padding: 10px 20px;
+  text-align: left;
+  -webkit-border-radius: 4px;
+     -moz-border-radius: 4px;
+       -o-border-radius: 4px;
+          border-radius: 4px;
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+     -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+       -o-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+form#comment-form textarea {
+  margin-bottom: 20px;
+  width: 565px;
+}
 
 
 /*- MODULAR ELEMENT STYLES
