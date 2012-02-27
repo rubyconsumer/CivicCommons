@@ -71,11 +71,6 @@
           </div>
         <% end %>
 
-        <% if @radioshow.conversation_ids.length > 0 %>
-          <% @recent_items = Activity.most_recent_activity_items_for_conversations(@radioshow.conversation_ids, 5) %>
-          <%= render_recent_items_sidebar %>
-        <% end %>
-
       </div>
 
     </div>
