@@ -24,10 +24,10 @@ feature "Organization Profiles", %q{
     current_page.should have_avatar person
     follow_leave_organization_link
     join_organization_link.should be_visible
-    current_page.should have_content "member of this Organization"
+    current_page.should have_content "I'm affiliated with this organization"
     current_page.should_not have_avatar person
   end
-  
+
   scenario "Following an organization", :js => true do
     login_as :person
     goto :organization_profile, for: organization
@@ -36,7 +36,7 @@ feature "Organization Profiles", %q{
     unsubscribe_organization_link.should be_visible
     current_page.should have_subscriber_avatar person
   end
-  
+
   scenario "Un-following an organization", :js => true do
     login_as :person
     goto :organization_profile, for: organization_with_subscriber(person)
@@ -55,18 +55,18 @@ feature "Organization Profiles", %q{
   def organization
     @organization
   end
-  
+
   def organization_with_member(person)
     @organization.join_as_member(person)
     return @organization
   end
-  
+
   def organization_with_subscriber(person)
     Subscription.subscribe(@organization.type, @organization.id, person)
     @organization.reload
     return @organization
   end
-  
+
   def person
     database.latest_person
   end

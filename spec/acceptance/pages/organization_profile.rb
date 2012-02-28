@@ -2,12 +2,12 @@ module CivicCommonsDriver
   class OrganizationProfile
     SHORT_NAME= :organization_profile
     include Page
-    has_link :join_organization, "I'm a member of this Organization", :organization_profile
+    has_link :join_organization, "I'm affiliated with this organization", :organization_profile
     has_link :leave_organization, 'Leave this organization', :organization_profile
     has_link :confirm_joining_organization, "I agree", :organization_profile
     has_link :subscribe_organization, 'Follow this Organization', :organization_profile
     has_link :unsubscribe_organization, 'Stop Following this Organization', :organization_profile
-    
+
     def initialize options
       @slug = options[:for].cached_slug if !options[:for].blank?
     end
@@ -33,7 +33,7 @@ module CivicCommonsDriver
       has_css? ".img-container[data-member-id='#{person.id}']" and
       has_css? ".img-container[data-member-id='#{person.id}'] img"
     end
-    
+
     def has_subscriber_avatar? person
       has_css? ".img-container[data-subscriber-id='#{person.id}']" and
       has_css? ".img-container[data-subscriber-id='#{person.id}'] img"
