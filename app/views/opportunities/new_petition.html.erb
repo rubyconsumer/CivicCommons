@@ -4,11 +4,36 @@
   <div class="content-container">
 
     <div class="main-content">
-      main content
+      <h2>Share a Reflection</h2>
+      <p>A reflection is your recap on the state of this opportunity after action was taken.  Were things improved?  Was the action successful?  Would you recommend doing it again?  Etc…</p>
+      
+      <form></form>
+      <fieldset class="form-group">
+      <label for="conversation_title">Title:</label>
+      <input id="conversation_title" name="conversation[title]" size="30" type="text" />
+      </fieldset>
+      
+      <div id='contribution_tool_container'>
+        <label for="conversation_title">Your Reflection:</label>
+              <div id="contrib" name="contrib" class="contrib_tool_container">
+                <form accept-charset="UTF-8" class="contribution_new" data-remote="true" enctype="multipart/form-data" id="contribution_new" method="post">
+                  <fieldset>
+                    <textarea class="content" cols="40" id="contribution_content" name="contribution[content]" rows="20"></textarea>
+                  </fieldset>
+                  <fieldset class="button-group">
+                    <input class="submit" id="contribution_submit" name="commit" type="submit" value="Publish" /> or 
+                    <a href="#" id="cancel-contribution">Cancel</a>
+                  </fieldset>
+              </form>
+            </div>
+        </div>
+            
     </div><!-- /.main-content -->
 
     <div class='aside supplementary'>
-      side bar
+      <p>You participated in the following actions, would you like to reference them in your reflection?</p>
+      <hr />
+      <p>Petition Cedar Fair to turn SeaWorld into a whale breeding motel.</p>
     </div><!-- /.aside -->
 
   </div>
