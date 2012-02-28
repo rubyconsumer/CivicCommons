@@ -82,7 +82,7 @@ module CivicCommonsDriver
     def self.create_conversation attributes={}
       Factory.create :conversation, attributes
     end
-    
+
     def self.create_registered_user attributes={}
       Factory.create(:registered_user, attributes)
     end
@@ -101,6 +101,10 @@ module CivicCommonsDriver
 
     def self.create_issue(attributes= {})
       Factory.create :issue, attributes
+    end
+
+    def self.create_project(attributes= {})
+      Factory.create :managed_issue, attributes
     end
 
     def self.create_blog_post(attributes = {})
@@ -122,7 +126,7 @@ module CivicCommonsDriver
     def self.destroy_all_topics
       Topic.destroy_all
     end
-    
+
     class << self
       alias :has_a_blog_post :create_blog_post
       alias :has_a_radio_show :create_radio_show

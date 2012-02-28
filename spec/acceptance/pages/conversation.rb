@@ -31,6 +31,7 @@ class Conversation
       fill_in_summary_with "stufffff!"
       fill_in_content_with "COOL! THIS IS AWESOME"
       select_issue "They are important"
+      select_project "Projects are important"
       add_link options[:link_to_related_website] if options.key? :link_to_related_website
     end
 
@@ -49,14 +50,23 @@ class Conversation
         check issue
       end
     end
+
+    def select_project project
+      within "fieldset.projects" do
+        check project
+      end
+    end
+
     def submit_conversation(options = {})
       fill_in_conversation options
       click_start_my_conversation_button
     end
+
     def submit_invalid_conversation options={}
       fill_in_conversation options
       click_start_invalid_conversation_button
     end
+
     def has_an_error_for? field
       case field
       when :invalid_link
@@ -66,6 +76,7 @@ class Conversation
       end
       has_content? error_msg
     end
+
   end
 end
 end

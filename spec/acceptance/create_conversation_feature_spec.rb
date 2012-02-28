@@ -6,6 +6,7 @@ feature "User Creates a User-Conversation", %q{
 } do
   background do
     database.create_issue name: "They are important"
+    database.create_project name: "Projects are important"
   end
 
 
@@ -36,7 +37,7 @@ feature "User Creates a User-Conversation", %q{
 
     current_page.should have_an_error_for :invalid_link
   end
-  
+
   scenario "starting an invalid conversation with an attachment that needs a comment", :js => true do
     login_as :person
     follow_start_conversation_link
@@ -45,7 +46,7 @@ feature "User Creates a User-Conversation", %q{
     click_start_invalid_conversation_button
     current_page.should have_an_error_for :attachment_needs_comment
   end
-  
+
   context "on Blog posts" do
     background do
       database.create_blog_post title: "Blog post title here"
@@ -79,9 +80,9 @@ feature "User Creates a User-Conversation", %q{
       the_current_page.should be_the_invite_a_friend_page_for_the conversation
     end
   end
-  
+
   def friend
-    Friend.new('bla@goolge.com') 
+    Friend.new('bla@goolge.com')
   end
     class Friend
       attr_accessor :email

@@ -33,7 +33,7 @@ class ConversationsController < ApplicationController
       format.xml
     end
   end
-  
+
   def responsibilities
     get_content_item(params)
   end
@@ -255,7 +255,7 @@ class ConversationsController < ApplicationController
 
     get_content_item(params)
     @conversation.content_items = [@content_item] if @content_item.present?
-    
+
     @conversation.person = current_person
     @conversation.from_community = true
     @conversation.started_at = Time.now
@@ -267,10 +267,10 @@ class ConversationsController < ApplicationController
 
   def get_content_item(params)
     if params[:radioshow_id] || params[:blog_id]
-      @content_item = ContentItem.find(params[:radioshow_id]||params[:blog_id]) 
+      @content_item = ContentItem.find(params[:radioshow_id]||params[:blog_id])
       @start_from = @content_item.content_type
     end
   end
-  
+
 
 end
