@@ -19,3 +19,32 @@
 .label-rating {
   background-color: #9aaa58;
 }
+
+.form-error {
+  padding: 10px 10px 0 10px;
+  background-color: #ffd4d4;
+  border-width: 1px;
+  border-style: solid;
+  border-color: red;
+}
+.form-error p {
+  color: red;
+}
+
+
+
+
+
+
+
+
+
+/* Forms (this should be its own stylesheet but I don't know how to add it to the head in Ruby)
+---------------------------------*/
+
+.top-label {
+  float: none;
+  margin: 0 0 4px 0;
+  text-align: left; 
+  width: 620px;
+}

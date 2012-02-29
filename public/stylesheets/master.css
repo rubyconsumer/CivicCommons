@@ -2779,6 +2779,18 @@ div.blog img.callout {float: left; width: 32px; height: 32px; padding-right: 5px
   width: 100%;
 }
 
+/*- OPPORTUNITY PAGE STYLES
+----------------------------------------------------------------------*/
+.vente {
+  font-size: 20px;
+  margin-bottom: .1em;
+}
+.grande {
+  font-size: 30px;
+}
+
+
+
 
 /*- SELF CLEARING FLOATS
 ----------------------------------------------------------------------*/
