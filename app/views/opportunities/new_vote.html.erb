@@ -4,7 +4,64 @@
   <div class="content-container">
 
     <div class="main-content">
-      main content
+      <h2>New Vote</h2>
+      
+        <fieldset class="form-group">
+        <label class="top-label" for="your_petition">Title:*</label>
+        <input id="your_petition" name="conversation[title]" size="40" type="text" />
+        </fieldset>
+        
+        <label class="top-label" for="explain_petition">Description:*</label>
+        <fieldset class="form-group">
+        <textarea cols="60" id="explain_petition" name="" rows="10"></textarea>
+        </fieldset>
+        
+        <fieldset class="form-group">
+        <label class="top-label" for="conversation_title">Number of options to select:</label>
+        <input id="conversation_title" name="conversation[title]" size="40" type="text" />
+        </fieldset>
+        
+        <fieldset class="form-group">
+        <label class="top-label" for="conversation_title">Vote Ends On:</label>
+        <input id="conversation_title" name="conversation[title]" size="40" type="text" />
+        </fieldset>
+        
+        
+        
+        <h3>Vote Options:</h3>
+        <fieldset class="contrib_tool_container">
+        
+        <fieldset class="form-group">
+        <label class="top-label" for="your_petition">Title:*</label>
+        <input id="your_petition" name="conversation[title]" size="40" type="text" />
+        </fieldset>
+        
+        <p>
+        <textarea class="content" cols="40" id="conversation_contributions_attributes_0_content" name="conversation[contributions_attributes][0][content]" placeholder="Leave a Comment..." rows="20"></textarea>
+        </p>
+    
+    <div class="attachments">
+      <div class="add-link"><div>
+        <a href="#" id="contribution-add-link">Add a link to a related website</a>
+        <input class="textbox hide" id="conversation_contributions_attributes_0_url" name="conversation[contributions_attributes][0][url]" size="30" type="text" />
+      </div></div>
+    
+      <div class="add-file"><div>
+        <a href="#" id="contribution-add-file">Upload a photograph, document, or other file</a>
+        <input class="hide" id="conversation_contributions_attributes_0_attachment" name="conversation[contributions_attributes][0][attachment]" type="file" />
+      </div></div>
+    </div>
+    
+        
+    </fieldset>
+        
+        
+        
+        
+        <fieldset>
+          <input class="submit" id="contribution_submit" name="commit" type="submit" value="Publish" /> or 
+          <a href="#" id="cancel-contribution">Cancel</a>
+        </fieldset>
     </div><!-- /.main-content -->
 
     <div class='aside supplementary'>
