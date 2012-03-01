@@ -36,3 +36,8 @@ form#comment-form textarea {
 .top-align input#contribution_submit {
   margin-left: 0;
 }
+
+/* Checkbox Inline */
+.checkbox-inline span {
+  padding-left: 18px;
+}
