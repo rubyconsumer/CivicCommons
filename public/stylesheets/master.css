@@ -2755,6 +2755,50 @@ div.blog img.callout {float: left; width: 32px; height: 32px; padding-right: 5px
 .grande {
   font-size: 30px;
 }
+.tab-content {
+  width: 100%;
+  list-style-type: none;
+  margin-bottom: 0;
+  margin-left: 0;
+  border-bottom: none;
+  font-weight: bold;
+  margin-top: 30px;
+}
+.tab-content ul li  {
+  display: inline-block;
+  padding: 5px 9px;
+  text-decoration: none;
+  border: solid 1px #ccc;
+  background: #ddd;
+}
+.tab-content ul li a {
+}
+.tab-content ul {
+  margin-left: 0;
+  border-bottom: solid 1px #ddd;
+}
+.tab-content li {
+  margin-bottom: -1px;
+}
+.tab-content li.tab-active {
+  background-color: #eeeeee;
+  border-bottom: solid 1px #eeeeee;
+}
+.tab-checkbox {
+  float: left;
+}
+.checkbox-text {
+  width: 590px;
+  float: left;
+  padding: 0 0 10px 8px; 
+}
+.checkbox-text h4 {
+  margin-bottom: .125em;
+}
+.checkbox-text img {
+  float: left;
+  padding: 0 8px 0 0;
+}
 
 
 
