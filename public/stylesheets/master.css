@@ -2799,8 +2799,19 @@ div.blog img.callout {float: left; width: 32px; height: 32px; padding-right: 5px
   float: left;
   padding: 0 8px 0 0;
 }
-
-
+.opportunities-outline {
+  border: solid 1px #ccc;
+  padding: 4px 8px 8px 8px;
+}
+ol.opportunities-ol {
+	font-size: 16px;
+	margin-left: 1.4em;
+}
+.opportunities-ol p, h4 {
+  font-size: 12px;
+  margin: 0;
+  padding: 0;
+}
 
 
 /*- SELF CLEARING FLOATS
