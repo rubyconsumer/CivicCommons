@@ -10,7 +10,7 @@ gem 'jquery-rails', '>= 1.0.3'
 
 gem 'haml', "<3.1"
 gem 'date_validator'
-gem "will_paginate", "2.3.15"
+gem "will_paginate", "~> 3.0.3"
 
 gem 'httparty'
 
@@ -41,7 +41,7 @@ gem 'highline'
 
 gem "gchart", "~> 1.0.0"
 
-gem 'sunspot_rails' 
+gem 'sunspot_rails'
 gem 'sunspot_solr'
 gem 'progress_bar'
 
@@ -86,7 +86,7 @@ end
 
 group :cool_toys do
   gem 'autotest'
-  gem 'autotest-rails' 
+  gem 'autotest-rails'
   gem 'autotest-growl'
   gem 'autotest-fsevent'
   gem 'query_reviewer', :git => 'git://github.com/nesquena/query_reviewer.git'
