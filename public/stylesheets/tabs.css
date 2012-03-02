@@ -1,0 +1,80 @@
+/* Tabs Base
+   (from Bootstrap)
+---------------------------------*/
+
+.tab {
+  list-style: none;
+  margin-left: 0;
+  margin-bottom: 10px;
+  padding-left: 10px;
+}
+
+.tab > li > a {
+  display: block;
+  text-decoration: none;
+}
+
+.tab > li > a:hover {
+  background-color: #ddd;
+  color: #2c87b7;
+}
+
+
+/* Tabs
+---------------------------------*/
+
+.tab-section > li {
+  float: left;
+}
+
+.tab-section > li > a {
+  color: #555;
+  padding-right: 12px;
+  padding-left: 12px;
+  margin-right: 5px;
+  line-height: 14px; // keeps the overall height an even number
+}
+
+.tab-section {
+  border-bottom: 1px solid #ccc;
+}
+
+.tab-section > li {
+  margin-bottom: -1px;
+}
+
+.tab-section > li > a {
+  background-color: #e3e3e3;
+  border: 1px solid #bbb;
+  padding-top: 9px;
+  padding-bottom: 9px;
+  -webkit-border-radius: 4px 4px 0 0;
+     -moz-border-radius: 4px 4px 0 0;
+       -o-border-radius: 4px 4px 0 0;
+          border-radius: 4px 4px 0 0;
+}
+
+.tab-section > li > a:hover {
+  border-color: #bbb;
+}
+
+.tab-section > .active > a,
+.tab-section > .active > a:hover {
+  color: #333;
+  background-color: #eee;
+  border: 1px solid #bbb;
+  border-bottom-color: transparent;
+  cursor: default;
+}
+
+.tab-section:after {
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+
+*:first-child+html .tab-section {
+	zoom: 1;
+}

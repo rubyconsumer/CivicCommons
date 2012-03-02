@@ -641,7 +641,7 @@ a.see-more {float: right;}
 
 .media .img {
   float: left;
-  margin-right: 20px;
+  margin-right: 10px;
 }
 
 .media .img img {
@@ -719,20 +719,20 @@ div.three-col-sm div.photobank img {margin: 0 0 6px 6px;}
   margin: 10px 0 0 0;
   padding: 10px;
   cursor: move;
-  -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
-  -o-border-radius: 4px;
-  border-radius: 4px;
+     -moz-border-radius: 4px;
+       -o-border-radius: 4px;
+          border-radius: 4px;
   -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
-  -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
-  -o-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+     -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+       -o-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 }
 .selected-survey-options .survey-option {
-  -moz-border-radius: 0;
   -webkit-border-radius: 0;
-  -o-border-radius: 0;
-  border-radius: 0;
+     -moz-border-radius: 0;
+       -o-border-radius: 0;
+          border-radius: 0;
 }
 .survey-option-locator {
   border: none;
@@ -795,14 +795,14 @@ div.three-col-sm div.photobank img {margin: 0 0 6px 6px;}
 .selected-survey-options {
   border: 1px solid #b5b5b5;
   background-color: #fff;
-  -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
-  -o-border-radius: 4px;
-  border-radius: 4px;
+     -moz-border-radius: 4px;
+       -o-border-radius: 4px;
+          border-radius: 4px;
   -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
-  -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
-  -o-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+     -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+       -o-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 }
 .selected-survey-options .title {
   margin: 1em;
@@ -837,10 +837,10 @@ div.three-col-sm div.photobank img {margin: 0 0 6px 6px;}
   height: 100%;
   color: #a2a2a2;
   font-size: 1.3em;
-  -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
-  -o-border-radius: 4px;
-  border-radius: 4px;
+     -moz-border-radius: 4px;
+       -o-border-radius: 4px;
+          border-radius: 4px;
 }
 .selected-survey-options .sortable .placeholder.over {
   color: #555;
@@ -2752,65 +2752,43 @@ div.blog img.callout {float: left; width: 32px; height: 32px; padding-right: 5px
   font-size: 20px;
   margin-bottom: .1em;
 }
+
 .grande {
   font-size: 30px;
 }
-.tab-content {
-  width: 100%;
-  list-style-type: none;
-  margin-bottom: 0;
-  margin-left: 0;
-  border-bottom: none;
-  font-weight: bold;
-  margin-top: 30px;
-}
-.tab-content ul li  {
-  display: inline-block;
-  padding: 5px 9px;
-  text-decoration: none;
-  border: solid 1px #ccc;
-  background: #ddd;
-}
-.tab-content ul li a {
-}
-.tab-content ul {
-  margin-left: 0;
-  border-bottom: solid 1px #ddd;
-}
-.tab-content li {
-  margin-bottom: -1px;
-}
-.tab-content li.tab-active {
-  background-color: #eeeeee;
-  border-bottom: solid 1px #eeeeee;
-}
-.tab-checkbox {
-  float: left;
-}
-.checkbox-text {
-  width: 590px;
-  float: left;
-  padding: 0 0 10px 8px; 
-}
-.checkbox-text h4 {
-  margin-bottom: .125em;
-}
-.checkbox-text img {
-  float: left;
-  padding: 0 8px 0 0;
-}
+
 .opportunities-outline {
-  border: solid 1px #ccc;
-  padding: 4px 8px 8px 8px;
+  border: 1px solid #b5b5b5; 
+  background-color: #fff;
+  margin: 20px 0 0 0;
+  padding: 10px;
+  cursor: move;
+  -webkit-border-radius: 4px;
+     -moz-border-radius: 4px;
+       -o-border-radius: 4px;
+          border-radius: 4px;
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+     -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+       -o-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 }
+
 ol.opportunities-ol {
 	font-size: 16px;
+	font-weight: bold;
 	margin-left: 1.4em;
 }
-.opportunities-ol p, h4 {
+
+.opportunities-ol p, 
+.opportunities-ol h4 {
   font-size: 12px;
+  font-weight: normal;
   margin: 0;
   padding: 0;
+}
+
+.opportunities-ol h4 {
+	font-weight: bold;
 }
 
 
