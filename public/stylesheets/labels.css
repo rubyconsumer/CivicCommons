@@ -34,18 +34,28 @@
           border-radius: 4px;
 }
 
+/* Success Alert */
+.alert-success {
+	background-color: #dff0d8;
+	border-color: #59ab5b;
+	color: #468847;
+}
+
+/* Error Alert */
 .alert-error {
   background-color: #F2DEDE;
   border-color: #EF867F;
   color: #B94A48;
 }
 
+/* Notification Alert */
 .alert-notification {
   background-color: #d8eaf2;
   border-color: #9db4bc;
   color: #51778E;
 }
 
+/* Admin Alert */
 .alert-admin {
 	background-color: #ffe3ac;
 	border-color: #eabe7c;
