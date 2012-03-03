@@ -45,3 +45,15 @@
   border-color: #9db4bc;
   color: #51778E;
 }
+
+.alert-admin {
+	background-color: #ffe3ac;
+	border-color: #eabe7c;
+	color: #d6a55e;
+	margin-bottom: 8px;
+	padding: 3px 7px 3px 12px;
+}
+
+.alert-admin a {
+	margin: 0 5px;
+}
