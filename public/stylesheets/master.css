@@ -2790,8 +2790,27 @@ ol.opportunities-ol {
 .opportunities-ol h4 {
 	font-weight: bold;
 }
+
+/* Form overrides for Opportunities */
+
 input.textbox.input-short {
   width: 240px;
+}
+
+.date-picker {
+	background: url(../images/calendar-f.png) no-repeat 0 0;
+	display: inline-block;
+	height: 18px;
+  overflow: hidden;
+  position: relative;
+	text-indent: 100%;
+	top: -2px;
+  white-space: nowrap;
+	width: 17px;
+}
+
+.date-picker:hover {
+	background-position: 0 -61px;
 }
 
 /*- SELF CLEARING FLOATS
