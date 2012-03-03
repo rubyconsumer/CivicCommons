@@ -56,7 +56,7 @@ form.delete-button {
 /* Typography
 ---------------------------------*/
 
-div#header-wrapper, div.wrapper, div#nav-wrapper, div#footer, div#legal {font-size: .75em;}
+div#header-wrapper, div.wrapper, div#nav-wrapper, div#footer, div#legal, .modal-wrap {font-size: .75em;}
 p {
   line-height: 1.5em;
   margin-bottom: .8em;

@@ -42,7 +42,7 @@
     <div class='aside supplementary'>
       <div class="mod">
         <div class="btn-group btn-group-large">
-          <a href="#" class="button btn-large">Sign the Petition</a>
+          <a href="#" class="button btn-large modal-launch">Sign the Petition</a>
         </div>
       </div>
       
@@ -71,5 +71,13 @@
 
 
   </div>
+  <script type="text/javascript">
+    $(document).ready(function(){
+    	$('a.modal-launch').colorbox({href:'/modal-test.html', width:'400px', transition: 'fade'});
+    	$('#cboxContent .closebutton').live('click', function(){
+        $.fn.colorbox.close();
+      });
+    });
+  </script>
 </div>
 
