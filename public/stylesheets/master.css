@@ -2790,8 +2790,8 @@ ol.opportunities-ol {
 .opportunities-ol h4 {
 	font-weight: bold;
 }
-.input-short {
-  width: 240px !important
+input.textbox.input-short {
+  width: 240px;
 }
 
 /*- SELF CLEARING FLOATS
