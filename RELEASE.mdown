@@ -1,3 +1,15 @@
+## 1.9.6
+
+### External Changes
+  * [Design Refinements](https://agilezen.com/project/18091/story/437)
+
+#### Miscellaneous
+
+#### Bug Fixes
+
+### Post Deployment Instructions
+
+
 ## 1.9.5
 
 ### External Changes
