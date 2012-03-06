@@ -4,7 +4,8 @@ class Person < ActiveRecord::Base
   include GeometryForStyle
   include UnsubscribeSomeone
 
-  searchable :ignore_attribute_changes_of => [ :updated_at, :failed_attempts, :current_sign_in_at, :last_sign_in_at, :current_sign_in_ip, :confirmed_at, :sign_in_count ] do
+  searchable :if => :confirmed?, :unless => :locked?,
+    :ignore_attribute_changes_of => [ :updated_at, :failed_attempts, :current_sign_in_at, :last_sign_in_at, :current_sign_in_ip, :confirmed_at, :sign_in_count ] do
     text :first_name, :boost => 2, :default_boost => 2
     text :last_name, :boost => 2, :default_boost => 2
     text :bio, :stored => true, :boost => 1, :default_boost => 1 do
@@ -162,6 +163,10 @@ class Person < ActiveRecord::Base
 
   def facebook_unlinking?
     @facebook_unlinking || false
+  end
+
+  def locked?
+    not self.locked_at.nil?
   end
 
   def require_zip_code?

@@ -1,13 +1,35 @@
+## 1.9.6
+
+### External Changes
+  * [Design Refinements](https://agilezen.com/project/18091/story/437)
+
+#### Miscellaneous
+
+#### Bug Fixes
+
+### Post Deployment Instructions
+
+
 ## 1.9.5
+
+### External Changes
+  * [Add RadioShow Links](https://agilezen.com/project/18091/story/407)
+  * [Member of Org wording changes](https://agilezen.com/project/18091/story/432)
+  * [Group Projects and Issues Separately when Starting a New Conversation](https://agilezen.com/project/18091/story/401)
+  * [JS conversation Widget](https://agilezen.com/project/18091/story/430)
 
 #### Miscellaneous
   * [Automate Newsletter Subscription to MailChimp](https://agilezen.com/project/18091/story/405)
 
 #### Bug Fixes
   * [Ability to Login when Inviting a Friend to a Conversation](https://agilezen.com/project/18091/story/408)
+  * [SOLR filter to remove Unconfirmed People](https://agilezen.com/project/18091/story/427)
+  * [reindexing solr displays the error: Association named 'conversation' was not found](https://agilezen.com/project/18091/story/409)
+  * [Adjust Conversation URLs so Google Analytics and Facebook/Twitter counts show up accurately](https://agilezen.com/project/18091/story/389)
 
 ### Post Deployment Instructions
   * add "weekly_newsletter_list_id" (unique ID of newsletter MailChimp list) under "mailer" in the civic_commons.yml file
+  * run `bundle exec rake sunspot:solr:reindex` on the server after deployment
 
 
 ## 1.9.4
@@ -38,6 +60,14 @@
 
 ### Post Deployment Instructions
 
+
+## 1.9.3.1
+
+#### Miscellaneous
+  * [Design RSS Link for Curated Feeds.](https://agilezen.com/projects/18091/story/399)
+
+#### Bug Fixes
+  * [Ability to edit Blog Entries over a year old.](https://agilezen.com/projects/18091/story/396)
 
 
 ## 1.9.3

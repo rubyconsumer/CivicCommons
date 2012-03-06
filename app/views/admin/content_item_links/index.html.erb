@@ -1,0 +1,28 @@
+<h1><%= @content_item.title %></h1>
+<p><%= link_to 'Back', admin_content_item_path(@content_item) %></p>
+<h2>Links (<%= link_to 'Add Link', new_admin_content_item_content_item_link_path %>)</h2>
+<table class="tablesorter" summary="List of Static Pages">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Url</th>
+      <th></th>
+    </tr>
+  <thead>
+  <tbody>
+    <% @links.each do |link| %>
+      <tr data-content-item-link-id="<%= link.id %>">
+        <td><%= link.title %></td>
+        <td><%= link.description %></td>
+        <td><%= link_to link.url, {}, :target => '_blank' %></td>
+        <td>
+          <%= link_to "Edit", edit_admin_content_item_content_item_link_path(@content_item, link) %>
+          &bull;
+          <%= link_to "Remove", admin_content_item_content_item_link_path(@content_item, link), method:  :delete, confirm: "Are you sure?" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br />

@@ -134,3 +134,29 @@ describe ApplicationControllerVerifyAdmin do
   end
 
 end
+
+
+#####################################################################
+# require_user
+
+class ApplicationControllerRenderWidget < ApplicationController
+end
+
+describe ApplicationControllerRenderWidget do
+  controller(ApplicationControllerRenderWidget) do
+    def index
+      render_widget({})
+    end
+  end
+
+  it "should properly set the content_type as text/javascript" do
+    get :index, :callback => 'jsonp1234'
+    response.content_type.should == 'text/javascript'
+  end
+    
+  it "should set the callback for jsonp" do
+    get :index, :callback => 'jsonp1234'
+    response.body.should == "jsonp1234({\"css\":[\"/stylesheets/widget.css\"]})"
+  end
+
+end

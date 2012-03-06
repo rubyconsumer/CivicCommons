@@ -48,6 +48,31 @@ feature "RadioShow Admin", %q{
     page.should_not have_content 'John Doe'
   end
   
+  scenario "Manage radio show links", :js => true do
+    database.create_radio_show
+    follow_radio_shows_link
+    follow_show_link_for database.latest_radio_show
+    
+    follow_manage_links_link
+    follow_add_link_link
+    fill_in_title_with 'Link Title here'
+    fill_in_url_with 'http://test.local'
+    fill_in_description_with 'Description here'
+    click_create_link_button
+    page.should have_content 'Link Title here'
+    
+    follow_edit_link_for database.latest_content_item_link
+    fill_in_title_with 'Updated Link Title here'
+    fill_in_url_with 'http://updatedtest.local'
+    fill_in_description_with 'Updated Description here'
+    click_update_link_button
+    page.should have_content 'Updated Link Title here'
+  
+    follow_remove_link_for database.latest_content_item_link
+    accept_alert
+    page.should_not have_content 'Updated Link Title here'
+  end
+  
   def submit_a_radio_show_without_a_topic
     follow_add_content_item_link
     fill_in_radio_show_with :topics => []

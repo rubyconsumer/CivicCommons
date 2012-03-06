@@ -93,5 +93,11 @@ describe ConversationsController do
       { :post => "/radioshow/1/conversations" }.should route_to(:controller => "conversations", :action => "create", :radioshow_id => '1')
     end
   end
+  
+  describe "JS Widget" do
+    it "recognizes and generates #activities" do
+      { get: "/conversations/1/activities.embed" }.should route_to(controller: "conversations", action: "activities", :id => '1', :format => 'embed')
+    end
+  end
 
 end

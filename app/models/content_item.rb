@@ -46,6 +46,7 @@ class ContentItem < ActiveRecord::Base
 
   has_and_belongs_to_many :topics, uniq: true
   has_and_belongs_to_many :conversations, uniq: true
+  has_many :links, :class_name => 'ContentItemLink', :dependent => :destroy
 
   # Any radioshow people
   has_and_belongs_to_many :people,

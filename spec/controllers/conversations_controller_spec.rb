@@ -9,6 +9,10 @@ describe ConversationsController do
   def mock_content_item(stubs={})
     @mock_content_item ||= mock_model(ContentItem, stubs).as_null_object
   end
+  
+  def mock_activity(stubs={})
+    @mock_activity ||= mock_model(Activity, stubs).as_null_object
+  end
 
   describe "not logged in" do
     before(:each) do
@@ -21,6 +25,36 @@ describe ConversationsController do
         it "redirects to login for #{method} => :#{action}" do
           send(method, action)
           response.should redirect_to new_person_session_path
+        end
+      end
+    end
+  end
+  
+  describe "before_filters" do
+    describe "force_friendly_id" do
+      describe "on :show" do
+        def given_conversation
+          @conversation = mock_conversation(:id => 1234, :cached_slug => 'friendly-id-here')
+        end
+        it "should redirect to the same url but using the correct friendly id if numerical id is passed" do
+          given_conversation
+          Conversation.stub!(:find_by_id).and_return(@conversation)
+          get :show, :id => @conversation.id
+          response.should redirect_to '/conversations/friendly-id-here'
+        end
+        it "should allow the parameters to be passed on redirect" do
+          given_conversation
+          Conversation.stub!(:find_by_id).and_return(@conversation)
+          get :show, :id => @conversation.id, :hello => 'hi'
+          response.should redirect_to '/conversations/friendly-id-here?hello=hi'
+        end
+        it "should not redirect if friendly id is passed" do
+          given_conversation
+          Conversation.stub_chain(:includes, :find).and_return(@conversation)
+          RatingGroup.stub!(:ratings_for_conversation_by_contribution_with_count).and_return(nil)
+          get :show, :id => @conversation.cached_slug
+          response.should render_template :show
+          response.should_not redirect_to '/conversations/friendly-id-here'
         end
       end
     end
@@ -94,7 +128,7 @@ describe ConversationsController do
     end
 
     def do_get
-      get :show, :id => @convo.id
+      get :show, :id => @convo.cached_slug
     end
 
     it "assigns the requested conversation as @conversation" do
@@ -104,7 +138,7 @@ describe ConversationsController do
 
     it "records a visit to the conversation passing the current user" do
       do_get
-      convo = Conversation.find_by_id(@convo.id)
+      convo = Conversation.find_by_cached_slug(@convo.cached_slug)
       convo.total_visits.should == @convo.total_visits + 1
       convo.recent_visits.should == @convo.recent_visits + 1
       Visit.where("person_id = #{@person.id} and visitable_id = #{@convo.id}").size.should == 1
@@ -243,6 +277,46 @@ describe ConversationsController do
     it "should receive get_content_item" do
       controller.should_receive(:get_content_item)
       get :responsibilities
+    end
+  end
+  
+  describe "GET activities" do
+    before(:each) do
+      Conversation.stub!(:find).and_return(mock_conversation)
+      Activity.stub!(:most_recent_activity_items_for_conversation).and_return([mock_activity])
+    end
+    context "page" do
+      it "should set the page as 1 if no :page is passed in the param" do
+        get :activities, :id => 1
+        assigns(:page).should == 1
+      end
+      it "should set convert the page to integer when :page is passed in the param" do
+        get :activities, :id => 1, :page => '123'
+        assigns(:page).should == 123
+      end
+    end
+    it "should set per page to 5" do
+      get :activities, :id => 1
+      assigns(:per_page).should == 5
+    end
+    context "next_page" do
+      it "should set to true if there are more contents" do
+        Activity.stub!(:most_recent_activity_items_for_conversation).and_return([mock_activity, mock_activity, mock_activity, mock_activity, mock_activity, mock_activity])
+        get :activities, :id => 1
+        assigns(:next_page).should be_true
+      end
+      it "should set to false if there are NO more contents" do
+        get :activities, :id => 1
+        assigns(:next_page).should be_false
+      end
+    end
+    it "should pop the latest recent_item on the array" do
+      get :activities, :id => 1
+      assigns(:recent_items).should == []
+    end
+    it "should call render_widget" do
+      controller.should_receive(:render_widget)
+      get :activities, :id => 1, :format => :embed
     end
   end
 end

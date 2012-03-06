@@ -346,6 +346,7 @@ a.cancel {font-weight: normal;}
 .form-group {margin-bottom: 30px;}
 .form-group .related {margin-left: 80px;}
 .form-group .related input.textbox {width: 400px;}
+.form-group.projects td {width:300px;}
 .required { color: #900; font-weight:bold; font-size:14px; }
 .validation-error {color: #ae1111;}
 .friendly-alert {
@@ -2360,7 +2361,7 @@ div.three-col-sm div.cols.call-out p {word-wrap: break-word;}
   padding-top: 5px;
   line-height:1.4em;
 }
-.recent-item .posted a {color: #2c87b7;}
+/*.recent-item .posted a {color: #2c87b7;}*/
 .recent-item .offset-2, .recent-item .bd {
   background: #fff;
   border: 1px solid #ccc;

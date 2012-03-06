@@ -1,5 +1,6 @@
 module CivicCommonsDriver
   module Pages
+
     class Responsibilities
       SHORT_NAME = :accept_responsibilities
       include Page
@@ -8,7 +9,7 @@ module CivicCommonsDriver
       def agree_to_responsibilities
         follow_agree_link
       end
-      
     end
+
   end
 end
