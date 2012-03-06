@@ -57,7 +57,7 @@ module CivicCommonsDriver
           @blog_post = options[:for]
         end
         def url
-          "/blog/#{@blog_post.cached_slug}"
+          "/blog/#{@blog_post.slug}"
         end
       end
 

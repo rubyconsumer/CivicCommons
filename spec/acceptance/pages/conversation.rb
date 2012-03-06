@@ -8,7 +8,7 @@ class Conversation
       @conversation = options[:for]
     end
     def url
-      "/conversations/#{@conversation.cached_slug}"
+      "/conversations/#{@conversation.slug}"
     end
   end
   class Start

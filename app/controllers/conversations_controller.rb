@@ -284,9 +284,13 @@ class ConversationsController < ApplicationController
   private
 
   def force_friendly_id
-    if params[:id].to_s =~ /^\d+$/i
-      conversation = Conversation.find_by_id(params[:id])
-      redirect_to request.parameters.merge({:id => conversation.cached_slug, :status => :moved_permanently})
+    @conversation = Conversation.find params[:id]
+
+    # If an old id or a numeric id was used to find the record, then
+    # the request path will not match the post_path, and we should do
+    # a 301 redirect that uses the current friendly id.
+    if request.format != 'embed' and request.path != conversation_path(@conversation)
+      return redirect_to request.parameters.merge({:id => @conversation.slug, :status => :moved_permanently})
     end
   end
 

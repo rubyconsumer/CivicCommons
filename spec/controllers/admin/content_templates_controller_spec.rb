@@ -73,12 +73,11 @@ module Admin
 
         it "assigns a newly created content_template as @content_template" do
           assigns[:content_template].name.should eq params[:name]
-          assigns[:content_template].cached_slug.should eq params[:cached_slug]
           assigns[:content_template].template.should eq params[:template]
         end
 
         it "redirects to the created content_template" do
-          response.should redirect_to admin_content_template_path(assigns[:content_template].cached_slug)
+          response.should redirect_to admin_content_template_path(assigns[:content_template].slug)
         end
 
       end
@@ -116,10 +115,6 @@ module Admin
         "Some completely different but valid name"
       end
 
-      let(:new_slug) do
-        "some-completely-different-but-valid-name"
-      end
-
       let(:params) do
         template.attributes
       end
@@ -139,11 +134,10 @@ module Admin
           assigns[:content_template].id.should eq params['id']
           assigns[:content_template].name.should eq new_name
           assigns[:content_template].template.should eq params['template']
-          assigns[:content_template].cached_slug.should eq new_slug
         end
 
         it "redirects to the 'GET show' page" do
-          response.should redirect_to admin_content_template_path(new_slug)
+          response.should redirect_to admin_content_template_path(template)
         end
 
       end
@@ -159,7 +153,6 @@ module Admin
           assigns[:content_template].id.should eq params['id']
           assigns[:content_template].name.should eq params['name']
           assigns[:content_template].template.should eq params['template']
-          assigns[:content_template].cached_slug.should eq params['cached_slug']
         end
 
         it "re-renders the 'edit' template" do
@@ -185,7 +178,7 @@ module Admin
       end
 
       it "redirects to the content_templates list" do
-        response.should redirect_to(admin_content_templates_url)
+        response.should redirect_to(admin_content_templates_path)
       end
 
     end

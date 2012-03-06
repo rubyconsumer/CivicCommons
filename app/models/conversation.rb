@@ -1,4 +1,5 @@
 class Conversation < ActiveRecord::Base
+  extend FriendlyId
   include Visitable
   include Subscribable
   include Regionable
@@ -30,7 +31,7 @@ class Conversation < ActiveRecord::Base
 
   has_and_belongs_to_many :issues
   has_and_belongs_to_many :content_items, uniq: true
-  
+
   has_one :survey, :as => :surveyable
   belongs_to :person, :foreign_key => "owner"
   delegate :name, :to => :person, :prefix => true
@@ -59,7 +60,10 @@ class Conversation < ActiveRecord::Base
 
   after_create :set_initial_position, :subscribe_creator
 
-  has_friendly_id :title, :use_slug => true, :strip_non_ascii => true
+  friendly_id :title, :use => :slugged
+  def should_generate_new_friendly_id?
+    new_record? || slug.nil?
+  end
 
   scope :latest_updated, :order => 'updated_at DESC'
   scope :latest_created, where(:exclude_from_most_recent => false).order('created_at DESC')

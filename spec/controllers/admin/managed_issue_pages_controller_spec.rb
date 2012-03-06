@@ -93,12 +93,11 @@ module Admin
 
         it "assigns a newly created managed_issue_page as @managed_issue_page" do
           assigns[:managed_issue_page].name.should eq params[:name]
-          assigns[:managed_issue_page].cached_slug.should eq params[:cached_slug]
           assigns[:managed_issue_page].template.should eq params[:template]
         end
 
         it "redirects to the created managed_issue_page" do
-          response.should redirect_to admin_issue_page_path(issue, assigns[:managed_issue_page].cached_slug)
+          response.should redirect_to admin_issue_page_path(issue, assigns[:managed_issue_page])
         end
 
       end
@@ -136,10 +135,6 @@ module Admin
         "Some completely different but valid name"
       end
 
-      let(:new_slug) do
-        "some-completely-different-but-valid-name"
-      end
-
       let(:params) do
         page.attributes
       end
@@ -159,11 +154,10 @@ module Admin
           assigns[:managed_issue_page].id.should eq params['id']
           assigns[:managed_issue_page].name.should eq new_name
           assigns[:managed_issue_page].template.should eq params['template']
-          assigns[:managed_issue_page].cached_slug.should eq new_slug
         end
 
         it "redirects to the 'GET show' page" do
-          response.should redirect_to admin_issue_page_path(issue, new_slug)
+          response.should redirect_to admin_issue_page_path(issue, page)
         end
 
       end
@@ -179,7 +173,6 @@ module Admin
           assigns[:managed_issue_page].id.should eq params['id']
           assigns[:managed_issue_page].name.should eq params['name']
           assigns[:managed_issue_page].template.should eq params['template']
-          assigns[:managed_issue_page].cached_slug.should eq params['cached_slug']
         end
 
         it "re-renders the 'edit' template" do

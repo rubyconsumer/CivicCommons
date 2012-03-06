@@ -18,7 +18,7 @@ xml.rss :version => "2.0", 'xmlns:atom' => "http://www.w3.org/2005/Atom" do
       xml.item do
         xml.title item.title
         xml.link news_index_url
-        xml.guid "#{news_index_url}?#{item.cached_slug}"
+        xml.guid "#{news_index_url}?#{item.slug}"
         xml.description item.summary
         xml.pubDate item.published.to_s(:rfc822)
       end

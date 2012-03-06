@@ -1,4 +1,5 @@
 class ManagedIssuePage < ActiveRecord::Base
+  extend FriendlyId
   include Rails.application.routes.url_helpers #needed by the url helper in this class
 
   acts_as_revisionable :on_update => true
@@ -22,7 +23,10 @@ class ManagedIssuePage < ActiveRecord::Base
   validates_uniqueness_of :name
   validate :valid_ccml_tags
 
-  has_friendly_id :name, :use_slug => true, :strip_non_ascii => true
+  friendly_id :name, :use => :slugged
+  def should_generate_new_friendly_id?
+    new_record? || slug.nil?
+  end
 
   searchable :ignore_attribute_changes_of => [ :updated_at, :stylesheet_path, :template ] do
     text :template, :stored => true, :boost => 1, :default_boost => 1 do

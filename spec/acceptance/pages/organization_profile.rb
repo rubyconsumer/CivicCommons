@@ -9,7 +9,7 @@ module CivicCommonsDriver
     has_link :unsubscribe_organization, 'Stop Following this Organization', :organization_profile
 
     def initialize options
-      @slug = options[:for].cached_slug if !options[:for].blank?
+      @slug = options[:for].slug if !options[:for].blank?
     end
 
     def has_pluralized_itself?

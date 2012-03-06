@@ -406,11 +406,6 @@ describe Issue do
   end
 
   context "most active users" do
-    it "returns an ActiveRecord:Relation object" do
-      issue = Factory.build(:issue)
-      issue.most_active_users.class.should == ActiveRecord::Relation
-    end
-
     it "includes 'participants' / users that add contributions from an issue page" do
       issue = Factory.create(:issue)
       person = Factory.create(:registered_user)

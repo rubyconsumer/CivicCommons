@@ -44,7 +44,7 @@ module CivicCommonsDriver
           @radio_show = options[:for]
         end
         def url
-          "/radioshow/#{@radio_show.cached_slug}"
+          "/radioshow/#{@radio_show.slug}"
         end
       end
 

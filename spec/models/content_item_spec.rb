@@ -159,17 +159,17 @@ describe ContentItem do
 
   context "urls" do
     it "will show the correct path for a BlogPost" do
-      blog_post = Factory.build(:blog_post)
+      blog_post = Factory.create(:blog_post)
       blog_post.url.should == blog_path(blog_post)
     end
 
     it "will show the correct path for a RadioShow" do
-      radio_show = Factory.build(:radio_show)
+      radio_show = Factory.create(:radio_show)
       radio_show.url.should == radioshow_path(radio_show)
     end
 
     it "will show the external link for a NewsItem" do
-      news_item = Factory.build(:news_item)
+      news_item = Factory.create(:news_item)
       news_item.url.should == news_item.external_link
     end
   end

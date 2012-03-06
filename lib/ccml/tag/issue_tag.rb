@@ -21,7 +21,7 @@ class CCML::Tag::IssueTag < CCML::Tag::TagPair
   #   <li>Image File Size: {image_file_size}</li>
   #   <li>URL: {url}</li>
   #   <li>URL Title: {url_title}</li>
-  #   <li>Cached Slug: {cached_slug}</li>
+  #   <li>Slug: {slug}</li>
   #   <li>Type: {type}</li>
   #   <li>Conversations: {conversations.size}</li>
   #   <li>Participants: {participants.size}</li>
@@ -51,7 +51,7 @@ class CCML::Tag::IssueTag < CCML::Tag::TagPair
   #   <li>Author Email: {author.email}</li>
   #   <li>Created: {created_at format='%A, %B %d at %I:%M%S %p'}</li>
   #   <li>Updated: {updated_at format='%A, %B %d at %I:%M%S %p'}</li>
-  #   <li>Cached Slug: {cached_slug}</li>
+  #   <li>Slug: {slug}</li>
   # </ul>
   # {/ccml:issue:pages}
   def pages

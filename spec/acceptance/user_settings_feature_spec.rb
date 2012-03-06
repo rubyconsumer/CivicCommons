@@ -10,17 +10,6 @@ feature "User Settings", %q{
   I want to be able to manage my user profile
 } do
 
-  scenario "Zipcode validation message on user profile if user had not previously added the zipcode" do
-    login_as :person_without_zip_code
-    goto :edit_profile_page, :for=>logged_in_user
-    current_page.should contain 'please enter zipcode, must be 5 characters or higher'
-  end
-  scenario "Zip Code required on user update on profile page" do
-    login_as :person_without_zip_code
-    update_zip_code_to ""
-    current_page.should contain 'please enter zipcode, must be 5 characters or higher'
-  end
-
   scenario "Unsubscribe from weekly newsletter" do
     login_as :person_subscribed_to_weekly_newsletter
     remove_subscription_to :weekly_newsletter

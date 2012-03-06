@@ -95,7 +95,6 @@ module Admin
 
         it "assigns a newly created issue as @issue" do
           assigns[:issue].name.should eq @params[:name]
-          assigns[:issue].cached_slug.should match 'important-stuff'
           assigns[:issue].summary.should eq @params[:summary]
           assigns[:issue].sponsor_name.should eq @params[:sponsor_name]
         end
@@ -163,10 +162,6 @@ module Admin
         "Some completely different but valid name"
       end
 
-      let(:new_slug) do
-        "some-completely-different-but-valid-name"
-      end
-
       let(:params) do
         issue.attributes
       end
@@ -187,7 +182,6 @@ module Admin
           assigns[:issue].id.should eq params['id']
           assigns[:issue].name.should eq new_name
           assigns[:issue].summary.should eq params['summary']
-          assigns[:issue].cached_slug.should eq new_slug
           assigns[:issue].sponsor_name.should eq params['sponsor_name']
         end
 
@@ -209,7 +203,6 @@ module Admin
           assigns[:issue].id.should eq params['id']
           assigns[:issue].name.should eq params['name']
           assigns[:issue].summary.should eq params['summary']
-          assigns[:issue].cached_slug.should eq params['cached_slug']
           assigns[:issue].sponsor_name.should eq params['sponsor_name']
         end
 

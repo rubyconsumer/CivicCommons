@@ -64,7 +64,7 @@ class Admin::ContentItemsController < Admin::DashboardController
   def edit
     @content_item = ContentItem.find(params[:id])
     @authors = Person.find_all_by_admin(true, :order => 'first_name, last_name ASC')
-    @content_item.url_slug = @content_item.cached_slug
+    @content_item.url_slug = @content_item.slug
     @topics = Topic.all
   end
 

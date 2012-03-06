@@ -48,7 +48,7 @@ class UserController < ApplicationController
   end
 
   def show
-    unless Person.exists? cached_slug: params[:id]
+    unless Person.exists? params[:id]
       redirect_to community_path
       return
     end

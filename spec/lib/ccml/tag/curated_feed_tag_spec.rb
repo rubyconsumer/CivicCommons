@@ -6,9 +6,9 @@ describe CCML::Tag::CuratedFeedTag do
 
     before(:each) do
       @curated_feed = Factory.create(:curated_feed)
-      @url = "http://www.theciviccommons.com/feeds/#{@curated_feed.cached_slug}"
-      @tag_body = '{id} "{title}" {cached_slug}'
-      @tag_regexp = Regexp.new("#{@curated_feed.id} \"#{@curated_feed.title}\" #{@curated_feed.cached_slug}")
+      @url = "http://www.theciviccommons.com/feeds/#{@curated_feed.slug}"
+      @tag_body = '{id} "{title}" {slug}'
+      @tag_regexp = Regexp.new("#{@curated_feed.id} \"#{@curated_feed.title}\" #{@curated_feed.slug}")
     end
 
     it "accepts an id as opts id" do
@@ -17,8 +17,8 @@ describe CCML::Tag::CuratedFeedTag do
       tag.index.should =~ @tag_regexp
     end
 
-    it "accepts a cached_slug as opts id" do
-      tag = CCML::Tag::CuratedFeedTag.new({id: @curated_feed.cached_slug}, @url)
+    it "accepts a slug as opts id" do
+      tag = CCML::Tag::CuratedFeedTag.new({id: @curated_feed.slug}, @url)
       tag.tag_body = @tag_body
       tag.index.should =~ @tag_regexp
     end
@@ -40,7 +40,7 @@ describe CCML::Tag::CuratedFeedTag do
   context "#all method" do
 
     before(:each) do
-      @tag_body = '{id} "{title}" {cached_slug}'
+      @tag_body = '{id} "{title}" {slug}'
     end
 
     it "returns all curated feeds" do
@@ -50,7 +50,7 @@ describe CCML::Tag::CuratedFeedTag do
       tag.tag_body = @tag_body
       output = tag.all
       feeds.each do |feed|
-        output.should =~ /#{feed.id} \"#{feed.title}\" #{feed.cached_slug}/
+        output.should =~ /#{feed.id} \"#{feed.title}\" #{feed.slug}/
       end
     end
 

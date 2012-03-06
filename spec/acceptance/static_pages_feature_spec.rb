@@ -13,7 +13,7 @@ feature "View Static Page", %q{
       # When I visit the FAQ page
       # Then I should be on the FAQ page
       # And I should see the FAQ text
-      @static_page = Factory.create(:content_template, name: 'FAQ', cached_slug: 'faq')
+      @static_page = Factory.create(:content_template, name: 'FAQ')
       visit page_path(@static_page)
       should_be_on page_path(@static_page)
       page.should have_content(@static_page.template)

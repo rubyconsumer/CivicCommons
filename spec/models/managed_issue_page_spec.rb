@@ -47,7 +47,7 @@ describe ManagedIssuePage do
     it "validates the uniqueness of the name" do
       ManagedIssuePage.new(@attr).save
       @attr[:template] = 'new stuff'
-      @attr[:cached_slug] = 'new_stuff'
+      @attr[:slug] = 'new_stuff'
       @attr[:author] = Factory.build(:admin_person, :id => @author.id+1)
       ManagedIssuePage.new(@attr).should_not be_valid
     end

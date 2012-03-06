@@ -1,6 +1,6 @@
 <article>
   <header>
-    <h1><%= link_to(@content_item.title, @content_item.cached_slug) %></h1>
+    <h1><%= link_to(@content_item.title, @content_item.slug) %></h1>
     <div>
       <%= image_tag @content_item.image.url(:panel) %>
     </div>

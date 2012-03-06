@@ -87,12 +87,11 @@ module Admin
 
         it "assigns a newly created content_item as @content_item" do
           assigns[:content_item].title.should eq params[:title]
-          assigns[:content_item].cached_slug.should eq params[:cached_slug]
           assigns[:content_item].summary.should eq params[:summary]
         end
 
         it "redirects to the created content_item" do
-          response.should redirect_to admin_content_item_path(assigns[:content_item].cached_slug)
+          response.should redirect_to admin_content_item_path(assigns[:content_item].slug)
         end
 
       end
@@ -170,10 +169,6 @@ module Admin
         "Some completely different but valid title"
       end
 
-      let(:new_slug) do
-        "some-completely-different-but-valid-title"
-      end
-
       let(:params) do
         content_item.attributes
       end
@@ -194,11 +189,10 @@ module Admin
           assigns[:content_item].id.should eq params['id']
           assigns[:content_item].title.should eq new_title
           assigns[:content_item].summary.should eq params['summary']
-          assigns[:content_item].cached_slug.should eq new_slug
         end
 
         it "redirects to the 'GET show' page" do
-          response.should redirect_to admin_content_item_path(new_slug)
+          response.should redirect_to admin_content_item_path(content_item)
         end
 
       end
@@ -215,7 +209,7 @@ module Admin
           assigns[:content_item].id.should eq params['id']
           assigns[:content_item].title.should eq params['title']
           assigns[:content_item].summary.should eq params['summary']
-          assigns[:content_item].cached_slug.should eq params['cached_slug']
+          assigns[:content_item].slug.should eq params['slug']
         end
 
         it "re-renders the 'edit' content_item" do

@@ -1,5 +1,5 @@
 class Person < ActiveRecord::Base
-
+  extend FriendlyId
   include Regionable
   include GeometryForStyle
   include UnsubscribeSomeone
@@ -78,7 +78,10 @@ class Person < ActiveRecord::Base
   validates_presence_of :first_name, :last_name, :if => Proc.new{|record| record.type != 'Organization'}
   validate :check_twitter_username_format
 
-  has_friendly_id :name, :use_slug => true, :strip_non_ascii => true
+  friendly_id :name, :use => :slugged
+  def should_generate_new_friendly_id?
+    new_record? || slug.nil?
+  end
 
   # Ensure format of salt
   # Commented out because devise 1.2.RC doesn't store password_salt column anymore, if it uses bcrypt
@@ -128,7 +131,7 @@ class Person < ActiveRecord::Base
     yield
     Notifier.email_changed(old_email, new_email).deliver if old_email && new_email
   end
-  
+
   def send_confirmation_instructions
     # if spam don't send confirmation
     SpamService.spam?(email) ? false : super
@@ -390,11 +393,11 @@ class Person < ActiveRecord::Base
   def has_twitter?
     attribute_present? :twitter_username
   end
-  
+
   def has_email?
     attribute_present? :email
   end
-  
+
   def is_organization?
     is_a? Organization
   end
