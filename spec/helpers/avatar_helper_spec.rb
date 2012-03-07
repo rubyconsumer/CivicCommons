@@ -40,6 +40,14 @@ describe AvatarHelper do
       helper.text_profile(@registered_user).should =~ /\<a href="\S*\/user\/13" title="Someone Else">Someone Else<\/a>/i
     end
 
+    it "should display a users name with a link if person id is used" do
+      helper.stub(:current_person).and_return(@me)
+      @registered_user.avatar.stub(:url).and_return("http://avatar_url")
+      Person.stub(:find).and_return(@registered_user)
+
+      helper.text_profile(@registered_user.id).should =~ /\<a href="\S*\/user\/13" title="Someone Else">Someone Else<\/a>/i
+    end
+
   end
 
   context "profile image" do

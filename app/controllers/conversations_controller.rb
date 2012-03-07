@@ -1,5 +1,5 @@
 class ConversationsController < ApplicationController
-  layout 'category_index'
+  layout 'opportunity', :except => :index
 
   before_filter :force_friendly_id, :only => :show
   before_filter :require_user, :only => [
@@ -22,7 +22,7 @@ class ConversationsController < ApplicationController
 
     @regions = Region.all
     @recent_items = Activity.most_recent_activity_items(3)
-    render :index
+    render :index, :layout => 'category_index'
   end
 
   # GET /conversations/rss
@@ -36,6 +36,7 @@ class ConversationsController < ApplicationController
 
   def responsibilities
     get_content_item(params)
+    render :layout => 'category_index'
   end
 
   def filter
@@ -44,7 +45,7 @@ class ConversationsController < ApplicationController
 
     @regions = Region.all
     @recent_items = Activity.most_recent_activity_items(3)
-    render :filter
+    render :filter, :layout => 'category_index'
   end
 
   # GET /conversations/1
@@ -91,13 +92,13 @@ class ConversationsController < ApplicationController
     @offset = @per_page * (@page - 1)
 
     @conversation = Conversation.find(params[:id])
-    
+
     # Added 1 to @per_page to see if there is a next page
     @recent_items = Activity.most_recent_activity_items_for_conversation(@conversation, @per_page + 1, @offset)
     @next_page = @recent_items.length > @per_page
-    
+
     # pop the last item, because it was temporarily used to see if there is a next page.
-    @recent_items.pop 
+    @recent_items.pop
 
     respond_to do |format|
       format.embed do
@@ -196,7 +197,7 @@ class ConversationsController < ApplicationController
     return redirect_to :conversation_responsibilities unless params[:accept]
     get_content_item(params)
     @conversation = Conversation.new
-    render :new
+    render :new, :layout => 'category_index'
   end
 
   # GET /conversations/1/edit
@@ -213,7 +214,7 @@ class ConversationsController < ApplicationController
       if @conversation.save
         format.html { redirect_to(new_invite_path(:source_type => :conversations, :source_id => @conversation.id, :conversation_created => true), :notice => 'Your conversation has been created!') }
       else
-        format.html { render :new }
+        format.html { render :new, :layout => 'category_index' }
       end
     end
   end

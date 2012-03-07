@@ -1,0 +1,6 @@
+- content_for :main_body do
+  = render :partial => 'layouts/opportunity_header'
+  = yield
+  .aside.supplementary
+    = yield :sidebar
+= render :file => 'layouts/application'

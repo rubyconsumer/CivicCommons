@@ -3,6 +3,7 @@ module AvatarHelper
   # Create Avatar and Link for a Users Profile
   def user_profile(person)
     if person
+      person = Person.find(person) if person.is_a?(Numeric)
       link_to_profile(person) do
         loggedin_image(person)
       end
@@ -13,6 +14,7 @@ module AvatarHelper
 
   def text_profile(person)
     if person
+      person = Person.find(person) if person.is_a?(Numeric)
       link_to_profile(person) do
         person.name
       end
