@@ -78,6 +78,9 @@ GEM
       xpath (~> 0.1.4)
     childprocess (0.2.3)
       ffi (~> 1.0.6)
+    ckeditor (3.6.3)
+      mime-types (~> 1.16)
+      orm_adapter (~> 0.0.5)
     coffee-script (2.2.0)
       coffee-script-source
       execjs
@@ -338,6 +341,7 @@ DEPENDENCIES
   awesome_nested_set
   aws-s3
   capybara (= 1.1.2)
+  ckeditor (= 3.6.3)
   database_cleaner (~> 0.6.0)
   date_validator
   delayed_job (>= 2.1.2)

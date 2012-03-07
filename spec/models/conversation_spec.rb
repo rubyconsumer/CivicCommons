@@ -5,6 +5,7 @@ describe Conversation do
   context "Associations" do
     it { should have_many :contributions  }
     it { should have_attached_file :image }
+    it { should have_many(:petitions).dependent(:destroy) }
     context "has_one survey" do
       it "should be correct" do
         Conversation.reflect_on_association(:survey).macro.should == :has_one

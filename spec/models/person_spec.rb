@@ -33,6 +33,12 @@ describe Person do
     it "should be have uniqueness constraint on habtm organiazation" do
       Person.reflect_on_association(:organizations).options[:uniq].should be_true
     end
+    it "should have many petition_signatures" do
+      should have_many(:petition_signatures).dependent(:destroy)
+    end
+    it "should have many signed_petitions" do
+      should have_many(:signed_petitions).through(:petition_signatures)
+    end
   end
 
   describe "validate required data" do

@@ -147,6 +147,7 @@ Civiccommons::Application.routes.draw do
       get '/moderate', to: 'contributions#moderate', on: :member
       put '/moderate', to: 'contributions#moderated', on: :member
     end
+    resources :petitions
   end
 
   # Created by Jonathan Penn (February 17, 2012)

@@ -17,10 +17,14 @@ module CivicCommonsDriver
       self.class::LOCATION
     end
 
-    def has_wysiwyg_editor_field(field, locator)
+    def has_wysiwyg_editor_field(field, locator, type = :tinymce)
       define_method "fill_in_#{field}_with" do | value |
         begin
-          page.execute_script("tinymce.get('#{locator}').setContent('#{value}')")
+          if type == :tinymce
+            page.execute_script("tinymce.get('#{locator}').setContent('#{value}')")
+          elsif type == :ckeditor
+            page.execute_script("CKEDITOR.instances['#{locator}'].setData('#{value}');")
+          end
         rescue Capybara::NotSupportedByDriverError
           fill_in locator, :with=>value
         end

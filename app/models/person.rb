@@ -70,6 +70,9 @@ class Person < ActiveRecord::Base
 
   has_many :contributed_conversations, :through => :contributions, :source => :conversation, :uniq => true, :dependent => :restrict
   has_many :contributed_issues, :through => :contributions, :source => :issue, :uniq => true, :dependent => :restrict
+  
+  has_many :petition_signatures, :dependent => :destroy
+  has_many :signed_petitions, :class_name => 'Petition', :through => :petition_signatures, :source => :petition
 
   validates_length_of :email, :within => 6..255, :too_long => "please use a shorter email address", :too_short => "please use a longer email address"
 

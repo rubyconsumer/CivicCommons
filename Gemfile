@@ -51,6 +51,8 @@ gem 'sixarm_ruby_email_address_validation'
 
 gem 'profanity_filter'
 
+gem "ckeditor", "3.6.3"
+
 group :development do
   gem "rails3-generators"
   gem "hpricot"

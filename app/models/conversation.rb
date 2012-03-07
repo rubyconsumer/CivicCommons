@@ -28,6 +28,8 @@ class Conversation < ActiveRecord::Base
   has_many :participants, :through => :confirmed_contributions,
            :source => :person, :uniq => true,
            :order => "contributions.created_at ASC"
+           
+  has_many :petitions, :dependent => :destroy
 
   has_and_belongs_to_many :issues
   has_and_belongs_to_many :content_items, uniq: true
