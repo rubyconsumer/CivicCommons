@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120219165240) do
+ActiveRecord::Schema.define(:version => 20120306142027) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -85,12 +85,14 @@ ActiveRecord::Schema.define(:version => 20120219165240) do
     t.text     "meta_description"
     t.text     "meta_tags"
     t.string   "link_text"
+    t.string   "slug"
   end
 
   add_index "content_items", ["cached_slug"], :name => "index_content_items_on_cached_slug", :length => {"cached_slug"=>10}
   add_index "content_items", ["content_type"], :name => "index_content_items_on_content_type", :length => {"content_type"=>4}
   add_index "content_items", ["conversation_id"], :name => "index_content_items_on_conversation_id"
   add_index "content_items", ["person_id"], :name => "index_content_items_on_person_id"
+  add_index "content_items", ["slug"], :name => "index_content_items_on_slug", :unique => true
 
   create_table "content_items_conversations", :id => false, :force => true do |t|
     t.integer  "conversation_id"
@@ -128,10 +130,12 @@ ActiveRecord::Schema.define(:version => 20120219165240) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "stylesheet_path"
+    t.string   "slug"
   end
 
   add_index "content_templates", ["cached_slug"], :name => "index_content_templates_on_cached_slug", :unique => true
   add_index "content_templates", ["person_id"], :name => "index_content_templates_on_person_id"
+  add_index "content_templates", ["slug"], :name => "index_content_templates_on_slug", :unique => true
 
   create_table "contributions", :force => true do |t|
     t.datetime "datetime"
@@ -202,11 +206,13 @@ ActiveRecord::Schema.define(:version => 20120219165240) do
     t.string   "page_title"
     t.text     "meta_description"
     t.text     "meta_tags"
+    t.string   "slug"
   end
 
   add_index "conversations", ["cached_slug"], :name => "index_conversations_on_cached_slug", :unique => true
   add_index "conversations", ["exclude_from_most_recent"], :name => "index_conversations_on_exclude_from_most_recent"
   add_index "conversations", ["owner"], :name => "index_conversations_on_owner"
+  add_index "conversations", ["slug"], :name => "index_conversations_on_slug", :unique => true
 
   create_table "conversations_issues", :id => false, :force => true do |t|
     t.integer "conversation_id"
@@ -245,9 +251,11 @@ ActiveRecord::Schema.define(:version => 20120219165240) do
     t.string   "cached_slug"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "slug"
   end
 
   add_index "curated_feeds", ["cached_slug"], :name => "index_curated_feeds_on_cached_slug", :unique => true
+  add_index "curated_feeds", ["slug"], :name => "index_curated_feeds_on_slug", :unique => true
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -270,6 +278,17 @@ ActiveRecord::Schema.define(:version => 20120219165240) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "friendly_id_slugs", :force => true do |t|
+    t.string   "slug",                         :null => false
+    t.integer  "sluggable_id",                 :null => false
+    t.string   "sluggable_type", :limit => 40
+    t.datetime "created_at"
+  end
+
+  add_index "friendly_id_slugs", ["slug", "sluggable_type"], :name => "index_friendly_id_slugs_on_slug_and_sluggable_type", :unique => true
+  add_index "friendly_id_slugs", ["sluggable_id"], :name => "index_friendly_id_slugs_on_sluggable_id"
+  add_index "friendly_id_slugs", ["sluggable_type"], :name => "index_friendly_id_slugs_on_sluggable_type"
 
   create_table "homepage_featureds", :force => true do |t|
     t.integer  "homepage_featureable_id",   :null => false
@@ -307,9 +326,11 @@ ActiveRecord::Schema.define(:version => 20120219165240) do
     t.string   "page_title"
     t.text     "meta_description"
     t.text     "meta_tags"
+    t.string   "slug"
   end
 
   add_index "issues", ["cached_slug"], :name => "index_issues_on_cached_slug", :unique => true
+  add_index "issues", ["slug"], :name => "index_issues_on_slug", :unique => true
 
   create_table "issues_topics", :id => false, :force => true do |t|
     t.integer  "issue_id"
@@ -329,11 +350,18 @@ ActiveRecord::Schema.define(:version => 20120219165240) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "stylesheet_path"
+    t.string   "slug"
   end
 
   add_index "managed_issue_pages", ["cached_slug"], :name => "index_managed_issue_pages_on_cached_slug", :unique => true
   add_index "managed_issue_pages", ["issue_id"], :name => "index_managed_issue_pages_on_issue_id"
   add_index "managed_issue_pages", ["person_id"], :name => "index_managed_issue_pages_on_person_id"
+  add_index "managed_issue_pages", ["slug"], :name => "index_managed_issue_pages_on_slug", :unique => true
+
+  create_table "opportunities", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "organization_details", :force => true do |t|
     t.integer  "person_id"
@@ -395,11 +423,13 @@ ActiveRecord::Schema.define(:version => 20120219165240) do
     t.boolean  "weekly_newsletter",                   :default => true
     t.string   "type"
     t.string   "title"
+    t.string   "slug"
   end
 
   add_index "people", ["cached_slug"], :name => "index_people_on_cached_slug", :unique => true
   add_index "people", ["email"], :name => "index_people_on_email", :unique => true
   add_index "people", ["reset_password_token"], :name => "index_people_on_reset_password_token", :unique => true
+  add_index "people", ["slug"], :name => "index_people_on_slug", :unique => true
 
   create_table "rating_descriptors", :force => true do |t|
     t.string   "title"

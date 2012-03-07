@@ -1,4 +1,5 @@
 class Issue < ActiveRecord::Base
+  extend FriendlyId
   include Visitable
   include Subscribable
   include Regionable
@@ -48,7 +49,10 @@ class Issue < ActiveRecord::Base
                                     :content_type => /image\/*/,
                                     :message => "Not a valid image file."
 
-  has_friendly_id :name, :use_slug => true, :strip_non_ascii => true
+  friendly_id :name, :use => :slugged
+  def should_generate_new_friendly_id?
+    new_record? || slug.nil?
+  end
 
   before_create :assign_position
 

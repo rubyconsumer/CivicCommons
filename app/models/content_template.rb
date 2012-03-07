@@ -1,4 +1,5 @@
 class ContentTemplate < ActiveRecord::Base
+  extend FriendlyId
 
   acts_as_revisionable :on_update => true
 
@@ -7,6 +8,9 @@ class ContentTemplate < ActiveRecord::Base
   validates_presence_of :name, :template, :author
   validates_uniqueness_of :name
 
-  has_friendly_id :name, :use_slug => true, :strip_non_ascii => true
+  friendly_id :name, :use => :slugged
+  def should_generate_new_friendly_id?
+    new_record? || slug.nil?
+  end
 
 end

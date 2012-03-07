@@ -1,4 +1,5 @@
 class ContentItem < ActiveRecord::Base
+  extend FriendlyId
 
   attr_accessor :url_slug
 
@@ -84,7 +85,10 @@ class ContentItem < ActiveRecord::Base
 
   validates_presence_of :published
 
-  has_friendly_id :title, :use_slug => true, :strip_non_ascii => true
+  friendly_id :title, :use => :slugged
+  def should_generate_new_friendly_id?
+    new_record? || slug.nil?
+  end
 
   def people=(record)
     raise Exception, ":people is readonly. please use :hosts or :guests habtm association, instead!"
@@ -130,7 +134,7 @@ class ContentItem < ActiveRecord::Base
       return false
     end
   end
-  
+
   def delete_person(role, person)
     case role
     when 'guest'
@@ -155,11 +159,11 @@ class ContentItem < ActiveRecord::Base
   def content_type_is_radio_show?
     content_type == "RadioShow"
   end
-  
+
   def self.blog_authors
     people_query = ContentItem.blog_post.recent_blog_posts.newer_than(3.months.ago).select('DISTINCT(person_id)')
     blog_author_ids = people_query.collect(&:person_id)
     Person.find(blog_author_ids)
   end
-  
+
 end

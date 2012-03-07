@@ -49,13 +49,14 @@ class ProfilePresenter < Delegator
   end
 
   def recent_activity
+    require 'will_paginate/array'
     @user.most_recent_activity.paginate(page: @page, per_page: PER_PAGE)
   end
 
   def has_profile?
     has_website? || has_twitter? || has_address? || has_email?
   end
-  
+
   def title
     @user.title if !@user.is_organization?
   end
@@ -64,7 +65,7 @@ class ProfilePresenter < Delegator
     not recent_activity.empty?
   end
   def feed_path
-    user_path(@user.cached_slug, format: :xml)
+    user_path(@user.slug, format: :xml)
   end
   def feed_title
     "#{@user.name} at The Civic Commons"
@@ -83,16 +84,16 @@ class ProfilePresenter < Delegator
   end
   def website
     if @user.website.present? && !@user.website.match(/^http/)
-      "http://#{@user.website}" 
+      "http://#{@user.website}"
     else
       @user.website
     end
   end
-  
+
   def has_email?
     @user.email if is_organization?
   end
-  
+
   private
   def address
     return "" unless has_address?

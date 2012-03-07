@@ -15,7 +15,7 @@ describe ProfilePresenter do
       subscribed_conversations: subscribed_conversations,
       subscribed_organizations: subscribed_organizations,
       most_recent_activity: most_recent_activity,
-      cached_slug: "bob",
+      slug: "bob",
       name: "Bob"
   end
   let(:presenter) { ProfilePresenter.new(user, page: 1) }

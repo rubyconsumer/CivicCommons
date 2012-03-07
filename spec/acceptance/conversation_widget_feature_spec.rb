@@ -15,7 +15,7 @@ feature "Conversation Widget Feature", %q{
   end
   
   background do
-    @conversation = Factory.create(:conversation, :cached_slug => 'akron-beacon-journal-seeks-citizen-views', :title => 'Akron Beacon Journal Seeks Citizen Views', :summary => 'Conversation Summary Here')
+    @conversation = Factory.create(:conversation, :title => 'Akron Beacon Journal Seeks Citizen Views', :summary => 'Conversation Summary Here')
     @person = Factory.create(:normal_person)
     @contribution1 = Factory.create(:contribution,{:conversation => @conversation, :content => 'Contribution Title here 1'})
     @contribution2 = Factory.create(:contribution,{:conversation => @conversation, :content => 'Contribution Title here 2'})

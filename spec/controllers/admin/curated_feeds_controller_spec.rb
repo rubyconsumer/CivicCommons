@@ -73,12 +73,11 @@ module Admin
 
         it "assigns a newly created feed as @feed" do
           assigns[:feed].title.should eq params[:title]
-          assigns[:feed].cached_slug.should eq params[:cached_slug]
           assigns[:feed].description.should eq params[:description]
         end
 
         it "redirects to the created feed" do
-          response.should redirect_to admin_curated_feed_path(assigns[:feed].cached_slug)
+          response.should redirect_to admin_curated_feed_path(assigns[:feed])
         end
 
       end
@@ -115,10 +114,6 @@ module Admin
           "Some completely different but valid title"
         end
 
-        let(:new_slug) do
-          "some-completely-different-but-valid-title"
-        end
-
         let(:params) do
           feed.attributes
         end
@@ -138,11 +133,10 @@ module Admin
             assigns[:feed].id.should eq params['id']
             assigns[:feed].title.should eq new_title
             assigns[:feed].description.should eq params['description']
-            assigns[:feed].cached_slug.should eq new_slug
           end
 
           it "redirects to the 'GET show' page" do
-            response.should redirect_to admin_curated_feed_path(new_slug)
+            response.should redirect_to admin_curated_feed_path(feed)
           end
 
         end
@@ -159,7 +153,6 @@ module Admin
             assigns[:feed].id.should eq params['id']
             assigns[:feed].title.should eq params['title']
             assigns[:feed].description.should eq params['description']
-            assigns[:feed].cached_slug.should eq params['cached_slug']
           end
 
           it "re-renders the 'edit' feed" do
@@ -185,7 +178,7 @@ module Admin
         end
 
         it "redirects to the feeds list" do
-          response.should redirect_to(admin_curated_feeds_url)
+          response.should redirect_to(admin_curated_feeds_path)
         end
 
       end

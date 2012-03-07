@@ -78,7 +78,7 @@ describe HPSlotPresenter do
     end
 
     it "is available with a BlogPost object" do
-      blog_post = Factory.build(:blog_post)
+      blog_post = Factory.create(:blog_post)
       hsp = HPSlotPresenter.new(blog_post)
 
       # hsp.url.should == "http://www.example.com/blog/#{i.friendly_id}"
@@ -86,7 +86,7 @@ describe HPSlotPresenter do
     end
 
     it "is available with a RadioShow object" do
-      radio_show = Factory.build(:radio_show)
+      radio_show = Factory.create(:radio_show)
       hsp = HPSlotPresenter.new(radio_show)
 
       # hsp.url.should == "http://www.example.com/radioshow/#{i.friendly_id}"

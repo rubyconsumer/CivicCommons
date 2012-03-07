@@ -11,7 +11,7 @@ module CivicCommonsDriver
       has_link :people_active_in_this_issue, 'People active in this issue', :issue_community
 
       def initialize attributes
-        self.url = "/issues/#{attributes[:for].cached_slug}"
+        self.url = "/issues/#{attributes[:for].slug}"
       end
 
       def follow_topic_link_for topic

@@ -14,7 +14,6 @@ FactoryGirl.define do |f|
     u.zip_code '44313'
     u.password 'password'
     u.sequence(:email) {|n| "test.account#{n}@mysite.com" }
-    f.sequence(:cached_slug) {|n| "john-doe--#{n}" }
     u.daily_digest false
     u.avatar_url '/images/avatar_70.gif'
   end
@@ -32,12 +31,6 @@ FactoryGirl.define do |f|
     u.sequence(:id)
   end
 
-  factory :person_without_zip_code, :parent => :registered_user do |u|
-    u.zip_code nil
-    to_create do |instance|
-      instance.save :validate=>false
-    end
-  end
   factory :person_subscribed_to_weekly_newsletter, :parent => :registered_user do |u|
     u.weekly_newsletter true
   end

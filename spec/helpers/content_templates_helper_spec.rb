@@ -18,7 +18,7 @@ describe ContentTemplatesHelper do
     end
 
     it "looks up a template by friendly-id" do
-      parse_content_template(template.cached_slug).should == template.template
+      parse_content_template(template.slug).should == template.template
     end
 
     it "returns blank when template not found" do

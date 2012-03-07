@@ -715,7 +715,7 @@ div.three-col-sm div.photobank img {margin: 0 0 6px 6px;}
   padding-top: 10px;
 }
 .survey-option{
-  border: 1px solid #b5b5b5; 
+  border: 1px solid #b5b5b5;
   background-color: #fff;
   margin: 10px 0 0 0;
   padding: 10px;
@@ -737,7 +737,7 @@ div.three-col-sm div.photobank img {margin: 0 0 6px 6px;}
 }
 .survey-option-locator {
   border: none;
-  height: 0; 
+  height: 0;
 }
 .survey-option .menu .contract {display: none;}
 .survey-option .content {
@@ -748,8 +748,8 @@ div.three-col-sm div.photobank img {margin: 0 0 6px 6px;}
   float: right;
   width: 78px;
 }
-.disabled .survey-option .select, 
-.disabled .survey-option .unselect, 
+.disabled .survey-option .select,
+.disabled .survey-option .unselect,
 .disabled.selected-survey-options .menu {display: none !important;}
 .disabled .survey-option {cursor: default !important;}
 .survey-option .select {
@@ -1197,7 +1197,7 @@ div.three-col-sm div.photobank img {margin: 0 0 6px 6px;}
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
 }
 .pagination span {color: #999;}
-.pagination .prev_page {
+.pagination .previous_page {
   border-left: 1px solid #ccc;
   -moz-border-radius: 4px 0 0 4px;
   -webkit-border-radius: 4px 0 0 4px;
@@ -1446,7 +1446,7 @@ div.login-actions p {
   background-image: -webkit-linear-gradient(bottom, #484E57 30%, #575D68 70%);
   background-image: -ms-linear-gradient(bottom, #484E57 30%, #575D68 70%);
   background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.3, #484E57), color-stop(0.7, #575D68));
-  filter: progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorStr=#FF484E57, endColorStr=#FF575D68);  
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorStr=#FF484E57, endColorStr=#FF575D68);
   -webkit-border-radius:4px;
   -moz-border-radius: 4px;
   color:#fff;

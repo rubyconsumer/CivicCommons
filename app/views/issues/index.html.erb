@@ -7,6 +7,7 @@
     <div class="main-content">
       <% svc = ParticipationService.new %>
       <% @issues.each do |issue| %>
+        <% issue = IssuePresenter.new(issue) %>
         <div class="entry-container">
           <div class="entry-details" <%=issue.container_attribute%>>
             <a href="<%= issue_path(issue) %>"><%= image_tag issue.image.url(:panel) %></a>

@@ -4,10 +4,13 @@
   * [Design Refinements](https://agilezen.com/project/18091/story/437)
 
 #### Miscellaneous
+  * [upgrade friendlyID and will_paginate gems](https://agilezen.com/project/18091/story/438)
 
 #### Bug Fixes
 
 ### Post Deployment Instructions
+  * run migrations: `bundle exec rake db:migrate`
+  * run friendlyID upgrade rake task: `bundle exec rake friendlyid:upgrade`
 
 
 ## 1.9.5
