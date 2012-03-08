@@ -358,11 +358,6 @@ ActiveRecord::Schema.define(:version => 20120306142027) do
   add_index "managed_issue_pages", ["person_id"], :name => "index_managed_issue_pages_on_person_id"
   add_index "managed_issue_pages", ["slug"], :name => "index_managed_issue_pages_on_slug", :unique => true
 
-  create_table "opportunities", :force => true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "organization_details", :force => true do |t|
     t.integer  "person_id"
     t.string   "street"
