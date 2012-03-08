@@ -49,7 +49,6 @@ class ProfilePresenter < Delegator
   end
 
   def recent_activity
-    require 'will_paginate/array'
     @user.most_recent_activity.paginate(page: @page, per_page: PER_PAGE)
   end
 
