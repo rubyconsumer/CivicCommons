@@ -4,22 +4,22 @@ class Petition < ActiveRecord::Base
   has_one :action, :as => :actionable, :dependent => :destroy
   has_many :signatures, :class_name => 'PetitionSignature', :dependent => :destroy
   has_many :signers, :class_name => 'Person', :through => :signatures, :source => :person
-  
-  validates_presence_of :title, 
-                        :description, 
-                        :resulting_actions, 
+
+  validates_presence_of :title,
+                        :description,
+                        :resulting_actions,
                         :signature_needed,
                         :person_id
   validates_numericality_of :signature_needed, :greater_than => 0, :allow_blank => true
-  
+
   alias_attribute :participants, :signers
-  
+
   after_save :create_or_update_action
-  
+
   def signed_by?(person)
     signers.exists?(person)
   end
-  
+
   def signature_needed_left
     if signature_needed > signatures.count
       signature_needed - signatures.count
@@ -27,13 +27,13 @@ class Petition < ActiveRecord::Base
       0
     end
   end
-  
+
   def sign(person)
     unless signers.exists?(person)
       self.signers << person
     end
   end
-    
+
   # Needed to create the Action model when Petition is created
   def create_or_update_action
     if self.action.present?
@@ -42,5 +42,6 @@ class Petition < ActiveRecord::Base
       self.build_action(:conversation_id => self.conversation_id).save if self.conversation_id.present?
     end
   end
-  
+
 end
+

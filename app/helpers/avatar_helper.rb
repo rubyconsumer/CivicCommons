@@ -18,8 +18,6 @@ module AvatarHelper
       link_to_profile(person) do
         person.name
       end
-    else
-      person.name
     end
   end
 
@@ -53,11 +51,10 @@ module AvatarHelper
 
   def avatar_profile(person, size=20, css_class='callout')
     if person
+      person = Person.find(person) if person.is_a?(Numeric)
       link_to_profile(person) do
         profile_image(person, size, css_class)
       end
-    else
-      profile_image(person, size, css_class)
     end
   end
 

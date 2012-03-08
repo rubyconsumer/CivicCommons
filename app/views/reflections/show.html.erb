@@ -1,14 +1,11 @@
-<%= render :partial => 'layouts/opportunities' %>
-
 <div class="wrapper">
   <div class="content-container">
 
     <div class="main-content">
 
-      <h2 class="mtn">Title of Reflection</h2>
-      <p><strong>By: <a href="#">Noelle Celeste</a> on January 1, 2012</strong></p>
-      <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin augue nisi, fermentum vitae, imperdiet a, auctor eu, mi. Nulla imperdiet molestie purus. Duis arcu dui, pretium in, molestie id, convallis eget, orci. Praesent eget purus. Nullam sed nunc. Etiam quis orci ac metus consectetuer consequat. Sed pulvinar aliquam sem. Vestibulum convallis. Pellentesque vestibulum dapibus est. Morbi iaculis. Morbi molestie molestie libero. Ut metus. Phasellus pulvinar. Aenean rutrum tristique neque. Morbi vulputate. Curabitur pretium, arcu a accumsan pretium, augue mi ullamcorper ligula, at tristique ligula purus quis mi. Etiam blandit arcu et lorem. Nam ligula. Aliquam nisi sem, euismod id, pharetra vitae, ullamcorper et, pede.</p>
-      <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin augue nisi, fermentum vitae, imperdiet a, auctor eu, mi. Nulla imperdiet molestie purus. Duis arcu dui, pretium in, molestie id, convallis eget, orci. Praesent eget purus. Nullam sed nunc. Etiam quis orci ac metus consectetuer consequat. Sed pulvinar aliquam sem. Vestibulum convallis. Pellentesque vestibulum dapibus est. Morbi iaculis. Morbi molestie molestie libero. Ut metus. Phasellus pulvinar. Aenean rutrum tristique neque. Morbi vulputate. Curabitur pretium, arcu a accumsan pretium, augue mi ullamcorper ligula, at tristique ligula purus quis mi. Etiam blandit arcu et lorem. Nam ligula. Aliquam nisi sem, euismod id, pharetra vitae, ullamcorper et, pede.</p>
+      <h2 class="mtn"><%= @reflection.title %></h2>
+      <p><strong>By: <%= text_profile(@reflection.owner) %> on <%= @reflection.created_at.strftime('%B %d, %Y') %></strong></p>
+      <p><%= raw @reflection.details %></p>
 
       <div class="comment-section mtl">
         <h3 class="mbl">Comments</h3>
@@ -53,9 +50,8 @@
     <div class='aside supplementary'>
       <div class="recent-item">
         <div class="offset-2">
-          <a href="#" title="Jason Segedy"><img alt="Jason Segedy" class="callout" height="40" src="http://s3.amazonaws.com/com.theciviccommons.production/avatars/31/standard/jason-segedy.jpg?1289706219" title="Jason Segedy" width="40" /></a>
-          <p><strong><a href="#">Noelle Celeste</a></strong><br />
-          <a href="#">View Profile</a></p>
+          <%= user_profile(@reflection.owner) %>
+          <p><strong><%= text_profile(@reflection.owner) %></strong><br />
         </div>
       </div>
       <div class="mod">
