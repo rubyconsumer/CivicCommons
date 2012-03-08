@@ -5,8 +5,8 @@ module CivicCommonsDriver
     has_link :join_organization, "I'm affiliated with this organization", :organization_profile
     has_link :leave_organization, 'Leave this organization', :organization_profile
     has_link :confirm_joining_organization, "I agree", :organization_profile
-    has_link :subscribe_organization, 'Follow this Organization', :organization_profile
-    has_link :unsubscribe_organization, 'Stop Following this Organization', :organization_profile
+    has_link :subscribe_organization, 'Follow', :organization_profile
+    has_link :unsubscribe_organization, 'Following', :organization_profile
 
     def initialize options
       @slug = options[:for].slug if !options[:for].blank?

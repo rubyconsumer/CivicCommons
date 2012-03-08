@@ -7,7 +7,7 @@ module CivicCommonsDriver
       attr_accessor :url
       include Page
       include SearchBox
-      
+
       has_link :people_active_in_this_issue, 'People active in this issue', :issue_community
 
       def initialize attributes
