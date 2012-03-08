@@ -5,22 +5,19 @@
       <div class="main-content">
 
         <div class='main-content-left'>
-          <img src='<%= @conversation.image.url(:panel) %>' width='120' height='80' alt='<%= @conversation.title %>' class='featured main-img'>
+          <img src='<%= @conversation.image.url(:panel) %>' width='120' height='80' alt='<%= @conversation.title %>' class='featured main-img'\>
         </div>
         <div class='main-content-right'>
           <h1><%= @conversation.title %></h1>
           <p class="subtitle">Started on <%= @conversation.created_at.strftime('%b %d, %Y') %> by <%= text_profile(@conversation.owner) %></p>
+          <%= render :partial => '/layouts/social_links', :locals => {conversation_title: @conversation.title} %>
         </div>
 
         <div class='convo-summary'>
           <p><%= raw(@conversation.summary) %></p>
         </div>
 
-        <div class="btn-group btn-group-large mbm">
-          <a class="button secondary active" href="#"><span class="fl-left">Talk</span> <span class="fl-right number"><i class="ico-sm ico-person-white"></i> 23</span></a>
-          <a class="button secondary" href="#"><span class="fl-left">Take Action</span> <span class="fl-right number">2</span></a>
-          <a class="button secondary" href="#"><span class="fl-left">Reflect</span> <span class="fl-right number">0</span></a>
-        </div>
+        <%= render :partial => '/layouts/opportunity_navigation' %>
 
       </div><!-- /.main-content -->
 
