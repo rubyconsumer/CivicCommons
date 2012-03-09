@@ -41,12 +41,11 @@
         if($(this.el).hasClass('active')) { this.toggle(); }
     },
     toggle: function() {
-      this.active = this.active ? false : true
+      this.active = this.active ? false : true;
       this.$('a').toggleClass('close');
       this.$('input').toggleClass('hide');
       if(!this.active) {
         this.$('input').val('');
-        $('#contribution_content').tinymce().focus();
       } else {
         this.$('input').focus();
       }

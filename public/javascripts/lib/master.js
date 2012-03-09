@@ -12,13 +12,13 @@ var lastAjaxSettings;
     },
     scrollTo: function(){
       var $this = this;
-      if(this.offset() == undefined) { return; }
+      if(this.offset() === null) { return; }
       var top = this.offset().top - 100; // 100px top padding in viewport,
       var origBG = this.css('background') || 'transparent';
       var scrolled = false; // Hack since 'html,body' is the only cross-browser compatible way to scroll window
 
-      $('html,body').animate({scrollTop: top}, 1000, function (){
-        if ( ! scrolled ) { $this.effect('highlight', {color: '#c5d36a'}, 3000); }
+      $('html,body').stop(true).animate({scrollTop: top}, 1000, function (){
+        if ( ! scrolled ) { $this.stop(true, true).effect('highlight', {color: '#c5d36a'}, 3000); }
         scrolled = true;
       });
       return $this;
