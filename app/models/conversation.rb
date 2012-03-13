@@ -7,6 +7,17 @@ class Conversation < ActiveRecord::Base
   include HomepageFeaturable
   include Thumbnail
 
+  #############################################################################
+  # Temporary Stubs
+  #
+  # TODO: Use rails generated properties once the associations are created.
+  #       There are temporary methods in conversations_helper as well.
+  def actions
+    []
+  end
+  alias_method :reflections, :actions
+  #############################################################################
+
   searchable :ignore_attribute_changes_of => [ :total_visits, :recent_visits, :last_visit_date, :updated_at, :recent_rating ] do
     text :title, :boost => 3, :default_boost => 3
     text :summary, :stored => true, :boost => 2, :default_boost => 2 do
