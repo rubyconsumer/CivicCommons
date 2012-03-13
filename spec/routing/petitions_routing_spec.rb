@@ -13,6 +13,14 @@ describe PetitionsController do
     it "recognizes and generates #show" do
       { get: "/conversations/123/petitions/1234" }.should route_to(controller: "petitions", action: "show", :conversation_id => '123', :id => '1234')
     end
+
+    it "recognizes and generates #sign" do
+      { post: "/conversations/123/petitions/1234/sign" }.should route_to(controller: "petitions", action: "sign", :conversation_id => '123', :id => '1234')
+    end
+
+    it "recognizes and generates #sign_modal" do
+      { get: "/conversations/123/petitions/1234/sign" }.should route_to(controller: "petitions", action: "sign_modal", :conversation_id => '123', :id => '1234')
+    end
     
   end
 

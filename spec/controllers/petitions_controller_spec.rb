@@ -75,5 +75,42 @@ describe PetitionsController do
     end
   end
 
+  describe "sign" do
+    before(:each) do
+      @petitions_double = double
+      @stub_conversation.should_receive(:petitions).and_return(@petitions_double)
+      @petitions_double.stub!(:find).with(1234).and_return(stub_petition)  
+    end
+    
+    it "should find the petition" do
+      @petitions_double.should_receive(:find).with(1234).and_return(stub_petition)  
+      post :sign, :conversation_id => 123, :id => 1234
+    end
+    
+    it "should set the current user to sign the petition" do
+      stub_petition.should_receive(:sign).with(stub_person)
+      post :sign, :conversation_id => 123, :id => 1234
+    end
+    
+    it "should return the flash message" do
+      post :sign, :conversation_id => 123, :id => 1234
+      flash[:petition_notice].should == "<strong>Thank you!</strong> You successfully signed this petition."
+    end
+
+  end
+  
+  describe "sign_modal" do
+    before(:each) do
+      petitions_double = double
+      @stub_conversation.should_receive(:petitions).and_return(petitions_double)
+      petitions_double.should_receive(:find).with(1234).and_return(stub_petition)  
+    end
+    
+    it "should return the sign_modal template" do
+      get :sign_modal, :conversation_id => 123, :id => 1234
+      response.should render_template 'sign_modal'
+    end
+  end
+  
 
 end

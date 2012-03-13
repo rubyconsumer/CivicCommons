@@ -12,4 +12,18 @@ class Petition < ActiveRecord::Base
                         :person_id
   validates_numericality_of :signature_needed, :greater_than => 0, :allow_blank => true
   
+  def signed_by?(person)
+    signers.exists?(person)
+  end
+  
+  def sign(person)
+    unless signers.exists?(person)
+      self.signers << person
+    end
+  end
+  
+  def votable?
+    !end_on.today? && end_on.future?
+  end
+  
 end

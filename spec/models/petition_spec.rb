@@ -40,6 +40,50 @@ describe Petition do
     it "should have many signers" do
       should have_many(:signers).through(:signatures)
     end
-    
+  end
+  describe "signed_by?" do
+    def given_petition_signed_by_person
+      @petition = Factory.create(:petition)
+      @person = @petition.signers.first
+    end
+    it "should correctly confirm if a petition is signed by someone" do
+      given_petition_signed_by_person
+      @petition.signed_by?(@person).should be_true
+    end
+    it "should not confirm if petition is not signed by person" do
+      given_petition_signed_by_person
+      @person2 = Factory.create(:person)
+      @petition.signed_by?(@person2).should be_false
+    end
+  end
+  describe "sign" do
+    def given_un_signed_petition
+      @petition = Factory.create(:unsigned_petition)
+      @person = Factory.create(:person)
+    end
+    it "should sign the person" do
+      given_un_signed_petition
+      @petition.signers.should == []
+      @petition.sign(@person)
+      @petition.signers.include?(@person).should be_true
+    end
+  end
+  describe "votable?" do
+    it "should be votable if end_on in the future" do
+      @petition = Factory.build(:petition, :end_on => 3.days.from_now)
+      @petition.should be_votable
+    end
+    it "should be votable if end_on is not today" do
+      @petition = Factory.build(:petition, :end_on => 1.days.from_now)
+      @petition.should be_votable
+    end
+    it "should not be votable if end_on is yesterday" do
+      @petition = Factory.build(:petition, :end_on => 1.days.ago)
+      @petition.should_not be_votable
+    end
+    it "should not be votable if end_on is today" do
+      @petition = Factory.build(:petition, :end_on => Date.today)
+      @petition.should_not be_votable
+    end
   end
 end

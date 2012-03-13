@@ -5,15 +5,18 @@ feature " Petitions", %q{
   When I want participate in a petition
   I should be able to
 } do
-  background do
-    given_a_conversation
-  end
     
   def given_a_conversation
     @conversation = Factory.create(:conversation)
   end
+  
+  def given_a_petition
+    @petition = Factory.create(:petition)
+    @conversation = @petition.conversation
+  end
 
   scenario "Creating and viewing a petition", :js => true do
+    given_a_conversation
     login_as :person
     visit new_conversation_petition_path(@conversation)
     
@@ -32,6 +35,21 @@ feature " Petitions", %q{
     page.should have_content 'Title here'
     page.should have_content 'Description here'
     page.should have_content 'resulting action here'
+  end
+  
+  scenario "signing a petition", :js => true do
+    given_a_petition
+    login_as :person
+    
+    visit conversation_petition_path(@conversation, @petition)
+    set_current_page_to :petition
+    
+    follow_sign_petition_link
+    sleep 1
+    
+    follow_confirm_sign_petition_link
+    
+    current_page.should_not have_content 'Sign the Petition'
   end
   
 

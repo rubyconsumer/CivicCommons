@@ -1,7 +1,7 @@
 class PetitionsController < ApplicationController
   layout 'opportunity'
   
-  before_filter :require_user, :only => [:new, :create]
+  before_filter :require_user, :except => [:show]
   before_filter :find_conversation
   
   def new
@@ -20,6 +20,19 @@ class PetitionsController < ApplicationController
     else
       render :action => :new
     end
+  end
+  
+  def sign
+    @petition = @conversation.petitions.find(params[:id])
+    @petition.sign(current_person)
+    flash[:petition_notice] = '<strong>Thank you!</strong> You successfully signed this petition.'
+    redirect_to conversation_petition_path(@conversation, @petition)
+  end
+  
+  def sign_modal
+    @petition = @conversation.petitions.find(params[:id])
+    #returns the sign modal dialog
+    render :layout => false
   end
   
 protected

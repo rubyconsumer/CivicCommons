@@ -38,17 +38,18 @@
     </div><!-- /.main-content -->
 
     <div class='aside supplementary'>
-      <!--Card # 420 - Sign the petition button
-      <div class="mod">
-        <div class="btn-group btn-group-large">
-          <a href="#" class="button btn-large modal-launch">Sign the Petition</a>
+      <% if signed_in? && !@petition.signed_by?(current_person) %>
+        <div class="mod">
+          <div class="btn-group btn-group-large">
+            <%= link_to 'Sign the Petition', sign_conversation_petition_path(@conversation, @petition), :class => 'button btn-large modal-launch' %>
+          </div>
         </div>
-      </div>
-      
-      <div class="alert alert-success">
-        <strong>Thank you!</strong> You successfully signed this petition.
-      </div>
-      -->
+      <% end %>
+      <% if flash[:petition_notice] %>
+        <div class="alert alert-success">
+          <%= raw flash[:petition_notice] %>
+        </div>
+      <% end %>
 
       <!-- Card#421 Ability to View Summary Count of Signatures 
       <div class="recent-item">
@@ -74,9 +75,14 @@
   </div>
   <script type="text/javascript">
     $(document).ready(function(){
-    	$('a.modal-launch').colorbox({href:'/modal-test.html', width:'400px', transition: 'fade'});
+    	$('a.modal-launch').colorbox({href:'<%= sign_conversation_petition_path(@conversation, @petition) %>', width:'400px', transition: 'fade'});
+    	$('#cboxContent .agreebutton').live('click', function(){
+    	  
+    	  return false;
+    	});
     	$('#cboxContent .closebutton').live('click', function(){
         $.fn.colorbox.close();
+        return false;
       });
     });
   </script>

@@ -147,7 +147,10 @@ Civiccommons::Application.routes.draw do
       get '/moderate', to: 'contributions#moderate', on: :member
       put '/moderate', to: 'contributions#moderated', on: :member
     end
-    resources :petitions
+    resources :petitions do
+      post :sign, :to => 'petitions#sign', :on => :member
+      get :sign, :to => 'petitions#sign_modal', :on => :member
+    end
   end
 
   # Created by Jonathan Penn (February 17, 2012)
