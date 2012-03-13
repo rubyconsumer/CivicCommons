@@ -10,7 +10,11 @@ class PetitionsController < ApplicationController
   end
 
   def show
-    @petition = @conversation.petitions.find(params[:id])
+    @petition = @conversation.petitions.includes(:signatures).includes(:signers).find(params[:id])
+    respond_to do |format|
+      format.html
+      format.pdf
+    end
   end
   
   def edit

@@ -14,6 +14,7 @@ GIT
 GEM
   remote: http://rubygems.org/
   specs:
+    Ascii85 (1.0.1)
     ZenTest (4.5.0)
     abstract (1.0.0)
     actionmailer (3.0.3)
@@ -222,8 +223,17 @@ GEM
     paperclip (2.3.8)
       activerecord
       activesupport
+    pdf-reader (1.1.0)
+      Ascii85 (~> 1.0.0)
+      ruby-rc4
     polyglot (0.3.3)
     pr_geohash (1.0.0)
+    prawn (1.0.0.rc1)
+      pdf-reader (>= 0.9.0)
+      ttfunk (~> 1.0.3)
+    prawn_rails (0.0.8)
+      prawn (>= 0.11.1)
+      rails (>= 3.0.0)
     profanity_filter (0.1.1)
     progress_bar (0.4.0)
       highline (~> 1.6.1)
@@ -283,6 +293,7 @@ GEM
       ruby-debug-base19 (>= 0.11.19)
     ruby-hmac (0.4.0)
     ruby-progressbar (0.0.10)
+    ruby-rc4 (0.1.5)
     ruby_core_source (0.1.5)
       archive-tar-minitar (>= 0.5.2)
     ruby_parser (2.3.1)
@@ -328,6 +339,7 @@ GEM
     treetop (1.4.10)
       polyglot
       polyglot (>= 0.3.1)
+    ttfunk (1.0.3)
     tzinfo (0.3.31)
     warden (1.1.0)
       rack (>= 1.0)
@@ -392,6 +404,8 @@ DEPENDENCIES
   omniauth (= 1.0.1)
   omniauth-facebook
   paperclip (= 2.3.8)
+  prawn (>= 1.0.0.rc1)
+  prawn_rails
   profanity_filter
   progress_bar
   query_reviewer!
