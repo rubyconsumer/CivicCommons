@@ -6,6 +6,7 @@
 #### Opportunities
   * [Create and view Petition](https://agilezen.com/project/18091/story/419)
   * [Ability to sign a petition](https://agilezen.com/project/18091/story/420)
+  * [Ability to view Signatures of Petition](https://agilezen.com/project/18091/story/422)
 
 #### Miscellaneous
   * [upgrade friendlyID and will_paginate gems](https://agilezen.com/project/18091/story/438)
