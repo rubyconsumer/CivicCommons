@@ -10,8 +10,8 @@ feature " Petitions", %q{
     @conversation = Factory.create(:conversation)
   end
   
-  def given_a_petition
-    @petition = Factory.create(:petition)
+  def given_a_petition(options={})
+    @petition = Factory.create(:petition, options)
     @conversation = @petition.conversation
   end
 
@@ -48,6 +48,16 @@ feature " Petitions", %q{
     sleep 1
     
     follow_confirm_sign_petition_link
+    
+    current_page.should_not have_content 'Sign the Petition'
+  end
+
+  scenario "the inability to sign an expired petition", :js => true do
+    given_a_petition(:end_on=> 2.days.ago)
+    login_as :person
+    
+    visit conversation_petition_path(@conversation, @petition)
+    set_current_page_to :petition
     
     current_page.should_not have_content 'Sign the Petition'
   end
