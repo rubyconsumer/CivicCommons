@@ -66,5 +66,16 @@ feature " Petitions", %q{
     current_page.should_not have_content 'Sign the Petition'
   end
   
+  scenario "View summary count of petition signatures " do
+    given_a_petition(:end_on=> 2.days.from_now, :signature_needed => 12)
+    login_as :person
+    
+    visit conversation_petition_path(@conversation, @petition)
+    set_current_page_to :petition
+    
+    current_page.should have_content '1 out of 12'
+    current_page.should have_content "11 more signatures needed before"
+  end
+  
 
 end

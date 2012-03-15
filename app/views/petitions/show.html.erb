@@ -34,17 +34,19 @@
         </div>
       <% end %>
 
-      <!-- Card#421 Ability to View Summary Count of Signatures 
+
       <div class="recent-item">
         <div class="bd">
-          <h5 class="vente"><span class="grande">236</span> out of 250</h5>
-          <p>14 more signatures needed before Jan 31, 2012</p>
-          <div id="contribution-4142" class="dnld document">
-            <p><strong><a href="#">Download the petition</a></strong></p>
-          </div>       
+          <h5 class="vente"><span class="grande"><%= @petition.signatures.count %></span> out of <%= @petition.signature_needed %></h5>
+          <p><%= @petition.signature_needed_left %> more signatures needed before <%= @petition.end_on.to_s(:long) %></p>
+          <!-- 
+            <div id="contribution-4142" class="dnld document">
+              <p><strong><a href="#">Download the petition</a></strong></p>
+            </div>        
+          -->
         </div>
       </div>
-      -->
+
       <div class="recent-item">
         <div class="offset-2">
           <%= member_profile(@petition.creator) %>

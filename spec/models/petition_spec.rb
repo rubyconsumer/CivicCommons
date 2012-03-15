@@ -86,4 +86,23 @@ describe Petition do
       @petition.should_not be_votable
     end
   end
+  
+  describe 'signature_needed_left' do
+    it "should return 0 if number of signatures are more than needed" do
+      stubber = double      
+      @petition = Factory.build(:petition, :signature_needed => 10)
+      @petition.stub!(:signatures).and_return(stubber)
+      stubber.stub!(:count).and_return(1)
+      
+      @petition.signature_needed_left.should == 9
+    end
+    it "should return the real number if the number of signatures are less than needed" do
+      stubber = double      
+      @petition = Factory.build(:petition, :signature_needed => 10)
+      @petition.stub!(:signatures).and_return(stubber)
+      stubber.stub!(:count).and_return(20)
+      
+      @petition.signature_needed_left.should == 0
+    end
+  end
 end

@@ -16,6 +16,14 @@ class Petition < ActiveRecord::Base
     signers.exists?(person)
   end
   
+  def signature_needed_left
+    if signature_needed > signatures.count
+      signature_needed - signatures.count
+    else
+      0
+    end
+  end
+  
   def sign(person)
     unless signers.exists?(person)
       self.signers << person
