@@ -363,7 +363,13 @@ div.validation-error > ul > li {
   padding: 0;
   text-align: left;
 }
-.field-with-error input.textbox {background-color: #fff8f8;}
+.field-with-error input.textbox, 
+.field-with-error textarea {
+  background-color: #fff8f8;
+}
+.field-with-error .cke_skin_kama .cke_contents iframe{
+  background-color: #fff8f8 !important;
+}
 div.issue-selection p {
   float: left;
   font-weight: bold;
