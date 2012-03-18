@@ -6,7 +6,7 @@
     count: participants_count
   } %>
   <%= render partial: '/layouts/opportunity_navigation_item', locals: {
-    active: opportunity_navigation_item_selected?('actions'),
+    active: opportunity_navigation_item_selected?('actions') || opportunity_navigation_item_selected?('petitions'),
     title: 'Take Action',
     link: conversation_actions_path(conversation),
     count: actions_count

@@ -1,0 +1,10 @@
+<div class="entry-container reverse">
+  <div class="entry-meta">
+    <h3><%= link_to petition.title, [@conversation, petition] %></h3>
+    <p class="entry-contrib" title="<%= pluralize(petition.signers.count,'signer') %>"><%= petition.signers.count %></p>
+  </div>
+  <div class="entry-details full">
+    <p class="entry-tags">Proposed by: <%= text_profile(petition.creator) %>. Ends <%= petition.end_on.to_s(:long) %></p>
+    <%= raw sanitize petition.description %>
+  </div>
+</div>

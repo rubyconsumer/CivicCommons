@@ -5,11 +5,11 @@ module ConversationsHelper
   #
   # TODO: Use rails generated paths once the associations are created.
   #       There are temporary methods in conversation model as well.
-  def conversation_actions_path(conversation)
-    '#'
+  def conversation_reflections_path(options)
+    conversation_actions_path(options)
   end
-  alias_method :conversation_reflections_path, :conversation_actions_path
   #############################################################################
+  
 
   def opportunity_navigation_item_selected?(type)
     type == controller.controller_name

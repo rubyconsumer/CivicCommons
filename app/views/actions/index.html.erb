@@ -1,0 +1,31 @@
+<div class="wrapper">
+  <div class="content-container">
+  
+    <div class="main-content">
+      <%= render :partial => '/actions/action', :collection => @actions %>      
+    </div><!-- /.main-content -->
+
+    <div class="aside supplementary">
+      <!-- Card # 425 - Ability to Suggest an Action
+        <div class="mod">
+          <div class="btn-group">
+            <a class="button dropdown-toggle full" href="#">
+              <span class="fl-left">Suggest an Action</span>
+              <span class="caret fl-right"></span>
+            </a>
+            <ul class="dropdown-menu full">
+              <li><a href="#">Take a Vote</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Write a Petition</a></li>
+            </ul>
+          </div>
+        </div> 
+      -->
+      
+      <% if @conversation.issues.standard_issue.size > 0 %>
+        <%= render :partial => '/conversations/side_issues', :object => @conversation, :as => :conversation %>
+      <% end %>
+      <%= render :partial => '/actions/side_participants', :object => @participants, :as => :participants if @participants.present? %>
+  </div>
+</div>
+

@@ -47,13 +47,7 @@
                   =link_to(content_item.title, path_to_content_item(content_item))
 
       - if @conversation.issues.standard_issue.size > 0
-        .mod
-          %h3 Issues
-          .mod-content
-            %ul.link-list
-              -@conversation.issues.standard_issue.each do |issue|
-                %li.issue-list
-                  =link_to(issue.name, issue_path(issue))
+        = render :partial => '/conversations/side_issues', :object => @conversation, :as => :conversation
       - if @conversation.issues.managed_issue.size > 0
         .mod
           %h3 Projects
@@ -62,16 +56,4 @@
               -@conversation.issues.managed_issue.each do |issue|
                 %li.issue-list
                   =link_to(issue.name, issue_path(issue))
-      .mod
-        %h3 Participants
-        .mod-content
-          .guides
-            .photobank
-              -@conversation.participants.select{ |p| @tlc_participants.include?(p.id) }.each do |participant|
-                =conversation_profile(participant).html_safe
-            %br.clear
-          - if @conversation.participants.select{ |p| !@tlc_participants.include?(p.id) }.size > 0
-            .other-participants
-              .photobank
-                -@conversation.participants.select{ |p| !@tlc_participants.include?(p.id) }.each do |participant|
-                  =conversation_profile(participant).html_safe
+      = render :partial => '/conversations/side_participants', :object => @conversation, :as => :conversation

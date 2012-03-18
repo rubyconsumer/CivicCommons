@@ -9,6 +9,7 @@
   * [Ability to view Signatures of Petition](https://agilezen.com/project/18091/story/422)
   * [Ability to View Summary Count of Signatures](https://agilezen.com/project/18091/story/421)
   * [Error Form Look and Feel (design)](https://agilezen.com/project/18091/story/446)
+  * [Ability to view a list of actions](https://agilezen.com/project/18091/story/424)
 
 #### Miscellaneous
   * [upgrade friendlyID and will_paginate gems](https://agilezen.com/project/18091/story/438)

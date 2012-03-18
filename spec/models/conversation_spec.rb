@@ -6,6 +6,7 @@ describe Conversation do
     it { should have_many :contributions  }
     it { should have_attached_file :image }
     it { should have_many(:petitions).dependent(:destroy) }
+    it { should have_many(:actions).dependent(:destroy)}
     context "has_one survey" do
       it "should be correct" do
         Conversation.reflect_on_association(:survey).macro.should == :has_one
@@ -459,6 +460,18 @@ describe Conversation do
       default_url = Conversation.attachment_definitions[:image][:default_url].gsub(/\:style/, style)
       default_file = File.join(Rails.root, 'public', default_url)
       File.exist?(default_file)
+    end
+  end
+  
+  context "action_participants" do
+    def given_conversation_and_actions
+      @petition = Factory.create(:petition)
+      @conversation = @petition.conversation
+      @person = @petition.signers.first
+    end
+    it "should return All participants of the actions" do
+      given_conversation_and_actions
+      @conversation.action_participants.should == [@person]
     end
   end
 

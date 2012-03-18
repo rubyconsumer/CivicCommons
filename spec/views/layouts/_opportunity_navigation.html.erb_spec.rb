@@ -21,10 +21,8 @@ describe 'layouts/_opportunity_navigation.html.erb' do
   end
 
   it "should render the conversation_actions_path" do
-    pending 'removal of stubbed methods and addition of actions association' do
-      render partial: '/layouts/opportunity_navigation', locals: default_locals
-      rendered.should =~ /#{conversation_actions_path(default_locals[:conversation])}/
-    end
+    render partial: '/layouts/opportunity_navigation', locals: default_locals
+    rendered.should =~ /#{conversation_actions_path(default_locals[:conversation])}/
   end
 
   it "should render the conversation_reflections_path" do

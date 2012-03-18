@@ -151,6 +151,7 @@ Civiccommons::Application.routes.draw do
       post :sign, :to => 'petitions#sign', :on => :member
       get :sign, :to => 'petitions#sign_modal', :on => :member
     end
+    resources :actions, :only => [:index]
   end
 
   # Created by Jonathan Penn (February 17, 2012)

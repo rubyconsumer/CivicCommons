@@ -40,6 +40,9 @@ describe Petition do
     it "should have many signers" do
       should have_many(:signers).through(:signatures)
     end
+    it "should has one action as actionable" do
+      should have_one(:action)
+    end
   end
   describe "signed_by?" do
     def given_petition_signed_by_person
@@ -103,6 +106,24 @@ describe Petition do
       stubber.stub!(:count).and_return(20)
       
       @petition.signature_needed_left.should == 0
+    end
+  end
+  describe "after_create" do
+    describe "after_update" do
+      it "should modify the action model if Petition is updated" do
+        @petition = Factory.create(:petition, :conversation_id => 123)
+        @action = Action.first
+        @action.conversation_id.should == 123
+        @petition.conversation_id = 111
+        @petition.save
+        @action.reload.conversation_id.should == 111
+      end
+    end
+    describe "create_action" do
+      it "should create the action model once a petition is created" do
+        Factory.create(:petition)
+        Action.first.should == Petition.first.action
+      end
     end
   end
 end
