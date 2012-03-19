@@ -89,17 +89,16 @@ feature "Add contribution", %q{
 
   scenario "Contribution tool appears below all other contributions in the same thread", :js => true do
     contributions = create_some_nested_contributions
-    convo_page = ConversationPage.new(page)
-    contrib = ContributionTool.new(page)
 
     contributions.each do |contribution|
       # Given I am on a conversation node permalink page
-      convo_page.visit_page(conversation)
+      convo_page = ConversationPage.new(page)
       convo_page.visit_node(conversation, contribution)
+      sleep(2)
+      contrib = ContributionTool.new(page)
 
       # When I click on the respond-to button
       contrib.respond_to_link(contribution).click
-      sleep(2)
 
       # Then I should see the contribution tool
       contrib.should be_visible
@@ -141,7 +140,7 @@ feature "Add contribution", %q{
 
   scenario "Posting only a comment", :js => true do
     start_posting_to_conversation
-    sleep(1)
+
     contribution_tool.fill_in_content_field(content)
     contribution_tool.submit_button.click
     convo_page.should have_content(content)

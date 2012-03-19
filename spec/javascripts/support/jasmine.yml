@@ -26,6 +26,7 @@ src_files:
   - vendor/underscore.js
   - vendor/backbone-0.5.3.js
 
+  - vendor/tiny_mce/jquery.tinymce.js
   - vendor/tiny_mce/tiny_mce.js
   - vendor/ie7_js/ie7-recalc
   - vendor/jquery/jquery.tablesorter.min.js

@@ -1,29 +1,20 @@
+// requires JQuery and TinyMCE (with the JQuery plugin)
+
 function init_tiny_mce(JqueryListOfElements){
-  setTimeout(function(){
-    $(JqueryListOfElements).each(function(){
-      var $this = $(this);
-      if(!$this.hasClass('tinymce-loaded')) {
-        $this.addClass('tinymce-uninitialized');
-        tinyMCE.init({
-          editor_selector : 'tinymce-uninitialized',
-          init_instance_callback : function(instance) {
-            $this.data('tinymce', instance);
-            instance.focus();
-          },
-          mode : "specific_textareas",
-          theme : "advanced",
-          width : '100%',
-          theme_advanced_buttons1 : "bold,italic,underline,strikethrough,|,link,unlink,|,bullist,numlist,|,undo,redo,|,cut,copy,paste",
-          theme_advanced_buttons2 : "",
-          theme_advanced_buttons3 : "",
-          theme_advanced_toolbar_location : "top",
-          theme_advanced_toolbar_align : "left"
-        });
-        $this.removeClass('tinymce-uninitialized');
-        $this.addClass('tinymce-loaded');
-      }
-    });
-  }, 100);
+  $(JqueryListOfElements).tinymce({
+    script_url : '/javascripts/vendor/tiny_mce/tiny_mce.js',
+    mode : "textareas",
+    //theme : "simple",
+    theme : "advanced",
+    // turned off autoresize because it doesn't seem to work very well
+    //plugins : 'autoresize',
+    width : '100%',
+    theme_advanced_buttons1 : "bold,italic,underline,strikethrough,|,link,unlink,|,bullist,numlist,|,undo,redo,|,cut,copy,paste",
+    theme_advanced_buttons2 : "",
+    theme_advanced_buttons3 : "",
+    theme_advanced_toolbar_location : "top",
+    theme_advanced_toolbar_align : "left"
+  });
 }
 
 function clear_contribution_tool_form() {
@@ -32,11 +23,11 @@ function clear_contribution_tool_form() {
     .val('')
     .removeAttr('checked')
     .removeAttr('selected');
-  if(($('#contribution_content').length > 0) &&
-    (typeof $('#contribution_content').tinymce == 'function') &&
-    ($('#contribution_content').tinymce() !== undefined))
+  if(($('#contribution_content').length > 0)
+    && (typeof $('#contribution_content').tinymce == 'function')
+    && ($('#contribution_content').tinymce() != undefined))
   {
-    $('#contribution_content').tinymce('setContent', '');
+    $('#contribution_content').tinymce().setContent('');
   }
   $("#contrib #error_explanation").remove();
 }
@@ -52,22 +43,19 @@ function get_contribution_parent_id(container) {
 }
 
 function show_contribution_tool(container, contribution_id, title) {
-  if((typeof $('#contribution_content').tinymce == 'function') &&
-    ($('#contribution_content').tinymce() !== undefined))
+  if((typeof $('#contribution_content').tinymce == 'function')
+    && ($('#contribution_content').tinymce() != undefined))
   {
-    $('#contribution_content').tinymce('remove');
+    $('#contribution_content').tinymce().remove();
   }
-
   $('#contribution_parent_id').val(contribution_id);
   $('.contrib_tool_container .title').html(title + ':');
-
-  if (null !== container) {
+  if (null != container) {
     container.append($('#contrib'));
   } else {
     container = $('#contribution_tool_container');
     container.append($('#contrib'));
   }
-
   $('#contrib').removeClass('hide');
   init_tiny_mce('#contribution_content');
   scroll_to_contribution_tool();
@@ -92,19 +80,20 @@ function enable_post_to_conversation(element) {
     if (contribution_id) {
       var $thread = $(this).parents('.contribution-container').next('ol.thread-list');
       $tinymce_containers = $('li.tinymce-container');
-      if($tinymce_containers.length === 0)
+      if($tinymce_containers.length == 0)
       {
-        $thread.append('<li class="tinymce-container"></li>');
+          $thread.append('<li class="tinymce-container"></li>');
       }
       else
       {
-        var container = $tinymce_containers.first().detach();
-        $thread.append(container);
+          var container = $tinymce_containers.first().detach();
+          $thread.append(container);
       }
       show_contribution_tool($thread.find('li.tinymce-container'), contribution_id, title);
     } else {
       show_contribution_tool(null, null, title);
     }
+    $('#contribution_content').tinymce().focus();
   });
 }
 
@@ -118,17 +107,17 @@ function enable_cancel_contribution(element) {
 
 (function() {
 
-  var ElementHasPlaceholderValue = function(element) {
+  var ElementHasPlaceholderValue =  function(element) {
     element = $(element);
     return element.val() == element.attr('placeholder');
-  };
+  }
 
   this.ContributionTool = Backbone.View.extend({
     events: {
       'submit form': 'submit'
     },
     initialize: function() {
-      this.attachmentSection = new TogglableSection({ sections: ['.add-file', '.add-link'] });
+      this.attachmentSection = new TogglableSection({ sections: ['.add-file', '.add-link'] } )
       this.attachmentSection.render();
       this.$contentField = this.$('.content');
       this.$('.attachments').remove();
@@ -142,7 +131,7 @@ function enable_cancel_contribution(element) {
       return this.validateInputs();
     },
     validateInputs: function() {
-      if(this.$fileUploadField.val() !== '' && this.$contentField.val() === ''){
+      if(this.$fileUploadField.val() != '' && this.$contentField.val() == ''){
         this.addError('Sorry! You must also write a comment above when you upload a file.');
         return false;
       }

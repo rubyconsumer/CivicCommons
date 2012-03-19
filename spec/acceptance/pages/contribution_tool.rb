@@ -73,11 +73,8 @@ class ContributionTool < PageObject
   end
 
   def fill_in_content_field(value)
-    begin
-      page.execute_script("$('#contribution_content').tinymce('setContent', '#{value}')")
-    rescue Capybara::NotSupportedByDriverError
-      fill_in  'contribution_content', :with => value
-    end
+    # TinyMCE hides the textarea so we need to get fancy
+    @page.execute_script("$('textarea#contribution_content').val('#{value}')")
   end
 
   def fill_in_url_field(value)
