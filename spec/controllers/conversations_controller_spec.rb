@@ -1,3 +1,4 @@
+
 require 'spec_helper'
 
 describe ConversationsController do
@@ -121,6 +122,7 @@ describe ConversationsController do
       @person = Factory.create(:registered_user)
       @controller.should_receive(:current_person).at_least(1).and_return(@person)
       @convo = Factory.create(:conversation)
+      controller.stub!(:force_friendly_id).and_return(true)
     end
 
     def do_get
@@ -138,6 +140,16 @@ describe ConversationsController do
       convo.total_visits.should == @convo.total_visits + 1
       convo.recent_visits.should == @convo.recent_visits + 1
       Visit.where("person_id = #{@person.id} and visitable_id = #{@convo.id}").size.should == 1
+    end
+    
+    it "should return the format html" do
+      get :show, :id => @convo.slug, :format => :html
+      response.should render_template :show
+    end
+    
+    it "should return with the format embed" do
+      get :show, :id => @convo.slug, :format => :embed, :callback => 'callback1234'
+      response.body.should == "callback1234({\"html\":\"\",\"js\":[\"/javascripts/lib/conversations/show_embed.js\"],\"css\":[\"/stylesheets/widget.css\"]})"
     end
   end
 

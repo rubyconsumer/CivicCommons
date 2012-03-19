@@ -72,7 +72,7 @@ class ConversationsController < ApplicationController
     setup_meta_info(@conversation)
 
     respond_to do |format|
-      format.any{ render :show }
+      format.html{ render :show }
       format.embed do
         html = render_to_string
         json = {
@@ -81,6 +81,7 @@ class ConversationsController < ApplicationController
           }
         render_widget(json)
       end
+      format.any{ render :show}
     end
   end
 
