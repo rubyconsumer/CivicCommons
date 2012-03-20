@@ -75,6 +75,7 @@ input.submit:active,
 input#contribution_submit:active, 
 a.button.active {
   background: #fff;
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#ffffff', EndColorStr='#ffffff');
   color: #94a647;
   text-shadow: none;
 }
@@ -109,6 +110,7 @@ a.button.active {
 .button.secondary:active, 
 .button.secondary.active {
   background: #fff;
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#ffffff', EndColorStr='#ffffff');
 	color: #637988;
 }
 

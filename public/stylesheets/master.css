@@ -676,6 +676,11 @@ a.see-more {float: right;}
   width: 14px;
 }
 
+*:first-child+html .ico-sm {
+	top: -1px;
+	margin-right: 2px;
+}
+
 .ico-sm.ico-person-white {
   background: url(../images/icons/person-ico-white.png) no-repeat;
 }
