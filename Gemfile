@@ -62,7 +62,7 @@ end
 group :test do
   gem "rack-test"
   gem "factory_girl_rails", '~>1.3'
-  gem 'no_peeping_toms', :git => 'git://github.com/alindeman/no_peeping_toms.git'
+  gem 'no_peeping_toms'
   gem 'webmock', '1.6.2' #, :git => 'git://github.com/CivicCommons/webmock.git', :branch => '1.6.2'
   # Required by WebMock but breaks everything at 2.2.5
   # Can use latest addressable when pull request is accepted: https://github.com/sporkmonger/addressable/pull/33
