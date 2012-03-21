@@ -3,6 +3,7 @@
 ### Bug Fixes
   * [upgrade TinyMCE to work with iPad and IE8](https://agilezen.com/project/18091/story/451)
   * [Ability to View List of Actions](https://agilezen.com/project/18091/story/424)
+  * [Fix Load more button on WKYC](https://agilezen.com/project/18091/story/454)
 
 
 ## 1.9.6.1
