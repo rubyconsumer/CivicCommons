@@ -22,6 +22,15 @@ feature " Actions", %q{
     
     page.should have_content 'Petition Title here'
   end
+
+  scenario "Suggest an Action", :js => true do
+    given_a_petition(:title => 'Petition Title here')
+    login_as :person
+    visit conversation_actions_path(@conversation)
+    set_current_page_to :actions
+    follow_suggest_an_action_link
+    follow_write_a_petition_link
+  end
   
 
 end
