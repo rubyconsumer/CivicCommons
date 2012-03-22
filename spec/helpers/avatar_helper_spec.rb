@@ -44,8 +44,8 @@ describe AvatarHelper do
 
   context "profile image" do
 
-    it "renders the person.avatar_url" do
-      @me.stub(:avatar_url).and_return('http://api.twiter.com/')
+    it "renders the AvatarService" do
+      AvatarService.should_receive(:avatar_image_url)
       helper.profile_image(@me, 80)
     end
 
@@ -54,7 +54,7 @@ describe AvatarHelper do
   context "local profile image" do
 
     it "should display a profile image with the default size" do
-      helper.profile_image(@me).should == "<img alt=\"My Self\" class=\"callout\" height=\"20\" src=\"#{@me.avatar_url}\" title=\"My Self\" width=\"20\" />"
+      helper.profile_image(@me).should == "<img alt=\"My Self\" class=\"callout\" height=\"20\" src=\"http://test.host/images/avatar_70.gif\" title=\"My Self\" width=\"20\" />"
     end
 
     it "should display a profile image with a size of 80" do
