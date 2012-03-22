@@ -5,7 +5,9 @@
   * [Ability to View List of Actions](https://agilezen.com/project/18091/story/424)
   * [Fix Load more button on WKYC](https://agilezen.com/project/18091/story/454)
   * [Default User avatar not showing when displayed on a widget](https://agilezen.com/project/18091/story/453)
-
+  * [Error sending to FB Friends](https://agilezen.com/project/18091/story/449)
+  
+  
 ## 1.9.6.1
 
 ### Bug Fixes
