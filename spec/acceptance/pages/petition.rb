@@ -13,7 +13,6 @@ module CivicCommonsDriver
         has_wysiwyg_editor_field :description, 'petition_description', :ckeditor
         has_field :resulting_actions, 'petition[resulting_actions]'
         has_field :signature_needed, 'petition[signature_needed]'
-        has_field :end_on, 'petition[end_on]'
         
         has_button :start_invalid_petition, 'Publish', :new_petition
         has_button :start_petition, 'Publish', :petition

@@ -4,7 +4,7 @@
     <div class="main-content">
       <div class="mbl">
         <h2 class="mtn"><%= @petition.title %></h2>
-        <p class="contribution-person-name"> By: <%= text_profile(@petition.creator) %> on <%= @petition.end_on.to_s(:long) %></p>
+        <p class="contribution-person-name"> By: <%= text_profile(@petition.creator) %> on <%= @petition.created_at.to_date.to_s(:long) %></p>
         <%= raw sanitize @petition.description %>
         <p class="alert alert-notification">
           <strong><%= @petition.resulting_actions %></strong>
@@ -21,7 +21,7 @@
     </div><!-- /.main-content -->
 
     <div class='aside supplementary'>
-      <% if signed_in? && (@petition.votable? && !@petition.signed_by?(current_person)) %>
+      <% if signed_in? && !@petition.signed_by?(current_person) %>
         <div class="mod">
           <div class="btn-group btn-group-large">
             <%= link_to 'Sign the Petition', sign_conversation_petition_path(@conversation, @petition), :class => 'button btn-large modal-launch' %>
@@ -38,7 +38,7 @@
       <div class="recent-item">
         <div class="bd">
           <h5 class="vente"><span class="grande"><%= @petition.signatures.count %></span> out of <%= @petition.signature_needed %></h5>
-          <p><%= @petition.signature_needed_left %> more signatures needed before <%= @petition.end_on.to_s(:long) %></p>
+          <p><%= @petition.signature_needed_left %> more signatures needed</p>
           <!-- 
             <div id="contribution-4142" class="dnld document">
               <p><strong><a href="#">Download the petition</a></strong></p>
