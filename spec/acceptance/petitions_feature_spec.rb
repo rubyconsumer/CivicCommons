@@ -29,7 +29,6 @@ feature " Petitions", %q{
     fill_in_description_with 'Description here'
     fill_in_resulting_actions_with 'resulting action here'
     fill_in_signature_needed_with '12'
-    fill_in_end_on_with 'February 29, 2012'
     
     click_start_petition_button
     page.should have_content 'Title here'
@@ -55,26 +54,16 @@ feature " Petitions", %q{
     current_page.should have_content 'Signatures'
     current_page.should have_selector('.photobank.signatures a img', :count => 1)
   end
-
-  scenario "the inability to sign an expired petition", :js => true do
-    given_a_petition(:end_on=> 2.days.ago)
-    login_as :person
-    
-    visit conversation_petition_path(@conversation, @petition)
-    set_current_page_to :petition
-    
-    current_page.should_not have_content 'Sign the Petition'
-  end
   
   scenario "View summary count of petition signatures " do
-    given_a_petition(:end_on=> 2.days.from_now, :signature_needed => 12)
+    given_a_petition(:signature_needed => 12)
     login_as :person
     
     visit conversation_petition_path(@conversation, @petition)
     set_current_page_to :petition
     
     current_page.should have_content '1 out of 12'
-    current_page.should have_content "11 more signatures needed before"
+    current_page.should have_content "11 more signatures needed"
   end
   
 

@@ -8,7 +8,6 @@ class Petition < ActiveRecord::Base
   validates_presence_of :title, 
                         :description, 
                         :resulting_actions, 
-                        :end_on, 
                         :signature_needed,
                         :person_id
   validates_numericality_of :signature_needed, :greater_than => 0, :allow_blank => true
@@ -34,11 +33,7 @@ class Petition < ActiveRecord::Base
       self.signers << person
     end
   end
-  
-  def votable?
-    !end_on.today? && end_on.future?
-  end
-  
+    
   # Needed to create the Action model when Petition is created
   def create_or_update_action
     if self.action.present?

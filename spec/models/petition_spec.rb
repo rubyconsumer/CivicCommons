@@ -14,10 +14,6 @@ describe Petition do
       should validate_presence_of(:resulting_actions)
     end
 
-    it "should validate presence of end_on" do
-      should validate_presence_of(:end_on)
-    end
-
     it "should validate presence of person_id" do
       should validate_presence_of(:person_id)
     end
@@ -69,24 +65,6 @@ describe Petition do
       @petition.signers.should == []
       @petition.sign(@person)
       @petition.signers.include?(@person).should be_true
-    end
-  end
-  describe "votable?" do
-    it "should be votable if end_on in the future" do
-      @petition = Factory.build(:petition, :end_on => 3.days.from_now)
-      @petition.should be_votable
-    end
-    it "should be votable if end_on is not today" do
-      @petition = Factory.build(:petition, :end_on => 1.days.from_now)
-      @petition.should be_votable
-    end
-    it "should not be votable if end_on is yesterday" do
-      @petition = Factory.build(:petition, :end_on => 1.days.ago)
-      @petition.should_not be_votable
-    end
-    it "should not be votable if end_on is today" do
-      @petition = Factory.build(:petition, :end_on => Date.today)
-      @petition.should_not be_votable
     end
   end
   
