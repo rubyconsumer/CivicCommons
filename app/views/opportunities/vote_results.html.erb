@@ -8,15 +8,30 @@
       <p><strong>By: <a href="#">Dan Moulthrop</a> on Jan 1, 2012</strong></p>
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec sem in lacus mattis adipiscing eget ut lorem. Proin eu quam nulla, id porta erat. </p>
 
-      <h3>Results <span>Your vote results are marked in blue</span></h3>
+      <h3 class="vote-heading mtl ptm mbl">Results <span>Your vote results are marked in blue</span></h3>
 
-      <ul>
-        <li><span class="vote-bar" style="width: 80%">This is the title of the top ranking item.</span></li>
-        <li><span class="vote-bar" style="width: 60%">This is the title of another item.</span></li>
-        <li><span class="vote-bar" style="width: 40%">This is the title of another item.</span></li>
-        <li><span class="vote-bar" style="width: 20%">This is the title of another item.</span></li>
-        <li><span class="vote-bar" style="width: 10%">This is the title of another item.</span></li>
-      </ul>
+      <div class="voting-results">
+        <div class="vote-container">
+          <p class="vote-bar"><span class="vote-row voted" style="width: 80%">80%</span><a href="#">This is the title of the top ranking item.</a></p>
+          <p class="vote-summary">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin augue nisi, fermentum vitae, imperdiet a, auctor eu, mi. Nulla imperdiet molestie purus. Duis arcu dui, pretium in, molestie id, convallis eget, orci. Praesent eget purus. Nullam sed nunc. Etiam quis orci ac metus consectetuer consequat. Sed pulvinar aliquam sem. Vestibulum convallis.</p>
+        </div>
+        <div class="vote-container">
+          <p class="vote-bar"><span class="vote-row" style="width: 60%">60%</span><a href="#">This is the title of another item.</a></p>
+          <p class="vote-summary">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin augue nisi, fermentum vitae, imperdiet a, auctor eu, mi. Nulla imperdiet molestie purus. Duis arcu dui, pretium in, molestie id, convallis eget, orci. Praesent eget purus. Nullam sed nunc. Etiam quis orci ac metus consectetuer consequat. Sed pulvinar aliquam sem. Vestibulum convallis.</p>
+        </div>
+        <div class="vote-container">
+          <p class="vote-bar"><span class="vote-row voted" style="width: 40%">40%</span><a href="#">This is the title of another item.</a></p>
+          <p class="vote-summary">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin augue nisi, fermentum vitae, imperdiet a, auctor eu, mi. Nulla imperdiet molestie purus. Duis arcu dui, pretium in, molestie id, convallis eget, orci. Praesent eget purus. Nullam sed nunc. Etiam quis orci ac metus consectetuer consequat. Sed pulvinar aliquam sem. Vestibulum convallis.</p>
+        </div>
+        <div class="vote-container">
+          <p class="vote-bar"><span class="vote-row" style="width: 20%">20%</span><a href="#">This is the title of another item.</a></p>
+          <p class="vote-summary">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin augue nisi, fermentum vitae, imperdiet a, auctor eu, mi. Nulla imperdiet molestie purus. Duis arcu dui, pretium in, molestie id, convallis eget, orci. Praesent eget purus. Nullam sed nunc. Etiam quis orci ac metus consectetuer consequat. Sed pulvinar aliquam sem. Vestibulum convallis.</p>
+        </div>
+        <div class="vote-container">
+          <p class="vote-bar"><span class="vote-row voted" style="width: 10%">10%</span><a href="#">This is the title of another item.</a></p>
+          <p class="vote-summary">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin augue nisi, fermentum vitae, imperdiet a, auctor eu, mi. Nulla imperdiet molestie purus. Duis arcu dui, pretium in, molestie id, convallis eget, orci. Praesent eget purus. Nullam sed nunc. Etiam quis orci ac metus consectetuer consequat. Sed pulvinar aliquam sem. Vestibulum convallis.</p>
+        </div>
+      </div>
 
     </div><!-- /.main-content -->
 
@@ -33,3 +48,14 @@
 
   </div>
 </div>
+
+<!-- TODO: This can be refactored/relocated as needed -->
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("p.vote-bar a").click(function(e) {
+		  $(this).parent().siblings("p.vote-summary").slideToggle("fast");
+		  e.preventDefault();
+		});
+	});
+</script>
