@@ -983,12 +983,14 @@ div.three-col-sm div.photobank img {margin: 0 0 6px 6px;}
 
 .vote-bar {
   margin: 0 0 15px 0;
+  overflow: hidden;
   position: relative;
 }
 
 .vote-bar a {
   display: block;
   font-weight: bold;
+  overflow: hidden;
   position: relative;
   padding: 7px;
   text-decoration: none;
@@ -1000,7 +1002,6 @@ div.three-col-sm div.photobank img {margin: 0 0 6px 6px;}
 
 .vote-row {
   background-color: #cbd699;
-  border: 1px solid #b0b983;
   display: block;
   height: 100%;
   left: 0;
@@ -1019,7 +1020,6 @@ div.three-col-sm div.photobank img {margin: 0 0 6px 6px;}
 
 .vote-bar .vote-row.voted {
   background-color: #a9cfe4;
-  border-color: #91b2c4;
 }
 
 .vote-bar:hover .vote-row.voted {
