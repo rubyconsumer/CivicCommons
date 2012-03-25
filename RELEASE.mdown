@@ -12,6 +12,7 @@
   * [Ability to view a list of actions](https://agilezen.com/project/18091/story/424)
   * [Ability to Suggest an Action](https://agilezen.com/project/18091/story/425)
   * [Remove End Date from Petition](https://agilezen.com/project/18091/story/448)
+  * [Image upload capability for CkEditor](https://agilezen.com/project/18091/story/455)
 
 #### Miscellaneous
   * [upgrade friendlyID and will_paginate gems](https://agilezen.com/project/18091/story/438)
