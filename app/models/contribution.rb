@@ -14,6 +14,7 @@ class Contribution < ActiveRecord::Base
 
   # nested contributions are destroyed via callbacks
   acts_as_nested_set :exclude_unless => {:confirmed => true}, :dependent => :destroy, :scope => :conversation_id
+  attr_protected :lft, :rgt
   acts_as_revisionable
   profanity_filter :content, :method => 'hollow'
   attr_accessor :moderation_reason
@@ -141,7 +142,7 @@ class Contribution < ActiveRecord::Base
   def self.update_or_create_node(params,person)
     if contribution = Contribution.unconfirmed.where(:parent_id => params[:parent_id], :owner => person.id).first
       contribution.update_attributes(params)
-    else 
+    else
       contribution = Contribution.create_node(params,person)
     end
     return contribution

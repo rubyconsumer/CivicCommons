@@ -356,11 +356,11 @@ module CCML
         sub = CCML.run_tag_method(tag, method)
       rescue CCML::Error::ExternalSourceError => e
         sub = ''
-        # If CCML::Error::ExternalSourceError then ignore it by default and report it to hoptoad
+        # If CCML::Error::ExternalSourceError then ignore it by default and report it to airbrake
         if options[:silence_external_source_errors] == false
           raise e
         else
-          HoptoadNotifier.notify(e) if defined?(HoptoadNotifier)
+          Airbrake.notify(e) if defined?(Airbrake)
         end
       end
 
@@ -396,11 +396,11 @@ module CCML
         sub = CCML.run_tag_method(tag, method)
       rescue CCML::Error::ExternalSourceError => e
         sub = ''
-        # If CCML::Error::ExternalSourceError then ignore it by default and report it to hoptoad
+        # If CCML::Error::ExternalSourceError then ignore it by default and report it to airbrake
         if options[:silence_external_source_errors] == false
           raise e
         else
-          HoptoadNotifier.notify(e) if defined?(HoptoadNotifier)
+          Airbrake.notify(e) if defined?(Airbrake)
         end
 
       end

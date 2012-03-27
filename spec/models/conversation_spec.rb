@@ -124,13 +124,12 @@ describe Conversation do
       @conversation = Factory.create(:conversation)
       @contribution = Factory.create(:contribution, :conversation => @conversation, :parent => nil)
       @top_level_contribution = Factory.create(:top_level_contribution, :conversation => @conversation)
-      @nested_contribution = Factory.create(:contribution, :parent => @top_level_contribution, :conversation => @conversation)
     end
 
     it "destroys all nested contributions" do
       conversation_id = @conversation.id
-      Contribution.find_all_by_conversation_id(conversation_id).count.should == 3
-      @conversation.destroy
+      Contribution.find_all_by_conversation_id(conversation_id).count.should == 2
+      @conversation.reload.destroy
       Contribution.find_all_by_conversation_id(conversation_id).count.should == 0
     end
 

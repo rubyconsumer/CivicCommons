@@ -393,7 +393,7 @@ describe Contribution do
 
       before(:each) do
         @attributes = Factory.attributes_for(:unconfirmed_contribution,
-                                             :conversation => @contribution.conversation,
+                                             :conversation_id => @conversation.id,
                                              :parent_id => @contribution.parent_id)
       end
 
