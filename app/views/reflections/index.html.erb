@@ -3,7 +3,9 @@
 
     <div class="main-content">
 
-      <p class="mbl">This is a brief instruction about what reflections are all about. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec sem in lacus mattis adipiscing eget ut lorem. Proin eu quam nulla, id porta erat. Cras nec neque non nisl lobortis adipiscing eget at enim. </p>
+      <p class="mbl">
+        This is the space where we take a moment to understand what we’ve learned and the significance of our conversation and action. So, what’s been accomplished? What’s still needed? Is there an opportunity for more action or a new conversation that ought to be launched? What are the unanswered questions and who else should be invited to participate?
+      </p>
 
       <% @reflections.each do |reflection| %>
         <%= render :partial => '/reflections/reflection_index_panel', :locals => {:conversation => @conversation, :reflection => reflection} %>
