@@ -3,6 +3,7 @@ class Petition < ActiveRecord::Base
   belongs_to :creator, :class_name => 'Person', :foreign_key => 'person_id'
   has_one :action, :as => :actionable, :dependent => :destroy
   has_many :signatures, :class_name => 'PetitionSignature', :dependent => :destroy
+  has_many :reflections, :class_name => 'ReflectionPetition', :dependent => :destroy
   has_many :signers, :class_name => 'Person', :through => :signatures, :source => :person
 
   validates_presence_of :title,

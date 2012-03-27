@@ -1,8 +1,11 @@
 <div class="mod">
   <p><strong>You participated in the following actions, would you like to reference them in your reflection?</strong></p>
   <div class="media inset">
-    <% petitions.each do |petition| %>
-      <input for="petition-check" type="hidden" value="0"><input class="img" checked="" id="person_daily_digest" name="petition-check" type="checkbox" value="1"> <div class="bd"><strong><%= petition.title %></strong></div>
+    <% reflection_form.fields_for :petition do |petition_form| %>
+      <% petitions.each do |petition| %>
+        <%= petition_form.check_box("petition", "title", { :class => 'img' }, petition.id) %>
+        <div class="bd"><strong><%= petition.title %></strong></div>
+      <% end %>
     <% end %>
   </div>
 </div>

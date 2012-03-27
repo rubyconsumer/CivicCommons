@@ -156,7 +156,7 @@ class Activity < ActiveRecord::Base
     activities = activities.limit(limit) if limit
     activities.collect{|a| a.item}.compact
   end
-  
+
   def self.most_recent_activity_items_for_conversations(conversation_ids=[], limit = nil)
     activities = Activity.where(conversation_id: conversation_ids).order('item_created_at DESC')
     activities = activities.limit(limit) if limit

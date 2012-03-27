@@ -3,18 +3,8 @@
 
     <div class="main-content">
       <h2 class="mtn">Share a Reflection</h2>
-      <p>A reflection is your recap on the state of this opportunity after action was taken.  Were things improved?  Was the action successful?  Would you recommend doing it again?  Etc…</p>
+      <p>This is the space where we take a moment to understand what we’ve learned and the significance of our conversation and action. So, what’s been accomplished? What’s still needed? Is there an opportunity for more action or a new conversation that ought to be launched? What are the unanswered questions and who else should be invited to participate?</p>
       <%= render 'form' %>
-    </div><!-- /.main-content -->
-
-    <div class='aside supplementary'>
-      <%= render partial: 'participated_actions', locals: {:petitions => current_person.signed_petitions} %>
-      <div class="mod">
-        <p><strong>You participated in the following actions, would you like to reference them in your reflection?</strong></p>
-        <div class="media inset">
-          <input for="petition-check" type="hidden" value="0"><input class="img" checked="" id="person_daily_digest" name="petition-check" type="checkbox" value="1"> <div class="bd"><strong>Petition Cedar Fair to turn Sea World into a whale breeding motel.</strong></div>
-        </div>
-      </div>
     </div><!-- /.aside -->
 
 
