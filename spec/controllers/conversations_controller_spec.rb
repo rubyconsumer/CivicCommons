@@ -6,11 +6,11 @@ describe ConversationsController do
   def mock_conversation(stubs={})
     @mock_conversation ||= mock_model(Conversation, stubs).as_null_object
   end
-  
+
   def mock_content_item(stubs={})
     @mock_content_item ||= mock_model(ContentItem, stubs).as_null_object
   end
-  
+
   def mock_activity(stubs={})
     @mock_activity ||= mock_model(Activity, stubs).as_null_object
   end
@@ -30,7 +30,7 @@ describe ConversationsController do
       end
     end
   end
-  
+
   describe "before_filters" do
     describe "force_friendly_id" do
       describe "on :show" do
@@ -88,7 +88,7 @@ describe ConversationsController do
   end
 
   describe "GET rss" do
- 
+
     before(:each) do
       (1..5).each do |i|
         Factory.create(:conversation)
@@ -103,7 +103,7 @@ describe ConversationsController do
 
     it "does not retrieve conversations more than 1 month old" do
       get :rss, format: 'xml'
-      assigns(:conversations).should_not include @old_convo 
+      assigns(:conversations).should_not include @old_convo
     end
 
     it "sorts conversations by created_at, descending" do
@@ -141,12 +141,12 @@ describe ConversationsController do
       convo.recent_visits.should == @convo.recent_visits + 1
       Visit.where("person_id = #{@person.id} and visitable_id = #{@convo.id}").size.should == 1
     end
-    
+
     it "should return the format html" do
       get :show, :id => @convo.slug, :format => :html
       response.should render_template :show
     end
-    
+
     it "should return with the format embed" do
       get :show, :id => @convo.slug, :format => :embed, :callback => 'callback1234'
       response.body.should == "callback1234({\"html\":\"\",\"js\":[\"/javascripts/lib/conversations/show_embed.js\"],\"css\":[\"/stylesheets/widget.css\"]})"
@@ -160,7 +160,7 @@ describe ConversationsController do
       Issue.stub(:alphabetical) { :all_issues }
       get :new, :accept => true
     end
-    
+
     it "should receive get_content_item" do
       controller.should_receive(:get_content_item)
       get :new, :accept => true
@@ -174,13 +174,13 @@ describe ConversationsController do
     it "assigns new conversation as @conversation" do
       assigns(:conversation).should be mock_conversation
     end
-    
+
     describe "on radioshows" do
       it "should find content_item" do
         ContentItem.should_receive(:find).with(1).and_return(mock_content_item)
         get :new, :accept => true, :radioshow_id => 1
       end
-      
+
       it "should not find content_item if radioshow_id is not passed" do
         ContentItem.should_not_receive(:find).with(1).and_return(mock_content_item)
         get :new, :accept => true
@@ -191,13 +191,13 @@ describe ConversationsController do
         ContentItem.should_receive(:find).with(1).and_return(mock_content_item)
         get :new, :accept => true, :blog_id => 1
       end
-      
+
       it "should not find content_item if radioshow_id is not passed" do
         ContentItem.should_not_receive(:find).with(1).and_return(mock_content_item)
         get :new, :accept => true
       end
     end
-    
+
   end
 
   describe "POST create" do
@@ -209,7 +209,7 @@ describe ConversationsController do
     def do_create
       post :create, :conversation => {}
     end
-    
+
     it "should receive get_content_item" do
       controller.should_receive(:get_content_item)
       do_create
@@ -238,7 +238,7 @@ describe ConversationsController do
         do_create
         response.should redirect_to new_invite_path(:source_type => :conversations, :source_id => '35', :conversation_created => true)
       end
-      
+
       describe "on radioshows" do
         it "should find content_item" do
           ContentItem.should_receive(:find).with(1).and_return(mock_content_item)
@@ -261,7 +261,7 @@ describe ConversationsController do
           post :create, :conversation => {}
         end
       end
-      
+
     end
 
     describe "with invalid params" do
@@ -277,8 +277,8 @@ describe ConversationsController do
       it "populates error messages" do
       end
     end
-    
-    
+
+
   end
 
   describe "GET responsibilities" do
@@ -287,7 +287,7 @@ describe ConversationsController do
       get :responsibilities
     end
   end
-  
+
   describe "GET activities" do
     before(:each) do
       Conversation.stub!(:find).and_return(mock_conversation)
@@ -318,9 +318,14 @@ describe ConversationsController do
         assigns(:next_page).should be_false
       end
     end
-    it "should pop the latest recent_item on the array" do
+    it "should pop the latest recent_item on the array if there is another page" do
+      Activity.stub!(:most_recent_activity_items_for_conversation).and_return([mock_activity, mock_activity, mock_activity, mock_activity, mock_activity, mock_activity])
       get :activities, :id => 1
-      assigns(:recent_items).should == []
+      assigns(:recent_items).should == [mock_activity, mock_activity, mock_activity, mock_activity, mock_activity]
+    end
+    it "should not pop the latest recent_item on the array when there is no next page" do
+      get :activities, :id => 1
+      assigns(:recent_items).should == [mock_activity]
     end
     it "should call render_widget" do
       controller.should_receive(:render_widget)
