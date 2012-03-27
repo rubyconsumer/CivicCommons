@@ -227,7 +227,7 @@ a.button:active span.stitcher {
   visibility: hidden;
 }
 
-.ie7 .btn-group {
+*:first-child+html .btn-group {
 	zoom: 1;
 }
 
