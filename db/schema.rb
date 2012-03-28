@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120323045206) do
+ActiveRecord::Schema.define(:version => 20120328040812) do
 
   create_table "actions", :force => true do |t|
     t.integer  "conversation_id"
@@ -23,6 +23,13 @@ ActiveRecord::Schema.define(:version => 20120323045206) do
   add_index "actions", ["actionable_id"], :name => "index_actions_on_actionable_id"
   add_index "actions", ["actionable_type"], :name => "index_actions_on_actionable_type"
   add_index "actions", ["conversation_id"], :name => "index_actions_on_conversation_id"
+
+  create_table "actions_reflections", :id => false, :force => true do |t|
+    t.integer "reflection_id"
+    t.integer "action_id"
+  end
+
+  add_index "actions_reflections", ["reflection_id", "action_id"], :name => "index_actions_reflections_on_reflection_id_and_action_id"
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -506,15 +513,6 @@ ActiveRecord::Schema.define(:version => 20120323045206) do
   add_index "ratings", ["rating_descriptor_id"], :name => "index_ratings_on_rating_descriptor_id"
   add_index "ratings", ["rating_group_id"], :name => "index_ratings_on_rating_group_id"
 
-  create_table "reflection_petitions", :force => true do |t|
-    t.integer  "reflection_id"
-    t.integer  "petition_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "reflection_petitions", ["reflection_id", "petition_id"], :name => "index_reflection_petitions_on_reflection_id_and_petition_id"
-
   create_table "reflections", :force => true do |t|
     t.string   "title",           :null => false
     t.text     "details",         :null => false
@@ -613,8 +611,8 @@ ActiveRecord::Schema.define(:version => 20120323045206) do
     t.datetime "updated_at"
     t.integer  "conversation_id"
     t.integer  "issue_id"
-    t.integer  "person_id"
     t.text     "activity_cache",  :limit => 2147483647
+    t.integer  "person_id"
   end
 
   add_index "top_items", ["conversation_id"], :name => "conversations_index"

@@ -20,6 +20,13 @@ end
 
 describe Person do
   include Facebookable
+  
+  def given_petition
+    @petition = Factory.create(:petition)
+    @conversation = @petition.conversation
+    @petition_signer = @petition.signers.first
+  end
+  
   context "Associations" do
     it "should has_many Authentications" do
       Person.reflect_on_association(:authentications).macro == :has_many
@@ -785,6 +792,25 @@ describe Person do
     it "should only include confirmed and non-locked instances" do
       Person.sunspot_options[:if].should == :confirmed?
       Person.sunspot_options[:unless].should == :locked?
+    end
+  end
+  
+  context "participated_actions" do
+    it "should correctly include signed petitions" do
+      given_petition
+      @petition.creator.participated_actions.include?(Action.last)
+    end
+  end
+  
+  context "participated_actions_for_conversation" do
+    it "should correctly include signed petitions for a conversation" do
+      given_petition
+      @petition_signer.participated_actions_for_conversation(@conversation).include?(Action.last).should be_true
+    end
+    it "should not include signed petition that's not associated to a conversation" do
+      given_petition
+      other_conversation = Factory.create(:conversation)
+      @petition_signer.participated_actions_for_conversation(other_conversation).include?(Action.last).should be_false
     end
   end
 

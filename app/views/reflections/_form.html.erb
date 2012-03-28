@@ -34,10 +34,10 @@
 <div class="mod">
   <p><strong>You participated in the following actions, would you like to reference them in your reflection?</strong></p>
   <div class="media inset">
-    <% current_person.signed_petitions.each do |petition| %>
+    <% current_person.participated_actions_for_conversation(@conversation).each do |action| %>
         <div class="bd">
-        <%= check_box_tag 'reflection[petition_ids][]', petition.id, @reflection.petition_ids.include?(petition.id) %>
-          <strong><%= petition.title %></strong>
+        <%= check_box_tag 'reflection[action_ids][]', action.id, @reflection.action_ids.include?(action.id) %>
+          <strong><%= action.actionable.title %></strong>
         </div>
     <% end %>
   </div>

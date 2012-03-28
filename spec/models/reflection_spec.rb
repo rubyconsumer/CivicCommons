@@ -1,5 +1,9 @@
 require 'spec_helper'
 
 describe Reflection do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe "associations" do
+    it { should belong_to :person }
+    it { should belong_to :conversation }
+    it { should have_and_belong_to_many :actions }
+  end
 end
