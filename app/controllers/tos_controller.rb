@@ -23,7 +23,7 @@ class TosController < ApplicationController
 
     respond_to do |format|
       unless reason.blank?
-        @notice = "Thank you! You're helping to make Northeast Ohio stronger!"
+        @notice = "Thank you! You're helping to make your community stronger!"
         format.js
       else
         flash[:notice] = @error = "Please include a reason."

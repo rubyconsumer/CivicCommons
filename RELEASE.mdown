@@ -1,5 +1,8 @@
 ## 1.9.6.2
 
+### External Changes
+  * [Change Text on Thank You Popup](https://agilezen.com/project/18091/story/459)
+
 ### Bug Fixes
   * [upgrade TinyMCE to work with iPad and IE8](https://agilezen.com/project/18091/story/451)
   * [Ability to View List of Actions](https://agilezen.com/project/18091/story/424)
