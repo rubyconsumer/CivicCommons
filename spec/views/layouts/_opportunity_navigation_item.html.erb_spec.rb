@@ -25,13 +25,15 @@ describe 'layouts/_opportunity_navigation_item.html.erb' do
     rendered.should =~ /#{default_locals[:title]}/
   end
 
-  it "should show active indicator if active" do
+  it "should show active indicator if :show_person_icon is true" do
     default_locals[:active] = true
+    default_locals[:show_person_icon] = true
     render partial: '/layouts/opportunity_navigation_item', locals: default_locals
     rendered.should =~ /<i class="ico-sm ico-person-white"><\/i>/
   end
 
-  it "should not show active indicator if not active" do
+  it "should not show active indicator if :show_person_icon is not set or false" do
+    default_locals[:active] = true
     render partial: '/layouts/opportunity_navigation_item', locals: default_locals
     rendered.should_not =~ /<i class="ico-sm ico-person-white"><\/i>/
   end

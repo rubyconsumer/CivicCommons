@@ -3,7 +3,8 @@
     active: opportunity_navigation_item_selected?('conversations'),
     title: 'Talk',
     link: conversation_path(conversation),
-    count: participants_count
+    count: participants_count,
+    show_person_icon: true
   } %>
   <%= render partial: '/layouts/opportunity_navigation_item', locals: {
     active: opportunity_navigation_item_selected?('actions') || opportunity_navigation_item_selected?('petitions'),
@@ -17,4 +18,16 @@
     link: conversation_reflections_path(conversation),
     count: reflections_count
   } %>
+</div>
+
+<div class="btn-group mbm">
+  <div class="text">
+    <p>Share stories, photos, videos, and links. Friendly debates.</p>
+  </div>
+  <div class="text">
+    <p>Start a movement, join a movement.</p>
+  </div>
+  <div class="text">
+    <p>Look back on what we've done.</p>
+  </div>
 </div>

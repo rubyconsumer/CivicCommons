@@ -2,9 +2,9 @@
 /* Button Styles
 ---------------------------------*/
 
-a.button, 
-.button, 
-a.off_button, 
+a.button,
+.button,
+a.off_button,
 .off_button {
   background-color: #b9c974;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#b9c974), to(#9dae55));
@@ -44,7 +44,7 @@ a.off_button,
   background-color: #c0d3dd;
 }
 
-a.button.answer, 
+a.button.answer,
 .button.answer {
   padding-top: 4px;
   text-transform: inherit;
@@ -53,9 +53,9 @@ a.button.answer,
   text-transform: uppercase;
 }
 
-a.button:hover, 
-a.off_button:hover, 
-input.submit:hover, 
+a.button:hover,
+a.off_button:hover,
+input.submit:hover,
 input#contribution_submit:hover {
   background-color: #a2af5d;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#a2af5d), to(#7b893b));
@@ -69,10 +69,10 @@ input#contribution_submit:hover {
   color: #f3f3f3;
 }
 
-a.button:active, 
-a.off_button:active, 
-input.submit:active, 
-input#contribution_submit:active, 
+a.button:active,
+a.off_button:active,
+input.submit:active,
+input#contribution_submit:active,
 a.button.active {
   background: #fff;
   filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#ffffff', EndColorStr='#ffffff');
@@ -107,7 +107,7 @@ a.button.active {
   filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#95b5ca', EndColorStr='#6c8595');
 }
 
-.button.secondary:active, 
+.button.secondary:active,
 .button.secondary.active {
   background: #fff;
   filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#ffffff', EndColorStr='#ffffff');
@@ -161,13 +161,13 @@ a.button:active span.stitcher {
           border-radius: 2px;
 }
 
-.button:active .number, 
+.button:active .number,
 .button.active .number {
 	background: #9cb050;
 	color: #fff;
 }
 
-.button.secondary:active .number, 
+.button.secondary:active .number,
 .button.secondary.active .number {
 	background: #637988;
 	color: #fff;
@@ -202,7 +202,7 @@ a.button:active span.stitcher {
           border-bottom-left-radius: 4px;
 }
 
-.btn-group .button:last-child, 
+.btn-group .button:last-child,
 .btn-group .button.dropdown-toggle {
      -webkit-border-top-right-radius: 4px;
          -moz-border-radius-topright: 4px;
@@ -219,6 +219,17 @@ a.button:active span.stitcher {
   z-index: 2;
 }
 
+.btn-group .text {
+  float: left;
+  font-style: italic;
+  text-align: left;
+  width: 181px;
+}
+
+.btn-group .text p {
+  padding: 0 10px 0 5px;
+}
+
 .btn-group:after {
   content: ".";
   display: block;
@@ -232,7 +243,7 @@ a.button:active span.stitcher {
 }
 
 
-/* Large Button Group 
+/* Large Button Group
    (opportunities, etc.)
 ---------------------------------*/
 

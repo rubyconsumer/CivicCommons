@@ -462,7 +462,7 @@ describe Conversation do
       File.exist?(default_file)
     end
   end
-  
+
   context "action_participants" do
     def given_conversation_and_actions
       @petition = Factory.create(:petition)
@@ -472,6 +472,31 @@ describe Conversation do
     it "should return All participants of the actions" do
       given_conversation_and_actions
       @conversation.action_participants.should == [@person]
+    end
+  end
+
+  context "community_user_ids" do
+    before(:each) do
+      @conversation = Factory.create(:conversation)
+    end
+
+    it "should return an array of person ids" do
+      @conversation.community_user_ids.kind_of?(Array).should be_true
+    end
+
+    it "should include conversation owner" do
+      @conversation.community_user_ids.include?(@conversation.owner).should be_true
+    end
+
+    it "should include all confirmed, non-locked users who rated a contribution" do
+      contribution = Factory.create(:contribution, conversation: @conversation)
+      rating_group = Factory.create(:rating_group, contribution: contribution)
+      @conversation.community_user_ids.include?(rating_group.person_id).should be_true
+    end
+
+    it "should include all confirmed, non-locked users who created a contribution" do
+      contribution = Factory.create(:contribution, conversation: @conversation)
+      @conversation.community_user_ids.include?(@conversation.owner).should be_true
     end
   end
 

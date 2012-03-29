@@ -152,6 +152,19 @@ class Conversation < ActiveRecord::Base
     end
   end
 
+  def community_user_ids
+    rater_ids = RatingGroup.select(:person_id).where(contribution_id: contribution_ids).uniq.collect do |rating_group|
+      rating_group.person_id
+    end
+    person_ids = Array.new
+    person_ids += [owner]
+    person_ids += participant_ids
+    person_ids += rater_ids
+    person_ids = person_ids.flatten.uniq.reject(&:blank?)
+    people = Person.select(:id).where(:id => person_ids).where('confirmed_at IS NOT NULL and locked_at IS NULL')
+    people.collect{ |person| person.id }
+  end
+
   def user_generated?
     from_community
   end
