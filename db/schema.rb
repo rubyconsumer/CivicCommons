@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120328040812) do
+ActiveRecord::Schema.define(:version => 20120329033351) do
 
   create_table "actions", :force => true do |t|
     t.integer  "conversation_id"
@@ -512,6 +512,17 @@ ActiveRecord::Schema.define(:version => 20120328040812) do
 
   add_index "ratings", ["rating_descriptor_id"], :name => "index_ratings_on_rating_descriptor_id"
   add_index "ratings", ["rating_group_id"], :name => "index_ratings_on_rating_group_id"
+
+  create_table "reflection_comments", :force => true do |t|
+    t.text     "body"
+    t.integer  "person_id"
+    t.integer  "reflection_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "reflection_comments", ["person_id"], :name => "index_reflection_comments_on_person_id"
+  add_index "reflection_comments", ["reflection_id"], :name => "index_reflection_comments_on_reflection_id"
 
   create_table "reflections", :force => true do |t|
     t.string   "title",           :null => false

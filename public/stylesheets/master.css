@@ -308,7 +308,8 @@ button.cancel {
 .contribution-form {padding-bottom: 5px;}
 input.submit.no-tab {margin-left: 0;}
 input#contribution_submit,
-input#petition_submit
+input#petition_submit,
+input#reflection_comment_submit
  {
   margin-left: 0;
   margin-right: 0;

@@ -142,7 +142,9 @@ Civiccommons::Application.routes.draw do
   resources :projects, only: [:index]
 
   resources :conversations, only: [:index, :show, :new, :create] do
-    resources :reflections
+    resources :reflections do
+      resources :reflection_comments, :path => 'comments', :only => [:create]
+    end
     get :activities, on: :member
     resources :contributions, only: [:create, :edit, :show, :update, :destroy] do
       get '/moderate', to: 'contributions#moderate', on: :member

@@ -16,6 +16,8 @@ class ReflectionsController < ApplicationController
 
   def show
     @reflection = Reflection.find(params[:id])
+    @comment = @reflection.comments.new
+    @comments = @reflection.comments
   end
 
   def new

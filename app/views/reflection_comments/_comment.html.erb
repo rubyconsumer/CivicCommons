@@ -1,0 +1,11 @@
+<div class="media comment mbl">
+  <%= link_to profile_image(comment.person,'40'), user_url(comment.person) ,:class => 'img', :title => comment.person.name %>
+  <div class="bd">
+    <!-- Implemented in card 461 Moderating Ability on Reflection
+    <p class="fl-right alert alert-admin">
+      <strong>Moderate:</strong> <a href="#">Edit</a> | <a href="#">Delete</a>
+    </p> -->
+    <p><strong><%= link_to comment.person.name, user_url(comment.person) %> on <%= comment.created_at.to_date.to_s(:long) %></strong></p>
+    <p><%= comment.body %></p>
+  </div>
+</div>

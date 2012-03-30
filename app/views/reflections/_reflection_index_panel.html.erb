@@ -6,7 +6,9 @@
     <p><strong>Read the <a style="color:red;" href="#">initial proposal</a> by <%= text_profile(reflection.owner) %></strong></p>
     <p><%= raw reflection.details %></p>
     <div><img src="http://placehold.it/375x240" /></div>
-    <p><a href="#">8 comments</a> | <a href="#">Leave a comment</a></p>
+    <p>
+      <%= link_to pluralize(reflection.comments.count, 'comment'), conversation_reflection_path(conversation_id: conversation.id, id: reflection, anchor: 'comments') %> | <%= link_to "Leave a comment", conversation_reflection_path(conversation_id: conversation.id, id: reflection, anchor: 'new_comment') %>
+    </p>
   </div>
 </div>
 

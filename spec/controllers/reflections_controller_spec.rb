@@ -36,6 +36,19 @@ describe ReflectionsController do
       get :show, :id => "37", :conversation_id => 7
       assigns(:reflection).should be(mock_reflection)
     end
+    it "should initiate a new comment" do
+      comment_double = double('Comment')
+      Reflection.stub(:find).with("37") { mock_reflection(:comments => comment_double) }
+      comment_double.should_receive(:new)
+      get :show, :id => "37", :conversation_id => 7
+    end
+    it "should fetch comments" do
+      comment_double = double('Comment')
+      Reflection.stub(:find).with("37") { mock_reflection(:comments => comment_double) }
+      comment_double.stub(:new)
+      get :show, :id => "37", :conversation_id => 7
+      assigns(:comments).should be(comment_double)
+    end
   end
 
   describe "GET new" do
