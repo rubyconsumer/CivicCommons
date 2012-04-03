@@ -1,8 +1,14 @@
+## 1.9.X
+
+### External Changes
+  * [Moderating Ability on Reflection](https://agilezen.com/project/18091/story/461)
+
+
 ## 1.9.6
 
 ### External Changes
   * [Design Refinements](https://agilezen.com/project/18091/story/437)
-  
+
 #### Opportunities
   * [Create and view Petition](https://agilezen.com/project/18091/story/419)
   * [Ability to sign a petition](https://agilezen.com/project/18091/story/420)

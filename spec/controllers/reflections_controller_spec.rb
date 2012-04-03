@@ -1,4 +1,5 @@
 require 'spec_helper'
+include ControllerMacros
 
 describe ReflectionsController do
 
@@ -89,35 +90,171 @@ describe ReflectionsController do
       end
     end
   end
+end
 
+describe ReflectionsController do
   describe "PUT update" do
-    describe "with valid params" do
-      it "updates the requested reflection" do
-        Reflection.stub(:find).with("37") { mock_reflection }
-        mock_reflection.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, :id => "37", :reflection => {'these' => 'params'}, :conversation_id => 7
+    context "as admin" do
+      before(:each) do
+        login_admin
+        @reflection = Factory.create(:reflection)
       end
 
-      it "assigns the requested reflection as @reflection" do
-        Reflection.stub(:find) { mock_reflection(:update_attributes => true) }
-        put :update, :id => "1", :conversation_id => 7
-        assigns(:reflection).should be(mock_reflection)
+      describe "with valid params" do
+        it "updates the requested reflection" do
+          put :update, :id => @reflection.id, :reflection => { 'title' => 'new title!' }, :conversation_id => @reflection.conversation_id
+          @reflection.reload.title.should == 'new title!'
+        end
+
+        it "assigns the requested reflection as @reflection" do
+          put :update, :id => @reflection.id, :reflection => {}, :conversation_id => @reflection.conversation_id
+          assigns[:reflection].id.should == @reflection.id
+        end
+
+        it "redirects to the reflection" do
+          put :update, :id => @reflection.id, :reflection => {}, :conversation_id => @reflection.conversation_id
+          response.should redirect_to(conversation_reflection_path(@reflection.conversation, @reflection))
+        end
       end
 
-      it "redirects to the reflection" do
-        Reflection.stub(:find) { mock_reflection(:update_attributes => true) }
-        put :update, :id => "1", :conversation_id => 7
-        response.should redirect_to(conversation_reflection_path(mock_conversation, mock_reflection))
+      describe "with invalid params" do
+        it "assigns the reflection as @reflection" do
+          put :update, :id => @reflection.id, :reflection => { 'invalid' => 'attribute' }, :conversation_id => @reflection.conversation_id
+          assigns[:reflection].id.should == @reflection.id
+        end
       end
     end
 
-    describe "with invalid params" do
-      it "assigns the reflection as @reflection" do
-        Reflection.stub(:find) { mock_reflection(:update_attributes => false) }
-        put :update, :id => "1", :conversation_id => 7
-        assigns(:reflection).should be(mock_reflection)
+    context "as non-admin but logged in" do
+      before(:each) do
+        login_user
+        @reflection = Factory.create(:reflection)
+      end
+
+      it "sets flash[:error]" do
+        put :update, :id => @reflection.id, :reflection => {}, :conversation_id => @reflection.conversation_id
+        flash[:error].should == "You must be an admin to view this page."
+      end
+
+      it "redirects to profile page" do
+        pending "Can't seem to get current_person in method." do
+          put :update, :id => @reflection.id, :reflection => {}, :conversation_id => @reflection.conversation_id
+          response.should redirect_to(secure_session_url(current_person))
+        end
+      end
+    end
+
+    context "not logged in" do
+      before(:each) do
+        login_user
+        @reflection = Factory.create(:reflection)
+      end
+
+      it "redirects to login page" do
+        pending "Can't seem to get current_person in method." do
+          put :update, :id => @reflection.id, :reflection => {}, :conversation_id => @reflection.conversation_id
+          response.should redirect_to(secure_new_person_session_url)
+        end
       end
     end
   end
 
+  describe "GET edit" do
+    context "as admin" do
+      before(:each) do
+        login_admin
+        @reflection = Factory.create(:reflection)
+      end
+
+      it "assigns the requested reflection as @reflection" do
+        get :edit, :id => @reflection.id, :conversation_id => @reflection.conversation_id
+        assigns[:reflection].id.should == @reflection.id
+      end
+    end
+
+    context "as non-admin but logged in" do
+      before(:each) do
+        login_user
+        @reflection = Factory.create(:reflection)
+      end
+
+      it "sets flash[:error]" do
+        get :edit, :id => @reflection.id, :conversation_id => @reflection.conversation_id
+        flash[:error].should == "You must be an admin to view this page."
+      end
+
+      it "redirects to profile page" do
+        pending "Can't seem to get current_person in method." do
+          get :edit, :id => @reflection.id, :conversation_id => @reflection.conversation_id
+          response.should redirect_to(secure_session_url(current_person))
+        end
+      end
+    end
+
+    context "not logged in" do
+      before(:each) do
+        login_user
+        @reflection = Factory.create(:reflection)
+      end
+
+      it "redirects to login page" do
+        pending "Can't seem to get current_person in method." do
+          get :edit, :id => @reflection.id, :conversation_id => @reflection.conversation_id
+          response.should redirect_to(secure_new_person_session_url)
+        end
+      end
+    end
+  end
+
+  describe "DELETE destroy" do
+    context "as admin" do
+      before(:each) do
+        login_admin
+        @reflection = Factory.create(:reflection)
+      end
+
+      it "assigns the requested reflection as @reflection" do
+        delete :destroy, :id => @reflection.id, :conversation_id => @reflection.conversation_id
+        assigns[:reflection].id.should == @reflection.id
+      end
+
+      it "redirects to conversation_reflection_path" do
+        delete :destroy, :id => @reflection.id, :conversation_id => @reflection.conversation_id
+        response.should redirect_to(conversation_reflections_path(@reflection.conversation))
+      end
+    end
+
+    context "as non-admin but logged in" do
+      before(:each) do
+        login_user
+        @reflection = Factory.create(:reflection)
+      end
+
+      it "sets flash[:error]" do
+        delete :destroy, :id => @reflection.id, :conversation_id => @reflection.conversation_id
+        flash[:error].should == "You must be an admin to view this page."
+      end
+
+      it "redirects to profile page" do
+        pending "Can't seem to get current_person in method." do
+          delete :destroy, :id => @reflection.id, :conversation_id => @reflection.conversation_id
+          response.should redirect_to(secure_session_url(current_person))
+        end
+      end
+    end
+
+    context "not logged in" do
+      before(:each) do
+        login_user
+        @reflection = Factory.create(:reflection)
+      end
+
+      it "redirects to login page" do
+        pending "Can't seem to get current_person in method." do
+          delete :destroy, :id => @reflection.id, :conversation_id => @reflection.conversation_id
+          response.should redirect_to(secure_new_person_session_url)
+        end
+      end
+    end
+  end
 end

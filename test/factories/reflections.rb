@@ -1,10 +1,12 @@
 # Read about factories at http://github.com/thoughtbot/factory_girl
 
-Factory.define :reflection do |f|
-  f.association :owner, :factory => :person
-  f.title 'Title here'
-  f.details 'Details here'
-  f.association :conversation
+Factory.define do
+  factory :reflection do
+    sequence(:title) {|n| "Reflection Title #{n}" }
+    details "MyText"
+    association :person, factory: :registered_user
+    association :conversation, factory: :conversation
+  end
 end
 
 Factory.define :reflection_with_comments, :parent => :reflection do |f|

@@ -2,6 +2,7 @@ class ReflectionsController < ApplicationController
   layout 'opportunity'
 
   before_filter :require_user, :except => [:index, :show]
+  before_filter :verify_admin, :only => [:edit, :update, :destroy]
   before_filter :find_conversation
 
   protected
@@ -46,7 +47,6 @@ class ReflectionsController < ApplicationController
 
   def update
     @reflection = Reflection.find(params[:id])
-
     respond_to do |format|
       if @reflection.update_attributes(params[:reflection])
         format.html { redirect_to([@conversation, @reflection], :notice => 'Reflection was successfully updated.') }
