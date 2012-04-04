@@ -18,12 +18,12 @@
         <h3 class="mbl" id="comments">Comments</h3>
         <%= render :partial => '/reflection_comments/comment', :collection => @comments %>
         </div>
-        
+
         <span id="new_comment"></span>
         <%= render :partial => '/reflection_comments/form' %>
 
       </div>
-      
+
       <div class='aside supplementary'>
         <div class="recent-item">
           <div class="offset-2">
@@ -31,17 +31,9 @@
             <p><strong><%= text_profile(@reflection.owner) %></strong><br />
           </div>
         </div>
-        <div class="mod">
-          <h3>Noelle participated in:</h3>
-          <div class="recent-item">
-            <div class="offset-2 plm">
-              <p><strong>Petition Cedar Fair to turn SeaWorld into a whale breeding motel.</strong></p>
-              <p><a href="#">View petition</a></p>
-            </div>
-          </div>
-        </div>
+        <%= render :partial => '/shared/opportunity/participated_actions_aside', :locals => {reflection:@reflection, participated_actions:@participated_actions } if @participated_actions.present? %>
       </div><!-- /.aside -->
-      
+
     </div><!-- /.main-content -->
   </div>
 </div>

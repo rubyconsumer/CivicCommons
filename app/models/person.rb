@@ -85,12 +85,12 @@ class Person < ActiveRecord::Base
   def should_generate_new_friendly_id?
     new_record? || slug.nil?
   end
-  
+
   def participated_actions
     # To do: need to merge this array with vote when we integrate them with vote
     self.signed_petitions.collect(&:action).compact.uniq
   end
-  
+
   def participated_actions_for_conversation(conversation)
     participated_actions.delete_if{|action|action.conversation_id != conversation.id}
   end

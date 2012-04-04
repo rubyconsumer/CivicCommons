@@ -1,3 +1,8 @@
+## 2.0
+
+### External Changes
+  * [Reflection Permalink Displays Users Participated Petitions](https://agilezen.com/project/18091/story/480)
+
 ## 1.9.X
 
 ### External Changes

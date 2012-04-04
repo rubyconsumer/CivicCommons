@@ -16,7 +16,8 @@ class ReflectionsController < ApplicationController
   end
 
   def show
-    @reflection = Reflection.find(params[:id])
+    @reflection = Reflection.find(params[:id], :include => :person)
+    @participated_actions = @reflection.owner_participated_actions
     @comment = @reflection.comments.new
     @comments = @reflection.comments
   end

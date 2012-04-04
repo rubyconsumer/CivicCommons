@@ -24,7 +24,6 @@ describe ReflectionsController do
   describe "GET index" do
     it "assigns all reflections as @reflections" do
       Reflection.stub(:where) { [mock_reflection] }
-      #get :index, :controller => "reflections", :conversation_id => 7
       get :index, :controller => "reflections", :conversation_id => 7
       assigns(:conversation).should eq(mock_conversation)
       assigns(:reflections).should eq([mock_reflection])
@@ -33,19 +32,20 @@ describe ReflectionsController do
 
   describe "GET show" do
     it "assigns the requested reflection as @reflection" do
-      Reflection.stub(:find).with("37") { mock_reflection }
+      Reflection.stub(:find).with("37", {:include=>:person}) { mock_reflection }
       get :show, :id => "37", :conversation_id => 7
       assigns(:reflection).should be(mock_reflection)
+      assigns(:participated_actions).should be(mock_reflection)
     end
     it "should initiate a new comment" do
       comment_double = double('Comment')
-      Reflection.stub(:find).with("37") { mock_reflection(:comments => comment_double) }
+      Reflection.stub(:find).with("37", {:include=>:person}) { mock_reflection(:comments => comment_double) }
       comment_double.should_receive(:new)
       get :show, :id => "37", :conversation_id => 7
     end
     it "should fetch comments" do
       comment_double = double('Comment')
-      Reflection.stub(:find).with("37") { mock_reflection(:comments => comment_double) }
+      Reflection.stub(:find).with("37", {:include=>:person}) { mock_reflection(:comments => comment_double) }
       comment_double.stub(:new)
       get :show, :id => "37", :conversation_id => 7
       assigns(:comments).should be(comment_double)

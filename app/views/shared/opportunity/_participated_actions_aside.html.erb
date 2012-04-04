@@ -1,0 +1,12 @@
+<div class="mod">
+  <h3><%= reflection.owner_name %> participated in:</h3>
+  <div class="recent-item">
+    <% participated_actions.each do |action| %>
+      <div class="offset-2 plm">
+        <p><strong><%= action.actionable.title %></strong></p>
+        <p><%= link_to "View petition", [action.conversation, action.actionable] %></p>
+      </div>
+    <% end %>
+  </div>
+</div>
+

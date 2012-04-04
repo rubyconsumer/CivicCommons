@@ -8,4 +8,5 @@ class Action < ActiveRecord::Base
   # the other end of actionable must have participants method
   delegate :participants, :to => :actionable
 
+  delegate :title, :to => :actionable
 end
