@@ -2,6 +2,7 @@ class PetitionsController < ApplicationController
   layout 'opportunity'
 
   before_filter :require_user, :except => [:show]
+  before_filter :verify_admin, :only => [:edit,:update,:destroy]
   before_filter :find_conversation
 
   def new
@@ -10,6 +11,27 @@ class PetitionsController < ApplicationController
 
   def show
     @petition = @conversation.petitions.find(params[:id])
+  end
+  
+  def edit
+    @petition = @conversation.petitions.find(params[:id])
+  end
+  
+  def update
+    @petition = @conversation.petitions.find(params[:id])
+    if @petition.update_attributes(params[:petition])
+      redirect_to conversation_petition_path(@conversation, @petition)
+    else
+      render :action => :edit
+    end
+  end
+  
+  def destroy
+    @petition = @conversation.petitions.find(params[:id])
+    @petition.destroy
+    
+    flash[:notice] = 'The petition have been successfully deleted'
+    redirect_to conversation_actions_path(@conversation)
   end
 
   def create

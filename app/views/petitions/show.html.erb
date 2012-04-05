@@ -3,7 +3,9 @@
 
     <div class="main-content">
       <div class="mbl">
+        <%= moderate_link_for(@petition) if signed_in? && current_person.admin? %>
         <h2 class="mtn"><%= @petition.title %></h2>
+        
         <p class="contribution-person-name"> By: <%= text_profile(@petition.creator) %> on <%= @petition.created_at.to_date.to_s(:long) %></p>
         <%= raw sanitize @petition.description %>
         <p class="alert alert-notification">

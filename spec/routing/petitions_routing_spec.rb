@@ -5,6 +5,18 @@ describe PetitionsController do
     it "recognizes and generates #new" do
       { get: "/conversations/123/petitions/new" }.should route_to(controller: "petitions", action: "new", :conversation_id => '123')
     end
+    
+    it "recognizes and generates #edit" do
+      { get: "/conversations/123/petitions/1234/edit" }.should route_to(controller: "petitions", action: "edit", :conversation_id => '123', :id => '1234')
+    end
+    
+    it "recognizes and generates #update" do
+      { put: "/conversations/123/petitions/1234" }.should route_to(controller: "petitions", action: "update", :conversation_id => '123', :id => '1234')
+    end
+    
+    it "recognizes and generates #destroy" do
+      { delete: "/conversations/123/petitions/1234" }.should route_to(controller: "petitions", action: "destroy", :conversation_id => '123', :id => '1234')
+    end
 
     it "recognizes and generates #create" do
       { post: "/conversations/123/petitions" }.should route_to(controller: "petitions", action: "create", :conversation_id => '123')

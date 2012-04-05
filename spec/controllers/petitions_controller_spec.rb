@@ -20,6 +20,78 @@ describe PetitionsController do
     Conversation.stub!(:find).and_return(stub_conversation)
   end
 
+  describe "edit" do
+    before(:each) do
+      @controller.stub!(:verify_admin).and_return(true)
+    end
+    it "should edit the petition" do
+      petitions_double = double
+      @stub_conversation.should_receive(:petitions).and_return(petitions_double)
+      petitions_double.should_receive(:find).with(1234).and_return(stub_petition)
+
+      get :edit, :conversation_id => 123, :id => 1234
+    end
+  end
+  
+  describe "destroy" do
+    before(:each) do
+      @controller.stub!(:verify_admin).and_return(true)
+      @petition = stub_petition
+      @petitions_double = double
+      @stub_conversation.stub!(:petitions).and_return(@petitions_double)
+      @petitions_double.stub!(:find).with(1234).and_return(@petition)
+    end
+    
+    it "should find the petition" do
+      petitions_double = double
+      @stub_conversation.should_receive(:petitions).and_return(petitions_double)
+      petitions_double.should_receive(:find).with(1234).and_return(stub_petition)
+
+      delete :destroy, :conversation_id => 123, :id => 1234
+    end
+    it "should destroy the petition" do
+      @petition.should_receive(:destroy)
+      delete :destroy, :conversation_id => 123, :id => 1234
+    end
+    it "should set flash message" do
+      delete :destroy, :conversation_id => 123, :id => 1234
+      flash[:notice].should == "The petition have been successfully deleted"
+    end
+    it "should redirect to conversation actions path" do
+      delete :destroy, :conversation_id => 123, :id => 1234
+      response.should redirect_to conversation_actions_path(@stub_conversation)
+    end
+  end
+  
+  describe "update" do
+    before(:each) do
+      @controller.stub!(:verify_admin).and_return(true)
+      @petition = stub_petition
+      @petitions_double = double
+      @stub_conversation.stub!(:petitions).and_return(@petitions_double)
+      @petitions_double.stub!(:find).with(1234).and_return(@petition)
+    end
+    it "should find the petition" do
+      petitions_double = double
+      @stub_conversation.should_receive(:petitions).and_return(petitions_double)
+      petitions_double.should_receive(:find).with(1234).and_return(stub_petition)
+
+      get :update, :conversation_id => 123, :id => 1234
+    end
+    it "should redirect to conversation petition path if successful" do
+      @petition.stub!(:update_attributes).and_return(true)
+      get :update, :conversation_id => 123, :id => 1234
+      response.should redirect_to conversation_petition_path(@stub_conversation,@petition)
+    end
+    it "should render the :edit action if update is not successful" do
+      @petition.stub!(:update_attributes).and_return(false)
+      get :update, :conversation_id => 123, :id => 1234
+      response.should render_template(:action => :new)
+    end
+    
+  end
+
+
   describe "new" do
     it "should find the conversation" do
       Conversation.should_receive(:find).with(123).and_return(stub_conversation)

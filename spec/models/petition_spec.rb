@@ -40,6 +40,13 @@ describe Petition do
       should have_one(:action)
     end
   end
+  describe "reflections" do
+    it "should have many reflections" do
+      @petition = Factory.create(:petition)
+      @reflection = Factory.create(:reflection,:actions => [@petition.action])
+      @petition.reflections.should == [@reflection]
+    end
+  end
   describe "signed_by?" do
     def given_petition_signed_by_person
       @petition = Factory.create(:petition)

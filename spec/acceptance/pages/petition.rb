@@ -32,6 +32,24 @@ module CivicCommonsDriver
         
       end
 
+      class Edit
+        SHORT_NAME = :edit_petition
+        include Page
+        
+        has_field :title, 'petition[title]'
+        has_wysiwyg_editor_field :description, 'petition_description', :ckeditor
+        has_field :resulting_actions, 'petition[resulting_actions]'
+        has_field :signature_needed, 'petition[signature_needed]'
+        
+        has_button :update_invalid_petition, 'Publish', :edit_petition
+        has_button :update_petition, 'Publish', :petition
+                
+        def has_error?
+          has_content? 'There were errors saving this petition.'
+        end        
+      end
+      
+
     end
 
   end
