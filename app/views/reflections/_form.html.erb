@@ -30,18 +30,20 @@
 </div><!-- /.main-content -->
 
 <div class='aside supplementary'>
-  <%#= render partial: 'participated_actions', locals: {:petitions => current_person.signed_petitions} %>
-<div class="mod">
-  <p><strong>You participated in the following actions, would you like to reference them in your reflection?</strong></p>
-  <div class="media inset">
-    <% current_person.participated_actions_for_conversation(@conversation).each do |action| %>
+
+  <% if current_person.participated_actions_for_conversation(@conversation).present? %>
+  <div class="mod">
+    <p><strong>You participated in the following actions, would you like to reference them in your reflection?</strong></p>
+    <div class="media inset">
+      <% current_person.participated_actions_for_conversation(@conversation).each do |action| %>
         <div class="bd">
-        <%= check_box_tag 'reflection[action_ids][]', action.id, @reflection.action_ids.include?(action.id) %>
+          <%= check_box_tag 'reflection[action_ids][]', action.id, @reflection.action_ids.include?(action.id) %>
           <strong><%= action.actionable.title %></strong>
         </div>
-    <% end %>
+      <% end %>
+    </div>
   </div>
-</div>
+  <% end %>
 
 </div>
 
