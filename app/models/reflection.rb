@@ -12,11 +12,18 @@ class Reflection < ActiveRecord::Base
   attr_accessible :action_ids
   attr_accessible :title, :details, :conversation_id, :owner
 
+  # Owner/Creator of this reflection
   def owner_name
     self.person.name
   end
 
+  # Actions related to owner of this reflection
   def owner_participated_actions
     self.person.participated_actions
+  end
+
+  # Actionables related to this reflection
+  def related_actionables
+    action.actionable
   end
 end

@@ -1,7 +1,9 @@
 ## 2.0
 
 ### External Changes
+  * [Display Action Person Selected When Creating a Reflection on Reflection Perma Link Page](https://agilezen.com/project/18091/story/475)
   * [Reflection Permalink Displays Users Participated Petitions](https://agilezen.com/project/18091/story/480)
+  * [Display participated action selector when user is making a new reflection](https://agilezen.com/project/18091/story/485)
 
 ## 1.9.X
 
