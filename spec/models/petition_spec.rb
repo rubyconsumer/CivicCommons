@@ -1,6 +1,15 @@
 require 'spec_helper'
 
 describe Petition do
+  describe "factories" do
+    it "should be valid" do
+      Factory.build(:petition).should be_valid
+      Factory.create(:petition).should be_valid
+      Factory.build(:unsigned_petition).should be_valid
+      Factory.create(:unsigned_petition).should be_valid
+    end
+  end
+
   describe "validation" do
     it "should validate presence of title" do
       should validate_presence_of(:title)
@@ -21,7 +30,7 @@ describe Petition do
     it "should validate presence of signature_needed" do
       should validate_presence_of(:signature_needed)
     end
-    
+
     it "should validate numericality of signature_needed to be greater than 0" do
       should validate_numericality_of(:signature_needed)
     end
@@ -74,22 +83,22 @@ describe Petition do
       @petition.signers.include?(@person).should be_true
     end
   end
-  
+
   describe 'signature_needed_left' do
     it "should return 0 if number of signatures are more than needed" do
-      stubber = double      
+      stubber = double
       @petition = Factory.build(:petition, :signature_needed => 10)
       @petition.stub!(:signatures).and_return(stubber)
       stubber.stub!(:count).and_return(1)
-      
+
       @petition.signature_needed_left.should == 9
     end
     it "should return the real number if the number of signatures are less than needed" do
-      stubber = double      
+      stubber = double
       @petition = Factory.build(:petition, :signature_needed => 10)
       @petition.stub!(:signatures).and_return(stubber)
       stubber.stub!(:count).and_return(20)
-      
+
       @petition.signature_needed_left.should == 0
     end
   end

@@ -32,7 +32,7 @@ describe PetitionsController do
       get :edit, :conversation_id => 123, :id => 1234
     end
   end
-  
+
   describe "destroy" do
     before(:each) do
       @controller.stub!(:verify_admin).and_return(true)
@@ -41,7 +41,7 @@ describe PetitionsController do
       @stub_conversation.stub!(:petitions).and_return(@petitions_double)
       @petitions_double.stub!(:find).with(1234).and_return(@petition)
     end
-    
+
     it "should find the petition" do
       petitions_double = double
       @stub_conversation.should_receive(:petitions).and_return(petitions_double)
@@ -62,7 +62,7 @@ describe PetitionsController do
       response.should redirect_to conversation_actions_path(@stub_conversation)
     end
   end
-  
+
   describe "update" do
     before(:each) do
       @controller.stub!(:verify_admin).and_return(true)
@@ -88,7 +88,7 @@ describe PetitionsController do
       get :update, :conversation_id => 123, :id => 1234
       response.should render_template(:action => :new)
     end
-    
+
   end
 
 
@@ -104,17 +104,6 @@ describe PetitionsController do
       get :new, :conversation_id => 123
     end
   end
-
-  describe "show" do
-    it "should show the petition" do
-      petitions_double = double
-      @stub_conversation.should_receive(:petitions).and_return(petitions_double)
-      petitions_double.should_receive(:find).with(1234).and_return(stub_petition)
-
-      get :show, :conversation_id => 123, :id => 1234
-    end
-  end
-
 
   describe "create" do
     before(:each) do
@@ -184,5 +173,22 @@ describe PetitionsController do
     end
   end
 
+end
 
+describe PetitionsController do
+  describe "show" do
+    let(:petition) { Factory.create(:petition) }
+
+    it "should show the petition" do
+      get :show, :conversation_id => petition.conversation_id, :id => petition.id
+      assigns[:petition].id.should == petition.id
+      response.should be_success
+    end
+
+    it "should respond to :pdf format" do
+      get :show, conversation_id: petition.conversation_id, id: petition.id, format: :pdf
+      response.headers['Content-Type'].include?("application/pdf").should be_true
+      response.should be_success
+    end
+  end
 end

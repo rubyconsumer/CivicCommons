@@ -5,7 +5,7 @@
       <div class="mbl">
         <%= moderate_link_for(@petition) if signed_in? && current_person.admin? %>
         <h2 class="mtn"><%= @petition.title %></h2>
-        
+
         <p class="contribution-person-name"> By: <%= text_profile(@petition.creator) %> on <%= @petition.created_at.to_date.to_s(:long) %></p>
         <%= raw sanitize @petition.description %>
         <p class="alert alert-notification">
@@ -41,11 +41,9 @@
         <div class="bd">
           <h5 class="vente"><span class="grande"><%= @petition.signatures.count %></span> out of <%= @petition.signature_needed %></h5>
           <p><%= @petition.signature_needed_left %> more signatures needed.</p>
-          <!--
-            <div id="contribution-4142" class="dnld document">
-              <p><strong><a href="#">Download the petition</a></strong></p>
-            </div>
-          -->
+          <div class="dnld document">
+            <p><strong><a href="<%= conversation_petition_path(@petition.conversation, @petition, format: :pdf) %>">Download the petition</a></strong></p>
+          </div>
         </div>
       </div>
 
