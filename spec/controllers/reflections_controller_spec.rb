@@ -137,10 +137,8 @@ describe ReflectionsController do
       end
 
       it "redirects to profile page" do
-        pending "Can't seem to get current_person in method." do
-          put :update, :id => @reflection.id, :reflection => {}, :conversation_id => @reflection.conversation_id
-          response.should redirect_to(secure_session_url(current_person))
-        end
+        put :update, :id => @reflection.id, :reflection => {}, :conversation_id => @reflection.conversation_id
+        response.should redirect_to(@controller.secure_session_url(@controller.current_person))
       end
     end
 
@@ -151,10 +149,8 @@ describe ReflectionsController do
       end
 
       it "redirects to login page" do
-        pending "Can't seem to get current_person in method." do
-          put :update, :id => @reflection.id, :reflection => {}, :conversation_id => @reflection.conversation_id
-          response.should redirect_to(secure_new_person_session_url)
-        end
+        put :update, :id => @reflection.id, :reflection => {}, :conversation_id => @reflection.conversation_id
+        response.should redirect_to(@controller.secure_new_person_session_url)
       end
     end
   end
@@ -184,10 +180,8 @@ describe ReflectionsController do
       end
 
       it "redirects to profile page" do
-        pending "Can't seem to get current_person in method." do
-          get :edit, :id => @reflection.id, :conversation_id => @reflection.conversation_id
-          response.should redirect_to(secure_session_url(current_person))
-        end
+        get :edit, :id => @reflection.id, :conversation_id => @reflection.conversation_id
+        response.should redirect_to(@controller.secure_session_url(@controller.current_person))
       end
     end
 
@@ -198,10 +192,8 @@ describe ReflectionsController do
       end
 
       it "redirects to login page" do
-        pending "Can't seem to get current_person in method." do
-          get :edit, :id => @reflection.id, :conversation_id => @reflection.conversation_id
-          response.should redirect_to(secure_new_person_session_url)
-        end
+        get :edit, :id => @reflection.id, :conversation_id => @reflection.conversation_id
+        response.should redirect_to(@controller.secure_new_person_session_url)
       end
     end
   end
@@ -236,10 +228,8 @@ describe ReflectionsController do
       end
 
       it "redirects to profile page" do
-        pending "Can't seem to get current_person in method." do
-          delete :destroy, :id => @reflection.id, :conversation_id => @reflection.conversation_id
-          response.should redirect_to(secure_session_url(current_person))
-        end
+        delete :destroy, :id => @reflection.id, :conversation_id => @reflection.conversation_id
+        response.should redirect_to(@controller.secure_session_url(@controller.current_person))
       end
     end
 
@@ -250,10 +240,8 @@ describe ReflectionsController do
       end
 
       it "redirects to login page" do
-        pending "Can't seem to get current_person in method." do
-          delete :destroy, :id => @reflection.id, :conversation_id => @reflection.conversation_id
-          response.should redirect_to(secure_new_person_session_url)
-        end
+        delete :destroy, :id => @reflection.id, :conversation_id => @reflection.conversation_id
+        response.should redirect_to(@controller.secure_new_person_session_url)
       end
     end
   end
