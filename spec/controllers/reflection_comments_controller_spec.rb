@@ -24,6 +24,54 @@ describe ReflectionCommentsController do
     @controller.stub!(:current_person).and_return(stub_person)
     Conversation.stub(:find).with(7) { mock_conversation }
     mock_conversation.stub_chain(:reflections,:find).and_return(mock_reflection)
+    mock_reflection.stub_chain(:comments,:find).and_return(mock_reflection_comment)
+  end
+
+  describe "GET edit" do
+    before(:each) do
+      @controller.stub!(:verify_moderating_ability).and_return(true)
+    end
+    it "should be successful" do
+      get :edit, :conversation_id => 7, :reflection_id => 123, :id => 1234
+      response.should be_success
+    end
+  end
+  
+  describe "PUT update" do
+    before(:each) do
+      @controller.stub!(:verify_moderating_ability).and_return(true)
+    end
+    it "should redirect to conversation comment reflection if successful" do
+      mock_reflection_comment.should_receive(:update_attributes).with({'these' => 'params'}).and_return(true)
+      put :update, :reflection_comment => {'these' => 'params'}, :conversation_id => 7, :reflection_id => 123, :id => 1234
+      response.should redirect_to conversation_reflection_path(mock_conversation, mock_reflection)
+    end
+    it "should render the edit action if unsuccessful" do
+      mock_reflection_comment.should_receive(:update_attributes).with({'these' => 'params'}).and_return(false)
+      put :update, :reflection_comment => {'these' => 'params'}, :conversation_id => 7, :reflection_id => 123, :id => 1234
+      response.should render_template :action => :edit
+    end
+    it "should set flash message if successful" do
+      mock_reflection_comment.should_receive(:update_attributes).with({'these' => 'params'}).and_return(true)
+      put :update, :reflection_comment => {'these' => 'params'}, :conversation_id => 7, :reflection_id => 123, :id => 1234
+      flash[:notice].should == 'This comment has been successfully updated'
+    end
+  end
+  
+  describe "DELETE destroy" do
+    before(:each) do
+      @controller.stub!(:verify_moderating_ability).and_return(true)
+    end
+    it "should set flash message if successful" do
+      mock_reflection_comment.should_receive(:destroy)
+      delete :destroy, :conversation_id => 7, :reflection_id => 123, :id => 1234
+      flash[:notice].should == 'This comment has been successfully deleted'
+    end
+    it "should redirect to conversation comment reflection" do
+      mock_reflection_comment.should_receive(:destroy)
+      delete :destroy, :conversation_id => 7, :reflection_id => 123, :id => 1234
+      response.should redirect_to conversation_reflection_path(mock_conversation, mock_reflection)
+    end
   end
 
   describe "POST create" do

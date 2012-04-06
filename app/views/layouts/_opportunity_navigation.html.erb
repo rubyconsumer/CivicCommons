@@ -13,7 +13,7 @@
     count: actions_count
   } %>
   <%= render partial: '/layouts/opportunity_navigation_item', locals: {
-    active: opportunity_navigation_item_selected?('reflections'),
+    active: opportunity_navigation_item_selected?('reflections') || opportunity_navigation_item_selected?('reflection_comments'),
     title: 'Reflect',
     link: conversation_reflections_path(conversation),
     count: reflections_count

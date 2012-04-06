@@ -143,7 +143,7 @@ Civiccommons::Application.routes.draw do
 
   resources :conversations, only: [:index, :show, :new, :create] do
     resources :reflections do
-      resources :reflection_comments, :path => 'comments', :only => [:create]
+      resources :reflection_comments, :path => 'comments'
     end
     get :activities, on: :member
     resources :contributions, only: [:create, :edit, :show, :update, :destroy] do

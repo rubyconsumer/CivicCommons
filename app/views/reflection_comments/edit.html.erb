@@ -1,0 +1,30 @@
+<div class="wrapper">
+  <div class="content-container">
+
+    <div class="main-content">
+      <h2 class="mtn"><%= @reflection.title %></h2>
+      <p><strong>By: <%= text_profile(@reflection.owner) %> on <%= @reflection.created_at.strftime('%B %d, %Y') %></strong></p>
+      <p><%= raw @reflection.details %></p>
+
+      <div class="comment-section mtl">
+        <h3 class="mbl" id="comments">Edit Comment</h3>
+      </div>
+
+      <span id="new_comment"></span>
+      <%= render :partial => '/reflection_comments/form' %>
+
+    </div>
+
+      <div class='aside supplementary'>
+        <div class="recent-item">
+          <div class="offset-2">
+            <%= user_profile(@reflection.owner) %>
+            <p><strong><%= text_profile(@reflection.owner) %></strong><br />
+          </div>
+        </div>
+      </div><!-- /.aside -->
+
+    </div><!-- /.main-content -->
+  </div>
+</div>
+

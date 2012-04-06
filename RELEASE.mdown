@@ -28,6 +28,7 @@
   * [Image upload capability for CkEditor](https://agilezen.com/project/18091/story/455)
   * [Ability to comment on a reflection](https://agilezen.com/project/18091/story/413)
   * [Moderating ability on Petition](https://agilezen.com/project/18091/story/460)
+  * [Moderating ability on Reflection comments](https://agilezen.com/project/18091/story/473)
 
 #### Miscellaneous
   * [upgrade friendlyID and will_paginate gems](https://agilezen.com/project/18091/story/438)

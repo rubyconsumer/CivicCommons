@@ -9,6 +9,10 @@ module CivicCommonsDriver
         has_button :create_invalid_comment, 'Leave my Response', :reflection
         has_button :create_comment, 'Leave my Response', :reflection
         
+        has_link_for :edit_comment, 'Edit', :edit_reflection_comment
+        has_link_for :delete_comment, 'Delete', :reflection
+        
+        
         def has_error?
           has_content? 'There were errors saving this response'
         end
