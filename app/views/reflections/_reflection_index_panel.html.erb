@@ -3,7 +3,7 @@
     <h3><a href='<%= conversation_reflection_path(conversation_id: conversation.id, id: reflection) %>'><%= reflection.title %></a></h3>
   </div>
   <div class="entry-details full">
-    <p><strong>Read the <a style="color:red;" href="#">initial proposal</a> by <%= text_profile(reflection.owner) %></strong></p>
+    <p><strong>Posted by: <%= text_profile(reflection.owner) %></strong> on <%= reflection.created_at.to_date.to_s(:long) %></p>
     <p><%= raw reflection.details %></p>
     <div><img src="http://placehold.it/375x240" /></div>
     <p>
