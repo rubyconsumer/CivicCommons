@@ -1,5 +1,8 @@
 ## 2.0
 
+### External Changes
+  * [Remove FB Send from Conversation](https://agilezen.com/project/18091/story/479)
+
 #### Bug Fixes
   * [Unable to add link to a blog](https://agilezen.com/project/18091/story/478)
 
