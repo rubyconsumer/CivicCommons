@@ -16,7 +16,7 @@ function init_tiny_mce(JqueryListOfElements){
 
     // Theme options
     theme_advanced_buttons1 : "newdocument,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,formatselect,fontsizeselect,|,code,preview,fullscreen,|,help",
-    theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,undo,redo,|,bullist,numlist,|,outdent,indent,blockquote,sub,sup,|link,unlink,image,media,advhr,|,cleanup",
+    theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,undo,redo,|,bullist,numlist,|,outdent,indent,blockquote,sub,sup,|,link,unlink,image,media,advhr,|,cleanup",
     theme_advanced_buttons3 : "",
     theme_advanced_toolbar_location : "top",
     theme_advanced_toolbar_align : "left",
