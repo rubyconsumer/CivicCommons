@@ -49,7 +49,7 @@ GEM
     arel (2.0.10)
     autotest (4.4.6)
       ZenTest (>= 4.4.1)
-    autotest-fsevent (0.2.7)
+    autotest-fsevent (0.2.8)
       sys-uname
     autotest-growl (0.2.16)
     autotest-rails (4.1.1)
