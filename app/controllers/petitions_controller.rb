@@ -16,11 +16,11 @@ class PetitionsController < ApplicationController
       format.pdf
     end
   end
-  
+
   def edit
     @petition = @conversation.petitions.find(params[:id])
   end
-  
+
   def update
     @petition = @conversation.petitions.find(params[:id])
     if @petition.update_attributes(params[:petition])
@@ -29,11 +29,11 @@ class PetitionsController < ApplicationController
       render :action => :edit
     end
   end
-  
+
   def destroy
     @petition = @conversation.petitions.find(params[:id])
     @petition.destroy
-    
+
     flash[:notice] = 'The petition have been successfully deleted'
     redirect_to conversation_actions_path(@conversation)
   end
@@ -42,6 +42,7 @@ class PetitionsController < ApplicationController
     @petition = @conversation.petitions.build(params[:petition])
     @petition.person_id = current_person.id
     if @petition.save
+      @petition.sign(current_person)
       redirect_to conversation_petition_path(@conversation, @petition)
     else
       render :action => :new

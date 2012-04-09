@@ -4,6 +4,7 @@
   * [Display Action Person Selected When Creating a Reflection on Reflection Perma Link Page](https://agilezen.com/project/18091/story/475)
   * [Reflection Permalink Displays Users Participated Petitions](https://agilezen.com/project/18091/story/480)
   * [Display participated action selector when user is making a new reflection](https://agilezen.com/project/18091/story/485)
+  * [Autosign Petition](https://agilezen.com/project/18091/story/487)
   * [Create and view Petition](https://agilezen.com/project/18091/story/419)
   * [Ability to sign a petition](https://agilezen.com/project/18091/story/420)
   * [Ability to view Signatures of Petition](https://agilezen.com/project/18091/story/422)
