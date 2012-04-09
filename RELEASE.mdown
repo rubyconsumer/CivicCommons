@@ -17,6 +17,8 @@
   * [Moderating ability on Petition](https://agilezen.com/project/18091/story/460)
   * [Moderating ability on Reflection comments](https://agilezen.com/project/18091/story/473)
   * [Changed reflection text from "initial proposal" to "posted by"](https://agilezen.com/project/18091/story/483)
+  * [When using the Opportunity Navigation Bar, jump down to the Opportunity Navigation Bar, so if the Conversation Summary is long it does not dominate the page. ](https://agilezen.com/project/18091/story/476)
+  
 
 ## 1.9.X
 
