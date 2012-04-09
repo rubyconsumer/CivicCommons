@@ -8,7 +8,7 @@ module Admin
     end
 
     before(:each) do
-      sign_in Factory.create(:admin_person)
+      sign_in FactoryGirl.create(:admin_person)
     end
 
     describe "GET index" do
@@ -16,7 +16,7 @@ module Admin
       before(:each) do
         @content_items = {}
         (1..5).each do 
-          content_item = Factory.create(:content_item)
+          content_item = FactoryGirl.create(:content_item)
           @content_items[content_item.id] = content_item
         end
       end
@@ -31,7 +31,7 @@ module Admin
     describe "GET show" do
 
       let(:content_item) do
-        Factory.create(:content_item)
+        FactoryGirl.create(:content_item)
       end
 
       it "assigns the requested content_item as @content_item" do
@@ -53,7 +53,7 @@ module Admin
     describe "GET edit" do
 
       let(:content_item) do
-        Factory.create(:content_item)
+        FactoryGirl.create(:content_item)
       end
 
       it "assigns the requested content_item as @content_item" do
@@ -65,8 +65,8 @@ module Admin
 
     describe "POST create" do
       let(:params) do
-        topic = Factory.create(:topic)
-        attributes = Factory.attributes_for(:content_item)
+        topic = FactoryGirl.create(:topic)
+        attributes = FactoryGirl.attributes_for(:content_item)
         attributes.delete(:topics)
         attributes[:topic_ids]=[topic.id]
         attributes
@@ -75,7 +75,7 @@ module Admin
       describe "with valid params" do
 
         let(:author) do
-          Factory.create(:admin_person)
+          FactoryGirl.create(:admin_person)
         end
 
 
@@ -99,7 +99,7 @@ module Admin
       describe "with invalid params" do
 
         let(:author) do
-          Factory.create(:admin_person)
+          FactoryGirl.create(:admin_person)
         end
 
         before(:each) do
@@ -121,7 +121,7 @@ module Admin
       describe "with valid Embedly integration" do
 
         let(:author) do
-          Factory.create(:admin_person)
+          FactoryGirl.create(:admin_person)
         end
 
         before(:each) do
@@ -162,7 +162,7 @@ module Admin
     describe "PUT update" do
 
       let(:content_item) do
-        Factory.create(:content_item)
+        FactoryGirl.create(:content_item)
       end
 
       let(:new_title) do
@@ -223,7 +223,7 @@ module Admin
     describe "DELETE destroy" do
 
       let(:content_item) do
-        Factory.create(:content_item)
+        FactoryGirl.create(:content_item)
       end
 
       before(:each) do

@@ -3,7 +3,7 @@ require 'acceptance/support/facebookable'
 
 describe Person do
   context 'normal_person' do
-    subject { Factory.build(:normal_person) }
+    subject { FactoryGirl.build(:normal_person) }
 
     it { should be_valid }
     it { should have_attached_file :avatar }
@@ -13,20 +13,13 @@ describe Person do
   end
 
   context 'admin' do
-    subject { Factory.build(:admin) }
+    subject { FactoryGirl.build(:admin) }
     it { should be_valid }
   end
 end
 
 describe Person do
   include Facebookable
-  
-  def given_petition
-    @petition = Factory.create(:petition)
-    @conversation = @petition.conversation
-    @petition_signer = @petition.signers.first
-  end
-  
   context "Associations" do
     it "should has_many Authentications" do
       Person.reflect_on_association(:authentications).macro == :has_many
@@ -40,18 +33,12 @@ describe Person do
     it "should be have uniqueness constraint on habtm organiazation" do
       Person.reflect_on_association(:organizations).options[:uniq].should be_true
     end
-    it "should have many petition_signatures" do
-      should have_many(:petition_signatures).dependent(:destroy)
-    end
-    it "should have many signed_petitions" do
-      should have_many(:signed_petitions).through(:petition_signatures)
-    end
   end
 
   describe "validate required data" do
 
     before(:each) do
-      @person = Factory.build(:normal_person)
+      @person = FactoryGirl.build(:normal_person)
     end
 
     it "should require first name and last name" do
@@ -67,7 +54,7 @@ describe Person do
 
     context "zip code" do
       def given_a_person_with_no_zip_code
-        @person = Factory.build(:normal_person,:zip_code =>'')
+        @person = FactoryGirl.build(:normal_person,:zip_code =>'')
       end
 
       def given_a_registered_person_without_a_zip_code
@@ -156,7 +143,7 @@ describe Person do
   describe "when finding all by name" do
 
     def given_a_person_with_name(name)
-      person = Factory.create(:normal_person)
+      person = FactoryGirl.create(:normal_person)
       person.name = name
       person.password = "password"
       person.email = "wendy@example.com"
@@ -182,7 +169,7 @@ describe Person do
 
   describe "when setting the name" do
     it "should split the entry into first name and last name" do
-      person = Factory.create(:normal_person)
+      person = FactoryGirl.create(:normal_person)
       person.name = "John Doe"
       person.first_name.should == "John"
       person.last_name.should == "Doe"
@@ -191,13 +178,13 @@ describe Person do
 
   context "when setting the email address" do
     it "should not allow emails that are too short" do
-      person = Factory.build(:normal_person, :email => "a@b.c")
+      person = FactoryGirl.build(:normal_person, :email => "a@b.c")
       person.valid?.should be_false
       person.should have_validation_error(:email, /please use a longer email address/)
     end
 
     it "should not allow emails that are too long" do
-      person = Factory.build(:normal_person, :email => "1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890@1234567890b.c")
+      person = FactoryGirl.build(:normal_person, :email => "1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890@1234567890b.c")
       person.valid?.should be_false
       person.should have_validation_error(:email, /please use a shorter email address/)
     end
@@ -205,21 +192,21 @@ describe Person do
 
   describe "when displaying a name" do
     it "should respect case of name entered by person" do
-      person = Factory.build(:normal_person)
+      person = FactoryGirl.build(:normal_person)
       person.first_name = "ektor"
       person.last_name = "van capsula"
       person.name.should == "ektor van capsula"
     end
 
     it "should display names without leading spaces when the first name is missing" do
-      person = Factory.build(:normal_person)
+      person = FactoryGirl.build(:normal_person)
       person.first_name = ""
       person.last_name = "van capsula"
       person.name.should == "van capsula"
     end
 
     it "should display names without trailing spaces when the last name is missing" do
-      person = Factory.build(:normal_person)
+      person = FactoryGirl.build(:normal_person)
       person.first_name = "ektor"
       person.last_name = ""
       person.name.should == "ektor"
@@ -231,7 +218,7 @@ describe Person do
       ActionMailer::Base.deliveries = []
     end
     def given_a_new_user_registered
-      @person = Factory.create(:normal_person)
+      @person = FactoryGirl.create(:normal_person)
       @person.first_name = 'John'
       @person.last_name = 'Doe'
       @person.save
@@ -248,7 +235,7 @@ describe Person do
     end
     context "from facebook" do
       it "does not send a confirmation email" do
-          @person = Factory.build(:registered_user_with_facebook_authentication)
+          @person = FactoryGirl.build(:registered_user_with_facebook_authentication)
           ActionMailer::Base.deliveries.any? do | mail |
             mail.subject.include? "Confirmation"
           end.should == false
@@ -272,7 +259,7 @@ describe Person do
   describe "after confirmation of email" do
     it "should send a welcome email" do
       ActionMailer::Base.deliveries = []
-      person = Factory.create(:normal_person)
+      person = FactoryGirl.create(:normal_person)
 
       mailing = ActionMailer::Base.deliveries.last
       mailing.subject.should_not == "Welcome to The Civic Commons"
@@ -295,8 +282,8 @@ describe Person do
   context "Facebook authentication" do
     describe "when having a facebook authentication associated" do
       def given_a_person_with_facebook_auth
-        @person = Factory.build(:normal_person)
-        @authentication = Factory.build(:authentication, :provider => 'facebook')
+        @person = FactoryGirl.build(:normal_person)
+        @authentication = FactoryGirl.build(:authentication, :provider => 'facebook')
         @person.link_with_facebook(@authentication)
       end
       it "should show that it does have the correct authentication" do
@@ -309,34 +296,34 @@ describe Person do
         @person.facebook_authenticated?.should be_true
       end
       it "should wiped out the current person's password, so they can't login using local account anymore" do
-        @person = Factory.create(:normal_person, :password => 'password')
+        @person = FactoryGirl.create(:normal_person, :password => 'password')
         @person.valid_password?('password').should be_true
-        @authentication = Factory.build(:authentication, :provider => 'facebook')
+        @authentication = FactoryGirl.build(:authentication, :provider => 'facebook')
         @person.link_with_facebook(@authentication)
         @person.valid_password?('password').should be_false
       end
     end
     describe "link_with_facebook" do
       it "should return true if correctly saved" do
-        @person = Factory.build(:normal_person)
-        @authentication = Factory.build(:authentication, :provider => 'facebook')
+        @person = FactoryGirl.build(:normal_person)
+        @authentication = FactoryGirl.build(:authentication, :provider => 'facebook')
         @person.link_with_facebook(@authentication).should be_true
       end
       it "should return false if incorrectly saved" do
-        @person = Factory.build(:normal_person)
+        @person = FactoryGirl.build(:normal_person)
         @authentication = Authentication.new
         @person.link_with_facebook(@authentication).should be_false
       end
     end
     describe "when an account is not facebook authenticated" do
       it "should return false if we check for it" do
-        @person = Factory.build(:normal_person)
+        @person = FactoryGirl.build(:normal_person)
         @person.facebook_authenticated?.should be_false
       end
     end
     describe "conflicting_email?" do
       def given_a_normal_person
-        @person = Factory.build(:normal_person, :email => 'johnd@test.com')
+        @person = FactoryGirl.build(:normal_person, :email => 'johnd@test.com')
       end
       it "should return false if other email is blank?" do
         given_a_normal_person
@@ -354,8 +341,8 @@ describe Person do
     end
     describe "facebook_profile_pic_url" do
       def given_a_normal_person_with_facebook_auth
-        @person = Factory.build(:normal_person, :email => 'johnd@test.com')
-        @authentication = Factory.build(:facebook_authentication, :uid => 12345)
+        @person = FactoryGirl.build(:normal_person, :email => 'johnd@test.com')
+        @authentication = FactoryGirl.build(:facebook_authentication, :uid => 12345)
         @person.link_with_facebook(@authentication)
       end
 
@@ -368,7 +355,7 @@ describe Person do
         @person.facebook_profile_pic_url(:large).should == 'https://graph.facebook.com/12345/picture?type=large'
       end
       it "should return nil if user has not been authenticated with fb" do
-         @person = Factory.build(:normal_person, :email => 'johnd@test.com')
+         @person = FactoryGirl.build(:normal_person, :email => 'johnd@test.com')
          @person.facebook_profile_pic_url.should be_nil
       end
     end
@@ -389,11 +376,11 @@ describe Person do
         ActionMailer::Base.deliveries = []
       end
       def given_a_person_with_facebook_auth
-        @person = Factory.build(:registered_user_with_facebook_authentication, :email => 'johnd@example.com')
+        @person = FactoryGirl.build(:registered_user_with_facebook_authentication, :email => 'johnd@example.com')
 
       end
       def given_a_regular_person
-        @person = Factory.create(:registered_user, :email => 'johnd@example.com')
+        @person = FactoryGirl.create(:registered_user, :email => 'johnd@example.com')
       end
       it "should not send email when account is facebook authenticated" do
         given_a_person_with_facebook_auth
@@ -412,8 +399,8 @@ describe Person do
 
   context "Facebook unlinking" do
     def given_a_person_with_facebook_auth
-      @person = Factory.build(:normal_person, :email => 'johnd@example.com')
-      @authentication = Factory.build(:authentication, :provider => 'facebook')
+      @person = FactoryGirl.build(:normal_person, :email => 'johnd@example.com')
+      @authentication = FactoryGirl.build(:authentication, :provider => 'facebook')
       @person.link_with_facebook(@authentication)
 
       # makes sure that password is nil first
@@ -499,8 +486,8 @@ describe Person do
 
   context "password_required?" do
     def given_a_person_with_facebook_auth
-      @person = Factory.build(:normal_person)
-      @authentication = Factory.build(:authentication, :provider => 'facebook')
+      @person = FactoryGirl.build(:normal_person)
+      @authentication = FactoryGirl.build(:authentication, :provider => 'facebook')
       @person.link_with_facebook(@authentication)
     end
 
@@ -516,12 +503,12 @@ describe Person do
     end
 
     it "should return true if not persisted and not create from auth" do
-      @person = Factory.build(:normal_person)
+      @person = FactoryGirl.build(:normal_person)
       @person.send(:password_required?).should be_true
     end
 
     it "should return true if user is changing password by having password and password confirmation field present" do
-      Factory.create(:registered_user)
+      FactoryGirl.create(:registered_user)
       @person = Person.last
       @person.send(:password_required?).should be_false
       @person.password = 'test123'
@@ -532,9 +519,9 @@ describe Person do
 
   context "find_confirmed_order_by_last_name" do
     before(:each) do
-      @person1 = Factory.create(:registered_user, :name => 'John Abc')
-      @person2 = Factory.create(:registered_user, :name => 'John Bcd')
-      @person3 = Factory.create(:registered_user, :name => 'John Def')
+      @person1 = FactoryGirl.create(:registered_user, :name => 'John Abc')
+      @person2 = FactoryGirl.create(:registered_user, :name => 'John Bcd')
+      @person3 = FactoryGirl.create(:registered_user, :name => 'John Def')
     end
     it "should return ordered by last name" do
       Person.find_confirmed_order_by_last_name.should == [@person1, @person2, @person3]
@@ -552,9 +539,9 @@ describe Person do
 
   context "find_confirmed_order_by_recency" do
     before(:each) do
-      @person1 = Factory.create(:registered_user, :confirmed_at => 3.second.ago)
-      @person2 = Factory.create(:registered_user, :confirmed_at => 2.second.ago)
-      @person3 = Factory.create(:registered_user, :confirmed_at => 1.second.ago)
+      @person1 = FactoryGirl.create(:registered_user, :confirmed_at => 3.second.ago)
+      @person2 = FactoryGirl.create(:registered_user, :confirmed_at => 2.second.ago)
+      @person3 = FactoryGirl.create(:registered_user, :confirmed_at => 1.second.ago)
     end
     it "should return the correct people by recency" do
       Person.find_confirmed_order_by_recency.should == [@person3, @person2, @person1]
@@ -569,11 +556,11 @@ describe Person do
   context "when finding by the most active" do
 
     before(:each) do
-      @person1 = Factory.create(:sequence_user, name: "Lazy Sue")
-      @person2 = Factory.create(:sequence_user, name: "Hyper Fred")
-      @person3 = Factory.create(:sequence_user, name: "Super Doug")
-      @convo = Factory.create(:conversation)
-      Factory.create(:contribution_activity, item_id: @convo.id, person: @person2);
+      @person1 = FactoryGirl.create(:sequence_user, name: "Lazy Sue")
+      @person2 = FactoryGirl.create(:sequence_user, name: "Hyper Fred")
+      @person3 = FactoryGirl.create(:sequence_user, name: "Super Doug")
+      @convo = FactoryGirl.create(:conversation)
+      FactoryGirl.create(:contribution_activity, item_id: @convo.id, person: @person2);
     end
 
     it "will return the most active to least active users and also with an array of person ids" do
@@ -601,12 +588,12 @@ describe Person do
     end
 
     before(:each) do
-      @person = Factory.create(:normal_person)
+      @person = FactoryGirl.create(:normal_person)
     end
 
     it "will delete all subscriptions" do
-      Factory.create(:conversation, person: @person)
-      Factory.create(:issue_subscription, person: @person)
+      FactoryGirl.create(:conversation, person: @person)
+      FactoryGirl.create(:issue_subscription, person: @person)
 
       @person.reload.subscriptions.length.should == 2
       @person.destroy
@@ -614,7 +601,7 @@ describe Person do
     end
 
     it "will delete any authentications" do
-      Factory.create(:facebook_authentication, person: @person)
+      FactoryGirl.create(:facebook_authentication, person: @person)
 
       Authentication.find(:all).length.should == 1
       @person.destroy
@@ -624,14 +611,14 @@ describe Person do
   end
 
   it 'allows you to unsubscribe from daily digest' do
-    @person = Factory.create(:normal_person)
+    @person = FactoryGirl.create(:normal_person)
     @person.unsubscribe_from_daily_digest
     @person.should_not be_subscribed_to_daily_digest
   end
 
   describe 'weekly_newsletter' do
-    let(:subscribed_person){ Factory.create(:person_subscribed_to_weekly_newsletter) }
-    let(:unsubscribed_person){ Factory.create(:normal_person, weekly_newsletter: false) }
+    let(:subscribed_person){ FactoryGirl.create(:person_subscribed_to_weekly_newsletter) }
+    let(:unsubscribed_person){ FactoryGirl.create(:normal_person, weekly_newsletter: false) }
 
     it 'allows subscribing to weekly newsletter' do
       unsubscribed_person.weekly_newsletter = true
@@ -665,7 +652,7 @@ describe Person do
       last_name = 'Last'
       merge_tags = { :FNAME => first_name, :LNAME => last_name }
 
-      user = Factory.create(:normal_person,
+      user = FactoryGirl.create(:normal_person,
         email: email,
         weekly_newsletter: false,
         first_name: first_name,
@@ -684,7 +671,7 @@ describe Person do
       Delayed::Worker.delay_jobs = false
       Delayed::Job.should_receive(:enqueue).twice
       email = 'test@example.com'
-      user = Factory.create(:normal_person, email: email, weekly_newsletter: true)
+      user = FactoryGirl.create(:normal_person, email: email, weekly_newsletter: true)
       Jobs::UnsubscribeFromEmailListJob.should_receive(:new).with(
         Civiccommons::Config.mailer['api_token'],
         Civiccommons::Config.mailer['weekly_newsletter_list_id'],
@@ -702,7 +689,7 @@ describe Person do
       last_name = 'Organization Name'
       merge_tags = { :FNAME => first_name, :LNAME => last_name }
 
-      user = Factory.create(:organization,
+      user = FactoryGirl.create(:organization,
         email: email,
         weekly_newsletter: false,
         name: last_name)
@@ -770,19 +757,19 @@ describe Person do
 
   context "display_name" do
     it 'should display the last name first and the first name last' do
-      user = Factory.build(:normal_person, :first_name => "Tom", :last_name => "Kat")
+      user = FactoryGirl.build(:normal_person, :first_name => "Tom", :last_name => "Kat")
 
       user.display_name.should == "Kat, Tom"
     end
 
     it "should display the full name if the first name is missing" do
-      user = Factory.build(:normal_person, :first_name => nil, :last_name => "Kat")
+      user = FactoryGirl.build(:normal_person, :first_name => nil, :last_name => "Kat")
 
       user.display_name.should == "Kat"
     end
 
     it "should display the full name if the last name is missing" do
-      user = Factory.build(:normal_person, :first_name => "Tom", :last_name => nil)
+      user = FactoryGirl.build(:normal_person, :first_name => "Tom", :last_name => nil)
 
       user.display_name.should == "Tom"
     end
@@ -792,25 +779,6 @@ describe Person do
     it "should only include confirmed and non-locked instances" do
       Person.sunspot_options[:if].should == :confirmed?
       Person.sunspot_options[:unless].should == :locked?
-    end
-  end
-  
-  context "participated_actions" do
-    it "should correctly include signed petitions" do
-      given_petition
-      @petition.creator.participated_actions.include?(Action.last)
-    end
-  end
-  
-  context "participated_actions_for_conversation" do
-    it "should correctly include signed petitions for a conversation" do
-      given_petition
-      @petition_signer.participated_actions_for_conversation(@conversation).include?(Action.last).should be_true
-    end
-    it "should not include signed petition that's not associated to a conversation" do
-      given_petition
-      other_conversation = Factory.create(:conversation)
-      @petition_signer.participated_actions_for_conversation(other_conversation).include?(Action.last).should be_false
     end
   end
 

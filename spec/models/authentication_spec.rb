@@ -4,10 +4,10 @@ require 'acceptance/support/facebookable'
 describe Authentication do
   context "factories" do
     it 'should be valid' do
-      Factory.build(:authentication).should be_valid
-      Factory.create(:authentication).should be_valid
-      Factory.build(:facebook_authentication).should be_valid
-      Factory.create(:facebook_authentication).should be_valid
+      FactoryGirl.build(:authentication).should be_valid
+      FactoryGirl.create(:authentication).should be_valid
+      FactoryGirl.build(:facebook_authentication).should be_valid
+      FactoryGirl.create(:facebook_authentication).should be_valid
     end
   end
 
@@ -25,8 +25,8 @@ describe Authentication do
       blank_authentication.errors[:provider].first.should == "can't be blank"
     end
     it "can only have one unique provider and uid at any given time" do
-      auth1 = Factory.create(:authentication, :uid => '123',:provider => 'facebook')
-      auth2 = Factory.build(:authentication, :uid => '123',:provider => 'facebook')
+      auth1 = FactoryGirl.create(:authentication, :uid => '123',:provider => 'facebook')
+      auth2 = FactoryGirl.build(:authentication, :uid => '123',:provider => 'facebook')
       auth2.valid?.should be_false
       auth2.errors[:uid].first.should == "has already been taken"
     end

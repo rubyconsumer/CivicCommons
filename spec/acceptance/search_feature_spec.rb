@@ -5,8 +5,8 @@ feature "Search the web site", %q{
   I want to search
   So that I can find an issue, conversation or person I am interested in
 } do
-  let(:henry_ford)           {Factory.create(:normal_person, :first_name => "Henry", :last_name => "Ford")}
-  let(:russell_anderson)      {Factory.create(:normal_person, :first_name => "Russell", :last_name => "Anderson")}
+  let(:henry_ford)           {FactoryGirl.create(:normal_person, :first_name => "Henry", :last_name => "Ford")}
+  let(:russell_anderson)      {FactoryGirl.create(:normal_person, :first_name => "Russell", :last_name => "Anderson")}
   let(:community_page)      {CommunityPage.new(page)}
   let(:conversation_page)   {ConversationPage.new(page)}
   let(:conversations_page)  {ConversationsPage.new(page)}
@@ -28,7 +28,7 @@ feature "Search the web site", %q{
 
   scenario "Search Filter for a conversation page" do
     # Given a conversation
-    conversation = Factory.create(:conversation)
+    conversation = FactoryGirl.create(:conversation)
     # And I am on the conversation page
     conversation_page.visit_page(conversation)
     # When I enter a search query
@@ -65,7 +65,7 @@ feature "Search the web site", %q{
   end
 
   scenario "Search Filter for an issue page" do
-    issue = Factory.create(:issue)
+    issue = FactoryGirl.create(:issue)
     goto :issue_detail, :for=> issue
     search_for 'search term here'
     current_page.should be :search_results

@@ -2,10 +2,10 @@ require 'spec_helper'
 
 [Conversation, Issue, Organization].each do |model_type|
   describe model_type.to_s do
-    let(:item) {Factory.create(model_type.to_s.downcase)}
+    let(:item) {FactoryGirl.create(model_type.to_s.downcase)}
 
     before(:each) do
-      @person = Factory.create(:normal_person)
+      @person = FactoryGirl.create(:normal_person)
     end
 
     context "is subscribed to a by the current user" do
@@ -32,7 +32,7 @@ require 'spec_helper'
         item.subscribers.include?(@person).should be_true
       end
       it "returns an unordered array of people following a #{model_type.to_s}" do
-        person2 = Factory.create(:normal_person)
+        person2 = FactoryGirl.create(:normal_person)
         item.subscribe(@person)
         item.subscribe(person2)
         item.subscribers.include?(@person).should be_true

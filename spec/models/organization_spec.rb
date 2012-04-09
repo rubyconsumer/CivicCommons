@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe Organization do
 
-  subject { Factory.create(:organization, name: 'The Civic Commons') }
+  subject { FactoryGirl.create(:organization, name: 'The Civic Commons') }
 
-  let(:user) {Factory.create(:normal_person)}
+  let(:user) {FactoryGirl.create(:normal_person)}
   let(:allowed_image_types) {["image/gif", "image/jpeg", "image/png", "image/bmp"]}
 
   it { should be_valid }
@@ -14,13 +14,13 @@ describe Organization do
 
   context "validation" do
     it "should validate on name" do
-      org = Factory.build(:organization, :name=>'')
+      org = FactoryGirl.build(:organization, :name=>'')
       org.valid?
       org.errors[:name].should == ["can't be blank"]
     end
 
     it "should not validate first_name and last_name" do
-      org = Factory.build(:organization, :first_name=>'', :last_name => '')
+      org = FactoryGirl.build(:organization, :first_name=>'', :last_name => '')
       org.valid?
       org.errors[:first_name].should be_blank
       org.errors[:last_name].should be_blank
@@ -52,8 +52,8 @@ describe Organization do
   
   context "organization members" do
     before(:each) do
-      @organization = Factory.create(:organization)
-      @person = Factory.create(:person)
+      @organization = FactoryGirl.create(:organization)
+      @person = FactoryGirl.create(:person)
     end
     
     context "has_member?" do

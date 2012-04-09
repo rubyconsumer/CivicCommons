@@ -3,7 +3,7 @@ include ControllerMacros
 
 describe "reflections/show.html.erb" do
   before(:each) do
-    @reflection = Factory.create(:reflection_with_comments, title: 'Custom Title', details: 'Custom Details')
+    @reflection = FactoryGirl.create(:reflection_with_comments, title: 'Custom Title', details: 'Custom Details')
   end
 
   it "renders attributes in <p>" do

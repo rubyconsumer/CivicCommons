@@ -89,7 +89,7 @@ describe ApplicationControllerRequireUser do
   end
 
   it "should not redirect when a user is present" do
-    sign_in Factory.create(:registered_user)
+    sign_in FactoryGirl.create(:registered_user)
     get :index
     response.should_not be_redirect
   end
@@ -117,7 +117,7 @@ describe ApplicationControllerVerifyAdmin do
   end
 
   it "should redirect when a non-admin user is present" do
-    user =  Factory.create(:registered_user)
+    user =  FactoryGirl.create(:registered_user)
     sign_in user
     get :index
     response.should be_redirect
@@ -126,7 +126,7 @@ describe ApplicationControllerVerifyAdmin do
   end
 
   it "should not redirect when an admin user is present" do
-    user = Factory.create(:admin_person)
+    user = FactoryGirl.create(:admin_person)
     sign_in user
     get :index
     response.should_not be_redirect

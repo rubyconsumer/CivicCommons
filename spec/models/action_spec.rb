@@ -13,7 +13,7 @@ describe Action do
   end
   describe "delegation" do
     it "should delegate participants to actionable" do
-      @petition = Factory.create(:petition)
+      @petition = FactoryGirl.create(:petition)
       @action = @petition.action
       @action.participants.should == @petition.participants
     end

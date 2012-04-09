@@ -4,10 +4,10 @@ describe RatingGroup do
 
   describe "toggle rating methods" do
     before(:each) do
-      @current_person = Factory.create(:normal_person)
-      @contribution = Factory.create(:contribution)
-      @descriptor = Factory.create(:rating_descriptor)
-      @descriptor2 = Factory.create(:rating_descriptor, :title => "Motivating")
+      @current_person = FactoryGirl.create(:normal_person)
+      @contribution = FactoryGirl.create(:contribution)
+      @descriptor = FactoryGirl.create(:rating_descriptor)
+      @descriptor2 = FactoryGirl.create(:rating_descriptor, :title => "Motivating")
     end
 
     def add_rating(descriptor = @descriptor)
@@ -41,7 +41,7 @@ describe RatingGroup do
       end
 
       it "does not allow a user to rate their own contribution" do
-        user_contribution = Factory.create(:contribution, :person => @current_person)
+        user_contribution = FactoryGirl.create(:contribution, :person => @current_person)
         rg = RatingGroup.add_rating!(@current_person, user_contribution, @descriptor)
         rg.should have_validation_error(:person, /cannot rate own/)
       end
@@ -106,19 +106,19 @@ describe RatingGroup do
   end
   describe "rating finders" do
     before(:each) do
-      @current_person = Factory.create(:normal_person)
-      @conversation = Factory.create(:conversation)
-      @contribution = Factory.create(:comment, :conversation => @conversation)
-      @descriptor = Factory.create(:rating_descriptor)
-      @descriptor2 = Factory.create(:rating_descriptor, :title => "Motivating")
-      @descriptor3 = Factory.create(:rating_descriptor, :title => "Tasty")
-      @descriptor4 = Factory.create(:rating_descriptor, :title => "Sad")
-      @rg = Factory.create(:rating_group, :contribution => @contribution, :person => @current_person)
-      @rg2 = Factory.create(:rating_group, :contribution => @contribution)
-      @rating1a = Factory.create(:rating, :rating_group => @rg, :rating_descriptor => @descriptor)
-      @rating1b = Factory.create(:rating, :rating_group => @rg, :rating_descriptor => @descriptor2)
-      @rating2a = Factory.create(:rating, :rating_group => @rg2, :rating_descriptor => @descriptor)
-      @rating2c = Factory.create(:rating, :rating_group => @rg2, :rating_descriptor => @descriptor3)
+      @current_person = FactoryGirl.create(:normal_person)
+      @conversation = FactoryGirl.create(:conversation)
+      @contribution = FactoryGirl.create(:comment, :conversation => @conversation)
+      @descriptor = FactoryGirl.create(:rating_descriptor)
+      @descriptor2 = FactoryGirl.create(:rating_descriptor, :title => "Motivating")
+      @descriptor3 = FactoryGirl.create(:rating_descriptor, :title => "Tasty")
+      @descriptor4 = FactoryGirl.create(:rating_descriptor, :title => "Sad")
+      @rg = FactoryGirl.create(:rating_group, :contribution => @contribution, :person => @current_person)
+      @rg2 = FactoryGirl.create(:rating_group, :contribution => @contribution)
+      @rating1a = FactoryGirl.create(:rating, :rating_group => @rg, :rating_descriptor => @descriptor)
+      @rating1b = FactoryGirl.create(:rating, :rating_group => @rg, :rating_descriptor => @descriptor2)
+      @rating2a = FactoryGirl.create(:rating, :rating_group => @rg2, :rating_descriptor => @descriptor)
+      @rating2c = FactoryGirl.create(:rating, :rating_group => @rg2, :rating_descriptor => @descriptor3)
       RatingGroup.refresh_cached_rating_descriptors
     end
 
@@ -195,7 +195,7 @@ describe RatingGroup do
     end
 
     it "returns skeleton of expected hash for contribution with not rating_groups" do
-      contribution = Factory.build(:contribution, :id => 42)
+      contribution = FactoryGirl.build(:contribution, :id => 42)
       ratings = RatingGroup.ratings_for_conversation_by_contribution_with_count(@conversation, @current_person)
 
       expected_result = {

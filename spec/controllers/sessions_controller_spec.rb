@@ -24,7 +24,7 @@ describe SessionsController do
     context "redirection after signing in" do
       
       before(:each) do
-        @person = Factory.create(:registered_user)
+        @person = FactoryGirl.create(:registered_user)
         warden.stub(:authenticate!).and_return(@person)
       end
       
@@ -72,7 +72,7 @@ describe SessionsController do
   end
   context "POST ajax_create" do
     before(:each) do
-      @person = Factory.create(:registered_user)
+      @person = FactoryGirl.create(:registered_user)
       warden.stub(:authenticate!).and_return(@person)
     end
     describe "when close_modal_on_exit is true" do

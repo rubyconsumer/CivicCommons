@@ -15,8 +15,8 @@ feature "View Managed Issue Page", %q{
       # When I visit the issue page
       # Then I should be on the page
       # And I should see the page content
-      issue = Factory.create(:managed_issue)
-      index_page = Factory.create(:managed_issue_page, issue: issue)
+      issue = FactoryGirl.create(:managed_issue)
+      index_page = FactoryGirl.create(:managed_issue_page, issue: issue)
       issue.index = index_page
       issue.save
       visit issue_path(issue)
@@ -30,7 +30,7 @@ feature "View Managed Issue Page", %q{
       # When I visit the issue page
       # Then I should be on the page
       # And I should the standard issue page
-      issue = Factory.create(:managed_issue)
+      issue = FactoryGirl.create(:managed_issue)
       visit issue_path(issue)
       should_be_on issue_path(issue)
       page.should have_content issue.name
@@ -46,8 +46,8 @@ feature "View Managed Issue Page", %q{
       # When I visit the page page
       # Then I should be on the page
       # And I should see the page content
-      issue = Factory.create(:managed_issue)
-      issue_page = Factory.create(:managed_issue_page, issue: issue)
+      issue = FactoryGirl.create(:managed_issue)
+      issue_page = FactoryGirl.create(:managed_issue_page, issue: issue)
       visit issue_page_path(issue, issue_page)
       should_be_on issue_page_path(issue, issue_page)
       page.should have_content issue_page.template
@@ -59,7 +59,7 @@ feature "View Managed Issue Page", %q{
       # When I visit a page page
       # Then I should be on the issue page
       # And I should see the standard issue page
-      issue = Factory.create(:managed_issue)
+      issue = FactoryGirl.create(:managed_issue)
       visit issue_page_path(issue, 'does-not-exist')
       should_be_on issue_path(issue)
       page.should have_content issue.name

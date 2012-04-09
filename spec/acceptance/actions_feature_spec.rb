@@ -7,11 +7,11 @@ feature " Actions", %q{
 } do
     
   def given_a_conversation
-    @conversation = Factory.create(:conversation)
+    @conversation = FactoryGirl.create(:conversation)
   end
   
   def given_a_petition(options={})
-    @petition = Factory.create(:petition, options)
+    @petition = FactoryGirl.create(:petition, options)
     @conversation = @petition.conversation
   end
 

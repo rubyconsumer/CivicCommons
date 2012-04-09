@@ -32,7 +32,7 @@ describe Survey do
 
     context "accepts_nested_attributes_for :options" do
       it "should correctly create nested models" do
-        @survey = Factory.build(:survey)
+        @survey = FactoryGirl.build(:survey)
         @survey.options_attributes = [{:title => 'option title here', :description => 'option description here', :nested => true}]
         @survey.save
         @survey.should be_valid
@@ -77,61 +77,61 @@ describe Survey do
   
   context "End Date" do
     it "should display the survey progress if show_progress is set to true AND end_date is less than today's date" do
-      @survey = Factory.create(:survey, :end_date => 2.days.ago.to_date, :show_progress => true)
+      @survey = FactoryGirl.create(:survey, :end_date => 2.days.ago.to_date, :show_progress => true)
       @survey.end_date.should be_present
       @survey.show_progress_now?.should == true
     end
     it "should NOT display survey progress if show_progress is set to true AND end_date is later than Today's date" do
-      @survey = Factory.create(:survey, :end_date => 2.days.from_now.to_date, :show_progress => true)
+      @survey = FactoryGirl.create(:survey, :end_date => 2.days.from_now.to_date, :show_progress => true)
       @survey.show_progress_now?.should == false
     end
     it "should NOT display survey progress if show_progress is set to false" do
-      @survey = Factory.create(:survey, :end_date => 2.days.from_now.to_date, :show_progress => false)
+      @survey = FactoryGirl.create(:survey, :end_date => 2.days.from_now.to_date, :show_progress => false)
       @survey.show_progress_now?.should == false
     end
   end
   
   context "active?" do
     it "should be active when there is no start_date" do
-      @survey = Factory.create(:survey, :show_progress => true)
+      @survey = FactoryGirl.create(:survey, :show_progress => true)
       @survey.should be_active
     end
     it "should not be active when the start_date is in the future" do
-      @survey = Factory.create(:survey, :show_progress => true, :start_date => 1.days.from_now.to_date)
+      @survey = FactoryGirl.create(:survey, :show_progress => true, :start_date => 1.days.from_now.to_date)
       @survey.should_not be_active
     end
     it "should be active when the start_date is in the past" do
-      @survey = Factory.create(:survey, :show_progress => true, :start_date => 1.days.ago.to_date)
+      @survey = FactoryGirl.create(:survey, :show_progress => true, :start_date => 1.days.ago.to_date)
       @survey.should be_active
     end
     it "should be active when the start_date is today" do
-      @survey = Factory.create(:survey, :show_progress => true, :start_date => Date.today)
+      @survey = FactoryGirl.create(:survey, :show_progress => true, :start_date => Date.today)
       @survey.should be_active
     end
   end
   
   context "expired?" do
     it "should not be expired when the end_date is in the future" do
-      @survey = Factory.create(:survey, :show_progress => true, :end_date => 1.days.from_now.to_date)
+      @survey = FactoryGirl.create(:survey, :show_progress => true, :end_date => 1.days.from_now.to_date)
       @survey.should_not be_expired
     end
     it "should be expired when the end_date is in the past" do
-      @survey = Factory.create(:survey, :show_progress => true, :end_date => 1.days.ago.to_date)
+      @survey = FactoryGirl.create(:survey, :show_progress => true, :end_date => 1.days.ago.to_date)
       @survey.should be_expired
     end
     it "should be expired when the start_date is today" do
-      @survey = Factory.create(:survey, :show_progress => true, :end_date => Date.today)
+      @survey = FactoryGirl.create(:survey, :show_progress => true, :end_date => Date.today)
       @survey.should be_expired
     end
   end
   describe "#days_until_end_date" do
     it "counts number of days to end date" do
       end_date = Date.today + 1.day
-      @survey = Factory.create(:survey, :end_date => end_date, :show_progress => false)
+      @survey = FactoryGirl.create(:survey, :end_date => end_date, :show_progress => false)
       @survey.days_until_end_date.should == 1
     end
     it "is nil when end_date is today" do
-      @survey = Factory.create(:survey, :end_date => Date.today, :show_progress => false)
+      @survey = FactoryGirl.create(:survey, :end_date => Date.today, :show_progress => false)
       @survey.days_until_end_date.should be_nil
     end
   end
@@ -139,24 +139,24 @@ describe Survey do
   describe "sending emails to survey respondents that the survey has ended" do
     context "sending to background job" do
       it "should send to background job on save" do
-        @survey = Factory.create(:survey, :end_date => Date.today, :show_progress => false)
+        @survey = FactoryGirl.create(:survey, :end_date => Date.today, :show_progress => false)
         Delayed::Job.count.should == 1
       end
       it "should send to the background job on update when end_date is changed" do
-        @survey = Factory.create(:survey, :end_date => Date.today, :show_progress => false)
+        @survey = FactoryGirl.create(:survey, :end_date => Date.today, :show_progress => false)
         @survey.end_date = 1.days.from_now.to_date
         @survey.save
         Delayed::Job.count.should == 2
       end
       it "should have the delayed job run at the end_date" do
         the_date = Date.today
-        @survey = Factory.create(:survey, :end_date => the_date, :show_progress => false)
+        @survey = FactoryGirl.create(:survey, :end_date => the_date, :show_progress => false)
         Delayed::Job.last.run_at.to_date.should == the_date
       end
     end
     context "when running background job" do
       def given_a_survey_with_a_response
-        @vote_survey_response = Factory.create(:vote_survey_response)
+        @vote_survey_response = FactoryGirl.create(:vote_survey_response)
         @survey = @vote_survey_response.survey
         @person = @vote_survey_response.person
       end

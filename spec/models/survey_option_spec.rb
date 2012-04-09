@@ -37,8 +37,8 @@ describe SurveyOption do
     end
     
     it "should validate uniqueness of survey" do
-      @survey_option1 = Factory.create(:survey_option, :position => 1, :survey_id => 1)
-      @survey_option2 = Factory.build(:survey_option, :position => 1, :survey_id => 1)
+      @survey_option1 = FactoryGirl.create(:survey_option, :position => 1, :survey_id => 1)
+      @survey_option2 = FactoryGirl.build(:survey_option, :position => 1, :survey_id => 1)
       @survey_option2.valid?
       @survey_option2.errors[:position].should == ["has already been taken"]
     end
@@ -46,8 +46,8 @@ describe SurveyOption do
   
   context "named scope" do
     def given_a_few_surveys 
-      @survey_option2 = Factory.create(:survey_option, :position => 2)
-      @survey_option1 = Factory.create(:survey_option, :position => 1)
+      @survey_option2 = FactoryGirl.create(:survey_option, :position => 2)
+      @survey_option1 = FactoryGirl.create(:survey_option, :position => 1)
     end
 
     it "should " do

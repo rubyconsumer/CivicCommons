@@ -3,15 +3,15 @@ require 'spec_helper'
 describe VoteProgressService do
   
   def given_a_vote
-    @person1 = Factory.create(:registered_user)
-    @person2 = Factory.create(:registered_user)
-    @survey = Factory.create(:vote, :max_selected_options => 3)
-    @survey_option1 = Factory.create(:survey_option,:survey_id => @survey.id, :position => 1)
-    @survey_option2 = Factory.create(:survey_option,:survey_id => @survey.id, :position => 2)
-    @survey_option3 = Factory.create(:survey_option,:survey_id => @survey.id, :position => 3)
-    @survey_option4 = Factory.create(:survey_option,:survey_id => @survey.id, :position => 4)
-    @survey_option5 = Factory.create(:survey_option,:survey_id => @survey.id, :position => 5)
-    @survey_option6 = Factory.create(:survey_option,:survey_id => @survey.id, :position => 6)
+    @person1 = FactoryGirl.create(:registered_user)
+    @person2 = FactoryGirl.create(:registered_user)
+    @survey = FactoryGirl.create(:vote, :max_selected_options => 3)
+    @survey_option1 = FactoryGirl.create(:survey_option,:survey_id => @survey.id, :position => 1)
+    @survey_option2 = FactoryGirl.create(:survey_option,:survey_id => @survey.id, :position => 2)
+    @survey_option3 = FactoryGirl.create(:survey_option,:survey_id => @survey.id, :position => 3)
+    @survey_option4 = FactoryGirl.create(:survey_option,:survey_id => @survey.id, :position => 4)
+    @survey_option5 = FactoryGirl.create(:survey_option,:survey_id => @survey.id, :position => 5)
+    @survey_option6 = FactoryGirl.create(:survey_option,:survey_id => @survey.id, :position => 6)
   end
   
   def given_valid_vote_responses

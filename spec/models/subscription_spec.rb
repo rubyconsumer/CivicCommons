@@ -1,10 +1,10 @@
 require 'spec_helper'
 
 describe Subscription do
-  let(:user)         {Factory.create(:normal_person)}
-  let(:conversation) {Factory.create(:conversation, title: 'How to improve Cleveland')}
-  let(:issue)        {Factory.create(:issue, name: 'Issue Title')}
-  let(:organization) {Factory.create(:organization, name: 'The Civic Commons')}
+  let(:user)         {FactoryGirl.create(:normal_person)}
+  let(:conversation) {FactoryGirl.create(:conversation, title: 'How to improve Cleveland')}
+  let(:issue)        {FactoryGirl.create(:issue, name: 'Issue Title')}
+  let(:organization) {FactoryGirl.create(:organization, name: 'The Civic Commons')}
 
   context "for a conversation" do
     it 'will be created by calling subscribe' do
@@ -13,7 +13,7 @@ describe Subscription do
     end
 
     it "has a person and conversation" do
-      subscription = Factory.build(:conversation_subscription)
+      subscription = FactoryGirl.build(:conversation_subscription)
       subscription.person_name.should == "Marc Canter"
       subscription.subscribable_type.should == "Conversation"
       subscription.title.should == 'The Civic Commons'
@@ -28,7 +28,7 @@ describe Subscription do
     end
 
     it "has a person and issue" do
-      subscription = Factory.build(:issue_subscription)
+      subscription = FactoryGirl.build(:issue_subscription)
       subscription.person_name.should == "Marc Canter"
       subscription.subscribable.summary.should == 'The Civic Commons'
     end
@@ -42,7 +42,7 @@ describe Subscription do
     end
 
     it "has a person and issue" do
-      subscription = Factory.build(:organization_subscription)
+      subscription = FactoryGirl.build(:organization_subscription)
       subscription.person_name.should == "Marc Canter"
       subscription.title.should == 'The Civic Commons'
     end

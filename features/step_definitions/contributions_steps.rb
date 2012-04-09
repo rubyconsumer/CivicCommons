@@ -3,7 +3,7 @@ require 'cucumber/rspec/doubles'
 Given /^I have contributed a comment:$/ do |content|
 
   # TODO: Replace Date.parse with Chronic.parse
-  Factory.create(:comment,
+  FactoryGirl.create(:comment,
                  content: content,
                  person: @current_person,
                  conversation: @conversation,
@@ -12,7 +12,7 @@ end
 
 Given /^I have contributed a video:$/ do |contribution|
 
-  @contribution = Factory.build(:embedded_snippet,
+  @contribution = FactoryGirl.build(:embedded_snippet,
                                 person: @current_person,
                                 conversation: @conversation,
                                 created_at: Date.parse("2010/10/10"),
@@ -30,7 +30,7 @@ Given /^I have contributed a video:$/ do |contribution|
 end
 
 Given /^I have contributed a suggestion:$/ do |content|
-  Factory.create(:suggested_action,
+  FactoryGirl.create(:suggested_action,
                  content: content,
                  person: @current_person,
                  conversation: @conversation,
@@ -38,7 +38,7 @@ Given /^I have contributed a suggestion:$/ do |content|
 end
 
 Given /^I have contributed a question:$/ do |question|
-  Factory.create(:question,
+  FactoryGirl.create(:question,
                  content: question,
                  person: @current_person,
                  conversation: @conversation,
@@ -47,7 +47,7 @@ end
 
 
 Given /^I have contributed a attached_file:$/ do |attached_file_comment|
-  Factory.create(:attached_file,
+  FactoryGirl.create(:attached_file,
                  content: attached_file_comment,
                  person: @current_person,
                  conversation: @conversation,
@@ -56,7 +56,7 @@ Given /^I have contributed a attached_file:$/ do |attached_file_comment|
 end
 
 Given /^I have contributed a image:$/ do |image_comment|
-  Factory.create(:attached_file,
+  FactoryGirl.create(:attached_file,
                  content: image_comment,
                  person: @current_person,
                  conversation: @conversation,
@@ -64,7 +64,7 @@ Given /^I have contributed a image:$/ do |image_comment|
 end
 
 Given /^I have contributed a link:$/ do |link_comment|
-  Factory.create(:link,
+  FactoryGirl.create(:link,
                  content: link_comment,
                  person: @current_person,
                  conversation: @conversation,

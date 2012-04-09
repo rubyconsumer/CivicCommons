@@ -3,7 +3,7 @@ require 'spec_helper'
 describe CuratedFeedItem do
 
   let(:params) do
-    Factory.attributes_for(:curated_feed_item, curated_feed_id: 1)
+    FactoryGirl.attributes_for(:curated_feed_item, curated_feed_id: 1)
   end
 
   context "validation" do

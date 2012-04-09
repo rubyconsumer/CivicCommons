@@ -30,13 +30,13 @@ feature "Admin User Registration Tool", %q{
   end
 
   scenario "an admin wants to be able to confirm users that have signed up but have not received or completed the confirmation letter process" do
-    Factory.create(:normal_person)
+    FactoryGirl.create(:normal_person)
     visit admin_people_path
     page.should have_link('Confirm')
   end
 
   scenario "an admin wants to be able to confirm users that have signed up but have not received or completed the confirmation letter process" do
-    jose = Factory.create(:normal_person, name: 'Jose Doe')
+    jose = FactoryGirl.create(:normal_person, name: 'Jose Doe')
     visit admin_people_path
     click_link('Confirm')
     visit admin_people_path

@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe VoteResponsePresenter do
   def given_a_person_and_a_survey_and_presenter
-    @person = Factory.create(:registered_user)
-    @survey = Factory.create(:vote)
-    @survey_option1 = Factory.create(:survey_option,:survey_id => @survey.id, :position => 1)
+    @person = FactoryGirl.create(:registered_user)
+    @survey = FactoryGirl.create(:vote)
+    @survey_option1 = FactoryGirl.create(:survey_option,:survey_id => @survey.id, :position => 1)
     @presenter = VoteResponsePresenter.new(:person_id => @person.id,:survey_id => @survey.id)
   end
   it "should allow for selected_option_1_id" do
@@ -40,9 +40,9 @@ describe VoteResponsePresenter do
   
   context "saving" do
     def given_a_vote_presenter
-      @person = Factory.create(:registered_user)
-      @survey = Factory.create(:vote)
-      @survey_option1 = Factory.create(:survey_option,:survey_id => @survey.id, :position => 1)
+      @person = FactoryGirl.create(:registered_user)
+      @survey = FactoryGirl.create(:vote)
+      @survey_option1 = FactoryGirl.create(:survey_option,:survey_id => @survey.id, :position => 1)
       @presenter = VoteResponsePresenter.new(:person_id => @person.id,
         :survey_id => @survey.id, 
         :selected_option_1_id => 11, 
@@ -50,9 +50,9 @@ describe VoteResponsePresenter do
     end
     
     def given_a_presenter_with_an_expired_vote
-      @person = Factory.create(:registered_user)
-      @survey = Factory.create(:vote, :end_date => 2.days.ago)
-      @survey_option1 = Factory.create(:survey_option,:survey_id => @survey.id, :position => 1)
+      @person = FactoryGirl.create(:registered_user)
+      @survey = FactoryGirl.create(:vote, :end_date => 2.days.ago)
+      @survey_option1 = FactoryGirl.create(:survey_option,:survey_id => @survey.id, :position => 1)
       @presenter = VoteResponsePresenter.new(:person_id => @person.id,
         :survey_id => @survey.id, 
         :selected_option_1_id => 11, 
@@ -60,9 +60,9 @@ describe VoteResponsePresenter do
     end
     
     def given_a_bare_vote_presenter
-      @person = Factory.create(:registered_user)
-      @survey = Factory.create(:vote)
-      @survey_option1 = Factory.create(:survey_option,:survey_id => @survey.id, :position => 1)
+      @person = FactoryGirl.create(:registered_user)
+      @survey = FactoryGirl.create(:vote)
+      @survey_option1 = FactoryGirl.create(:survey_option,:survey_id => @survey.id, :position => 1)
       @presenter = VoteResponsePresenter.new(:person_id => @person.id,
         :survey_id => @survey.id)
     end

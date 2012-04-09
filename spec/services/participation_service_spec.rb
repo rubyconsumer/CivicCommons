@@ -3,10 +3,10 @@ require 'spec_helper'
 describe ParticipationService do
   describe 'participants_by_issue' do
     before(:each) do
-      @issue = Factory.create(:issue)
-      @convo1 = Factory.create(:conversation, :issues => [@issue])
-      @convo2 = Factory.create(:user_generated_conversation, :issues => [@issue])
-      @contrib = Factory.create(:contribution, :conversation => @convo2)
+      @issue = FactoryGirl.create(:issue)
+      @convo1 = FactoryGirl.create(:conversation, :issues => [@issue])
+      @convo2 = FactoryGirl.create(:user_generated_conversation, :issues => [@issue])
+      @contrib = FactoryGirl.create(:contribution, :conversation => @convo2)
     end
 
     it "ignores issues with conversations without participants" do

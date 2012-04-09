@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe Reflection do
   describe "factories" do
-    it { Factory.build(:reflection).should be_valid }
-    it { Factory.create(:reflection).should be_valid }
+    it { FactoryGirl.build(:reflection).should be_valid }
+    it { FactoryGirl.create(:reflection).should be_valid }
   end
 
   describe "associations" do

@@ -17,8 +17,8 @@ require File.dirname(__FILE__) + '/../spec_helper'
   end
   describe model_type, "When working with visits" do
     before(:each) do
-      @person = Factory.create(:normal_person)
-      @item = Factory.create(model_type.to_s.downcase, {:total_visits=>0, :recent_visits=>0, :last_visit_date=>nil})
+      @person = FactoryGirl.create(:normal_person)
+      @item = FactoryGirl.create(model_type.to_s.downcase, {:total_visits=>0, :recent_visits=>0, :last_visit_date=>nil})
     end
     context "and visiting a #{model_type.to_s}" do
        it "adds a visit to the #{model_type.to_s}" do      
@@ -75,9 +75,9 @@ require File.dirname(__FILE__) + '/../spec_helper'
     end
     context "and identifying the top visited items" do  
       it "should order by recent_visits" do
-        @item_10 = Factory.create(model_type.to_s.downcase, {:total_visits=>10, :recent_visits=>10, :last_visit_date=>Time.now})
-        @item_5 = Factory.create(model_type.to_s.downcase, {:total_visits=>5, :recent_visits=>5, :last_visit_date=>Time.now})      
-        @item_1 = Factory.create(model_type.to_s.downcase, {:total_visits=>1, :recent_visits=>1, :last_visit_date=>Time.now})            
+        @item_10 = FactoryGirl.create(model_type.to_s.downcase, {:total_visits=>10, :recent_visits=>10, :last_visit_date=>Time.now})
+        @item_5 = FactoryGirl.create(model_type.to_s.downcase, {:total_visits=>5, :recent_visits=>5, :last_visit_date=>Time.now})      
+        @item_1 = FactoryGirl.create(model_type.to_s.downcase, {:total_visits=>1, :recent_visits=>1, :last_visit_date=>Time.now})            
 
         result = model_type.get_top_visited
     
@@ -86,7 +86,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
         result[2].should == @item_1
       end
       it "should not include records if last visit is older than 30 days" do
-        @item_old = Factory.create(model_type.to_s.downcase, {:total_visits=>10, :recent_visits=>10, :last_visit_date=>(Time.now - 60.days)})
+        @item_old = FactoryGirl.create(model_type.to_s.downcase, {:total_visits=>10, :recent_visits=>10, :last_visit_date=>(Time.now - 60.days)})
 
         result = model_type.get_top_visited
 

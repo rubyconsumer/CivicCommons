@@ -4,9 +4,9 @@ describe SpamService do
   context "spam?" do
     describe "if there are restrictions" do
       before(:each) do
-        @restriction1 = Factory.create(:email_restriction,:domain => 'yeah.net')
-        @restriction2 = Factory.create(:email_restriction,:domain => '163.com')
-        @restriction3 = Factory.create(:email_restriction,:domain => '21cn.com')
+        @restriction1 = FactoryGirl.create(:email_restriction,:domain => 'yeah.net')
+        @restriction2 = FactoryGirl.create(:email_restriction,:domain => '163.com')
+        @restriction3 = FactoryGirl.create(:email_restriction,:domain => '21cn.com')
       end
       it "should reject spam emails" do
         SpamService.spam?('spammer@yeah.net').should == true

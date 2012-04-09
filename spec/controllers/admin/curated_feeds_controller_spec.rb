@@ -4,7 +4,7 @@ module Admin
   describe CuratedFeedsController do
 
     before(:each) do
-      sign_in Factory.create(:admin_person)
+      sign_in FactoryGirl.create(:admin_person)
     end
 
     describe "GET index" do
@@ -12,7 +12,7 @@ module Admin
       before(:each) do
         @feeds = {}
         (1..2).each do 
-          feed = Factory.create(:curated_feed)
+          feed = FactoryGirl.create(:curated_feed)
           @feeds[feed.id] = feed
         end
       end
@@ -27,7 +27,7 @@ module Admin
     describe "GET show" do
 
       let(:feed) do
-        Factory.create(:curated_feed)
+        FactoryGirl.create(:curated_feed)
       end
 
       it "assigns the requested feed as @feed" do
@@ -49,7 +49,7 @@ module Admin
     describe "GET edit" do
 
       let(:feed) do
-        Factory.create(:curated_feed)
+        FactoryGirl.create(:curated_feed)
       end
 
       it "assigns the requested feed as @feed" do
@@ -64,7 +64,7 @@ module Admin
       describe "with valid params" do
 
         let(:params) do
-          Factory.attributes_for(:curated_feed)
+          FactoryGirl.attributes_for(:curated_feed)
         end
 
         before(:each) do
@@ -85,7 +85,7 @@ module Admin
       describe "with invalid params" do
 
         let(:params) do
-          Factory.attributes_for(:curated_feed)
+          FactoryGirl.attributes_for(:curated_feed)
         end
 
         before(:each) do
@@ -107,7 +107,7 @@ module Admin
       describe "PUT update" do
 
         let(:feed) do
-          Factory.create(:curated_feed)
+          FactoryGirl.create(:curated_feed)
         end
 
         let(:new_title) do
@@ -166,7 +166,7 @@ module Admin
       describe "DELETE destroy" do
 
         let(:feed) do
-          Factory.create(:curated_feed)
+          FactoryGirl.create(:curated_feed)
         end
 
         before(:each) do

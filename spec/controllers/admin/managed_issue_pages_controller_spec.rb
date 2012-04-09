@@ -4,11 +4,11 @@ module Admin
   describe ManagedIssuePagesController do
 
     before(:each) do
-      sign_in Factory.create(:admin_person)
+      sign_in FactoryGirl.create(:admin_person)
     end
 
     let(:issue) do
-      Factory.create(:managed_issue)
+      FactoryGirl.create(:managed_issue)
     end
 
     describe "GET all" do
@@ -16,7 +16,7 @@ module Admin
       before(:each) do
         @managed_issue_pages = {}
         (1..5).each do 
-          page = Factory.create(:managed_issue_page, issue: issue)
+          page = FactoryGirl.create(:managed_issue_page, issue: issue)
           @managed_issue_pages[page.id] = page
         end
       end
@@ -32,7 +32,7 @@ module Admin
       before(:each) do
         @managed_issue_pages = {}
         (1..5).each do 
-          page = Factory.create(:managed_issue_page, issue: issue)
+          page = FactoryGirl.create(:managed_issue_page, issue: issue)
           @managed_issue_pages[page.id] = page
         end
       end
@@ -47,7 +47,7 @@ module Admin
     describe "GET show" do
 
       let(:page) do
-        Factory.create(:managed_issue_page)
+        FactoryGirl.create(:managed_issue_page)
       end
 
       it "assigns the requested managed_issue_page as @managed_issue_page" do
@@ -69,7 +69,7 @@ module Admin
     describe "GET edit" do
 
       let(:page) do
-        Factory.create(:managed_issue_page)
+        FactoryGirl.create(:managed_issue_page)
       end
 
       it "assigns the requested managed_issue_page as @managed_issue_page" do
@@ -84,7 +84,7 @@ module Admin
       describe "with valid params" do
 
         let(:params) do
-          Factory.attributes_for(:managed_issue_page)
+          FactoryGirl.attributes_for(:managed_issue_page)
         end
 
         before(:each) do
@@ -105,7 +105,7 @@ module Admin
       describe "with invalid params" do
 
         let(:params) do
-          Factory.attributes_for(:managed_issue_page)
+          FactoryGirl.attributes_for(:managed_issue_page)
         end
 
         before(:each) do
@@ -128,7 +128,7 @@ module Admin
     describe "PUT update" do
 
       let(:page) do
-        Factory.create(:managed_issue_page)
+        FactoryGirl.create(:managed_issue_page)
       end
 
       let(:new_name) do
@@ -186,7 +186,7 @@ module Admin
     describe "DELETE destroy" do
 
       let(:page) do
-        Factory.create(:managed_issue_page)
+        FactoryGirl.create(:managed_issue_page)
       end
 
       before(:each) do

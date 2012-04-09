@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Admin::ArticlesController do
 
   before(:each) do 
-    @admin_person = Factory.create(:admin_person)
+    @admin_person = FactoryGirl.create(:admin_person)
     @controller.stub(:current_person).and_return(@admin_person)
   end
 

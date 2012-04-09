@@ -23,7 +23,7 @@ end
 
 describe "custom_image?" do
   it "will return false if image is set, it has a :default_url and it is not set to it" do
-    instance = Factory.build(:conversation) # class has a :default_url
+    instance = FactoryGirl.build(:conversation) # class has a :default_url
     instance.custom_image?.should be_false
 
     instance.image = nil
@@ -32,7 +32,7 @@ describe "custom_image?" do
     instance.image = File.new(Rails.root + 'test/fixtures/images/test_image.jpg')
     instance.custom_image?.should be_true
 
-    instance = Factory.build(:issue) # class does not have a :default_url
+    instance = FactoryGirl.build(:issue) # class does not have a :default_url
     instance.custom_image?.should be_true
 
     # this appears incorret, but paperclip adds a default url of 'images/:style/missing.png'
@@ -44,23 +44,23 @@ end
 
 describe "default_image" do
   it "will return paperclip's :default_url if set, or nil" do
-    instance = Factory.build(:conversation)
+    instance = FactoryGirl.build(:conversation)
     instance.default_image.should == '/images/convo_img_original.gif'
 
-    instance = Factory.build(:issue)
+    instance = FactoryGirl.build(:issue)
     instance.default_image.should == nil
   end
 end
 
 describe "default_image?" do
   it "will return true if image has a :default_url and is set to it" do
-    instance = Factory.build(:conversation)
+    instance = FactoryGirl.build(:conversation)
     instance.default_image?.should be_true
 
     instance.image = File.new(Rails.root + 'test/fixtures/images/test_image.jpg')
     instance.default_image?.should be_false
 
-    instance = Factory.build(:issue)
+    instance = FactoryGirl.build(:issue)
     instance.default_image?.should be_false
   end
 end

@@ -5,8 +5,6 @@ describe Conversation do
   context "Associations" do
     it { should have_many :contributions  }
     it { should have_attached_file :image }
-    it { should have_many(:petitions).dependent(:destroy) }
-    it { should have_many(:actions).dependent(:destroy)}
     context "has_one survey" do
       it "should be correct" do
         Conversation.reflect_on_association(:survey).macro.should == :has_one
@@ -17,9 +15,9 @@ describe Conversation do
     end
     context "has_and_belongs_to_many content_items" do
       def given_a_radio_show_with_conversations
-        @radioshow = Factory.create(:radio_show)
-        @conversation1 = Factory.create(:conversation)
-        @conversation2 = Factory.create(:conversation)
+        @radioshow = FactoryGirl.create(:radio_show)
+        @conversation1 = FactoryGirl.create(:conversation)
+        @conversation2 = FactoryGirl.create(:conversation)
         @radioshow.conversations = [@conversation1, @conversation2]
       end
       it "should be correct" do
@@ -34,7 +32,7 @@ describe Conversation do
   end
   describe "a valid conversation" do
     before :each do
-      @conversation = Factory.build(:conversation)
+      @conversation = FactoryGirl.build(:conversation)
     end
     it "is invalid with no title" do
       @conversation.title = nil
@@ -60,11 +58,11 @@ describe Conversation do
 
   describe "when retrieving all of the issues associated with a conversation" do
     before(:each) do
-      @normal_person = Factory.create(:normal_person)
+      @normal_person = FactoryGirl.create(:normal_person)
     end
     it "should return issue" do
-      conversation = Factory.create(:conversation)
-      issue = Factory.create(:issue, :conversations=>[conversation])
+      conversation = FactoryGirl.create(:conversation)
+      issue = FactoryGirl.create(:issue, :conversations=>[conversation])
 
       conversation.issues.reload.count.should == 2
       conversation.issues.should include issue
@@ -73,20 +71,20 @@ describe Conversation do
 
   describe "when creating a post for the conversation" do
     before(:each) do
-      @comment = Factory.create(:comment)
-      @person = Factory.create(:normal_person)
-      @conversation = Factory.create(:conversation)
+      @comment = FactoryGirl.create(:comment)
+      @person = FactoryGirl.create(:normal_person)
+      @conversation = FactoryGirl.create(:conversation)
     end
 
   end
   context "about an issue" do
 
     it "should sort by the latest updated conversations" do
-      issue = Factory.create(:issue, :name => 'A first issue')
-      conversation1 = Factory.create(:conversation, {:issues => [issue], :updated_at => (Time.now - 3.seconds)})
-      conversation2 = Factory.create(:conversation, {:issues => [issue], :updated_at => (Time.now - 2.seconds)})
-      conversation3 = Factory.create(:conversation, {:issues => [issue], :updated_at => (Time.now - 1.second)})
-      conversation4 = Factory.create(:conversation)
+      issue = FactoryGirl.create(:issue, :name => 'A first issue')
+      conversation1 = FactoryGirl.create(:conversation, {:issues => [issue], :updated_at => (Time.now - 3.seconds)})
+      conversation2 = FactoryGirl.create(:conversation, {:issues => [issue], :updated_at => (Time.now - 2.seconds)})
+      conversation3 = FactoryGirl.create(:conversation, {:issues => [issue], :updated_at => (Time.now - 1.second)})
+      conversation4 = FactoryGirl.create(:conversation)
       conversation2.touch
       issue.conversations.latest_updated.should == [conversation2,conversation3,conversation1]
     end
@@ -94,11 +92,11 @@ describe Conversation do
 
   describe "when creating several Conversations at once" do
     before(:each) do
-      @conversation1 = Factory.create(:conversation)
-      @conversation2 = Factory.create(:conversation)
+      @conversation1 = FactoryGirl.create(:conversation)
+      @conversation2 = FactoryGirl.create(:conversation)
       [@conversation1, @conversation2].each do |conv|
         3.times do
-          Factory.create(:top_level_contribution, :conversation => conv)
+          FactoryGirl.create(:top_level_contribution, :conversation => conv)
         end
       end
     end
@@ -123,21 +121,20 @@ describe Conversation do
 
   describe "when destroying a conversation" do
     before(:each) do
-      @conversation = Factory.create(:conversation)
-      @contribution = Factory.create(:contribution, :conversation => @conversation, :parent => nil)
-      @top_level_contribution = Factory.create(:top_level_contribution, :conversation => @conversation)
-      @nested_contribution = Factory.create(:contribution, :parent => @top_level_contribution, :conversation => @conversation)
+      @conversation = FactoryGirl.create(:conversation)
+      @contribution = FactoryGirl.create(:contribution, :conversation => @conversation, :parent => nil)
+      @top_level_contribution = FactoryGirl.create(:top_level_contribution, :conversation => @conversation)
     end
 
     it "destroys all nested contributions" do
       conversation_id = @conversation.id
-      Contribution.find_all_by_conversation_id(conversation_id).count.should == 3
-      @conversation.destroy
+      Contribution.find_all_by_conversation_id(conversation_id).count.should == 2
+      @conversation.reload.destroy
       Contribution.find_all_by_conversation_id(conversation_id).count.should == 0
     end
 
     it "destroys all subscriptions" do
-      subscription = Factory.create(:conversation_subscription, :subscribable => @conversation)
+      subscription = FactoryGirl.create(:conversation_subscription, :subscribable => @conversation)
       @conversation.destroy
       lambda{ Subscription.find(subscription.id) }.should raise_error ActiveRecord::RecordNotFound
     end
@@ -153,45 +150,45 @@ describe Conversation do
 
     describe 'most_active filter' do
       it 'will not return conversations if they have no contributions' do
-        Factory.create(:conversation, :contributions => [])
+        FactoryGirl.create(:conversation, :contributions => [])
         Conversation.filtered('active').all.should be_empty
         Conversation.most_active.all.should be_empty
       end
 
       it 'will not return conversations if they are only of type TopLevelContribution' do
-        conversation = Factory.create(:conversation)
-        Factory.create(:top_level_contribution, :conversation => conversation)
+        conversation = FactoryGirl.create(:conversation)
+        FactoryGirl.create(:top_level_contribution, :conversation => conversation)
         Conversation.filtered('active').all.should be_empty
         Conversation.most_active.all.should be_empty
       end
 
       it 'will return conversations with any contributions that are within 60 days' do
-        conversation = Factory.create(:conversation, :contributions => [])
-        top_level_contribution = Factory.create(:top_level_contribution, :conversation => conversation)
-        Factory.create(:contribution, :parent => top_level_contribution, :conversation => conversation,
+        conversation = FactoryGirl.create(:conversation, :contributions => [])
+        top_level_contribution = FactoryGirl.create(:top_level_contribution, :conversation => conversation)
+        FactoryGirl.create(:contribution, :parent => top_level_contribution, :conversation => conversation,
           :created_at => (Time.now - 59.days), :updated_at => (Time.now - 30.seconds))
         Conversation.filtered('active').all.first.should == conversation
         Conversation.most_active.all.first.should == conversation
       end
 
       it 'will not return conversations with contributions that are all older than 60 days' do
-        conversation = Factory.create(:conversation, :contributions => [])
-        top_level_contribution = Factory.create(:top_level_contribution, :conversation => conversation)
-        Factory.create(:contribution, :parent => top_level_contribution, :conversation => conversation,
+        conversation = FactoryGirl.create(:conversation, :contributions => [])
+        top_level_contribution = FactoryGirl.create(:top_level_contribution, :conversation => conversation)
+        FactoryGirl.create(:contribution, :parent => top_level_contribution, :conversation => conversation,
           :created_at => (Time.now - 61.days), :updated_at => (Time.now - 30.seconds))
         Conversation.filtered('active').all.should be_empty
         Conversation.most_active.all.should be_empty
       end
 
       it 'will return the conversation ordered by newest contribution descending if number of contributions is the same' do
-        old_conversation = Factory.create(:conversation, :contributions => [])
-        top_level_contribution = Factory.create(:top_level_contribution, :conversation => old_conversation)
-        Factory.create(:contribution, :parent => top_level_contribution, :conversation => old_conversation,
+        old_conversation = FactoryGirl.create(:conversation, :contributions => [])
+        top_level_contribution = FactoryGirl.create(:top_level_contribution, :conversation => old_conversation)
+        FactoryGirl.create(:contribution, :parent => top_level_contribution, :conversation => old_conversation,
           :created_at => (Time.now - 59.days), :updated_at => (Time.now - 30.seconds))
 
-        new_conversation = Factory.create(:conversation, :contributions => [])
-        top_level_contribution = Factory.create(:top_level_contribution, :conversation => new_conversation)
-        Factory.create(:contribution, :parent => top_level_contribution, :conversation => new_conversation,
+        new_conversation = FactoryGirl.create(:conversation, :contributions => [])
+        top_level_contribution = FactoryGirl.create(:top_level_contribution, :conversation => new_conversation)
+        FactoryGirl.create(:contribution, :parent => top_level_contribution, :conversation => new_conversation,
           :created_at => (Time.now - 1.days), :updated_at => (Time.now - 30.seconds))
 
         Conversation.filtered('active').all.first.should == new_conversation
@@ -204,19 +201,19 @@ describe Conversation do
 
   describe "when creating a user-generated conversation" do
     before(:each) do
-      @person = Factory.create(:normal_person)
+      @person = FactoryGirl.create(:normal_person)
 
       @contributions = {
-        "0" => Factory.build(:comment, :owner => @person.id, :conversation => nil, :parent => nil).attributes,
-        "1" => Factory.build(:question, :owner => @person.id, :conversation => nil, :parent => nil).attributes,
-        "2" => Factory.build(:attached_file, :owner => @person.id, :conversation => nil, :parent => nil).attributes,
-        "3" => Factory.build(:link, :owner => @person.id, :conversation => nil, :parent => nil).attributes,
-        "4" => Factory.build(:embedded_snippet, :owner => @person.id, :conversation => nil, :parent => nil).attributes,
-        "5" => Factory.build(:suggested_action, :owner => @person.id, :conversation => nil, :parent => nil).attributes,
-        "6" => Factory.build(:embedly_contribution, :owner => @person.id, :conversation => nil, :parent => nil).attributes,
+        "0" => FactoryGirl.build(:comment, :owner => @person.id, :conversation => nil, :parent => nil).attributes,
+        "1" => FactoryGirl.build(:question, :owner => @person.id, :conversation => nil, :parent => nil).attributes,
+        "2" => FactoryGirl.build(:attached_file, :owner => @person.id, :conversation => nil, :parent => nil).attributes,
+        "3" => FactoryGirl.build(:link, :owner => @person.id, :conversation => nil, :parent => nil).attributes,
+        "4" => FactoryGirl.build(:embedded_snippet, :owner => @person.id, :conversation => nil, :parent => nil).attributes,
+        "5" => FactoryGirl.build(:suggested_action, :owner => @person.id, :conversation => nil, :parent => nil).attributes,
+        "6" => FactoryGirl.build(:embedly_contribution, :owner => @person.id, :conversation => nil, :parent => nil).attributes,
       }
 
-      @conversation = Factory.build(:user_generated_conversation, :person => @person)
+      @conversation = FactoryGirl.build(:user_generated_conversation, :person => @person)
     end
 
     it "default user_generated_conversation factory should be valid" do
@@ -235,8 +232,8 @@ describe Conversation do
     end
 
     it "raises an error if conversation created with multiple contributions" do
-      @contributions[1] = Factory.build(:question, :conversation => nil, :parent => nil).attributes
-      @conversation = Factory.build(:user_generated_conversation,
+      @contributions[1] = FactoryGirl.build(:question, :conversation => nil, :parent => nil).attributes
+      @conversation = FactoryGirl.build(:user_generated_conversation,
                                     :person => @person,
                                     :contributions => [],
                                     :contributions_attributes => Marshal::load(Marshal.dump(@contributions)))
@@ -278,9 +275,9 @@ describe Conversation do
     end
 
     it "will return from order when the positions shouldn't change" do
-      @conversations << Factory.create(:conversation, { position: 0, staff_pick: true, title: 'Conversation 1' })
-      @conversations << Factory.create(:conversation, { position: 1, staff_pick: true, title: 'Conversation 2' })
-      @conversations << Factory.create(:conversation, { position: 2, staff_pick: false, title: 'Conversation 3' })
+      @conversations << FactoryGirl.create(:conversation, { position: 0, staff_pick: true, title: 'Conversation 1' })
+      @conversations << FactoryGirl.create(:conversation, { position: 1, staff_pick: true, title: 'Conversation 2' })
+      @conversations << FactoryGirl.create(:conversation, { position: 2, staff_pick: false, title: 'Conversation 3' })
 
       Conversation.sort
       Conversation.find_by_id(@conversations[0].id).position.should == 0
@@ -289,9 +286,9 @@ describe Conversation do
     end
 
     it "will order the positions when they are out of order" do
-      @conversations << Factory.create(:conversation, { position: 7, staff_pick: true, title: 'Conversation 1' })
-      @conversations << Factory.create(:conversation, { position: 10, staff_pick: true, title: 'Conversation 2' })
-      @conversations << Factory.create(:conversation, { position: 1, staff_pick: false, title: 'Conversation 3' })
+      @conversations << FactoryGirl.create(:conversation, { position: 7, staff_pick: true, title: 'Conversation 1' })
+      @conversations << FactoryGirl.create(:conversation, { position: 10, staff_pick: true, title: 'Conversation 2' })
+      @conversations << FactoryGirl.create(:conversation, { position: 1, staff_pick: false, title: 'Conversation 3' })
 
       Conversation.sort
       Conversation.find_by_id(@conversations[0].id).position.should == 0
@@ -300,9 +297,9 @@ describe Conversation do
     end
 
     it "will order the positions when numbers are repeated" do
-      @conversations << Factory.create(:conversation, { position: 10, staff_pick: true, title: 'Conversation 1' })
-      @conversations << Factory.create(:conversation, { position: 10, staff_pick: true, title: 'Conversation 2' })
-      @conversations << Factory.create(:conversation, { position: 10, staff_pick: false, title: 'Conversation 3' })
+      @conversations << FactoryGirl.create(:conversation, { position: 10, staff_pick: true, title: 'Conversation 1' })
+      @conversations << FactoryGirl.create(:conversation, { position: 10, staff_pick: true, title: 'Conversation 2' })
+      @conversations << FactoryGirl.create(:conversation, { position: 10, staff_pick: false, title: 'Conversation 3' })
 
       Conversation.sort
       Conversation.find_by_id(@conversations[0].id).position.should == 0
@@ -322,21 +319,21 @@ describe Conversation do
     end
 
     it "will sort correctly if there is one conversation with saff_pick on" do
-      @conversations << Factory.create(:conversation, { position: 0, staff_pick: true, title: 'Conversation 1' })
+      @conversations << FactoryGirl.create(:conversation, { position: 0, staff_pick: true, title: 'Conversation 1' })
       @conversations[0].sort
       Conversation.find_by_id(@conversations[0].id).position.should == 0
     end
 
     it "will sort correctly if there is one conversation with saff_pick off" do
-      @conversations << Factory.create(:conversation, { position: 0, staff_pick: false, title: 'Conversation 1' })
+      @conversations << FactoryGirl.create(:conversation, { position: 0, staff_pick: false, title: 'Conversation 1' })
       @conversations[0].sort
       Conversation.find_by_id(@conversations[0].id).position.should == 0
     end
 
     it "sets the postion to the next highest position of all featured conversations" do
-      @conversations << Factory.create(:conversation, { position: 0, staff_pick: true, title: 'Conversation 1' })
-      @conversations << Factory.create(:conversation, { position: 1, staff_pick: true, title: 'Conversation 2' })
-      @conversations << Factory.create(:conversation, { position: 2, staff_pick: false, title: 'Conversation 3' })
+      @conversations << FactoryGirl.create(:conversation, { position: 0, staff_pick: true, title: 'Conversation 1' })
+      @conversations << FactoryGirl.create(:conversation, { position: 1, staff_pick: true, title: 'Conversation 2' })
+      @conversations << FactoryGirl.create(:conversation, { position: 2, staff_pick: false, title: 'Conversation 3' })
       @conversations[0].sort
       Conversation.find_by_id(@conversations[0].id).position.should == 1
       Conversation.find_by_id(@conversations[1].id).position.should == 0
@@ -346,10 +343,10 @@ describe Conversation do
 
   describe "recommended" do
     before(:each) do
-      @conversation_nr1 = Factory.create(:conversation)
-      @conversation_nr2 = Factory.create(:conversation)
-      @conversation_r1 = Factory.create(:conversation, :staff_pick => true)
-      @conversation_r2 = Factory.create(:conversation, :staff_pick => true)
+      @conversation_nr1 = FactoryGirl.create(:conversation)
+      @conversation_nr2 = FactoryGirl.create(:conversation)
+      @conversation_r1 = FactoryGirl.create(:conversation, :staff_pick => true)
+      @conversation_r2 = FactoryGirl.create(:conversation, :staff_pick => true)
     end
 
     it "will select all recommanded conversations" do
@@ -373,11 +370,11 @@ describe Conversation do
 
   describe "random active" do
     before(:each) do
-      @conversation_1 = Factory.create(:conversation, :updated_at => (Time.now - 1.seconds))
-      @conversation_2 = Factory.create(:conversation, :updated_at => (Time.now - 2.seconds))
-      @conversation_3 = Factory.create(:conversation, :updated_at => (Time.now - 3.seconds))
-      @conversation_4 = Factory.create(:conversation, :updated_at => (Time.now - 4.seconds))
-      @conversation_5 = Factory.create(:conversation, :updated_at => (Time.now - 5.seconds))
+      @conversation_1 = FactoryGirl.create(:conversation, :updated_at => (Time.now - 1.seconds))
+      @conversation_2 = FactoryGirl.create(:conversation, :updated_at => (Time.now - 2.seconds))
+      @conversation_3 = FactoryGirl.create(:conversation, :updated_at => (Time.now - 3.seconds))
+      @conversation_4 = FactoryGirl.create(:conversation, :updated_at => (Time.now - 4.seconds))
+      @conversation_5 = FactoryGirl.create(:conversation, :updated_at => (Time.now - 5.seconds))
 
       Conversation.stub(:most_active).and_return([@conversation_1, @conversation_2, @conversation_3, @conversation_4, @conversation_5])
     end
@@ -400,21 +397,21 @@ describe Conversation do
   describe "after saving a new conversation" do
     before(:each) do
       Conversation.delete_all
-      Factory.create(:conversation, { title: 'Conversation 1' })
-      Factory.create(:conversation, { title: 'Conversation 2' })
-      Factory.create(:conversation, { title: 'Conversation 3' })
+      FactoryGirl.create(:conversation, { title: 'Conversation 1' })
+      FactoryGirl.create(:conversation, { title: 'Conversation 2' })
+      FactoryGirl.create(:conversation, { title: 'Conversation 3' })
     end
 
     it "it will have the largest position" do
-      conversation = Factory.create(:conversation, { title: 'Conversation 4' })
+      conversation = FactoryGirl.create(:conversation, { title: 'Conversation 4' })
       conversation = Conversation.find_by_id(conversation.id)
       conversation.position.should == 3
     end
 
     it "automatically subscribes owner to conversation" do
       Subscription.delete_all
-      person = Factory.create(:normal_person)
-      conversation = Factory.build(:conversation, person: person)
+      person = FactoryGirl.create(:normal_person)
+      conversation = FactoryGirl.build(:conversation, person: person)
       person.subscriptions.length.should == 0
       conversation.save
       person.reload.subscriptions.length.should == 1
@@ -424,8 +421,8 @@ describe Conversation do
   describe "conversations with exclude_from_most_recent" do
     before(:each) do
       # stub_amazon_s3_request
-      @conversation = Factory.create(:conversation)
-      @excluded_conversation = Factory.create(:conversation, { exclude_from_most_recent: true })
+      @conversation = FactoryGirl.create(:conversation)
+      @excluded_conversation = FactoryGirl.create(:conversation, { exclude_from_most_recent: true })
     end
 
     it "will not show in latest_created scope" do
@@ -460,43 +457,6 @@ describe Conversation do
       default_url = Conversation.attachment_definitions[:image][:default_url].gsub(/\:style/, style)
       default_file = File.join(Rails.root, 'public', default_url)
       File.exist?(default_file)
-    end
-  end
-
-  context "action_participants" do
-    def given_conversation_and_actions
-      @petition = Factory.create(:petition)
-      @conversation = @petition.conversation
-      @person = @petition.signers.first
-    end
-    it "should return All participants of the actions" do
-      given_conversation_and_actions
-      @conversation.action_participants.should == [@person]
-    end
-  end
-
-  context "community_user_ids" do
-    before(:each) do
-      @conversation = Factory.create(:conversation)
-    end
-
-    it "should return an array of person ids" do
-      @conversation.community_user_ids.kind_of?(Array).should be_true
-    end
-
-    it "should include conversation owner" do
-      @conversation.community_user_ids.include?(@conversation.owner).should be_true
-    end
-
-    it "should include all confirmed, non-locked users who rated a contribution" do
-      contribution = Factory.create(:contribution, conversation: @conversation)
-      rating_group = Factory.create(:rating_group, contribution: contribution)
-      @conversation.community_user_ids.include?(rating_group.person_id).should be_true
-    end
-
-    it "should include all confirmed, non-locked users who created a contribution" do
-      contribution = Factory.create(:contribution, conversation: @conversation)
-      @conversation.community_user_ids.include?(@conversation.owner).should be_true
     end
   end
 

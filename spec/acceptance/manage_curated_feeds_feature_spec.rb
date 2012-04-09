@@ -48,11 +48,11 @@ feature "Manage curated feeds", %q{
 
     # Given a valid curated feed
     let :feed do
-      Factory.create(:curated_feed)
+      FactoryGirl.create(:curated_feed)
     end
 
     let :feed_params do
-      Factory.attributes_for(:curated_feed_item)
+      FactoryGirl.attributes_for(:curated_feed_item)
     end
 
     scenario "add a valid feed item" do
@@ -74,7 +74,7 @@ feature "Manage curated feeds", %q{
       # When I select the delete link
       # Then I should be on the curated feed #show page
       # And I should not see the feed item
-      item = Factory.create(:curated_feed_item, curated_feed: feed)
+      item = FactoryGirl.create(:curated_feed_item, curated_feed: feed)
       visit admin_curated_feed_path(feed)
       feed_page.delete_item(item)
       should_be_on admin_curated_feed_path(feed)
@@ -90,7 +90,7 @@ feature "Manage curated feeds", %q{
       # And I submit the form
       # Then I should be on the curated feed #show page
       # And I should see the feed item
-      item = Factory.create(:curated_feed_item, curated_feed: feed)
+      item = FactoryGirl.create(:curated_feed_item, curated_feed: feed)
       visit admin_curated_feed_path(feed)
       feed_page.edit_item(item)
       should_be_on edit_admin_curated_feed_item_path(feed, item)

@@ -12,11 +12,11 @@ feature "Voting Admin", %q{
 
   
   def given_an_existing_issue
-    @issue = Factory.create(:issue)
+    @issue = FactoryGirl.create(:issue)
   end
   
   def given_a_survey_with_responses
-    @survey_response = Factory.create(:vote_survey_response)
+    @survey_response = FactoryGirl.create(:vote_survey_response)
     @survey = @survey_response.survey
   end
   

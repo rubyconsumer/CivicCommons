@@ -3,9 +3,9 @@ require 'spec_helper'
 describe Admin::PeopleController, "locking/unlocking" do
 
   before(:each) do
-    @admin = Factory.create(:admin_person)
+    @admin = FactoryGirl.create(:admin_person)
     controller.stub!(:current_person).and_return(@admin)
-    @person = Factory.create(:normal_person)
+    @person = FactoryGirl.create(:normal_person)
   end
 
   it "should allow locking of a person" do

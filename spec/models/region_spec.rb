@@ -46,7 +46,7 @@ describe Region do
   describe "issues" do
 
     before(:each) do
-      @issue = Factory.create(:issue, {:zip_code => "all"})
+      @issue = FactoryGirl.create(:issue, {:zip_code => "all"})
     end
 
     context "when region is default" do
@@ -57,7 +57,7 @@ describe Region do
 
     context "when region has zipcodes" do
       it "returns issues with 'all' zip_code" do
-        region = Factory.create(:region,{:name => "blah"})
+        region = FactoryGirl.create(:region,{:name => "blah"})
         region.zip_code_string = "48103\n18621"
         region.save
         Region.last.issues.should include(@issue)

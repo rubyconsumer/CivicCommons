@@ -2,10 +2,10 @@ require 'spec_helper'
 
 describe ContentItemDescription do
   context "validations" do
-    let(:radio_show_description) { Factory.build(:radio_show_description) }
+    let(:radio_show_description) { FactoryGirl.build(:radio_show_description) }
 
     it "factory creates a valid object" do
-      Factory.build(:blog_post_description).should be_valid
+      FactoryGirl.build(:blog_post_description).should be_valid
       radio_show_description.should be_valid
     end
 
@@ -19,7 +19,7 @@ describe ContentItemDescription do
 
     it "validates the uniqueness of content_type" do
       radio_show_description.save
-      radio_show_description2 = Factory.build(:radio_show_description)
+      radio_show_description2 = FactoryGirl.build(:radio_show_description)
       radio_show_description2.should_not be_valid
     end
 

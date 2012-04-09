@@ -2,7 +2,7 @@ require 'spec_helper'
 describe '/issues/index.html.erb' do
 
   before(:each) do
-    @issue = Factory.create(:issue,
+    @issue = FactoryGirl.create(:issue,
       index_summary: 'custom index summary',
       summary: 'original summary'
     )

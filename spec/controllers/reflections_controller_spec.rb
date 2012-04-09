@@ -97,7 +97,7 @@ describe ReflectionsController do
     context "as admin" do
       before(:each) do
         login_admin
-        @reflection = Factory.create(:reflection)
+        @reflection = FactoryGirl.create(:reflection)
       end
 
       describe "with valid params" do
@@ -128,7 +128,7 @@ describe ReflectionsController do
     context "as non-admin but logged in" do
       before(:each) do
         login_user
-        @reflection = Factory.create(:reflection)
+        @reflection = FactoryGirl.create(:reflection)
       end
 
       it "sets flash[:error]" do
@@ -145,7 +145,7 @@ describe ReflectionsController do
     context "not logged in" do
       before(:each) do
         login_user
-        @reflection = Factory.create(:reflection)
+        @reflection = FactoryGirl.create(:reflection)
       end
 
       it "redirects to login page" do
@@ -159,7 +159,7 @@ describe ReflectionsController do
     context "as admin" do
       before(:each) do
         login_admin
-        @reflection = Factory.create(:reflection)
+        @reflection = FactoryGirl.create(:reflection)
       end
 
       it "assigns the requested reflection as @reflection" do
@@ -171,7 +171,7 @@ describe ReflectionsController do
     context "as non-admin but logged in" do
       before(:each) do
         login_user
-        @reflection = Factory.create(:reflection)
+        @reflection = FactoryGirl.create(:reflection)
       end
 
       it "sets flash[:error]" do
@@ -188,7 +188,7 @@ describe ReflectionsController do
     context "not logged in" do
       before(:each) do
         login_user
-        @reflection = Factory.create(:reflection)
+        @reflection = FactoryGirl.create(:reflection)
       end
 
       it "redirects to login page" do
@@ -202,7 +202,7 @@ describe ReflectionsController do
     context "as admin" do
       before(:each) do
         login_admin
-        @reflection = Factory.create(:reflection)
+        @reflection = FactoryGirl.create(:reflection)
       end
 
       it "assigns the requested reflection as @reflection" do
@@ -219,7 +219,7 @@ describe ReflectionsController do
     context "as non-admin but logged in" do
       before(:each) do
         login_user
-        @reflection = Factory.create(:reflection)
+        @reflection = FactoryGirl.create(:reflection)
       end
 
       it "sets flash[:error]" do
@@ -236,7 +236,7 @@ describe ReflectionsController do
     context "not logged in" do
       before(:each) do
         login_user
-        @reflection = Factory.create(:reflection)
+        @reflection = FactoryGirl.create(:reflection)
       end
 
       it "redirects to login page" do

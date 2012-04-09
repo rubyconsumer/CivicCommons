@@ -7,16 +7,16 @@ feature " Reflection comments", %q{
 } do
     
   def given_a_conversation
-    @conversation = Factory.create(:conversation)
+    @conversation = FactoryGirl.create(:conversation)
   end
   
   def given_a_reflection(options={})
-    @reflection = Factory.create(:reflection, options)
+    @reflection = FactoryGirl.create(:reflection, options)
     @conversation = @reflection.conversation
   end
   
   def given_a_reflection_with_comments(options={})
-    @reflection = Factory.create(:reflection_with_comments, options)
+    @reflection = FactoryGirl.create(:reflection_with_comments, options)
     @conversation = @reflection.conversation
     @comment = @reflection.comments.first
     @reflection = @comment.reflection

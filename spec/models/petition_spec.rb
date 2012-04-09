@@ -3,10 +3,10 @@ require 'spec_helper'
 describe Petition do
   describe "factories" do
     it "should be valid" do
-      Factory.build(:petition).should be_valid
-      Factory.create(:petition).should be_valid
-      Factory.build(:unsigned_petition).should be_valid
-      Factory.create(:unsigned_petition).should be_valid
+      FactoryGirl.build(:petition).should be_valid
+      FactoryGirl.create(:petition).should be_valid
+      FactoryGirl.build(:unsigned_petition).should be_valid
+      FactoryGirl.create(:unsigned_petition).should be_valid
     end
   end
 
@@ -51,14 +51,14 @@ describe Petition do
   end
   describe "reflections" do
     it "should have many reflections" do
-      @petition = Factory.create(:petition)
-      @reflection = Factory.create(:reflection,:actions => [@petition.action])
+      @petition = FactoryGirl.create(:petition)
+      @reflection = FactoryGirl.create(:reflection,:actions => [@petition.action])
       @petition.reflections.should == [@reflection]
     end
   end
   describe "signed_by?" do
     def given_petition_signed_by_person
-      @petition = Factory.create(:petition)
+      @petition = FactoryGirl.create(:petition)
       @person = @petition.signers.first
     end
     it "should correctly confirm if a petition is signed by someone" do
@@ -67,14 +67,14 @@ describe Petition do
     end
     it "should not confirm if petition is not signed by person" do
       given_petition_signed_by_person
-      @person2 = Factory.create(:person)
+      @person2 = FactoryGirl.create(:person)
       @petition.signed_by?(@person2).should be_false
     end
   end
   describe "sign" do
     def given_un_signed_petition
-      @petition = Factory.create(:unsigned_petition)
-      @person = Factory.create(:person)
+      @petition = FactoryGirl.create(:unsigned_petition)
+      @person = FactoryGirl.create(:person)
     end
     it "should sign the person" do
       given_un_signed_petition
@@ -87,7 +87,7 @@ describe Petition do
   describe 'signature_needed_left' do
     it "should return 0 if number of signatures are more than needed" do
       stubber = double
-      @petition = Factory.build(:petition, :signature_needed => 10)
+      @petition = FactoryGirl.build(:petition, :signature_needed => 10)
       @petition.stub!(:signatures).and_return(stubber)
       stubber.stub!(:count).and_return(1)
 
@@ -95,7 +95,7 @@ describe Petition do
     end
     it "should return the real number if the number of signatures are less than needed" do
       stubber = double
-      @petition = Factory.build(:petition, :signature_needed => 10)
+      @petition = FactoryGirl.build(:petition, :signature_needed => 10)
       @petition.stub!(:signatures).and_return(stubber)
       stubber.stub!(:count).and_return(20)
 
@@ -105,7 +105,7 @@ describe Petition do
   describe "after_create" do
     describe "after_update" do
       it "should modify the action model if Petition is updated" do
-        @petition = Factory.create(:petition, :conversation_id => 123)
+        @petition = FactoryGirl.create(:petition, :conversation_id => 123)
         @action = Action.first
         @action.conversation_id.should == 123
         @petition.conversation_id = 111
@@ -115,7 +115,7 @@ describe Petition do
     end
     describe "create_action" do
       it "should create the action model once a petition is created" do
-        Factory.create(:petition)
+        FactoryGirl.create(:petition)
         Action.first.should == Petition.first.action
       end
     end

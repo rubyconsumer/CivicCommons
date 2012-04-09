@@ -31,7 +31,7 @@ describe RegistrationsController do
   end
   context "POST create_organization" do
     before(:each) do
-      @person = Factory.create(:registered_user)
+      @person = FactoryGirl.create(:registered_user)
       warden.stub(:authenticate!).and_return(@person)
     end
     
@@ -57,8 +57,8 @@ describe RegistrationsController do
   context 'POST create' do
     context "with facebook authentication attributes" do
       before do
-        attributes = Factory.attributes_for(:normal_person, email: 'facebook@theciviccommons.com')
-        attributes['authentications_attributes'] = [Factory.attributes_for(:facebook_authentication, person: nil)]
+        attributes = FactoryGirl.attributes_for(:normal_person, email: 'facebook@theciviccommons.com')
+        attributes['authentications_attributes'] = [FactoryGirl.attributes_for(:facebook_authentication, person: nil)]
         post :create, person: attributes
       end
       it 'will store Facebook authentication' do
@@ -71,7 +71,7 @@ describe RegistrationsController do
 
     context "without facebook authentication" do
       before do
-        attributes = Factory.attributes_for(:normal_person, email: 'normal@theciviccommons.com')
+        attributes = FactoryGirl.attributes_for(:normal_person, email: 'normal@theciviccommons.com')
         post :create, person: attributes
       end
       it 'will not store facebook authentication' do
@@ -83,7 +83,7 @@ describe RegistrationsController do
     end
 
     it 'will render #new if there was a validation error' do
-      attributes = Factory.attributes_for(:invalid_person)
+      attributes = FactoryGirl.attributes_for(:invalid_person)
       post :create, person: attributes
       response.should be_success
       response.should render_template('registrations/new')

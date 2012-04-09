@@ -177,7 +177,7 @@ end
 
 describe PetitionsController do
   describe "show" do
-    let(:petition) { Factory.create(:petition) }
+    let(:petition) { FactoryGirl.create(:petition) }
 
     it "should show the petition" do
       get :show, :conversation_id => petition.conversation_id, :id => petition.id

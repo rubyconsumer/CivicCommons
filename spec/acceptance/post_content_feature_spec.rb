@@ -7,11 +7,11 @@ feature "Post Content Item", %q{
 } do
 
     let :content do
-      Factory.create(:content_item)
+      FactoryGirl.create(:content_item)
     end
     
     def given_a_topic
-      @topic = Factory.create(:topic, :name => 'TopicNameHere')
+      @topic = FactoryGirl.create(:topic, :name => 'TopicNameHere')
     end
 
     background do

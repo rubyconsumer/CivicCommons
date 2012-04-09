@@ -8,7 +8,7 @@ describe ContentItemLink do
   end
   describe "validations" do
     before(:each) do
-      @content_item_link = Factory.build(:content_item_link)
+      @content_item_link = FactoryGirl.build(:content_item_link)
     end
 
     it "validates presence of title" do

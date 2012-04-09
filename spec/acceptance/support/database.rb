@@ -76,19 +76,19 @@ module CivicCommonsDriver
     end
 
     def self.create_contribution attributes={}
-      Factory.create :contribution, attributes
+      FactoryGirl.create :contribution, attributes
     end
 
     def self.create_conversation attributes={}
-      Factory.create :conversation, attributes
+      FactoryGirl.create :conversation, attributes
     end
 
     def self.create_registered_user attributes={}
-      Factory.create(:registered_user, attributes)
+      FactoryGirl.create(:registered_user, attributes)
     end
 
     def self.create_topic(attributes={})
-      Factory.create :topic, attributes
+      FactoryGirl.create :topic, attributes
     end
 
     def self.has_a_topic_without_issues
@@ -100,23 +100,23 @@ module CivicCommonsDriver
     end
 
     def self.create_issue(attributes= {})
-      Factory.create :issue, attributes
+      FactoryGirl.create :issue, attributes
     end
 
     def self.create_project(attributes= {})
-      Factory.create :managed_issue, attributes
+      FactoryGirl.create :managed_issue, attributes
     end
 
     def self.create_blog_post(attributes = {})
-      Factory.create :blog_post, attributes
+      FactoryGirl.create :blog_post, attributes
     end
 
     def self.create_radio_show(attributes = {})
-      Factory.create :radio_show, attributes
+      FactoryGirl.create :radio_show, attributes
     end
 
     def self.create_email_restriction(attributes={})
-      Factory.create :email_restriction, attributes
+      FactoryGirl.create :email_restriction, attributes
     end
 
     def self.destroy_all_content_items

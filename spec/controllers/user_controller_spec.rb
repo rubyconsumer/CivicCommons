@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe UserController do
   let(:user) do
-    Factory.create(:normal_person)
+    FactoryGirl.create(:normal_person)
   end
 
   def stub_person(stubs={})
@@ -44,7 +44,7 @@ describe UserController do
   describe "PUT update" do
     context "as a registered user" do
       it "should update attributes" do
-        person = Factory.create(:registered_user, zip_code: '11111')
+        person = FactoryGirl.create(:registered_user, zip_code: '11111')
         controller.stub!(:current_person).and_return(person)
         changes = person.attributes
         changes["zip_code"] = '55555'
@@ -55,7 +55,7 @@ describe UserController do
 
     context "as an organization" do
       it "should update attributes" do
-        organization = Factory.create(:organization, zip_code: '11111')
+        organization = FactoryGirl.create(:organization, zip_code: '11111')
         controller.stub!(:current_person).and_return(organization)
         changes = organization.attributes
         changes["zip_code"] = '55555'

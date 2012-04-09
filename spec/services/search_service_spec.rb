@@ -25,8 +25,8 @@ describe SearchService do
     end
 
     it "will not return unconfirmed contributions in search results", :search => true do
-      confirmed_contribution_hit = create_hit(Factory.build(:contribution, content: 'Confirmed Contribution'))
-      unconfirmed_contribution_hit = create_hit(Factory.build(:unconfirmed_contribution, content: 'Unconfirmed Contribution'))
+      confirmed_contribution_hit = create_hit(FactoryGirl.build(:contribution, content: 'Confirmed Contribution'))
+      unconfirmed_contribution_hit = create_hit(FactoryGirl.build(:unconfirmed_contribution, content: 'Unconfirmed Contribution'))
       @mock_search.stub(:search) { @mock_search }
       @mock_search.stub(:hits) { [confirmed_contribution_hit, unconfirmed_contribution_hit] }
       @search.fetch_results('contribution', Contribution).should == [confirmed_contribution_hit]

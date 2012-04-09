@@ -9,7 +9,7 @@ describe "/user/_following.html.erb" do
   end
 
   it "displays subscriptions when there are subscriptions" do
-    convo_subscription = Factory.build(:conversation_subscription)
+    convo_subscription = FactoryGirl.build(:conversation_subscription)
 
     render :partial => "/user/following", :locals => { :user_name => "Tom", :subscriptions => [convo_subscription] }
     rendered.should contain(convo_subscription.title)

@@ -7,20 +7,20 @@ describe IssuesController do
     before(:each) do
 
       (1..2).each do
-        Factory.create(:topic)
+        FactoryGirl.create(:topic)
       end
 
       (1..2).each do
-        Factory.create(:managed_issue)
+        FactoryGirl.create(:managed_issue)
       end
 
       factory_limit = 2
       (1..factory_limit).each do |i|
-        Factory.create(:issue, :exclude_from_result => false, :topics => [Topic.first], :position => factory_limit-i)
+        FactoryGirl.create(:issue, :exclude_from_result => false, :topics => [Topic.first], :position => factory_limit-i)
       end
 
       (1..2).each do
-        Factory.create(:issue, :exclude_from_result => true)
+        FactoryGirl.create(:issue, :exclude_from_result => true)
       end
 
     end
@@ -71,9 +71,9 @@ describe IssuesController do
     context "with standard issues" do
 
       before(:each) do
-        @user = Factory.create(:registered_user)
+        @user = FactoryGirl.create(:registered_user)
         sign_in @user
-        @issue = Factory.create(:issue)
+        @issue = FactoryGirl.create(:issue)
       end
 
       it "assigns the requested issue as @issue" do
@@ -103,11 +103,11 @@ describe IssuesController do
     context "with managed issues (aka Projects)" do
 
       let(:issue) do
-        Factory.create(:managed_issue)
+        FactoryGirl.create(:managed_issue)
       end
 
       it "renders the index managed issue page when set" do
-        issue.index = Factory.create(:managed_issue_page, issue: issue)
+        issue.index = FactoryGirl.create(:managed_issue_page, issue: issue)
         issue.save
         get :show, :id => issue.id
         response.should render_template 'managed_issue_pages/show'

@@ -5,7 +5,7 @@ module Services
   describe AvatarService do
 
     before(:each) do
-      @person = Factory.create(:registered_user, :twitter_username => "civiccommons")
+      @person = FactoryGirl.create(:registered_user, :twitter_username => "civiccommons")
     end
     
     
@@ -17,7 +17,7 @@ module Services
         end
         
         it "should return their uploaded avatar picture first" do
-          @person = Factory.create(:registered_user_with_avatar, :twitter_username => "civiccommons")
+          @person = FactoryGirl.create(:registered_user_with_avatar, :twitter_username => "civiccommons")
           @person.update_attributes(:twitter_username => 'twitterusername')
           @person.stub_chain(:authentications, :present?).and_return(:true)
           

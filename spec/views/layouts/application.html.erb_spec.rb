@@ -63,7 +63,7 @@ describe 'layouts/application.html.erb' do
 
     it "will show the summary of a Conversation on a conversation page without HTML" do
       summary = 'I am a <b>summary</b>'
-      @conversation = Factory.create(:conversation, summary: summary)
+      @conversation = FactoryGirl.create(:conversation, summary: summary)
       meta_description = '<meta name="description" content="' + Sanitize.clean(summary, :remove_contents => ['style','script']) + '" />'
       render
       rendered.include?(meta_description).should be_true
@@ -71,7 +71,7 @@ describe 'layouts/application.html.erb' do
 
     it "will show the summary of an Issue on an issue page without HTML" do
       summary = 'I am a <b>summary</b>'
-      @issue = Factory.create(:issue, summary: summary)
+      @issue = FactoryGirl.create(:issue, summary: summary)
       meta_description = '<meta name="description" content="' + Sanitize.clean(summary, :remove_contents => ['style','script']) + '" />'
       render
       rendered.include?(meta_description).should be_true
@@ -79,7 +79,7 @@ describe 'layouts/application.html.erb' do
 
     it "will show the summary of a BlogPost on a blog post page without HTML" do
       summary = 'I am a <b>summary</b>'
-      @blog_post = Factory.create(:blog_post, summary: summary)
+      @blog_post = FactoryGirl.create(:blog_post, summary: summary)
       meta_description = '<meta name="description" content="' + Sanitize.clean(summary, :remove_contents => ['style','script']) + '" />'
       render
       rendered.include?(meta_description).should be_true
@@ -87,7 +87,7 @@ describe 'layouts/application.html.erb' do
 
     it "will show the summary of a RadioShow on a radio show page without HTML" do
       summary = 'I am a <b>summary</b>'
-      @radioshow = Factory.create(:radio_show, summary: summary)
+      @radioshow = FactoryGirl.create(:radio_show, summary: summary)
       meta_description = '<meta name="description" content="' + Sanitize.clean(summary, :remove_contents => ['style','script']) + '" />'
       render
       rendered.include?(meta_description).should be_true

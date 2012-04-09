@@ -10,7 +10,7 @@
 # end
 
 Given /^I am (?:signed|logged) in$/ do
-  user = Factory.create(:registered_user)
+  user = FactoryGirl.create(:registered_user)
   visit(new_person_session_url)
   fill_in 'person_email', :with => user.email
   fill_in 'person_password', :with => 'password'
@@ -32,7 +32,7 @@ Given /^a registered user:$/ do |table|
   user = table.rows_hash
 
   @current_person =
-    Factory.create(:registered_user,
+    FactoryGirl.create(:registered_user,
                    first_name:           user['First Name'],
                    last_name:            user['Last Name'],
                    email:                user['Email'],

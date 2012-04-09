@@ -4,20 +4,20 @@ describe Contribution do
 
   context "factories" do
     it 'should be valid' do
-      Factory.build(:contribution).should be_valid
-      Factory.create(:contribution).should be_valid
-      Factory.build(:comment).should be_valid
-      Factory.create(:comment).should be_valid
-      Factory.build(:embedly_contribution).should be_valid
-      Factory.create(:embedly_contribution).should be_valid
+      FactoryGirl.build(:contribution).should be_valid
+      FactoryGirl.create(:contribution).should be_valid
+      FactoryGirl.build(:comment).should be_valid
+      FactoryGirl.create(:comment).should be_valid
+      FactoryGirl.build(:embedly_contribution).should be_valid
+      FactoryGirl.create(:embedly_contribution).should be_valid
     end
   end
 
   context "embedly" do
 
     before(:each) do
-      @person = Factory.build(:registered_user)
-      @contribution = Factory.attributes_for(:embedly_contribution)
+      @person = FactoryGirl.build(:registered_user)
+      @contribution = FactoryGirl.attributes_for(:embedly_contribution)
       @contribution[:person] = @person
     end
 
@@ -48,7 +48,7 @@ describe Contribution do
   context "base_url" do
 
     let(:contribution) do
-      Factory.build(:embedly_contribution)
+      FactoryGirl.build(:embedly_contribution)
     end
 
     it "returns blank when url is blank" do
@@ -69,9 +69,9 @@ describe Contribution do
 
   describe "when destroyed" do
     it "should destroy rating groups associated with it" do
-      @contribution = Factory.create(:contribution, {:created_at => Time.now - 25.minutes})
+      @contribution = FactoryGirl.create(:contribution, {:created_at => Time.now - 25.minutes})
 
-      rating_group = Factory.create(:rating_group, contribution: @contribution)
+      rating_group = FactoryGirl.create(:rating_group, contribution: @contribution)
       @contribution.destroy
 
       lambda {RatingGroup.find(rating_group.id)}.should raise_error ActiveRecord::RecordNotFound
@@ -81,7 +81,7 @@ describe Contribution do
   describe "when creating a TopLevelContribution for a conversation" do
 
     before(:each) do
-      @top_level_contribution = Factory.build(:top_level_contribution)
+      @top_level_contribution = FactoryGirl.build(:top_level_contribution)
       @top_level_contribution.run_callbacks(:save)
     end
 
@@ -94,7 +94,7 @@ describe Contribution do
   describe "when confirming contributions" do
 
     before(:each) do
-      @contribution = Factory.create(:unconfirmed_contribution)
+      @contribution = FactoryGirl.create(:unconfirmed_contribution)
     end
 
     it "omits unconfirmed contributions (those only previewed but never confirmed) in confirmed scope" do
@@ -119,9 +119,9 @@ describe Contribution do
   describe "when editing and deleting confirmed contributions" do
 
     before(:each) do
-      @person = Factory.create(:registered_user)
-      @old_contribution = Factory.create(:contribution, {:created_at => Time.now - 35.minutes, :person => @person})
-      @new_contribution = Factory.create(:contribution, {:created_at => Time.now - 5.minutes, :person => @person})
+      @person = FactoryGirl.create(:registered_user)
+      @old_contribution = FactoryGirl.create(:contribution, {:created_at => Time.now - 35.minutes, :person => @person})
+      @new_contribution = FactoryGirl.create(:contribution, {:created_at => Time.now - 5.minutes, :person => @person})
       @new_params = {:contribution => { 'content' => "Some new comment", 'url' => "http://www.youtube.com/watch?v=djtNtt8jDW4" } }
     end
 
@@ -139,7 +139,7 @@ describe Contribution do
       end
 
       it "disallows deletion by the user if anyone has rated or replied to the contribution" do
-        rating_group = Factory.create(:rating_group, contribution: @new_contribution)
+        rating_group = FactoryGirl.create(:rating_group, contribution: @new_contribution)
         @new_contribution.should_not_receive(:destroy)
         @new_contribution.destroy_by_user(@person)
         @new_contribution.should have_generic_error(:base, /Contributions cannot be deleted if they are older than 30 minutes or have any responses./)
@@ -159,7 +159,7 @@ describe Contribution do
       end
 
       it "disallows editing by the user if anyone has rated or replied to the contribution" do
-        rating_group = Factory.create(:rating_group, contribution: @new_contribution)
+        rating_group = FactoryGirl.create(:rating_group, contribution: @new_contribution)
         @new_contribution.should_not_receive(:update)
         @new_contribution.update_attributes_by_user(@new_params, @person)
         @new_contribution.should have_generic_error(:base, /Contributions cannot be edited if they are older than 30 minutes or have any responses./)
@@ -180,7 +180,7 @@ describe Contribution do
     context "as an admin user" do
 
       before(:each) do
-        @admin_person = Factory.create(:admin_person)
+        @admin_person = FactoryGirl.create(:admin_person)
       end
 
       it "allows deletion by an admin at any time" do
@@ -199,7 +199,7 @@ describe Contribution do
     context "as another user" do
 
       before(:each) do
-        @other_person = Factory.create(:registered_user)
+        @other_person = FactoryGirl.create(:registered_user)
       end
 
       it "disallows deletion by another user" do
@@ -232,31 +232,31 @@ describe Contribution do
 
     before :each do
       @reason = { :moderation_reason => "violates tos" }
-      @person = Factory.create(:admin_person)
+      @person = FactoryGirl.create(:admin_person)
     end
 
     it "sets the reason for moderation in the content" do
-      contribution = Factory.create(:comment)
+      contribution = FactoryGirl.create(:comment)
       reason = { :contribution => @reason }
       contribution.moderate_content(reason, @person).should be_true
       contribution.content.should match(reason[:contribution][:moderation_reason])
     end
 
     it "sets the contribution type to Comment" do
-      contribution = Factory.create(:question)
+      contribution = FactoryGirl.create(:question)
       reason = { :contribution => @reason }
       contribution.moderate_content(reason, @person).should be_true
     end
 
     it "clears attachments" do
-      contribution = Factory.create(:attached_file)
+      contribution = FactoryGirl.create(:attached_file)
       reason = { :contribution => @reason }
       contribution.moderate_content(reason, @person).should be_true
       contribution.attachment.should_not exist
     end
 
     it "clears embedly_content" do
-      contribution = Factory.create(:embedly_contribution)
+      contribution = FactoryGirl.create(:embedly_contribution)
       reason = { :contribution => @reason }
       contribution.moderate_content(reason, @person).should be_true
       contribution.embedly_code.should be_nil
@@ -264,7 +264,7 @@ describe Contribution do
     end
 
     it "clears title and description" do
-      contribution = Factory.create(:embedly_contribution)
+      contribution = FactoryGirl.create(:embedly_contribution)
       reason = { :contribution => @reason }
       contribution.moderate_content(reason, @person).should be_true
       contribution.title.should be_nil
@@ -276,8 +276,8 @@ describe Contribution do
   describe "when updating AttachedFile" do
 
     before(:each) do
-      @person = Factory.create(:normal_person)
-      @attached_file = Factory.create(:attached_file, {:person => @person})
+      @person = FactoryGirl.create(:normal_person)
+      @attached_file = FactoryGirl.create(:attached_file, {:person => @person})
     end
 
     it "does nothing to the file attachment if left blank" do
@@ -298,8 +298,8 @@ describe Contribution do
   describe "when updating a Link" do
 
     before(:each) do
-      @person = Factory.create(:normal_person)
-      @link = Factory.create(:link, {:person => @person})
+      @person = FactoryGirl.create(:normal_person)
+      @link = FactoryGirl.create(:link, {:person => @person})
     end
 
     it "does nothing to the URL if left blank" do
@@ -319,10 +319,10 @@ describe Contribution do
   describe "when deleting old unconfirmed contributions" do
 
     before(:each) do
-      @old_unconfirmed_contribution = Factory.create(:comment, {:created_at => Time.now - 3.days, :override_confirmed => false})
-      @new_unconfirmed_contribution = Factory.create(:comment, {:created_at => Time.now, :override_confirmed => false})
-      @old_confirmed_contribution = Factory.create(:comment, {:created_at => Time.now - 3.days})
-      @new_confirmed_contribution = Factory.create(:comment, {:created_at => Time.now})
+      @old_unconfirmed_contribution = FactoryGirl.create(:comment, {:created_at => Time.now - 3.days, :override_confirmed => false})
+      @new_unconfirmed_contribution = FactoryGirl.create(:comment, {:created_at => Time.now, :override_confirmed => false})
+      @old_confirmed_contribution = FactoryGirl.create(:comment, {:created_at => Time.now - 3.days})
+      @new_confirmed_contribution = FactoryGirl.create(:comment, {:created_at => Time.now})
       @count = Contribution.delete_old_and_unconfirmed
       @remaining_contributions = Contribution.all
     end
@@ -349,10 +349,10 @@ describe Contribution do
   describe "when creating for a conversation" do
 
     before(:each) do
-      @conversation = Factory.create(:conversation)
-      @person = Factory.create(:normal_person)
-      @top_level_contribution = Factory.create(:top_level_contribution,{:conversation=>@conversation})
-      @contribution = Factory.build(:unconfirmed_contribution, {
+      @conversation = FactoryGirl.create(:conversation)
+      @person = FactoryGirl.create(:normal_person)
+      @top_level_contribution = FactoryGirl.create(:top_level_contribution,{:conversation=>@conversation})
+      @contribution = FactoryGirl.build(:unconfirmed_contribution, {
         :person => @person,
         :conversation => @conversation,
         :parent => @top_level_contribution
@@ -392,8 +392,8 @@ describe Contribution do
     describe "and using node level contribution methods" do
 
       before(:each) do
-        @attributes = Factory.attributes_for(:unconfirmed_contribution,
-                                             :conversation => @contribution.conversation,
+        @attributes = FactoryGirl.attributes_for(:unconfirmed_contribution,
+                                             :conversation_id => @conversation.id,
                                              :parent_id => @contribution.parent_id)
       end
 
@@ -476,8 +476,8 @@ describe Contribution do
   describe "when creating a contribution for an issue" do
 
     before(:each) do
-      @issue = Factory.create(:issue)
-      @mock_person = Factory.create(:normal_person)
+      @issue = FactoryGirl.create(:issue)
+      @mock_person = FactoryGirl.create(:normal_person)
     end
 
     it "should set the item to the issue" do
@@ -490,14 +490,14 @@ describe Contribution do
   describe "validating a contribution" do
 
     it "should require an issue or a contributiion" do
-      person = Factory.create(:normal_person)
+      person = FactoryGirl.create(:normal_person)
       contribution = Contribution.create_node({:content => "Foo Bar"}, person)
       contribution.errors.count.should == 1
     end
 
     context "when a url is provided" do
       it "rejects invalid urls" do
-        person = Factory.create(:normal_person)
+        person = FactoryGirl.create(:normal_person)
         contribution = Contribution.create_node({:url=>'asdf'}, person)
         contribution.should have_validation_error :url
       end
@@ -508,8 +508,8 @@ describe Contribution do
   describe "validating a contribution for an issue" do
 
     before(:each) do
-      @issue = Factory.create(:issue)
-      @person = Factory.create(:normal_person)
+      @issue = FactoryGirl.create(:issue)
+      @person = FactoryGirl.create(:normal_person)
     end
 
     it "should be valid when creating a Comment" do
@@ -527,10 +527,10 @@ describe Contribution do
   describe "when deleting contributions of" do
 
     def given_a_contribution(type)
-      @person = Factory.create(:normal_person)
-      @other_person = Factory.create(:normal_person)
-      @admin_person = Factory.create(:admin_person)
-      @contribution = Factory.create(type, {:person => @person})
+      @person = FactoryGirl.create(:normal_person)
+      @other_person = FactoryGirl.create(:normal_person)
+      @admin_person = FactoryGirl.create(:admin_person)
+      @contribution = FactoryGirl.create(type, {:person => @person})
     end
 
     describe "suggested action" do
@@ -614,8 +614,8 @@ describe Contribution do
   context "Existing contribution, conversation, and issue" do
 
     let(:contribution) {Contribution.new(content: "This is a contribution")}
-    let(:conversation) {Factory.create(:conversation, title: "I'm a conversation")}
-    let(:issue)        {Factory.create(:issue, name: "I'm an Issue")}
+    let(:conversation) {FactoryGirl.create(:conversation, title: "I'm a conversation")}
+    let(:issue)        {FactoryGirl.create(:issue, name: "I'm an Issue")}
 
     describe "Contribution#item_id" do
 
