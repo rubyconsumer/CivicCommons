@@ -17,6 +17,7 @@
     = javascript_include_tag 'vendor/jquery/jquery.loadmask.min'
     = javascript_include_tag 'vendor/jquery/jquery.hashchange.min'
     = javascript_include_tag 'vendor/jquery/jquery.easytabs'
+    = javascript_include_tag 'vendor/jquery/jquery.cookie'
 
     = javascript_include_tag 'lib/authentication'
     = javascript_include_tag 'lib/omniauth_handler'
@@ -27,6 +28,8 @@
     = javascript_include_tag 'lib/elements/togglable_field.js'
     = javascript_include_tag 'lib/dropdown.js'
     = javascript_tag '$.fx.off = true;' if Rails.env.test?
+    = javascript_include_tag "lib/upgrade-browser.js"
+    
 
     :plain
       <!--[if gte IE 7]><!-->
@@ -46,7 +49,7 @@
       <!--<![endif]-->
     :javascript
       $(document).ready(function(){
-
+        
         $("input.datetime").datetimepicker({
           ampm: true,
           stepMinute: 15
