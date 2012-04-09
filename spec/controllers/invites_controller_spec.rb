@@ -49,7 +49,7 @@ describe InvitesController do
       # assigns(:source_type).should == 'conversations'
       # assigns(:source_id).should == @conversation.id
       # assigns(:conversation).should == @conversation
-      assigns(:notice).should == "Thank you! You're helping to make your community stronger!"
+      assigns(:notice).should == "Thank you! You're helping to make Northeast Ohio stronger!"
     end
 
     it "sets an error message when email is too short" do

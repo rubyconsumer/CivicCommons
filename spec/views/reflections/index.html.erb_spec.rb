@@ -9,12 +9,11 @@ describe "reflections/index.html.erb" do
       #).with(:issues) {nil}
     #)
 
-    conversation = double("conversation")
-    conversation.stub(:id => 21)
-    conversation.stub(:name => "My Conversation")
-    conversation.stub(:details => "My Conversation Details")
-    conversation.stub(:issues => nil)
-    conversation.stub(:reflection_participants => [])
+    conversation = double("conversation", {:id => 21, 
+      :name => "My Conversation", 
+      :details => "My Conversation Details", 
+      :issues => nil, 
+      :reflection_participants => []})
 
     assign(:conversation, conversation)
 
@@ -27,12 +26,14 @@ describe "reflections/index.html.erb" do
       stub_model(Reflection,
         :title => "Title",
         :details => "MyText",
-        :owner => 2
+        :owner => 2,
+        :created_at => DateTime.now
       ),
       stub_model(Reflection,
         :title => "Title",
         :details => "MyText",
-        :owner => 1
+        :owner => 1,
+        :created_at => DateTime.now
       )
     ])
   end
