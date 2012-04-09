@@ -24,8 +24,9 @@ gem 'embedly', '<0.4'
 gem 'gibbon'
 gem 'hominid', "~>3.0.2"
 gem 'delayed_job', ">= 2.1.2"
+gem 'delayed_job_active_record'
 
-gem 'hoptoad_notifier'
+gem 'airbrake'
 
 gem 'remotipart'
 

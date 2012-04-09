@@ -7,15 +7,15 @@ GIT
 
 GIT
   remote: git://github.com/nesquena/query_reviewer.git
-  revision: d4e1828ee1b43c97311381405d00e7599fe04a37
+  revision: 43b46f92afbc81ae7da8459ff3ae9afa465fe4e8
   specs:
-    query_reviewer (0.1.3)
+    query_reviewer (0.1.5)
 
 GEM
   remote: http://rubygems.org/
   specs:
     Ascii85 (1.0.1)
-    ZenTest (4.5.0)
+    ZenTest (4.7.0)
     abstract (1.0.0)
     actionmailer (3.0.3)
       actionpack (= 3.0.3)
@@ -43,8 +43,11 @@ GEM
       activemodel (= 3.0.3)
       activesupport (= 3.0.3)
     activesupport (3.0.3)
-    acts_as_revisionable (1.2.1)
+    acts_as_revisionable (1.2.2)
       activerecord (>= 2.3.9)
+    airbrake (3.0.9)
+      activesupport
+      builder
     archive-tar-minitar (0.5.2)
     arel (2.0.10)
     autotest (4.4.6)
@@ -52,9 +55,9 @@ GEM
     autotest-fsevent (0.2.8)
       sys-uname
     autotest-growl (0.2.16)
-    autotest-rails (4.1.1)
-      ZenTest (= 4.5)
-    awesome_nested_set (2.0.2)
+    autotest-rails (4.1.2)
+      ZenTest (~> 4.5)
+    awesome_nested_set (2.1.2)
       activerecord (>= 3.0.0)
     aws-s3 (0.6.2)
       builder
@@ -71,7 +74,7 @@ GEM
       xpath (~> 0.1.4)
     carrierwave (0.5.8)
       activesupport (~> 3.0)
-    childprocess (0.2.3)
+    childprocess (0.3.1)
       ffi (~> 1.0.6)
     ckeditor (3.6.3)
       mime-types (~> 1.16)
@@ -79,16 +82,17 @@ GEM
     coffee-script (2.2.0)
       coffee-script-source
       execjs
-    coffee-script-source (1.1.3)
-    columnize (0.3.5)
+    coffee-script-source (1.2.0)
+    columnize (0.3.6)
     crack (0.3.1)
-    daemons (1.1.4)
     database_cleaner (0.6.7)
-    date_validator (0.6.2)
-      activemodel (>= 3.0.0, < 3.2.0)
-    delayed_job (2.1.4)
+    date_validator (0.6.3)
+      activemodel (~> 3.0)
+    delayed_job (3.0.1)
       activesupport (~> 3.0)
-      daemons
+    delayed_job_active_record (0.3.2)
+      activerecord (> 2.1.0)
+      delayed_job (~> 3.0.0)
     delayed_paperclip (0.6.5)
       paperclip (>= 2.3.0)
     devise (1.5.2)
@@ -115,18 +119,18 @@ GEM
       abstract (>= 1.0.0)
     escape (0.0.4)
     excon (0.12.0)
-    execjs (1.2.12)
+    execjs (1.3.0)
       multi_json (~> 1.0)
-    factory_girl (2.3.2)
-      activesupport
-    factory_girl_rails (1.4.0)
-      factory_girl (~> 2.3.0)
+    factory_girl (2.6.4)
+      activesupport (>= 2.3.9)
+    factory_girl_rails (1.7.0)
+      factory_girl (~> 2.6.0)
       railties (>= 3.0.0)
-    faraday (0.7.0)
-      addressable (~> 2.2.4)
-      multipart-post (~> 1.1.0)
-      rack (>= 1.1.0, < 2)
-    fattr (2.2.0)
+    faraday (0.7.6)
+      addressable (~> 2.2)
+      multipart-post (~> 1.1)
+      rack (~> 1.1)
+    fattr (2.2.1)
     ffi (1.0.11)
     fitter-happier (0.0.1)
     fog (1.3.0)
@@ -140,13 +144,14 @@ GEM
       nokogiri (~> 1.5.0)
       ruby-hmac
     formatador (0.2.1)
-    friendly_id (4.0.1)
+    friendly_id (4.0.4)
     fuubar (0.0.6)
       rspec (~> 2.0)
       rspec-instafail (~> 0.1.8)
       ruby-progressbar (~> 0.0.10)
     gchart (1.0.0)
-    geokit (1.6.0)
+    geokit (1.6.5)
+      multi_json
     gibbon (0.3.5)
       httparty (> 0.6.0)
       httparty (> 0.6.0)
@@ -155,13 +160,10 @@ GEM
       rdoc
     haml (3.0.25)
     hashie (1.2.0)
-    highline (1.6.8)
+    highline (1.6.11)
     hike (1.2.1)
-    hominid (3.0.2)
-    hoptoad_notifier (2.4.11)
-      activesupport
-      builder
-    hpricot (0.8.5)
+    hominid (3.0.4)
+    hpricot (0.8.6)
     httparty (0.8.1)
       multi_json
       multi_xml
@@ -181,8 +183,8 @@ GEM
     jquery-rails (1.0.19)
       railties (~> 3.0)
       thor (~> 0.14)
-    json (1.6.3)
-    json_pure (1.6.3)
+    json (1.6.6)
+    json_pure (1.6.6)
     launchy (2.0.3)
     linecache19 (0.5.12)
       ruby_core_source (>= 0.1.4)
@@ -192,12 +194,12 @@ GEM
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
-    mime-types (1.17.2)
+    mime-types (1.18)
     mini_magick (3.4)
       subexec (~> 0.2.1)
-    multi_json (1.0.4)
-    multi_xml (0.4.1)
-    multipart-post (1.1.4)
+    multi_json (1.2.0)
+    multi_xml (0.4.2)
+    multipart-post (1.1.5)
     mysql2 (0.2.18)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
@@ -205,21 +207,21 @@ GEM
     no_peeping_toms (2.1.2)
       activerecord (>= 3.0.0)
       activesupport (>= 3.0.0)
-    nokogiri (1.5.0)
-    oauth2 (0.5.0)
-      faraday (>= 0.6.1, < 0.8)
-      multi_json (~> 1.0.0)
+    nokogiri (1.5.2)
+    oauth2 (0.5.2)
+      faraday (~> 0.7)
+      multi_json (~> 1.0)
     omniauth (1.0.1)
       hashie (~> 1.2)
       rack
-    omniauth-facebook (1.1.0)
+    omniauth-facebook (1.2.0)
       omniauth-oauth2 (~> 1.0.0)
     omniauth-oauth2 (1.0.0)
       oauth2 (~> 0.5.0)
       omniauth (~> 1.0)
     options (2.3.0)
       fattr
-    orm_adapter (0.0.5)
+    orm_adapter (0.0.7)
     paperclip (2.3.8)
       activerecord
       activesupport
@@ -238,7 +240,7 @@ GEM
     progress_bar (0.4.0)
       highline (~> 1.6.1)
       options (~> 2.3.0)
-    rack (1.2.4)
+    rack (1.2.5)
     rack-mount (0.6.14)
       rack (>= 1.0.0)
     rack-test (0.5.7)
@@ -260,12 +262,12 @@ GEM
       thor (~> 0.14.4)
     rainbow (1.1.3)
     rake (0.9.2.2)
-    rdoc (3.11)
+    rdoc (3.12)
       json (~> 1.4)
-    remotipart (1.0.1)
+    remotipart (1.0.2)
     rest-client (1.6.7)
       mime-types (>= 1.16)
-    rsolr (1.0.6)
+    rsolr (1.0.7)
       builder (>= 2.1.2)
     rspec (2.5.0)
       rspec-core (~> 2.5.0)
@@ -281,7 +283,7 @@ GEM
       activesupport (~> 3.0)
       railties (~> 3.0)
       rspec (~> 2.5.0)
-    rspec-spies (2.0.0)
+    rspec-spies (2.1.0)
       rspec (~> 2.0)
     ruby-debug-base19 (0.11.25)
       columnize (>= 0.3.1)
@@ -298,38 +300,43 @@ GEM
       archive-tar-minitar (>= 0.5.2)
     ruby_parser (2.3.1)
       sexp_processor (~> 3.0)
-    rubyzip (0.9.5)
+    rubyzip (0.9.6.1)
     sanitize (2.0.3)
       nokogiri (>= 1.4.4, < 1.6)
-    selenium-webdriver (2.15.0)
-      childprocess (>= 0.2.1)
-      ffi (~> 1.0.9)
-      multi_json (~> 1.0.4)
+    selenium-webdriver (2.20.0)
+      childprocess (>= 0.2.5)
+      ffi (~> 1.0)
+      multi_json (~> 1.0)
       rubyzip
-    sexp_processor (3.0.9)
-    shoulda (2.11.3)
-    simplecov (0.5.4)
-      multi_json (~> 1.0.3)
+    sexp_processor (3.1.0)
+    shoulda (3.0.1)
+      shoulda-context (~> 1.0.0)
+      shoulda-matchers (~> 1.0.0)
+    shoulda-context (1.0.0)
+    shoulda-matchers (1.0.0)
+    simplecov (0.6.1)
+      multi_json (~> 1.0)
       simplecov-html (~> 0.5.3)
     simplecov-html (0.5.3)
     sixarm_ruby_email_address_validation (1.2.4)
-    spork (0.8.5)
-    sprockets (2.1.2)
+    spork (0.9.0)
+    sprockets (2.4.0)
       hike (~> 1.2)
+      multi_json (~> 1.0)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
     steak (2.0.0)
       capybara (>= 1.0.0)
       rspec-rails (>= 2.5.0)
     subexec (0.2.1)
-    sunspot (1.3.0)
+    sunspot (1.3.1)
       escape (~> 0.0.4)
       pr_geohash (~> 1.0)
-      rsolr (~> 1.0.6)
-    sunspot_rails (1.3.0)
+      rsolr (~> 1.0.7)
+    sunspot_rails (1.3.1)
       nokogiri
-      sunspot (= 1.3.0)
-    sunspot_solr (1.3.0)
+      sunspot (= 1.3.1)
+    sunspot_solr (1.3.1)
       escape (~> 0.0.4)
     sys-uname (0.9.0)
       ffi (>= 1.0.0)
@@ -340,8 +347,8 @@ GEM
       polyglot
       polyglot (>= 0.3.1)
     ttfunk (1.0.3)
-    tzinfo (0.3.31)
-    warden (1.1.0)
+    tzinfo (0.3.32)
+    warden (1.1.1)
       rack (>= 1.0)
     webmock (1.6.2)
       addressable (>= 2.2.2)
@@ -361,6 +368,7 @@ PLATFORMS
 DEPENDENCIES
   acts_as_revisionable
   addressable!
+  airbrake
   autotest
   autotest-fsevent
   autotest-growl
@@ -373,6 +381,7 @@ DEPENDENCIES
   database_cleaner (~> 0.6.0)
   date_validator
   delayed_job (>= 2.1.2)
+  delayed_job_active_record
   delayed_paperclip (< 0.7)
   devise (= 1.5.2)
   email_spec
@@ -389,7 +398,6 @@ DEPENDENCIES
   haml (< 3.1)
   highline
   hominid (~> 3.0.2)
-  hoptoad_notifier
   hpricot
   httparty
   jasmine

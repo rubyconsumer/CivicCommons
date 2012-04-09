@@ -4,7 +4,13 @@ require 'uri'
 
 class AvatarService
 
-  def self.avatar_image_url(person)
+  def self.avatar_image_url(person, options={})
+    request = options.delete(:request)
+    if request.present?
+      base_url = "#{request.protocol}#{request.host_with_port}"
+    else
+      base_url = nil
+    end
     # Image displayed by order of priority    
     # 1. image uploaded
     return person.avatar.url(:standard) if person.avatar?
@@ -14,8 +20,8 @@ class AvatarService
     return self.twitter_image_url(person) if person.twitter_username.present?
     # 4. gravatar
     return self.gravatar_image_url(person) if self.gravatar_available?(person)
-    # 5. default
-    person.avatar.url(:standard)
+    # 5. default - need to be absolute path, due to widget
+    "#{base_url}#{person.avatar.url(:standard)}"
   end
 
   def self.facebook_image_url(person)

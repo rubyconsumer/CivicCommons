@@ -45,7 +45,6 @@ describe AvatarHelper do
   context "profile image" do
 
     it "renders the AvatarService" do
-      pending "need to verify when merging with development"
       AvatarService.should_receive(:avatar_image_url)
       helper.profile_image(@me, 80)
     end

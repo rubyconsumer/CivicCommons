@@ -15,12 +15,12 @@ else
   run "echo Activate Ignore All robot.txt... IGNORE"
 end
 
-# Link to Hoptoad Config In Staging and Production
+# Link to Airbrake Config In Staging and Production
 if current_environment == "production" || current_environment == "staging"
-  run "echo Config Hoptoad Connection..."
-  run "ln -nfs #{shared_path}/config/initializers/hoptoad.rb #{release_path}/config/initializers/hoptoad.rb"
+  run "echo Config Airbrake Connection..."
+  run "ln -nfs #{shared_path}/config/initializers/airbrake.rb #{release_path}/config/initializers/airbrake.rb"
 else
-  run "echo Config Hoptoad Connection....... IGNORE"
+  run "echo Config Airbrake Connection....... IGNORE"
 end
 
 # restart delayed_job process

@@ -9,7 +9,7 @@ class Survey < ActiveRecord::Base
   after_save :send_end_notification_email_later
 
   def days_until_end_date
-    (end_date - Date.today).to_i if end_date && end_date.future?
+    (end_date - Date.today).to_i if end_date && end_date > Date.today
   end
 
   def show_progress_now?

@@ -73,7 +73,7 @@ class ConversationsController < ApplicationController
     setup_meta_info(@conversation)
 
     respond_to do |format|
-      format.any{ render :show }
+      format.html{ render :show }
       format.embed do
         html = render_to_string
         json = {
@@ -82,6 +82,7 @@ class ConversationsController < ApplicationController
           }
         render_widget(json)
       end
+      format.any{ render :show}
     end
   end
 
@@ -212,7 +213,7 @@ class ConversationsController < ApplicationController
 
     respond_to do |format|
       if @conversation.save
-        format.html { redirect_to(new_invite_path(:source_type => :conversations, :source_id => @conversation.id, :conversation_created => true), :notice => 'Your conversation has been created!') }
+        format.html { redirect_to(new_invite_path(:source_type => :conversations, :source_id => @conversation.id, :conversation_created => true), :notice => "Thank you! You're helping to make your community stronger!") }
       else
         format.html { render :new, :layout => 'category_index' }
       end

@@ -9,6 +9,9 @@ if (window.jQuery === undefined || window.jQuery.fn.jquery !== '1.4.2') {
 } else {
     // The jQuery version on the window is the one we want to use
     jQuery = window.jQuery;
+    //pass this jQuery to CivicCommonsLoadedJquery to be used by our other js
+    window.CivicCommonsLoadedJquery = jQuery;
+    
     main();
 }
 

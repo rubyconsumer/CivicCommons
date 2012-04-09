@@ -38,7 +38,7 @@ module AvatarHelper
   end
 
   def profile_image(person, size=20, css_class='callout')
-    image_tag (person.avatar_url ||= person.avatar.url(:standard)), alt: person.name, height: size, width: size, title: person.name, class: css_class
+    image_tag AvatarService.avatar_image_url(person, :request => request).to_s, alt: person.name, height: size, width: size, title: person.name, class: css_class
   end
 
   def loggedin_image(person, size=40, css_class='callout')

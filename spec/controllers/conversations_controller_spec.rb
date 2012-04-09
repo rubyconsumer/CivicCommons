@@ -323,11 +323,6 @@ describe ConversationsController do
       get :activities, :id => 1
       assigns(:recent_items).should == [mock_activity, mock_activity, mock_activity, mock_activity, mock_activity]
     end
-    it "should not pop the latest recent_item on the array when there is no next page" do
-      pending "need to verify if it pops the last item or not"
-      get :activities, :id => 1
-      assigns(:recent_items).should == [mock_activity]
-    end
     it "should call render_widget" do
       controller.should_receive(:render_widget)
       get :activities, :id => 1, :format => :embed

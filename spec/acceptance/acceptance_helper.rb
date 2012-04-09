@@ -11,8 +11,10 @@ WebMock.allow_net_connect!
 Capybara.default_wait_time = 10
 
 def tiny_mce_fill_in(name, args)
-  page.driver.within_frame("#{name}_ifr") do
-    editor = page.find_by_id('tinymce')
-    editor.native.send_keys(args[:with])
+  value = args[:with]
+  begin
+    page.execute_script("$('##{name}').tinymce().setContent('#{value}')")
+  rescue Capybara::NotSupportedByDriverError
+    fill_in  "#{name}", :with => value
   end
 end
