@@ -16,7 +16,7 @@
     </div>
     <div class="form-block">
       <label for="reflection_title">Your Reflection:</label>
-      <%= reflection_form.cktext_area :details, :class => 'short textbox', :cols => '40', :rows => '20' %>
+      <%= reflection_form.cktext_area :details, :cols => '40', :rows => '20', :input_html => {:class => 'short textbox'} %>
     </div>
     <div class="form-block">
       <%= reflection_form.submit :class => 'submit', :value => 'Publish' %> or &nbsp;
