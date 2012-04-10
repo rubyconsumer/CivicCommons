@@ -16,7 +16,7 @@
     <div class="aside supplementary">
       <div class="mod">
         <div class="btn-group btn-group-large">
-          <%= link_to 'Share a Reflection', new_conversation_reflection_path(@conversation), :class => 'button btn-large' %>
+          <%= link_to 'Share a Reflection', new_conversation_reflection_path(@conversation, :anchor => 'opportunity-nav'), :class => 'button btn-large' %>
         </div>
       </div>
       <%= render :partial => '/layouts/conversation_issues', :locals => {:standard_issues => @conversation.standard_issue} if @conversation.issues.present? %>
