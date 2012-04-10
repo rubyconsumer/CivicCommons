@@ -26,7 +26,7 @@
       <% if signed_in? && !@petition.signed_by?(current_person) %>
         <div class="mod">
           <div class="btn-group btn-group-large">
-            <%= link_to 'Sign the Petition', sign_conversation_petition_path(@conversation, @petition), :class => 'button btn-large modal-launch' %>
+            <%= link_to 'Sign the Petition', sign_conversation_petition_path(@conversation, @petition), :class => 'button btn-large', :remote => true %>
           </div>
         </div>
       <% end %>

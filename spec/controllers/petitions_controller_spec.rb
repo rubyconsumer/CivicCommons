@@ -168,7 +168,7 @@ describe PetitionsController do
     end
 
     it "should return the sign_modal template" do
-      get :sign_modal, :conversation_id => 123, :id => 1234
+      xhr :get, :sign_modal, :conversation_id => 123, :id => 1234
       response.should render_template 'sign_modal'
     end
   end

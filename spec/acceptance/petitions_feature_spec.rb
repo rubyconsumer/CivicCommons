@@ -13,7 +13,7 @@ feature " Petitions", %q{
   def given_a_petition(options={})
     @petition = FactoryGirl.create(:petition, options)
     @conversation = @petition.conversation
-    
+
     @petition.instance_eval do
       def container
         "[data-petition-id='#{self.id}']"
@@ -77,27 +77,27 @@ feature " Petitions", %q{
     login_as :admin_person
     visit conversation_actions_path(@conversation)
     set_current_page_to :actions
-    
+
     current_page.should have_content 'Existing Title Here'
     current_page.should have_content 'Moderate'
     current_page.should have_content 'Edit'
     current_page.should have_content 'Delete'
-    
+
     follow_edit_petition_link_for(@petition)
     fill_in_title_with 'New Title here'
-    
+
     click_update_petition_button
     current_page.should have_content 'New Title here'
-    
+
     visit conversation_actions_path(@conversation)
     set_current_page_to :actions
     current_page.should have_content 'Moderate'
     current_page.should have_content 'Edit'
     current_page.should have_content 'Delete'
-    
+
     follow_delete_petition_link_for(@petition)
     accept_alert
-    
+
     current_page.should_not have_content 'New Title here'
   end
   scenario "Moderating a petition as a user is NOT allowed" do
@@ -108,14 +108,14 @@ feature " Petitions", %q{
     current_page.should_not have_content 'Moderate'
     current_page.should_not have_content 'Edit'
     current_page.should_not have_content 'Delete'
-    
+
     visit conversation_petition_path(@conversation, @petition)
     set_current_page_to :petition
     current_page.should_not have_content 'Moderate'
     current_page.should_not have_content 'Edit'
     current_page.should_not have_content 'Delete'
-    
+
   end
-  
+
 
 end
