@@ -1,7 +1,7 @@
 class PetitionsController < ApplicationController
   layout 'opportunity'
 
-  before_filter :require_user, :except => [:show]
+  before_filter :require_user, :except => [:show, :print]
   before_filter :verify_admin, :only => [:edit,:update,:destroy]
   before_filter :find_conversation
 
@@ -60,6 +60,11 @@ class PetitionsController < ApplicationController
     @petition = @conversation.petitions.find(params[:id])
     #returns the sign modal dialog
     render :layout => false
+  end
+
+  def print
+    @petition = @conversation.petitions.includes(:signatures).includes(:signers).find(params[:id])
+    render layout: false
   end
 
 protected

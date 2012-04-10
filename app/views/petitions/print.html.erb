@@ -1,0 +1,46 @@
+<html>
+<head>
+  <title>The Civic Commons</title>
+  <%= stylesheet_link_tag "petition.print", :media => "screen" %>
+</head>
+<body>
+  <div id="wrapper">
+    <img src="/images/cc_logo_4.png" />
+    <p class="document-date">As of <%= Date.today.strftime('%b %d, %Y') %></p>
+    <hr />
+
+    <p class="pdf-link"><a href="http://pdfcrowd.com/url_to_pdf/?pdf_name=<%= CGI.escape @petition.title %>.pdf">Convert this page to a PDF</a></p>
+    <h1><%= @petition.title %></h1>
+    <p>Written by: <%= link_to @petition.creator.name, user_url(@petition.creator) %>
+      on <%= @petition.created_at.strftime('%b %d, %Y') %></p>
+    <div class="description">
+      <%= raw @petition.description %>
+    </div>
+
+    <h3 class="section-title"><%= pluralize @petition.signer_ids.count, 'Signatures' %></h3>
+    <hr />
+
+    <% if @petition.signatures.length == 0 %>
+      <p>There have been no signatures so far.</p>
+    <% else %>
+      <table class="signatures">
+        <% @petition.signatures.each_with_index do |signature, index| %>
+        <% if index % 3 == 0 %><tr><% end %>
+          <td class="signature"><%= render partial: 'print_signer', locals: { signer: signature.person, signature_date: signature.created_at } %></td>
+
+        <% # finish adding table columns to complete the table
+          if index == @petition.signatures.length - 1
+            while index % 3 != 2
+              index += 1
+        %><td></td><%
+            end
+          end
+        %>
+
+        <% if index % 3 == 2 %></tr><% end %>
+        <% end %>
+      </table>
+    <% end %>
+  </div>
+</body>
+</html>

@@ -42,7 +42,7 @@
           <h5 class="vente"><span class="grande"><%= @petition.signatures.count %></span> out of <%= @petition.signature_needed %></h5>
           <p><%= @petition.signature_needed_left %> more signatures needed.</p>
           <div class="dnld document">
-            <p><strong><a href="<%= conversation_petition_path(@petition.conversation, @petition, format: :pdf) %>">Download the petition</a></strong></p>
+            <p><strong><%= link_to 'Download the petition', print_conversation_petition_path(@petition.conversation, @petition), target: '_blank' %></strong></p>
           </div>
         </div>
       </div>

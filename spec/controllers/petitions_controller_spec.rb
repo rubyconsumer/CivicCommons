@@ -176,9 +176,9 @@ describe PetitionsController do
 end
 
 describe PetitionsController do
-  describe "show" do
-    let(:petition) { FactoryGirl.create(:petition) }
+  let(:petition) { FactoryGirl.create(:petition) }
 
+  describe "show" do
     it "should show the petition" do
       get :show, :conversation_id => petition.conversation_id, :id => petition.id
       assigns[:petition].id.should == petition.id
@@ -188,6 +188,14 @@ describe PetitionsController do
     it "should respond to :pdf format" do
       get :show, conversation_id: petition.conversation_id, id: petition.id, format: :pdf
       response.headers['Content-Type'].include?("application/pdf").should be_true
+      response.should be_success
+    end
+  end
+
+  describe "print" do
+    it "should show the petition" do
+      get :show, :conversation_id => petition.conversation_id, :id => petition.id
+      assigns[:petition].id.should == petition.id
       response.should be_success
     end
   end

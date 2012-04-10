@@ -153,6 +153,7 @@ Civiccommons::Application.routes.draw do
     resources :petitions do
       post :sign, :to => 'petitions#sign', :on => :member
       get :sign, :to => 'petitions#sign_modal', :on => :member
+      get :print, :to => 'petitions#print', :on => :member
     end
     resources :actions, :only => [:index]
   end
