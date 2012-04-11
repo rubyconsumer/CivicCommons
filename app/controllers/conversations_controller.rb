@@ -70,6 +70,9 @@ class ConversationsController < ApplicationController
 
     @recent_items = Activity.most_recent_activity_items_for_conversation(@conversation, 5)
 
+    # The Participants in a Conversation               | Moved from View to Controller. TODO: Move to model
+    @conversation_participants = @conversation.participants.select{ |p| !@tlc_participants.include?(p.id) }
+
     setup_meta_info(@conversation)
 
     respond_to do |format|

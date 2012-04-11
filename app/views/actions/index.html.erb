@@ -23,7 +23,7 @@
       <% if @conversation.issues.standard_issue.size > 0 %>
         <%= render :partial => '/conversations/side_issues', :object => @conversation, :as => :conversation %>
       <% end %>
-      <%= render :partial => '/layouts/side_participants', :locals => {participants: @participants} if @participants.present? %>
+      <%= render :partial => '/shared/opportunity/side_participants', :locals => {participants: @participants} %>
   </div>
 </div>
 

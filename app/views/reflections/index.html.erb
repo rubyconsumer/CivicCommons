@@ -20,7 +20,7 @@
         </div>
       </div>
       <%= render :partial => '/layouts/conversation_issues', :locals => {:standard_issues => @conversation.standard_issue} if @conversation.issues.present? %>
-      <%= render :partial => '/layouts/side_participants', :locals => {participants: @conversation.reflection_participants} if @conversation.reflection_participants.present? %>
+      <%= render :partial => '/shared/opportunity/side_participants', :locals => {participants: @conversation.reflection_participants} %>
     </div><!-- /.aside -->
 
   </div>
