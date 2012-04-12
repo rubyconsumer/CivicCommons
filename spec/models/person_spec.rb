@@ -58,12 +58,12 @@ describe Person do
       end
 
       def given_a_registered_person_without_a_zip_code
-        @person = Factory :registered_user
+        @person = FactoryGirl.create(:registered_user)
         @person.zip_code = nil
       end
 
       def given_a_registered_person_with_a_short_zip_code
-        @person = Factory :registered_user
+        @person = FactoryGirl.create(:registered_user)
         @person.zip_code = "all"
       end
 
@@ -569,7 +569,7 @@ describe Person do
       results[0].first_name.should == "Hyper"
       results[1].first_name.should == "Lazy"
       results[2].first_name.should == "Super"
-      
+
       results = Person.find_confirmed_order_by_most_active([@person1.id, @person2.id])
       # Check order of objects in the results
       results[0].first_name.should == "Hyper"
