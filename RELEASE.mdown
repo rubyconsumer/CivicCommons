@@ -1,3 +1,8 @@
+## 2.X
+
+### Miscellaneous
+  * [Remove Opportunity Mockups from our Rails project](https://agilezen.com/project/18091/story/494)
+
 ## 2.0
 
 ### External Changes
