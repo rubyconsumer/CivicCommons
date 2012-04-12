@@ -2825,6 +2825,16 @@ div.blog img.callout {float: left; width: 32px; height: 32px; padding-right: 5px
   width: 100%;
 }
 
+
+
+/*- CKEDITOR CUSTOMIZATIONS
+----------------------------------------------------------------------*/
+#cke_advanced_125, #cke_Link_91 {
+  visibility:hidden;
+}
+
+
+
 /*- OPPORTUNITY PAGE STYLES
 ----------------------------------------------------------------------*/
 .vente {
