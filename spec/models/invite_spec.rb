@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Invite do
   def given_an_invite
-    @invite = Factory.build(:invite)
+    @invite = FactoryGirl.build(:invite)
   end
   describe "validation" do
     def given_an_invalid_invite
@@ -28,7 +28,7 @@ describe Invite do
     end
     describe "validates_format_of :emails" do
       def given_an_invite_with_email(emails='')
-        @invite = Factory.build(:invite,:emails=>emails)
+        @invite = FactoryGirl.build(:invite,:emails=>emails)
         @invite.valid?
       end
       it "should validate on correctness of email format" do
@@ -52,17 +52,17 @@ describe Invite do
 
   describe "#conversation" do
     def given_an_invite_with_valid_conversation
-      @conversation = Factory.create(:conversation)
-      @invite = Factory.build(:invite, :source_id=>@conversation.id, :source_type=>'conversations')
+      @conversation = FactoryGirl.create(:conversation)
+      @invite = FactoryGirl.build(:invite, :source_id=>@conversation.id, :source_type=>'conversations')
     end
     it "should find the conversation based on the source_id" do
       given_an_invite_with_valid_conversation
       @invite.conversation.should == @conversation
     end
     it "should default to the first conversation when there is no source_id found" do
-      @conversation1 = Factory.create(:conversation)
-      @conversation2 = Factory.create(:conversation)
-      @invite = Factory.build(:invite, :source_id=>123456, :source_type=>'conversations')
+      @conversation1 = FactoryGirl.create(:conversation)
+      @conversation2 = FactoryGirl.create(:conversation)
+      @invite = FactoryGirl.build(:invite, :source_id=>123456, :source_type=>'conversations')
       @invite.conversation.should == @conversation1
     end
   end
@@ -86,7 +86,7 @@ describe Invite do
   describe "splitted_emails" do
     it "should split the emails based on new line or comma" do
       emails="first@test.com second@test.com, third@test.com \nfourth@test.com"
-      @invite = Factory.build(:invite, :emails=>emails)
+      @invite = FactoryGirl.build(:invite, :emails=>emails)
       @invite.splitted_emails.should == ['first@test.com', 'second@test.com', 'third@test.com', 'fourth@test.com']
     end
   end
@@ -94,7 +94,7 @@ describe Invite do
   describe "parsed_email" do
     let(:valid_results) {['alpha@example.com', 'bravo@example.com', 'charlie@example.com']}
     def given_invite_with_emails(emails="")
-      @invite = Factory.build(:invite, :emails=>emails)
+      @invite = FactoryGirl.build(:invite, :emails=>emails)
     end
     it "should correctly parse and return an array of emails" do
       given_invite_with_emails("alpha@example.com, bravo@example.com\n charlie@example.com")
@@ -130,9 +130,9 @@ describe Invite do
   describe "send_invites" do
     it "should not escape the html of the summary" do
       summary = '<em>Strong Tag Here</em>'
-      conversation = Factory.create(:conversation,:summary=> summary)
-      user = Factory.create(:registered_user)
-      @invite = Factory.build(:invite,:user => user, :source_id=>conversation.id, :source_type=> 'conversations')
+      conversation = FactoryGirl.create(:conversation,:summary=> summary)
+      user = FactoryGirl.create(:registered_user)
+      @invite = FactoryGirl.build(:invite,:user => user, :source_id=>conversation.id, :source_type=> 'conversations')
       @invite.send_invites
       ActionMailer::Base.deliveries.last.body.include?(summary).should be_true
     end

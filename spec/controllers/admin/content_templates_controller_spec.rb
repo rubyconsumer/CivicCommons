@@ -4,7 +4,7 @@ module Admin
   describe ContentTemplatesController do
 
     before(:each) do
-      sign_in Factory.create(:admin_person)
+      sign_in FactoryGirl.create(:admin_person)
     end
 
     describe "GET index" do
@@ -12,7 +12,7 @@ module Admin
       before(:each) do
         @content_templates = {}
         (1..5).each do 
-          template = Factory.create(:content_template)
+          template = FactoryGirl.create(:content_template)
           @content_templates[template.id] = template
         end
       end
@@ -27,7 +27,7 @@ module Admin
     describe "GET show" do
 
       let(:template) do
-        Factory.create(:content_template)
+        FactoryGirl.create(:content_template)
       end
 
       it "assigns the requested content_template as @content_template" do
@@ -49,7 +49,7 @@ module Admin
     describe "GET edit" do
 
       let(:template) do
-        Factory.create(:content_template)
+        FactoryGirl.create(:content_template)
       end
 
       it "assigns the requested content_template as @content_template" do
@@ -64,7 +64,7 @@ module Admin
       describe "with valid params" do
 
         let(:params) do
-          Factory.attributes_for(:content_template)
+          FactoryGirl.attributes_for(:content_template)
         end
 
         before(:each) do
@@ -85,7 +85,7 @@ module Admin
       describe "with invalid params" do
 
         let(:params) do
-          Factory.attributes_for(:content_template)
+          FactoryGirl.attributes_for(:content_template)
         end
 
         before(:each) do
@@ -108,7 +108,7 @@ module Admin
     describe "PUT update" do
 
       let(:template) do
-        Factory.create(:content_template)
+        FactoryGirl.create(:content_template)
       end
 
       let(:new_name) do
@@ -166,7 +166,7 @@ module Admin
     describe "DELETE destroy" do
 
       let(:template) do
-        Factory.create(:content_template)
+        FactoryGirl.create(:content_template)
       end
 
       before(:each) do

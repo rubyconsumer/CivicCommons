@@ -17,7 +17,7 @@ describe Admin::ContentItemsPeopleController do
   end
 
   before(:each) do
-    # sign_in Factory.create(:admin_person)
+    # sign_in FactoryGirl.create(:admin_person)
     ContentItem.stub!(:find).and_return(stub_content_item)
   end
 

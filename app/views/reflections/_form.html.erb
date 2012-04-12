@@ -1,0 +1,50 @@
+<% content_for :header do %>
+  <%= javascript_include_tag :ckeditor %>
+<% end %>
+
+<%= form_for [@conversation, @reflection] do |reflection_form| %>
+  <% if @reflection.errors.any? %>
+    <div class="alert alert-error mbl">
+      <h4>There were errors saving this petition.</h4>
+    </div>
+  <% end %>
+
+  <fieldset class="form-group top-align">
+    <div class="form-block">
+      <%= reflection_form.label :'title:' %><br />
+      <%= reflection_form.text_field :title, :class => 'textbox', :size => '30' %>
+    </div>
+    <div class="form-block">
+      <label for="reflection_title">Your Reflection:</label>
+      <%= reflection_form.cktext_area :details, :cols => '40', :rows => '20', :input_html => {:class => 'short textbox'} %>
+    </div>
+    <div class="form-block">
+      <%= reflection_form.submit :class => 'submit', :value => 'Publish' %> or &nbsp;
+      <%= link_to 'Cancel', [@conversation, @reflection], :id => 'cancel-reflection' %>
+    </div>
+    <%= hidden_field(:reflection, :conversation_id) %>
+    <%= hidden_field(:reflection, :owner) %>
+  </fieldset>
+
+
+</div><!-- /.main-content -->
+
+<div class='aside supplementary'>
+
+  <% if current_person.participated_actions_for_conversation(@conversation).present? %>
+  <div class="mod">
+    <p><strong>You participated in the following actions, would you like to reference them in your reflection?</strong></p>
+    <div class="media inset">
+      <% current_person.participated_actions_for_conversation(@conversation).each do |action| %>
+        <div class="bd">
+          <%= check_box_tag 'reflection[action_ids][]', action.id, @reflection.action_ids.include?(action.id) %>
+          <strong><%= action.actionable.title %></strong>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <% end %>
+
+</div>
+
+<% end %>

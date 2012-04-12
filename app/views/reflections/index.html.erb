@@ -1,0 +1,28 @@
+<div class="wrapper">
+  <div class="content-container">
+
+    <div class="main-content">
+
+      <p class="mbl">
+        This is the space where we take a moment to understand what we’ve learned and the significance of our conversation and action. So, what’s been accomplished? What’s still needed? Is there an opportunity for more action or a new conversation that ought to be launched? What are the unanswered questions and who else should be invited to participate?
+      </p>
+
+      <% @reflections.each do |reflection| %>
+        <%= render :partial => '/reflections/reflection_index_panel', :locals => {:conversation => @conversation, :reflection => reflection} %>
+      <% end %>
+
+    </div><!-- /.main-content -->
+
+    <div class="aside supplementary">
+      <div class="mod">
+        <div class="btn-group btn-group-large">
+          <%= link_to 'Share a Reflection', new_conversation_reflection_path(@conversation, :anchor => 'opportunity-nav'), :class => 'button btn-large' %>
+        </div>
+      </div>
+      <%= render :partial => '/layouts/conversation_issues', :locals => {:standard_issues => @conversation.standard_issue} if @conversation.issues.present? %>
+      <%= render :partial => '/shared/opportunity/side_participants', :locals => {participants: @conversation.reflection_participants} %>
+    </div><!-- /.aside -->
+
+  </div>
+</div>
+

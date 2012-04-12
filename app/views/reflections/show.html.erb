@@ -1,0 +1,40 @@
+<div class="wrapper">
+  <div class="content-container">
+
+    <div class="main-content">
+      
+      <% if current_person.try(:admin?) %>
+      <p class="fl-right alert alert-admin">
+        <strong>Moderate:</strong>
+        <%= link_to 'Edit', edit_conversation_reflection_path(@conversation, @reflection) %> |
+        <%= link_to 'Delete', conversation_reflection_path(@conversation, @reflection), :method => :delete, :confirm => "Are you sure you want to delete this reflection? This cannot be undone." %>
+      </p>
+      <% end %>
+      <h2 class="mtn"><%= @reflection.title %></h2>
+      <p><strong>By: <%= text_profile(@reflection.owner) %> on <%= @reflection.created_at.strftime('%B %d, %Y') %></strong></p>
+      <p><%= raw @reflection.details %></p>
+
+      <div class="comment-section mtl">
+        <h3 class="mbl" id="comments">Comments</h3>
+        <%= render :partial => '/reflection_comments/comment', :collection => @comments %>
+        </div>
+
+        <span id="new_comment"></span>
+        <%= render :partial => '/reflection_comments/form' %>
+
+      </div>
+
+      <div class='aside supplementary'>
+        <div class="recent-item">
+          <div class="offset-2">
+            <%= user_profile(@reflection.owner) %>
+            <p><strong><%= text_profile(@reflection.owner) %></strong><br />
+          </div>
+        </div>
+        <%= render :partial => '/shared/opportunity/participated_actions_aside', :locals => {reflection:@reflection, participated_actions:@participated_actions } if @participated_actions.present? %>
+      </div><!-- /.aside -->
+
+    </div><!-- /.main-content -->
+  </div>
+</div>
+

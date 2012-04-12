@@ -1,0 +1,75 @@
+<div class="wrapper">
+  <div class="content-container">
+
+    <div class="main-content">
+      <div class="mbl">
+        <%= moderate_link_for(@petition) if signed_in? && current_person.admin? %>
+        <h2 class="mtn"><%= @petition.title %></h2>
+
+        <p class="contribution-person-name"> By: <%= text_profile(@petition.creator) %> on <%= @petition.created_at.to_date.to_s(:long) %></p>
+        <%= raw sanitize @petition.description %>
+        <p class="alert alert-notification">
+          <strong><%= @petition.resulting_actions %></strong>
+        </p>
+      </div>
+      <% if @petition.signers.count > 0 %>
+        <h3>Signatures</h3>
+        <div class="photobank signatures">
+          <% @petition.signers.each do |signer| %>
+            <%= avatar_profile(signer, 50, 'callout') %>
+          <% end %>
+        </div>
+      <% end %>
+    </div><!-- /.main-content -->
+
+    <div class='aside supplementary'>
+      <% if !signed_in? || !@petition.signed_by?(current_person) %>
+        <div class="mod">
+          <div class="btn-group btn-group-large">
+            <%= link_to 'Sign the Petition', sign_conversation_petition_path(@conversation, @petition), :class => 'button btn-large', :remote => true %>
+          </div>
+        </div>
+      <% end %>
+      <% if flash[:petition_notice] %>
+        <div class="alert alert-success">
+          <%= raw flash[:petition_notice] %>
+        </div>
+      <% end %>
+
+
+      <div class="recent-item">
+        <div class="bd">
+          <h5 class="vente"><span class="grande"><%= @petition.signatures.count %></span> out of <%= @petition.signature_needed %></h5>
+          <p><%= @petition.signature_needed_left %> more signatures needed.</p>
+          <div class="dnld document">
+            <p><strong><%= link_to 'Download the petition', print_conversation_petition_path(@petition.conversation, @petition), target: '_blank' %></strong></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="recent-item">
+        <div class="offset-2">
+          <%= member_profile(@petition.creator) %>
+          <p><strong><%= text_profile(@petition.creator) %></strong><br />
+          <%= link_to 'View Profile', user_path(@petition.creator) %>
+        </div>
+      </div>
+    </div><!-- /.aside -->
+
+
+  </div>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('a.modal-launch').colorbox({href:'<%= sign_conversation_petition_path(@conversation, @petition) %>', width:'400px', transition: 'fade'});
+      $('#cboxContent .agreebutton').live('click', function(){
+
+        return false;
+      });
+      $('#cboxContent .closebutton').live('click', function(){
+        $.fn.colorbox.close();
+        return false;
+      });
+    });
+  </script>
+</div>
+

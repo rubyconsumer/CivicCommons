@@ -3,19 +3,19 @@ require 'spec_helper'
 describe TopicsHelper do
   describe 'topics_list_for' do
     before(:each) do
-      @topic = Factory.create(:topic)
+      @topic = FactoryGirl.create(:topic)
     end
 
     context 'Issues' do
       context 'when there are no topics' do
-        let(:issue_without_topic) { Factory.build(:issue, topics: []) }
+        let(:issue_without_topic) { FactoryGirl.build(:issue, topics: []) }
         it "does not display topics" do
           topics_list_for(issue_without_topic).should eq ""
         end
       end
 
       context "when there is 1 topic" do
-        let(:issue_with_topic) { Factory.build(:issue, topics: [@topic]) }
+        let(:issue_with_topic) { FactoryGirl.build(:issue, topics: [@topic]) }
 
         it "displays just the one topic" do
           topics_list_for(issue_with_topic).should include @topic.name
@@ -30,8 +30,8 @@ describe TopicsHelper do
 
       context "when there are more than one topic" do
         let(:issue_with_topics) do
-          @topic2 = Factory.build(:topic)
-          Factory.build(:issue, topics: [@topic, @topic2])
+          @topic2 = FactoryGirl.build(:topic)
+          FactoryGirl.build(:issue, topics: [@topic, @topic2])
         end
 
         it "displays the topics comma seperated" do
@@ -43,14 +43,14 @@ describe TopicsHelper do
 
     context 'RadioShows' do
       context 'when there are no topics' do
-        let(:radioshow_without_topic) { Factory.build(:radio_show, topics: []) }
+        let(:radioshow_without_topic) { FactoryGirl.build(:radio_show, topics: []) }
         it "does not display topics" do
           topics_list_for(radioshow_without_topic).should eq ""
         end
       end
 
       context "when there is 1 topic" do
-        let(:radioshow_with_topic) { Factory.build(:radio_show, topics: [@topic]) }
+        let(:radioshow_with_topic) { FactoryGirl.build(:radio_show, topics: [@topic]) }
 
         it "displays just the one topic" do
           topics_list_for(radioshow_with_topic).should include @topic.name
@@ -65,8 +65,8 @@ describe TopicsHelper do
 
       context "when there are more than one topic" do
         let(:radioshow_with_topics) do
-          @topic2 = Factory.build(:topic)
-          Factory.build(:radio_show, topics: [@topic, @topic2])
+          @topic2 = FactoryGirl.build(:topic)
+          FactoryGirl.build(:radio_show, topics: [@topic, @topic2])
         end
 
         it "displays the topics comma seperated" do

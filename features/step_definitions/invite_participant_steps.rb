@@ -1,5 +1,5 @@
 Given /^that I am on the invitation page$/ do
-  @conversation = Factory.create(:conversation)
+  @conversation = FactoryGirl.create(:conversation)
   visit new_invite_url(:source_type => :conversations, :source_id => @conversation.slug)
 end
 

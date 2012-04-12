@@ -3,11 +3,11 @@ require 'spec_helper'
 describe ContentItem do
 
   before(:all) do
-    @author = Factory.build(:admin_person)
+    @author = FactoryGirl.build(:admin_person)
   end
 
   before(:each) do
-    @content_item = Factory.build(:content_item,:author => @author)
+    @content_item = FactoryGirl.build(:content_item,:author => @author)
   end
 
   context "validations" do
@@ -38,7 +38,7 @@ describe ContentItem do
 
     it "validates the uniqueness of the title" do
       @content_item.save
-      @content_item2 = Factory.build(:content_item, :title => @content_item.title)
+      @content_item2 = FactoryGirl.build(:content_item, :title => @content_item.title)
       @content_item2.should_not be_valid
     end
 
@@ -49,10 +49,10 @@ describe ContentItem do
     end
 
     it 'requires one topic to be assigned' do
-      content_item = Factory.build(:blog_post, topics: [])
+      content_item = FactoryGirl.build(:blog_post, topics: [])
       content_item.should_not be_valid
 
-      topic = Factory.build(:topic)
+      topic = FactoryGirl.build(:topic)
       content_item.topics = [topic]
       content_item.should be_valid
     end
@@ -61,9 +61,9 @@ describe ContentItem do
 
   context "has_and_belongs_to_many conversations" do
     def given_a_radio_show_with_conversations
-      @radioshow = Factory.create(:radio_show)
-      @conversation1 = Factory.create(:conversation)
-      @conversation2 = Factory.create(:conversation)
+      @radioshow = FactoryGirl.create(:radio_show)
+      @conversation1 = FactoryGirl.create(:conversation)
+      @conversation2 = FactoryGirl.create(:conversation)
       @radioshow.conversations = [@conversation1, @conversation2]
     end
     it "should be correct" do
@@ -79,9 +79,9 @@ describe ContentItem do
   context "has_and_belongs_to_many topics" do
     describe "on blog posts" do
       def given_a_blog_post_with_topics
-        @topic1 = Factory.create(:topic)
-        @topic2 = Factory.create(:topic)
-        @blog = Factory.create(:blog_post)
+        @topic1 = FactoryGirl.create(:topic)
+        @topic2 = FactoryGirl.create(:topic)
+        @blog = FactoryGirl.create(:blog_post)
         @blog.topics = [@topic1, @topic2]
       end
       it "should be correct" do
@@ -95,9 +95,9 @@ describe ContentItem do
 
     describe "on radio shows" do
       def given_a_radio_show_with_topics
-        @topic1 = Factory.create(:topic)
-        @topic2 = Factory.create(:topic)
-        @radio_show = Factory.create(:radio_show)
+        @topic1 = FactoryGirl.create(:topic)
+        @topic2 = FactoryGirl.create(:topic)
+        @radio_show = FactoryGirl.create(:radio_show)
         @radio_show.topics = [@topic1, @topic2]
       end
       it "should be correct" do
@@ -127,12 +127,12 @@ describe ContentItem do
     context "recent_blog_posts" do
 
       before(:each) do
-        @p1 = Factory.create(:admin_person)
-        @p2 = Factory.create(:admin_person)
-        @b1_1 = Factory.create(:blog_post, author: @p1, published: 1.day.ago, created_at: 1.day.ago)
-        @b2_1 = Factory.create(:blog_post, author: @p2, published: 2.days.ago, created_at: 2.days.ago)
-        @b2_2 = Factory.create(:blog_post, author: @p2, published: 2.days.ago, created_at: 3.days.ago)
-        @b2_3 = Factory.create(:blog_post, author: @p2, published: 3.day.ago, created_at: 3.days.ago)
+        @p1 = FactoryGirl.create(:admin_person)
+        @p2 = FactoryGirl.create(:admin_person)
+        @b1_1 = FactoryGirl.create(:blog_post, author: @p1, published: 1.day.ago, created_at: 1.day.ago)
+        @b2_1 = FactoryGirl.create(:blog_post, author: @p2, published: 2.days.ago, created_at: 2.days.ago)
+        @b2_2 = FactoryGirl.create(:blog_post, author: @p2, published: 2.days.ago, created_at: 3.days.ago)
+        @b2_3 = FactoryGirl.create(:blog_post, author: @p2, published: 3.day.ago, created_at: 3.days.ago)
       end
 
       it "retrieves all blog posts sorted properly when no author is given" do
@@ -159,17 +159,17 @@ describe ContentItem do
 
   context "urls" do
     it "will show the correct path for a BlogPost" do
-      blog_post = Factory.create(:blog_post)
+      blog_post = FactoryGirl.create(:blog_post)
       blog_post.url.should == blog_path(blog_post)
     end
 
     it "will show the correct path for a RadioShow" do
-      radio_show = Factory.create(:radio_show)
+      radio_show = FactoryGirl.create(:radio_show)
       radio_show.url.should == radioshow_path(radio_show)
     end
 
     it "will show the external link for a NewsItem" do
-      news_item = Factory.create(:news_item)
+      news_item = FactoryGirl.create(:news_item)
       news_item.url.should == news_item.external_link
     end
   end
@@ -205,13 +205,13 @@ describe ContentItem do
 
   context "RadioShow Host" do
     def given_a_radio_show
-      @radio_show = Factory.create(:radio_show)
-      @user1 = Factory.create(:registered_user)
-      @user2 = Factory.create(:registered_user)
+      @radio_show = FactoryGirl.create(:radio_show)
+      @user1 = FactoryGirl.create(:registered_user)
+      @user2 = FactoryGirl.create(:registered_user)
     end
     def given_a_radio_show_with_a_host_and_guest
-      @radio_show = Factory.create(:radio_show)
-      @user1 = Factory.create(:registered_user)
+      @radio_show = FactoryGirl.create(:radio_show)
+      @user1 = FactoryGirl.create(:registered_user)
       @radio_show.hosts << @user1
       @radio_show.guests << @user1
     end
@@ -252,22 +252,22 @@ describe ContentItem do
 
     context "has and belongs to many people" do
       it "should be read only" do
-        @radio_show = Factory.create(:radio_show)
-        @user1 = Factory.create(:registered_user)
+        @radio_show = FactoryGirl.create(:radio_show)
+        @user1 = FactoryGirl.create(:registered_user)
         lambda{@radio_show.people = [@user1]}.should raise_exception ":people is readonly. please use :hosts or :guests habtm association, instead!"
         @radio_show.reload.people.count.should == 0
       end
       it "should return all hosts and guests" do
-        @radio_show = Factory.create(:radio_show)
-        @user1 = Factory.create(:registered_user)
-        @user2 = Factory.create(:registered_user)
+        @radio_show = FactoryGirl.create(:radio_show)
+        @user1 = FactoryGirl.create(:registered_user)
+        @user2 = FactoryGirl.create(:registered_user)
         @radio_show.hosts << @user1
         @radio_show.guests << @user2
         @radio_show.people.count.should == 2
       end
       it "should return all people uniquely" do
-        @radio_show = Factory.create(:radio_show)
-        @user1 = Factory.create(:registered_user)
+        @radio_show = FactoryGirl.create(:radio_show)
+        @user1 = FactoryGirl.create(:registered_user)
         @radio_show.hosts << @user1
         @radio_show.guests << @user1
         @radio_show.people.count.should == 1
@@ -276,8 +276,8 @@ describe ContentItem do
   end
   context "add_person" do
     before(:each) do
-      @radio_show = Factory.create(:radio_show)
-      @user1 = Factory.create(:registered_user)
+      @radio_show = FactoryGirl.create(:radio_show)
+      @user1 = FactoryGirl.create(:registered_user)
     end
 
     it "should add the guest if role is set as a guest" do
@@ -295,8 +295,8 @@ describe ContentItem do
   end
   context "delete_person" do
     before(:each) do
-      @radio_show = Factory.create(:radio_show)
-      @user1 = Factory.create(:registered_user)
+      @radio_show = FactoryGirl.create(:radio_show)
+      @user1 = FactoryGirl.create(:registered_user)
       @radio_show.add_person('guest', @user1)
       @radio_show.add_person('host', @user1)
     end
@@ -316,33 +316,33 @@ describe ContentItem do
   end
   context "link text" do
     it "displays default radioshow link text." do
-      radioshow = Factory.build(:radio_show)
+      radioshow = FactoryGirl.build(:radio_show)
       radioshow.link_title.should == "Listen to the podcast..."
     end
 
     it "displays default blog link text." do
-      blogpost = Factory.build(:blog_post)
+      blogpost = FactoryGirl.build(:blog_post)
       blogpost.link_title.should == "Continue reading..."
     end
 
     it "displays default link text for the unknown." do
-      unknown = Factory.build(:blog_post)
+      unknown = FactoryGirl.build(:blog_post)
       unknown.content_type = "UNKNOWN"
       unknown.link_title.should == "Continue reading..."
     end
 
     it "displays inputed text for link text" do
-      unknown = Factory.build(:blog_post)
+      unknown = FactoryGirl.build(:blog_post)
       unknown.link_title("link to this").should == "link to this"
     end
   end
   context "blog_authors" do
     def given_blogs_and_authors
-       @author1 = Factory.create(:admin_person)
-       @author2 = Factory.create(:admin_person)
-       @author3 = Factory.create(:admin_person)
-       @blog1 = Factory.create(:blog_post, :author => @author1)
-       @blog2 = Factory.create(:blog_post, :author => @author2)
+       @author1 = FactoryGirl.create(:admin_person)
+       @author2 = FactoryGirl.create(:admin_person)
+       @author3 = FactoryGirl.create(:admin_person)
+       @blog1 = FactoryGirl.create(:blog_post, :author => @author1)
+       @blog2 = FactoryGirl.create(:blog_post, :author => @author2)
     end
 
     it "should return the correct authors" do

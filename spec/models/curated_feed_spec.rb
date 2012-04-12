@@ -3,7 +3,7 @@ require 'spec_helper'
 describe CuratedFeed do
 
   let(:params) do
-    Factory.attributes_for(:curated_feed)
+    FactoryGirl.attributes_for(:curated_feed)
   end
 
   context "validation" do
@@ -18,7 +18,7 @@ describe CuratedFeed do
     end
 
     it "validates uniqueness of title" do
-      feed = Factory.create(:curated_feed)
+      feed = FactoryGirl.create(:curated_feed)
       params[:title] = feed.title
       CuratedFeed.new(params).should_not be_valid
     end

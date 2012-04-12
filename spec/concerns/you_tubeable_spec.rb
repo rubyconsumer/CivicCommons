@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Article, "When working with YouTube videos" do
   before(:each) do
-    @model = Factory.build(:youtube_article)
+    @model = FactoryGirl.build(:youtube_article)
   end
   context "and submitting a URL" do
     [ "http://www.example.com/this-is-not-a-valid-youtube-url" ].each do |invalid_youtube_url|

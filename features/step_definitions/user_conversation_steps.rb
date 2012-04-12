@@ -7,7 +7,7 @@ Given /am on the responsibilities page$/ do
 end
 
 Given /am on the conversation creation page$/ do
-  Factory.create(:issue)
+  FactoryGirl.create(:issue)
   visit new_conversation_path(:accept => true)
   @issues = [Issue.first]
 end
@@ -29,7 +29,7 @@ Given /have entered valid conversation data:$/ do |table|
 end
 
 Given /am on the Send Invitations page after creating a conversation$/ do
-  @conversation = Factory.create(:conversation)
+  @conversation = FactoryGirl.create(:conversation)
   Given 'a clear email queue'
   visit new_invite_url(:source_type => :conversations, :source_id => @conversation.id, :conversation_created => true)
 end

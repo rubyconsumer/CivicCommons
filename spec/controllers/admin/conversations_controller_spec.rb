@@ -4,7 +4,7 @@ module Admin
   describe ConversationsController do
 
     before :each do
-      @admin_person = Factory.create(:admin_person)
+      @admin_person = FactoryGirl.create(:admin_person)
       @controller.stub(:current_person).and_return(@admin_person)
     end
 
@@ -23,9 +23,9 @@ module Admin
     describe "ConversationsController#create" do
 
       it "sets community_generated to false" do
-        params = Factory.attributes_for(:conversation)
-        params[:owner] = Factory.create(:admin_person)
-        params[:issues] = [ Factory.create(:issue) ]
+        params = FactoryGirl.attributes_for(:conversation)
+        params[:owner] = FactoryGirl.create(:admin_person)
+        params[:issues] = [ FactoryGirl.create(:issue) ]
         post :create, conversation: params
         assigns(:conversation).from_community.should be_false
       end
@@ -54,14 +54,14 @@ module Admin
 
     describe "ConversationsController#toggle_staff_pick" do
       it "toggles the staff_pick flag on a given conversation" do
-        conversation = Factory.create(:conversation, staff_pick: true)
+        conversation = FactoryGirl.create(:conversation, staff_pick: true)
 
         put :toggle_staff_pick, id: conversation.id
         Conversation.find_by_id(conversation.id).staff_pick.should be_false
       end
 
       it "redirects to the original controller action if provided" do
-        conversation = Factory.create(:conversation, staff_pick: true)
+        conversation = FactoryGirl.create(:conversation, staff_pick: true)
         Conversation.stub(:find) { conversation }
         conversation.stub(:save) { true }
 
@@ -70,7 +70,7 @@ module Admin
       end
 
       it "shows a flash[:error] message if the conversation cannot be saved" do
-        conversation = Factory.create(:conversation, staff_pick: true)
+        conversation = FactoryGirl.create(:conversation, staff_pick: true)
         Conversation.stub(:find) { conversation }
         conversation.stub(:save) { false }
 

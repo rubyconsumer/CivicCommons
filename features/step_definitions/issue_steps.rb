@@ -1,5 +1,5 @@
 Given /^I have a comment on the issue:$/ do |comment|
-  Factory.create(:contribution,
+  FactoryGirl.create(:contribution,
                  person: @current_person,
                  content: comment,
                  conversation: nil,
@@ -15,16 +15,16 @@ Given /^an issue:$/ do |table|
   end
 
   @issue =
-    Factory.create(:issue,
+    FactoryGirl.create(:issue,
                    id:   issue['ID'],
                    name: issue['Name'],
                    image: attachment,
                    summary: issue['Summary'],
                    zip_code: issue['Zip Code'])
 
-  @contributor = Factory.create(:registered_user)
+  @contributor = FactoryGirl.create(:registered_user)
 
-  Factory.create(:issue_contribution,
+  FactoryGirl.create(:issue_contribution,
                  issue: @issue,
                  owner: @contributor.id)
 
@@ -36,7 +36,7 @@ Given /^I am following the issue:$/ do |table|
 end
 
 Given /^I have a contribution on the issue$/ do
-  Factory.create(:comment,
+  FactoryGirl.create(:comment,
                  person: @current_person,
                  issue: @issue)
 end

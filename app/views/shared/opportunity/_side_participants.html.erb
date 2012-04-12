@@ -1,0 +1,12 @@
+<% if participants.present? %>
+  <h3>Participants</h3>
+  <div class='mod-content'>
+    <div class='other-participants'>
+      <div class='photobank'>
+        <% participants.each do |participant| %>
+          <%= conversation_profile(participant).html_safe %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>

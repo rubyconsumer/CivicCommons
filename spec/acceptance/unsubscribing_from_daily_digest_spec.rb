@@ -18,7 +18,7 @@ feature "Unscribing from daily digest", %q{
   end
 
   def given_a_member
-    @member = Factory.build(:normal_person)
+    @member = FactoryGirl.build(:normal_person)
   end
 
   def given_a_member_missing_required_information

@@ -3,8 +3,8 @@ require 'spec_helper'
 describe Tos do
 
   before(:each) do
-    @user = Factory.create(:registered_user, :name => 'Whistle Blower', :daily_digest => true, :avatar => nil)
-    @contribution = Factory.create(:comment, :content => 'spam spam spam')
+    @user = FactoryGirl.create(:registered_user, :name => 'Whistle Blower', :daily_digest => true, :avatar => nil)
+    @contribution = FactoryGirl.create(:comment, :content => 'spam spam spam')
     @reason = "This comment is spam."
   end
 

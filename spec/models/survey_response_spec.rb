@@ -27,7 +27,7 @@ describe SurveyResponse do
       @survey_response.errors[:person_id].should == ["can't be blank"]
     end
     it "should validate uniqueness of person_id and survey_id" do
-      @survey_response1 = Factory.create(:survey_response)
+      @survey_response1 = FactoryGirl.create(:survey_response)
       @survey_response2 = @survey_response1.clone
       @survey_response2.valid?
       @survey_response2.errors[:person_id].should == ["already exists"]
@@ -37,8 +37,8 @@ describe SurveyResponse do
   context "scope" do
     context "sort_last_created_first" do
       def given_survey_responses
-        @survey_response1 = Factory.create(:survey_response, :created_at => Date.today)
-        @survey_response2 = Factory.create(:survey_response, :created_at => 1.days.ago)
+        @survey_response1 = FactoryGirl.create(:survey_response, :created_at => Date.today)
+        @survey_response2 = FactoryGirl.create(:survey_response, :created_at => 1.days.ago)
       end
       it "should sort by last created at" do
         given_survey_responses

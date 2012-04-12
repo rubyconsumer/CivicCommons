@@ -20,7 +20,7 @@ module CivicCommonsDriver
   end
 
   def create_user(type, options={})
-    Factory.create(type, options)
+    FactoryGirl.create(type, options)
   end
 
   def login_as(type = :person, options={})
@@ -69,7 +69,7 @@ module CivicCommonsDriver
   end
 
   def create_contribution options={}
-    self.contribution = Factory.create(:contribution_without_parent, options)
+    self.contribution = FactoryGirl.create(:contribution_without_parent, options)
   end
 
   def contribution= contribution
@@ -97,7 +97,7 @@ module CivicCommonsDriver
   end
 
   def create_subcontribution_for contribution
-    Factory.create(:contribution, :conversation=>contribution.conversation, :parent=> contribution)
+    FactoryGirl.create(:contribution, :conversation=>contribution.conversation, :parent=> contribution)
   end
   def page_header
     @header = (@header || Header.new)

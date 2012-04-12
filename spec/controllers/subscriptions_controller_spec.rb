@@ -4,7 +4,7 @@ include ControllerMacros
 describe SubscriptionsController do
 
   before(:each) do
-    @conversation = Factory.create(:conversation)
+    @conversation = FactoryGirl.create(:conversation)
   end
 
   context "subscribe" do

@@ -7,6 +7,8 @@ class Conversation < ActiveRecord::Base
   include HomepageFeaturable
   include Thumbnail
 
+  has_many :actions, :dependent => :destroy
+
   searchable :ignore_attribute_changes_of => [ :total_visits, :recent_visits, :last_visit_date, :updated_at, :recent_rating ] do
     text :title, :boost => 3, :default_boost => 3
     text :summary, :stored => true, :boost => 2, :default_boost => 2 do
@@ -29,12 +31,16 @@ class Conversation < ActiveRecord::Base
            :source => :person, :uniq => true,
            :order => "contributions.created_at ASC"
 
+  has_many :petitions, :dependent => :destroy
+  has_many :reflections, :dependent => :destroy
+
   has_and_belongs_to_many :issues
   has_and_belongs_to_many :content_items, uniq: true
 
   has_one :survey, :as => :surveyable
   belongs_to :person, :foreign_key => "owner"
   delegate :name, :to => :person, :prefix => true
+  delegate :standard_issue, :to => :issues
 
   has_attached_file :image,
     :styles => {
@@ -67,6 +73,14 @@ class Conversation < ActiveRecord::Base
 
   scope :latest_updated, :order => 'updated_at DESC'
   scope :latest_created, where(:exclude_from_most_recent => false).order('created_at DESC')
+
+  def action_participants
+    participants = self.actions.collect(&:participants).flatten.uniq
+  end
+
+  def reflection_participants
+    participants = self.reflections.collect(&:participants).flatten.uniq
+  end
 
   def self.available_filters
     {
@@ -136,6 +150,19 @@ class Conversation < ActiveRecord::Base
     others.each_with_index do |conversation, i|
       Conversation.where('id = ?', conversation.id).update_all(position: i + staff_picks_length)
     end
+  end
+
+  def community_user_ids
+    rater_ids = RatingGroup.select(:person_id).where(contribution_id: contribution_ids).uniq.collect do |rating_group|
+      rating_group.person_id
+    end
+    person_ids = Array.new
+    person_ids += [owner]
+    person_ids += participant_ids
+    person_ids += rater_ids
+    person_ids = person_ids.flatten.uniq.reject(&:blank?)
+    people = Person.select(:id).where(:id => person_ids).where('confirmed_at IS NOT NULL and locked_at IS NULL')
+    people.collect{ |person| person.id }
   end
 
   def user_generated?

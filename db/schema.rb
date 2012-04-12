@@ -10,7 +10,26 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120306142027) do
+ActiveRecord::Schema.define(:version => 20120329033351) do
+
+  create_table "actions", :force => true do |t|
+    t.integer  "conversation_id"
+    t.integer  "actionable_id"
+    t.string   "actionable_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "actions", ["actionable_id"], :name => "index_actions_on_actionable_id"
+  add_index "actions", ["actionable_type"], :name => "index_actions_on_actionable_type"
+  add_index "actions", ["conversation_id"], :name => "index_actions_on_conversation_id"
+
+  create_table "actions_reflections", :id => false, :force => true do |t|
+    t.integer "reflection_id"
+    t.integer "action_id"
+  end
+
+  add_index "actions_reflections", ["reflection_id", "action_id"], :name => "index_actions_reflections_on_reflection_id_and_action_id"
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -47,6 +66,22 @@ ActiveRecord::Schema.define(:version => 20120306142027) do
   add_index "authentications", ["person_id"], :name => "index_authentications_on_person_id"
   add_index "authentications", ["provider"], :name => "index_authentications_on_provider"
   add_index "authentications", ["uid"], :name => "index_authentications_on_uid"
+
+  create_table "ckeditor_assets", :force => true do |t|
+    t.string   "data_file_name",                  :null => false
+    t.string   "data_content_type"
+    t.integer  "data_file_size"
+    t.integer  "assetable_id"
+    t.string   "assetable_type",    :limit => 30
+    t.string   "type",              :limit => 30
+    t.integer  "width"
+    t.integer  "height"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "ckeditor_assets", ["assetable_type", "assetable_id"], :name => "idx_ckeditor_assetable"
+  add_index "ckeditor_assets", ["assetable_type", "type", "assetable_id"], :name => "idx_ckeditor_assetable_type"
 
   create_table "content_item_descriptions", :force => true do |t|
     t.string "content_type"
@@ -358,11 +393,6 @@ ActiveRecord::Schema.define(:version => 20120306142027) do
   add_index "managed_issue_pages", ["person_id"], :name => "index_managed_issue_pages_on_person_id"
   add_index "managed_issue_pages", ["slug"], :name => "index_managed_issue_pages_on_slug", :unique => true
 
-  create_table "opportunities", :force => true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "organization_details", :force => true do |t|
     t.integer  "person_id"
     t.string   "street"
@@ -431,6 +461,30 @@ ActiveRecord::Schema.define(:version => 20120306142027) do
   add_index "people", ["reset_password_token"], :name => "index_people_on_reset_password_token", :unique => true
   add_index "people", ["slug"], :name => "index_people_on_slug", :unique => true
 
+  create_table "petition_signatures", :force => true do |t|
+    t.integer  "petition_id"
+    t.integer  "person_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "petition_signatures", ["petition_id", "person_id"], :name => "index_petition_signatures_on_petition_id_and_person_id"
+
+  create_table "petitions", :force => true do |t|
+    t.integer  "conversation_id"
+    t.string   "title"
+    t.text     "description"
+    t.text     "resulting_actions"
+    t.integer  "signature_needed"
+    t.date     "end_on"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "person_id"
+  end
+
+  add_index "petitions", ["conversation_id"], :name => "index_petitions_on_conversation_id"
+  add_index "petitions", ["person_id"], :name => "index_petitions_on_person_id"
+
   create_table "rating_descriptors", :force => true do |t|
     t.string   "title"
     t.datetime "created_at"
@@ -458,6 +512,26 @@ ActiveRecord::Schema.define(:version => 20120306142027) do
 
   add_index "ratings", ["rating_descriptor_id"], :name => "index_ratings_on_rating_descriptor_id"
   add_index "ratings", ["rating_group_id"], :name => "index_ratings_on_rating_group_id"
+
+  create_table "reflection_comments", :force => true do |t|
+    t.text     "body"
+    t.integer  "person_id"
+    t.integer  "reflection_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "reflection_comments", ["person_id"], :name => "index_reflection_comments_on_person_id"
+  add_index "reflection_comments", ["reflection_id"], :name => "index_reflection_comments_on_reflection_id"
+
+  create_table "reflections", :force => true do |t|
+    t.string   "title",           :null => false
+    t.text     "details",         :null => false
+    t.integer  "owner",           :null => false
+    t.integer  "conversation_id", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "regions", :force => true do |t|
     t.string   "name"

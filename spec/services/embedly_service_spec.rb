@@ -91,7 +91,7 @@ describe EmbedlyService do
       describe "EmbedlyService#fetch_ane_update_attributes(contribution)" do
 
         before(:each) do
-          @contribution = Factory.create(:embedly_contribution, url: 'http://www.youtube.com/watch?v=ukuERsvfDMU')
+          @contribution = FactoryGirl.create(:embedly_contribution, url: 'http://www.youtube.com/watch?v=ukuERsvfDMU')
           @embedly = EmbedlyService.new
           @boolean = @embedly.fetch_and_update_attributes(@contribution)
         end
@@ -179,7 +179,7 @@ describe EmbedlyService do
   describe "EmbedltService#parse_raw(data)" do
 
     it "should properly parse data from an EmbedlyContribution" do
-      contrib = Factory.build(:embedly_contribution)
+      contrib = FactoryGirl.build(:embedly_contribution)
       contrib.embedly_code = fixture_content('embedly/flickr.json')
       data = EmbedlyService.parse_raw(contrib)
       data.should_not be_empty

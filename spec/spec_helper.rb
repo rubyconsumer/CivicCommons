@@ -57,6 +57,7 @@ Spork.prefork do
     config.include StubbedHttpRequests
     config.include Paperclip::Shoulda::Matchers
     config.include Devise::TestHelpers, :type => :controller
+    config.include Devise::TestHelpers, :type => :view
 
     config.include(EmailSpec::Helpers)
     config.include(EmailSpec::Matchers)

@@ -1,5 +1,9 @@
 module ConversationsHelper
 
+  def opportunity_navigation_item_selected?(type)
+    type == controller.controller_name
+  end
+
   def format_rating(contribution)
     return "" unless contribution.total_rating
     out = contribution.total_rating > 0 ? "+" : ""
@@ -59,7 +63,7 @@ module ConversationsHelper
 
     return action
   end
-  
+
   def contribution_form_placeholder_text_for(type, subtype = nil)
     case type
     when :comment
@@ -67,7 +71,7 @@ module ConversationsHelper
     when :question
       "Ask a Question..."
     when :answer
-      
+
     when :attached_file
       "Comment on file..."
     when :embedded_snippet
@@ -86,7 +90,7 @@ module ConversationsHelper
       ""
     end
   end
-  
+
   # This method allows you to get the subset of direct descendents of this_contribution_id from the complete thread of root_contribution_and_descendents
   #  root_contribution in this case is a TopLevelContribution node, and the whole thing has already been loaded by the controller,
   #  so we don't want to poll the database for each subset when we've already loaded the entire set once.
@@ -145,7 +149,7 @@ module ConversationsHelper
       "These are the conversations that match your filter."
     end
   end
-  
+
   def path_to_content_item(content_item)
     if content_item.content_type == 'RadioShow'
       path = radioshow_path(content_item)
@@ -172,7 +176,7 @@ module ConversationsHelper
 
     # remove double paragraph tags which ocurr since TinyMCE creates paragraph tags by default and so does simple_format. Since old contribitions
     # do not have the paragraph tags for all text and we don't want to update them so that they do, we remove double p tags from output
-    stripped_extra_paragraphs = simple_format(text).gsub(/\<p\>\<p\>/, '<p>').gsub(/\<\/p\>\<\/p\>/, '</p>') 
+    stripped_extra_paragraphs = simple_format(text).gsub(/\<p\>\<p\>/, '<p>').gsub(/\<\/p\>\<\/p\>/, '</p>')
     auto_link stripped_extra_paragraphs
   end
 
@@ -185,14 +189,14 @@ module ConversationsHelper
       conversation.contributions.build if conversation.contributions.empty?
     end
   end
-  
+
   def get_path_sym(content_item)
     if content_item
-      case content_item.content_type 
+      case content_item.content_type
       when 'RadioShow'
         :radioshow
       when 'BlogPost'
-        :blog 
+        :blog
       end
     end
   end

@@ -4,7 +4,7 @@ include ControllerMacros
 describe TosController do
 
   before(:each) do
-    @contribution = Factory.create(:comment)
+    @contribution = FactoryGirl.create(:comment)
   end
 
   context "new" do

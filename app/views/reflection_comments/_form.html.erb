@@ -1,0 +1,13 @@
+<%= form_for [@conversation, @reflection, @comment], :html => {:id => 'comment-form'} do |f| %>
+  <% if @comment.errors.any? %>
+    <div class="alert alert-error mbl">
+      <h4>There were errors saving this response</h4>
+    </div>
+  <% end %>
+  
+  <p><strong>Comment on <%= @reflection.person.first_name %>'s Reflection:</strong></p>
+  <%= f.text_area :body, :cols => 40, :rows => 15, :class => 'short textbox' %>  
+  <div class="mgm">
+    <%= f.submit 'Leave my Response', :class => 'button submit' %> or <%= link_to 'Cancel', conversation_reflections_path(conversation_id: @conversation)%>
+  </div>  
+<% end %>

@@ -5,7 +5,7 @@ module Admin
   describe UserRegistrationsController do
 
     before(:each) do
-      @admin_person = Factory.create(:admin_person)
+      @admin_person = FactoryGirl.create(:admin_person)
       @controller.stub(:current_person).and_return(@admin_person)
     end
 
@@ -48,7 +48,7 @@ module Admin
       context "Invalid Person" do
 
         def do_create
-          params = Factory.attributes_for(:normal_person)
+          params = FactoryGirl.attributes_for(:normal_person)
           params.delete(:email)
           post :create, person: params
         end

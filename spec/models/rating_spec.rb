@@ -2,14 +2,14 @@ require 'spec_helper'
 
 describe Rating do
   before(:each) do
-    @current_person = Factory.create(:normal_person)
-    @contribution = Factory.create(:comment)
-    @descriptor = Factory.create(:rating_descriptor)
-    @descriptor2 = Factory.create(:rating_descriptor, :title => "Motivating")
-    @rg = Factory.create(:rating_group, :contribution => @contribution, :person => @current_person)
-    @rating = Factory.create(:rating, :rating_group => @rg, :rating_descriptor => @descriptor)
-    @rating2 = Factory.create(:rating, :rating_group => @rg, :rating_descriptor => @descriptor2)
-    @rating1b = Factory.create(:rating, :rating_descriptor => @descriptor)
+    @current_person = FactoryGirl.create(:normal_person)
+    @contribution = FactoryGirl.create(:comment)
+    @descriptor = FactoryGirl.create(:rating_descriptor)
+    @descriptor2 = FactoryGirl.create(:rating_descriptor, :title => "Motivating")
+    @rg = FactoryGirl.create(:rating_group, :contribution => @contribution, :person => @current_person)
+    @rating = FactoryGirl.create(:rating, :rating_group => @rg, :rating_descriptor => @descriptor)
+    @rating2 = FactoryGirl.create(:rating, :rating_group => @rg, :rating_descriptor => @descriptor2)
+    @rating1b = FactoryGirl.create(:rating, :rating_descriptor => @descriptor)
   end
 
   it "should have a descriptor" do

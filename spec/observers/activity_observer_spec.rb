@@ -15,9 +15,9 @@ describe ActivityObserver do
   end
   
   def given_a_user_have_voted
-    @person = Factory.create(:registered_user)
-    @survey = Factory.create(:vote)
-    @survey_option1 = Factory.create(:survey_option,:survey_id => @survey.id, :position => 1)
+    @person = FactoryGirl.create(:registered_user)
+    @survey = FactoryGirl.create(:vote)
+    @survey_option1 = FactoryGirl.create(:survey_option,:survey_id => @survey.id, :position => 1)
     @presenter = VoteResponsePresenter.new(:person_id => @person.id,
       :survey_id => @survey.id, 
       :selected_option_1_id => 11, 
@@ -28,7 +28,7 @@ describe ActivityObserver do
   context "On create" do
 
     it 'creates a new activity record when a conversation is created' do
-      conversation = Factory.create(:conversation)
+      conversation = FactoryGirl.create(:conversation)
       a = Activity.last
       a.item_id.should == conversation.id
       a.item_type.should == 'Conversation'
@@ -36,7 +36,7 @@ describe ActivityObserver do
     end
 
     it 'creates a new activity record when a rating group is created' do
-      rating_group = Factory.create(:rating_group)
+      rating_group = FactoryGirl.create(:rating_group)
       a = Activity.last
       a.item_id.should == rating_group.id
       a.item_type.should == 'RatingGroup'
@@ -56,9 +56,9 @@ describe ActivityObserver do
   context "after saving" do
 
     it 'creates a new activity record when a contribution is confirmed' do
-      conversation = Factory.create(:conversation)
-      contribution = Factory.create(:contribution, :conversation => conversation)
-      contribution = Factory.create(:contribution, :conversation => conversation)
+      conversation = FactoryGirl.create(:conversation)
+      contribution = FactoryGirl.create(:contribution, :conversation => conversation)
+      contribution = FactoryGirl.create(:contribution, :conversation => conversation)
       a = Activity.where(item_type: 'Contribution', item_id: contribution.id).first
       a.item_id.should == contribution.id
       a.item_type.should == 'Contribution'
@@ -66,30 +66,30 @@ describe ActivityObserver do
     end
 
     it 'does not create a contribution activity record when contribution is part of conversation creation' do
-      contribution = Factory.create(:top_level_contribution)
+      contribution = FactoryGirl.create(:top_level_contribution)
       Activity.where(item_id: contribution.id, item_type: "Contribution").should be_empty
     end
 
     it 'creates a new activity record when a contribution is added to an existing comversation' do
-      conversation = Factory.create(:user_generated_conversation)
-      contribution = Factory.create(:contribution_without_parent, conversation: conversation)
+      conversation = FactoryGirl.create(:user_generated_conversation)
+      contribution = FactoryGirl.create(:contribution_without_parent, conversation: conversation)
       a = Activity.last
       a.item_id.should == contribution.id
       a.item_type.should == 'Contribution'
     end
 
     it 'does not create a new activity record for contributions on preview' do
-      conversation = Factory.create(:conversation)
-      contribution = Factory.create(:unconfirmed_contribution, id: 5, conversation: conversation)
+      conversation = FactoryGirl.create(:conversation)
+      contribution = FactoryGirl.create(:unconfirmed_contribution, id: 5, conversation: conversation)
       a = Activity.last
       a.item_id.should_not == contribution.id
       a.item_type.should_not == 'Contribution'
     end
 
     it 'does not create a new activity record on update for contribution' do
-      conversation = Factory.create(:conversation)
-      top_level_contribution = Factory.create(:top_level_contribution, conversation: conversation)
-      contribution = Factory.create(:comment, conversation: conversation, parent: top_level_contribution)
+      conversation = FactoryGirl.create(:conversation)
+      top_level_contribution = FactoryGirl.create(:top_level_contribution, conversation: conversation)
+      contribution = FactoryGirl.create(:comment, conversation: conversation, parent: top_level_contribution)
       contribution.update_attributes(content: "changed my mind...")
       a = Activity.where(item_id: contribution.id, item_type: 'Contribution')
       a.size.should == 1
@@ -100,7 +100,7 @@ describe ActivityObserver do
   context "when destroying" do
     context 'a conversation' do
       it 'removes activity records when a conversation is deleted/destroyed' do
-        conversation = Factory.create(:conversation)
+        conversation = FactoryGirl.create(:conversation)
         Activity.where(item_id: conversation.id, item_type: 'Conversation').should_not be_empty
         Conversation.destroy(conversation)
         Activity.where(item_id: conversation.id, item_type: 'Conversation').should be_empty
@@ -108,13 +108,13 @@ describe ActivityObserver do
     end
 
     it 'removes activity records when a contribution is deleted/destroyed' do
-      contribution = Factory.create(:contribution)
+      contribution = FactoryGirl.create(:contribution)
       Contribution.destroy(contribution)
       Activity.where(item_id: contribution.id, item_type: 'Contribution').should be_empty
     end
 
     it 'removes activity records when a rating group is deleted/destroyed' do
-      rating_group = Factory.create(:rating_group)
+      rating_group = FactoryGirl.create(:rating_group)
       RatingGroup.destroy(rating_group)
       Activity.where(item_id: rating_group.id, item_type: 'RatingGroup').should be_empty
     end

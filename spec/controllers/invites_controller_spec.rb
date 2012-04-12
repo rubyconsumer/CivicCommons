@@ -3,10 +3,10 @@ require 'spec_helper'
 describe InvitesController do
 
   before(:each) do
-    @admin = Factory.create(:admin_person)
-    @conversation = Factory.create(:conversation)
+    @admin = FactoryGirl.create(:admin_person)
+    @conversation = FactoryGirl.create(:conversation)
     controller.stub!(:current_person).and_return(@admin)
-    @person = Factory.create(:normal_person)
+    @person = FactoryGirl.create(:normal_person)
     @invite = stub_model(Invite).as_null_object
     Invite.stub!(:new).and_return(@invite)
   end

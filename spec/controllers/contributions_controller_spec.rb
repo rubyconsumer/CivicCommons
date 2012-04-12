@@ -72,7 +72,7 @@ describe ContributionsController do
   context "Within a Conversation" do
 
     before :each do
-      @conversation = Factory.create(:conversation)
+      @conversation = FactoryGirl.create(:conversation)
       controller.stub(:load_conversation).and_return(@conversation)
     end
 

@@ -66,7 +66,7 @@ feature "Add contribution", %q{
   scenario "Contribution tool appears when a user responds to a child contribution", :js => true do
 
     # Given a child contribution exists
-    child = Factory.create(:contribution,
+    child = FactoryGirl.create(:contribution,
                            :override_confirmed => true,
                            :conversation => conversation,
                            :parent => contribution)

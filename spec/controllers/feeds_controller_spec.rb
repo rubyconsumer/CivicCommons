@@ -5,7 +5,7 @@ describe FeedsController do
   context "GET show" do
 
     it "assigns the requested CuratedFeed as @feed" do
-      feed = Factory.create(:curated_feed)
+      feed = FactoryGirl.create(:curated_feed)
       get :show, :id => feed.id, format: :xml
       assigns[:feed].should == feed
     end

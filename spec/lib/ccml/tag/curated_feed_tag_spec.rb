@@ -5,7 +5,7 @@ describe CCML::Tag::CuratedFeedTag do
   context "#index method" do
 
     before(:each) do
-      @curated_feed = Factory.create(:curated_feed)
+      @curated_feed = FactoryGirl.create(:curated_feed)
       @url = "http://www.theciviccommons.com/feeds/#{@curated_feed.slug}"
       @tag_body = '{id} "{title}" {slug}'
       @tag_regexp = Regexp.new("#{@curated_feed.id} \"#{@curated_feed.title}\" #{@curated_feed.slug}")
@@ -45,7 +45,7 @@ describe CCML::Tag::CuratedFeedTag do
 
     it "returns all curated feeds" do
       feeds = []
-      3.times {|i| feeds << Factory.create(:curated_feed) }
+      3.times {|i| feeds << FactoryGirl.create(:curated_feed) }
       tag = CCML::Tag::CuratedFeedTag.new({})
       tag.tag_body = @tag_body
       output = tag.all
@@ -65,18 +65,18 @@ describe CCML::Tag::CuratedFeedTag do
   context "#items method" do
 
     before(:each) do
-      @feed = Factory.create(:curated_feed)
+      @feed = FactoryGirl.create(:curated_feed)
       @tag_body = '{id} "{title}" {original_url}'
     end
 
     context "limiting" do
       before(:each) do
-        @first_feed = Factory.create(:curated_feed_item, curated_feed: @feed, created_at: 0.days.ago, pub_date: 0.days.ago)
-                      Factory.create(:curated_feed_item, curated_feed: @feed, created_at: 1.days.ago, pub_date: 1.days.ago)
-                      Factory.create(:curated_feed_item, curated_feed: @feed, created_at: 2.days.ago, pub_date: 2.days.ago)
-                      Factory.create(:curated_feed_item, curated_feed: @feed, created_at: 3.days.ago, pub_date: 3.days.ago)
-        @fifth_feed = Factory.create(:curated_feed_item, curated_feed: @feed, created_at: 4.days.ago, pub_date: 4.days.ago)
-        @sixth_feed = Factory.create(:curated_feed_item, curated_feed: @feed, created_at: 5.days.ago, pub_date: 5.days.ago)
+        @first_feed = FactoryGirl.create(:curated_feed_item, curated_feed: @feed, created_at: 0.days.ago, pub_date: 0.days.ago)
+                      FactoryGirl.create(:curated_feed_item, curated_feed: @feed, created_at: 1.days.ago, pub_date: 1.days.ago)
+                      FactoryGirl.create(:curated_feed_item, curated_feed: @feed, created_at: 2.days.ago, pub_date: 2.days.ago)
+                      FactoryGirl.create(:curated_feed_item, curated_feed: @feed, created_at: 3.days.ago, pub_date: 3.days.ago)
+        @fifth_feed = FactoryGirl.create(:curated_feed_item, curated_feed: @feed, created_at: 4.days.ago, pub_date: 4.days.ago)
+        @sixth_feed = FactoryGirl.create(:curated_feed_item, curated_feed: @feed, created_at: 5.days.ago, pub_date: 5.days.ago)
       end
 
       it "returns all feed items if no limit is specified" do

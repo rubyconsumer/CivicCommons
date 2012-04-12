@@ -77,6 +77,7 @@ protected
     end
   end
 
+  # Set Up Page HTML Meta Information
   def setup_meta_info(meta_data)
     @meta_info = {:page_title => nil, :meta_description => nil, :meta_tags => nil, :image_url => nil}
     @meta_info[:page_title] = meta_data.page_title if meta_data.page_title

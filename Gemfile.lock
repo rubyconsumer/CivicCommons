@@ -14,6 +14,7 @@ GIT
 GEM
   remote: http://rubygems.org/
   specs:
+    Ascii85 (1.0.1)
     ZenTest (4.7.0)
     abstract (1.0.0)
     actionmailer (3.0.3)
@@ -71,8 +72,13 @@ GEM
       rack-test (>= 0.5.4)
       selenium-webdriver (~> 2.0)
       xpath (~> 0.1.4)
+    carrierwave (0.5.8)
+      activesupport (~> 3.0)
     childprocess (0.3.1)
       ffi (~> 1.0.6)
+    ckeditor (3.6.3)
+      mime-types (~> 1.16)
+      orm_adapter (~> 0.0.5)
     coffee-script (2.2.0)
       coffee-script-source
       execjs
@@ -112,6 +118,7 @@ GEM
     erubis (2.6.6)
       abstract (>= 1.0.0)
     escape (0.0.4)
+    excon (0.12.0)
     execjs (1.3.0)
       multi_json (~> 1.0)
     factory_girl (2.6.4)
@@ -126,6 +133,17 @@ GEM
     fattr (2.2.1)
     ffi (1.0.11)
     fitter-happier (0.0.1)
+    fog (1.3.0)
+      builder
+      excon (~> 0.12.0)
+      formatador (~> 0.2.0)
+      mime-types
+      multi_json (~> 1.0)
+      net-scp (~> 1.0.4)
+      net-ssh (>= 2.1.3)
+      nokogiri (~> 1.5.0)
+      ruby-hmac
+    formatador (0.2.1)
     friendly_id (4.0.4)
     fuubar (0.0.6)
       rspec (~> 2.0)
@@ -177,10 +195,14 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.18)
+    mini_magick (3.4)
+      subexec (~> 0.2.1)
     multi_json (1.2.0)
     multi_xml (0.4.2)
     multipart-post (1.1.5)
     mysql2 (0.2.18)
+    net-scp (1.0.4)
+      net-ssh (>= 1.99.1)
     net-ssh (2.1.4)
     no_peeping_toms (2.1.2)
       activerecord (>= 3.0.0)
@@ -203,8 +225,17 @@ GEM
     paperclip (2.3.8)
       activerecord
       activesupport
+    pdf-reader (1.1.0)
+      Ascii85 (~> 1.0.0)
+      ruby-rc4
     polyglot (0.3.3)
     pr_geohash (1.0.0)
+    prawn (1.0.0.rc1)
+      pdf-reader (>= 0.9.0)
+      ttfunk (~> 1.0.3)
+    prawn_rails (0.0.8)
+      prawn (>= 0.11.1)
+      rails (>= 3.0.0)
     profanity_filter (0.1.1)
     progress_bar (0.4.0)
       highline (~> 1.6.1)
@@ -262,7 +293,9 @@ GEM
       columnize (>= 0.3.1)
       linecache19 (>= 0.5.11)
       ruby-debug-base19 (>= 0.11.19)
+    ruby-hmac (0.4.0)
     ruby-progressbar (0.0.10)
+    ruby-rc4 (0.1.5)
     ruby_core_source (0.1.5)
       archive-tar-minitar (>= 0.5.2)
     ruby_parser (2.3.1)
@@ -295,6 +328,7 @@ GEM
     steak (2.0.0)
       capybara (>= 1.0.0)
       rspec-rails (>= 2.5.0)
+    subexec (0.2.1)
     sunspot (1.3.1)
       escape (~> 0.0.4)
       pr_geohash (~> 1.0)
@@ -312,6 +346,7 @@ GEM
     treetop (1.4.10)
       polyglot
       polyglot (>= 0.3.1)
+    ttfunk (1.0.3)
     tzinfo (0.3.32)
     warden (1.1.1)
       rack (>= 1.0)
@@ -341,6 +376,8 @@ DEPENDENCIES
   awesome_nested_set
   aws-s3
   capybara (= 1.1.2)
+  carrierwave
+  ckeditor (= 3.6.3)
   database_cleaner (~> 0.6.0)
   date_validator
   delayed_job (>= 2.1.2)
@@ -352,6 +389,7 @@ DEPENDENCIES
   engineyard
   factory_girl_rails (~> 1.3)
   fitter-happier (= 0.0.1)
+  fog
   friendly_id (~> 4.0.1)
   fuubar (~> 0.0.3)
   gchart (~> 1.0.0)
@@ -367,12 +405,15 @@ DEPENDENCIES
   jquery-rails (>= 1.0.3)
   launchy
   linguistics
+  mini_magick
   mysql2 (< 0.3)
   no_peeping_toms
   nokogiri
   omniauth (= 1.0.1)
   omniauth-facebook
   paperclip (= 2.3.8)
+  prawn (>= 1.0.0.rc1)
+  prawn_rails
   profanity_filter
   progress_bar
   query_reviewer!

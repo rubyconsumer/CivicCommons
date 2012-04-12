@@ -35,7 +35,7 @@ describe ConversationsController do
     describe "force_friendly_id" do
       describe "on :show" do
         before(:each) do
-          @conversation = Factory.create(:conversation, title: 'friendly-id-here')
+          @conversation = FactoryGirl.create(:conversation, title: 'friendly-id-here')
         end
 
         it "should redirect to the same url but using the correct friendly id if numerical id is passed" do
@@ -60,8 +60,8 @@ describe ConversationsController do
   describe "GET index" do
 
     before(:each) do
-      @old_conversation = Factory.create(:conversation, {:created_at => (Time.now - 2.days), :updated_at => (Time.now - 30.seconds), :last_visit_date => Time.now, :recent_visits => 2})
-      @new_conversation = Factory.create(:conversation, {:created_at => (Time.now - 1.day), :updated_at => (Time.now - 2.seconds), :last_visit_date => Time.now, :recent_visits => 1})
+      @old_conversation = FactoryGirl.create(:conversation, {:created_at => (Time.now - 2.days), :updated_at => (Time.now - 30.seconds), :last_visit_date => Time.now, :recent_visits => 2})
+      @new_conversation = FactoryGirl.create(:conversation, {:created_at => (Time.now - 1.day), :updated_at => (Time.now - 2.seconds), :last_visit_date => Time.now, :recent_visits => 1})
     end
 
     it "assigns all conversations as @active, @popular, and @recent" do
@@ -74,10 +74,10 @@ describe ConversationsController do
     end
 
     it "does not duplicate avatars for recent contributions on the same conversation" do
-      @person = Factory.create(:registered_user)
-      Factory.create(:contribution, { :conversation => @new_conversation, :person => @person })
-      Factory.create(:contribution, { :conversation => @new_conversation, :person => @person })
-      Factory.create(:contribution, { :conversation => @new_conversation, :person => @person })
+      @person = FactoryGirl.create(:registered_user)
+      FactoryGirl.create(:contribution, { :conversation => @new_conversation, :person => @person })
+      FactoryGirl.create(:contribution, { :conversation => @new_conversation, :person => @person })
+      FactoryGirl.create(:contribution, { :conversation => @new_conversation, :person => @person })
 
       get :index
 
@@ -91,9 +91,9 @@ describe ConversationsController do
 
     before(:each) do
       (1..5).each do |i|
-        Factory.create(:conversation)
+        FactoryGirl.create(:conversation)
       end
-        @old_convo = Factory.create(:conversation, created_at: 2.months.ago)
+        @old_convo = FactoryGirl.create(:conversation, created_at: 2.months.ago)
     end
 
     it "assigns conversations as @conversations" do
@@ -119,9 +119,9 @@ describe ConversationsController do
 
   describe "GET show" do
     before(:each) do
-      @person = Factory.create(:registered_user)
+      @person = FactoryGirl.create(:registered_user)
       @controller.should_receive(:current_person).at_least(1).and_return(@person)
-      @convo = Factory.create(:conversation)
+      @convo = FactoryGirl.create(:conversation)
       controller.stub!(:force_friendly_id).and_return(true)
     end
 
@@ -155,7 +155,7 @@ describe ConversationsController do
 
   describe "GET new" do
     before(:each) do
-      @controller.stub(:current_person).and_return(Factory.build(:normal_person))
+      @controller.stub(:current_person).and_return(FactoryGirl.build(:normal_person))
       Conversation.stub(:new) { mock_conversation }
       Issue.stub(:alphabetical) { :all_issues }
       get :new, :accept => true
@@ -202,7 +202,7 @@ describe ConversationsController do
 
   describe "POST create" do
     before(:each) do
-      @person = Factory.build(:normal_person, :id => 1)
+      @person = FactoryGirl.build(:normal_person, :id => 1)
       @controller.stub(:current_person) { @person }
     end
 
@@ -322,10 +322,6 @@ describe ConversationsController do
       Activity.stub!(:most_recent_activity_items_for_conversation).and_return([mock_activity, mock_activity, mock_activity, mock_activity, mock_activity, mock_activity])
       get :activities, :id => 1
       assigns(:recent_items).should == [mock_activity, mock_activity, mock_activity, mock_activity, mock_activity]
-    end
-    it "should not pop the latest recent_item on the array when there is no next page" do
-      get :activities, :id => 1
-      assigns(:recent_items).should == [mock_activity]
     end
     it "should call render_widget" do
       controller.should_receive(:render_widget)

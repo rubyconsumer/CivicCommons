@@ -52,6 +52,14 @@ gem 'sixarm_ruby_email_address_validation'
 
 gem 'profanity_filter'
 
+gem "ckeditor", "3.6.3"
+gem 'prawn_rails'
+gem 'prawn', '>= 1.0.0.rc1'
+
+gem 'fog'
+gem 'carrierwave'
+gem 'mini_magick'
+
 group :development do
   gem "rails3-generators"
   gem "hpricot"

@@ -5,7 +5,7 @@ describe ContentTemplatesHelper do
   context "parse_content_template" do
 
     let(:template) do
-      Factory.create(:content_template)
+      FactoryGirl.create(:content_template)
     end
 
     it "parses the requested template with the CCML parser" do

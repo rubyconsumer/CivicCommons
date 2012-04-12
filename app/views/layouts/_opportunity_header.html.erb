@@ -1,0 +1,40 @@
+<div class="feature-mast">
+  <div class="wrapper">
+    <div class="content-container">
+
+      <div class="main-content">
+
+        <div class='main-content-left'>
+          <img src='<%= @conversation.image.url(:panel) %>' width='120' height='80' alt='<%= @conversation.title %>' class='featured main-img'\>
+        </div>
+        <div class='main-content-right'>
+          <h1><%= @conversation.title %></h1>
+          <p class="subtitle">Started on <%= @conversation.created_at.strftime('%b %d, %Y') %> by <%= text_profile(@conversation.owner) %></p>
+          <%= render :partial => '/layouts/social_links', :locals => {conversation_title: @conversation.title} %>
+        </div>
+
+        <div class='convo-summary'>
+          <p><%= raw(@conversation.summary) %></p>
+        </div>
+
+        <%= render :partial => '/layouts/opportunity_navigation', :locals => {
+          conversation: @conversation,
+          participants_count: @conversation.community_user_ids.count,
+          actions_count: @conversation.actions.count,
+          reflections_count: @conversation.reflections.count
+        } %>
+
+      </div><!-- /.main-content -->
+
+      <div class='aside supplementary convo-mast-buttons'>
+
+        <span id='subscription'>
+          <%= render :partial => '/subscriptions/subscription', :locals => {:subscribable => @conversation} %>
+        </span>
+
+      </div><!-- /.aside -->
+
+    </div>
+
+  </div>
+</div>

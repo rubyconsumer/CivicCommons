@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Article do
   describe "Validation" do
     it "is valid" do
-      @article = Factory.build(:article)
+      @article = FactoryGirl.build(:article)
       @article.should be_valid
     end
   end

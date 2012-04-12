@@ -1,6 +1,8 @@
+require 'config/configurator'
 module S3Config
+  include Configurator
   extend self
-  
+
   def credential_file
     # paperclip bug: if you don't specify the path, you will get
     # a stack overflow when trying to upload an image.
@@ -11,4 +13,7 @@ module S3Config
     end
     File.new(filename)
   end
+
+  load_config(:file => credential_file, :environment => Rails.env)
+
 end

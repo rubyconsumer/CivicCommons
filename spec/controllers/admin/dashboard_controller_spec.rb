@@ -4,7 +4,7 @@ describe Admin::DashboardController do
   context "showing with an admin logged in" do
 
     before :each do
-      @admin_person = Factory.create(:admin_person)
+      @admin_person = FactoryGirl.create(:admin_person)
       @controller.stub(:current_person).and_return(@admin_person)
       Socket.stub(:gethostname).and_return('YOUR MOM GOES TO COLLEGE')
       get :show

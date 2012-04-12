@@ -17,39 +17,39 @@ describe HPSlotPresenter do
 
   describe "title" do
     it "is available with an Issue object" do
-      issue = Factory.create(:issue, :name => "Some Issue Name")
+      issue = FactoryGirl.create(:issue, :name => "Some Issue Name")
       hsp = HPSlotPresenter.new(issue)
       hsp.title.should == "Some Issue Name"
     end
 
     it "is available with a Conversation object" do
-      conversation = Factory.create(:conversation, :title => "Some Conversation Title")
+      conversation = FactoryGirl.create(:conversation, :title => "Some Conversation Title")
       hsp = HPSlotPresenter.new(conversation)
       hsp.title.should == "Some Conversation Title"
     end
 
     it "is available with a HomepageFeatured object" do
-      hp_feature = Factory.create(:homepage_featured)
+      hp_feature = FactoryGirl.create(:homepage_featured)
       hsp = HPSlotPresenter.new(hp_feature)
       hsp.title.should == "Homepage Featurable Title"
     end
 
     it "is available with a BlogPost object" do
       title = 'Blog Post Title'
-      hp_feature = Factory.build(:blog_post, title: title)
+      hp_feature = FactoryGirl.build(:blog_post, title: title)
       hsp = HPSlotPresenter.new(hp_feature)
       hsp.title.should == title
     end
 
     it "is available with a RadioShow object" do
       title = 'Radio Show Title xx'
-      hp_feature = Factory.build(:radio_show, title: title)
+      hp_feature = FactoryGirl.build(:radio_show, title: title)
       hsp = HPSlotPresenter.new(hp_feature)
       hsp.title.should == title
     end
 
     it "is nil with a Contribution object" do
-      contribution = Factory.create(:contribution)
+      contribution = FactoryGirl.create(:contribution)
       hsp = HPSlotPresenter.new(contribution)
       hsp.title.should == nil
     end
@@ -62,7 +62,7 @@ describe HPSlotPresenter do
 
   describe "url" do
     it "is available for an Issue object" do
-      issue = Factory.create(:issue, :name => "Some Issue Name")
+      issue = FactoryGirl.create(:issue, :name => "Some Issue Name")
       hsp = HPSlotPresenter.new(issue)
 
       # hsp.url.should == "http://www.example.com/issues/#{i.friendly_id}"
@@ -70,7 +70,7 @@ describe HPSlotPresenter do
     end
 
     it "is available with a Conversation object" do
-      conversation = Factory.create(:conversation, :title => "Some Conversation Title")
+      conversation = FactoryGirl.create(:conversation, :title => "Some Conversation Title")
       hsp = HPSlotPresenter.new(conversation)
 
       # hsp.url.should == "http://www.example.com/conversations/#{i.friendly_id}"
@@ -78,7 +78,7 @@ describe HPSlotPresenter do
     end
 
     it "is available with a BlogPost object" do
-      blog_post = Factory.create(:blog_post)
+      blog_post = FactoryGirl.create(:blog_post)
       hsp = HPSlotPresenter.new(blog_post)
 
       # hsp.url.should == "http://www.example.com/blog/#{i.friendly_id}"
@@ -86,7 +86,7 @@ describe HPSlotPresenter do
     end
 
     it "is available with a RadioShow object" do
-      radio_show = Factory.create(:radio_show)
+      radio_show = FactoryGirl.create(:radio_show)
       hsp = HPSlotPresenter.new(radio_show)
 
       # hsp.url.should == "http://www.example.com/radioshow/#{i.friendly_id}"
@@ -94,7 +94,7 @@ describe HPSlotPresenter do
     end
 
     it "is host url with a Contribution object" do
-      contribution = Factory.create(:contribution)
+      contribution = FactoryGirl.create(:contribution)
       hsp = HPSlotPresenter.new(contribution)
       hsp.url.should == "/"
     end

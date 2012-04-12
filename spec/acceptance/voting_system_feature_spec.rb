@@ -26,23 +26,23 @@ feature "Voting system", %q{
 
 
   def given_an_survey_with_an_issue
-    @issue = Factory.create(:issue)
-    @survey = Factory.create(:vote)
-    @survey_option1 = Factory.create(:survey_option,:survey_id => @survey.id, :position => 1)
-    @survey_option2 = Factory.create(:survey_option,:survey_id => @survey.id, :position => 2)
-    @survey_option3 = Factory.create(:survey_option,:survey_id => @survey.id, :position => 3)
+    @issue = FactoryGirl.create(:issue)
+    @survey = FactoryGirl.create(:vote)
+    @survey_option1 = FactoryGirl.create(:survey_option,:survey_id => @survey.id, :position => 1)
+    @survey_option2 = FactoryGirl.create(:survey_option,:survey_id => @survey.id, :position => 2)
+    @survey_option3 = FactoryGirl.create(:survey_option,:survey_id => @survey.id, :position => 3)
   end
 
   def given_an_independent_vote(opts={})
     show_progress = opts.delete(:show_progress) || false
-    @vote = Factory.create(:vote,:surveyable_type => nil, :surveyable_id => nil, :show_progress => show_progress)
-    @survey_option1 = Factory.create(:survey_option,:survey_id => @vote.id, :position => 1)
-    @survey_option2 = Factory.create(:survey_option,:survey_id => @vote.id, :position => 2)
-    @survey_option3 = Factory.create(:survey_option,:survey_id => @vote.id, :position => 3)
+    @vote = FactoryGirl.create(:vote,:surveyable_type => nil, :surveyable_id => nil, :show_progress => show_progress)
+    @survey_option1 = FactoryGirl.create(:survey_option,:survey_id => @vote.id, :position => 1)
+    @survey_option2 = FactoryGirl.create(:survey_option,:survey_id => @vote.id, :position => 2)
+    @survey_option3 = FactoryGirl.create(:survey_option,:survey_id => @vote.id, :position => 3)
   end
 
   def given_a_survey_with_responses
-    @survey_response = Factory.create(:vote_survey_response, :person_id => logged_in_user.id)
+    @survey_response = FactoryGirl.create(:vote_survey_response, :person_id => logged_in_user.id)
     @survey = @survey_response.survey
   end
 
@@ -115,10 +115,10 @@ feature "Voting system", %q{
 
   scenario "Association with an issue" do
     # Given an issue or conversation exists on the CC site
-    @issue = Factory.create(:issue)
+    @issue = FactoryGirl.create(:issue)
 
     # When a survey is created
-    @vote = Factory.create(:vote)
+    @vote = FactoryGirl.create(:vote)
 
     # It can be associated to the issue or conversation
     @vote.surveyable = @issue
@@ -129,8 +129,8 @@ feature "Voting system", %q{
   scenario "An active vote associated to an Issue"  do
     # Given I am a registered user at The Civic Commons and I am logged in
     login_as :person
-    @issue = Factory.create(:issue)
-    @vote = Factory.create(:vote)
+    @issue = FactoryGirl.create(:issue)
+    @vote = FactoryGirl.create(:vote)
 
     # When I visit a vote page associated to an Issue
     @vote.surveyable = @issue
@@ -244,7 +244,7 @@ feature "Voting system", %q{
 
     # and a survey has been set to ‘show progress’
     # and the start date has not passed
-    @survey = Factory.create(:vote, :show_progress=>true, :start_date => 2.days.from_now)
+    @survey = FactoryGirl.create(:vote, :show_progress=>true, :start_date => 2.days.from_now)
 
     # Then I should not be able to vote
     vote_page.visit_a_vote(@survey)

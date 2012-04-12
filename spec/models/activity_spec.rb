@@ -5,7 +5,7 @@ describe Activity do
   context "Validation" do
 
     let(:params) do
-      Factory.attributes_for(:activity)
+      FactoryGirl.attributes_for(:activity)
     end
 
     it "Requires item_id" do
@@ -38,70 +38,70 @@ describe Activity do
   context "Creates new activity object from existing active record object" do
 
     it "Creates a new activity from valid conversation object" do
-      obj = Factory.build(:conversation, id: 1, created_at: Time.now)
+      obj = FactoryGirl.build(:conversation, id: 1, created_at: Time.now)
       a = Activity.new(obj)
       a.should be_valid
       a.item_type.should == 'Conversation'
     end
 
     it "Creates a new activity from valid comment object" do
-      obj = Factory.build(:comment, id: 1, created_at: Time.now)
+      obj = FactoryGirl.build(:comment, id: 1, created_at: Time.now)
       a = Activity.new(obj)
       a.should be_valid
       a.item_type.should == 'Contribution'
     end
 
     it "Creates a new activity from valid question object" do
-      obj = Factory.build(:question, id: 1, created_at: Time.now)
+      obj = FactoryGirl.build(:question, id: 1, created_at: Time.now)
       a = Activity.new(obj)
       a.should be_valid
       a.item_type.should == 'Contribution'
     end
 
     it "Creates a new activity from valid suggested action object" do
-      obj = Factory.build(:suggested_action, id: 1, created_at: Time.now)
+      obj = FactoryGirl.build(:suggested_action, id: 1, created_at: Time.now)
       a = Activity.new(obj)
       a.should be_valid
       a.item_type.should == 'Contribution'
     end
 
     it "Creates a new activity from valid link object" do
-      obj = Factory.build(:link, id: 1, created_at: Time.now)
+      obj = FactoryGirl.build(:link, id: 1, created_at: Time.now)
       a = Activity.new(obj)
       a.should be_valid
       a.item_type.should == 'Contribution'
     end
 
     it "Creates a new activity from valid answer object" do
-      obj = Factory.build(:answer, id: 1, created_at: Time.now)
+      obj = FactoryGirl.build(:answer, id: 1, created_at: Time.now)
       a = Activity.new(obj)
       a.should be_valid
       a.item_type.should == 'Contribution'
     end
 
     it "Creates a new activity from valid ebmedly object object" do
-      obj = Factory.build(:embedly_contribution, id: 1, created_at: Time.now)
+      obj = FactoryGirl.build(:embedly_contribution, id: 1, created_at: Time.now)
       a = Activity.new(obj)
       a.should be_valid
       a.item_type.should == 'Contribution'
     end
 
     it "Creates a new activity from valid attached file object" do
-      obj = Factory.build(:attached_file, id: 1, created_at: Time.now)
+      obj = FactoryGirl.build(:attached_file, id: 1, created_at: Time.now)
       a = Activity.new(obj)
       a.should be_valid
       a.item_type.should == 'Contribution'
     end
 
     it "Creates a new activity from valid rating group object" do
-      obj = Factory.build(:rating_group, id: 1, created_at: Time.now)
+      obj = FactoryGirl.build(:rating_group, id: 1, created_at: Time.now)
       a = Activity.new(obj)
       a.should be_valid
       a.item_type.should == 'RatingGroup'
     end
 
     it "Creates a new activity from valid survey response object" do
-      obj = Factory.build(:survey_response, id: 1, created_at: Time.now)
+      obj = FactoryGirl.build(:survey_response, id: 1, created_at: Time.now)
       a = Activity.new(obj)
       a.should be_valid
       a.item_type.should == 'SurveyResponse'
@@ -109,12 +109,12 @@ describe Activity do
 
 
     it "Does not create a new acivity on top level contribution" do
-      obj = Factory.build(:top_level_contribution, id: 1, created_at: Time.now)
+      obj = FactoryGirl.build(:top_level_contribution, id: 1, created_at: Time.now)
       Activity.new(obj).should_not be_valid
     end
 
     it "Does not create a new acivity on non supported active record type" do
-      obj = Factory.build(:normal_person, id: 1, created_at: Time.now)
+      obj = FactoryGirl.build(:normal_person, id: 1, created_at: Time.now)
       Activity.new(obj).should_not be_valid
     end
 
@@ -123,7 +123,7 @@ describe Activity do
   context "Updating cache data when observed objects are saved" do
 
     it "updates contribution cache data when contribution is saved" do
-      comment = Factory.create(:comment)
+      comment = FactoryGirl.create(:comment)
       item = Activity.new(comment)
       item.save
       comment.content = "Updated since last saved"
@@ -134,7 +134,7 @@ describe Activity do
     end
 
     it "updates conversation cache data when conversation is saved" do
-      conversation = Factory.create(:conversation)
+      conversation = FactoryGirl.create(:conversation)
       item = Activity.new(conversation)
       item.save
       conversation.summary = "Updated since last saved"
@@ -149,29 +149,29 @@ describe Activity do
   context "Removing activity records" do
 
     let(:contrib) do
-      Factory.create(:contribution)
+      FactoryGirl.create(:contribution)
     end
 
     let(:convo) do
-      Factory.create(:conversation)
+      FactoryGirl.create(:conversation)
     end
 
     let(:rating_group) do
-      Factory.create(:rating_group)
+      FactoryGirl.create(:rating_group)
     end
 
     let(:survey) do
-      Factory.create(:survey)
+      FactoryGirl.create(:survey)
     end
 
     before(:each) do
       @item_count = 3
       @total_count = 12
       (1..@item_count).each do |i|
-        Factory.create(:conversation_activity, item_id: convo.id)
-        Factory.create(:contribution_activity, item_id: contrib.id)
-        Factory.create(:rating_group_activity, item_id: rating_group.id)
-        Factory.create(:survey_response_activity, item_id: survey.id)
+        FactoryGirl.create(:conversation_activity, item_id: convo.id)
+        FactoryGirl.create(:contribution_activity, item_id: contrib.id)
+        FactoryGirl.create(:rating_group_activity, item_id: rating_group.id)
+        FactoryGirl.create(:survey_response_activity, item_id: survey.id)
       end
     end
 
@@ -201,10 +201,10 @@ describe Activity do
 
   context "encoding activity cache data" do
 
-    let(:conversation) { Factory.create(:conversation) }
-    let(:comment) { Factory.create(:comment) }
-    let(:rating_group) { Factory.create(:rating_group) }
-    let(:vote_survey_response) {Factory.create(:vote_survey_response)}
+    let(:conversation) { FactoryGirl.create(:conversation) }
+    let(:comment) { FactoryGirl.create(:comment) }
+    let(:rating_group) { FactoryGirl.create(:rating_group) }
+    let(:vote_survey_response) {FactoryGirl.create(:vote_survey_response)}
 
     it "serializes a contribution object" do
       encoded_comment = Activity.encode(comment)
@@ -245,7 +245,7 @@ describe Activity do
   context "decodes cache data into ActiveRecord object" do
 
     it "decodes a contribution object" do
-      comment = Factory.create(:comment)
+      comment = FactoryGirl.create(:comment)
       encoded_comment = Activity.encode(comment)
       decoded_comment = Activity.decode(encoded_comment)
       decoded_comment.class == GenericObject
@@ -255,7 +255,7 @@ describe Activity do
     end
 
     it "decodes a conversation object" do
-      conversation = Factory.create(:conversation)
+      conversation = FactoryGirl.create(:conversation)
       encoded_conversation = Activity.encode(conversation)
       decoded_conversation = Activity.decode(encoded_conversation)
       decoded_conversation.class == GenericObject
@@ -265,7 +265,7 @@ describe Activity do
     end
 
     it "decodes a rating group object" do
-      rating_group = Factory.create(:rating_group)
+      rating_group = FactoryGirl.create(:rating_group)
       encoded_rating_group = Activity.encode(rating_group)
       decoded_rating_group = Activity.decode(encoded_rating_group)
       decoded_rating_group.class == GenericObject
@@ -275,7 +275,7 @@ describe Activity do
     end
 
     it "decodes a survey repsonse object" do
-      survey_response = Factory.create(:vote_survey_response)
+      survey_response = FactoryGirl.create(:vote_survey_response)
       encoded_survey_response = Activity.encode(survey_response)
       decoded_survey_response = Activity.decode(encoded_survey_response)
       decoded_survey_response.class == GenericObject
@@ -298,15 +298,15 @@ describe Activity do
       end
 
       let(:convo) do
-        Factory.create(:conversation)
+        FactoryGirl.create(:conversation)
       end
 
       let(:rating_group) do
-        Factory.create(:rating_group)
+        FactoryGirl.create(:rating_group)
       end
 
       let(:invalid_type) do
-        Factory.create(:normal_person)
+        FactoryGirl.create(:normal_person)
       end
 
       it "should check existance based on item_id and item_type if it is a valid type" do
@@ -324,21 +324,21 @@ describe Activity do
 
   describe "most recent activity items" do
     let(:contrib) do
-      Factory.create(:contribution)
+      FactoryGirl.create(:contribution)
     end
 
     let(:convo) do
-      Factory.create(:conversation)
+      FactoryGirl.create(:conversation)
     end
 
     let(:rating_group) do
-      Factory.create(:rating_group)
+      FactoryGirl.create(:rating_group)
     end
 
     before(:each) do
-      Factory.create(:conversation_activity, item_id: convo.id, :item_created_at => 0.days.ago)
-      Factory.create(:contribution_activity, item_id: contrib.id, :item_created_at => 1.days.ago)
-      Factory.create(:rating_group_activity, item_id: rating_group.id, :item_created_at => 2.days.ago)
+      FactoryGirl.create(:conversation_activity, item_id: convo.id, :item_created_at => 0.days.ago)
+      FactoryGirl.create(:contribution_activity, item_id: contrib.id, :item_created_at => 1.days.ago)
+      FactoryGirl.create(:rating_group_activity, item_id: rating_group.id, :item_created_at => 2.days.ago)
     end
 
 

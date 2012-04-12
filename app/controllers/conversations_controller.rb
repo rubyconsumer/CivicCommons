@@ -1,5 +1,5 @@
 class ConversationsController < ApplicationController
-  layout 'category_index'
+  layout 'opportunity', :except => :index
 
   before_filter :force_friendly_id, :only => :show
   before_filter :require_user, :only => [
@@ -22,7 +22,7 @@ class ConversationsController < ApplicationController
 
     @regions = Region.all
     @recent_items = Activity.most_recent_activity_items(3)
-    render :index
+    render :index, :layout => 'category_index'
   end
 
   # GET /conversations/rss
@@ -36,6 +36,7 @@ class ConversationsController < ApplicationController
 
   def responsibilities
     get_content_item(params)
+    render :layout => 'category_index'
   end
 
   def filter
@@ -44,7 +45,7 @@ class ConversationsController < ApplicationController
 
     @regions = Region.all
     @recent_items = Activity.most_recent_activity_items(3)
-    render :filter
+    render :filter, :layout => 'category_index'
   end
 
   # GET /conversations/1
@@ -68,6 +69,9 @@ class ConversationsController < ApplicationController
     @latest_contribution = @conversation.confirmed_contributions.most_recent.first
 
     @recent_items = Activity.most_recent_activity_items_for_conversation(@conversation, 5)
+
+    # The Participants in a Conversation               | Moved from View to Controller. TODO: Move to model
+    @conversation_participants = @conversation.participants.select{ |p| !@tlc_participants.include?(p.id) }
 
     setup_meta_info(@conversation)
 
@@ -97,8 +101,8 @@ class ConversationsController < ApplicationController
     @recent_items = Activity.most_recent_activity_items_for_conversation(@conversation, @per_page + 1, @offset)
     @next_page = @recent_items.length > @per_page
 
-    # if there is a next page, pop the last item because it was temporarily used to see if there is a next page.
-    @recent_items.pop if @next_page
+    # pop the last item, because it was temporarily used to see if there is a next page.
+    @recent_items.pop
 
     respond_to do |format|
       format.embed do
@@ -197,7 +201,7 @@ class ConversationsController < ApplicationController
     return redirect_to :conversation_responsibilities unless params[:accept]
     get_content_item(params)
     @conversation = Conversation.new
-    render :new
+    render :new, :layout => 'category_index'
   end
 
   # GET /conversations/1/edit
@@ -214,7 +218,7 @@ class ConversationsController < ApplicationController
       if @conversation.save
         format.html { redirect_to(new_invite_path(:source_type => :conversations, :source_id => @conversation.id, :conversation_created => true), :notice => "Thank you! You're helping to make your community stronger!") }
       else
-        format.html { render :new }
+        format.html { render :new, :layout => 'category_index' }
       end
     end
   end

@@ -2,10 +2,10 @@ require 'spec_helper'
 
 module Admin
   describe IssuesController do
-    let(:topic) { Factory.create(:topic) }
+    let(:topic) { FactoryGirl.create(:topic) }
     before(:each) do
-      sign_in Factory.create(:admin_person)
-        Factory.create(:topic)
+      sign_in FactoryGirl.create(:admin_person)
+        FactoryGirl.create(:topic)
     end
 
     describe "GET index" do
@@ -13,7 +13,7 @@ module Admin
       before(:each) do
         @issues = {}
         (1..5).each do 
-          issue = Factory.create(:issue)
+          issue = FactoryGirl.create(:issue)
           @issues[issue.id] = issue
         end
       end
@@ -28,7 +28,7 @@ module Admin
     describe "GET show" do
 
       let(:issue) do
-        Factory.create(:issue)
+        FactoryGirl.create(:issue)
       end
 
       it "assigns the requested issue as @issue" do
@@ -58,9 +58,9 @@ module Admin
     end
 
     describe "GET edit" do
-      let(:unselected_topic) { Factory.create(:topic)}
+      let(:unselected_topic) { FactoryGirl.create(:topic)}
       before(:each) do
-        @issue = Factory.create(:issue, topics: [topic])
+        @issue = FactoryGirl.create(:issue, topics: [topic])
         get :edit, :id => issue.id.to_s
       end
 
@@ -88,7 +88,7 @@ module Admin
       describe "with valid params" do
 
         before(:each) do
-          @params = Factory.build(:issue).attributes.symbolize_keys
+          @params = FactoryGirl.build(:issue).attributes.symbolize_keys
           @params[:topic_ids] = [topic.id]
           post :create, :issue => @params
         end
@@ -108,7 +108,7 @@ module Admin
       describe "with invalid params" do
 
         let(:params) do
-          Factory.build(:issue).attributes.symbolize_keys
+          FactoryGirl.build(:issue).attributes.symbolize_keys
         end
 
         before(:each) do
@@ -132,7 +132,7 @@ module Admin
       describe "with subclasses" do
 
         it "creates issues" do
-          params = Factory.build(:issue).attributes.symbolize_keys
+          params = FactoryGirl.build(:issue).attributes.symbolize_keys
           params[:type] = 'Issue'
           params[:topic_ids] = [topic.id]
           post :create, :issue => params
@@ -141,7 +141,7 @@ module Admin
         end
 
         it "creates managed issues" do
-          params = Factory.build(:managed_issue).attributes.symbolize_keys
+          params = FactoryGirl.build(:managed_issue).attributes.symbolize_keys
           params[:type] = 'ManagedIssue'
           params[:topic_ids] = [topic.id]
           post :create, :issue => params
@@ -155,7 +155,7 @@ module Admin
     describe "PUT update" do
 
       let(:issue) do
-        Factory.create(:issue)
+        FactoryGirl.create(:issue)
       end
 
       let(:new_name) do
@@ -219,7 +219,7 @@ module Admin
       describe "with subclasses" do
 
         it "converts an issue to a managed issue" do
-          issue = Factory.create(:issue)
+          issue = FactoryGirl.create(:issue)
           params = issue.attributes
           params[:type] = 'ManagedIssue'
           params[:topic_ids] = issue.topics.collect(&:id)
@@ -229,7 +229,7 @@ module Admin
         end
 
         it "converts a managed issue to an issue" do
-          issue = Factory.create(:managed_issue)
+          issue = FactoryGirl.create(:managed_issue)
           params = issue.attributes
           params[:topic_ids] = issue.topics.collect(&:id)
           params[:type] = 'Issue'
@@ -249,15 +249,15 @@ module Admin
       end
 
       it "returns an error response if current_position is not blank, but next and previous are" do
-        Factory.create(:issue, :position => 0)
+        FactoryGirl.create(:issue, :position => 0)
         put :update_order, :current => '0', :next => '', :prev => ''
         response.should_not be_success
       end
 
       it "returns a success response if current_position is not blank, and next_position or prev_position or both" do
-        Factory.create(:issue, :position => 0)
-        Factory.create(:issue, :position => 1)
-        Factory.create(:issue, :position => 2)
+        FactoryGirl.create(:issue, :position => 0)
+        FactoryGirl.create(:issue, :position => 1)
+        FactoryGirl.create(:issue, :position => 2)
         put :update_order, :current => '0', :next => '1'
         response.should be_success
         put :update_order, :current => '0', :prev => '1'
@@ -272,13 +272,13 @@ module Admin
       end
 
       it "returns an error response if next_position does not exist for an issue and previous is not set" do
-        Factory.create(:issue, :position => 0)
+        FactoryGirl.create(:issue, :position => 0)
         put :update_order, :current => '0', :next => '1'
         response.should_not be_success
       end
 
       it "returns an error response if previous_position does not exist for an issue and next is not set" do
-        Factory.create(:issue, :position => 0)
+        FactoryGirl.create(:issue, :position => 0)
         put :update_order, :current => '0', :prev => '1'
         response.should_not be_success
       end
@@ -287,7 +287,7 @@ module Admin
     describe "DELETE destroy" do
 
       let(:issue) do
-        Factory.create(:issue)
+        FactoryGirl.create(:issue)
       end
 
       before(:each) do

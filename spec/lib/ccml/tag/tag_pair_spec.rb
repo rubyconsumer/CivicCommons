@@ -60,7 +60,7 @@ describe CCML::Tag::TagPair do
 
       @test_date = Time.utc(2011, 4, 5, 23, 58, 00)
 
-      @person = Factory.build(:admin_person, :id => 1, :first_name => 'John', :last_name => 'Doe', :confirmed_at => @test_date)
+      @person = FactoryGirl.build(:admin_person, :id => 1, :first_name => 'John', :last_name => 'Doe', :confirmed_at => @test_date)
 
       @ccml_options = {
         :id => @person.id.to_s,
@@ -117,9 +117,9 @@ describe CCML::Tag::TagPair do
 
         before(:each) do
           (1..4).each do
-            Factory.create(:admin_person, first_name: 'John', last_name: 'Doe')
+            FactoryGirl.create(:admin_person, first_name: 'John', last_name: 'Doe')
           end
-          Factory.create(:content_item, :author => Person.first)
+          FactoryGirl.create(:content_item, :author => Person.first)
         end
 
         it "processes an active record set" do
@@ -199,7 +199,7 @@ describe CCML::Tag::TagPair do
       end
 
       it "processes an 'if' phrase" do
-        @tag.obj = Factory.build(:registered_user, :first_name => 'John')
+        @tag.obj = FactoryGirl.build(:registered_user, :first_name => 'John')
         @tag.tag_body = @full_conditional
         @tag.single_object.should == "\n<h1>I am the walrus.</h1>\n"
       end
@@ -235,7 +235,7 @@ describe CCML::Tag::TagPair do
       end
 
       it "processes an multiple conditionals" do
-        @tag.obj = Factory.build(:registered_user, :first_name => 'John')
+        @tag.obj = FactoryGirl.build(:registered_user, :first_name => 'John')
         @tag.tag_body = @multiple_conditionals
         @tag.single_object.should == "\n<h1>I am the walrus.</h1>\n\n\n\n<h1>I am the walrus.</h1>\n"
       end

@@ -5,7 +5,7 @@ describe PagesController do
   context "GET show" do
 
     it "assigns the requested ContentTemplate as @template" do
-      template = Factory.create(:content_template)
+      template = FactoryGirl.create(:content_template)
       get :show, :id => template.id
       assigns[:template].should == template
     end

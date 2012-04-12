@@ -1,6 +1,27 @@
 ## 2.0
 
 ### External Changes
+  * [Display Action Person Selected When Creating a Reflection on Reflection Perma Link Page](https://agilezen.com/project/18091/story/475)
+  * [Reflection Permalink Displays Users Participated Petitions](https://agilezen.com/project/18091/story/480)
+  * [Display participated action selector when user is making a new reflection](https://agilezen.com/project/18091/story/485)
+  * [Autosign Petition](https://agilezen.com/project/18091/story/487)
+  * [Create and view Petition](https://agilezen.com/project/18091/story/419)
+  * [Ability to sign a petition](https://agilezen.com/project/18091/story/420)
+  * [Ability to view Signatures of Petition](https://agilezen.com/project/18091/story/422)
+  * [Ability to View Summary Count of Signatures](https://agilezen.com/project/18091/story/421)
+  * [Error Form Look and Feel (design)](https://agilezen.com/project/18091/story/446)
+  * [Ability to view a list of actions](https://agilezen.com/project/18091/story/424)
+  * [Ability to Suggest an Action](https://agilezen.com/project/18091/story/425)
+  * [Remove End Date from Petition](https://agilezen.com/project/18091/story/448)
+  * [Image upload capability for CkEditor](https://agilezen.com/project/18091/story/455)
+  * [Ability to comment on a reflection](https://agilezen.com/project/18091/story/413)
+  * [Moderating ability on Petition](https://agilezen.com/project/18091/story/460)
+  * [Moderating ability on Reflection comments](https://agilezen.com/project/18091/story/473)
+  * [Changed reflection text from "initial proposal" to "posted by"](https://agilezen.com/project/18091/story/483)
+  * [When using the Opportunity Navigation Bar, jump down to the Opportunity Navigation Bar, so if the Conversation Summary is long it does not dominate the page. ](https://agilezen.com/project/18091/story/476)
+  * [Ability to Print Completed Petition](https://agilezen.com/project/18091/story/423)
+  * [Remove support for IE 6 and 7](https://agilezen.com/project/18091/story/486)
+  * [Moderating Ability on Reflection](https://agilezen.com/project/18091/story/41)
   * [Remove FB Send from Conversation](https://agilezen.com/project/18091/story/479)
 
 #### Bug Fixes

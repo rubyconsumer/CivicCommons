@@ -71,6 +71,9 @@ class Person < ActiveRecord::Base
   has_many :contributed_conversations, :through => :contributions, :source => :conversation, :uniq => true, :dependent => :restrict
   has_many :contributed_issues, :through => :contributions, :source => :issue, :uniq => true, :dependent => :restrict
 
+  has_many :petition_signatures, :dependent => :destroy
+  has_many :signed_petitions, :class_name => 'Petition', :through => :petition_signatures, :source => :petition
+
   validates_length_of :email, :within => 6..255, :too_long => "please use a shorter email address", :too_short => "please use a longer email address"
 
   validates_presence_of :zip_code, :message => ' please enter zipcode'
@@ -81,6 +84,15 @@ class Person < ActiveRecord::Base
   friendly_id :name, :use => :slugged
   def should_generate_new_friendly_id?
     new_record? || slug.nil?
+  end
+
+  def participated_actions
+    # To do: need to merge this array with vote when we integrate them with vote
+    self.signed_petitions.collect(&:action).compact.uniq
+  end
+
+  def participated_actions_for_conversation(conversation)
+    participated_actions.delete_if{|action|action.conversation_id != conversation.id}
   end
 
   # Ensure format of salt

@@ -7,15 +7,15 @@ describe ProjectsController do
     before(:each) do
 
       (1..2).each do
-        Factory.create(:issue)
+        FactoryGirl.create(:issue)
       end
 
       (1..2).each do
-        Factory.create(:managed_issue)
+        FactoryGirl.create(:managed_issue)
       end
 
       (1..2).each do
-        Factory.create(:managed_issue, :exclude_from_result => true)
+        FactoryGirl.create(:managed_issue, :exclude_from_result => true)
       end
 
     end

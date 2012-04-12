@@ -5,18 +5,18 @@ require 'spec_helper'
     it { should have_one(:homepage_featured) }
 
     it 'responds to "featured?" showing status of attachment to a HomepageFeatured object' do
-      instance = Factory.create(model.to_s.downcase)
+      instance = FactoryGirl.create(model.to_s.downcase)
       instance.featured?.should be_false
-      Factory.create(:homepage_featured, homepage_featureable: instance)
+      FactoryGirl.create(:homepage_featured, homepage_featureable: instance)
       instance.reload.featured?.should be_true
     end
 
     it 'provides a Class method for finding all objects associated with HomepageFeatured' do
-      instance1 = Factory.create(model.to_s.downcase)
-      instance2 = Factory.create(model.to_s.downcase)
-      Factory.create(model.to_s.downcase)
-      Factory.create(:homepage_featured, homepage_featureable: instance1)
-      Factory.create(:homepage_featured, homepage_featureable: instance2)
+      instance1 = FactoryGirl.create(model.to_s.downcase)
+      instance2 = FactoryGirl.create(model.to_s.downcase)
+      FactoryGirl.create(model.to_s.downcase)
+      FactoryGirl.create(:homepage_featured, homepage_featureable: instance1)
+      FactoryGirl.create(:homepage_featured, homepage_featureable: instance2)
       model.featured.all.should == [instance1, instance2]
     end
   end

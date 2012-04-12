@@ -118,7 +118,7 @@ describe Registrations::OmniauthCallbacksController, "handle facebook authentica
       end
     end
     describe "logging in using facebook" do
-      let(:facebook_user) { Factory.create(:registered_user_with_facebook_authentication) }
+      let(:facebook_user) { FactoryGirl.create(:registered_user_with_facebook_authentication) }
 
       context "successfully" do
         before(:each) do

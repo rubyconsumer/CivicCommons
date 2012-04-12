@@ -1,0 +1,43 @@
+/* Forms
+---------------------------------*/
+
+/* Comment Form */
+form#comment-form {
+  background: #E6E6E6;
+  border: 1px solid #CCC;
+  margin-top: 20px;
+  padding: 10px 20px;
+  text-align: left;
+  -webkit-border-radius: 4px;
+     -moz-border-radius: 4px;
+       -o-border-radius: 4px;
+          border-radius: 4px;
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+     -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+       -o-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+form#comment-form textarea {
+  margin-bottom: 20px;
+  width: 565px;
+}
+
+/* Overrides for Top Aligned Labels */
+.top-align label {
+  float: none;
+  margin: 0 0 4px 0;
+  text-align: left;
+  width: 620px;
+}
+.top-align input.checkbox, 
+.top-align button.cancel, 
+.top-align input.submit, 
+.top-align input#contribution_submit {
+  margin-left: 0;
+}
+
+/* Checkbox Inline */
+.checkbox-inline span {
+  padding-left: 18px;
+}

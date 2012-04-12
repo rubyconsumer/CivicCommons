@@ -5,7 +5,7 @@ module Utilities
 
     context "when merging another account" do
       def given_a_person_with_email(email)
-        person = Factory.create(:registered_user, :avatar => nil, :email => email)
+        person = FactoryGirl.create(:registered_user, :avatar => nil, :email => email)
       end
 
       after(:each) do
@@ -26,10 +26,10 @@ module Utilities
       end
 
       it "will rollback if a transaction fails" do
-        Factory.create(:top_level_contribution, person: @person_to_merge)
-        Factory.create(:contribution, person: @person_to_merge)
-        Factory.create(:issue_contribution, person: @person_to_merge)
-        Factory.create(:comment, person: @person_to_merge)
+        FactoryGirl.create(:top_level_contribution, person: @person_to_merge)
+        FactoryGirl.create(:contribution, person: @person_to_merge)
+        FactoryGirl.create(:issue_contribution, person: @person_to_merge)
+        FactoryGirl.create(:comment, person: @person_to_merge)
         @person_to_merge.contributions.length.should == 4
 
         # run a portion of the PersonUtilities.merge_account code to check that transactions work as expected
@@ -59,20 +59,20 @@ module Utilities
       end
 
       it "will associate contributions to the person being merged into" do
-        contribution = Factory.create(:top_level_contribution, person: @person_to_merge)
+        contribution = FactoryGirl.create(:top_level_contribution, person: @person_to_merge)
         conversation = contribution.conversation
-        Factory.create(:contribution, person: @person_to_merge)
-        Factory.create(:issue_contribution, person: @person_to_merge)
-        Factory.create(:comment, person: @person_to_merge)
-        Factory.create(:comment_with_unique_content, person: @person_to_merge)
-        Factory.create(:suggested_action, person: @person_to_merge)
-        Factory.create(:question, conversation: conversation, parent: contribution, person: @person_to_merge)
-        Factory.create(:question_without_parent, conversation: conversation ,person: @person_to_merge)
-        Factory.create(:answer, person: @person_to_merge)
-        Factory.create(:attached_file, person: @person_to_merge)
-        Factory.create(:link, person: @person_to_merge)
-        Factory.create(:embedded_snippet, person: @person_to_merge)
-        Factory.create(:embedly_contribution, conversation: conversation, parent: contribution, person: @person_to_merge)
+        FactoryGirl.create(:contribution, person: @person_to_merge)
+        FactoryGirl.create(:issue_contribution, person: @person_to_merge)
+        FactoryGirl.create(:comment, person: @person_to_merge)
+        FactoryGirl.create(:comment_with_unique_content, person: @person_to_merge)
+        FactoryGirl.create(:suggested_action, person: @person_to_merge)
+        FactoryGirl.create(:question, conversation: conversation, parent: contribution, person: @person_to_merge)
+        FactoryGirl.create(:question_without_parent, conversation: conversation ,person: @person_to_merge)
+        FactoryGirl.create(:answer, person: @person_to_merge)
+        FactoryGirl.create(:attached_file, person: @person_to_merge)
+        FactoryGirl.create(:link, person: @person_to_merge)
+        FactoryGirl.create(:embedded_snippet, person: @person_to_merge)
+        FactoryGirl.create(:embedly_contribution, conversation: conversation, parent: contribution, person: @person_to_merge)
 
         # create an array of the contribution IDs attributed to person_to_merge
         contribution_ids = @person_to_merge.contributions.collect do |contribution|
@@ -90,10 +90,10 @@ module Utilities
       end
 
       it "will associate ratings to the person being merged into" do
-        @contribution = Factory.create(:comment)
-        @descriptor = Factory.create(:rating_descriptor)
-        @rg = Factory.create(:rating_group, :contribution => @contribution, :person => @person_to_merge)
-        @rating = Factory.create(:rating, :rating_group => @rg, :rating_descriptor => @descriptor)
+        @contribution = FactoryGirl.create(:comment)
+        @descriptor = FactoryGirl.create(:rating_descriptor)
+        @rg = FactoryGirl.create(:rating_group, :contribution => @contribution, :person => @person_to_merge)
+        @rating = FactoryGirl.create(:rating, :rating_group => @rg, :rating_descriptor => @descriptor)
 
         @rating.person.should == @person_to_merge
         PersonUtilities.merge_account(@person, @person_to_merge)
@@ -101,7 +101,7 @@ module Utilities
       end
 
       it "will associate conversations to the person being merged into" do
-        conversation = Factory.build(:user_generated_conversation, person: @person_to_merge)
+        conversation = FactoryGirl.build(:user_generated_conversation, person: @person_to_merge)
         conversation.should be_valid
         conversation.save
 
@@ -112,7 +112,7 @@ module Utilities
       end
 
       it "will associate subscriptions to the person being merged into" do
-        @conversation_subscription = Factory.create(:conversation_subscription, person_id: @person_to_merge.id)
+        @conversation_subscription = FactoryGirl.create(:conversation_subscription, person_id: @person_to_merge.id)
         @conversation_subscription.person.should == @person_to_merge
 
         PersonUtilities.merge_account(@person, @person_to_merge)
@@ -121,7 +121,7 @@ module Utilities
       end
 
       it "will associate visits to the person being merged into" do
-        item = Factory.create(:issue, {:total_visits=>0, :recent_visits=>0, :last_visit_date=>nil})
+        item = FactoryGirl.create(:issue, {:total_visits=>0, :recent_visits=>0, :last_visit_date=>nil})
         item.visit(@person_to_merge.id)
         item.total_visits.should == 1
         PersonUtilities.merge_account(@person, @person_to_merge)
@@ -130,8 +130,8 @@ module Utilities
       end
 
       it "will associate content_items to the person being merged into" do
-        @topic = Factory.create(:topic)
-        @attr = Factory.attributes_for(:content_item, topics: [@topic])
+        @topic = FactoryGirl.create(:topic)
+        @attr = FactoryGirl.attributes_for(:content_item, topics: [@topic])
         @attr[:author] = @person_to_merge
         content_item = ContentItem.new(@attr)
         content_item.should be_valid
@@ -154,7 +154,7 @@ module Utilities
       end
 
       it "will associate content_templates to the person being merged into" do
-        @attr = Factory.attributes_for(:content_template)
+        @attr = FactoryGirl.attributes_for(:content_template)
         @attr[:author] = @person_to_merge
         content_template = ContentTemplate.new(@attr)
         content_template.should be_valid
@@ -177,8 +177,8 @@ module Utilities
       end
 
       it "will associate managed_issue_pages to the person being merged into" do
-        @attr = Factory.attributes_for(:managed_issue_page)
-        @attr[:issue] = Factory.build(:managed_issue)
+        @attr = FactoryGirl.attributes_for(:managed_issue_page)
+        @attr[:issue] = FactoryGirl.build(:managed_issue)
         @attr[:author] = @person_to_merge
         managed_issue_page = ManagedIssuePage.new(@attr)
         managed_issue_page.should be_valid

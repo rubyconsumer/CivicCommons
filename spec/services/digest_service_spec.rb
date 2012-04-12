@@ -7,13 +7,13 @@ describe DigestService do
     before(:each) do
 
       #Contrubitor that talks a lot
-      @contributor = Factory.create(:registered_user, :name => 'Big Talker', :avatar => nil)
+      @contributor = FactoryGirl.create(:registered_user, :name => 'Big Talker', :avatar => nil)
 
       #Conversations
-      @convo_fresh_with_subs = Factory.create(:conversation, :title => 'Fresh with Subscriptions')
-      @convo_fresh_without_subs = Factory.create(:conversation, :title => 'Fresh without Subscriptions')
-      @convo_stale_with_subs = Factory.create(:conversation, :title => 'Stale with Subscriptions')
-      @convo_stale_without_subs = Factory.create(:conversation, :title => 'Stale without Subscriptions')
+      @convo_fresh_with_subs = FactoryGirl.create(:conversation, :title => 'Fresh with Subscriptions')
+      @convo_fresh_without_subs = FactoryGirl.create(:conversation, :title => 'Fresh without Subscriptions')
+      @convo_stale_with_subs = FactoryGirl.create(:conversation, :title => 'Stale with Subscriptions')
+      @convo_stale_without_subs = FactoryGirl.create(:conversation, :title => 'Stale without Subscriptions')
 
       #create instance of DigestService
       @service = DigestService.new
@@ -23,7 +23,7 @@ describe DigestService do
     context "When users have opted out of the digest" do
 
       before(:each) do
-        @person_unsubscribed_from_digest = Factory.create(:registered_user, :daily_digest => false,  :name => 'No Subscriptions', :avatar => nil)
+        @person_unsubscribed_from_digest = FactoryGirl.create(:registered_user, :daily_digest => false,  :name => 'No Subscriptions', :avatar => nil)
       end
 
       it "Generates an empty set" do
@@ -36,15 +36,15 @@ describe DigestService do
     context "When users have subscribed to conversations" do
 
       before(:each) do
-        @person_with_subs = Factory.create(:registered_user, :name => 'I Subscribe', :daily_digest => true, :avatar => nil)
+        @person_with_subs = FactoryGirl.create(:registered_user, :name => 'I Subscribe', :daily_digest => true, :avatar => nil)
 
         #Subscriptions
-        @sub_fresh = Factory.create(:conversation_subscription, :person => @person_with_subs, :subscribable => @convo_fresh_with_subs)
-        @sub_stale = Factory.create(:conversation_subscription, :person => @person_with_subs, :subscribable => @convo_stale_with_subs)
+        @sub_fresh = FactoryGirl.create(:conversation_subscription, :person => @person_with_subs, :subscribable => @convo_fresh_with_subs)
+        @sub_stale = FactoryGirl.create(:conversation_subscription, :person => @person_with_subs, :subscribable => @convo_stale_with_subs)
 
         #Contributions
-        Factory.create(:contribution, :person => @contributor, :conversation => @convo_stale_with_subs, :created_at => 2.days.ago)
-        Factory.create(:contribution, :person => @contributor, :conversation => @convo_stale_without_subs, :created_at => 2.days.ago)
+        FactoryGirl.create(:contribution, :person => @contributor, :conversation => @convo_stale_with_subs, :created_at => 2.days.ago)
+        FactoryGirl.create(:contribution, :person => @contributor, :conversation => @convo_stale_without_subs, :created_at => 2.days.ago)
       end
 
       context "No new contributions added yesterday" do
@@ -61,15 +61,15 @@ describe DigestService do
 
         before(:each) do
           #Issue
-          @fresh_issue = Factory.create(:issue)
+          @fresh_issue = FactoryGirl.create(:issue)
 
           #Subscriptions
-          @sub_fresh_issue = Factory.create(:issue_subscription, :person => @person_with_subs, :subscribable => @fresh_issue)
+          @sub_fresh_issue = FactoryGirl.create(:issue_subscription, :person => @person_with_subs, :subscribable => @fresh_issue)
 
           #Contributions
-          Factory.create(:issue_contribution, :person => @contributor, :created_at => 1.day.ago)
-          Factory.create(:contribution, :person => @contributor, :conversation => @convo_fresh_with_subs, :created_at => 1.day.ago)
-          Factory.create(:contribution, :person => @contributor, :conversation => @convo_fresh_without_subs, :created_at => 1.day.ago)
+          FactoryGirl.create(:issue_contribution, :person => @contributor, :created_at => 1.day.ago)
+          FactoryGirl.create(:contribution, :person => @contributor, :conversation => @convo_fresh_with_subs, :created_at => 1.day.ago)
+          FactoryGirl.create(:contribution, :person => @contributor, :conversation => @convo_fresh_without_subs, :created_at => 1.day.ago)
         end
 
         it "should generate a valid data set when there are fresh contributions and at least one valid subscriber" do
@@ -103,12 +103,12 @@ describe DigestService do
   describe "DigestService#group_contributions_by_conversation" do
 
     it "Creates an array of contributions for the given conversation" do
-      @person_with_subs = Factory.create(:registered_user, :name => 'I Subscribe', :daily_digest => true, :avatar => nil)
-      @contributor = Factory.create(:registered_user, :name => 'Big Talker', :avatar => nil)
-      @convo_fresh_with_subs = Factory.create(:conversation, :title => 'Fresh with Subscriptions')
-      Factory.create(:conversation_subscription, person: @person_with_subs, subscribable: @convo_fresh_with_subs)
-      @first_contribution = Factory.create(:contribution, :person => @contributor, :conversation => @convo_fresh_with_subs, :created_at => 1.day.ago)
-      @second_contribution = Factory.create(:contribution, :person => @contributor, :conversation => @convo_fresh_with_subs, :created_at => 1.day.ago)
+      @person_with_subs = FactoryGirl.create(:registered_user, :name => 'I Subscribe', :daily_digest => true, :avatar => nil)
+      @contributor = FactoryGirl.create(:registered_user, :name => 'Big Talker', :avatar => nil)
+      @convo_fresh_with_subs = FactoryGirl.create(:conversation, :title => 'Fresh with Subscriptions')
+      FactoryGirl.create(:conversation_subscription, person: @person_with_subs, subscribable: @convo_fresh_with_subs)
+      @first_contribution = FactoryGirl.create(:contribution, :person => @contributor, :conversation => @convo_fresh_with_subs, :created_at => 1.day.ago)
+      @second_contribution = FactoryGirl.create(:contribution, :person => @contributor, :conversation => @convo_fresh_with_subs, :created_at => 1.day.ago)
 
       digest = DigestService.new
       digest.generate_digest_set
@@ -124,10 +124,10 @@ describe DigestService do
 
     before(:each) do
 
-      @person_with_subs = Factory.create(:registered_user, :name => 'I Subscribe', :daily_digest => true, :avatar => nil)
-      @contributor = Factory.create(:registered_user, :name => 'Big Talker', :avatar => nil)
-      @convo_fresh_with_subs = Factory.create(:conversation, :title => 'Fresh with Subscriptions')
-      convo_array = [ [@convo_fresh_with_subs, [ Factory.create(:contribution, :person => @contributor, :conversation => @convo_fresh_with_subs, :created_at => 1.day.ago) ] ] ]
+      @person_with_subs = FactoryGirl.create(:registered_user, :name => 'I Subscribe', :daily_digest => true, :avatar => nil)
+      @contributor = FactoryGirl.create(:registered_user, :name => 'Big Talker', :avatar => nil)
+      @convo_fresh_with_subs = FactoryGirl.create(:conversation, :title => 'Fresh with Subscriptions')
+      convo_array = [ [@convo_fresh_with_subs, [ FactoryGirl.create(:contribution, :person => @contributor, :conversation => @convo_fresh_with_subs, :created_at => 1.day.ago) ] ] ]
       @digest_set = {
         @person_with_subs => convo_array
       }

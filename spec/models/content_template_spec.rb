@@ -3,11 +3,11 @@ require 'spec_helper'
 describe ContentTemplate do
   
   before(:all) do
-    @author = Factory.build(:admin_person)
+    @author = FactoryGirl.build(:admin_person)
   end
 
   before(:each) do
-    @attr = Factory.attributes_for(:content_template)
+    @attr = FactoryGirl.attributes_for(:content_template)
     @attr[:author] = @author
   end
 
@@ -36,7 +36,7 @@ describe ContentTemplate do
       ContentTemplate.new(@attr).save
       @attr[:template] = 'new stuff'
       @attr[:slug] = 'new_stuff'
-      @attr[:author] = Factory.build(:admin_person, :id => @author.id+1)
+      @attr[:author] = FactoryGirl.build(:admin_person, :id => @author.id+1)
       ContentTemplate.new(@attr).should_not be_valid
     end
 

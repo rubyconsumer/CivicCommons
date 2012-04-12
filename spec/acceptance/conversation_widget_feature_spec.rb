@@ -15,15 +15,15 @@ feature "Conversation Widget Feature", %q{
   end
   
   background do
-    @conversation = Factory.create(:conversation, :title => 'Akron Beacon Journal Seeks Citizen Views', :summary => 'Conversation Summary Here')
-    @person = Factory.create(:normal_person)
-    @contribution1 = Factory.create(:contribution,{:conversation => @conversation, :content => 'Contribution Title here 1'})
-    @contribution2 = Factory.create(:contribution,{:conversation => @conversation, :content => 'Contribution Title here 2'})
-    @contribution3 = Factory.create(:contribution,{:conversation => @conversation, :content => 'Contribution Title here 3'})
-    @contribution4 = Factory.create(:contribution,{:conversation => @conversation, :content => 'Contribution Title here 4'})
-    @contribution5 = Factory.create(:contribution,{:conversation => @conversation, :content => 'Contribution Title here 5'})
-    @contribution6 = Factory.create(:contribution,{:conversation => @conversation, :content => 'Contribution Title here 6'})
-    @contribution7 = Factory.create(:contribution,{:conversation => @conversation, :content => 'Contribution Title here 7'})
+    @conversation = FactoryGirl.create(:conversation, :title => 'Akron Beacon Journal Seeks Citizen Views', :summary => 'Conversation Summary Here')
+    @person = FactoryGirl.create(:normal_person)
+    @contribution1 = FactoryGirl.create(:contribution,{:conversation => @conversation, :content => 'Contribution Title here 1'})
+    @contribution2 = FactoryGirl.create(:contribution,{:conversation => @conversation, :content => 'Contribution Title here 2'})
+    @contribution3 = FactoryGirl.create(:contribution,{:conversation => @conversation, :content => 'Contribution Title here 3'})
+    @contribution4 = FactoryGirl.create(:contribution,{:conversation => @conversation, :content => 'Contribution Title here 4'})
+    @contribution5 = FactoryGirl.create(:contribution,{:conversation => @conversation, :content => 'Contribution Title here 5'})
+    @contribution6 = FactoryGirl.create(:contribution,{:conversation => @conversation, :content => 'Contribution Title here 6'})
+    @contribution7 = FactoryGirl.create(:contribution,{:conversation => @conversation, :content => 'Contribution Title here 7'})
   end
   scenario "Widget", :js => true do
     visit '/example_cc_widget_for_rspec'

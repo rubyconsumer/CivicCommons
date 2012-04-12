@@ -58,7 +58,7 @@ describe SecureUrlHelper do
   describe "secure_edit_user_url" do
 
     before(:all) do
-      @resource = Factory.build(:registered_user, :id => 1)
+      @resource = FactoryGirl.build(:registered_user, :id => 1)
     end
 
     it "should return the correct URL when SSL is enabled" do
@@ -76,7 +76,7 @@ describe SecureUrlHelper do
   describe "secure_user_url" do
 
     before(:all) do
-      @resource = Factory.build(:registered_user, :id => 1)
+      @resource = FactoryGirl.build(:registered_user, :id => 1)
     end
 
     it "should return the correct URL when SSL is enabled" do

@@ -1,0 +1,12 @@
+<div class="modal-wrap">
+  <div class="media pal">
+    <%= profile_image(current_person, 40, 'img')  %>
+    <div class="bd">
+      <p><%= current_person.first_name %>, would you like to add your name to the list of signatures on this petition?</p>
+      <div class="ptl">
+        <%= link_to 'Yes, sign my name', sign_conversation_petition_path(@conversation,@petition), :class => 'button', :method => :post %>
+        <a href="#" class="closebutton">No, do not sign.</a>
+      </div>
+    </div>
+  </div>
+</div>

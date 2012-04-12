@@ -32,4 +32,16 @@ describe ConversationsHelper do
       helper.get_path_sym(mock_content_item(:content_type => 'BlogPost',:id => 123)).should == :blog
     end
   end
+
+  describe 'opportunity_navigation_item_selected?' do
+    it 'should return true if the controller is the same as type argument' do
+      controller.stub!(:controller_name).and_return('conversations')
+      helper.opportunity_navigation_item_selected?('conversations').should be_true
+    end
+
+    it 'should return false if the controller is different than the type argument' do
+      controller.stub!(:controller_name).and_return('actions')
+      helper.opportunity_navigation_item_selected?('conversations').should be_false
+    end
+  end
 end

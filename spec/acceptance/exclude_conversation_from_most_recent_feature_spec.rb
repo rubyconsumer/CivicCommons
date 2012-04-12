@@ -9,7 +9,7 @@ feature "Exclude conversation from 'most recent' filter", %q{
 } do
 
   scenario "Creating a conversation", :js => true do
-    issue = Factory.create(:issue)
+    issue = FactoryGirl.create(:issue)
 
     # Given that I am an admin
     login_as :admin
@@ -33,7 +33,7 @@ feature "Exclude conversation from 'most recent' filter", %q{
   end
 
   scenario "Editing a conversation", :js => true do
-    conversation = Factory.create(:conversation)
+    conversation = FactoryGirl.create(:conversation)
     # Given that I am an admin
     login_as :admin
     # And a conversation is on the homepage
@@ -58,7 +58,7 @@ feature "Exclude conversation from 'most recent' filter", %q{
   context "Viewing a conversation that is excluded from Most Recent" do
     scenario "View converstation on associated issue page" do
       # Given a conversation that is excluded from Most Recent
-      conversation = Factory.create(:conversation, exclude_from_most_recent: true)
+      conversation = FactoryGirl.create(:conversation, exclude_from_most_recent: true)
       # When I visit an issue page the conversation belongs to
       visit issue_path(conversation.issues.first)
       # Then I should see the conversation
@@ -67,7 +67,7 @@ feature "Exclude conversation from 'most recent' filter", %q{
 
     scenario "View converstation as part of 'Recommended'" do
       # Given a conversation that is excluded from Most Recent
-      conversation = Factory.create(:conversation, exclude_from_most_recent: true, staff_pick: true)
+      conversation = FactoryGirl.create(:conversation, exclude_from_most_recent: true, staff_pick: true)
       # When I visit an issue page the conversation belongs to
       visit conversations_filter_path('recommended')
       # Then I should see the conversation
@@ -75,10 +75,10 @@ feature "Exclude conversation from 'most recent' filter", %q{
     end
 
     scenario "View converstation as part of region conversation listing" do
-      region = Factory.create(:region)
-      Factory.create(:zip_code, region: region, zip_code: '12345')
+      region = FactoryGirl.create(:region)
+      FactoryGirl.create(:zip_code, region: region, zip_code: '12345')
       # Given a conversation that is excluded from Most Recent
-      conversation = Factory.create(:conversation, exclude_from_most_recent: true, zip_code: '12345')
+      conversation = FactoryGirl.create(:conversation, exclude_from_most_recent: true, zip_code: '12345')
       # When I visit an issue page the conversation belongs to
       visit region_path(region)
       # Then I should see the conversation

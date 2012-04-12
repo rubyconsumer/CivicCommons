@@ -1,0 +1,33 @@
+<div class="btn-group btn-group-large mbm" id="opportunity-nav">
+  <%= render partial: '/layouts/opportunity_navigation_item', locals: {
+    active: opportunity_navigation_item_selected?('conversations'),
+    title: 'Talk',
+    link: conversation_path(conversation, :anchor => 'opportunity-nav'),
+    count: participants_count,
+    show_person_icon: true
+  } %>
+  <%= render partial: '/layouts/opportunity_navigation_item', locals: {
+    active: opportunity_navigation_item_selected?('actions') || opportunity_navigation_item_selected?('petitions'),
+    title: 'Take Action',
+    link: conversation_actions_path(conversation, :anchor => 'opportunity-nav'),
+    count: actions_count
+  } %>
+  <%= render partial: '/layouts/opportunity_navigation_item', locals: {
+    active: opportunity_navigation_item_selected?('reflections') || opportunity_navigation_item_selected?('reflection_comments'),
+    title: 'Reflect',
+    link: conversation_reflections_path(conversation, :anchor => 'opportunity-nav'),
+    count: reflections_count
+  } %>
+</div>
+
+<div class="btn-group mbm">
+  <div class="text">
+    <p>Share stories, photos, videos, and links. Friendly debates.</p>
+  </div>
+  <div class="text">
+    <p>Start a movement, join a movement.</p>
+  </div>
+  <div class="text">
+    <p>Look back on what we've done.</p>
+  </div>
+</div>

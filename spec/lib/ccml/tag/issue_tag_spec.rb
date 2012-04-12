@@ -5,7 +5,7 @@ describe CCML::Tag::IssueTag do
   context "'index' method" do
 
     before(:each) do
-      @issue = Factory.create(:issue)
+      @issue = FactoryGirl.create(:issue)
       @url = "http://www.theciviccommons.com/issues/#{@issue.slug}"
       @tag_body = '{id} "{name}" {slug}'
       @tag_regexp = Regexp.new("#{@issue.id} \"#{@issue.name}\" #{@issue.slug}")
@@ -40,8 +40,8 @@ describe CCML::Tag::IssueTag do
   context "'pages' method" do
 
     before(:each) do
-      @issue = Factory.create(:managed_issue)
-      @page = Factory.create(:managed_issue_page, issue: @issue)
+      @issue = FactoryGirl.create(:managed_issue)
+      @page = FactoryGirl.create(:managed_issue_page, issue: @issue)
       @url = "http://www.theciviccommons.com/issues/#{@issue.slug}"
       @tag_body = '{id} "{name}" {slug}'
       @tag_regexp = Regexp.new("#{@page.id} \"#{@page.name}\" #{@page.slug}")
@@ -72,14 +72,14 @@ describe CCML::Tag::IssueTag do
     end
 
     it "returns blank if the requested issue has no associated pages" do
-      issue = Factory.create(:managed_issue)
+      issue = FactoryGirl.create(:managed_issue)
       tag = CCML::Tag::IssueTag.new({id: issue.id}, @url)
       tag.tag_body = @tag_body
       tag.pages.should be_blank
     end
 
     it "returns blank if the requested issue is not a managed issue" do
-      issue = Factory.create(:issue)
+      issue = FactoryGirl.create(:issue)
       tag = CCML::Tag::IssueTag.new({id: issue.id}, @url)
       tag.tag_body = @tag_body
       tag.pages.should be_blank
@@ -90,8 +90,8 @@ describe CCML::Tag::IssueTag do
   context "'conversations' method" do
 
     before(:each) do
-      @issue = Factory.create(:managed_issue)
-      @convo = Factory.create(:conversation)
+      @issue = FactoryGirl.create(:managed_issue)
+      @convo = FactoryGirl.create(:conversation)
       @convo.issues << @issue
       @convo.save
       @url = "http://www.theciviccommons.com/issues/#{@issue.slug}"
@@ -124,7 +124,7 @@ describe CCML::Tag::IssueTag do
     end
 
     it "returns blank if the requested issue has no associated conversations" do
-      issue = Factory.create(:managed_issue)
+      issue = FactoryGirl.create(:managed_issue)
       tag = CCML::Tag::IssueTag.new({id: issue.id}, @url)
       tag.tag_body = @tag_body
       tag.conversations.should be_blank
@@ -140,9 +140,9 @@ describe CCML::Tag::IssueTag do
 
   context "'vote_band' method" do
     before(:each) do
-      @issue = Factory.create(:issue)
-      @vote1 = Factory.create(:vote, :title => 'Vote1title', :surveyable_type => @issue.class.name, :surveyable_id => @issue.id)
-      @vote2 = Factory.create(:vote, :title => 'Vote2title', :surveyable_type => @issue.class.name, :surveyable_id => @issue.id)
+      @issue = FactoryGirl.create(:issue)
+      @vote1 = FactoryGirl.create(:vote, :title => 'Vote1title', :surveyable_type => @issue.class.name, :surveyable_id => @issue.id)
+      @vote2 = FactoryGirl.create(:vote, :title => 'Vote2title', :surveyable_type => @issue.class.name, :surveyable_id => @issue.id)
       @url = "http://www.theciviccommons.com/issues/#{@issue.slug}"
       @vote_title1 = Regexp.new(@vote1.title)
       @vote_title2 = Regexp.new(@vote2.title)

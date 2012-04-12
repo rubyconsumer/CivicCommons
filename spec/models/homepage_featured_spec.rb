@@ -8,21 +8,21 @@ describe HomepageFeatured do
 
   describe 'factories' do
     it 'is valid' do
-      Factory.build(:homepage_featured).should be_valid
-      Factory.create(:homepage_featured).should be_valid
+      FactoryGirl.build(:homepage_featured).should be_valid
+      FactoryGirl.create(:homepage_featured).should be_valid
     end
   end
 
   describe 'creation' do
     it 'should not allow entries with duplicate homepage_featureable' do
-      Factory.create(:homepage_featured)
+      FactoryGirl.create(:homepage_featured)
       should validate_uniqueness_of(:homepage_featureable_id).scoped_to(:homepage_featureable_type)
     end
   end
 
   describe 'deletion' do
     it 'should not delete the homepage_featureable object if the HomepageFeature object is deleted' do
-      homepage_featured = Factory.create(:homepage_featured)
+      homepage_featured = FactoryGirl.create(:homepage_featured)
       homepage_featureable = homepage_featured.homepage_featureable
       homepage_featured.destroy
       homepage_featureable.reload.should be_valid
@@ -30,9 +30,9 @@ describe HomepageFeatured do
   end
 
   describe 'sample_and_filtered' do
-    let(:homepage_featured) {Factory.create(:homepage_featured)}
-    let(:homepage_featured2) {Factory.create(:homepage_featured)}
-    let(:homepage_featured3) {Factory.create(:homepage_featured)}
+    let(:homepage_featured) {FactoryGirl.create(:homepage_featured)}
+    let(:homepage_featured2) {FactoryGirl.create(:homepage_featured)}
+    let(:homepage_featured3) {FactoryGirl.create(:homepage_featured)}
 
     before(:each) do
       HomepageFeatured.stub(:all).and_return([homepage_featured2, homepage_featured, homepage_featured3])
