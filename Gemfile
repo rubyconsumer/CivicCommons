@@ -70,7 +70,7 @@ end
 
 group :test do
   gem "rack-test"
-  gem "factory_girl_rails", '~>1.3'
+  gem "factory_girl_rails", '~>2.0'
   gem 'no_peeping_toms'
   gem 'webmock', '1.6.2' #, :git => 'git://github.com/CivicCommons/webmock.git', :branch => '1.6.2'
   # Required by WebMock but breaks everything at 2.2.5

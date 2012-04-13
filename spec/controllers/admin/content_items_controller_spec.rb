@@ -83,6 +83,7 @@ module Admin
         before(:each) do
           params[:author] = author
           params.delete(:published)
+
           post :create, :content_item => params
         end
 
