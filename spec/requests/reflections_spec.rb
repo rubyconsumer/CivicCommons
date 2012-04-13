@@ -12,6 +12,7 @@ describe "Reflections" do
 
     it "works! (now write some real specs)" do
       Conversation.stub(:find).with('7') { mock_conversation }
+      mock_conversation.stub_chain(:managed_issue,:first).and_return(nil)
       Reflection.stub(:where) {mock_reflection}
       mock_reflection.stub(:order) {[]}
       get conversation_reflections_path :conversation_id => 7
