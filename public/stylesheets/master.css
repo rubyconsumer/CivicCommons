@@ -2836,7 +2836,10 @@ div.blog img.callout {float: left; width: 32px; height: 32px; padding-right: 5px
 #cke_advanced_125, #cke_Link_91 {
   visibility:hidden;
 }
-
+.wysiwyg-formatted img{
+/*  max-width:588px;*/
+  max-width:100%;
+}
 
 
 /*- OPPORTUNITY PAGE STYLES
