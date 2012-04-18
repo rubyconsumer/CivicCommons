@@ -47,14 +47,29 @@
     </p>
   <% end %>
 
-  <% if @issue.image.exists? %>
-    <%= image_tag @issue.image.url(:normal) %>
-  <% end %>
-  <p>
+  <fieldset class="form-field">
+    <legend>Standard Banner Image</legend>
+    <% if @issue.standard_banner_image.exists? %>
+      <%= image_tag @issue.standard_banner_image.url(:normal) %>
+    <% end %>
+    <p>
+    <%= f.label :standard_banner_image, "Attach an Image (looks best at 3:2 ratio)" %>
+    <br />
+    <%= f.file_field :standard_banner_image %>
+    </p>
+  </fieldset>
+
+  <fieldset class="form-field">
+    <legend>Panel Image</legend>
+    <% if @issue.image.exists? %>
+      <%= image_tag @issue.image.url(:normal) %>
+    <% end %>
+    <p>
     <%= f.label :image, "Attach an Image (looks best at 3:2 ratio)" %>
     <br />
     <%= f.file_field :image %>
-  </p>
+    </p>
+  </fieldset>
 
   <p>
     <%= f.label :index_summary %>

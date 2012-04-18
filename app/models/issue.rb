@@ -49,6 +49,17 @@ class Issue < ActiveRecord::Base
                                     :content_type => /image\/*/,
                                     :message => "Not a valid image file."
 
+  has_attached_file(:standard_banner_image,
+                    :styles => {
+                      :normal => "480x300#",
+                      :panel => "198x130#" },
+                    :storage => :s3,
+                    :s3_credentials => S3Config.credential_file,
+                    :path => IMAGE_ATTACHMENT_PATH)
+  validates_attachment_content_type :standard_banner_image,
+                                    :content_type => /image\/*/,
+                                    :message => "Not a valid image file."
+
   friendly_id :name, :use => :slugged
   def should_generate_new_friendly_id?
     new_record? || slug.nil?

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120329033351) do
+ActiveRecord::Schema.define(:version => 20120418135757) do
 
   create_table "actions", :force => true do |t|
     t.integer  "conversation_id"
@@ -352,16 +352,20 @@ ActiveRecord::Schema.define(:version => 20120329033351) do
     t.string   "url"
     t.string   "url_title"
     t.string   "cached_slug"
-    t.string   "type",                  :default => "Issue", :null => false
+    t.string   "type",                               :default => "Issue", :null => false
     t.integer  "managed_issue_page_id"
     t.integer  "position"
     t.string   "sponsor_name"
-    t.boolean  "exclude_from_result",   :default => false
+    t.boolean  "exclude_from_result",                :default => false
     t.text     "index_summary"
     t.string   "page_title"
     t.text     "meta_description"
     t.text     "meta_tags"
     t.string   "slug"
+    t.string   "standard_banner_image_file_name"
+    t.string   "standard_banner_image_content_type"
+    t.integer  "standard_banner_image_file_size"
+    t.datetime "standard_banner_image_updated_at"
   end
 
   add_index "issues", ["cached_slug"], :name => "index_issues_on_cached_slug", :unique => true
