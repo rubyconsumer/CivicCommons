@@ -6,6 +6,7 @@
   * [Limit image size in CKEditor to fit in our frame](https://agilezen.com/project/18091/story/500)
   * [Display Error if Topic is Missing when editing an Issue in the Admin Screen](https://agilezen.com/project/18091/story/506)
   * [Project Design Carried to Conversation Page](https://agilezen.com/project/18091/story/503)
+  * [Add Option to Remove Styling from Widget](https://agilezen.com/project/18091/story/504)
   * [Reflection Index Page in Desc order](https://agilezen.com/project/18091/story/490)
   * [Action Index Page in Desc order](https://agilezen.com/project/18091/story/491)
 
