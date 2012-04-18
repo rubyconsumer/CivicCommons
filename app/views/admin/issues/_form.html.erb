@@ -14,7 +14,7 @@
     <%= f.check_box :exclude_from_result %>
   </p>
 
-  <fieldset>
+  <fieldset class="form-field">
     <legend>Topics</legend>
     <table class="topics">
     <% @topics.each_slice(2) do |slice| %>
@@ -32,8 +32,11 @@
 
   <p>
     <%= f.label :type %>
-    <br />
-    <%= f.select :type, Issue::ALL_TYPES %>
+    <% if @issue.id.present? %>
+      <i><%= @issue.type %></i>
+    <% else %>
+      <%= f.select :type, Issue::ALL_TYPES %>
+    <% end %>
   </p>
 
   <% if @issue.type == 'ManagedIssue' %>
