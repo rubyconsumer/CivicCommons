@@ -67,9 +67,9 @@ $(document).ready(function(){
     CKEDITOR.on('dialogDefinition', function(event) {
       var dialogName = event.data.name;
       var dialogDefinition = event.data.definition;
-      var uploadPageID = 'Upload';
 
       if(dialogName == 'image') {
+        var uploadPageID = 'Upload';
         dialogDefinition.removeContents('advanced');
         dialogDefinition.removeContents('Link');
 
@@ -79,15 +79,38 @@ $(document).ready(function(){
 
           dialogDefinition.onShow = function() {
             this.selectPage(uploadPageID);
+            this.on('selectPage', ckRemoveLoadIcon);
             if(typeof oldMethod == 'function') {
               oldMethod.apply(this, oldArguments);
             }
+
+            var uploadButton = this.getContentElement('Upload', 'uploadButton');
+            var $uploadButton = $('#' + uploadButton.domId);
+
+            // if the span for the button recieves 'upload-complete' it will dismiss the loading icon
+            $uploadButton.bind('upload-complete', function(event){
+              $(this).find('.loading-icon').remove();
+            });
+
+            $uploadButton.click(function(event){
+              if(event.currentTarget == this &&
+                $(this).find('.loading-icon').length === 0 &&
+                CKEDITOR.dialog.getCurrent().getContentElement('Upload', 'upload').getValue() !== '') {
+                var $spinner = $('<img class="loading-icon" src="/images/loading.gif" style="padding-left: 5px; vertical-align: middle;" />');
+                $(this).find('span').append($spinner);
+              }
+            });
           };
         }
       }
     });
   }
 });
+
+function ckRemoveLoadIcon() {
+  var $button = $('span.cke_dialog_ui_button:contains("Send it to the Server")');
+  $button.trigger('upload-complete');
+}
 
 function ckDialogPageExists(dialogDefinition, pageID) {
   var i = 0;
