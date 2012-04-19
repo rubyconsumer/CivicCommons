@@ -12,6 +12,7 @@
   * [Action Index Page in Desc order](https://agilezen.com/project/18091/story/491)
   * [CKEditor Image Dialog Displays Info and Upload Tab](https://agilezen.com/project/18091/story/483)
   * [CKEditor Image Dialog box should default to Upload Tab](https://agilezen.com/project/18091/story/495)
+  * [CKEditor Indicator of Upload Status](https://agilezen.com/project/18091/story/508)
 
 ### Bug Fixes
   * [Allow Issues to be Edited in Admin Screen](https://agilezen.com/project/18091/story/505)
