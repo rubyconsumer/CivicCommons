@@ -364,7 +364,7 @@ div.validation-error > ul > li {
   padding: 0;
   text-align: left;
 }
-.field-with-error input.textbox, 
+.field-with-error input.textbox,
 .field-with-error textarea {
   background-color: #fff8f8;
 }
@@ -630,8 +630,8 @@ a.see-more {float: right;}
 
 /* Media Object
 
- (introducing the media object by 
- Nicole Sullivan hopefully it will 
+ (introducing the media object by
+ Nicole Sullivan hopefully it will
  allow us to remove the various
  image offset styles)
 
@@ -1172,7 +1172,7 @@ div.three-col-sm div.photobank img {margin: 0 0 6px 6px;}
   color: #2c87b7;
 }
 
-.entry-details h4, 
+.entry-details h4,
 .entry-details p {
   padding-left: 210px;
 }
@@ -1186,12 +1186,12 @@ div.three-col-sm div.photobank img {margin: 0 0 6px 6px;}
           border-radius: 0 1px 3px rgba(0, 0, 0, 0.15);
 }
 
-.entry-details.full h4, 
+.entry-details.full h4,
 .entry-details.full p {
   padding-left: 0;
 }
 
-.entry-details.full img, 
+.entry-details.full img,
 .entry-details.full object {
 	float: none;
 }
@@ -2830,18 +2830,6 @@ div.blog img.callout {float: left; width: 32px; height: 32px; padding-right: 5px
 }
 
 
-
-/*- CKEDITOR CUSTOMIZATIONS
-----------------------------------------------------------------------*/
-#cke_advanced_125, #cke_Link_91 {
-  visibility:hidden;
-}
-.wysiwyg-formatted img{
-/*  max-width:588px;*/
-  max-width:100%;
-}
-
-
 /*- OPPORTUNITY PAGE STYLES
 ----------------------------------------------------------------------*/
 .vente {
@@ -2854,7 +2842,7 @@ div.blog img.callout {float: left; width: 32px; height: 32px; padding-right: 5px
 }
 
 .opportunities-outline {
-  border: 1px solid #b5b5b5; 
+  border: 1px solid #b5b5b5;
   background-color: #fff;
   margin: 20px 0 0 0;
   padding: 10px;
@@ -2875,7 +2863,7 @@ ol.opportunities-ol {
 	margin-left: 1.4em;
 }
 
-.opportunities-ol p, 
+.opportunities-ol p,
 .opportunities-ol h4 {
   font-size: 12px;
   font-weight: normal;
@@ -2938,8 +2926,8 @@ input.textbox.input-short {
   border-color: #797979;
 }
 
-#ui-datepicker-div .ui-state-default, 
-#ui-datepicker-div .ui-widget-content .ui-state-default, 
+#ui-datepicker-div .ui-state-default,
+#ui-datepicker-div .ui-widget-content .ui-state-default,
 #ui-datepicker-div .ui-widget-header .ui-state-default {
 	background-color: #e3e5e5;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#e3e5e5), to(#eef1f1));
@@ -2949,11 +2937,11 @@ input.textbox.input-short {
   background-image: linear-gradient(top, #e3e5e5, #eef1f1);
 }
 
-#ui-datepicker-div .ui-state-hover, 
-#ui-datepicker-div .ui-widget-content .ui-state-hover, 
-#ui-datepicker-div .ui-widget-header .ui-state-hover, 
-#ui-datepicker-div .ui-state-focus, 
-#ui-datepicker-div .ui-widget-content .ui-state-focus, 
+#ui-datepicker-div .ui-state-hover,
+#ui-datepicker-div .ui-widget-content .ui-state-hover,
+#ui-datepicker-div .ui-widget-header .ui-state-hover,
+#ui-datepicker-div .ui-state-focus,
+#ui-datepicker-div .ui-widget-content .ui-state-focus,
 #ui-datepicker-div .ui-widget-header .ui-state-focus {
   border: 1px solid transparent;
   background: none /* #fdf5ce url(images/ui-bg_glass_100_fdf5ce_1x400.png) 50% 50% repeat-x */;
@@ -2965,11 +2953,11 @@ input.textbox.input-short {
 	background-image: url(ui-lightness/images/ui-icons_ffffff_256x240.png);
 }
 
-#ui-datepicker-div .ui-state-default:hover, 
-#ui-datepicker-div .ui-widget-content .ui-state-default:hover, 
-#ui-datepicker-div .ui-widget-header .ui-state-default:hover, 
-#ui-datepicker-div .ui-state-active, 
-#ui-datepicker-div .ui-widget-content .ui-state-active, 
+#ui-datepicker-div .ui-state-default:hover,
+#ui-datepicker-div .ui-widget-content .ui-state-default:hover,
+#ui-datepicker-div .ui-widget-header .ui-state-default:hover,
+#ui-datepicker-div .ui-state-active,
+#ui-datepicker-div .ui-widget-content .ui-state-active,
 #ui-datepicker-div .ui-widget-header .ui-state-active {
   background-color: #f5f5f5;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#f5f5f5), to(#dadada));
@@ -2981,8 +2969,8 @@ input.textbox.input-short {
 	color: #555;
 }
 
-#ui-datepicker-div .ui-state-highlight, 
-#ui-datepicker-div .ui-widget-content .ui-state-highlight, 
+#ui-datepicker-div .ui-state-highlight,
+#ui-datepicker-div .ui-widget-content .ui-state-highlight,
 #ui-datepicker-div .ui-widget-header .ui-state-highlight {
   background-color: #8daec2;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#8daec2), to(#aecee4));
@@ -2994,12 +2982,12 @@ input.textbox.input-short {
 	color: #555;
 }
 
-#ui-datepicker-div .ui-datepicker .ui-datepicker-prev-hover, 
+#ui-datepicker-div .ui-datepicker .ui-datepicker-prev-hover,
 #ui-datepicker-div .ui-datepicker .ui-datepicker-next-hover {
   background: none;
 }
 
-#ui-datepicker-div .ui-datepicker .ui-datepicker-prev span, 
+#ui-datepicker-div .ui-datepicker .ui-datepicker-prev span,
 #ui-datepicker-div .ui-datepicker .ui-datepicker-next span {
 	display: inline;
 }

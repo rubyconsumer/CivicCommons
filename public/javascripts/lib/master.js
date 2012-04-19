@@ -67,12 +67,17 @@ $(document).ready(function(){
     CKEDITOR.on('dialogDefinition', function(event) {
       var dialogName = event.data.name;
       var dialogDefinition = event.data.definition;
-      var pageName = 'Upload';
+      var uploadPageID = 'Upload';
 
-      if(dialogName == 'image' && ckDialogPageExists(dialogDefinition, pageName)) {
-        dialogDefinition.onShow = function() {
-          this.selectPage(pageName);
-        };
+      if(dialogName == 'image') {
+        dialogDefinition.removeContents('advanced');
+        dialogDefinition.removeContents('Link');
+
+        if(ckDialogPageExists(dialogDefinition, uploadPageID)) {
+          dialogDefinition.onShow = function() {
+            this.selectPage(uploadPageID);
+          };
+        }
       }
     });
   }
