@@ -52,7 +52,7 @@ $(document).ready(function(){
   $('a[data-colorbox]:not([data-remote])').live('click', function(e){
     $.colorbox({
       transition: 'fade', // needed to fix colorbox bug with jquery 1.4.4
-      href: $(this).attr('href') 
+      href: $(this).attr('href')
     });
     e.preventDefault();
   });
@@ -61,7 +61,30 @@ $(document).ready(function(){
   setTimeout(function(){
     $('.flash-notice').hide('blind');
   },5000);
+
+  // set defaults for CKEditor
+  CKEDITOR.on('dialogDefinition', function(event) {
+    var dialogName = event.data.name;
+    var dialogDefinition = event.data.definition;
+    var pageName = 'Upload';
+
+    if(dialogName == 'image' && ckDialogPageExists(dialogDefinition, pageName)) {
+      dialogDefinition.onShow = function() {
+        this.selectPage(pageName);
+      };
+    }
+  });
 });
+
+function ckDialogPageExists(dialogDefinition, pageID) {
+  var i = 0;
+  for(i = 0; i < dialogDefinition.contents.length; i++) {
+    if(dialogDefinition.contents[i].id === pageID) {
+      return true;
+    }
+  }
+  return false;
+}
 
 var civic = function() {
   var displayMessage = function(message, cssClass) {
@@ -69,7 +92,7 @@ var civic = function() {
       .addClass(cssClass)
       .addClass("message")
       .text(message)
-      .appendTo($("body")); 
+      .appendTo($("body"));
 
     setTimeout(function() { messageDiv.fadeOut();}, 4000);
   };
