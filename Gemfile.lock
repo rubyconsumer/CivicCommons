@@ -158,7 +158,7 @@ GEM
       json (> 1.4.0)
       json (> 1.4.0)
       rdoc
-    haml (3.0.25)
+    haml (3.1.4)
     hashie (1.2.0)
     highline (1.6.11)
     hike (1.2.1)
@@ -395,7 +395,7 @@ DEPENDENCIES
   gchart (~> 1.0.0)
   geokit
   gibbon
-  haml (< 3.1)
+  haml (~> 3.1.4)
   highline
   hominid (~> 3.0.2)
   hpricot

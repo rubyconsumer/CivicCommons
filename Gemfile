@@ -8,7 +8,7 @@ gem 'omniauth-facebook'
 gem 'rails', "3.0.3"
 gem 'jquery-rails', '>= 1.0.3'
 
-gem 'haml', "<3.1"
+gem 'haml', '~> 3.1.4'
 gem 'date_validator'
 gem "will_paginate", "~> 3.0.3"
 
