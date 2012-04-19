@@ -74,8 +74,14 @@ $(document).ready(function(){
         dialogDefinition.removeContents('Link');
 
         if(ckDialogPageExists(dialogDefinition, uploadPageID)) {
+          var oldMethod = dialogDefinition.onShow;
+          var oldArguments = arguments;
+
           dialogDefinition.onShow = function() {
             this.selectPage(uploadPageID);
+            if(typeof oldMethod == 'function') {
+              oldMethod.apply(this, oldArguments);
+            }
           };
         }
       }
