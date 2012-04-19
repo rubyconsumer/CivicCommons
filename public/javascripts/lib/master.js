@@ -63,17 +63,19 @@ $(document).ready(function(){
   },5000);
 
   // set defaults for CKEditor
-  CKEDITOR.on('dialogDefinition', function(event) {
-    var dialogName = event.data.name;
-    var dialogDefinition = event.data.definition;
-    var pageName = 'Upload';
+  if('CKEDITOR' in window) {
+    CKEDITOR.on('dialogDefinition', function(event) {
+      var dialogName = event.data.name;
+      var dialogDefinition = event.data.definition;
+      var pageName = 'Upload';
 
-    if(dialogName == 'image' && ckDialogPageExists(dialogDefinition, pageName)) {
-      dialogDefinition.onShow = function() {
-        this.selectPage(pageName);
-      };
-    }
-  });
+      if(dialogName == 'image' && ckDialogPageExists(dialogDefinition, pageName)) {
+        dialogDefinition.onShow = function() {
+          this.selectPage(pageName);
+        };
+      }
+    });
+  }
 });
 
 function ckDialogPageExists(dialogDefinition, pageID) {
