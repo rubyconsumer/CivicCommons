@@ -20,7 +20,6 @@ class ConversationsController < ApplicationController
     @recent = Conversation.latest_created.limit(3)
     @recommended = Conversation.recommended.limit(3)
 
-    @regions = Region.all
     @recent_items = Activity.most_recent_activity_items(3)
     render :index, :layout => 'category_index'
   end
@@ -43,7 +42,6 @@ class ConversationsController < ApplicationController
     @filter = params[:filter]
     @conversations = Conversation.filtered(@filter).paginate(:page => params[:page], :per_page => 12)
 
-    @regions = Region.all
     @recent_items = Activity.most_recent_activity_items(3)
     render :filter, :layout => 'category_index'
   end
