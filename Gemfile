@@ -69,27 +69,27 @@ group :development do
 end
 
 group :test do
-  gem "rack-test"
-  gem "factory_girl_rails", '~>2.0'
-  gem 'no_peeping_toms'
-  gem 'webmock', '1.6.2' #, :git => 'git://github.com/CivicCommons/webmock.git', :branch => '1.6.2'
-  # Required by WebMock but breaks everything at 2.2.5
+  # Addressable Required by WebMock but breaks everything at 2.2.5
   # Can use latest addressable when pull request is accepted: https://github.com/sporkmonger/addressable/pull/33
   gem 'addressable', :git => 'git://github.com/gkellogg/addressable.git', :branch => 'frozen-uri'
-  gem 'linguistics'
-  gem 'fuubar', '~>0.0.3'
-  gem "database_cleaner", "~> 0.6.0"
-  gem 'email_spec'
-  gem 'simplecov'
-  gem 'timecop'
-  gem 'rspec-spies'
-  gem 'spork'
-  gem "rspec-rails", "~> 2.5.0"
-  gem "jasmine"
-  gem 'steak'
-  gem "capybara", '1.1.2'
+  gem "capybara", '~> 1.1.2'
+  gem "database_cleaner", "~>0.7.2"
+  gem 'email_spec', '~>1.2.1'
+  gem "factory_girl_rails", '~>2.0'
+  gem 'fuubar', '~>1.0.0'
+  gem "jasmine", '~>1.1.2'
+  gem "jasmine-headless-webkit", '~>0.8.4'
+  gem 'linguistics', '~>1.0.9'
+  gem 'no_peeping_toms'
+  gem "rack-test"
+  gem "rspec-rails", "~> 2.9.0"
+  gem 'rspec-spies', '~>2.1.0'
+  gem 'simplecov', '~>0.6.2'
+  gem 'spork', '~>0.9.0'
+  gem 'steak', '~>2.0.0'
+  gem 'timecop', '~>0.3.5'
+  gem 'webmock', '~>1.6.2' #, :git => 'git://github.com/CivicCommons/webmock.git', :branch => '1.6.2'
   gem 'webrat', "~> 0.7.3"
-  gem "jasmine-headless-webkit"
 end
 
 
