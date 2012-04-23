@@ -19,7 +19,7 @@
 
 ### Chores
   * [Upgrade HAML](https://agilezen.com/project/18091/story/466)
-  * [Upgrade all test related gems(except factory_girl_rails)](https://agilezen.com/project/18091/story/509)
+  * [Upgrade all test related gems](https://agilezen.com/project/18091/story/509)
 
 ## 2.0
 
