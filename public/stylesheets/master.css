@@ -3008,6 +3008,11 @@ input.textbox.input-short {
 	background-position: 0 -61px;
 }
 
+.wysiwyg-formatted img{
+/*  max-width:588px;*/
+  max-width:100%;
+}
+
 /*- SELF CLEARING FLOATS
 ----------------------------------------------------------------------*/
 
