@@ -1,11 +1,4 @@
 GIT
-  remote: git://github.com/gkellogg/addressable.git
-  revision: a5ebbd9ad96d6c725be6cc8ae307c4e3e2cf0dd5
-  branch: frozen-uri
-  specs:
-    addressable (2.2.5)
-
-GIT
   remote: git://github.com/nesquena/query_reviewer.git
   revision: 43b46f92afbc81ae7da8459ff3ae9afa465fe4e8
   specs:
@@ -45,6 +38,7 @@ GEM
     activesupport (3.0.3)
     acts_as_revisionable (1.2.2)
       activerecord (>= 2.3.9)
+    addressable (2.2.7)
     airbrake (3.0.9)
       activesupport
       builder
@@ -370,7 +364,7 @@ PLATFORMS
 
 DEPENDENCIES
   acts_as_revisionable
-  addressable!
+  addressable
   airbrake
   autotest
   autotest-fsevent

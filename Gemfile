@@ -71,7 +71,7 @@ end
 group :test do
   # Addressable Required by WebMock but breaks everything at 2.2.5
   # Can use latest addressable when pull request is accepted: https://github.com/sporkmonger/addressable/pull/33
-  gem 'addressable', :git => 'git://github.com/gkellogg/addressable.git', :branch => 'frozen-uri'
+  gem 'addressable'
   gem "capybara", '~> 1.1.2'
   gem "database_cleaner", "~>0.7.2"
   gem 'email_spec', '~>1.2.1'
