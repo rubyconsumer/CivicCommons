@@ -35,7 +35,9 @@ class Conversation < ActiveRecord::Base
   has_many :reflections, :dependent => :destroy
 
   has_and_belongs_to_many :issues
-  has_and_belongs_to_many :content_items, uniq: true
+
+  has_many :content_items_conversations, :uniq => true
+  has_many :content_items, :through => :content_items_conversations, uniq: true
 
   has_one :survey, :as => :surveyable
   belongs_to :person, :foreign_key => "owner"
@@ -135,7 +137,7 @@ class Conversation < ActiveRecord::Base
 
   def self.filtered(filter)
     raise "Undefined Filter :#{filter}" unless available_filter_names.include?(filter)
-    scoped & self.send(available_filters[filter.to_sym])
+    scoped.merge(self.send(available_filters[filter.to_sym]))
   end
 
   def self.sort
