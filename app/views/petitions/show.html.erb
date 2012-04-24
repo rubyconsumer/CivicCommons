@@ -8,7 +8,7 @@
 
         <p class="contribution-person-name"> By: <%= text_profile(@petition.person) %> on <%= @petition.created_at.to_date.to_s(:long) %></p>
         <div class="wysiwyg-formatted">
-          <%= raw sanitize @petition.description %>
+          <%= raw @petition.description %>
         </div>
         <p class="alert alert-notification">
           <strong><%= @petition.resulting_actions %></strong>
