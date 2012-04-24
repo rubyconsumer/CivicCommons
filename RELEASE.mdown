@@ -14,6 +14,7 @@
   * [CKEditor Image Dialog box should default to Upload Tab](https://agilezen.com/project/18091/story/495)
   * [CKEditor Indicator of Upload Status](https://agilezen.com/project/18091/story/508)
   * [Remove Strikethru button on CKEditor Reflection/Action](https://agilezen.com/project/18091/story/499)
+  * [Default CKEditor linking to "open in new window" currently takes you off our site](https://agilezen.com/project/18091/story/501)
 
 ### Bug Fixes
   * [Allow Issues to be Edited in Admin Screen](https://agilezen.com/project/18091/story/505)

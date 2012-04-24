@@ -68,6 +68,12 @@ $(document).ready(function(){
       var dialogName = event.data.name;
       var dialogDefinition = event.data.definition;
 
+      if(dialogName == 'link') {
+        var targetTab = dialogDefinition.getContents('target');
+        var targetField = targetTab.get('linkTargetType');
+        targetField['default'] = '_blank';
+      }
+
       if(dialogName == 'image') {
         var uploadPageID = 'Upload';
         dialogDefinition.removeContents('advanced');
