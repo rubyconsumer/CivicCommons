@@ -16,6 +16,7 @@
 
 ### Bug Fixes
   * [Allow Issues to be Edited in Admin Screen](https://agilezen.com/project/18091/story/505)
+  * [Airbrake: NoMethodError: You have a nil object when you didn't expect it!](https://agilezen.com/project/18091/story/513)
 
 ### Chores
   * [Upgrade HAML](https://agilezen.com/project/18091/story/466)
