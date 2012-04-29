@@ -1,3 +1,9 @@
+## 2.2
+
+### Bug Fixes
+  * [Vote Result Email incomplete](https://agilezen.com/project/18091/story/518)
+
+
 ## 2.1
 
 ### Miscellaneous
