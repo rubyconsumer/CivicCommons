@@ -99,8 +99,8 @@ class ConversationsController < ApplicationController
     @recent_items = Activity.most_recent_activity_items_for_conversation(@conversation, @per_page + 1, @offset)
     @next_page = @recent_items.length > @per_page
 
-    # pop the last item, because it was temporarily used to see if there is a next page.
-    @recent_items.pop
+    # if there is a next page, pop the last item because it was temporarily used to see if there is a next page.
+    @recent_items.pop if @next_page
 
     respond_to do |format|
       format.embed do

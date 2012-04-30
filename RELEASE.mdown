@@ -3,8 +3,9 @@
 ### Bug Fixes
   * [Vote Result Email incomplete](https://agilezen.com/project/18091/story/518)
   * [Issue and Project Index pages are not following Staff Sort](https://agilezen.com/project/18091/story/517)
-
-
+  * [Issue and Project Index pages are not following Staff Sort](https://agilezen.com/project/18091/story/517)
+  * [Widget 1 comment error - 464 Redux](https://agilezen.com/project/18091/story/510)
+  
 ## 2.1
 
 ### Miscellaneous
