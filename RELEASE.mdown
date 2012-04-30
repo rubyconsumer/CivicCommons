@@ -2,6 +2,7 @@
 
 ### Bug Fixes
   * [Vote Result Email incomplete](https://agilezen.com/project/18091/story/518)
+  * [Issue and Project Index pages are not following Staff Sort](https://agilezen.com/project/18091/story/517)
 
 
 ## 2.1
