@@ -179,6 +179,7 @@ class Issue < ActiveRecord::Base
     end
   end
 
+  # Determine the user ids for participants of this issue.
   def community_user_ids
     person_ids = Array.new
     person_ids += participant_ids

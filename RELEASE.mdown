@@ -6,7 +6,10 @@
   * [Issue and Project Index pages are not following Staff Sort](https://agilezen.com/project/18091/story/517)
   * [Widget 1 comment error - 464 Redux](https://agilezen.com/project/18091/story/510)
   * [Error Message Correction - Reflection](https://agilezen.com/project/18091/story/522)
-  
+
+### Chores
+  * [Update Embed.ly gem](https://agilezen.com/project/18091/story/525)
+
 ## 2.1
 
 ### Miscellaneous

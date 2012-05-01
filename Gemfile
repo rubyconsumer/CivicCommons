@@ -19,7 +19,7 @@ gem 'geokit'
 gem "friendly_id", "~> 4.0.1"
 gem 'acts_as_revisionable'
 gem 'awesome_nested_set'
-gem 'embedly', '<0.4'
+gem 'embedly', '1.5.2'
 
 gem 'gibbon'
 gem 'hominid', "~>3.0.2"
