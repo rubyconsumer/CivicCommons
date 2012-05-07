@@ -19,6 +19,18 @@ describe Survey do
         Survey.reflect_on_association(:options).options[:dependent].should == :destroy
       end
     end
+    
+    it "should belongs to person" do
+      should belong_to(:person)
+    end
+
+    it "should has one action as actionable" do
+      should have_one(:action).dependent(:destroy)
+    end
+    
+    it "should have many respondents" do
+      should have_many(:respondents).through(:survey_responses)
+    end
 
     context "belongs_to :surveyable" do
       it "should really belongs to surveyable" do
@@ -88,6 +100,23 @@ describe Survey do
     it "should NOT display survey progress if show_progress is set to false" do
       @survey = FactoryGirl.create(:survey, :end_date => 2.days.from_now.to_date, :show_progress => false)
       @survey.show_progress_now?.should == false
+    end
+  end
+  
+  context "attached_to_conversation" do
+    it "should show true if surveyable exists and if it is a Conversation" do
+      @conversation = FactoryGirl.create(:conversation)
+      @vote = FactoryGirl.build(:vote, :surveyable => @conversation)
+      @vote.attached_to_conversation?.should be_true
+    end
+    it "should show false if surveyable is a Conversation" do
+      @topic = FactoryGirl.create(:topic)
+      @vote = FactoryGirl.build(:vote, :surveyable => @topic)
+      @vote.attached_to_conversation?.should be_false
+    end
+    it "should not show false if surveyable doesn't exist" do
+      @vote = FactoryGirl.build(:vote)
+      @vote.attached_to_conversation?.should be_false
     end
   end
   
@@ -183,6 +212,40 @@ describe Survey do
         given_a_survey_with_a_response
         Notifier.stub_chain(:survey_ended,:deliver)
         @survey.send_end_notification_email
+      end
+    end
+  end
+  
+  describe "after_create_or_update on action" do
+    describe "after_update" do
+      it "should not modify the action model if Survey is saved and there is an attached conversation and it has not changed" do
+        @conversation = FactoryGirl.create(:conversation)
+        @vote = FactoryGirl.create(:vote, :surveyable => @conversation)
+        @action = Action.first
+        @action.conversation.should == @conversation
+        @vote.save
+        @action.reload.conversation.should == @conversation
+      end
+      it "should modify the action model if Survey is updated and surveyable has changed" do
+        @conversation = FactoryGirl.create(:conversation)
+        @conversation2 = FactoryGirl.create(:conversation)
+        @vote = FactoryGirl.create(:vote, :surveyable => @conversation)
+        @action = Action.first
+        @action.conversation.should == @conversation
+        @vote.surveyable = @conversation2
+        @vote.save
+        @action.reload.conversation.should == @conversation2
+      end
+    end
+    describe "create_action" do
+      it "should create the action model once a survey is created and there is an attached conversation" do
+        @conversation = FactoryGirl.create(:conversation)
+        FactoryGirl.create(:vote, :surveyable => @conversation)
+        Action.first.should == Vote.first.action
+      end
+      it "should not create an action if survey is not attached to a conversation" do
+        FactoryGirl.create(:vote)
+        Action.count.should == 0
       end
     end
   end

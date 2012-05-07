@@ -1,0 +1,46 @@
+<div class="wrapper">
+  <div class="content-container">
+
+    <div class="main-content">
+      <h2 class="mtn"><%= @vote.title %></h2>
+      <p><strong>By: <a href="#">Dan Moulthrop</a> on Jan 1, 2012</strong></p>
+      <%= sanitize @vote.description %>
+      <ul class="tab tab-section mtl mbl">
+        <li class="active">
+          <a href="#"><strong>Step 1:</strong> Select Options</a>
+        </li>
+        <li><a href="vote_permalink_step_2"><strong>Step 2:</strong> Rank Options</a></li>
+      </ul>
+      <form>
+        <% @vote.options.each do |option| %>
+          <div class="media mbl inset">
+              <input class="tab-checkbox img" type="checkbox" name="vehicle" value="#" />
+              <div class="bd">
+                <h4><%= option.title %></h4>
+                <%= sanitize option.description %>
+              </div>
+          </div>
+        <% end %>
+
+        <fieldset>
+          <input class="continue" id="contribution_submit" name="Continue" type="continue" value="Continue" /> &nbsp; or 
+          <a href="#" id="cancel-contribution">Cancel</a>
+        </fieldset>
+      </form>
+      
+    </div><!-- /.main-content -->
+
+    <div class='aside supplementary'>
+      <div class="recent-item">
+        <div class="offset-2 ">
+          <a href="#" title="Jason Segedy"><img alt="Jason Segedy" class="callout" height="40" src="http://s3.amazonaws.com/com.theciviccommons.production/avatars/31/standard/jason-segedy.jpg?1289706219" title="Jason Segedy" width="40" /></a>
+          <p><strong><a href="#">Dan Moulthrop</a></strong><br />
+          <a href="#">View Profile</a></p>
+        </div>
+      </div>
+    </div><!-- /.aside -->
+
+
+  </div>
+</div>
+

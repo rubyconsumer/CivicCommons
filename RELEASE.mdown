@@ -1,3 +1,8 @@
+## 2.x
+
+### Opportunity Votes
+  * [Ability to Create and View a Vote](https://agilezen.com/project/18091/story/415)
+
 ## 2.2
 
 ### Bug Fixes

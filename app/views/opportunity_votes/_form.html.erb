@@ -1,0 +1,70 @@
+<% content_for :header do %>
+  <%= javascript_include_tag :ckeditor %>
+<% end %>
+
+<%= form_for [@conversation, @vote] do |form| %>
+  <% if @vote.errors.any? %>
+    <div class="alert alert-error mbl">
+      <h4>There were errors saving this vote.</h4>
+    </div>
+  <% end %>
+  <fieldset class="top-align new-vote mbl">
+    <div class="form-block">
+      <%= form.label :title, 'Title:*' %><br />
+      <%= form.text_field :title, :class => 'textbox', :size => '40' %>
+    </div>
+    <div class="form-block">
+      <%= form.label :description, 'Description:*' %><br />
+      <%= form.cktext_area :description, :cols => '60', :rows => '10', :input_html => {:class => 'textbox', :style => 'width: 563px;'} %>
+    </div>
+    
+    <div class="form-block">
+      <%= form.label :max_selected_options, 'Number of options to select:*' %><br />
+      <%= form.text_field :max_selected_options, :class => 'input-short textbox', :size => '40' %>
+    </div>
+    
+    <div class="form-block">
+      <%= form.label :end_date, 'Vote Ends On:*' %><br />
+      <%= form.text_field :end_date, :class => 'input-short textbox', :size => '40' %>
+    </div>
+  </fieldset>
+  <h3>Vote Options:</h3>
+  <%= form.fields_for :options do |option, i| %>
+    <div class = 'survey-option contrib_tool_container'>
+      <div class="field">
+        <%= option.text_field :title, :class => 'textbox', :placeholder => "Title of option #{option.object.position}", :style => 'width: 563px' %>
+      </div>
+      <div class="field">
+        <%= option.cktext_area :description, :cols => '40', :rows => '20', :input_html => {:class => 'short textbox', :style => 'width: 563px;', :placeholder => 'Description'} %>
+      </div>
+      
+      <!-- will be used for sorting of vote options ticket #528 -->
+      <%= option.hidden_field :position %> 
+      
+      <%= option.hidden_field :nested %>
+    </div>
+  <% end %>
+  <fieldset class="button-group">
+    <input class="submit" id="contribution_submit" name="commit" type="submit" value="Add another option">
+  </fieldset>
+  
+  <fieldset>
+    <%= form.submit :class => 'submit', :value => 'Publish' %> or &nbsp;
+    <%= link_to 'Cancel', conversation_path(@conversation), :id => 'cancel-reflection' %>
+  </fieldset>
+  <div class='aside supplementary'>
+  </div><!-- /.aside -->
+  
+<% end %>  
+
+
+<script type="text/javascript">
+  $().ready(function() {
+    $('#vote_end_date').datepicker(
+      {
+        showOn: "button",
+        dateFormat: 'MM d, yy',
+        buttonImage: false
+      });
+  });
+</script>

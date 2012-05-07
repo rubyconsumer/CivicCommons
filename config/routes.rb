@@ -156,6 +156,7 @@ Civiccommons::Application.routes.draw do
       get :print, :to => 'petitions#print', :on => :member
     end
     resources :actions, :only => [:index]
+    resources :votes, controller: :opportunity_votes
   end
 
   # Created by Jonathan Penn (February 17, 2012)

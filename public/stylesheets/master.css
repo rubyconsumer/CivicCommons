@@ -309,7 +309,8 @@ button.cancel {
 input.submit.no-tab {margin-left: 0;}
 input#contribution_submit,
 input#petition_submit,
-input#reflection_comment_submit
+input#reflection_comment_submit,
+input#vote_submit
  {
   margin-left: 0;
   margin-right: 0;

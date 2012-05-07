@@ -42,6 +42,26 @@ describe SurveyOption do
       @survey_option2.valid?
       @survey_option2.errors[:position].should == ["has already been taken"]
     end
+    
+    context "validating on validate_title_or_description" do
+      it "should return an error if title is blank and description is blank" do
+        @survey_option = FactoryGirl.build(:survey_option, :position => 1, :survey_id => 1, :title => nil,:description => nil)
+        @survey_option.valid?
+        @survey_option.errors[:title].include?('Either title must be filled, or description must be filled').should be_true
+      end
+      it "should not return an error if title is not blank and description is blank" do
+        @survey_option = FactoryGirl.build(:survey_option, :position => 1, :survey_id => 1, :title => 'hello title', :description => nil)
+        @survey_option.valid?
+        @survey_option.errors[:title].should be_blank
+      end
+      it "should not return an error if title is blank and description is not blank" do
+        @survey_option = FactoryGirl.build(:survey_option, :position => 1, :survey_id => 1, :title => nil, :description => 'hello description')
+        @survey_option.valid?
+        @survey_option.errors[:title].should be_blank
+      end
+      
+      
+    end
   end
   
   context "named scope" do

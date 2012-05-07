@@ -1,2 +1,3 @@
 class Vote < Survey
+  
 end
