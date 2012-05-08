@@ -1,5 +1,8 @@
 ## 2.2
 
+### External Changes
+  * [Add ZipCode to Mailchimp Feed](https://agilezen.com/project/18091/story/516)
+
 ### Bug Fixes
   * [Widget 1 comment error - 464 Redux](https://agilezen.com/project/18091/story/510)
   * [Issue and Project Index pages are not following Staff Sort](https://agilezen.com/project/18091/story/517)

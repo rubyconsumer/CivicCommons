@@ -227,6 +227,25 @@ class Person < ActiveRecord::Base
     self.first_name.blank? ? self.name : self.first_name
   end
 
+  # A valid zip code is composed of:
+  # * base, and
+  # * optionally the extension
+  #
+  # Typical Format: 12345-1234
+  def base_zip_code
+    zip_code.respond_to?(:to_s) ? zip_code.to_s.gsub(/\-.*/, '') : ''
+  end
+
+  # Short zip code is the base zip code unless it is too short or long, then it is blank
+  def short_zip_code
+    short_zip = base_zip_code
+    if short_zip.size < 4 or short_zip.size > 5
+      ''
+    else
+      short_zip
+    end
+  end
+
   def most_recent_activity
     Activity.most_recent_activity_items_for_person(self)
   end
@@ -435,7 +454,7 @@ protected
 
   def add_newsletter_subscription
     if Civiccommons::Config.mailer['mailchimp']
-      merge_tags = { :FNAME => first_name, :LNAME => last_name }
+      merge_tags = { :FNAME => first_name, :LNAME => last_name, :ZIP => short_zip_code }
       merge_tags = merge_tags.each{|key, value| merge_tags[key] = '' if value.nil? }
 
       Delayed::Job.enqueue Jobs::SubscribeToEmailListJob.new(

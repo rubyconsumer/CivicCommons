@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120424194807) do
+ActiveRecord::Schema.define(:version => 20120426152146) do
 
   create_table "actions", :force => true do |t|
     t.integer  "conversation_id"
@@ -606,6 +606,8 @@ ActiveRecord::Schema.define(:version => 20120424194807) do
   end
 
   create_table "surveys", :force => true do |t|
+    t.integer  "surveyable_id"
+    t.string   "surveyable_type"
     t.string   "title"
     t.text     "description"
     t.string   "type"
@@ -616,8 +618,6 @@ ActiveRecord::Schema.define(:version => 20120424194807) do
     t.date     "start_date"
     t.date     "end_date"
     t.boolean  "end_notification_email_sent"
-    t.integer  "surveyable_id"
-    t.string   "surveyable_type"
   end
 
   create_table "top_items", :force => true do |t|
