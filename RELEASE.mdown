@@ -2,6 +2,7 @@
 
 ### Opportunity Votes
   * [Ability to Create and View a Vote](https://agilezen.com/project/18091/story/415)
+  * [Ability to display a list of actions for votes.](https://agilezen.com/project/18091/story/531)
 
 ## 2.2
 
