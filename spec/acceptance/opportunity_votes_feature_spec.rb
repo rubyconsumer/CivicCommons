@@ -25,5 +25,15 @@ feature " Opportunity Votes", %q{
     visit conversation_actions_path(@conversation)
     page.should have_content('Vote title here')
   end
+  
+  scenario "Ability to create a vote from an opportunity actions page", :js => true do
+    given_a_conversation
+    login_as :person
+    visit conversation_actions_path(@conversation)
+    set_current_page_to :actions
+    follow_suggest_an_action_link
+    follow_take_a_vote_link
+    page.should have_content 'New Vote'
+  end
 
 end
