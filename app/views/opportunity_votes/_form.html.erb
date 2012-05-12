@@ -1,5 +1,5 @@
 <% content_for :header do %>
-  <%= javascript_include_tag :ckeditor %>
+  <%= javascript_include_tag :ckeditor, '/javascripts/lib/opportunity_votes/create_vote' %>
 <% end %>
 
 <%= form_for [@conversation, @vote] do |form| %>
@@ -29,27 +29,17 @@
     </div>
   </fieldset>
   <h3>Vote Options:</h3>
-  <%= form.fields_for :options do |option, i| %>
-    <div class = 'survey-option contrib_tool_container'>
-      <div class="field">
-        <%= option.text_field :title, :class => 'textbox', :placeholder => "Title of option #{option.object.position}", :style => 'width: 563px' %>
-      </div>
-      <div class="field">
-        <%= option.cktext_area :description, :cols => '40', :rows => '20', :input_html => {:class => 'short textbox', :style => 'width: 563px;', :placeholder => 'Description'} %>
-      </div>
-      
-      <!-- will be used for sorting of vote options ticket #528 -->
-      <%= option.hidden_field :position %> 
-      
-      <%= option.hidden_field :nested %>
-    </div>
-  <% end %>
+  <div id="options">
+    <%= form.fields_for :options do |option, i| %>
+      <%= render :partial => '/opportunity_votes/option', :locals => {:option => option} %>
+    <% end %>
+  </div>
   <fieldset class="button-group">
-    <input class="submit" id="contribution_submit" name="commit" type="submit" value="Add another option">
+    <%= add_object_link("Add another option", form, SurveyOption.new, "/opportunity_votes/option_form", "#options", :class => 'button') %>
   </fieldset>
   
   <fieldset>
-    <%= form.submit :class => 'submit', :value => 'Publish' %> or &nbsp;
+    <%= form.submit :class => 'submit', :value => 'Publish', :onclick => "reset_option_positions();" %> or &nbsp;
     <%= link_to 'Cancel', conversation_path(@conversation), :id => 'cancel-reflection' %>
   </fieldset>
   <div class='aside supplementary'>

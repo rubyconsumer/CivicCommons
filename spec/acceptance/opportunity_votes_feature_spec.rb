@@ -23,7 +23,7 @@ feature " Opportunity Votes", %q{
     given_a_vote_with_a_conversation(:title => 'Vote title here')
     login_as :person
     visit conversation_actions_path(@conversation)
-    page.should have_content('Vote title here')
+    current_page.should have_content('Vote title here')
   end
   
   scenario "Ability to create a vote from an opportunity actions page", :js => true do
@@ -33,7 +33,32 @@ feature " Opportunity Votes", %q{
     set_current_page_to :actions
     follow_suggest_an_action_link
     follow_take_a_vote_link
-    page.should have_content 'New Vote'
+    current_page.should have_content 'New Vote'
+  end
+  
+  scenario "Ability to add an option on the new votes page", :js => true do
+    given_a_vote_with_a_conversation(:title => 'Vote title here')
+    login_as :person
+    visit new_conversation_vote_path(@conversation)
+    set_current_page_to :new_opportunity_vote
+    current_page.should have_selector '.survey-option', :count => 1
+    follow_add_option_link
+    current_page.should have_selector '.survey-option', :count => 2
+    click_publish_invalid_vote_button
+    current_page.should have_content 'There were errors saving this vote.'
+  end
+  
+  scenario "Ability to delete an option on the new votes page", :js => true do
+    given_a_vote_with_a_conversation(:title => 'Vote title here')
+    login_as :person
+    visit new_conversation_vote_path(@conversation)
+    set_current_page_to :new_opportunity_vote
+    current_page.should have_selector '.survey-option', :count => 1
+    follow_delete_option_link
+    accept_alert
+    current_page.should_not have_selector '.survey-option'
+    click_publish_invalid_vote_button
+    current_page.should have_content 'There were errors saving this vote.'
   end
 
 end
