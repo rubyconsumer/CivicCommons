@@ -47,7 +47,7 @@ gem 'sunspot_rails'
 gem 'sunspot_solr'
 gem 'progress_bar'
 
-gem 'fitter-happier'
+gem 'fitter-happier', '= 0.0.1'
 
 gem 'sixarm_ruby_email_address_validation'
 
