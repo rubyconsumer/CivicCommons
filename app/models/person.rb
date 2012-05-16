@@ -5,7 +5,7 @@ class Person < ActiveRecord::Base
   include UnsubscribeSomeone
 
   searchable :if => :confirmed?, :unless => :locked?,
-    :ignore_attribute_changes_of => [ :updated_at, :failed_attempts, :current_sign_in_at, :last_sign_in_at, :current_sign_in_ip, :confirmed_at, :sign_in_count ] do
+    :ignore_attribute_changes_of => [ :updated_at, :failed_attempts, :current_sign_in_at, :last_sign_in_at, :current_sign_in_ip, :confirmed_at, :sign_in_count, :avatar_cached_image_url ] do
     text :first_name, :boost => 2, :default_boost => 2
     text :last_name, :boost => 2, :default_boost => 2
     text :bio, :stored => true, :boost => 1, :default_boost => 1 do
@@ -143,6 +143,10 @@ class Person < ActiveRecord::Base
 
   around_update :check_to_notify_email_change, :if => :send_email_change_notification?
 
+  def send_email_change_notification?
+    @send_email_change_notification || false
+  end
+
   def check_to_notify_email_change
     old_email, new_email = self.email_change
     yield
@@ -212,10 +216,6 @@ class Person < ActiveRecord::Base
 
   def send_welcome?
     @send_welcome
-  end
-
-  def send_email_change_notification?
-    @send_email_change_notification || false
   end
 
   def send_welcome_email
@@ -386,6 +386,18 @@ class Person < ActiveRecord::Base
       true
     end
   end
+
+
+  # Avatar Image Cache
+  # The cached avatar image url as determined by the AvatarService.
+  def avatar_image_url
+    if self.avatar_cached_image_url.blank?
+      self.avatar_cached_image_url = AvatarService.avatar_image_url(self)
+      save!
+    end
+    self.avatar_cached_image_url
+  end
+
 
   # Overiding Devise::Models::DatabaseAuthenticatable
   # due to needing to set encrypted_password to blank, so that it doesn't error out when it is set to nil
