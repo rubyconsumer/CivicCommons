@@ -30,7 +30,10 @@
   </fieldset>
   <h3>Vote Options:</h3>
   <div id="options">
-    <%= form.fields_for :options do |option, i| %>
+    <% @vote_options = form.object.options %>
+    <% @vote_options.sort!{|a,b| a.position <=> b.position } %>
+    
+    <%= form.fields_for :options, @vote_options do |option, i| %>
       <%= render :partial => '/opportunity_votes/option', :locals => {:option => option} %>
     <% end %>
   </div>

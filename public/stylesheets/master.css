@@ -888,7 +888,14 @@ div.three-col-sm div.photobank img {margin: 0 0 6px 6px;}
   background-image: url(/images/voting-icon-closed.png);
   color: #777;
 }
-
+/* Opportunity Votes -------
+*/
+.survey-option .sort-option{
+  cursor: move;
+}
+#options{
+  min-height:300px;
+}
 /*- Surveys/Votes ----------*/
 
 .voting-container ::selection {

@@ -15,6 +15,7 @@ module OpportunityVotesHelper
       var new_object_id = new Date().getTime() ;
       var html = $(#{js html}.replace(/index_to_replace_with_js/g, new_object_id)).hide();
       html.appendTo($("#{where}")).slideDown('fast');
+      init_opportunity_vote_option(html);
     }, options
   end
   
