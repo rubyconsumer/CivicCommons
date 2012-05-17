@@ -5,6 +5,7 @@
   * [Ability to display a list of actions for votes.](https://agilezen.com/project/18091/story/531)
   * [Ability to create a vote from an opportunity actions page](https://agilezen.com/project/18091/story/532)
   * [Ability to add or delete vote options on create vote form](https://agilezen.com/project/18091/story/529)
+  * [Ability to sort vote options during create vote form](https://agilezen.com/project/18091/story/528)
 
 ## 2.2
 
