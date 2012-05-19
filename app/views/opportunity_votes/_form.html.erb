@@ -38,10 +38,10 @@
     <% end %>
   </div>
   <fieldset class="button-group">
-    <%= add_object_link("Add another option", form, SurveyOption.new, "/opportunity_votes/option_form", "#options", :class => 'button') %>
+    <%= add_object_link("Add Another Option", form, SurveyOption.new, "/opportunity_votes/option_form", "#options", :class => 'button secondary') %>
   </fieldset>
   
-  <fieldset>
+  <fieldset class="btn-group btn-group-large">
     <%= form.submit :class => 'submit', :value => 'Publish', :onclick => "reset_option_positions();" %> or &nbsp;
     <%= link_to 'Cancel', conversation_path(@conversation), :id => 'cancel-reflection' %>
   </fieldset>
