@@ -3,7 +3,8 @@
 
     <div class="main-content">
       <h2 class="mtn"><%= @vote.title %></h2>
-      <p><strong>By: <a href="#">Dan Moulthrop</a> on Jan 1, 2012</strong></p>
+      <p><strong>By: <%= text_profile(@vote.person) %> on <%= @vote.created_at.to_date.to_s(:long) %></p>
+
       <%= sanitize @vote.description %>
       <ul class="tab tab-section mtl mbl">
         <li class="active">
@@ -33,9 +34,9 @@
     <div class='aside supplementary'>
       <div class="recent-item">
         <div class="offset-2 ">
-          <a href="#" title="Jason Segedy"><img alt="Jason Segedy" class="callout" height="40" src="http://s3.amazonaws.com/com.theciviccommons.production/avatars/31/standard/jason-segedy.jpg?1289706219" title="Jason Segedy" width="40" /></a>
-          <p><strong><a href="#">Dan Moulthrop</a></strong><br />
-          <a href="#">View Profile</a></p>
+          <%= member_profile(@vote.person) %>
+          <p><strong><%= text_profile(@vote.person) %></strong><br />
+          <%= link_to 'View Profile', user_path(@vote.person) %>          
         </div>
       </div>
     </div><!-- /.aside -->
