@@ -5,7 +5,7 @@
 <%= form_for [@conversation, @vote] do |form| %>
   <% if @vote.errors.any? %>
     <div class="alert alert-error mbl">
-      <h4>There were errors saving this vote.</h4>
+      <strong>There were errors saving this vote.</strong>
     </div>
   <% end %>
   <fieldset class="top-align new-vote mbl">
@@ -37,11 +37,10 @@
       <%= render :partial => '/opportunity_votes/option', :locals => {:option => option} %>
     <% end %>
   </div>
-  <fieldset class="button-group">
+  <fieldset class="mtm mbl">
     <%= add_object_link("Add Another Option", form, SurveyOption.new, "/opportunity_votes/option_form", "#options", :class => 'button secondary') %>
   </fieldset>
-  
-  <fieldset class="btn-group btn-group-large">
+  <fieldset class="btn-group">
     <%= form.submit :class => 'submit', :value => 'Publish', :onclick => "reset_option_positions();" %> or &nbsp;
     <%= link_to 'Cancel', conversation_path(@conversation), :id => 'cancel-reflection' %>
   </fieldset>
