@@ -8,6 +8,9 @@ describe SurveyOption do
     it "should have :winner" do
       @survey_option.respond_to?(:winner).should be_true
     end
+    it "should have :voted" do
+      @survey_option.respond_to?(:voted).should be_true
+    end
     it "should have :weighted_votes_percentage" do
       @survey_option.respond_to?(:weighted_votes_percentage).should be_true
     end

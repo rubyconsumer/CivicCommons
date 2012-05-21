@@ -1,0 +1,11 @@
+<div class="voting-results">
+  <% @vote_progress_service.progress_result.each_with_index do |option, index| %>
+    <div class="vote-container">
+      <p class="vote-bar">
+        <span class="vote-row <%= 'voted' if current_person && option.voted %>" style="width: <%= relative_weighted_votes_percentage(option.weighted_votes_percentage, @vote_progress_service.highest_weighted_votes_percentage, -20) %>%"><%= option.weighted_votes_percentage %>%</span>
+        <a href="#"><%= sanitize option.title %></a>
+      </p>
+      <p class="vote-summary"><%= option.description %></p>
+    </div>
+  <% end %>  
+</div>

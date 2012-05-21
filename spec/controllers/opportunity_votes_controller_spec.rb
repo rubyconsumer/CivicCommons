@@ -45,6 +45,7 @@ describe OpportunityVotesController do
         Vote.stub!(:new) { @vote }
         @vote.should_receive(:surveyable=).with(@conversation)
         @vote.should_receive(:person=).with(mock_person)
+        @vote.should_receive(:show_progress=).with(true)
         @vote.stub!(:save).and_return(true)
         post :create, :conversation_id => 123
         response.should redirect_to conversation_vote_path(123, 1234)
@@ -55,6 +56,7 @@ describe OpportunityVotesController do
         Vote.stub(:new) { mock_vote }
         mock_vote.should_receive(:surveyable=).with(mock_conversation(:id => 123))
         mock_vote.should_receive(:person=).with(mock_person)
+        mock_vote.should_receive(:show_progress=).with(true)
         mock_vote.stub!(:save).and_return(false)
         post :create, :conversation_id => 123
         response.should render_template 'opportunity_votes/new'

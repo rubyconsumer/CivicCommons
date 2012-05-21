@@ -16,6 +16,7 @@ class OpportunityVotesController < ApplicationController
     @vote = Vote.new(params[:vote])
     @vote.surveyable = @conversation
     @vote.person = current_person
+    @vote.show_progress = true
     
     if @vote.save
       redirect_to(conversation_vote_path(@conversation, @vote), :notice => 'Vote was successfully created.')

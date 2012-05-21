@@ -34,6 +34,18 @@ feature " Opportunity Votes", %q{
     @survey_option4 = FactoryGirl.create(:survey_option, :position => 4, :survey => @vote)
   end
   
+  def given_a_vote_with_options_and_conversations_and_a_survey_response(person)
+    given_a_vote_with_options_and_conversations(:show_progress => true)
+    @survey_response = FactoryGirl.create(:survey_response,:survey => @vote, :person => person)
+    @survey_response.selected_survey_options.create(:survey_option => @survey_option1, :position => 1)
+    @survey_response.selected_survey_options.create(:survey_option => @survey_option2, :position => 2)
+    @person2 = FactoryGirl.create(:registered_user)
+    @survey_response2 = FactoryGirl.create(:survey_response,:survey => @vote, :person => @person2)
+    @survey_response2.selected_survey_options.create(:survey_option => @survey_option2, :position => 1)
+    @survey_response2.selected_survey_options.create(:survey_option => @survey_option3, :position => 2)
+    
+  end
+  
   scenario "Ability to display a list of actions for votes.", :js => true do
     given_a_vote_with_a_conversation(:title => 'Vote title here')
     login_as :person
@@ -142,6 +154,17 @@ feature " Opportunity Votes", %q{
     visit conversation_vote_path(@conversation,@vote)
     click_continue_with_invalid_options_button
     current_page.should have_content 'You must select at least one option'
+  end
+  
+  scenario "View vote results", :js => true do
+    login_as :person
+    given_a_vote_with_options_and_conversations_and_a_survey_response(logged_in_user)
+    visit conversation_vote_path(@conversation,@vote)
+    set_current_page_to :opportunity_vote 
+    
+    current_page.should have_selector '.voting-results'
+    current_page.should have_selector '.vote-container', :count => 4
+    current_page.should have_selector '.vote-row.voted', :count => 2
   end
 
 end

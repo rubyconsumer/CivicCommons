@@ -1,7 +1,9 @@
 class SurveyOption < ActiveRecord::Base
   SURVEYABLE_TYPES = ['Issue', 'Conversation']
   attr_accessor :nested, 
-                :weighted_votes_percentage, :winner # used by VoteProgressService
+                :weighted_votes_percentage, 
+                :winner, # used by VoteProgressService
+                :voted # used by VoteProgressService
   belongs_to :survey
   has_many :selected_survey_options, :dependent => :destroy
   validates_presence_of :survey_id, :unless => :nested
