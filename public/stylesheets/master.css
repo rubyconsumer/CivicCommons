@@ -3154,6 +3154,9 @@ input.textbox.input-short {
 /*  max-width:588px;*/
   max-width:100%;
 }
+.button.opportunity-button{
+  width:143px;
+}
 
 /*- SELF CLEARING FLOATS
 ----------------------------------------------------------------------*/

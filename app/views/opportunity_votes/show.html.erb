@@ -1,47 +1,14 @@
-<div class="wrapper">
-  <div class="content-container">
+<% render :layout => 'vote_layout' do %>
 
-    <div class="main-content">
-      <h2 class="mtn"><%= @vote.title %></h2>
-      <p><strong>By: <%= text_profile(@vote.person) %> on <%= @vote.created_at.to_date.to_s(:long) %></p>
-
-      <%= sanitize @vote.description %>
-      <ul class="tab tab-section mtl mbl">
-        <li class="active">
-          <a href="#"><strong>Step 1:</strong> Select Options</a>
-        </li>
-        <li><a href="vote_permalink_step_2"><strong>Step 2:</strong> Rank Options</a></li>
-      </ul>
-      <form>
-        <% @vote.options.each do |option| %>
-          <div class="media mbl inset">
-              <input class="tab-checkbox img" type="checkbox" name="vehicle" value="#" />
-              <div class="bd">
-                <h4><%= option.title %></h4>
-                <%= sanitize option.description %>
-              </div>
-          </div>
-        <% end %>
-
-        <fieldset>
-          <input class="continue" id="contribution_submit" name="Continue" type="continue" value="Continue" /> &nbsp; or 
-          <a href="#" id="cancel-contribution">Cancel</a>
-        </fieldset>
-      </form>
-      
-    </div><!-- /.main-content -->
-
-    <div class='aside supplementary'>
-      <div class="recent-item">
-        <div class="offset-2 ">
-          <%= member_profile(@vote.person) %>
-          <p><strong><%= text_profile(@vote.person) %></strong><br />
-          <%= link_to 'View Profile', user_path(@vote.person) %>          
-        </div>
-      </div>
-    </div><!-- /.aside -->
-
-
-  </div>
-</div>
-
+  <% if @vote_response_presenter.allowed? %>
+    <%= render :partial => "opportunity_votes/select_options_form" %>
+  <% else %>
+    <% if @vote.show_progress? %>
+      <% @vote_progress_service = VoteProgressService.new(@survey) %>
+      <%= render :partial =>"opportunity_votes/vote_result" %>
+    <% else %>
+      <%= render :partial => "opportunity_votes/vote_hidden_result" %>
+    <% end %>
+  <% end %>
+  
+<% end %>

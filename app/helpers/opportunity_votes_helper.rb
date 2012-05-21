@@ -19,4 +19,10 @@ module OpportunityVotesHelper
     }, options
   end
   
+  def opportunity_vote_tab_nav(step)
+    selected_option_ids = @vote_response_presenter && @vote_response_presenter.selected_option_ids.join(',')
+    select_options_link = (step == 'select_options') ? '#' : select_options_conversation_vote_path(@conversation,@vote, :selected_option_ids => selected_option_ids)
+    render :partial => 'vote_tab_nav', :locals => {:step => step, :select_options_link => select_options_link}
+  end
+  
 end
