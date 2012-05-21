@@ -13,14 +13,14 @@ describe ActivityObserver do
   before :each do
     AvatarService.stub(:update_person).and_return(true)
   end
-  
+
   def given_a_user_have_voted
     @person = FactoryGirl.create(:registered_user)
     @survey = FactoryGirl.create(:vote)
     @survey_option1 = FactoryGirl.create(:survey_option,:survey_id => @survey.id, :position => 1)
     @presenter = VoteResponsePresenter.new(:person_id => @person.id,
-      :survey_id => @survey.id, 
-      :selected_option_1_id => 11, 
+      :survey_id => @survey.id,
+      :selected_option_1_id => 11,
       :selected_option_2_id => 22)
     @presenter.save
   end
@@ -42,7 +42,7 @@ describe ActivityObserver do
       a.item_type.should == 'RatingGroup'
       a.activity_cache.should_not be_nil
     end
-    
+
     it "creates a new activity record when someone have voted(A survey_response has been created)" do
       given_a_user_have_voted
       a = Activity.last
@@ -50,7 +50,7 @@ describe ActivityObserver do
       a.item_type.should == 'SurveyResponse'
       a.activity_cache.should_not be_nil
     end
-    
+
     it 'creates a new activity record when a Petition is created' do
       petition = FactoryGirl.create(:petition)
       a = Activity.last
@@ -58,7 +58,7 @@ describe ActivityObserver do
       a.item_type.should == 'Petition'
       a.activity_cache.should_not be_nil
     end
-    
+
     it 'creates a new activity record when a PetitionSignature is created' do
       petition_signature = FactoryGirl.create(:petition_signature)
       a = Activity.last
@@ -74,7 +74,7 @@ describe ActivityObserver do
       a.item_type.should == 'Reflection'
       a.activity_cache.should_not be_nil
     end
-    
+
     it 'creates a new activity record when a Reflection Comment is created' do
       reflection_comment = FactoryGirl.create(:reflection_comment)
       a = Activity.last
@@ -149,20 +149,20 @@ describe ActivityObserver do
       RatingGroup.destroy(rating_group)
       Activity.where(item_id: rating_group.id, item_type: 'RatingGroup').should be_empty
     end
-    
+
     it "removes the actvity records when a survey_response is destroyed" do
       given_a_user_have_voted
       Activity.where(item_id: @presenter.id, item_type: 'SurveyResponse').should_not be_empty
       @presenter.survey_response.destroy
       Activity.where(item_id: @presenter.id, item_type: 'SurveyResponse').should be_empty
     end
-    
+
     it 'removes activity records when a petition is deleted/destroyed' do
       petition = FactoryGirl.create(:petition)
       Petition.destroy(petition)
       Activity.where(item_id: petition.id, item_type: 'Petition').should be_empty
     end
-    
+
     it 'removes activity records when a petition signature is deleted/destroyed' do
       petition_signature = FactoryGirl.create(:petition_signature)
       PetitionSignature.destroy(petition_signature)
@@ -174,7 +174,7 @@ describe ActivityObserver do
       Reflection.destroy(reflection)
       Activity.where(item_id: reflection.id, item_type: 'Reflection').should be_empty
     end
-    
+
     it 'removes activity records when a reflection comment is deleted/destroyed' do
       reflection_comment = FactoryGirl.create(:reflection_comment)
       ReflectionComment.destroy(reflection_comment)
