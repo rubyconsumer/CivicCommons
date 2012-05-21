@@ -55,11 +55,52 @@ module CivicCommonsDriver
         end
         
       end
+      
       class Show
         SHORT_NAME = :opportunity_vote
+        
+        include Page
+      end
+      
+      class SelectOptions
+        SHORT_NAME = :select_options_opportunity_vote
         include Page
         
+        has_button :continue_with_invalid_options, 'Continue', :select_options_opportunity_vote
+        
+        has_button :continue, 'Continue', :rank_options_opportunity_vote
+        
+        
+        def find_option_check_box_for(position)
+          find(:xpath, "//*[contains(@class,'survey-option')][#{position.to_i}]//input[contains(@class,'option-checkbox')]")
+        end
+        
+        def select_option(position)
+          element = find_option_check_box_for(position)
+          check element[:id]
+        end
       end
+      
+      class RankOptions
+        SHORT_NAME = :rank_options_opportunity_vote
+        include Page
+        
+        has_button :cast_vote, 'Cast my Vote', :opportunity_vote
+        
+        def drag_from_to(from_position, to_position)
+          # element = find_field(".survey-option:nth-child(#{order.to_i})")
+          script ="
+            var $from =$('.selected-option:nth-child(#{from_position.to_i})').first();
+            var $to = $('.selected-option:nth-child(#{to_position.to_i})').first();
+            
+            $to.after($from);
+            reset_selected_option_positions();
+          "
+          page.execute_script(script)
+        end
+        alias :reorder_option :drag_from_to
+      end
+
     end
   end
 end

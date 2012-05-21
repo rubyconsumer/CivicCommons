@@ -25,6 +25,15 @@ feature " Opportunity Votes", %q{
     @vote = given_a_vote(options.merge({:surveyable => @conversation}))
   end
   
+  def given_a_vote_with_options_and_conversations(options={})
+    @conversation = given_a_conversation
+    @vote = given_a_vote(options.merge({:surveyable => @conversation}))
+    @survey_option1 = FactoryGirl.create(:survey_option, :position => 1, :survey => @vote)
+    @survey_option2 = FactoryGirl.create(:survey_option, :position => 2, :survey => @vote)
+    @survey_option3 = FactoryGirl.create(:survey_option, :position => 3, :survey => @vote)
+    @survey_option4 = FactoryGirl.create(:survey_option, :position => 4, :survey => @vote)
+  end
+  
   scenario "Ability to display a list of actions for votes.", :js => true do
     given_a_vote_with_a_conversation(:title => 'Vote title here')
     login_as :person
@@ -67,7 +76,7 @@ feature " Opportunity Votes", %q{
     current_page.should have_content 'There were errors saving this vote.'
   end
   
-  scenario "Ability to ", :js => true do    
+  scenario "Ability to sort options", :js => true do    
     given_a_vote_with_a_conversation(:title => 'Vote title here')
     login_as :person
     visit new_conversation_vote_path(@conversation)
@@ -91,6 +100,48 @@ feature " Opportunity Votes", %q{
     current_page.find_description_field_for(1).value.should =~ Regexp.new(SECOND_DESCRIPTION)    
     current_page.find_title_field_for(2).value.should =~ Regexp.new(FIRST_TITLE)
     current_page.find_description_field_for(2).value.should =~ Regexp.new(FIRST_DESCRIPTION)
+  end
+  
+  scenario "Ability to select, rank, and cast votes", :js => true do
+    given_a_vote_with_options_and_conversations
+    login_as :person
+    visit conversation_vote_path(@conversation,@vote)
+    set_current_page_to :select_options_opportunity_vote 
+    # select 2 options
+    current_page.select_option(2)
+    current_page.select_option(4)
+    # press continue
+    click_continue_button
+    # reorder so that the first one is the second
+    current_page.reorder_option(1,2)
+    # press cast vote
+
+    click_cast_vote_button
+    # then it should redirect to the vote page
+    sleep 1
+    current_page.current_path.should == conversation_vote_path(@conversation,@vote)
+  end
+  
+  scenario "Ability to vote, but there are errors when submitting", :js => true do
+    given_a_vote_with_options_and_conversations
+    login_as :person
+    
+    # submitting with too many votes
+    visit conversation_vote_path(@conversation,@vote)
+    set_current_page_to :select_options_opportunity_vote 
+    # select 4 options
+    current_page.select_option(1)
+    current_page.select_option(2)
+    current_page.select_option(3)
+    current_page.select_option(4)
+    # press continue
+    click_continue_with_invalid_options_button
+    current_page.should have_content 'You cannot select more than 3 option(s)'
+    
+    # submitting with no votes
+    visit conversation_vote_path(@conversation,@vote)
+    click_continue_with_invalid_options_button
+    current_page.should have_content 'You must select at least one option'
   end
 
 end

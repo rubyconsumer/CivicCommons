@@ -13,9 +13,9 @@
   <% end %>
   
   <% @vote_response_presenter.options_sorted.each do |option| %>
-    <div class="media mbl inset">
+    <div class="media mbl inset survey-option">
         <!-- <input class="tab-checkbox img" type="checkbox" name="vehicle" value="#" /> -->
-        <%= check_box_tag 'vote_response_presenter[selected_option_ids][]', option.id, @vote_response_presenter.selected_option_ids.include?(option.id), :class => 'tab-checkbox img' %>
+        <%= check_box_tag 'vote_response_presenter[selected_option_ids][]', option.id, @vote_response_presenter.selected_option_ids.include?(option.id), :class => 'tab-checkbox img option-checkbox', :id => "option_id_#{option.id}" %>
         <div class="bd">
           <h4><%= option.title %></h4>
           <%= sanitize option.description %>

@@ -8,8 +8,8 @@
   <ol class="opportunities-ol">
     <% @vote_response_presenter.selected_survey_options.each_with_index do |option,index| %>
       <% index+=1 %>
-        <li class="opportunities-outline">
-          <%= hidden_field_tag "survey_response_presenter[selected_option_#{index}_id]", option.survey_option.id, :class => 'selected_option' %>
+        <li class="opportunities-outline selected-option">
+          <%= hidden_field_tag "vote_response_presenter[selected_option_#{index}_id]", option.survey_option.id, :class => 'selected_option' %>
           <h4><%= option.survey_option.title %></h4>
           <p><%= sanitize option.survey_option.description %></p>
         </li>
