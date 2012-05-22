@@ -2,13 +2,13 @@ require 'spec_helper'
 
 describe 'opportunity_votes/show.html.erb' do
   def stub_person
-    @stub_person ||= stub_model(Person).as_null_object
+    @stub_person ||= stub_model(Person, :avatar_image_url => "avatar_image_url").as_null_object
   end
+
   def stub_vote
     @stub_vote ||= stub_model(Vote,:created_at => Time.now,:person => stub_person).as_null_object
   end
-  
-  
+
   before(:each) do
     # stub_template('opportunity_votes/_vote_layout.html' => '')
     stub!(:current_person).and_return(stub_person)

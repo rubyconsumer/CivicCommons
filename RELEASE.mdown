@@ -1,26 +1,44 @@
-## 2.x
+## 2.3
 
-### Opportunity Votes
+### External Changes
+
+#### Opportunity Votes
   * [Ability to Create and View a Vote](https://agilezen.com/project/18091/story/415)
+  * [Ability to Select Vote Options and Rank them and Cast the Vote](https://agilezen.com/project/18091/story/417)
+  * [Ability to View Vote Results](https://agilezen.com/project/18091/story/418)
+  * [Ability to sort vote options during create vote form](https://agilezen.com/project/18091/story/528)
+  * [Ability to add or delete vote options on create vote form](https://agilezen.com/project/18091/story/529)
   * [Ability to display a list of actions for votes.](https://agilezen.com/project/18091/story/531)
   * [Ability to create a vote from an opportunity actions page](https://agilezen.com/project/18091/story/532)
-  * [Ability to add or delete vote options on create vote form](https://agilezen.com/project/18091/story/529)
-  * [Ability to sort vote options during create vote form](https://agilezen.com/project/18091/story/528)
-  * [Ability to View Vote Results](https://agilezen.com/project/18091/story/418)
   * [Vote time for the End of the Day not beginning](https://agilezen.com/project/18091/story/551)
+
+### Bug Fixes
+  * [Widget of Recent Activity Displays Top Contribution](https://agilezen.com/project/18091/story/539)
+  * [Settings for User without Biography Displays Link](https://agilezen.com/project/18091/story/544)
+
+### Chores
+  * [Cache Avatar Image Url](https://agilezen.com/project/18091/story/537)
+
+## 2.2.1
+
+### Bug Fixes
+  * [Fixed - fitter happier gem error on production](https://agilezen.com/project/18091/story/536)
 
 ## 2.2
 
+### External Changes
+  * [Add ZipCode to Mailchimp Feed](https://agilezen.com/project/18091/story/516)
+
 ### Bug Fixes
-  * [Vote Result Email incomplete](https://agilezen.com/project/18091/story/518)
-  * [Issue and Project Index pages are not following Staff Sort](https://agilezen.com/project/18091/story/517)
-  * [Issue and Project Index pages are not following Staff Sort](https://agilezen.com/project/18091/story/517)
   * [Widget 1 comment error - 464 Redux](https://agilezen.com/project/18091/story/510)
+  * [Issue and Project Index pages are not following Staff Sort](https://agilezen.com/project/18091/story/517)
+  * [Vote Result Email incomplete](https://agilezen.com/project/18091/story/518)
   * [Error Message Correction - Reflection](https://agilezen.com/project/18091/story/522)
 
 ### Chores
-  * [Update Embed.ly gem](https://agilezen.com/project/18091/story/525)
   * [Upgrade to Rails 3.0.12](https://agilezen.com/project/18091/story/514)
+  * [Update Embed.ly gem](https://agilezen.com/project/18091/story/525)
+  * [Resize Blog Index Image](https://agilezen.com/project/18091/story/530)
 
 ## 2.1
 

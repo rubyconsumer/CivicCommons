@@ -160,8 +160,10 @@ class Activity < ActiveRecord::Base
     activities.collect{|a| a.item}.compact
   end
 
-  def self.most_recent_activity_items_for_conversation(conversation, limit = nil, offset = 0)
-    activities = Activity.where(conversation_id: conversation.id).order('item_created_at DESC')
+  def self.most_recent_activity_items_for_conversation(conversation, limit = nil, offset = 0, exclude_conversation = false)
+    activities = Activity.where(conversation_id: conversation.id)
+    activities = activities.where('item_type != "Conversation"') if exclude_conversation
+    activities = activities.order('item_created_at DESC')
     activities = activities.offset(offset) if offset.present?
     activities = activities.limit(limit) if limit
     activities.collect{|a| a.item}.compact

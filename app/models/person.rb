@@ -5,7 +5,7 @@ class Person < ActiveRecord::Base
   include UnsubscribeSomeone
 
   searchable :if => :confirmed?, :unless => :locked?,
-    :ignore_attribute_changes_of => [ :updated_at, :failed_attempts, :current_sign_in_at, :last_sign_in_at, :current_sign_in_ip, :confirmed_at, :sign_in_count ] do
+    :ignore_attribute_changes_of => [ :updated_at, :failed_attempts, :current_sign_in_at, :last_sign_in_at, :current_sign_in_ip, :confirmed_at, :sign_in_count, :avatar_cached_image_url ] do
     text :first_name, :boost => 2, :default_boost => 2
     text :last_name, :boost => 2, :default_boost => 2
     text :bio, :stored => true, :boost => 1, :default_boost => 1 do
@@ -143,6 +143,10 @@ class Person < ActiveRecord::Base
 
   around_update :check_to_notify_email_change, :if => :send_email_change_notification?
 
+  def send_email_change_notification?
+    @send_email_change_notification || false
+  end
+
   def check_to_notify_email_change
     old_email, new_email = self.email_change
     yield
@@ -214,10 +218,6 @@ class Person < ActiveRecord::Base
     @send_welcome
   end
 
-  def send_email_change_notification?
-    @send_email_change_notification || false
-  end
-
   def send_welcome_email
     Notifier.welcome(self).deliver
     @send_welcome = false
@@ -225,6 +225,25 @@ class Person < ActiveRecord::Base
 
   def short_name
     self.first_name.blank? ? self.name : self.first_name
+  end
+
+  # A valid zip code is composed of:
+  # * base, and
+  # * optionally the extension
+  #
+  # Typical Format: 12345-1234
+  def base_zip_code
+    zip_code.respond_to?(:to_s) ? zip_code.to_s.gsub(/\-.*/, '') : ''
+  end
+
+  # Short zip code is the base zip code unless it is too short or long, then it is blank
+  def short_zip_code
+    short_zip = base_zip_code
+    if short_zip.size < 4 or short_zip.size > 5
+      ''
+    else
+      short_zip
+    end
   end
 
   def most_recent_activity
@@ -368,6 +387,18 @@ class Person < ActiveRecord::Base
     end
   end
 
+
+  # Avatar Image Cache
+  # The cached avatar image url as determined by the AvatarService.
+  def avatar_image_url
+    if self.avatar_cached_image_url.blank?
+      self.avatar_cached_image_url = AvatarService.avatar_image_url(self)
+      save!
+    end
+    self.avatar_cached_image_url
+  end
+
+
   # Overiding Devise::Models::DatabaseAuthenticatable
   # due to needing to set encrypted_password to blank, so that it doesn't error out when it is set to nil
   def valid_password?(password)
@@ -435,7 +466,7 @@ protected
 
   def add_newsletter_subscription
     if Civiccommons::Config.mailer['mailchimp']
-      merge_tags = { :FNAME => first_name, :LNAME => last_name }
+      merge_tags = { :FNAME => first_name, :LNAME => last_name, :ZIP => short_zip_code }
       merge_tags = merge_tags.each{|key, value| merge_tags[key] = '' if value.nil? }
 
       Delayed::Job.enqueue Jobs::SubscribeToEmailListJob.new(

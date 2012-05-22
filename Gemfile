@@ -1,5 +1,7 @@
 source 'http://rubygems.org'
 
+gem 'newrelic_rpm'
+
 gem 'mysql2', '< 0.3'
 gem 'devise', '1.5.2'
 gem 'omniauth', '1.0.1'
@@ -25,6 +27,7 @@ gem 'gibbon'
 gem 'hominid', "~>3.0.2"
 gem 'delayed_job', ">= 2.1.2"
 gem 'delayed_job_active_record'
+gem 'daemons'
 
 gem 'airbrake'
 
@@ -46,7 +49,7 @@ gem 'sunspot_rails'
 gem 'sunspot_solr'
 gem 'progress_bar'
 
-gem 'fitter-happier'
+gem 'fitter-happier', '= 0.0.1'
 
 gem 'sixarm_ruby_email_address_validation'
 

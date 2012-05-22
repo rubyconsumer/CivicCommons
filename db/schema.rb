@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120508035406) do
+ActiveRecord::Schema.define(:version => 20120510142319) do
 
   create_table "actions", :force => true do |t|
     t.integer  "conversation_id"
@@ -426,13 +426,13 @@ ActiveRecord::Schema.define(:version => 20120508035406) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "password"
-    t.string   "email",                               :default => "",   :null => false
-    t.string   "encrypted_password",   :limit => 128, :default => "",   :null => false
-    t.string   "password_salt",                       :default => "",   :null => false
+    t.string   "email",                                  :default => "",   :null => false
+    t.string   "encrypted_password",      :limit => 128, :default => "",   :null => false
+    t.string   "password_salt",                          :default => "",   :null => false
     t.string   "reset_password_token"
     t.string   "remember_token"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                       :default => 0
+    t.integer  "sign_in_count",                          :default => 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -446,20 +446,21 @@ ActiveRecord::Schema.define(:version => 20120508035406) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
-    t.integer  "failed_attempts",                     :default => 0
+    t.integer  "failed_attempts",                        :default => 0
     t.string   "unlock_token"
     t.datetime "locked_at"
     t.text     "bio"
-    t.boolean  "daily_digest",                        :default => true, :null => false
+    t.boolean  "daily_digest",                           :default => true, :null => false
     t.boolean  "declined_fb_auth"
     t.string   "cached_slug"
     t.string   "twitter_username"
     t.string   "website"
     t.string   "avatar_url"
-    t.boolean  "weekly_newsletter",                   :default => true
+    t.boolean  "weekly_newsletter",                      :default => true
     t.string   "type"
     t.string   "title"
     t.string   "slug"
+    t.string   "avatar_cached_image_url"
   end
 
   add_index "people", ["cached_slug"], :name => "index_people_on_cached_slug", :unique => true
