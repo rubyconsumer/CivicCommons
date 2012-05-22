@@ -148,9 +148,9 @@ describe Survey do
       @survey = FactoryGirl.create(:survey, :show_progress => true, :end_date => 1.days.ago.to_date)
       @survey.should be_expired
     end
-    it "should be expired when the start_date is today" do
+    it "should not be expired when the end_date is today" do
       @survey = FactoryGirl.create(:survey, :show_progress => true, :end_date => Date.today)
-      @survey.should be_expired
+      @survey.should_not be_expired
     end
   end
   describe "#days_until_end_date" do

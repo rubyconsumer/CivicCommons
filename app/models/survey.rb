@@ -56,7 +56,7 @@ class Survey < ActiveRecord::Base
   end
 
   def expired?
-    !end_date.blank? && (end_date.today? || end_date.past? )
+    !end_date.blank? && end_date.past?
   end
 
 end

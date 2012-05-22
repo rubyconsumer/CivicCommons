@@ -7,6 +7,7 @@
   * [Ability to add or delete vote options on create vote form](https://agilezen.com/project/18091/story/529)
   * [Ability to sort vote options during create vote form](https://agilezen.com/project/18091/story/528)
   * [Ability to View Vote Results](https://agilezen.com/project/18091/story/418)
+  * [Vote time for the End of the Day not beginning](https://agilezen.com/project/18091/story/551)
 
 ## 2.2
 
