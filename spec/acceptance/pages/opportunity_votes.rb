@@ -5,8 +5,8 @@ module CivicCommonsDriver
         SHORT_NAME = :new_opportunity_vote
         include Page
         
-        has_link :add_option, 'Add another option', :new_opportunity_vote
-        has_link :delete_option, 'Delete option', :new_opportunity_vote
+        has_link :add_option, 'Add Another Option', :new_opportunity_vote
+        has_link :delete_option, 'Delete Option', :new_opportunity_vote
         has_button :publish_invalid_vote, 'Publish', :new_opportunity_vote
         
         has_button :publish, 'Publish', :opportunity_vote
