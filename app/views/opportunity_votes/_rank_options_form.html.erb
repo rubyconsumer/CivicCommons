@@ -5,7 +5,7 @@
   <%= opportunity_vote_tab_nav('rank_options') %>
   <h4 class="mtl mbl">Drag the selected options into order of importance:</h4>
   
-  <ol class="opportunities-ol">
+  <ol class="opportunities-ol wysiwyg-formatted">
     <% @vote_response_presenter.selected_survey_options.each_with_index do |option,index| %>
       <% index+=1 %>
         <li class="opportunities-outline selected-option">

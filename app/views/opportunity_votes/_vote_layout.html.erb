@@ -4,7 +4,9 @@
     <div class="main-content">
       <h2 class="mtn"><%= @vote.title %></h2>
       <p><strong>By: <%= text_profile(@vote.person) %> on <%= @vote.created_at.to_date.to_s(:long) %></p>
-        <%= sanitize @vote.description %>
+        <div class="wysiwyg-formatted">
+          <%= sanitize @vote.description %>
+        </div>
         
         <%= yield %>
       
