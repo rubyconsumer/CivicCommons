@@ -19,6 +19,7 @@ describe 'opportunity_votes/show.html.erb' do
     stub!(:text_profile).and_return('')
     VoteProgressService.stub!(:new).and_return('')
     @vote = stub_vote
+    login_user
   end
 
   context "allowed to vote" do
