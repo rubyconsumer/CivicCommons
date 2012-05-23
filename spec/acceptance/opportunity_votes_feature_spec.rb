@@ -159,11 +159,12 @@ feature " Opportunity Votes", %q{
   scenario "View vote results", :js => true do
     login_as :person
     given_a_vote_with_options_and_conversations_and_a_survey_response(logged_in_user)
-    @vote.end_date = 1.day.ago
+    @vote.end_date = 3.day.ago
     @vote.save
+    @vote.reload
     visit conversation_vote_path(@conversation,@vote)
     set_current_page_to :opportunity_vote 
-    
+    sleep 1
     current_page.should have_selector '.voting-results'
     current_page.should have_selector '.vote-container', :count => 4
     current_page.should have_selector '.vote-row.voted', :count => 2
