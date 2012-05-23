@@ -11,6 +11,7 @@
   * [Ability to display a list of actions for votes.](https://agilezen.com/project/18091/story/531)
   * [Ability to create a vote from an opportunity actions page](https://agilezen.com/project/18091/story/532)
   * [Vote time for the End of the Day not beginning](https://agilezen.com/project/18091/story/551)
+  * [Change Suggest Action Button Text to: Create a Vote](https://agilezen.com/project/18091/story/549)
 
 ### Bug Fixes
   * [Widget of Recent Activity Displays Top Contribution](https://agilezen.com/project/18091/story/539)
