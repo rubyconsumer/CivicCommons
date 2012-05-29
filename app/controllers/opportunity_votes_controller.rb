@@ -19,7 +19,7 @@ class OpportunityVotesController < ApplicationController
     @vote.show_progress = true
     
     if @vote.save
-      redirect_to(conversation_vote_path(@conversation, @vote), :notice => 'Vote was successfully created.')
+      redirect_to(conversation_vote_path(@conversation, @vote, :anchor => 'opportunity-nav'), :notice => 'Vote was successfully created.')
     else
       render :action => "new"
     end
@@ -42,7 +42,7 @@ class OpportunityVotesController < ApplicationController
     @vote = @conversation.surveys.find(params[:id])
     @vote_response_presenter = VoteResponsePresenter.new({:person_id => current_person.id, :survey_id => @vote.id}.merge!(vote_response_params))
     if @vote_response_presenter.valid_selected_options?
-      redirect_to rank_options_conversation_vote_path(@conversation,@vote,:selected_option_ids => @vote_response_presenter.selected_option_ids.join(','))
+      redirect_to rank_options_conversation_vote_path(@conversation,@vote,:selected_option_ids => @vote_response_presenter.selected_option_ids.join(','), :anchor => 'opportunity-nav')
     else
       render :action => :show 
     end
@@ -60,7 +60,7 @@ class OpportunityVotesController < ApplicationController
     @vote_response_presenter = VoteResponsePresenter.new({:person_id => current_person.id, :survey_id => @vote.id}.merge!(vote_response_params))
     if @vote_response_presenter.save
       flash[:notice] = "Thank you for voting!"
-      redirect_to rank_options_conversation_vote_path(@conversation,@vote)
+      redirect_to rank_options_conversation_vote_path(@conversation,@vote, :anchor => 'opportunity-nav')
     else
       render :action => :rank_options 
     end
@@ -76,6 +76,6 @@ class OpportunityVotesController < ApplicationController
   
   def restrict_voter_access
     vote = VoteResponsePresenter.new({:person_id => current_person.id, :survey_id => params[:id]})
-    redirect_to conversation_vote_path(@conversation,params[:id]) unless vote.allowed?
+    redirect_to conversation_vote_path(@conversation,params[:id], :anchor => 'opportunity-nav') unless vote.allowed?
   end
 end

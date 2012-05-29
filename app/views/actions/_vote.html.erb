@@ -1,7 +1,7 @@
 <div class="entry-container reverse" data-vote-id="<%= vote.id %>">
   <div class="entry-meta">
 
-    <h3><%= link_to vote.title, [@conversation, vote] %></h3>
+    <h3><%= link_to vote.title, conversation_vote_path(@conversation, vote, :anchor => 'opportunity-nav') %></h3>
     <p class="entry-contrib" title="<%= pluralize(vote.participants.count,'voters') %>"><%= vote.participants.count %></p>
   </div>
   <div class="entry-details full">
