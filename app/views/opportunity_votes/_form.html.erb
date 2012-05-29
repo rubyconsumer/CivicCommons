@@ -40,6 +40,8 @@
   <fieldset class="mtm mbl">
     <%= add_object_link("Add Another Option", form, SurveyOption.new, "/opportunity_votes/option_form", "#options", :class => 'button secondary') %>
   </fieldset>
+  
+  <p><strong>I'm ready to submit my vote. I understand that once this is submitted that I cannot make any more changes.</strong></p>
   <fieldset class="btn-group">
     <%= form.submit :class => 'submit', :value => 'Publish', :onclick => "reset_option_positions();" %> or &nbsp;
     <%= link_to 'Cancel', conversation_path(@conversation), :id => 'cancel-reflection' %>

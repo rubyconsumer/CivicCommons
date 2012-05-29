@@ -61,6 +61,7 @@ feature " Opportunity Votes", %q{
     follow_suggest_an_action_link
     follow_take_a_vote_link
     current_page.should have_content 'New Vote'
+    current_page.should have_content "I'm ready to submit my vote. I understand that once this is submitted that I cannot make any more changes."
   end
   
   scenario "Ability to add an option on the new votes page", :js => true do
