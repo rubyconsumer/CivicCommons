@@ -3,6 +3,9 @@
 ### External Changes
   * [Each Step of Vote process - take you down page (focus) to where you left.](https://agilezen.com/project/18091/story/543)
   * [Vote Add Warning before Publish.](https://agilezen.com/project/18091/story/545)
+  
+### Bug Fixes
+  * [Airbrake: ActiveRecord::RecordInvalid: Validation failed: Last name can't be blank](https://agilezen.com/project/18091/story/552)
 
 ## 2.3
 
