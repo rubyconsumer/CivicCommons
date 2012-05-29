@@ -48,7 +48,7 @@ describe OpportunityVotesController do
         @vote.should_receive(:show_progress=).with(true)
         @vote.stub!(:save).and_return(true)
         post :create, :conversation_id => 123
-        response.should redirect_to conversation_vote_path(123, 1234)
+        response.should redirect_to conversation_vote_path(123, 1234, :anchor => 'opportunity-nav')
       end
     end
     context "on unsuccessful save" do
