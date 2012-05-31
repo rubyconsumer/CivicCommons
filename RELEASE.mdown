@@ -4,6 +4,9 @@
   * [Each Step of Vote process - take you down page (focus) to where you left.](https://agilezen.com/project/18091/story/543)
   * [Vote Add Warning before Publish.](https://agilezen.com/project/18091/story/545)
 
+### Chores
+  * [Commonize Blog and Radio Show Description Partial](https://agilezen.com/project/18091/story/555)
+
 ## 2.3.1
 
 ### Bug Fixes
