@@ -6,7 +6,7 @@ describe DigestService do
 
     before(:each) do
 
-      #Contrubitor that talks a lot
+      #Contributor that talks a lot
       @contributor = FactoryGirl.create(:registered_user, :name => 'Big Talker', :avatar => nil)
 
       #Conversations
@@ -14,7 +14,7 @@ describe DigestService do
       @convo_fresh_without_subs = FactoryGirl.create(:conversation, :title => 'Fresh without Subscriptions')
       @convo_stale_with_subs = FactoryGirl.create(:conversation, :title => 'Stale with Subscriptions')
       @convo_stale_without_subs = FactoryGirl.create(:conversation, :title => 'Stale without Subscriptions')
-
+      
       #create instance of DigestService
       @service = DigestService.new
 
@@ -45,6 +45,11 @@ describe DigestService do
         #Contributions
         FactoryGirl.create(:contribution, :person => @contributor, :conversation => @convo_stale_with_subs, :created_at => 2.days.ago)
         FactoryGirl.create(:contribution, :person => @contributor, :conversation => @convo_stale_without_subs, :created_at => 2.days.ago)
+        
+        #Reflections
+        FactoryGirl.create(:reflection, :person => @contributor, :conversation => @convo_stale_with_subs, :created_at => 2.days.ago)
+        FactoryGirl.create(:reflection, :person => @contributor, :conversation => @convo_stale_without_subs, :created_at => 2.days.ago)
+        
       end
 
       context "No new contributions added yesterday" do
@@ -55,6 +60,28 @@ describe DigestService do
           @service.digest_set[@person_with_subs].should == []
         end
 
+      end
+      
+      context "Reflections added yesterday" do
+        before(:each) do          
+          #Reflections
+          @reflection_fresh_with_sub = FactoryGirl.create(:reflection, :person => @contributor, :conversation => @convo_fresh_with_subs, :created_at => 1.days.ago)
+          @reflection_fresh_without_sub = FactoryGirl.create(:reflection, :person => @contributor, :conversation => @convo_fresh_without_subs, :created_at => 1.days.ago)          
+        end
+        
+        it "should include reflections" do
+          set = @service.generate_digest_set
+          set.should be_instance_of Hash
+          set.should have(1).items
+          set.should have_key(@person_with_subs)
+
+          convos = set[@person_with_subs]
+          convos.should be_instance_of Array
+
+          convos.should have(1).items
+          convos[0].first.should == @convo_fresh_with_subs
+          convos[0].last.should == [@reflection_fresh_with_sub]
+        end
       end
 
       context "Contributions were added Yesterday" do
@@ -109,12 +136,26 @@ describe DigestService do
       FactoryGirl.create(:conversation_subscription, person: @person_with_subs, subscribable: @convo_fresh_with_subs)
       @first_contribution = FactoryGirl.create(:contribution, :person => @contributor, :conversation => @convo_fresh_with_subs, :created_at => 1.day.ago)
       @second_contribution = FactoryGirl.create(:contribution, :person => @contributor, :conversation => @convo_fresh_with_subs, :created_at => 1.day.ago)
-
+      @reflection_fresh_with_sub = FactoryGirl.create(:reflection, :person => @contributor, :conversation => @convo_fresh_with_subs, :created_at => 1.days.ago)
+      
       digest = DigestService.new
       digest.generate_digest_set
       digest.digest_set[@person_with_subs][0][1].should be_an_instance_of Array
       digest.digest_set[@person_with_subs][0][1][0].should == @first_contribution
       digest.digest_set[@person_with_subs][0][1][1].should == @second_contribution
+      digest.digest_set[@person_with_subs][0][1][2].should == @reflection_fresh_with_sub
+    end
+    
+    it "creates an array of reflection for a given conversation" do
+      @person_with_subs = FactoryGirl.create(:registered_user, :name => 'I Subscribe', :daily_digest => true, :avatar => nil)
+      @convo_fresh_with_subs = FactoryGirl.create(:conversation, :title => 'Fresh with Subscriptions')
+      FactoryGirl.create(:conversation_subscription, person: @person_with_subs, subscribable: @convo_fresh_with_subs)
+      @reflection_fresh_with_sub = FactoryGirl.create(:reflection, :person => @person_with_subs, :conversation => @convo_fresh_with_subs, :created_at => 1.days.ago)
+      
+      digest = DigestService.new
+      digest.generate_digest_set
+      digest.digest_set[@person_with_subs][0][1].should be_an_instance_of Array
+      digest.digest_set[@person_with_subs][0][1][0].should == @reflection_fresh_with_sub
     end
 
   end
@@ -127,7 +168,9 @@ describe DigestService do
       @person_with_subs = FactoryGirl.create(:registered_user, :name => 'I Subscribe', :daily_digest => true, :avatar => nil)
       @contributor = FactoryGirl.create(:registered_user, :name => 'Big Talker', :avatar => nil)
       @convo_fresh_with_subs = FactoryGirl.create(:conversation, :title => 'Fresh with Subscriptions')
-      convo_array = [ [@convo_fresh_with_subs, [ FactoryGirl.create(:contribution, :person => @contributor, :conversation => @convo_fresh_with_subs, :created_at => 1.day.ago) ] ] ]
+      convo_array = [ [@convo_fresh_with_subs, 
+                        [ FactoryGirl.create(:contribution, :person => @contributor, :conversation => @convo_fresh_with_subs, :created_at => 1.day.ago),
+                          FactoryGirl.create(:reflection, :person => @person_with_subs, :conversation => @convo_fresh_with_subs, :created_at => 1.days.ago) ] ] ]
       @digest_set = {
         @person_with_subs => convo_array
       }

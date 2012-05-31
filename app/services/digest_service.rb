@@ -3,7 +3,8 @@ class DigestService
   attr_reader :digest_recipients,
               :digest_set,
               :updated_contributions,
-              :updated_conversations
+              :updated_conversations,
+              :updated_reflections
 
   def initialize
     @digest_set = { }
@@ -14,6 +15,7 @@ class DigestService
   #TODO: Optimize the data retrieval
   def generate_digest_set(letter = nil)
     get_digest_recipients
+    get_updated_reflections
     get_updated_contributions
     get_updated_conversations
     get_recipient_subscriptions
@@ -39,11 +41,13 @@ class DigestService
   def get_digest_recipients
     @digest_recipients = Person.where(:daily_digest => true)
   end
+  
+  def time_range
+    # set the time range for yesterday
+    (Time.now.midnight - 1.day)..(Time.now.midnight - 1.second)
+  end
 
   def get_updated_contributions
-    # set the time range for yesterday
-    time_range = (Time.now.midnight - 1.day)..(Time.now.midnight - 1.second)
-
     # get the list of conversations that were updated yesterday
     @updated_contributions = Contribution.confirmed.includes(:conversation).order('conversation_id ASC, id ASC').where(created_at: time_range).where(top_level_contribution: false)
   end
@@ -51,8 +55,15 @@ class DigestService
   def get_updated_conversations
     # extract the individual conversation ids
     @updated_conversations = @updated_contributions.map { |c| c.conversation }
+    @updated_conversations += @updated_reflections.map { |c| c.conversation }
+    
     @updated_conversations.uniq!
   end
+
+  def get_updated_reflections
+    @updated_reflections = Reflection.includes(:conversation).order('conversation_id ASC, id ASC').where(created_at: time_range)
+  end
+
 
   def get_recipient_subscriptions
     # get the subscriptions for each person
@@ -84,8 +95,14 @@ class DigestService
         contributions = @updated_contributions.select do |contribution|
           contribution.conversation == conversation.first
         end
+        
+        reflections = @updated_reflections.select do |reflection|
+          reflection.conversation == conversation.first
+        end
+        
+        items = (contributions + reflections)
 
-        conversation << contributions
+        conversation << items
       end
     end
 
