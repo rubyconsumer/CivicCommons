@@ -1,6 +1,6 @@
 class OpportunityVotesController < ApplicationController
   layout 'opportunity'
-  before_filter :require_user
+  before_filter :require_user, :except => [:show]
   before_filter :find_conversation
   before_filter :restrict_voter_access, :only => [:select_options,:create_select_options,:rank_options, :create_rank_options]
   DEFAULT_NUM_OF_OPTIONS = 1
@@ -27,7 +27,7 @@ class OpportunityVotesController < ApplicationController
   
   def show
     @vote = @conversation.surveys.find(params[:id])
-    @vote_response_presenter = VoteResponsePresenter.new(:person_id => current_person.id, :survey_id => @vote.id)    
+    @vote_response_presenter = VoteResponsePresenter.new(:person_id => try(:current_person).try(:id), :survey_id => @vote.id)    
   end
   
   def select_options

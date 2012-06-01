@@ -170,5 +170,18 @@ feature " Opportunity Votes", %q{
     current_page.should have_selector '.vote-container', :count => 4
     current_page.should have_selector '.vote-row.voted', :count => 2
   end
+  
+  scenario "Visitor should be able to view a vote permalink without logging in" do
+    given_a_vote_with_options_and_conversations(:max_selected_options => 1)
+    visit conversation_vote_path(@conversation,@vote)
+    set_current_page_to :select_options_opportunity_vote
+    current_page.should have_content 'register for an account'
+    current_page.should have_content 'Step 1:'
+    current_page.should have_content 'Please select up to 1 option' 
+    current_page.select_option(1)
+    click_continue_button
+    #should prompt login
+    current_page.should have_content 'Login'
+  end
 
 end
