@@ -6,8 +6,27 @@ var reset_selected_option_positions = function(){
   })
 }
 $(document).ready(function() {
+  
+  //Add numbering on the li of the opportunity votes, so that it doesn't move as it is being dragged
+  $(".opportunities-ballot li").each(function(n) {
+    var pos = $(this).position();
+    var number = document.createElement('div');
+    number.innerHTML = (n+1) + ".";
+    $(number).css("position", "absolute");
+    $(number).addClass('number')
+    $(".opportunities-ballot").append(number);
+    $(number).position({
+      my: "center",
+      at: "left",
+      of: this,
+      offset: "-15 15"
+    });
+  });
+  
   $('.opportunities-ol').sortable({
     update: reset_selected_option_positions
   });  
+  
+
 })
 
