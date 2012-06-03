@@ -4,7 +4,10 @@ class DigestService
               :digest_set,
               :updated_contributions,
               :updated_conversations,
-              :updated_reflections
+              :updated_reflections,
+              :votes_created_activities,
+              :votes_ended_activities,
+              :vote_response_activities
 
   def initialize
     @digest_set = { }
@@ -16,6 +19,7 @@ class DigestService
   def generate_digest_set(letter = nil)
     get_digest_recipients
     get_updated_reflections
+    get_vote_activities
     get_updated_contributions
     get_updated_conversations
     get_recipient_subscriptions
@@ -54,8 +58,18 @@ class DigestService
 
   def get_updated_conversations
     # extract the individual conversation ids
+    
+    # Get conversations from updated contributions
     @updated_conversations = @updated_contributions.map { |c| c.conversation }
+    # Get conversations from updated reflections
     @updated_conversations += @updated_reflections.map { |c| c.conversation }
+
+    # Get conversations from votes created
+    @updated_conversations += @votes_created_activities.map { |c| c.surveyable }
+    # Get conversations from votes ended
+    @updated_conversations += @votes_ended_activities.map { |c| c.surveyable }
+    # Get conversations from votes responses
+    @updated_conversations += @vote_response_activities.map { |c| c.survey.surveyable }    
     
     @updated_conversations.uniq!
   end
@@ -63,7 +77,6 @@ class DigestService
   def get_updated_reflections
     @updated_reflections = Reflection.includes(:conversation).order('conversation_id ASC, id ASC').where(created_at: time_range)
   end
-
 
   def get_recipient_subscriptions
     # get the subscriptions for each person
@@ -86,6 +99,33 @@ class DigestService
     end
 
   end
+  
+  def get_votes_created_activities
+    @votes_created_activities = Vote.where(surveyable_type: Conversation, created_at: time_range).order('surveyable_id ASC, id ASC').includes(:surveyable)
+    @votes_created_activities.each do |record| 
+      #set this as an indicator for the mailer view
+      record.daily_digest_type = 'created'
+    end
+  end
+  
+  def get_votes_ended_activities
+    @votes_ended_activities = Vote.where(surveyable_type: Conversation, end_date: time_range.last.to_date).order('surveyable_id ASC, id ASC').includes(:surveyable)
+    @votes_ended_activities.each do |record| 
+      #set this as an indicator for the mailer view
+      record.daily_digest_type = 'ended'
+    end
+    
+  end
+  
+  def get_vote_response_activities
+    @vote_response_activities = SurveyResponse.joins(:survey).where(surveys: {surveyable_type: Conversation, type: Vote}, created_at: time_range).includes( survey: :surveyable)
+  end
+  
+  def get_vote_activities
+    get_votes_created_activities
+    get_votes_ended_activities
+    get_vote_response_activities
+  end
 
   def group_contributions_by_conversation
     @digest_set.each do |person, conversations_array|
@@ -100,12 +140,23 @@ class DigestService
           reflection.conversation == conversation.first
         end
         
-        items = (contributions + reflections)
+        votes_created = @votes_created_activities.select do |vote|
+          vote.surveyable == conversation.first
+        end
+        
+        votes_ended = @votes_ended_activities.select do |vote|
+          vote.surveyable == conversation.first
+        end
+        
+        vote_responses = @vote_response_activities.select do |vote_response|
+          vote_response.survey.surveyable == conversation.first
+        end
+        
+        items = (contributions + reflections + votes_created + votes_ended + vote_responses)
 
         conversation << items
       end
     end
-
     return @digest_set
 
   end

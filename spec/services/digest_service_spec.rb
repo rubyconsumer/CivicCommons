@@ -50,6 +50,12 @@ describe DigestService do
         FactoryGirl.create(:reflection, :person => @contributor, :conversation => @convo_stale_with_subs, :created_at => 2.days.ago)
         FactoryGirl.create(:reflection, :person => @contributor, :conversation => @convo_stale_without_subs, :created_at => 2.days.ago)
         
+        #Vote created
+        @vote_created = FactoryGirl.create(:vote, :person => @contributor, :surveyable => @convo_stale_without_subs, :created_at => 2.days.ago)
+        #Vote ended
+        FactoryGirl.create(:vote, :person => @contributor, :surveyable => @convo_stale_without_subs, :end_date => 2.days.ago)
+        #Vote response
+        FactoryGirl.create(:vote_survey_response, :person => @contributor, :survey => @vote_created, :created_at => 2.days.ago)
       end
 
       context "No new contributions added yesterday" do
@@ -60,6 +66,52 @@ describe DigestService do
           @service.digest_set[@person_with_subs].should == []
         end
 
+      end
+      
+      context "Vote Activities added yesterday" do
+        before(:each) do
+          #Vote created
+          @vote_created_fresh_with_sub = FactoryGirl.create(:vote, :person => @contributor, :surveyable => @convo_fresh_with_subs, :created_at => 1.days.ago)
+          @vote_created_fresh_without_sub = FactoryGirl.create(:vote, :person => @contributor, :surveyable => @convo_fresh_without_subs, :created_at => 1.days.ago)
+          #Vote ended
+          @vote_ended_fresh_with_sub = FactoryGirl.create(:vote, :person => @contributor, :surveyable => @convo_fresh_with_subs, :end_date => 1.days.ago)
+          @vote_ended_fresh_without_sub = FactoryGirl.create(:vote, :person => @contributor, :surveyable => @convo_fresh_without_subs, :end_date => 1.days.ago)
+          #Vote response
+          @vote_response_fresh_with_sub = FactoryGirl.create(:vote_survey_response, :person => @contributor, :survey => @vote_created_fresh_with_sub, :created_at => 1.days.ago)
+          @vote_response_fresh_without_sub = FactoryGirl.create(:vote_survey_response, :person => @contributor, :survey => @vote_created_fresh_without_sub, :created_at => 1.days.ago)
+        end
+        it "should have valid results" do
+          set = @service.generate_digest_set
+          set.should be_instance_of Hash
+          set.should have(1).items
+          set.should have_key(@person_with_subs)
+
+          convos = set[@person_with_subs]
+          convos.should be_instance_of Array
+
+          convos.should have(1).items
+          convos[0].first.should == @convo_fresh_with_subs
+          convos[0].last.should_not be_blank
+        end
+        it "should include Vote created" do
+          set = @service.generate_digest_set
+          convos = set[@person_with_subs]
+          convos[0].last.should be_include(@vote_created_fresh_with_sub)
+          convos[0].last.should_not be_include(@vote_created_fresh_without_sub)
+        end
+        it "should include Vote Ended" do
+          set = @service.generate_digest_set
+          convos = set[@person_with_subs]
+          convos[0].last.should be_include(@vote_ended_fresh_with_sub)
+          convos[0].last.should_not be_include(@vote_ended_fresh_without_sub)
+        end
+        it "should include who Voted" do
+          set = @service.generate_digest_set
+          convos = set[@person_with_subs]
+          convos[0].last.should be_include(@vote_response_fresh_with_sub)
+          convos[0].last.should_not be_include(@vote_response_fresh_without_sub)
+        end
+        
       end
       
       context "Reflections added yesterday" do
@@ -157,6 +209,22 @@ describe DigestService do
       digest.digest_set[@person_with_subs][0][1].should be_an_instance_of Array
       digest.digest_set[@person_with_subs][0][1][0].should == @reflection_fresh_with_sub
     end
+    
+    it "creates an array of vote activities for a given conversation" do
+      @person_with_subs = FactoryGirl.create(:registered_user, :name => 'I Subscribe', :daily_digest => true, :avatar => nil)
+      @convo_fresh_with_subs = FactoryGirl.create(:conversation, :title => 'Fresh with Subscriptions')
+      FactoryGirl.create(:conversation_subscription, person: @person_with_subs, subscribable: @convo_fresh_with_subs)
+      # vote activities
+      @vote_created_fresh_with_sub = FactoryGirl.create(:vote, :person => @person_with_subs, :surveyable => @convo_fresh_with_subs, :created_at => 1.days.ago)
+      @vote_ended_fresh_with_sub = FactoryGirl.create(:vote, :person => @person_with_subs, :surveyable => @convo_fresh_with_subs, :end_date => 1.days.ago)
+      @vote_response_fresh_with_sub = FactoryGirl.create(:vote_survey_response, :person => @person_with_subs, :survey => @vote_created_fresh_with_sub, :created_at => 1.days.ago)      
+      
+      digest = DigestService.new
+      digest.generate_digest_set
+      digest.digest_set[@person_with_subs][0][1].should be_include @vote_created_fresh_with_sub
+      digest.digest_set[@person_with_subs][0][1].should be_include @vote_ended_fresh_with_sub
+      digest.digest_set[@person_with_subs][0][1].should be_include @vote_response_fresh_with_sub
+    end
 
   end
 
@@ -168,9 +236,15 @@ describe DigestService do
       @person_with_subs = FactoryGirl.create(:registered_user, :name => 'I Subscribe', :daily_digest => true, :avatar => nil)
       @contributor = FactoryGirl.create(:registered_user, :name => 'Big Talker', :avatar => nil)
       @convo_fresh_with_subs = FactoryGirl.create(:conversation, :title => 'Fresh with Subscriptions')
+      @vote_created_fresh_with_sub = FactoryGirl.create(:vote, :person => @contributor, :surveyable => @convo_fresh_with_subs, :created_at => 1.days.ago)
+      @vote_created_fresh_with_sub.daily_digest_type = 'created'
       convo_array = [ [@convo_fresh_with_subs, 
                         [ FactoryGirl.create(:contribution, :person => @contributor, :conversation => @convo_fresh_with_subs, :created_at => 1.day.ago),
-                          FactoryGirl.create(:reflection, :person => @person_with_subs, :conversation => @convo_fresh_with_subs, :created_at => 1.days.ago) ] ] ]
+                          FactoryGirl.create(:reflection, :person => @person_with_subs, :conversation => @convo_fresh_with_subs, :created_at => 1.days.ago),
+                          @vote_created_fresh_with_sub,
+                          FactoryGirl.create(:vote, :person => @person_with_subs, :surveyable => @convo_fresh_with_subs, :end_date => 1.days.ago),
+                          FactoryGirl.create(:vote_survey_response, :person => @person_with_subs, :survey => @vote_created_fresh_with_sub, :created_at => 1.days.ago)
+                           ] ] ]
       @digest_set = {
         @person_with_subs => convo_array
       }
@@ -199,6 +273,36 @@ describe DigestService do
       ActionMailer::Base.deliveries.length.should == 0
     end
 
+  end
+  
+  describe "send_digest" do
+    before(:each) do
+      @person_with_subs = FactoryGirl.create(:registered_user, :name => 'I Subscribe', :daily_digest => true, :avatar => nil)
+      @convo_fresh_with_subs = FactoryGirl.create(:conversation, :title => 'Fresh with Subscriptions')
+      FactoryGirl.create(:conversation_subscription, person: @person_with_subs, subscribable: @convo_fresh_with_subs)
+
+      # vote activities
+      @vote_created_fresh_with_sub = FactoryGirl.create(:vote, :person => @person_with_subs, :surveyable => @convo_fresh_with_subs, :created_at => 1.days.ago)
+      @vote_ended_fresh_with_sub = FactoryGirl.create(:vote, :person => @person_with_subs, :surveyable => @convo_fresh_with_subs, :end_date => 1.days.ago)
+      @vote_response_fresh_with_sub = FactoryGirl.create(:vote_survey_response, :person => @person_with_subs, :survey => @vote_created_fresh_with_sub, :created_at => 1.days.ago)      
+      
+      ActionMailer::Base.deliveries.clear
+    end
+    context "vote activities" do
+      it "should successfully send the emails for votes created " do
+        DigestService.send_digest
+        ActionMailer::Base.deliveries.last.body.should =~ /created a vote/i
+      end
+      it "should successfully send the emails for votes ended " do
+        DigestService.send_digest
+        ActionMailer::Base.deliveries.last.body.should =~ /a vote has ended/i
+      end
+      it "should successfully send emails for vote responses" do
+        DigestService.send_digest
+        ActionMailer::Base.deliveries.last.body.should =~ /You voted on/i
+      end
+    end
+    
   end
 
 end
