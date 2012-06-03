@@ -6,6 +6,7 @@
   * [Add Reflection to the Daily Digest](https://agilezen.com/project/18091/story/554)
   * [Login for Vote AFTER they read the vote](https://agilezen.com/project/18091/story/553)
   * [Recent Activity for the Vote gets added to the Daily Digest](https://agilezen.com/project/18091/story/547)
+  * [Add Recent Activity stream to Conversation Permalink](https://agilezen.com/project/18091/story/557)
 
 ### Chores
   * [Commonize Blog and Radio Show Description Partial](https://agilezen.com/project/18091/story/555)
