@@ -7,7 +7,9 @@ class DigestService
               :updated_reflections,
               :votes_created_activities,
               :votes_ended_activities,
-              :vote_response_activities
+              :vote_response_activities,
+              :petition_created_activity,
+              :petition_signatures_activity
 
   def initialize
     @digest_set = { }
@@ -20,6 +22,7 @@ class DigestService
     get_digest_recipients
     get_updated_reflections
     get_vote_activities
+    get_petition_related_activity
     get_updated_contributions
     get_updated_conversations
     get_recipient_subscriptions
@@ -45,7 +48,7 @@ class DigestService
   def get_digest_recipients
     @digest_recipients = Person.where(:daily_digest => true)
   end
-  
+
   def time_range
     # set the time range for yesterday
     (Time.now.midnight - 1.day)..(Time.now.midnight - 1.second)
@@ -58,7 +61,7 @@ class DigestService
 
   def get_updated_conversations
     # extract the individual conversation ids
-    
+
     # Get conversations from updated contributions
     @updated_conversations = @updated_contributions.map { |c| c.conversation }
     # Get conversations from updated reflections
@@ -69,8 +72,14 @@ class DigestService
     # Get conversations from votes ended
     @updated_conversations += @votes_ended_activities.map { |c| c.surveyable }
     # Get conversations from votes responses
-    @updated_conversations += @vote_response_activities.map { |c| c.survey.surveyable }    
-    
+    @updated_conversations += @vote_response_activities.map { |c| c.survey.surveyable }
+
+    ##### PETITION RELATED ACTIVITY #####
+    # Get Conversations from Petitions Created
+    @updated_conversations += @petition_created_activity.map {|p| p.conversation } if @petition_created_activity
+    # Get Conversations from Petition Signatures
+    @updated_conversations += @petition_signatures_activity.map {|sig| sig.petition_conversation }
+
     @updated_conversations.uniq!
   end
 
@@ -99,34 +108,53 @@ class DigestService
     end
 
   end
-  
+
   def get_votes_created_activities
     @votes_created_activities = Vote.where(surveyable_type: Conversation, created_at: time_range).order('surveyable_id ASC, id ASC').includes(:surveyable)
-    @votes_created_activities.each do |record| 
+    @votes_created_activities.each do |record|
       #set this as an indicator for the mailer view
       record.daily_digest_type = 'created'
     end
   end
-  
+
   def get_votes_ended_activities
     @votes_ended_activities = Vote.where(surveyable_type: Conversation, end_date: time_range.last.to_date).order('surveyable_id ASC, id ASC').includes(:surveyable)
-    @votes_ended_activities.each do |record| 
+    @votes_ended_activities.each do |record|
       #set this as an indicator for the mailer view
       record.daily_digest_type = 'ended'
     end
-    
+
   end
-  
+
   def get_vote_response_activities
     @vote_response_activities = SurveyResponse.joins(:survey).where(surveys: {surveyable_type: Conversation, type: Vote}, created_at: time_range).includes( survey: :surveyable)
   end
-  
+
   def get_vote_activities
     get_votes_created_activities
     get_votes_ended_activities
     get_vote_response_activities
   end
 
+  # Retrieves all the activity related to Petitions
+  # 1) Petition Creation
+  # 2) Petition Signatures
+  def get_petition_related_activity
+    get_petition_created_activity
+    get_petition_signatures_activity
+  end
+
+  # Get All Created Petitions
+  def get_petition_created_activity
+    @petitions_created_activity = Petition.where(created_at: time_range).order('created_at ASC')
+  end
+
+  # Get Activity from Users Signing Petitions
+  def get_petition_signatures_activity
+    @petition_signatures_activity = PetitionSignature.where(created_at: time_range).order('created_at ASC')
+  end
+
+  # Gather All Activity by Conversation
   def group_contributions_by_conversation
     @digest_set.each do |person, conversations_array|
 
@@ -135,24 +163,32 @@ class DigestService
         contributions = @updated_contributions.select do |contribution|
           contribution.conversation == conversation.first
         end
-        
+
         reflections = @updated_reflections.select do |reflection|
           reflection.conversation == conversation.first
         end
-        
+
         votes_created = @votes_created_activities.select do |vote|
           vote.surveyable == conversation.first
         end
-        
+
         votes_ended = @votes_ended_activities.select do |vote|
           vote.surveyable == conversation.first
         end
-        
+
         vote_responses = @vote_response_activities.select do |vote_response|
           vote_response.survey.surveyable == conversation.first
         end
-        
-        items = (contributions + reflections + votes_created + votes_ended + vote_responses)
+
+        petitions_created = @petitions_created_activity.select do |petition|
+          petition.conversation == conversation.first
+        end
+
+        petition_signatures = @petition_signatures_activity.select do |petition_signature|
+          petition_signature.petition_conversation == conversation.first
+        end
+
+        items = (contributions + reflections + votes_created + votes_ended + vote_responses + petitions_created + petition_signatures)
 
         conversation << items
       end
@@ -161,6 +197,8 @@ class DigestService
 
   end
 
+
+  #TODO: Use 'letter' param to segment the data set by first letter of last name
   def self.send_digest(letter = nil, set = nil)
     digest = self.new
     digest.generate_digest_set(letter)

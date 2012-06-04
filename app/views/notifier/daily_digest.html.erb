@@ -3,11 +3,11 @@
   <% @conversations.each do |conversation| %>
     <% unless conversation.first == nil%>
       <h2><%= conversation.first.title %></h2>
-      
+
       <% conversation.last.each do |item| %>
         <%= render :partial => "daily_digest_#{item.class.name.underscore}", :locals => {:item => item, :conversation => conversation} %>
       <% end %>
-      
+
     <% end %>
   <% end %>
 <% end %>

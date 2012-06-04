@@ -21,7 +21,7 @@ describe DigestService do
       @convo_fresh_without_subs = FactoryGirl.create(:conversation, :title => 'Fresh without Subscriptions')
       @convo_stale_with_subs = FactoryGirl.create(:conversation, :title => 'Stale with Subscriptions')
       @convo_stale_without_subs = FactoryGirl.create(:conversation, :title => 'Stale without Subscriptions')
-      
+
       #create instance of DigestService
       @service = DigestService.new
 
@@ -54,11 +54,11 @@ describe DigestService do
         #Contributions
         FactoryGirl.create(:contribution, :person => @contributor, :conversation => @convo_stale_with_subs, :created_at => 2.days.ago)
         FactoryGirl.create(:contribution, :person => @contributor, :conversation => @convo_stale_without_subs, :created_at => 2.days.ago)
-        
+
         #Reflections
         FactoryGirl.create(:reflection, :person => @contributor, :conversation => @convo_stale_with_subs, :created_at => 2.days.ago)
         FactoryGirl.create(:reflection, :person => @contributor, :conversation => @convo_stale_without_subs, :created_at => 2.days.ago)
-        
+
         #Vote created
         @vote_created = FactoryGirl.create(:vote, :person => @contributor, :surveyable => @convo_stale_without_subs, :created_at => 2.days.ago)
         #Vote ended
@@ -76,7 +76,7 @@ describe DigestService do
         end
 
       end
-      
+
       context "Vote Activities added yesterday" do
         before(:each) do
           #Vote created
@@ -120,16 +120,16 @@ describe DigestService do
           convos[0].last.should be_include(@vote_response_fresh_with_sub)
           convos[0].last.should_not be_include(@vote_response_fresh_without_sub)
         end
-        
+
       end
-      
+
       context "Reflections added yesterday" do
-        before(:each) do          
+        before(:each) do
           #Reflections
           @reflection_fresh_with_sub = FactoryGirl.create(:reflection, :person => @contributor, :conversation => @convo_fresh_with_subs, :created_at => 1.days.ago)
-          @reflection_fresh_without_sub = FactoryGirl.create(:reflection, :person => @contributor, :conversation => @convo_fresh_without_subs, :created_at => 1.days.ago)          
+          @reflection_fresh_without_sub = FactoryGirl.create(:reflection, :person => @contributor, :conversation => @convo_fresh_without_subs, :created_at => 1.days.ago)
         end
-        
+
         it "should include reflections" do
           set = @service.generate_digest_set
           set.should be_instance_of Hash
@@ -198,7 +198,7 @@ describe DigestService do
       @first_contribution = FactoryGirl.create(:contribution, :person => @contributor, :conversation => @convo_fresh_with_subs, :created_at => 1.day.ago)
       @second_contribution = FactoryGirl.create(:contribution, :person => @contributor, :conversation => @convo_fresh_with_subs, :created_at => 1.day.ago)
       @reflection_fresh_with_sub = FactoryGirl.create(:reflection, :person => @contributor, :conversation => @convo_fresh_with_subs, :created_at => 1.days.ago)
-      
+
       digest = DigestService.new
       digest.generate_digest_set
       digest.digest_set[@person_with_subs][0][1].should be_an_instance_of Array
@@ -206,19 +206,19 @@ describe DigestService do
       digest.digest_set[@person_with_subs][0][1][1].should == @second_contribution
       digest.digest_set[@person_with_subs][0][1][2].should == @reflection_fresh_with_sub
     end
-    
+
     it "creates an array of reflection for a given conversation" do
       @person_with_subs = FactoryGirl.create(:registered_user, :name => 'I Subscribe', :daily_digest => true, :avatar => nil)
       @convo_fresh_with_subs = FactoryGirl.create(:conversation, :title => 'Fresh with Subscriptions')
       FactoryGirl.create(:conversation_subscription, person: @person_with_subs, subscribable: @convo_fresh_with_subs)
       @reflection_fresh_with_sub = FactoryGirl.create(:reflection, :person => @person_with_subs, :conversation => @convo_fresh_with_subs, :created_at => 1.days.ago)
-      
+
       digest = DigestService.new
       digest.generate_digest_set
       digest.digest_set[@person_with_subs][0][1].should be_an_instance_of Array
       digest.digest_set[@person_with_subs][0][1][0].should == @reflection_fresh_with_sub
     end
-    
+
     it "creates an array of vote activities for a given conversation" do
       @person_with_subs = FactoryGirl.create(:registered_user, :name => 'I Subscribe', :daily_digest => true, :avatar => nil)
       @convo_fresh_with_subs = FactoryGirl.create(:conversation, :title => 'Fresh with Subscriptions')
@@ -226,8 +226,8 @@ describe DigestService do
       # vote activities
       @vote_created_fresh_with_sub = FactoryGirl.create(:vote, :person => @person_with_subs, :surveyable => @convo_fresh_with_subs, :created_at => 1.days.ago)
       @vote_ended_fresh_with_sub = FactoryGirl.create(:vote, :person => @person_with_subs, :surveyable => @convo_fresh_with_subs, :end_date => 1.days.ago)
-      @vote_response_fresh_with_sub = FactoryGirl.create(:vote_survey_response, :person => @person_with_subs, :survey => @vote_created_fresh_with_sub, :created_at => 1.days.ago)      
-      
+      @vote_response_fresh_with_sub = FactoryGirl.create(:vote_survey_response, :person => @person_with_subs, :survey => @vote_created_fresh_with_sub, :created_at => 1.days.ago)
+
       digest = DigestService.new
       digest.generate_digest_set
       digest.digest_set[@person_with_subs][0][1].should be_include @vote_created_fresh_with_sub
@@ -247,7 +247,7 @@ describe DigestService do
       @convo_fresh_with_subs = FactoryGirl.create(:conversation, :title => 'Fresh with Subscriptions')
       @vote_created_fresh_with_sub = FactoryGirl.create(:vote, :person => @contributor, :surveyable => @convo_fresh_with_subs, :created_at => 1.days.ago)
       @vote_created_fresh_with_sub.daily_digest_type = 'created'
-      convo_array = [ [@convo_fresh_with_subs, 
+      convo_array = [ [@convo_fresh_with_subs,
                         [ FactoryGirl.create(:contribution, :person => @contributor, :conversation => @convo_fresh_with_subs, :created_at => 1.day.ago),
                           FactoryGirl.create(:reflection, :person => @person_with_subs, :conversation => @convo_fresh_with_subs, :created_at => 1.days.ago),
                           @vote_created_fresh_with_sub,
@@ -283,7 +283,7 @@ describe DigestService do
     end
 
   end
-  
+
   describe "send_digest" do
     before(:each) do
 
@@ -294,8 +294,8 @@ describe DigestService do
       # vote activities
       @vote_created_fresh_with_sub = FactoryGirl.create(:vote, :person => @person_with_subs, :surveyable => @convo_fresh_with_subs, :created_at => 1.days.ago)
       @vote_ended_fresh_with_sub = FactoryGirl.create(:vote, :person => @person_with_subs, :surveyable => @convo_fresh_with_subs, :end_date => 1.days.ago)
-      @vote_response_fresh_with_sub = FactoryGirl.create(:vote_survey_response, :person => @person_with_subs, :survey => @vote_created_fresh_with_sub, :created_at => 1.days.ago)      
-      
+      @vote_response_fresh_with_sub = FactoryGirl.create(:vote_survey_response, :person => @person_with_subs, :survey => @vote_created_fresh_with_sub, :created_at => 1.days.ago)
+
       ActionMailer::Base.deliveries.clear
     end
     context "vote activities" do
@@ -312,7 +312,7 @@ describe DigestService do
         ActionMailer::Base.deliveries.last.body.should =~ /You voted on/i        
       end
     end
-    
+
   end
 
 end

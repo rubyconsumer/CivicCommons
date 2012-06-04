@@ -3,11 +3,12 @@
 ### External Changes
   * [Each Step of Vote process - take you down page (focus) to where you left.](https://agilezen.com/project/18091/story/543)
   * [Vote Add Warning before Publish.](https://agilezen.com/project/18091/story/545)
-  * [Add Reflection to the Daily Digest](https://agilezen.com/project/18091/story/554)
-  * [Login for Vote AFTER they read the vote](https://agilezen.com/project/18091/story/553)
+  * [Recent Activity for the Petition gets added to the Daily Digest](https://agilezen.com/project/18091/story/546)
   * [Recent Activity for the Vote gets added to the Daily Digest](https://agilezen.com/project/18091/story/547)
-  * [Add Recent Activity stream to Conversation Permalink](https://agilezen.com/project/18091/story/557)
   * [When Dragging Voting options - floating numbers](https://agilezen.com/project/18091/story/548)
+  * [Login for Vote AFTER they read the vote](https://agilezen.com/project/18091/story/553)
+  * [Add Reflection to the Daily Digest](https://agilezen.com/project/18091/story/554)
+  * [Add Recent Activity stream to Conversation Permalink](https://agilezen.com/project/18091/story/557)
 
 ### Chores
   * [Commonize Blog and Radio Show Description Partial](https://agilezen.com/project/18091/story/555)
