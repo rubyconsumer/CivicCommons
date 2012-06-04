@@ -1,11 +1,18 @@
 require 'spec_helper'
 
 describe DigestService do
+  before(:all) do
+    # This is needed so that the vote ended related tests do not fail intermittently.
+    Timecop.travel(DateTime.parse('01 Jun 2012 5AM'))
+  end
+  
+  after(:all) do
+    Timecop.return
+  end
 
   describe "generate_digest_set" do
-
     before(:each) do
-
+      
       #Contributor that talks a lot
       @contributor = FactoryGirl.create(:registered_user, :name => 'Big Talker', :avatar => nil)
 
@@ -19,6 +26,8 @@ describe DigestService do
       @service = DigestService.new
 
     end
+    
+    
 
     context "When users have opted out of the digest" do
 
@@ -277,6 +286,7 @@ describe DigestService do
   
   describe "send_digest" do
     before(:each) do
+
       @person_with_subs = FactoryGirl.create(:registered_user, :name => 'I Subscribe', :daily_digest => true, :avatar => nil)
       @convo_fresh_with_subs = FactoryGirl.create(:conversation, :title => 'Fresh with Subscriptions')
       FactoryGirl.create(:conversation_subscription, person: @person_with_subs, subscribable: @convo_fresh_with_subs)
@@ -299,7 +309,7 @@ describe DigestService do
       end
       it "should successfully send emails for vote responses" do
         DigestService.send_digest
-        ActionMailer::Base.deliveries.last.body.should =~ /You voted on/i
+        ActionMailer::Base.deliveries.last.body.should =~ /You voted on/i        
       end
     end
     
