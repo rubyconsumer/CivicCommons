@@ -5,14 +5,14 @@ describe DigestService do
     # This is needed so that the vote ended related tests do not fail intermittently.
     Timecop.travel(DateTime.parse('01 Jun 2012 5AM'))
   end
-  
+
   after(:all) do
     Timecop.return
   end
 
   describe "generate_digest_set" do
     before(:each) do
-      
+
       #Contributor that talks a lot
       @contributor = FactoryGirl.create(:registered_user, :name => 'Big Talker', :avatar => nil)
 
@@ -24,13 +24,10 @@ describe DigestService do
 
       #create instance of DigestService
       @service = DigestService.new
-
     end
-    
-    
+
 
     context "When users have opted out of the digest" do
-
       before(:each) do
         @person_unsubscribed_from_digest = FactoryGirl.create(:registered_user, :daily_digest => false,  :name => 'No Subscriptions', :avatar => nil)
       end
@@ -39,8 +36,8 @@ describe DigestService do
         set = @service.generate_digest_set
         set.should be_empty
       end
-
     end
+
 
     context "When users have subscribed to conversations" do
 
@@ -68,13 +65,11 @@ describe DigestService do
       end
 
       context "No new contributions added yesterday" do
-
         it "should generate a digest set with a person but no contribution data" do
           set = @service.generate_digest_set
           set.should be_instance_of Hash
           @service.digest_set[@person_with_subs].should == []
         end
-
       end
 
       context "Vote Activities added yesterday" do
@@ -291,14 +286,15 @@ describe DigestService do
       @convo_fresh_with_subs = FactoryGirl.create(:conversation, :title => 'Fresh with Subscriptions')
       FactoryGirl.create(:conversation_subscription, person: @person_with_subs, subscribable: @convo_fresh_with_subs)
 
-      # vote activities
-      @vote_created_fresh_with_sub = FactoryGirl.create(:vote, :person => @person_with_subs, :surveyable => @convo_fresh_with_subs, :created_at => 1.days.ago)
-      @vote_ended_fresh_with_sub = FactoryGirl.create(:vote, :person => @person_with_subs, :surveyable => @convo_fresh_with_subs, :end_date => 1.days.ago)
-      @vote_response_fresh_with_sub = FactoryGirl.create(:vote_survey_response, :person => @person_with_subs, :survey => @vote_created_fresh_with_sub, :created_at => 1.days.ago)
-
       ActionMailer::Base.deliveries.clear
     end
     context "vote activities" do
+      before(:each) do
+        # vote activities
+        @vote_created_fresh_with_sub = FactoryGirl.create(:vote, :person => @person_with_subs, :surveyable => @convo_fresh_with_subs, :created_at => 1.days.ago)
+        @vote_ended_fresh_with_sub = FactoryGirl.create(:vote, :person => @person_with_subs, :surveyable => @convo_fresh_with_subs, :end_date => 1.days.ago)
+        @vote_response_fresh_with_sub = FactoryGirl.create(:vote_survey_response, :person => @person_with_subs, :survey => @vote_created_fresh_with_sub, :created_at => 1.days.ago)
+      end
       it "should successfully send the emails for votes created " do
         DigestService.send_digest
         ActionMailer::Base.deliveries.last.body.should =~ /created a vote/i
@@ -309,7 +305,22 @@ describe DigestService do
       end
       it "should successfully send emails for vote responses" do
         DigestService.send_digest
-        ActionMailer::Base.deliveries.last.body.should =~ /You voted on/i        
+        ActionMailer::Base.deliveries.last.body.should =~ /You voted on/i
+      end
+    end
+
+    context "petitions activity" do
+      before(:each) do
+        @petition = FactoryGirl.create(:petition, :person => @person_with_subs, :conversation => @convo_fresh_with_subs, :created_at => 1.days.ago)
+        FactoryGirl.create(:petition_signature, :person => @person_with_subs, :petition => @petition, :created_at => 1.days.ago)
+      end
+      it "should successfully send the emails for petitions created " do
+        DigestService.send_digest
+        ActionMailer::Base.deliveries.last.body.should =~ /You created a petition/i
+      end
+      it "should successfully send the emails for petition signatures created " do
+        DigestService.send_digest
+        ActionMailer::Base.deliveries.last.body.should =~ /You signed a petition/i
       end
     end
 

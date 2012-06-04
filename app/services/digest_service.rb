@@ -8,7 +8,7 @@ class DigestService
               :votes_created_activities,
               :votes_ended_activities,
               :vote_response_activities,
-              :petition_created_activity,
+              :new_petitions,
               :petition_signatures_activity
 
   def initialize
@@ -22,11 +22,11 @@ class DigestService
     get_digest_recipients
     get_updated_reflections
     get_vote_activities
-    get_petition_related_activity
+    get_petition_related_activities
     get_updated_contributions
     get_updated_conversations
     get_recipient_subscriptions
-    group_contributions_by_conversation
+    group_activities_by_conversation
   end
 
   def process_daily_digest(set = nil)
@@ -76,9 +76,9 @@ class DigestService
 
     ##### PETITION RELATED ACTIVITY #####
     # Get Conversations from Petitions Created
-    @updated_conversations += @petition_created_activity.map {|p| p.conversation } if @petition_created_activity
+    @updated_conversations += @new_petitions.map {|p| p.conversation } if @new_petitions
     # Get Conversations from Petition Signatures
-    @updated_conversations += @petition_signatures_activity.map {|sig| sig.petition_conversation }
+    @updated_conversations += @petition_signatures_activity.map {|sig| sig.petition_conversation } if @petition_signatures_activity
 
     @updated_conversations.uniq!
   end
@@ -139,14 +139,14 @@ class DigestService
   # Retrieves all the activity related to Petitions
   # 1) Petition Creation
   # 2) Petition Signatures
-  def get_petition_related_activity
-    get_petition_created_activity
+  def get_petition_related_activities
+    get_new_petitions
     get_petition_signatures_activity
   end
 
-  # Get All Created Petitions
-  def get_petition_created_activity
-    @petitions_created_activity = Petition.where(created_at: time_range).order('created_at ASC')
+  # Get All New Petitions
+  def get_new_petitions
+    @new_petitions = Petition.where(created_at: time_range).order('created_at ASC')
   end
 
   # Get Activity from Users Signing Petitions
@@ -155,7 +155,7 @@ class DigestService
   end
 
   # Gather All Activity by Conversation
-  def group_contributions_by_conversation
+  def group_activities_by_conversation
     @digest_set.each do |person, conversations_array|
 
       conversations_array.each do |conversation|
@@ -180,7 +180,7 @@ class DigestService
           vote_response.survey.surveyable == conversation.first
         end
 
-        petitions_created = @petitions_created_activity.select do |petition|
+        petitions_created = @new_petitions.select do |petition|
           petition.conversation == conversation.first
         end
 
