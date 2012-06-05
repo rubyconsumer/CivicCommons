@@ -10,4 +10,7 @@ class PetitionSignature < ActiveRecord::Base
   def signer_name
     person.name
   end
+  def conversation_id
+    try(:petition).try(:conversation_id)
+  end
 end

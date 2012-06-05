@@ -118,7 +118,21 @@ describe Survey do
       @vote = FactoryGirl.build(:vote)
       @vote.attached_to_conversation?.should be_false
     end
+    context 'conversation_id' do
+      it "should return the right conversation id if attached is a conversation" do
+        @conversation = FactoryGirl.create(:conversation)
+        @vote = FactoryGirl.build(:vote, :surveyable => @conversation)
+        @vote.conversation_id.should == @conversation.id
+      end
+      it "should not return any id if attached is not a conversation" do
+        @issue = FactoryGirl.create(:issue)
+        @vote = FactoryGirl.build(:vote, :surveyable => @issue)
+        @vote.conversation_id.should be_nil
+      end
+    end
+    
   end
+  
   
   context "active?" do
     it "should be active when there is no start_date" do

@@ -37,4 +37,12 @@ describe PetitionSignature do
       @petition_signature.signer_name.should == @petition_signature.person.name
     end
   end
+  
+  context 'conversation_id' do
+    it "should return the right conversation id" do
+      @petition_signature = FactoryGirl.build(:petition_signature)
+      @petition_signature.conversation_id.should == Conversation.last.id
+    end
+  end
+  
 end

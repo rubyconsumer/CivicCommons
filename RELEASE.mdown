@@ -17,7 +17,8 @@
 
 ### Bug Fixes
   * [Airbrake: ActiveRecord::RecordInvalid: Validation failed: Last name can't be blank](https://agilezen.com/project/18091/story/552)
-
+  * [Adjust Activity stream backend so that all opportunity related items are viewable in conversation permalink.](https://agilezen.com/project/18091/story/562)
+  
 ## 2.3
 
 ### External Changes

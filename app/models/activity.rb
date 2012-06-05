@@ -11,7 +11,7 @@ class Activity < ActiveRecord::Base
   validates :person_id, presence: true
 
   VALID_TYPES = [ Conversation, Contribution, Issue, RatingGroup, SurveyResponse,
-                  Petition, PetitionSignature, Reflection, ReflectionComment]
+                  Petition, PetitionSignature, Reflection, ReflectionComment, Survey]
 
   # Accept an Active Record object of valid type
   def initialize(attributes = nil)
@@ -32,6 +32,9 @@ class Activity < ActiveRecord::Base
         attr[:activity_cache] = Activity.encode(attributes)
       elsif attributes.is_a?(Conversation)
         attr[:conversation_id] = attributes.id
+        attr[:activity_cache] = Activity.encode(attributes)
+      elsif attributes.is_a?(Vote)
+        attr[:conversation_id] = attributes.surveyable_id if attributes.surveyable_type == 'Conversation'
         attr[:activity_cache] = Activity.encode(attributes)
       end
 
@@ -128,6 +131,8 @@ class Activity < ActiveRecord::Base
         obj = ActiveSupport::JSON.encode(item, include: [:person, :petition])
       when Reflection
         obj = ActiveSupport::JSON.encode(item, include: [:person, :conversation])
+      when Survey, Vote
+        obj = ActiveSupport::JSON.encode(item, include: [:person, :surveyable])  
       when ReflectionComment
         obj = ActiveSupport::JSON.encode(item, include: [:person, :reflection])
       end

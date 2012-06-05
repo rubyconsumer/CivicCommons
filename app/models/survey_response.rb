@@ -19,6 +19,10 @@ class SurveyResponse < ActiveRecord::Base
     @validate_presence_of_selected_option ||= false
   end
   
+  def conversation_id
+    survey.surveyable_id if try(:survey).try(:surveyable).is_a?(Conversation)
+  end
+  
   def selected_option_ids=(option_ids=[])
     @selected_option_ids = option_ids
     @selected_option_ids.each do |option_id|

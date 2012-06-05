@@ -26,6 +26,10 @@ class Survey < ActiveRecord::Base
     end
   end
   
+  def conversation_id
+    self.surveyable_id if attached_to_conversation?
+  end
+  
   def days_until_end_date
     (end_date - Date.today).to_i if end_date && end_date > Date.today
   end

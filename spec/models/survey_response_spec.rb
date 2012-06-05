@@ -70,5 +70,15 @@ describe SurveyResponse do
       end
     end
   end
+  
+  context "conversation_id" do
+    it "should return the correct conversation_id" do
+      @conversation = FactoryGirl.create(:conversation)
+      @survey = FactoryGirl.create(:vote, :surveyable => @conversation)
+      @survey_response = FactoryGirl.create(:survey_response, :survey => @survey)
+      @survey_response.conversation_id.should_not be_nil
+      @survey_response.conversation_id.should == Conversation.last.id
+    end
+  end
 
 end
