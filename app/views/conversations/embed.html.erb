@@ -1,0 +1,78 @@
+<% content_for :document_ready do %>
+  $('.pre-select').select();
+  $('a.img-popup').colorbox({rel:'gal'});
+<% end %>
+<% content_for :main_body do %>
+  <div class="wrapper">
+    <div class="content-container">
+      <h1>Your Commons</h1>
+      <div class="main-content">
+        <div class="media">
+          <img src="/images/embed_logo.png" alt="embed_logo" width="129" height="132" class="img" />
+          <div class="bd">
+            <p>
+              <strong>Want to put this conversation on your website?</strong> <br/>
+              You can do it in just a few clicks. By following the steps below you can embed this or any other Civic Commons conversation on your website. Your Commons is a great way to promote an issue you’re interested in, to invite your community to participate in a conversation and to add content to your website.
+            </p>
+            <p>
+              <strong>Your Commons</strong>
+               will display the most recent activity from the conversation on your website and let visitors click to come to the Civic Commons to read more and add their voice.
+            </p>
+            <p>
+              Here’s an example of what it can look like:<br/><br/>
+              <%= link_to image_tag('cc_widget_sample1.png', :height => '100px'), image_path('cc_widget_sample1.png'), :class => 'img-popup' %>
+              <%= link_to image_tag('cc_widget_sample2.png', :height => '100px'), image_path('cc_widget_sample2.png'), :class => 'img-popup' %>
+            </p>
+            
+            
+          </div>
+        </div><!--  /.media -->
+      </div>
+    </div><!-- /.content-container -->
+    <hr />
+    <div class="content-container">
+      <div class="main-content">
+        <div class="media mbl">
+          <h1>Let’s get started.</h1>
+          <div class="img mrl">
+            <span class="lrg-number">1</span>
+          </div>
+          <div class="bd">
+            <h4>Copy the code below.</h4>
+            <textarea class="inset inset--textarea pre-select"><%= cc_widget_embed_code(activities_conversation_path(@conversation),"civic-commons-widget-activity-#{@conversation.id}") -%></textarea>
+          </div>
+        </div>
+        <div class="media mbl">
+          <div class="img mrl">
+            <span class="lrg-number">2</span>
+          </div>
+          <div class="bd">
+            <h4>Paste the code in your website’s html.</h4>
+            <p>
+              If you need more detailed instructions about where to paste this code, here are links to instructions from <%= link_to 'WordPress', 'http://codex.wordpress.org/Using_Javascript', :target => '_blank' %>, <%= link_to 'Tumblr', 'http://www.tumblr.com/docs/en/custom_themes', :target => '_blank' %>, <%= link_to 'Blogger', 'http://support.google.com/blogger/bin/answer.py?hl=en&answer=46870&topic=1711140&ctx=topic', :target => '_blank' %> and <%= link_to 'Drupal', 'http://drupal.org/node/304255', :target => '_blank' %>. <br/>
+              Not using one of those systems? <br/>
+              Then contact us directly at <%= mail_to Civiccommons::Config.email['support_email'],nil, :subject => 'Help with "Your Commons" Widget' %> and we’ll help you out.
+            </p>
+          </div>
+        </div>
+        <div class="media mbl">
+          <div class="img mrl">
+            <span class="lrg-number">3</span>
+          </div>
+          <div class="bd">
+            <h4>Invite friends to join your conversation.</h4>
+            <p>This is key because lively conversations require lively participants. So share the conversation on Facebook, link to it in your next email newsletter or tweet an invitation to the world. The more ways you invite participation, the better. <br/>
+              Simply share a link to the page where you’ve added the conversation and we’ll take care of the rest.</p>
+          </div>
+        </div>
+        <p> If you need help getting a new conversation started or embedding a conversation that has already started at the Civic Commons, let us know. We’re happy to help. Simply email <%= mail_to Civiccommons::Config.email['support_email'],nil, :subject => 'Help with "Your Commons" Widget' %>.
+          We look forward to seeing where you take the conversation!
+        </p>
+        <p>
+          --The Civic Commons Team
+        </p>
+        
+    </div>
+    </div>
+  </div><!-- /.wrapper -->
+<% end %>

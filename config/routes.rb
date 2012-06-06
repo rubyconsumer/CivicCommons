@@ -142,6 +142,7 @@ Civiccommons::Application.routes.draw do
   resources :projects, only: [:index]
 
   resources :conversations, only: [:index, :show, :new, :create] do
+    get :embed, on: :member
     resources :reflections do
       resources :reflection_comments, :path => 'comments'
     end

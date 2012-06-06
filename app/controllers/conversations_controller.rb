@@ -86,6 +86,11 @@ class ConversationsController < ApplicationController
       format.any{ render :show}
     end
   end
+  
+  def embed
+    @conversation = Conversation.find(params[:id])
+    render :layout => 'application'
+  end
 
   def activities
     @page = params[:page].present? ? params[:page].to_i : 1

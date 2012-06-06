@@ -5,6 +5,7 @@
   * [Remove Ratings from Your Commons Activity Stream](https://agilezen.com/project/18091/story/561)
   * [Commonize Most Recent Activity Items Logic](https://agilezen.com/project/18091/story/567)
   * [YOUR COMMONS - Add 2 lines of text to the current conversation snippet.](https://agilezen.com/project/18091/story/563)
+  * [Create Your Commons Permalink Page](https://agilezen.com/project/18091/story/570)
 
 ### Bug Fixes
   * [vote Insert Image -Alignment](https://agilezen.com/project/18091/story/556)

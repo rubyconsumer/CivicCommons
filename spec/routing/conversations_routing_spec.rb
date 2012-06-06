@@ -98,6 +98,9 @@ describe ConversationsController do
     it "recognizes and generates #activities" do
       { get: "/conversations/1/activities.embed" }.should route_to(controller: "conversations", action: "activities", :id => '1', :format => 'embed')
     end
+    it "recognizes the embed action on the conversations controller" do
+      { get: "/conversations/1/embed" }.should route_to(controller: "conversations", action: "embed", :id => '1')
+    end
   end
 
 end

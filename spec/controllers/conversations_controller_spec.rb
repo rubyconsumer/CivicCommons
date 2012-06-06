@@ -287,6 +287,25 @@ describe ConversationsController do
     end
   end
 
+  describe "GET embed" do
+    before(:each) do
+      Conversation.stub!(:find).with(123).and_return(nil)
+    end
+    it "should render be_success" do
+      get :embed, :id => 123
+      response.should be_success
+    end
+    it "should render the embed partial" do
+      get :embed, :id => 123
+      response.should render_template 'embed'
+      response.should render_template 'layouts/application'
+    end
+    it "should search for the conversation" do
+      Conversation.should_receive(:find).with(123).and_return(nil)
+      get :embed, :id => 123
+    end
+  end
+
   describe "GET activities" do
     before(:each) do
       Conversation.stub!(:find).and_return(mock_conversation)
