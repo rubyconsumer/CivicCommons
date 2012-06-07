@@ -7,6 +7,7 @@
   * [YOUR COMMONS - Add 2 lines of text to the current conversation snippet.](https://agilezen.com/project/18091/story/563)
   * [Create Your Commons Permalink Page](https://agilezen.com/project/18091/story/570)
   * [Move Social Media Icons to the Right](https://agilezen.com/project/18091/story/572)
+  * [Add Your Commons Widget Button to Opportunity](https://agilezen.com/project/18091/story/569)
 
 ### Bug Fixes
   * [vote Insert Image -Alignment](https://agilezen.com/project/18091/story/556)

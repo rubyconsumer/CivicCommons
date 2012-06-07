@@ -54,4 +54,16 @@ feature "Conversation Widget Feature", %q{
     page.should_not have_content('See More Activity')
 
   end
+  
+  scenario "Your commons embed page", :js => true do
+    given_a_series_of_contributions
+    visit conversation_path(@conversation)
+    page.should have_content 'Akron Beacon Journal Seeks Citizen Views'
+    page.click_link('Embed Conversation')
+    
+    page.should have_content 'Your Commons'
+    page.should have_content 'Copy the code below.'
+    page.should have_content 'Paste the code in your website'
+    page.should have_content 'Invite friends to join your conversation.'
+  end
 end
