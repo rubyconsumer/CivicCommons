@@ -66,6 +66,24 @@ describe ContributionsController do
       post :update, :id => "1150", :conversation_id => "450", contribution: { "1150" => {content: "hello world"}, "url"=>"www.google.com", "contribution_id"=> "1150", "id"=>"1150", :url=>"www.google.com"}
     end
   end
+  
+  describe "fb_link" do
+    let(:contribution) { stub_model(Contribution, conversation: stub_model(Conversation), :content => '<b>Conversation content here</b>') }
+    
+    before(:each) do
+      Contribution.stub(:find).and_return(contribution)
+    end
+    
+    it "should redirect to the conversation's page's node if user agent is not a facebook bot" do
+      get :fb_link, id: '1234', conversation_id: 'convo-id-here'
+      response.should redirect_to "http://test.host/conversations/#{contribution.conversation.id}#node-#{contribution.id}"
+    end
+    it "should render the fb_like template if user agent is a facebook bot" do
+      request.env['HTTP_USER_AGENT'] = "facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)"
+      get :fb_link, id: '1234', conversation_id: 'convo-id-here'
+      response.should render_template 'fb_link'
+    end
+  end
 
   describe "POST: Create Confirmed Contribution" do
 

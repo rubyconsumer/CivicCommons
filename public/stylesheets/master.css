@@ -2018,6 +2018,9 @@ div.convo-utility div.tos {
   float: none;
   text-align: right;
 }
+div.convo-utility div.social_buttons{
+  text-align: right;
+}
 div.convo-utility div.tos a:link {color: #808080;}
 div.convo-utility span.respond {
   display: block;

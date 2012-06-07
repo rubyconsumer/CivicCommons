@@ -150,6 +150,7 @@ Civiccommons::Application.routes.draw do
     resources :contributions, only: [:create, :edit, :show, :update, :destroy] do
       get '/moderate', to: 'contributions#moderate', on: :member
       put '/moderate', to: 'contributions#moderated', on: :member
+      get '/fb_link', to: 'contributions#fb_link', on: :member
     end
     resources :petitions do
       post :sign, :to => 'petitions#sign', :on => :member

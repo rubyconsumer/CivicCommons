@@ -26,6 +26,21 @@ module MetaHelper
     #puts "default_meta_info:#{meta_info.inspect}"
     meta_info
   end
+  
+  def setup_meta_info_for_conversation_contribution(contribution)
+    conversation = contribution.conversation
+    @meta_info = {}
+    @meta_info[:page_title]= "The Civic Commons Comment on: #{conversation.page_title.present? ? conversation.page_title : conversation.title}"
+    @meta_info[:meta_description] = clean_and_truncate(contribution.content)
+    @meta_info[:meta_tags] = conversation.meta_tags
+    @meta_info[:image_url] = conversation.image.url(:panel) if conversation.respond_to?(:image) && conversation.image.present?
+    
+    @meta_info = sanitize_meta_values(@meta_info)
+  end
+  
+  def sanitize_meta_values(meta_info)
+    meta_info.each{|key,value| meta_info[key] = Sanitize.clean(value, :remove_contents => ['style','script'])}
+  end
 
   # Set Up Page HTML Meta Information
   def setup_meta_info(meta_data)

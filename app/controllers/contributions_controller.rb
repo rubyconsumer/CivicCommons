@@ -61,6 +61,15 @@ class ContributionsController < ApplicationController
     end
   end
 
+  # a url that is sent to facebook, when users like, or share a contribution
+  def fb_link
+    @contribution = Contribution.find(params[:id])
+    unless request.env['HTTP_USER_AGENT'] =~ /facebookexternalhit/i
+      redirect_to conversation_node_url(@contribution)
+    end
+    setup_meta_info_for_conversation_contribution(@contribution)
+  end
+  
   def show
     @contribution = Contribution.find(params[:id])
     @contributions = @contribution.self_and_descendants

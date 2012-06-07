@@ -35,6 +35,10 @@ describe ContributionsController do
       { delete: "/contributions/1" }.should route_to(controller: "contributions", action: "destroy", id: "1")
     end
 
+    it "recognizes and generates #fb_link" do
+      { get: "/conversations/1/contributions/1/fb_link" }.should route_to(controller: "contributions", action: "fb_link", conversation_id: "1", id: "1")
+    end
+    
   end
 
 end
