@@ -2,6 +2,11 @@
 
 ### Bug Fixes
   * [vote Insert Image -Alignment](https://agilezen.com/project/18091/story/556)
+  * [Default Avatar - not working on Your Commons](https://agilezen.com/project/18091/story/564)
+
+### Post Deployment Instructions
+  * Due to the bug fix for #564, rake avatar:update_image_urls must be executed after deployment.
+
 
 ## 2.4
 

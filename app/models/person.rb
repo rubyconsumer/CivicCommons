@@ -112,7 +112,7 @@ class Person < ActiveRecord::Base
       :large => "185x185#"},
     :storage => :s3,
     :s3_credentials => S3Config.credential_file,
-    :default_url => '/images/avatar_70.gif',
+    :default_url => "http://s3.amazonaws.com/#{S3Config.bucket.to_s}/avatars/default/avatar_70.gif",
     :path => ":attachment/:id/:style/:filename"
 
   validates_attachment_content_type :avatar,
