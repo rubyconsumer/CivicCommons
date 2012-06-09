@@ -178,4 +178,10 @@ class ContentItem < ActiveRecord::Base
     Person.find(blog_author_ids)
   end
 
+  def h_content_type
+    return "Blog" if content_type_is_blog_post?
+    return "News" if content_type_is_news_item?
+    return content_type.titlecase
+  end
+
 end

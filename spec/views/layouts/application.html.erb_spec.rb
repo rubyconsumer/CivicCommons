@@ -59,43 +59,49 @@ describe 'layouts/application.html.erb' do
 
   context "site metadata" do
     before(:each) do
+      @meta_info = {:page_title => nil, :meta_description => nil, :meta_tags => nil, :image_url => nil}
       @view.stub(:signed_in?).and_return(false)
     end
 
-    it "will show the summary of a Conversation on a conversation page without HTML" do
+    it "will show the summary of a Conversation on a conversation page without HTML markup" do
       summary = 'I am a <b>summary</b>'
+      @meta_info[:meta_description] = summary
       @conversation = FactoryGirl.create(:conversation, summary: summary)
-      meta_description = '<meta name="description" content="' + Sanitize.clean(summary, :remove_contents => ['style','script']) + '" />'
+      meta_description = '<meta name="description" content="I am a summary" />'
       render
       rendered.include?(meta_description).should be_true
     end
 
-    it "will show the summary of an Issue on an issue page without HTML" do
+    it "will show the summary of an Issue on an issue page without HTML markup" do
       summary = 'I am a <b>summary</b>'
+      @meta_info[:meta_description] = summary
       @issue = FactoryGirl.create(:issue, summary: summary)
-      meta_description = '<meta name="description" content="' + Sanitize.clean(summary, :remove_contents => ['style','script']) + '" />'
+      meta_description = '<meta name="description" content="I am a summary" />'
       render
       rendered.include?(meta_description).should be_true
     end
 
-    it "will show the summary of a BlogPost on a blog post page without HTML" do
+    it "will show the summary of a BlogPost on a blog post page without HTML markup" do
       summary = 'I am a <b>summary</b>'
+      @meta_info[:meta_description] = summary
       @blog_post = FactoryGirl.create(:blog_post, summary: summary)
-      meta_description = '<meta name="description" content="' + Sanitize.clean(summary, :remove_contents => ['style','script']) + '" />'
+      meta_description = '<meta name="description" content="I am a summary" />'
       render
       rendered.include?(meta_description).should be_true
     end
 
-    it "will show the summary of a RadioShow on a radio show page without HTML" do
+    it "will show the summary of a RadioShow on a radio show page without HTML markup" do
       summary = 'I am a <b>summary</b>'
+      @meta_info[:meta_description] = summary
       @radioshow = FactoryGirl.create(:radio_show, summary: summary)
-      meta_description = '<meta name="description" content="' + Sanitize.clean(summary, :remove_contents => ['style','script']) + '" />'
+      meta_description = '<meta name="description" content="I am a summary" />'
       render
       rendered.include?(meta_description).should be_true
     end
 
     it "will show a static description for pages that are not conversations, issues, blog posts, or radio shows" do
       description = "The Civic Commons is a new way to bring communities together with conversation and emerging technology. We’re focused on building conversations and connections that have the power to become informed, productive collective civic action."
+      @meta_info[:meta_description] = description
       meta_description = '<meta name="description" content="' + description + '" />'
       render
       rendered.include?(meta_description).should be_true

@@ -60,7 +60,7 @@ describe ApplicationControllerRequireNoSSL do
     response.should be_redirect
     response.should redirect_to('http://test.host/anonymous')
   end
-  
+
   it "should call the require_no_ssl filter" do
     controller.should_receive(:require_no_ssl)
     get :index
@@ -153,7 +153,7 @@ describe ApplicationControllerRenderWidget do
     get :index, :callback => 'jsonp1234'
     response.content_type.should == 'text/javascript'
   end
-    
+
   it "should set the callback for jsonp" do
     get :index, :callback => 'jsonp1234'
     response.body.should == "jsonp1234({\"css\":[\"/stylesheets/widget.css\"]})"

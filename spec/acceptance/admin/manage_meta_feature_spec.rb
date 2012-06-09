@@ -39,7 +39,7 @@ feature "Meta Content", %q{
                          :meta_description=>"OK, so it is not really radiolab",
                          :meta_tags=>"we,just,wish,we,were,radiolab"
     goto :view_radio_show, :for=> radio_show
-    current_page.should have_page_title "Welcome to RADIOLAB"
+    current_page.should have_page_title "The Civic Commons Radio Show: Welcome to RADIOLAB"
     current_page.should have_meta_description "OK, so it is not really radiolab"
     current_page.should have_meta_tags "we,just,wish,we,were,radiolab"
   end
@@ -49,7 +49,7 @@ feature "Meta Content", %q{
                      :meta_description=>"Just ask Arianna Huffington",
                      :meta_tags=>"if,you,can,get,past,her,millions,of,dollars"
     goto :view_blog_post, :for=> blog_post
-    current_page.should have_page_title "Blogging is fun!"
+    current_page.should have_page_title "The Civic Commons Blog: Blogging is fun!"
     current_page.should have_meta_description "Just ask Arianna Huffington"
     current_page.should have_meta_tags "if,you,can,get,past,her,millions,of,dollars"
   end

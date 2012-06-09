@@ -235,7 +235,6 @@ class Issue < ActiveRecord::Base
     end
   end
 
-
   define_method(:title) do
     name
   end

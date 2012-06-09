@@ -3,33 +3,12 @@
   description = "The Civic Commons is a new way to bring communities together with conversation and emerging technology. We’re focused on building conversations and connections that have the power to become informed, productive collective civic action."
   image = "/images/cc_podcast_small.jpg"
 
-  if not @meta_info.nil?
-    title = page_title
-    description = meta_description
-    if not @meta_info[:image_url].nil?
-      image = @meta_info[:image_url]
-    end
-  elsif not @conversation.nil?
-    title = @conversation.title
-    description = Sanitize.clean(@conversation.summary, :remove_contents => ['style','script'])
-    if not @conversation.image.nil?
-      image = @conversation.image.url(:panel)
-    end
-  elsif not @issue.nil?
-    title= @issue.name
-    description = Sanitize.clean(@issue.summary, :remove_contents => ['style','script'])
-    if not @issue.image.nil?
-      image = @issue.image.url(:panel)
-    end
-  elsif not @blog_post.nil?
-    title = "The Common Blog: #{@blog_post.title}"
-    description = Sanitize.clean(@blog_post.summary, :remove_contents => ['style','script'])
-    image = "/images/cc_podcast_small.jpg"
-  elsif not @radioshow.nil?
-    title="The Civic Commons Radio Show: #{h @radioshow.title}"
-    description= Sanitize.clean(@radioshow.summary, :remove_contents => ['style','script'])
-    image_src="/images/cc_podcast_small.jpg"
+  if @meta_info.present?
+          title = Sanitize.clean(@meta_info[:page_title], :remove_contents => ['style','script'])       if @meta_info[:page_title].present?
+    description = Sanitize.clean(@meta_info[:meta_description], :remove_contents => ['style','script']) if @meta_info[:meta_description].present?
+          image = Sanitize.clean(@meta_info[:image_url], :remove_contents => ['style','script'])        if @meta_info[:image_url].present?
   end
+
 %>
 
 <meta name="title" content="<%=h title %>" />
