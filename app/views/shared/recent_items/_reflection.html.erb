@@ -1,6 +1,6 @@
 <%
   link_text = '"'
-  link_text << truncate( Sanitize.clean( reflection.details, :remove_contents => ['script'] ).strip, :length => 100, :separator => ' ' )
+  link_text << truncate( Sanitize.clean( reflection.details, :remove_contents => ['script'] ).strip, :length => embed_activity_length, :separator => ' ' )
   link_text << '"'
 %>
 <div class="recent-item reflection">

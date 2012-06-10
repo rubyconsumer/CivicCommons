@@ -104,6 +104,7 @@ class ConversationsController < ApplicationController
 
     respond_to do |format|
       format.embed do
+        @embed = true # needed to differentiate the truncation limit on the activity content length when displaying as an embed
         html = render_to_string
         json = {
           :html => html,

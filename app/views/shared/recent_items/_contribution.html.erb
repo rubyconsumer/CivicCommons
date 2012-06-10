@@ -14,7 +14,7 @@ if contribution.content.blank?
   end
 else
   link_text << '"'
-  link_text << truncate( Sanitize.clean( contribution.content, :remove_contents => ['script'] ).strip, :length => 100, :separator => ' ' )
+  link_text << truncate( Sanitize.clean( contribution.content, :remove_contents => ['script'] ).strip, :length => embed_activity_length, :separator => ' ' )
   link_text << '"'
 end
 
