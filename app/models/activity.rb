@@ -153,36 +153,29 @@ class Activity < ActiveRecord::Base
   # If any of the items do not exist, they will not be returned. Hence
   # it is possible to get less than the requested amount of activity
   # items.
-  def self.most_recent_activity_items(limit = nil)
-    activities = Activity.order('item_created_at DESC')
-    activities = activities.limit(limit) if limit
-    activities.collect{|a| a.item}.compact
-  end
+  def self.most_recent_activity_items(options = {})
+    options.reverse_merge!(limit: nil, exclude_conversation: false, offset:nil, order:'DESC')
+    options[:order] = 'DESC' if options[:order].nil?
 
-  def self.most_recent_activity_items_for_issue(issue, limit = nil)
-    activities = Activity.where(issue_id: issue.id).order('item_created_at DESC')
-    activities = activities.limit(limit) if limit
-    activities.collect{|a| a.item}.compact
-  end
+    activities = nil
+    activities = Activity.where(conversation_id: options[:conversation]) if options[:conversation].present?
+    activities = Activity.where(      person_id: options[:person])       if options[:person].present?
 
-  def self.most_recent_activity_items_for_conversation(conversation, limit = nil, offset = 0, exclude_conversation = false)
-    activities = Activity.where(conversation_id: conversation.id)
-    activities = activities.where('item_type != "Conversation"') if exclude_conversation
-    activities = activities.order('item_created_at DESC')
-    activities = activities.offset(offset) if offset.present?
-    activities = activities.limit(limit) if limit
-    activities.collect{|a| a.item}.compact
-  end
+    if activities.nil?
+      activities = Activity.where('item_type != "Conversation"')         if options[:exclude_conversation]
+    else
+      activities = activities.where('item_type != "Conversation"')       if options[:exclude_conversation]
+    end
 
-  def self.most_recent_activity_items_for_conversations(conversation_ids=[], limit = nil)
-    activities = Activity.where(conversation_id: conversation_ids).order('item_created_at DESC')
-    activities = activities.limit(limit) if limit
-    activities.collect{|a| a.item}.compact
-  end
+    if activities.nil?
+      activities = Activity.order("item_created_at #{options[:order]}")
+    else
+      activities = activities.order("item_created_at #{options[:order]}")
+    end
 
-  def self.most_recent_activity_items_for_person(person, limit = nil)
-    activities = Activity.where(person_id: person.id).order('item_created_at DESC')
-    activities = activities.limit(limit) if limit
+    activities = activities.offset(options[:offset])                    if options[:offset]
+    activities = activities.limit(options[:limit])                      if options[:limit]
+
     activities.collect{|a| a.item}.compact
   end
 

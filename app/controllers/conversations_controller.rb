@@ -20,7 +20,7 @@ class ConversationsController < ApplicationController
     @recent = Conversation.latest_created.limit(3)
     @recommended = Conversation.recommended.limit(3)
 
-    @recent_items = Activity.most_recent_activity_items(3)
+    @recent_items = Activity.most_recent_activity_items(limit: 3)
     render :index, :layout => 'category_index'
   end
 
@@ -42,7 +42,7 @@ class ConversationsController < ApplicationController
     @filter = params[:filter]
     @conversations = Conversation.filtered(@filter).paginate(:page => params[:page], :per_page => 12)
 
-    @recent_items = Activity.most_recent_activity_items(3)
+    @recent_items = Activity.most_recent_activity_items(limit: 3)
     render :filter, :layout => 'category_index'
   end
 
@@ -66,7 +66,7 @@ class ConversationsController < ApplicationController
 
     @latest_contribution = @conversation.confirmed_contributions.most_recent.first
 
-    @recent_items = Activity.most_recent_activity_items_for_conversation(@conversation, 5)
+    @recent_items = Activity.most_recent_activity_items(conversation:@conversation, limit:5)
 
     # The Participants in a Conversation               | Moved from View to Controller. TODO: Move to model
     @conversation_participants = @conversation.participants.select{ |p| !@tlc_participants.include?(p.id) }
@@ -96,7 +96,7 @@ class ConversationsController < ApplicationController
     @conversation = Conversation.find(params[:id])
 
     # Added 1 to @per_page to see if there is a next page
-    @recent_items = Activity.most_recent_activity_items_for_conversation(@conversation, @per_page + 1, @offset, true)
+    @recent_items = Activity.most_recent_activity_items(conversation:@conversation, limit:@per_page + 1, offset:@offset, exclude_conversation:true)
     @next_page = @recent_items.length > @per_page
 
     # if there is a next page, pop the last item because it was temporarily used to see if there is a next page.

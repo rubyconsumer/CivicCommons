@@ -278,7 +278,6 @@ describe ConversationsController do
       end
     end
 
-
   end
 
   describe "GET responsibilities" do
@@ -291,7 +290,7 @@ describe ConversationsController do
   describe "GET activities" do
     before(:each) do
       Conversation.stub!(:find).and_return(mock_conversation)
-      Activity.stub!(:most_recent_activity_items_for_conversation).and_return([mock_activity])
+      Activity.stub!(:most_recent_activity_items).and_return([mock_activity])
     end
     context "page" do
       it "should set the page as 1 if no :page is passed in the param" do
@@ -309,7 +308,7 @@ describe ConversationsController do
     end
     context "next_page" do
       it "should set to true if there are more contents" do
-        Activity.stub!(:most_recent_activity_items_for_conversation).and_return([mock_activity, mock_activity, mock_activity, mock_activity, mock_activity, mock_activity])
+        Activity.stub!(:most_recent_activity_items).and_return([mock_activity, mock_activity, mock_activity, mock_activity, mock_activity, mock_activity])
         get :activities, :id => 1
         assigns(:next_page).should be_true
       end
@@ -318,9 +317,9 @@ describe ConversationsController do
         assigns(:next_page).should be_false
       end
     end
-    
+
     it "should pop the latest recent_item on the array if there is another page" do
-      Activity.stub!(:most_recent_activity_items_for_conversation).and_return([mock_activity, mock_activity, mock_activity, mock_activity, mock_activity, mock_activity])
+      Activity.stub!(:most_recent_activity_items).and_return([mock_activity, mock_activity, mock_activity, mock_activity, mock_activity, mock_activity])
       get :activities, :id => 1
       assigns(:recent_items).should == [mock_activity, mock_activity, mock_activity, mock_activity, mock_activity]
     end
@@ -329,7 +328,7 @@ describe ConversationsController do
       get :activities, :id => 1
       assigns(:recent_items).should == [mock_activity]
     end
-    
+
     it "should call render_widget" do
       controller.should_receive(:render_widget)
       get :activities, :id => 1, :format => :embed

@@ -10,7 +10,7 @@ class IssuesController < ApplicationController
 
     @search = @current_topic ? @current_topic.issues : Issue
     @issues = @search.standard_issue.published.custom_order.paginate(:page => params[:page], :per_page => 20)
-    @recent_items = Activity.most_recent_activity_items(3)
+    @recent_items = Activity.most_recent_activity_items(limit: 3)
   end
 
   # GET /issues/1
@@ -32,7 +32,7 @@ class IssuesController < ApplicationController
 
       @conversation_comments = @issue.conversation_comments.most_recent
       @contributions = @issue.contributions.includes(:person).most_recent
-      @recent_items = Activity.most_recent_activity_items_for_issue(@issue, 5)
+      #@recent_items = Activity.most_recent_activity_items(issue:issue, limit:5)
     end
   end
 

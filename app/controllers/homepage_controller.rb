@@ -3,7 +3,7 @@ class HomepageController < ApplicationController
     build_featured_items_section
 
     @conversations = Conversation.latest_created.paginate(:page => params[:page], :per_page => 6)
-    @recent_items = Activity.most_recent_activity_items(3)
+    @recent_items = Activity.most_recent_activity_items(limit: 3)
     @recent_blog_posts = ContentItem.recent_blog_posts.limit(3)
 
     respond_to do |format|

@@ -24,7 +24,7 @@ FactoryGirl.define do
     activity.item_type 'SurveyResponse'
     activity.item_created_at Time.now
   end
-  
+
 end
 
 

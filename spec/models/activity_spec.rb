@@ -254,7 +254,7 @@ describe Activity do
       encoded_survey_response.should match(/survey/)
       encoded_survey_response.should match(/survey.+type/)
     end
-    
+
     it "serialize a petition object" do
       encoded_petition = Activity.encode(petition)
       encoded_petition.should be_an_instance_of String
@@ -286,7 +286,7 @@ describe Activity do
       encoded_reflection_comment.should match(/reflection/)
       encoded_reflection_comment.should match(/person/)
     end
-    
+
   end
 
   context "decodes cache data into ActiveRecord object" do
@@ -366,7 +366,7 @@ describe Activity do
       decoded_reflection.owner.should == reflection.owner
       decoded_reflection.conversation_id.should == reflection.conversation_id
     end
-    
+
     it "decodes a reflection comment object" do
       reflection_comment = FactoryGirl.create(:reflection_comment)
       encoded_reflection_comment = Activity.encode(reflection_comment)
@@ -415,22 +415,26 @@ describe Activity do
   end
 
   describe "most recent activity items" do
+    let(:person) do
+      FactoryGirl.create(:normal_person)
+    end
+
+    let(:convo) do
+      FactoryGirl.create(:conversation, :owner => person)
+    end
+
     let(:contrib) do
       FactoryGirl.create(:contribution)
     end
 
-    let(:convo) do
-      FactoryGirl.create(:conversation)
-    end
-
     let(:rating_group) do
-      FactoryGirl.create(:rating_group)
+      FactoryGirl.create(:rating_group, :person_id => person)
     end
 
     before(:each) do
-      FactoryGirl.create(:conversation_activity, item_id: convo.id, :item_created_at => 0.days.ago)
-      FactoryGirl.create(:contribution_activity, item_id: contrib.id, :item_created_at => 1.days.ago)
-      FactoryGirl.create(:rating_group_activity, item_id: rating_group.id, :item_created_at => 2.days.ago)
+      FactoryGirl.create(:conversation_activity, item_id: convo.id,        :item_created_at => 0.days.ago, :conversation_id => convo)
+      FactoryGirl.create(:contribution_activity, item_id: contrib.id,      :item_created_at => 1.days.ago, :person_id => person)
+      FactoryGirl.create(:rating_group_activity, item_id: rating_group.id, :item_created_at => 2.days.ago, :person_id => person)
     end
 
     it "retrieves all the activity items" do
@@ -438,12 +442,40 @@ describe Activity do
     end
 
     it "retrieves a number of the activity items" do
-      Activity.most_recent_activity_items(2).should == [convo, contrib]
+      Activity.most_recent_activity_items(limit: 2).should == [convo, contrib]
+    end
+
+    it "retrieves a number of the activity items in reverse order" do
+      Activity.most_recent_activity_items(limit: 2, order:"ASC").should == [rating_group, contrib]
+    end
+
+    it "retrieves a number of the activity items with an offset" do
+      Activity.most_recent_activity_items(limit: 2, offset:1).should == [contrib, rating_group]
     end
 
     it "retrieves a number of the activity items excluding items that no longer exist" do
       contrib.delete
-      Activity.most_recent_activity_items(2).should == [convo]
+      Activity.most_recent_activity_items(limit: 2).should == [convo]
+    end
+
+    it "retrieves activity for a conversation" do
+      Activity.most_recent_activity_items(conversation: convo).should == [convo]
+    end
+
+    it "retrieves activity for a person" do
+      Activity.most_recent_activity_items(person: person).should == [contrib, rating_group]
+    end
+
+    it "retrieves one activity item for a person" do
+      Activity.most_recent_activity_items(person: person, limit:1).should == [contrib]
+    end
+
+    it "retrieves one activity item for a conversation excluding the conversation" do
+      Activity.most_recent_activity_items(conversation: convo, :exclude_conversation => true).should == []
+    end
+
+    it "retrieves one activity item for a conversation including the conversation" do
+      Activity.most_recent_activity_items(conversation: convo, :exclude_conversation => false).should == [convo]
     end
   end
 end

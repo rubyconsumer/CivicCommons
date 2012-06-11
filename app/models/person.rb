@@ -247,7 +247,7 @@ class Person < ActiveRecord::Base
   end
 
   def most_recent_activity
-    Activity.most_recent_activity_items_for_person(self)
+    Activity.most_recent_activity_items(person:self)
   end
 
   def self.find_all_by_name(name)
