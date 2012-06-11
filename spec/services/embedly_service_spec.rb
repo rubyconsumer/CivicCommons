@@ -212,6 +212,14 @@ describe EmbedlyService do
       embedly = EmbedlyService.new.load('garbage')
       embedly.properties.should be_empty
     end
+    
+    it "should return an empty hash when passed a nil" do
+      data = EmbedlyService.parse_raw(nil)
+      data.should be_empty
+
+      embedly = EmbedlyService.new.load(nil)
+      embedly.properties.should be_empty
+    end
 
   end
 

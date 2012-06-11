@@ -120,7 +120,7 @@ class EmbedlyService
       data = data.embedly_code if data.is_a?(Contribution)
       begin
         data = JSON.parse(data)
-      rescue JSON::ParserError
+      rescue JSON::ParserError, TypeError
         data = {}
       end
     end
