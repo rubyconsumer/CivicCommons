@@ -1,6 +1,8 @@
 ## 2.5
 
 ### External Changes
+  * [Remove Ratings from Activity Stream](https://agilezen.com/project/18091/story/560)
+  * [Remove Ratings from Your Commons Activity Stream](https://agilezen.com/project/18091/story/561)
   * [Commonize Most Recent Activity Items Logic](https://agilezen.com/project/18091/story/567)
   * [YOUR COMMONS - Add 2 lines of text to the current conversation snippet.](https://agilezen.com/project/18091/story/563)
 
@@ -33,7 +35,7 @@
 ### Bug Fixes
   * [Airbrake: ActiveRecord::RecordInvalid: Validation failed: Last name can't be blank](https://agilezen.com/project/18091/story/552)
   * [Adjust Activity stream backend so that all opportunity related items are viewable in conversation permalink.](https://agilezen.com/project/18091/story/562)
-  
+
 ## 2.3
 
 ### External Changes

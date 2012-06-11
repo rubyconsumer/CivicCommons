@@ -154,17 +154,23 @@ class Activity < ActiveRecord::Base
   # it is possible to get less than the requested amount of activity
   # items.
   def self.most_recent_activity_items(options = {})
-    options.reverse_merge!(limit: nil, exclude_conversation: false, offset:nil, order:'DESC')
+    options.reverse_merge!(limit: nil, offset:nil, order:'DESC', exclude_conversation: false, exclude_rating: true)
     options[:order] = 'DESC' if options[:order].nil?
 
     activities = nil
-    activities = Activity.where(conversation_id: options[:conversation]) if options[:conversation].present?
-    activities = Activity.where(      person_id: options[:person])       if options[:person].present?
+    activities = Activity.where(conversation_id: options[:conversation])  if options[:conversation].present?
+    activities = Activity.where(      person_id: options[:person])        if options[:person].present?
 
     if activities.nil?
-      activities = Activity.where('item_type != "Conversation"')         if options[:exclude_conversation]
+      activities = Activity.where('item_type != "Conversation"')          if options[:exclude_conversation]
     else
-      activities = activities.where('item_type != "Conversation"')       if options[:exclude_conversation]
+      activities = activities.where('item_type != "Conversation"')        if options[:exclude_conversation]
+    end
+
+    if activities.nil?
+      activities = Activity.where('item_type != "RatingGroup"')           if options[:exclude_rating]
+    else
+      activities = activities.where('item_type != "RatingGroup"')         if options[:exclude_rating]
     end
 
     if activities.nil?
@@ -173,8 +179,8 @@ class Activity < ActiveRecord::Base
       activities = activities.order("item_created_at #{options[:order]}")
     end
 
-    activities = activities.offset(options[:offset])                    if options[:offset]
-    activities = activities.limit(options[:limit])                      if options[:limit]
+    activities = activities.offset(options[:offset])                      if options[:offset]
+    activities = activities.limit(options[:limit])                        if options[:limit]
 
     activities.collect{|a| a.item}.compact
   end

@@ -438,7 +438,7 @@ describe Activity do
     end
 
     it "retrieves all the activity items" do
-      Activity.most_recent_activity_items.should == [convo, contrib, rating_group]
+      Activity.most_recent_activity_items.should == [convo, contrib]
     end
 
     it "retrieves a number of the activity items" do
@@ -446,11 +446,11 @@ describe Activity do
     end
 
     it "retrieves a number of the activity items in reverse order" do
-      Activity.most_recent_activity_items(limit: 2, order:"ASC").should == [rating_group, contrib]
+      Activity.most_recent_activity_items(limit: 2, order:"ASC").should == [contrib, convo]
     end
 
     it "retrieves a number of the activity items with an offset" do
-      Activity.most_recent_activity_items(limit: 2, offset:1).should == [contrib, rating_group]
+      Activity.most_recent_activity_items(limit: 2, offset:1).should == [contrib]
     end
 
     it "retrieves a number of the activity items excluding items that no longer exist" do
@@ -463,19 +463,26 @@ describe Activity do
     end
 
     it "retrieves activity for a person" do
-      Activity.most_recent_activity_items(person: person).should == [contrib, rating_group]
+      Activity.most_recent_activity_items(person: person).should == [contrib]
     end
 
     it "retrieves one activity item for a person" do
       Activity.most_recent_activity_items(person: person, limit:1).should == [contrib]
     end
 
-    it "retrieves one activity item for a conversation excluding the conversation" do
-      Activity.most_recent_activity_items(conversation: convo, :exclude_conversation => true).should == []
+    context "excluding" do
+      it "retrieves activity for a conversation excluding the conversation" do
+        Activity.most_recent_activity_items(conversation: convo, :exclude_conversation => true).should == []
+      end
+
+      it "retrieves activity excluding the ratings" do
+        Activity.most_recent_activity_items(:exclude_rating => false).should == [convo, contrib, rating_group]
+      end
+
+      it "retrieves one activity item for a conversation including the conversation" do
+        Activity.most_recent_activity_items(conversation: convo, :exclude_conversation => false).should == [convo]
+      end
     end
 
-    it "retrieves one activity item for a conversation including the conversation" do
-      Activity.most_recent_activity_items(conversation: convo, :exclude_conversation => false).should == [convo]
-    end
   end
 end
