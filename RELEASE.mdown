@@ -11,6 +11,9 @@
   * [Default Avatar - not working on Your Commons](https://agilezen.com/project/18091/story/564)
   * [Airbrake error:  TypeError: can't convert Fixnum into String](https://agilezen.com/project/18091/story/565)
 
+### Chores
+  * [Cleanup unused organization code](https://agilezen.com/project/18091/story/566)
+
 ### Post Deployment Instructions
   * Due to the bug fix for #564, rake avatar:update_image_urls must be executed after deployment.
 
