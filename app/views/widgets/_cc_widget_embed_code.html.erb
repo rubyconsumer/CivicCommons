@@ -1,2 +1,2 @@
-<script src="/widgets/cc_widget.js?src=<%= src_path %>&dom=<%= dom_id %>" type="text/javascript"></script>
+<%= javascript_include_tag cc_widget_js_url(format: :js, src: src_path, dom: dom_id) %>
 <div class="cleanslate civic-commons-widget-container" id="<%= dom_id %>"></div>
