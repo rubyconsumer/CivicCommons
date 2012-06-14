@@ -5,10 +5,10 @@
   <%= opportunity_vote_tab_nav('rank_options') %>
   <h4 class="mtl mbl">Drag the selected options into order of importance:</h4>
   <div class="opportunities-ballot">
-    <ol class="opportunities-ol wysiwyg-formatted">
+    <ol class="opportunities-ol">
       <% @vote_response_presenter.selected_survey_options.each_with_index do |option,index| %>
         <% index+=1 %>
-          <li class="opportunities-outline selected-option">
+          <li class="opportunities-outline selected-option wysiwyg-formatted">
             <%= hidden_field_tag "vote_response_presenter[selected_option_#{index}_id]", option.survey_option.id, :class => 'selected_option' %>
             <h4><%= option.survey_option.title %></h4>
             <p><%= sanitize option.survey_option.description %></p>
