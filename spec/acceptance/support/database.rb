@@ -33,6 +33,16 @@ module CivicCommonsDriver
     def self.latest_blog_post
       ContentItem.blog_post.last
     end
+    
+    def self.latest_featured_opportunity
+      content_item_link = FeaturedOpportunity.last
+      content_item_link.instance_eval do
+        def container
+          "[data-featured-opportunity-id='#{self.id}']"
+        end
+      end
+      content_item_link
+    end
 
     def self.latest_content_item_link
       content_item_link = ContentItemLink.last

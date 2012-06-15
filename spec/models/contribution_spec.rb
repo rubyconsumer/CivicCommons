@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe Contribution do
+  
+  context "Associations" do
+    it {should have_and_belong_to_many :featured_opportunities}
+  end
 
   context "factories" do
     it 'should be valid' do
@@ -638,6 +642,15 @@ describe Contribution do
       should have_db_column(:attachment_file_name).of_type(:string)
       should have_db_column(:attachment_content_type).of_type(:string)
       should have_db_column(:attachment_file_size).of_type(:integer)
+    end
+  end
+  
+  describe "one_line_summary" do
+    before(:each) do
+      @contribution = FactoryGirl.create(:contribution)
+    end
+    it "should return the correct one line summary" do
+      @contribution.one_line_summary.should == "John Doe - Basic Contributions"
     end
   end
 

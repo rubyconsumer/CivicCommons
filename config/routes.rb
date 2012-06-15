@@ -233,6 +233,9 @@ Civiccommons::Application.routes.draw do
       put 'confirm',       on: :member
     end
     resources :user_registrations, only: [:new, :create]
+    resources :featured_opportunities do
+      get 'change_conversation_selection', on: :collection
+    end
   end
 
 end

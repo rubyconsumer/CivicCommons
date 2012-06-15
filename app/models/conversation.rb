@@ -21,6 +21,7 @@ class Conversation < ActiveRecord::Base
   accepts_nested_attributes_for :contributions, :allow_destroy => true
 
   has_many :subscriptions, :as => :subscribable, :dependent => :destroy
+  has_many :featured_opportunities, :dependent => :nullify
 
   def top_level_contributions
     Contribution.where(:conversation_id => self.id, :top_level_contribution => true)
@@ -76,6 +77,7 @@ class Conversation < ActiveRecord::Base
 
   scope :latest_updated, :order => 'updated_at DESC'
   scope :latest_created, where(:exclude_from_most_recent => false).order('created_at DESC')
+  scope :alphabet_ascending_by_title, :order => 'title ASC'
 
   def action_participants
     participants = self.actions.collect(&:participants).flatten.uniq

@@ -5,6 +5,7 @@ describe Conversation do
   context "Associations" do
     it { should have_many :contributions  }
     it { should have_attached_file :image }
+    it { should have_many :featured_opportunities}
     context "has_many surveys" do
       it "should be correct" do
         Conversation.reflect_on_association(:surveys).macro.should == :has_many
