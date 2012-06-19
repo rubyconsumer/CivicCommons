@@ -2,11 +2,16 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe HomepageController do
   describe "GET 'show'" do
-    it "should retrieve the top visited conversations" do
+    it "should retrieve the most active, visited and latest conversations" do
       mock_convo = mock_model(Conversation)
-      mock_convo.should_receive(:to_ary).twice
+
       mock_conversations = [mock_convo]
-      Conversation.stub(:random_recommended).and_return(mock_conversations)
+      mock_conversations.should_receive(:limit).with(1).exactly(2).times
+
+      Conversation.stub(:latest_created ).and_return(mock_conversations)
+      Conversation.stub(:most_active    ).and_return(mock_conversations)
+      Conversation.stub(:get_top_visited).and_return(mock_conversations)
+
       get :show
     end
 

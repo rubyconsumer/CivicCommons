@@ -1,8 +1,10 @@
 class HomepageController < ApplicationController
-  def show
-    build_featured_items_section
 
-    @conversations = Conversation.latest_created.paginate(:page => params[:page], :per_page => 6)
+  def show
+    @most_recent_conversation  = Conversation.latest_created.limit(1)
+    @most_active_conversation  = Conversation.most_active(filter:@most_recent_conversation).limit(1)
+    @most_popular_conversation = Conversation.get_top_visited(filter:[@most_recent_conversation, @most_active_conversation], limit:1)
+
     @recent_items = Activity.most_recent_activity_items(limit: 3)
     @recent_blog_posts = ContentItem.recent_blog_posts.limit(3)
 
@@ -11,20 +13,4 @@ class HomepageController < ApplicationController
     end
   end
 
-  # Build Featured Items Section so Featured Items do not repeat.
-  #
-  # We build up a filter object to keep track of which Conversation and/or Issue is being used.
-  #
-  # HomepageFeatured object is made up of different objects types so it's important to build the filter appropriately.
-  def build_featured_items_section
-    filters = []
-    filters << @random_most_recent_conversations = Conversation.latest_created.limit(4).sample(4)
-    filters << @random_recommended_conversation = Conversation.random_recommended(1, filters).first
-    filters << @random_active_conversation = Conversation.random_active(1, 4, filters)
-    filters << @random_issues = Issue.all.sample(2)
-    filters << @staff_selected = HomepageFeatured.sample_and_filtered(3, filters)
-
-    @recent_blog_post = ContentItem.recent_blog_posts.limit(1)
-    @recent_radio_show = ContentItem.recent_radio_shows.limit(1)
-  end
 end

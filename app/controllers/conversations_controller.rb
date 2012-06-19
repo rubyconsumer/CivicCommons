@@ -16,7 +16,7 @@ class ConversationsController < ApplicationController
   # GET /conversations
   def index
     @active = Conversation.most_active.limit(3)
-    @popular = Conversation.get_top_visited(3)
+    @popular = Conversation.get_top_visited(limit:3)
     @recent = Conversation.latest_created.limit(3)
     @recommended = Conversation.recommended.limit(3)
 

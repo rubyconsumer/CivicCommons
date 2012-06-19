@@ -1,3 +1,9 @@
+## 2.6
+
+### External Changes
+  * [Update Home Page Conversation Tiles](https://agilezen.com/project/18091/story/576)
+
+
 ## 2.5
 
 ### External Changes
