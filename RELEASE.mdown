@@ -3,6 +3,8 @@
 ### External Changes
   * [Update Home Page Conversation Tiles](https://agilezen.com/project/18091/story/576)
 
+### Chores
+  * [Add Search Helper Spec](https://agilezen.com/project/18091/story/577)
 
 ## 2.5
 

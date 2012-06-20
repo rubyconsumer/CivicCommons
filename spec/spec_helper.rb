@@ -1,6 +1,8 @@
 require 'rubygems'
 require 'spork'
 
+SPEC_HELPER=true
+
 Spork.prefork do
   #if ENV['__test_coverage__']
     #require 'simplecov'

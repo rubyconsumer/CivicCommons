@@ -48,7 +48,7 @@ module SearchHelper
     if(strong_start_index > strong_end_index)
       # need to append closing strong tag to string since it was detected that an opening strong tag exists
       text += "</strong>"
-    end 
+    end
     return text
   end
 
