@@ -1,10 +1,10 @@
-if !defined? SPEC_HELPER
 #require 'spec_helper'
-require 'fast/helper'
-require './app/helpers/search_helper'
-include SearchHelper
-require 'action_view'
-include ActionView::Helpers
+if !defined? SPEC_HELPER
+  require 'fast/helper'
+  require './app/helpers/search_helper'
+  include SearchHelper
+  require 'action_view'
+  include ActionView::Helpers
 end
 require 'ostruct'
 
