@@ -1,8 +1,9 @@
 ## 2.6
 
 ### External Changes
-  * [Update Home Page Conversation Tiles](https://agilezen.com/project/18091/story/576)
   * [HP - Admin ability to Tag Featured Opportunity](https://agilezen.com/project/18091/story/574)
+  * [Update Home Page Conversation Tiles](https://agilezen.com/project/18091/story/576)
+  * [Display the Most Recent Blog on the Homepage](https://agilezen.com/project/18091/story/578)
 
 ### Chores
   * [Add Search Helper Spec](https://agilezen.com/project/18091/story/577)

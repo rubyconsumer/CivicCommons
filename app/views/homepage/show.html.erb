@@ -108,8 +108,8 @@
 
 <div class="wrapper">
   <div class="content-container">
-    <div class="main-content">
 
+    <div class="main-content">
       <div class="three-col-sm mbs">
         <div class="cols tmp-title">
           <h4><%= link_to "More Recent", conversations_filter_url(:recent) %></h4>
@@ -122,23 +122,16 @@
         </div>
       </div>
       <div class="three-col-sm">
-        <%= render partial: '/conversations/conversation_hp_panel', locals: {conversation: @most_recent_conversation.first} if @most_recent_conversation.first.present? %>
-        <%= render partial: '/conversations/conversation_hp_panel', locals: {conversation: @most_active_conversation.first} if @most_active_conversation.first.present? %>
-        <%= render partial: '/conversations/conversation_hp_panel', locals: {conversation: @most_popular_conversation.first} if @most_popular_conversation.first.present? %>
+        <%= render partial: 'conversation_hp_panel', locals: {conversation: @most_recent_conversation.first} if @most_recent_conversation.first.present? %>
+        <%= render partial: 'conversation_hp_panel', locals: {conversation: @most_active_conversation.first} if @most_active_conversation.first.present? %>
+        <%= render partial: 'conversation_hp_panel', locals: {conversation: @most_popular_conversation.first} if @most_popular_conversation.first.present? %>
       </div>
-      <div class="media">
-        <img class="img mrl" src="http://placehold.it/220x165" />
-        <div class="bd">
-          <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin augue nisi, fermentum vitae, imperdiet a, auctor eu, mi. Nulla imperdiet molestie purus. Duis arcu dui, pretium in, molestie id, convallis eget, orci. Praesent eget purus. Nullam sed nunc. Etiam quis orci ac metus consectetuer consequat. Sed pulvinar aliquam sem. Vestibulum convallis.</p>
-          <p><a href="#">Continue reading</a> or <a href="#">Read past posts</a></p>
-        </div>
-      </div>
-
+      <%= render partial: 'blog_hp_panel', locals: {blog_post: @recent_blog_post} if @recent_blog_post.present? %>
     </div><!-- /.main-content -->
 
     <div class="aside supplementary">
       <%= render_recent_items_sidebar %>
-      <%= render partial: 'blog/recent_blog_posts_sidebar', locals: { blog_posts: @recent_blog_posts } %>
     </div><!-- /.aside -->
+
   </div><!-- /.content-container -->
 </div><!-- /.wrapper -->
