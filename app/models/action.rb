@@ -1,4 +1,4 @@
-class Action < ActiveRecord::Base  
+class Action < ActiveRecord::Base
   belongs_to :conversation
   belongs_to :actionable, :polymorphic => true
   has_and_belongs_to_many :reflections
@@ -11,7 +11,7 @@ class Action < ActiveRecord::Base
   delegate :participants, :to => :actionable
 
   delegate :title, :to => :actionable
-  
+
   def one_line_summary
     [actionable.person.name, actionable.title, actionable.description].delete_if(&:blank?).join(' - ')
   end

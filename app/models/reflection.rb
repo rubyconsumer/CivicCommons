@@ -27,9 +27,9 @@ class Reflection < ActiveRecord::Base
   def related_actionables
     action.actionable
   end
-  
+
   def one_line_summary
     [person.name,title,details].delete_if(&:blank?).join(' - ')
   end
-  
+
 end

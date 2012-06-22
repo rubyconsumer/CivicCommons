@@ -30,7 +30,7 @@
 }
 
 .feature-mast-hero .card {
-  min-height: 258px;
+  min-height: 256px;
   height: auto !important;
   height: 256px;
   width: 256px;
@@ -52,10 +52,15 @@
 }
 
 .slideshow {
-  min-height: 300px;
+  min-height: 354px;
   height: auto !important;
-  height: 300px;
+  height: 354px;
   position: relative;
+}
+
+.slideshow .fl-left {
+  margin-right: 10px;
+  margin-bottom: 0px;
 }
 
 /* Slideshow Navigation Settings */

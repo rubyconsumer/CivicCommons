@@ -1,0 +1,18 @@
+<div class="mod fl-left">
+  <div class="card">
+    <h2>2. Take Action</h2>
+    <h4 class="mbm"><%= action.title %></h4>
+    <div class="recent-item">
+      <p class="bd"><%= truncate(Sanitize.clean(action.description), length:225).html_safe %></p>
+    </div>
+    <% if action.is_a?(Petition) %>
+      <% if !signed_in? || !action.signed_by?(current_person) %>
+        <%= link_to 'Sign the Petition', sign_conversation_petition_path(conversation, action), :class => 'button btn-large', :remote => true %> or
+      <% end %>
+      <%= link_to("Read the Petition", conversation_petition_path(conversation_id: conversation.id, id: action)) %>
+    <% end %>
+    <% if action.is_a?(Vote) %>
+      <%= link_to("View the Vote", conversation_vote_path(conversation_id: conversation.id, id: action), class:"button") %>
+    <% end %>
+  </div>
+</div>

@@ -829,6 +829,11 @@ a.see-more {
   zoom: 1;
 }
 
+.card .media a {
+  float: left;
+  margin-right: 10px;
+}
+
 .media .img {
   float: left;
   margin-right: 10px;

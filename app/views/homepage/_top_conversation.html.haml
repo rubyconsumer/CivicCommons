@@ -1,8 +1,0 @@
-.article
-  %p
-    %a{:href => conversation_path(item), :title => "#{item.title}"}
-      %strong=item.title
-    \&ndash;
-    %span=item.summary
-  %a.secondary.button{:href => conversation_path(item)} Join
-  %a.text.button{:href => conversation_path(item), :title => "#{item.total_rating} people found this productive"} #{item.total_rating} found this productive
