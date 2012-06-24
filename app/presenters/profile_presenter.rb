@@ -1,5 +1,6 @@
 class ProfilePresenter < Delegator
-  Rails.application.routes.url_helpers
+  include Rails.application.routes.url_helpers
+
   PER_PAGE = 10
 
   def initialize(user, params={})

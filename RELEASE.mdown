@@ -8,6 +8,9 @@
 ### Chores
   * [Add Search Helper Spec](https://agilezen.com/project/18091/story/577)
 
+### Bug Fix
+  * [ProfilePresenter issue in Development mode](https://agilezen.com/project/18091/story/583)
+
 ## 2.5
 
 ### External Changes

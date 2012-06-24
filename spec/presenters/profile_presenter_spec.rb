@@ -129,8 +129,8 @@ describe ProfilePresenter do
 
   describe "#feed_path" do
     it "is /user_path/user_slug.xml" do
-      presenter.stub(:user_path) { |u, opts| "/blarp/#{u}.#{opts[:format]}" }
-      presenter.feed_path.should == "/blarp/bob.xml"
+      presenter.stub(:user_path) { |u, opts| "/user/#{u}.#{opts[:format]}" }
+      presenter.feed_path.should == "/user/bob.xml"
     end
   end
 
