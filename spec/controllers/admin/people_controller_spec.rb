@@ -71,4 +71,23 @@ describe Admin::PeopleController, "locking/unlocking" do
       
     end
   end
+  
+  describe "GET: export_members" do
+    before(:each) do
+      @csv_output = 'one,two,three'
+      MemberExportService.stub!(:export_to_csv).and_return(@csv_output)
+    end
+    it "should return sucess" do
+      get :export_members
+      response.should be_success
+    end
+    it "should use the MemberExportService " do
+      MemberExportService.should_receive(:export_to_csv).and_return(@csv_output)
+      get :export_members
+    end
+    it "should give a content_type of text/csv" do
+      get :export_members
+      response.content_type.should == 'text/csv'
+    end
+  end
 end

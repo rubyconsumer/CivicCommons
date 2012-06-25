@@ -1,3 +1,9 @@
+## 2.6
+
+### External Changes
+  * [Admin Feature: Ability to do Member Export](https://agilezen.com/project/18091/story/568)
+
+
 ## 2.5
 
 ### External Changes

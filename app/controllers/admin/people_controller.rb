@@ -1,5 +1,10 @@
 class Admin::PeopleController < Admin::DashboardController
   before_filter :prepare_stats, :only => [:index, :proxies]
+  
+  def export_members
+    csv_string = MemberExportService.export_to_csv
+    render :text => csv_string, :content_type => Mime::CSV
+  end
 
   #GET admin/people/
   def index

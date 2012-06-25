@@ -231,6 +231,7 @@ Civiccommons::Application.routes.draw do
       put 'lock_access',   on: :member
       put 'unlock_access', on: :member
       put 'confirm',       on: :member
+      get 'export_members', on: :collection
     end
     resources :user_registrations, only: [:new, :create]
   end

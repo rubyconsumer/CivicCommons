@@ -13,6 +13,10 @@ describe Admin::PeopleController do
   it "generates and recognizes #edit" do
     { get: 'admin/people/1/edit' }.should route_to(controller: 'admin/people', action: 'edit', id: '1')
   end
+  
+  it "generates and recognizes #export_members" do
+    { get: 'admin/people/export_members' }.should route_to(controller: 'admin/people', action: 'export_members')
+  end
 
   it "genereates and recognizes #show" do
     { get: 'admin/people/1' }.should route_to(controller: 'admin/people', action: 'show', id: '1')
