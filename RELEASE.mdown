@@ -4,6 +4,9 @@
   * [HP - Admin ability to Tag Featured Opportunity](https://agilezen.com/project/18091/story/574)
   * [Update Home Page Conversation Tiles](https://agilezen.com/project/18091/story/576)
   * [Display the Most Recent Blog on the Homepage](https://agilezen.com/project/18091/story/578)
+  * [Display Featured Conversation Set on Homepage](https://agilezen.com/project/18091/story/579)
+  * [Rotate Featured Conversation Set on Homepage](https://agilezen.com/project/18091/story/580)
+  * [Limit Admin Conversation Selection for Featured Opportunities](https://agilezen.com/project/18091/story/585)
 
 ### Chores
   * [Add Search Helper Spec](https://agilezen.com/project/18091/story/577)

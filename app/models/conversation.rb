@@ -79,6 +79,17 @@ class Conversation < ActiveRecord::Base
   scope :latest_created, where(:exclude_from_most_recent => false).order('created_at DESC')
   scope :alphabet_ascending_by_title, :order => 'title ASC'
 
+  # Return conversations that have actions and reflections.
+  def self.conversations_with_actions_and_reflections
+    actions = Action.all
+    action_conversations = actions.collect{|action| action.conversation}
+
+    reflections = Reflection.all
+    reflection_conversations = reflections.collect{|reflection| reflection.conversation}
+
+    action_conversations & reflection_conversations
+  end
+
   def action_participants
     participants = self.actions.collect(&:participants).flatten.uniq
   end

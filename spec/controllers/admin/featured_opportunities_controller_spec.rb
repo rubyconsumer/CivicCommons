@@ -12,15 +12,15 @@ describe Admin::FeaturedOpportunitiesController do
   def mock_conversation(stubs={})
     @mock_conversation ||= mock_model(Conversation, stubs).as_null_object
   end
-  
+
   def mock_contribution(stubs={})
     @mock_contribution ||= mock_model(Contribution, stubs).as_null_object
   end
-  
+
   def mock_action(stubs={})
     @mock_action ||= mock_model(Action, stubs).as_null_object
   end
-  
+
   def mock_reflection(stubs={})
     @mock_reflection ||= mock_model(Reflection, stubs).as_null_object
   end
@@ -36,7 +36,7 @@ describe Admin::FeaturedOpportunitiesController do
       get 'show', :id => '123'
     end
   end
-  
+
   describe "GET 'edit'" do
     before(:each) do
       FeaturedOpportunity.stub(:find).and_return(mock_featured_opportunity)
@@ -51,7 +51,7 @@ describe Admin::FeaturedOpportunitiesController do
       get 'edit', :id => '123'
     end
     it "should get the conversation" do
-      Conversation.should_receive(:alphabet_ascending_by_title).and_return(mock_conversation)
+      Conversation.should_receive(:conversations_with_actions_and_reflections).and_return(mock_conversation)
       get 'edit', :id => '123'
     end
     it "should build the contribution if it doesn't exist" do
@@ -72,9 +72,9 @@ describe Admin::FeaturedOpportunitiesController do
       mock_reflection.should_receive(:build)
       get 'edit', :id => '123'
     end
-    
+
   end
-  
+
   describe "GET 'index'" do
     it "returns http success" do
       FeaturedOpportunity.stub(:all).and_return(mock_featured_opportunity)
@@ -97,7 +97,7 @@ describe Admin::FeaturedOpportunitiesController do
       get 'new'
     end
     it "should get the conversation" do
-      Conversation.should_receive(:alphabet_ascending_by_title).and_return(mock_conversation)
+      Conversation.should_receive(:conversations_with_actions_and_reflections).and_return(mock_conversation)
       get 'new'
     end
     it "should build the contribution" do
@@ -115,9 +115,9 @@ describe Admin::FeaturedOpportunitiesController do
       mock_reflection.should_receive(:build)
       get 'new'
     end
-    
-  end  
-  
+
+  end
+
   describe "POST 'create'" do
     before(:each) do
       FeaturedOpportunity.stub(:new).and_return(mock_featured_opportunity)
@@ -149,7 +149,7 @@ describe Admin::FeaturedOpportunitiesController do
       response.should render_template :action => :edit
     end
   end
-  
+
   describe "DELETE 'destroy'" do
     before(:each) do
       FeaturedOpportunity.stub(:find).and_return(mock_featured_opportunity)
@@ -160,12 +160,12 @@ describe Admin::FeaturedOpportunitiesController do
       response.should redirect_to admin_featured_opportunities_path
     end
   end
-  
+
   describe "change_conversation_selection" do
     before(:each) do
       Conversation.stub!(:find).and_return(mock_conversation)
     end
-    
+
     it "should find the conversation" do
       Conversation.should_receive(:find).and_return(mock_conversation)
       get :change_conversation_selection, :conversation_id => 123, :format => :js
@@ -183,6 +183,6 @@ describe Admin::FeaturedOpportunitiesController do
       get :change_conversation_selection, :conversation_id => 123, :format => :js
     end
   end
-  
+
 
 end
