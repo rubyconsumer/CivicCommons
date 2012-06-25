@@ -6,7 +6,7 @@ class MemberExportService
     csv_string = CSV.generate do |csv|
       
       # header row
-      csv << ['ID','Type', 'Name', 'Email', 'Zip Code', 'Registered', 'Confirmed', 'Admin', 'Proxy', 'Locked']
+      csv << ['ID','Type', 'Name', 'Email', 'Website', 'Zip Code', 'Registered', 'Confirmed', 'Admin', 'Proxy', 'Locked']
       
       # body row
       people.each do |person|
@@ -15,6 +15,7 @@ class MemberExportService
           person.class.name, 
           person.name, 
           person.email, 
+          person.website, 
           person.zip_code, 
           person.created_at.to_s(:yyyymmdd), 
           (person.confirmed_at.to_s(:yyyymmdd) if person.confirmed_at?),

@@ -6,11 +6,11 @@ describe MemberExportService do
   before(:each) do
     @time1 = DateTime.parse('1 june, 2012, 1pm')
     @time2 = DateTime.parse('2 june, 2012, 1pm')
-    @person = FactoryGirl.create(:registered_user, :email => 'johnd@test.com', :created_at => @time1, :confirmed_at => @time2, :id => 123)
+    @person = FactoryGirl.create(:registered_user, :email => 'johnd@test.com', :website => 'http://example.com', :created_at => @time1, :confirmed_at => @time2, :id => 123)
   end
   describe "export_to_csv" do
     it "should export to csv" do
-      MemberExportService.export_to_csv.should == "ID,Type,Name,Email,Zip Code,Registered,Confirmed,Admin,Proxy,Locked\n123,Person,John Doe,johnd@test.com,44313,2012.06.01,2012.06.02,no,no,no\n"
+      MemberExportService.export_to_csv.should == "ID,Type,Name,Email,Website,Zip Code,Registered,Confirmed,Admin,Proxy,Locked\n123,Person,John Doe,johnd@test.com,http://example.com,44313,2012.06.01,2012.06.02,no,no,no\n"
     end
     it "should contain ID column" do
       MemberExportService.export_to_csv.should =~ /ID/
@@ -27,6 +27,10 @@ describe MemberExportService do
     it "should contain Email column" do
       MemberExportService.export_to_csv.should =~ /Email/
       MemberExportService.export_to_csv.should =~ /johnd@test.com/
+    end
+    it "should contain Website column" do
+      MemberExportService.export_to_csv.should =~ /Website/
+      MemberExportService.export_to_csv.should =~ /http:\/\/example\.com/
     end
     it "should contain Zip Code column" do
       MemberExportService.export_to_csv.should =~ /Zip Code/
