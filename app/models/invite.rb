@@ -29,7 +29,7 @@ class Invite #makes invitation behaves like an activerecord model
   
   # email_formatting validation
   def email_formatting
-    unless splitted_emails.all?{|email| email =~ EmailAddressValidation::EMAIL_ADDRESS_EXACT_PATTERN }
+    unless splitted_emails.all?{|email| email =~ EmailAddressValidation::PatternExact }
       errors.add(:emails, "must be in the correct format, example: abc@test.com") 
     end
   end
@@ -44,7 +44,7 @@ class Invite #makes invitation behaves like an activerecord model
   
   # returns an array of emails using Regex
   def parsed_emails
-    splitted_emails.find_all{|email| email =~ EmailAddressValidation::EMAIL_ADDRESS_EXACT_PATTERN}
+    splitted_emails.find_all{|email| email =~ EmailAddressValidation::PatternExact}
   end
   
   def send_invites

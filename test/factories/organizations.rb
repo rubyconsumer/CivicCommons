@@ -7,9 +7,7 @@ FactoryGirl.define do |f|
     o.website "http://theciviccommons.com"
     o.twitter_username 'theciviccommons'
     o.association :organization_detail
-    o.after_create do |oo|
-      oo.authorized_to_setup_an_account = true
-    end
+    o.after(:create) { |oo| oo.authorized_to_setup_an_account = true }
   end
   factory :newly_confirmed_organization, :parent => :organization do |o|
     o.confirmed_at { Time.now }

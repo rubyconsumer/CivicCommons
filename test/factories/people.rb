@@ -59,7 +59,7 @@ FactoryGirl.define do |f|
     u.email 'johnd@example.com'
   end
   factory :registered_user_with_facebook_authentication, :parent => :registered_user_with_facebook_email do |u|
-    after_create { | u |
+    after(:create) { | u |
       u.link_with_facebook(FactoryGirl.create :facebook_authentication, person: u )
     }
   end
