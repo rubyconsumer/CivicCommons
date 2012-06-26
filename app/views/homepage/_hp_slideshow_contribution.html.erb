@@ -2,7 +2,7 @@
   <div class="card">
     <h2>1. Join a conversation</h2>
     <div class="arrow_box">
-      <p><%= truncate(contribution.content, length:225).html_safe %></p>
+      <p><%= truncate(Sanitize.clean(contribution.content), length:225).html_safe %></p>
     </div>
     <div class="media mtl">
       <%= conversation_profile(contribution.owner).html_safe %>
