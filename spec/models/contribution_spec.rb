@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Contribution do
-  
+
   context "Associations" do
     it {should have_and_belong_to_many :featured_opportunities}
   end
@@ -644,7 +644,7 @@ describe Contribution do
       should have_db_column(:attachment_file_size).of_type(:integer)
     end
   end
-  
+
   describe "one_line_summary" do
     before(:each) do
       @contribution = FactoryGirl.create(:contribution)

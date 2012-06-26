@@ -84,7 +84,7 @@ class Contribution < ActiveRecord::Base
   def has_media?
     not self.embedly_code.blank?
   end
-  
+
   def one_line_summary
     [person.name,title,content].delete_if(&:blank?).join(' - ')
   end
