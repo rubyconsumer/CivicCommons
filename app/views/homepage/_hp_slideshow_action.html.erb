@@ -6,10 +6,10 @@
       <p class="bd"><%= truncate(Sanitize.clean(action.description), length:225).html_safe %></p>
     </div>
     <% if action.is_a?(Petition) %>
-      <%= link_to("View the Petition", conversation_petition_path(conversation_id: conversation.id, id: action), class:"button") %>
+      <%= link_to("View the Petition", conversation_petition_path(conversation_id: conversation.id, id: action, :anchor => 'opportunity-nav'), class:"button") %>
     <% end %>
     <% if action.is_a?(Vote) %>
-      <%= link_to("View the Vote", conversation_vote_path(conversation_id: conversation.id, id: action), class:"button") %>
+      <%= link_to("View the Vote", conversation_vote_path(conversation_id: conversation.id, id: action, :anchor => 'opportunity-nav'), class:"button") %>
     <% end %>
   </div>
 </div>
