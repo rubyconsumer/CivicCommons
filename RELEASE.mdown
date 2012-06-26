@@ -9,6 +9,7 @@
   * [Rotate Featured Conversation Set on Homepage](https://agilezen.com/project/18091/story/580)
   * [Limit Admin Conversation Selection for Featured Opportunities](https://agilezen.com/project/18091/story/585)
   * [Add Object Id to Admin Conversation Selection for Featured Opportunities](https://agilezen.com/project/18091/story/586)
+  * [Featured Contribution Links to Contribution Node](https://agilezen.com/project/18091/story/592)
   * [Featured Opportunity Title Links to Conversation](https://agilezen.com/project/18091/story/595)
 
 ### Chores
