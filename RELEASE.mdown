@@ -12,6 +12,7 @@
   * [Featured Contribution Links to Contribution Node](https://agilezen.com/project/18091/story/592)
   * [Clean Markup from Featured Contribution Content](https://agilezen.com/project/18091/story/594)
   * [Featured Opportunity Title Links to Conversation](https://agilezen.com/project/18091/story/595)
+  * [View, not Sign,  Petitions in Featured Opportunity](https://agilezen.com/project/18091/story/596)
 
 ### Chores
   * [Add Search Helper Spec](https://agilezen.com/project/18091/story/577)
