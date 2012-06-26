@@ -3,15 +3,7 @@
     <div class="group">
       <h1>What do you care about?</h1>
       <div id="search" class="main-search-bar t-search-bar">
-        <form class="dropdown">
-          <input type="text" class="js-grid-search textbox" data-toggle="dropdown" placeholder="Search" />
-          <input class="submit" id="Search" type="submit" value="Search" />
-          <ul class="dropdown-menu">
-            <li><a href="#">Education</a></li>
-            <li><a href="#">Environment</a></li>
-            <li><a href="#">Arts</a></li>
-          </ul>
-        </form>
+        <%= render :partial => '/search/search' %>
       </div>
     </div><!-- /.group -->
   </div><!-- /.t-col-span -->

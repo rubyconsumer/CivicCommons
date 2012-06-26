@@ -15,7 +15,7 @@
 
 ### Bug Fix
   * [ProfilePresenter issue in Development mode](https://agilezen.com/project/18091/story/583)
-
+  * [Search form not working on the new homepage](https://agilezen.com/project/18091/story/591)
 
 ## 2.5
 
