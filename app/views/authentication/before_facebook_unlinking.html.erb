@@ -28,7 +28,7 @@
     </fieldset>
 
     <fieldset class="footer">
-      <%= f.submit 'Submit', :class => 'submit' %>
+      <%= f.submit 'Submit', :class => 'submit', :id => 'submit-unlink-from-facebook' %>
       <%= link_to 'cancel', secure_edit_user_url(current_person), :onclick => '$.colorbox.close(); return false;', :class => 'cancel' %>
     </fieldset>
   <% end %>

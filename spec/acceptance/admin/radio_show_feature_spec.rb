@@ -28,6 +28,7 @@ feature "RadioShow Admin", %q{
     follow_add_host_or_guest_link_for database.latest_radio_show
     follow_add_host_link
     follow_all_link
+    fill_in_host_with 'John Doe'
     click_add_host_button
     page.should have_content 'John Doe'
     follow_remove_host_link
@@ -41,6 +42,7 @@ feature "RadioShow Admin", %q{
     follow_add_host_or_guest_link_for database.latest_radio_show
     follow_add_guest_link
     follow_all_link
+    fill_in_guest_with 'John Doe'
     click_add_guest_button
     page.should have_content 'John Doe'
     follow_remove_guest_link

@@ -54,7 +54,7 @@ class Admin::SurveysController < Admin::DashboardController
     @survey.type = params["survey"]["type"]
     @survey = @survey.becomes(Survey) # needed for STI so that the form can use the parent, not the child
     @survey.attributes = params[:survey]
-    
+    @survey.person_id = current_person.id
     respond_to do |format|
       if @survey.save
         format.html { redirect_to(admin_survey_url(@survey), :notice => 'Survey was successfully created.') }
@@ -71,8 +71,10 @@ class Admin::SurveysController < Admin::DashboardController
   def update
     @survey = Survey.find(params[:id])
     @survey = @survey.becomes(Survey) # needed for STI so that the form can use the parent, not the child
+    @survey.type = params["survey"]["type"] if params['survey'] && params['survey']['type']
+    @survey.attributes = params[:survey]
     respond_to do |format|
-      if @survey.update_attributes(params[:survey])
+      if @survey.save
         format.html { redirect_to(admin_survey_url(@survey), :notice => 'Survey was successfully updated.') }
         format.xml  { head :ok }
       else

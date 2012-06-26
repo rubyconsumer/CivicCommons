@@ -17,7 +17,7 @@ describe TosController do
       login_user
       get :new, {:contribution_id => 2}
 
-      assigns(:contribution).should == 2
+      assigns(:contribution).should == "2"
     end
 
     context "XHR" do

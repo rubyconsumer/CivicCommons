@@ -177,23 +177,23 @@ describe ConversationsController do
 
     describe "on radioshows" do
       it "should find content_item" do
-        ContentItem.should_receive(:find).with(1).and_return(mock_content_item)
+        ContentItem.should_receive(:find).with("1").and_return(mock_content_item)
         get :new, :accept => true, :radioshow_id => 1
       end
 
       it "should not find content_item if radioshow_id is not passed" do
-        ContentItem.should_not_receive(:find).with(1).and_return(mock_content_item)
+        ContentItem.should_not_receive(:find).with("1").and_return(mock_content_item)
         get :new, :accept => true
       end
     end
     describe "on blogpost" do
       it "should find content_item" do
-        ContentItem.should_receive(:find).with(1).and_return(mock_content_item)
+        ContentItem.should_receive(:find).with("1").and_return(mock_content_item)
         get :new, :accept => true, :blog_id => 1
       end
 
       it "should not find content_item if radioshow_id is not passed" do
-        ContentItem.should_not_receive(:find).with(1).and_return(mock_content_item)
+        ContentItem.should_not_receive(:find).with("1").and_return(mock_content_item)
         get :new, :accept => true
       end
     end
@@ -241,23 +241,23 @@ describe ConversationsController do
 
       describe "on radioshows" do
         it "should find content_item" do
-          ContentItem.should_receive(:find).with(1).and_return(mock_content_item)
+          ContentItem.should_receive(:find).with("1").and_return(mock_content_item)
           post :create, :conversation => {}, :radioshow_id => 1
         end
 
         it "should not find content_item if radioshow_id is not passed" do
-          ContentItem.should_not_receive(:find).with(1).and_return(mock_content_item)
+          ContentItem.should_not_receive(:find).with("1").and_return(mock_content_item)
           post :create, :conversation => {}
         end
       end
       describe "on blogpost" do
         it "should find content_item" do
-          ContentItem.should_receive(:find).with(1).and_return(mock_content_item)
+          ContentItem.should_receive(:find).with("1").and_return(mock_content_item)
           post :create, :conversation => {}, :blog_id => 1
         end
 
         it "should not find content_item if radioshow_id is not passed" do
-          ContentItem.should_not_receive(:find).with(1).and_return(mock_content_item)
+          ContentItem.should_not_receive(:find).with("1").and_return(mock_content_item)
           post :create, :conversation => {}
         end
       end
@@ -289,7 +289,7 @@ describe ConversationsController do
 
   describe "GET embed" do
     before(:each) do
-      Conversation.stub!(:find).with(123).and_return(nil)
+      Conversation.stub!(:find).with("123").and_return(nil)
     end
     it "should render be_success" do
       get :embed, :id => 123
@@ -301,7 +301,7 @@ describe ConversationsController do
       response.should render_template 'layouts/application'
     end
     it "should search for the conversation" do
-      Conversation.should_receive(:find).with(123).and_return(nil)
+      Conversation.should_receive(:find).with("123").and_return(nil)
       get :embed, :id => 123
     end
   end

@@ -1,5 +1,6 @@
 module SecureUrlHelper
-
+  include Rails.application.routes.url_helpers
+  
   def self.protocol
     if self.https?
       'https'

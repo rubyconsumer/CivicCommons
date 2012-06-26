@@ -3,6 +3,7 @@ class SurveyResponse < ActiveRecord::Base
   has_many :selected_survey_options, :dependent => :destroy
   belongs_to :person
   belongs_to :survey
+  before_validation :reject_blank_selected_option_ids
   validates_presence_of :person_id
   validates_uniqueness_of :person_id, :scope => :survey_id, :allow_blank => true, :allow_nil => true, :message => 'already exists'
   validate :selected_should_be_under_max_selected_options
@@ -51,6 +52,10 @@ class SurveyResponse < ActiveRecord::Base
     if selected_option_ids.length < 1
       self.errors[:selected_option_ids] << "You must select at least one option"
     end
+  end
+protected
+  def reject_blank_selected_option_ids
+    selected_survey_options.delete_if{|selected_survey_option| selected_survey_option.new_record? && selected_survey_option.survey_option_id.blank? }
   end
   
 end

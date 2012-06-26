@@ -15,7 +15,6 @@ class Activity < ActiveRecord::Base
 
   # Accept an Active Record object of valid type
   def initialize(attributes = nil)
-
     if Activity.valid_type?(attributes)
       attributes = attributes.becomes(Contribution) if attributes.is_a?(Contribution)
       attr = {
@@ -39,8 +38,9 @@ class Activity < ActiveRecord::Base
       end
 
       attributes = attr
+    elsif attributes.is_a?(ActiveRecord::Base) # if it's not a valid Activity type, and it's an activerecord object, then nullify it, because it breaks in rails >= 3.1
+      attributes = nil
     end
-
     super(attributes)
   end
 

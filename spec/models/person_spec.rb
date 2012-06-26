@@ -70,33 +70,33 @@ describe Person do
       it "should be validated when a new person is registering" do
         given_a_person_with_no_zip_code
         @person.valid?
-        @person.errors.should have_key(:zip_code)
+        @person.errors.to_hash.should have_key(:zip_code)
       end
 
       it "should be validated when the person already exists" do
         given_a_registered_person_without_a_zip_code
         @person.valid?
-        @person.errors.should have_key(:zip_code)
+        @person.errors.to_hash.should have_key(:zip_code)
       end
 
       it "should be validated when the person already exists and has a short (invalid) zip code" do
         given_a_registered_person_with_a_short_zip_code
         @person.valid?
-        @person.errors.should have_key(:zip_code)
+        @person.errors.to_hash.should have_key(:zip_code)
       end
 
       it "should be validated when facebook unlinking" do
         given_a_person_with_no_zip_code
         @person.stub(:facebook_unlinking?).and_return(true)
         @person.valid?
-        @person.errors.should have_key(:zip_code)
+        @person.errors.to_hash.should have_key(:zip_code)
       end
 
       it "should be validated when creating from auth" do
         given_a_person_with_no_zip_code
         @person.stub(:create_from_auth?).and_return(true)
         @person.valid?
-        @person.errors.should have_key(:zip_code)
+        @person.errors.to_hash.should have_key(:zip_code)
       end
 
       describe "with base zip code" do
@@ -800,16 +800,22 @@ describe Person do
   end
 
   context "subscribed" do
-    it "conversations returns a users conversation subscriptions sorted decending" do
-      subject.subscriptions_conversations.should_receive(:order).with('created_at desc')
+    
+    let(:arel_double){double}
+    
+    it "conversations returns a users conversation subscriptions sorted decending" do      
+      subject.should_receive(:subscriptions_conversations).and_return(arel_double)
+      arel_double.should_receive(:order).with('created_at desc').and_return([])
       subject.subscribed_conversations
     end
     it "issues returns a users issue subscriptions sorted decending" do
-      subject.subscriptions_issues.should_receive(:order).with('created_at desc')
+      subject.should_receive(:subscriptions_issues).and_return(arel_double)
+      arel_double.should_receive(:order).with('created_at desc')
       subject.subscribed_issues
     end
     it "organizations returns a users organization subscriptions sorted decending" do
-      subject.subscriptions_organizations.should_receive(:order).with('created_at desc')
+      subject.should_receive(:subscriptions_organizations).and_return(arel_double)
+      arel_double.should_receive(:order).with('created_at desc')
       subject.subscribed_organizations
     end
   end

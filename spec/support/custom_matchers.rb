@@ -11,7 +11,7 @@ module CustomMatchers
   end
   
   def content_for(name) 
-    view.instance_variable_get(:@_content_for)[name] 
+    view.content_for(name.to_sym)
   end
   
   RSpec::Matchers.define :have_validation_error do |field=nil, pattern=//|

@@ -245,7 +245,10 @@ describe Issue do
     it "should have all issue participants when include is used" do
       given_an_issue_with_contributions_and_participants
       # i = Issue.find(@issue.id, :include => :participants)
-      Issue.includes(:participants).find(@issue.id).participants.should == [@person1,@person2,@person2]
+      @participants = Issue.includes(:participants).find(@issue.id).participants
+      [@person1,@person2,@person2].each do |person|
+        @participants.include?(person).should be_true
+      end
     end
 
     it "should have the correct number of participants" do

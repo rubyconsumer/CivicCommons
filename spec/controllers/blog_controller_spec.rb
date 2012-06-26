@@ -25,7 +25,7 @@ describe BlogController do
       get :index
     end
     it "should fetch current topic" do
-      Topic.should_receive(:find_by_id).with(123)
+      Topic.should_receive(:find_by_id).with("123")
       get :index, :topic => 123
     end
     context "blog posts" do
@@ -46,11 +46,11 @@ describe BlogController do
     end
     context "current author" do
       it "should get current_author if params[:author_id] exists" do
-        Person.should_receive(:find).with(123)
+        Person.should_receive(:find).with("123")
         get :index, :author_id => 123
       end
       it "should NOT get current_author if params[:author_id] doesn't exists" do
-        Person.should_not_receive(:find).with(123)
+        Person.should_not_receive(:find).with("123")
         get :index
       end
     end 

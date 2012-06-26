@@ -23,9 +23,9 @@ module Admin
     describe "ConversationsController#create" do
 
       it "sets community_generated to false" do
-        params = FactoryGirl.attributes_for(:conversation)
-        params[:owner] = FactoryGirl.create(:admin_person)
-        params[:issues] = [ FactoryGirl.create(:issue) ]
+        params = FactoryGirl.create(:conversation).attributes
+        issue = FactoryGirl.create(:issue)
+        params['issue_ids'] = [issue.id]
         post :create, conversation: params
         assigns(:conversation).from_community.should be_false
       end

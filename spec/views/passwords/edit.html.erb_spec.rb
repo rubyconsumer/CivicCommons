@@ -9,10 +9,6 @@ describe '/passwords/edit.html.erb' do
     )
   end
   
-  def content_for(name) 
-    view.instance_variable_get(:@_content_for)[name] 
-  end
-  
   before(:each) do
     @person = stub_person
     view.stub(:resource).and_return(@person)
@@ -26,7 +22,7 @@ describe '/passwords/edit.html.erb' do
       form.should have_selector("input#person_reset_password_token")
       form.should have_selector("input#person_password")
       form.should have_selector("input#person_password_confirmation")
-      form.should have_selector("input#person_submit")
+      form.should have_selector("input.submit")
     end    
   end
 end

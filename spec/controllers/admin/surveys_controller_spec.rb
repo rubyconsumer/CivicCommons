@@ -4,8 +4,13 @@ describe Admin::SurveysController do
   
   before(:each) do
     @controller.stub(:verify_admin).and_return(true)
+    @controller.stub(:current_person).and_return(mock_person)
   end
 
+  def mock_person(stubs={})
+    @mock_person ||= mock_model(Person, stubs).as_null_object
+  end
+  
   def mock_survey(stubs={})
     @mock_survey ||= mock_model(Survey, stubs).as_null_object
   end
@@ -38,7 +43,7 @@ describe Admin::SurveysController do
     end
     it "should defult to Vote, as a Survey STI" do
       @survey = mock_survey
-      Survey.stub(:new).and_return(@survey)
+      Survey.stub(:new){ mock_survey(:save => true) }
       @survey.should_receive('type=').and_return('Vote')
       get :new
     end
@@ -55,7 +60,7 @@ describe Admin::SurveysController do
   describe "POST create" do
     describe "with valid params" do
       it "assigns a newly created survey as @survey" do
-        Survey.stub(:new).with({'these' => 'params'}) { mock_survey(:save => true) }
+        Survey.stub(:new).and_return(mock_survey(:save => true) )
         post :create, :survey => {'these' => 'params'}
         assigns(:survey).should be(mock_survey)
       end
@@ -92,19 +97,19 @@ describe Admin::SurveysController do
   describe "PUT update" do
     describe "with valid params" do
       it "updates the requested survey" do
-        Survey.stub(:find).with("37") { mock_survey }
-        mock_survey.should_receive(:update_attributes).with({'these' => 'params'})
+        Survey.stub(:find).and_return(mock_survey)
+        mock_survey.should_receive(:save)
         put :update, :id => "37", :survey => {'these' => 'params'}
       end
 
       it "assigns the requested survey as @survey" do
-        Survey.stub(:find) { mock_survey(:update_attributes => true) }
+        Survey.stub(:find) { mock_survey(:save => true) }
         put :update, :id => "1"
-        assigns(:survey).should be(mock_survey)
+        assigns(:survey).should  be(mock_survey)
       end
 
       it "redirects to the survey" do
-        Survey.stub(:find) { mock_survey(:update_attributes => true) }
+        Survey.stub(:find) { mock_survey(:save => true) }
         put :update, :id => "1"
         response.should redirect_to(admin_survey_url(mock_survey))
       end
@@ -112,13 +117,13 @@ describe Admin::SurveysController do
 
     describe "with invalid params" do
       it "assigns the survey as @survey" do
-        Survey.stub(:find) { mock_survey(:update_attributes => false) }
+        Survey.stub(:find) { mock_survey(:save => false) }
         put :update, :id => "1"
         assigns(:survey).should be(mock_survey)
       end
 
       it "re-renders the 'edit' template" do
-        Survey.stub(:find) { mock_survey(:update_attributes => false) }
+        Survey.stub(:find) { mock_survey(:save => false) }
         put :update, :id => "1"
         response.should render_template("edit")
       end

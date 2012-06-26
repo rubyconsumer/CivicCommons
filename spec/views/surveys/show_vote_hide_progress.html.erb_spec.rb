@@ -1,10 +1,5 @@
 require 'spec_helper'
-describe '/surveys/show_vote_hide_progress.html.erb' do
-    
-  def content_for(name) 
-    view.instance_variable_get(:@_content_for)[name] 
-  end
-  
+describe '/surveys/show_vote_hide_progress.html.erb' do  
   
   def given_a_vote_response_presenter_that_is_persisted
     @surveyable = stub_model(Issue)

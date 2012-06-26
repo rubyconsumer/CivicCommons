@@ -18,7 +18,7 @@ describe ReflectionsController do
   before(:each) do
     @controller.stub!(:require_user).and_return(true)
     @controller.stub!(:current_person).and_return(stub_person)
-    Conversation.stub(:find).with(7) { mock_conversation }
+    Conversation.stub(:find).with("7") { mock_conversation }
   end
 
   describe "GET index" do
@@ -41,13 +41,13 @@ describe ReflectionsController do
     it "should initiate a new comment" do
       comment_double = double('Comment')
       Reflection.stub(:find).with("37", {:include=>:person}) { mock_reflection(:comments => comment_double) }
-      comment_double.should_receive(:new)
+      ReflectionComment.should_receive(:new)
       get :show, :id => "37", :conversation_id => 7
     end
     it "should fetch comments" do
       comment_double = double('Comment')
       Reflection.stub(:find).with("37", {:include=>:person}) { mock_reflection(:comments => comment_double) }
-      comment_double.stub(:new)
+      ReflectionComment.stub(:new)
       get :show, :id => "37", :conversation_id => 7
       assigns(:comments).should be(comment_double)
     end

@@ -92,7 +92,7 @@ describe Admin::ContentItemsPeopleController do
       @content_item.stub!(:add_person).and_return(true)
     end
     it "should find the person" do
-      Person.should_receive(:find).with(2).and_return(stub_person)
+      Person.should_receive(:find).with("2").and_return(stub_person)
       post :create, :content_item_id => 1, :person_id => 2
     end
     it "should assign the person variable" do
@@ -117,7 +117,7 @@ describe Admin::ContentItemsPeopleController do
       @content_item.stub!(:delete_person).and_return(true)
     end
     it "should find the person" do
-      Person.should_receive(:find).with(2).and_return(stub_person)
+      Person.should_receive(:find).with("2").and_return(stub_person)
       delete :destroy, :content_item_id => 1, :id => 2
     end
     it "should assign the person variable" do

@@ -15,7 +15,7 @@ class ForgotPasswordPage
   end
   
   def click_submit
-    page.click_button 'person_submit'
+    page.click_button 'Send me reset password instructions'
   end
   
 end

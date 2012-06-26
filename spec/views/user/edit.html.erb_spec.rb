@@ -14,10 +14,6 @@ describe '/user/edit.html.erb' do
     stub_model(Organization, stubs).as_null_object
   end
 
-  def content_for(name)
-    view.instance_variable_get(:@_content_for)[name]
-  end
-
   def given_a_person_with_facebook_authentication
     @person = stub_person(:facebook_authenticated? => true)
     view.stub(:current_person).and_return(@person)

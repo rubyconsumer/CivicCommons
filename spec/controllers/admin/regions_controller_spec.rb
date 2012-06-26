@@ -19,7 +19,7 @@ describe Admin::RegionsController do
     before(:each) do
       @region = Region.new
       @region.name = "jake"
-      Region.stub(:find).with(1).and_return(@region)
+      Region.stub(:find).with("1").and_return(@region)
       get :edit, :id=>1
     end
 

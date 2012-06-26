@@ -31,7 +31,7 @@ describe UserController do
   context "GET 'show'" do
     it "puts the user in a ProfilePresenter" do
       get :show, :id => user.slug
-      assigns(:user).should be_a ProfilePresenter
+      assigns(:user).class.should ==  ProfilePresenter
       assigns(:user).__getobj__.should == user
     end
 

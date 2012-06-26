@@ -1,7 +1,6 @@
 require 'gchart'
 
 class VoteProgressService
-  include ActionView::Helpers::AssetTagHelper
   include ActionView::Helpers::TagHelper
   include ActionView::Helpers::TextHelper
   
@@ -47,7 +46,7 @@ class VoteProgressService
                     'chts' => '000000,18,l'   # Align Title to the left
                     } 
       end
-    image_tag chart.to_url, :class => 'google-chart'
+    chart.to_url
   end
     
   def total_weighted_votes

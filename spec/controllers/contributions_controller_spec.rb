@@ -10,8 +10,8 @@ describe ContributionsController do
     end
 
     it 'finds the contribution by id' do
+      Contribution.should_receive(:find).with("1")
       delete :destroy, id: 1
-      Contribution.should have_received(:find).with(1)
     end
 
     context "when able to delete" do

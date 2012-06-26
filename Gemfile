@@ -2,14 +2,14 @@ source 'http://rubygems.org'
 
 gem 'newrelic_rpm'
 
-gem 'mysql2', '< 0.3'
+gem 'mysql2', '~> 0.3'
 gem 'devise', '1.5.2'
 gem 'omniauth', '1.0.1'
 gem 'omniauth-facebook'
 
 gem 'fb_graph'
 
-gem 'rails', "~> 3.0.3"
+gem 'rails', "3.1.0"
 gem 'jquery-rails', '>= 1.0.3'
 
 gem 'haml', '~> 3.1.4'
@@ -65,6 +65,8 @@ gem 'fog'
 gem 'carrierwave'
 gem 'mini_magick'
 
+gem 'rails_autolink' # auto_link was removed on rails 3.1, this is for migration purposes. A suggestion is to use Rinku
+
 group :development do
   gem "rails3-generators"
   gem "hpricot"
@@ -86,8 +88,8 @@ group :test do
   gem "jasmine-headless-webkit", '~>0.8.4'
   gem 'linguistics', '~>1.0.9'
   gem 'no_peeping_toms', "~>2.1.2"
-  gem "rack-test", '~> 0.5.6'
-  gem "rspec-rails", "~> 2.9.0"
+  gem "rack-test", '~> 0.6.0'
+  gem "rspec-rails", "~> 2.10.0"
   gem 'rspec-spies', '~>2.1.0'
   gem 'simplecov', '~>0.6.2'
   gem 'spork', '~>0.9.0'

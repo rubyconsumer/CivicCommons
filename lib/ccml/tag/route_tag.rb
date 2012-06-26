@@ -38,7 +38,7 @@ class CCML::Tag::RouteTag < CCML::Tag::SingleTag
     include Rails.application.routes.url_helpers
     
     def initialize(host)
-      default_url_options[:host] = (host.nil? ? host : '')
+      default_url_options[:host] = host unless host.nil?
     end
 
     def url(route, id)

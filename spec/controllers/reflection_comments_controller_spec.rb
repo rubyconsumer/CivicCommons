@@ -22,7 +22,7 @@ describe ReflectionCommentsController do
   before(:each) do
     @controller.stub!(:require_user).and_return(true)
     @controller.stub!(:current_person).and_return(stub_person)
-    Conversation.stub(:find).with(7) { mock_conversation }
+    Conversation.stub(:find).with("7") { mock_conversation }
     mock_conversation.stub_chain(:reflections,:find).and_return(mock_reflection)
     mock_reflection.stub_chain(:comments,:find).and_return(mock_reflection_comment)
   end

@@ -61,7 +61,7 @@ describe CuratedFeedItem do
     end
 
     it "prevents save on error" do
-      stub_request(:get, /http:\/\/pro\.embed\.ly/).to_return(:body => fixture_content('curated_feed_error.json'), :status => 200)
+      stub_request(:get, /http:\/\/.*\.embed\.ly/).to_return(:body => fixture_content('curated_feed_error.json'), :status => 200)
       @item.save.should == false
       @item.errors.should_not be_empty
     end

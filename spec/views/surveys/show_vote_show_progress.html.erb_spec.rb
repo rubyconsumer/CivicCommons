@@ -5,10 +5,6 @@ describe '/surveys/show_vote_show_progress.html.erb' do
     stub_template('subscriptions/_subscription.html.erb' => 'rendering subscription')
   end
 
-  def content_for(name)
-    view.instance_variable_get(:@_content_for)[name]
-  end
-
   def given_a_vote_response_presenter_that_is_persisted
     @surveyable = stub_model(Issue)
     @survey = stub_model(Vote, :surveyable => @surveyable)

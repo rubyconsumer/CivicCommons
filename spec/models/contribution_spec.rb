@@ -13,7 +13,9 @@ describe Contribution do
       FactoryGirl.build(:comment).should be_valid
       FactoryGirl.create(:comment).should be_valid
       FactoryGirl.build(:embedly_contribution).should be_valid
-      FactoryGirl.create(:embedly_contribution).should be_valid
+      @cont = FactoryGirl.build(:embedly_contribution)
+      @cont.save 
+      # puts ''#FactoryGirl.create(:embedly_contribution).should be_valid
     end
   end
 

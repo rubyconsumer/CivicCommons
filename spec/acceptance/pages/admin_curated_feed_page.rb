@@ -25,11 +25,11 @@ class AdminCuratedFeedPage < PageObject
   end
 
   def submit
-    @page.click_on('curated_feed_submit')
+    @page.click_on('Create Curated feed')
   end
 
   def submit_item
-    @page.click_on('curated_feed_item_submit')
+    @page.click_on('Add new feed item')
   end
 
 end

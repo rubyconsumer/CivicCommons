@@ -14,7 +14,7 @@ describe InvitesController do
   context "new" do
     it "sets the source type, source id and user for the new form page" do
       @invite.should_receive(:source_type=).with('conversations')
-      @invite.should_receive(:source_id=).with(@conversation.id)
+      @invite.should_receive(:source_id=).with(@conversation.id.to_s)
       @invite.should_receive(:user=).with(@admin)
 
       get :new, source_type: 'conversations', source_id: @conversation.id

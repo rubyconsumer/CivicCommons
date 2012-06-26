@@ -39,7 +39,10 @@ describe Survey do
       end
 
       it "should be polymorphic " do
-        Survey.reflect_on_association(:surveyable).options.should == {:polymorphic=>true, :foreign_type=>"surveyable_type"}
+        Survey.reflect_on_association(:surveyable).options.should == {:polymorphic=>true}
+      end
+      it "should have a foreign_type of surveyable_type" do
+        Survey.reflect_on_association(:surveyable).foreign_type.should == "surveyable_type"
       end
     end
 

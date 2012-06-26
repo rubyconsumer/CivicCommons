@@ -1,9 +1,5 @@
 require 'spec_helper'
 describe '/surveys/show_vote.html.erb' do
-    
-  def content_for(name) 
-    view.instance_variable_get(:@_content_for)[name] 
-  end
   
   def given_a_vote_response_presenter
     @surveyable = stub_model(Issue)

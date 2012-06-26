@@ -84,7 +84,7 @@ describe ProfilePresenter do
   end
 
   it "#has_issue_subscriptions?" do
-    presenter.should have_issue_subscriptions
+    presenter.has_issue_subscriptions?.should_not be_nil
   end
 
   describe "#issue_subscriptions" do
@@ -94,7 +94,7 @@ describe ProfilePresenter do
   end
 
   it "#has_conversation_subscriptions?" do
-    presenter.should have_conversation_subscriptions
+    presenter.has_conversation_subscriptions?.should_not be_nil
   end
 
   describe "#organization_subscriptions" do
@@ -110,7 +110,7 @@ describe ProfilePresenter do
   end
 
   it "#has_recent_activities?" do
-    presenter.should have_recent_activities
+    presenter.has_recent_activities?.should_not be_nil
   end
 
   describe "#recent_activity" do

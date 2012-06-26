@@ -67,10 +67,10 @@ module Admin
       let(:params) do
         topic = FactoryGirl.create(:topic)
         attributes = FactoryGirl.attributes_for(:content_item)
-        #attributes = FactoryGirl.create(:content_item).attributes
+        attributes = FactoryGirl.create(:content_item).attributes
         attributes.delete(:topics)
         attributes[:topic_ids]=[topic.id]
-        attributes
+        attributes.with_indifferent_access
       end
 
       describe "with valid params" do
@@ -81,18 +81,18 @@ module Admin
 
 
         before(:each) do
-          params[:author] = author
           params.delete(:published)
-
-          post :create, :content_item => params
         end
 
         it "assigns a newly created content_item as @content_item" do
+          post :create, :content_item => params
           assigns[:content_item].title.should eq params[:title]
           assigns[:content_item].summary.should eq params[:summary]
         end
 
         it "redirects to the created content_item" do
+          params[:title] = 'Title here'
+          post :create, :content_item => params
           response.should redirect_to admin_content_item_path(assigns[:content_item].slug)
         end
 
@@ -105,7 +105,6 @@ module Admin
         end
 
         before(:each) do
-          params[:author] = author
           params.delete(:title)
           post :create, :content_item => params
         end
@@ -127,7 +126,6 @@ module Admin
         end
 
         before(:each) do
-          params[:author] = author
           params.delete(:published)
         end
 

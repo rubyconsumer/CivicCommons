@@ -1,4 +1,5 @@
 class ContentItem < ActiveRecord::Base
+  include Rails.application.routes.url_helpers
   extend FriendlyId
 
   attr_accessor :url_slug

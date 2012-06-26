@@ -1,6 +1,23 @@
 require 'spec_helper'
 
 describe SurveyResponse do
+  context "before filters" do
+    describe "before_validation reject_blank_selected_option_ids" do
+      before(:each) do
+        @survey_response = FactoryGirl.build(:survey_response)
+        @survey_response.selected_survey_options.build
+      end
+      it "should be rejected if selected_survey_options has a blank survey_option_id and new record" do
+         @survey_response.save
+         @survey_response.selected_survey_options.count.should == 0
+      end
+      it "should be rejected if selected_survey_options has a blank survey_option_id and new record" do
+         @survey_response.selected_survey_options.build(:survey_option_id => 123, :survey_response_id => 1234)
+         @survey_response.save
+         @survey_response.selected_survey_options.count.should == 1
+      end
+    end
+  end
   context "Associations" do
     it "should has many selected_survey_options" do
       SurveyResponse.reflect_on_association(:selected_survey_options).macro.should == :has_many
@@ -28,7 +45,7 @@ describe SurveyResponse do
     end
     it "should validate uniqueness of person_id and survey_id" do
       @survey_response1 = FactoryGirl.create(:survey_response)
-      @survey_response2 = @survey_response1.clone
+      @survey_response2 = SurveyResponse.new(@survey_response1.attributes)
       @survey_response2.valid?
       @survey_response2.errors[:person_id].should == ["already exists"]
     end

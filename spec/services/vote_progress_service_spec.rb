@@ -43,11 +43,31 @@ describe VoteProgressService do
       given_valid_vote_responses
       VoteProgressService.new(@survey).calculate_progress.count.should == 6
     end
-    it "should return the correct attributes" do
+    it "should return the description attribute" do
       given_valid_vote_responses
-      VoteProgressService.new(@survey).calculate_progress.first.attributes.keys.should == 
-      ['description', 'survey_id', 'survey_option_id', 'title', 'total_votes', 'weighted_votes']
+      VoteProgressService.new(@survey).calculate_progress.first.attributes['description'].should_not be_nil
     end
+    it "should return the survey_id attribute" do
+      given_valid_vote_responses
+      VoteProgressService.new(@survey).calculate_progress.first.attributes['survey_id'].should_not be_nil
+    end
+    it "should return the survey_option_id attribute" do
+      given_valid_vote_responses
+      VoteProgressService.new(@survey).calculate_progress.first.attributes['survey_option_id'].should_not be_nil
+    end
+    it "should return the title attribute" do
+      given_valid_vote_responses
+      VoteProgressService.new(@survey).calculate_progress.first.attributes['title'].should_not be_nil
+    end
+    it "should return the total_votes attribute" do
+      given_valid_vote_responses
+      VoteProgressService.new(@survey).calculate_progress.first.attributes['total_votes'].should_not be_nil
+    end
+    it "should return the weighted_votes attribute" do
+      given_valid_vote_responses
+      VoteProgressService.new(@survey).calculate_progress.first.attributes['weighted_votes'].should_not be_nil
+    end
+    
     it "should return the correct total votes" do
       given_valid_vote_responses
       VoteProgressService.new(@survey).calculate_progress.first.total_votes.to_i.should == 2
@@ -136,7 +156,7 @@ describe VoteProgressService do
   describe "render_chart" do
     it "should correctly display the google chart url" do
       given_valid_vote_responses
-      VoteProgressService.new(@survey).render_chart.should be_include "http://chart.apis.google.com/chart"
+      VoteProgressService.new(@survey).render_chart.should =~ /http:\/\/chart.apis.google.com\/chart/i
     end
   end
   

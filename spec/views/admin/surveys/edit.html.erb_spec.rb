@@ -1,17 +1,23 @@
 require 'spec_helper'
 
 describe "admin/surveys/edit.html.erb" do
-  before(:each) do
-    @survey_option = stub_model(SurveyOption)
-    @survey = assign(:survey, stub_model(Survey,
+  def mock_survey_option
+    @mock_survey_option ||= mock_model(SurveyOption).as_null_object
+  end
+  def mock_survey
+    @mock_survey ||= mock_model(Survey,
+      :id => 123,
       :surveyable_id => 1,
       :surveyable_type => "MyString",
       :title => "MyString",
       :type => 'classType',
       :show_progress => true,
       :description => "MyText",
-      :options => [@survey_option]
-    ))
+      :options => [mock_survey_option]
+    ).as_null_object
+  end
+  before(:each) do
+    @survey = assign(:survey, mock_survey)
   end
 
   it "renders the edit survey form" do

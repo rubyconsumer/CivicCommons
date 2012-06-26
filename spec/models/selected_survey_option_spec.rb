@@ -16,12 +16,26 @@ describe SelectedSurveyOption do
       before(:each) do
         @selected_survey_option = SelectedSurveyOption.create
       end
-      it "should validate presence of survey_response_id" do
-        @selected_survey_option.errors[:survey_response_id].should == ["can't be blank"]
+      describe "survey_response_id" do
+        it "should validate presence of survey_response_id" do
+          @selected_survey_option.errors[:survey_response_id].should == ["can't be blank"]
+        end
+        it "should not validate presence_of survey_response_id if it is bypassed" do
+          @selected_survey_option = SelectedSurveyOption.create(:bypass_presence_validation => true)
+          @selected_survey_option.errors[:survey_response_id].should be_blank
+        end
       end
-      it "should validate presence of survey_option_id" do
-        @selected_survey_option.errors[:survey_option_id].should == ["can't be blank"]
+      describe "survey_option_id" do
+        it "should validate presence of survey_option_id" do
+          @selected_survey_option.errors[:survey_option_id].should == ["can't be blank"]
+        end
+        it "should not validate presence_of survey_response_id if it is bypassed" do
+          @selected_survey_option = SelectedSurveyOption.create(:bypass_presence_validation => true)
+          @selected_survey_option.errors[:survey_option_id].should be_blank
+        end
+        
       end
+      
     end
     context "validates_uniqueness_of" do
       it "should throw validation error if a selected survey option is created on the same position, survey option, and survey response" do

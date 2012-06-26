@@ -52,9 +52,6 @@ Spork.prefork do
   # in ./support/ and its subdirectories.
   Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
 
-  include Rails.application.routes.url_helpers
-  default_url_options[:host] = 'test.host'
-
   RSpec.configure do |config|
     config.mock_with :rspec
     config.include CustomMatchers
@@ -63,6 +60,7 @@ Spork.prefork do
     config.include Paperclip::Shoulda::Matchers
     config.include Devise::TestHelpers, :type => :controller
     config.include Devise::TestHelpers, :type => :view
+    config.include Rails.application.routes.url_helpers
 
     config.include(EmailSpec::Helpers)
     config.include(EmailSpec::Matchers)
@@ -78,6 +76,7 @@ Spork.prefork do
     end
 
     config.before :each do
+      default_url_options[:host] = 'test.host'
       DatabaseCleaner.start
       stub_contribution_urls
       stub_amazon_s3_request
@@ -109,4 +108,3 @@ if Spork.using_spork?
     #end
   end
 end
-

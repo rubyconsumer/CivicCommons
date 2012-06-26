@@ -44,7 +44,7 @@ describe Admin::ContentItemLinksController do
     it "should find the link" do
       link_double = double
       @content_item.should_receive(:links).and_return(link_double)
-      link_double.should_receive(:find).with(123)
+      link_double.should_receive(:find).with("123")
       get :edit, :content_item_id => 1, :id => 123
     end
   end

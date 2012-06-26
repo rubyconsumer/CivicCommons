@@ -13,10 +13,6 @@ describe '/passwords/new.html.erb' do
     "$.colorbox({href:'#{path}'"
   end
   
-  def content_for(name) 
-    view.instance_variable_get(:@_content_for)[name] 
-  end
-  
   before(:each) do
     @person = stub_person
     view.stub(:resource).and_return(@person)
@@ -28,7 +24,7 @@ describe '/passwords/new.html.erb' do
     render
     content_for(:main_body).should have_selector("form", :action => person_password_path, :method => "post") do |form|
       form.should have_selector("input#person_email")
-      form.should have_selector("input#person_submit")
+      form.should have_selector("input.submit")
     end    
   end
   it "should not display colorbox" do

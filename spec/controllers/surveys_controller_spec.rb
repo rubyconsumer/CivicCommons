@@ -78,7 +78,8 @@ describe SurveysController do
   
   describe "find_survey" do
     it "should return the survey" do
-      Survey.should_receive(:find).twice.and_return(mock_survey)
+      Survey.should_receive(:find).and_return(mock_survey)
+      VoteResponsePresenter.stub(:new).and_return(stub(VoteResponsePresenter, :allowed? => true))
       get :show, :id => 123
     end
   end

@@ -26,7 +26,7 @@ feature "Unlink Account From Facebook", %q{
     login_as :registered_user_with_facebook_authentication
     goto :edit_profile_page, :for => logged_in_user
     begin_unlinking_from_facebook
-    click_submit_invalid_form_button
+    click_submit_unlink_from_facebook_button
     current_page.should have_password_required_error
   end
   def unlink_from_facebook options
@@ -34,7 +34,7 @@ feature "Unlink Account From Facebook", %q{
     fill_in_email_with options[:email]
     fill_in_password_with "password123"
     fill_in_confirm_password_with "password123"
-    click_submit_button
+    click_submit_unlink_from_facebook_button
   end
   def begin_unlinking_from_facebook
     follow_unlink_from_facebook_link

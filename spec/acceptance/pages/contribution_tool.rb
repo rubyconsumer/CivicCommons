@@ -57,7 +57,7 @@ class ContributionTool < PageObject
   end
 
   def submit_button
-    @page.find('input#contribution_submit.submit')
+    @page.find('input.submit.contribution-tool')
   end
 
   def cancel_link

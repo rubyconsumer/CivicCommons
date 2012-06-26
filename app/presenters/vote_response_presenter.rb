@@ -11,7 +11,7 @@ class VoteResponsePresenter
     survey_id = options.delete(:survey_id)
     @survey_response = SurveyResponse.find_or_initialize_by_person_id_and_survey_id(person_id, survey_id)
     
-    define_methods_for_selected_options
+    define_methods_for_selected_options    
     
     options.each_pair do |key, val|
       self.send("#{key}=".to_sym,val)
@@ -53,7 +53,9 @@ class VoteResponsePresenter
         if not instance_variable_defined?("@selected_survey_option_#{index}")
           instance_variable_set "@selected_survey_option_#{index}", selected_survey_options.find_or_initialize_by_position(index) 
         end
-        instance_variable_get "@selected_survey_option_#{index}"
+        selected_survey_option = instance_variable_get "@selected_survey_option_#{index}"
+        selected_survey_option.bypass_presence_validation = true
+        return selected_survey_option
       end
       
       # def selected_option_1_id
@@ -83,8 +85,6 @@ class VoteResponsePresenter
       define_singleton_method "selected_option_#{index}=" do |obj|
         self.send("selected_survey_option_#{index}").survey_option = obj
       end
-      
-      
     end
   end
   

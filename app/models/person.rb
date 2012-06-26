@@ -369,13 +369,17 @@ class Person < ActiveRecord::Base
   end
 
   def link_with_facebook(authentication)
-    ActiveRecord::Base.transaction do
-      self.facebook_authentication = authentication
-      self.encrypted_password = ''
-      self.create_from_auth = true
-      save!
-      AvatarService.update_avatar_url_for(self)
-      facebook_authentication.persisted?
+    begin 
+      ActiveRecord::Base.transaction do
+        self.facebook_authentication = authentication
+        self.encrypted_password = ''
+        self.create_from_auth = true
+        save!
+        AvatarService.update_avatar_url_for(self)
+        facebook_authentication.persisted?
+      end
+    rescue ActiveRecord::RecordNotSaved
+      return false
     end
   end
 

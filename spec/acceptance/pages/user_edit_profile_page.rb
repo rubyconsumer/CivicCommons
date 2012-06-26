@@ -16,8 +16,10 @@ module CivicCommonsDriver
       has_field(:password, "person_password")
       has_field(:confirm_password, "person_password_confirmation")
       has_field(:zip_code, "Zip code")
-      has_button(:submit, "person_submit")
-      has_button(:submit_invalid_form, "person_submit")
+      has_button(:submit, "Update Settings")
+      has_button(:submit_invalid_form, "Update Settings")
+      
+      has_button(:submit_unlink_from_facebook, 'submit-unlink-from-facebook')
 
       def initialize(options)
         @url = "/user/#{options[:for].friendly_id}/edit"

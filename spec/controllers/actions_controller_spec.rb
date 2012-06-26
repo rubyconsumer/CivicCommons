@@ -19,7 +19,7 @@ describe ActionsController do
   
   describe "index" do
     it "should find the conversation" do
-      Conversation.should_receive(:find).with(123).and_return(stub_conversation)
+      Conversation.should_receive(:find).with("123").and_return(stub_conversation)
       get :index, :conversation_id => 123
     end
     it "should get the conversation actions" do
