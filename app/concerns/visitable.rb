@@ -1,8 +1,16 @@
 module Visitable
 
   module ClassMethods
-    def get_top_visited(limit = 10)
-      self.where("#{self.table_name}.last_visit_date >= '#{(Time.now - 30.days)}'").order("#{self.table_name}.recent_visits DESC").limit(limit)
+    def get_top_visited(options = {})
+      options.reverse_merge!(filter:0, limit:10)
+      filter = options[:filter]
+      filter = [filter] unless options[:filter].respond_to?(:flatten) || filter.nil?
+      filter.flatten!
+
+      self.where("#{self.table_name}.last_visit_date >= '#{(Time.now - 30.days)}'").
+           where("#{self.table_name}.id not in (?)", filter).
+           order("#{self.table_name}.recent_visits DESC").
+           limit(options[:limit])
     end
   end
 

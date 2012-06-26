@@ -21,6 +21,7 @@ class Conversation < ActiveRecord::Base
   accepts_nested_attributes_for :contributions, :allow_destroy => true
 
   has_many :subscriptions, :as => :subscribable, :dependent => :destroy
+  has_many :featured_opportunities, :dependent => :nullify
 
   def top_level_contributions
     Contribution.where(:conversation_id => self.id, :top_level_contribution => true)
@@ -76,6 +77,18 @@ class Conversation < ActiveRecord::Base
 
   scope :latest_updated, :order => 'updated_at DESC'
   scope :latest_created, where(:exclude_from_most_recent => false).order('created_at DESC')
+  scope :alphabet_ascending_by_title, :order => 'title ASC'
+
+  # Return conversations that have actions and reflections.
+  def self.conversations_with_actions_and_reflections
+    actions = Action.all
+    action_conversations = actions.collect{|action| action.conversation}
+
+    reflections = Reflection.all
+    reflection_conversations = reflections.collect{|reflection| reflection.conversation}
+
+    action_conversations & reflection_conversations
+  end
 
   def action_participants
     participants = self.actions.collect(&:participants).flatten.uniq
@@ -98,13 +111,19 @@ class Conversation < ActiveRecord::Base
     available_filters.keys.collect(&:to_s)
   end
 
-  def self.most_active
+  def self.most_active(options = {})
+    options.reverse_merge!(filter:0, daysago:60)
+    filter = options[:filter]
+    filter = [filter] unless options[:filter].respond_to?(:flatten) || filter.nil?
+    filter.flatten!
+
     Conversation.select('conversations.*, COUNT(*) AS count_all, MAX(contributions.created_at) AS max_contributions_created_at').
-      joins(:contributions).
-      where("contributions.top_level_contribution = 0").
-      where("contributions.created_at > ?", Time.now - 60.days).
-      group('conversations.id').
-      order('count_all DESC, max_contributions_created_at DESC')
+                     joins(:contributions).
+                     where("conversations.id not in (?)", filter).
+                     where("contributions.top_level_contribution = 0").
+                     where("contributions.created_at > ?", Time.now - options[:daysago].days).
+                     group('conversations.id').
+                     order('count_all DESC, max_contributions_created_at DESC')
   end
 
   # From the top active conversations, select a random sample.

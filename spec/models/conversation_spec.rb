@@ -5,6 +5,7 @@ describe Conversation do
   context "Associations" do
     it { should have_many :contributions  }
     it { should have_attached_file :image }
+    it { should have_many :featured_opportunities}
     context "has_many surveys" do
       it "should be correct" do
         Conversation.reflect_on_association(:surveys).macro.should == :has_many
@@ -178,6 +179,45 @@ describe Conversation do
           :created_at => (Time.now - 61.days), :updated_at => (Time.now - 30.seconds))
         Conversation.filtered('active').all.should be_empty
         Conversation.most_active.all.should be_empty
+      end
+
+      context "daysago option" do
+        it 'will return conversations with any contributions that are within 30 days' do
+          conversation = FactoryGirl.create(:conversation, :contributions => [])
+          top_level_contribution = FactoryGirl.create(:top_level_contribution, :conversation => conversation)
+          FactoryGirl.create(:contribution, :parent => top_level_contribution, :conversation => conversation,
+                             :created_at => (Time.now - 29.days), :updated_at => (Time.now - 30.seconds))
+
+          conversation_old = FactoryGirl.create(:conversation, :contributions => [])
+          top_level_contribution_old = FactoryGirl.create(:top_level_contribution, :conversation => conversation_old)
+          FactoryGirl.create(:contribution, :parent => top_level_contribution_old, :conversation => conversation_old,
+                             :created_at => (Time.now - 59.days), :updated_at => (Time.now - 30.seconds))
+
+          Conversation.filtered('active').all.first.should == conversation
+          Conversation.most_active(daysago:30).all.first.should == conversation
+        end
+
+        it 'will not return conversations with contributions that are all older than 30 days' do
+          conversation = FactoryGirl.create(:conversation, :contributions => [])
+          top_level_contribution = FactoryGirl.create(:top_level_contribution, :conversation => conversation)
+          FactoryGirl.create(:contribution, :parent => top_level_contribution, :conversation => conversation,
+                             :created_at => (Time.now - 31.days), :updated_at => (Time.now - 30.seconds))
+
+          Conversation.filtered('active').all.should == [conversation]
+          Conversation.most_active(daysago:30).all.should be_empty
+        end
+      end
+
+      context "filtered conversation" do
+        it 'will remove conversations from the results' do
+          conversation = FactoryGirl.create(:conversation, :contributions => [])
+          top_level_contribution = FactoryGirl.create(:top_level_contribution, :conversation => conversation)
+          FactoryGirl.create(:contribution, :parent => top_level_contribution, :conversation => conversation,
+                             :created_at => (Time.now - 59.days), :updated_at => (Time.now - 30.seconds))
+
+          Conversation.filtered('active').all.first.should == conversation
+          Conversation.most_active(filter:conversation).all.should be_empty
+        end
       end
 
       it 'will return the conversation ordered by newest contribution descending if number of contributions is the same' do

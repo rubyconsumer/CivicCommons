@@ -234,6 +234,9 @@ Civiccommons::Application.routes.draw do
       get 'export_members', on: :collection
     end
     resources :user_registrations, only: [:new, :create]
+    resources :featured_opportunities do
+      get 'change_conversation_selection', on: :collection
+    end
   end
 
 end

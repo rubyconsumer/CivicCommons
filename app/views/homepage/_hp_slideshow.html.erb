@@ -1,0 +1,22 @@
+<script type="text/javascript" src="/javascripts/lib/jquery-plugins/jquery.cycle.all.js"></script>
+<script type="text/javascript">
+  $(function() {
+      $('.slideshow').cycle({
+          fx:      'scrollHorz',
+          speed:   1000,
+          timeout: 15000,
+          pager:   '.slideshow-nav',
+      });
+  });
+</script>
+
+<div class="content-container slideshow">
+
+  <% featured_opportunities.each_with_index do |featured_opportunity, index| %>
+    <%= render partial: 'hp_slideshow_container', locals: {featured_opportunity:featured_opportunity, index:index} %>
+  <% end %>
+
+</div><!-- /.slideshow -->
+
+<div class="slideshow-nav"></div>
+

@@ -23,6 +23,7 @@ class Contribution < ActiveRecord::Base
   belongs_to :conversation
   belongs_to :issue
   has_many   :rating_groups, :dependent => :destroy
+  has_and_belongs_to_many :featured_opportunities, :join_table => :featured_opportunities_contributions, :uniq => true
 
   delegate :title, :to => :item, :prefix => true
   delegate :name, :to => :person, :prefix => true
@@ -82,6 +83,10 @@ class Contribution < ActiveRecord::Base
 
   def has_media?
     not self.embedly_code.blank?
+  end
+
+  def one_line_summary
+    [person.name,title,content].delete_if(&:blank?).join(' - ')
   end
 
   #############################################################################

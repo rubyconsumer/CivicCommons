@@ -3,6 +3,7 @@ class Reflection < ActiveRecord::Base
   belongs_to :conversation
   has_many :comments, :class_name => 'ReflectionComment', :dependent => :destroy
   has_and_belongs_to_many :actions
+  has_and_belongs_to_many :featured_opportunities, :join_table => :featured_opportunities_reflections, :uniq => true
 
   validates_presence_of :title
   validates_presence_of :details
@@ -26,4 +27,9 @@ class Reflection < ActiveRecord::Base
   def related_actionables
     action.actionable
   end
+
+  def one_line_summary
+    [person.name,title,details].delete_if(&:blank?).join(' - ')
+  end
+
 end

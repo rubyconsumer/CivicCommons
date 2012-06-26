@@ -18,5 +18,5 @@ describe "Reflections" do
       get conversation_reflections_path :conversation_id => 7
       response.status.should be(200)
     end
-  end
+  end  
 end

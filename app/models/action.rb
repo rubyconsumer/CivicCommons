@@ -2,6 +2,7 @@ class Action < ActiveRecord::Base
   belongs_to :conversation
   belongs_to :actionable, :polymorphic => true
   has_and_belongs_to_many :reflections
+  has_and_belongs_to_many :featured_opportunities, :join_table => :featured_opportunities_actions, :uniq => true
   validates_presence_of :conversation_id,
                         :actionable_id,
                         :actionable_type
@@ -10,4 +11,8 @@ class Action < ActiveRecord::Base
   delegate :participants, :to => :actionable
 
   delegate :title, :to => :actionable
+
+  def one_line_summary
+    [actionable.person.name, actionable.title, actionable.description].delete_if(&:blank?).join(' - ')
+  end
 end

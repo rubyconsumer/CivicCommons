@@ -1,0 +1,28 @@
+<h1>Featured Opportunity</h1>
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Conversation:</b><br/>
+  <%= link_to @featured_opportunity.conversation.title, conversation_url(@featured_opportunity.conversation) %>
+</p>
+<p>
+  <b>Contribution:</b><br/>
+  <% @featured_opportunity.contributions.each do |contribution| %>
+    <%= link_to strip_and_truncate(contribution.one_line_summary, 500), url_to_contribution(contribution) %><br/>
+  <% end %>
+</p>
+<p>
+  <b>Option:</b><br/>
+  <% @featured_opportunity.actions.each do |action| %>
+    <%= link_to strip_and_truncate(action.one_line_summary,500), [@featured_opportunity.conversation, action.actionable] %><br/>
+  <% end %>
+</p>
+<p>
+  <b>Reflection:</b><br/>
+  <% @featured_opportunity.reflections.each do |reflection| %>
+    <%= link_to strip_and_truncate(reflection.one_line_summary,500), conversation_reflection_url(@featured_opportunity.conversation, reflection) %><br/>
+  <% end %>
+</p>
+
+<%= link_to 'Edit', edit_admin_featured_opportunity_path(@topic) %> |
+<%= link_to 'Back', admin_featured_opportunities_path %>

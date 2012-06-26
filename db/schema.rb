@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120510142319) do
+ActiveRecord::Schema.define(:version => 20120615033628) do
 
   create_table "actions", :force => true do |t|
     t.integer  "conversation_id"
@@ -314,6 +314,33 @@ ActiveRecord::Schema.define(:version => 20120510142319) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "featured_opportunities", :force => true do |t|
+    t.integer "conversation_id"
+  end
+
+  add_index "featured_opportunities", ["conversation_id"], :name => "on_conversation_id"
+
+  create_table "featured_opportunities_actions", :id => false, :force => true do |t|
+    t.integer "featured_opportunity_id"
+    t.integer "action_id"
+  end
+
+  add_index "featured_opportunities_actions", ["featured_opportunity_id", "action_id"], :name => "on_featured_opportunity_id_and_action_id"
+
+  create_table "featured_opportunities_contributions", :id => false, :force => true do |t|
+    t.integer "featured_opportunity_id"
+    t.integer "contribution_id"
+  end
+
+  add_index "featured_opportunities_contributions", ["featured_opportunity_id", "contribution_id"], :name => "on_featured_opportunity_id_and_contribution_id"
+
+  create_table "featured_opportunities_reflections", :id => false, :force => true do |t|
+    t.integer "featured_opportunity_id"
+    t.integer "reflection_id"
+  end
+
+  add_index "featured_opportunities_reflections", ["featured_opportunity_id", "reflection_id"], :name => "on_featured_opportunity_id_and_reflection_id"
 
   create_table "friendly_id_slugs", :force => true do |t|
     t.string   "slug",                         :null => false
@@ -632,8 +659,8 @@ ActiveRecord::Schema.define(:version => 20120510142319) do
     t.datetime "updated_at"
     t.integer  "conversation_id"
     t.integer  "issue_id"
-    t.text     "activity_cache",  :limit => 2147483647
     t.integer  "person_id"
+    t.text     "activity_cache",  :limit => 2147483647
   end
 
   add_index "top_items", ["conversation_id"], :name => "conversations_index"

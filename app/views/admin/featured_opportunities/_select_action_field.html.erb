@@ -1,0 +1,2 @@
+<%= select_tag :featured_opportunity_action_ids, featured_opportunity_options_for_select(@featured_opportunity.try(:conversation).try(:actions) || @actions, action.try(:id)), { :name=>'featured_opportunity[action_ids][]'} %>
+<br/>

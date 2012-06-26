@@ -1,22 +1,28 @@
+<div class="feature-mast feature-mast-hero">
+  <div class="wrapper wrapper-hero">
+    <%= render partial: 'hp_slideshow', locals: {featured_opportunities: @featured_opportunities} if @featured_opportunities.present? %>
+  </div>
+</div>
+
 <div class="feature-mast">
   <div class="wrapper">
     <div class="content-container">
-      <%= render :partial => '/homepage/hp_banner' %>
+      <%= render :partial => '/homepage/hp_search_banner' %>
     </div>
   </div>
 </div>
 
 <div class="wrapper">
   <div class="content-container">
+
     <div class="main-content">
-      <%= render :partial => 'layouts/create_conversation' %>
-      <h3>Current Active Conversations</h3>
-      <%= render :partial => '/conversations/conversation_pager' %>
+      <%= render partial: 'hp_conversation_panels' %>
+      <%= render partial: 'hp_blog_panel', locals: {blog_post: @recent_blog_post} if @recent_blog_post.present? %>
     </div><!-- /.main-content -->
+
     <div class="aside supplementary">
-      <%= render :partial => '/search/search' %>
       <%= render_recent_items_sidebar %>
-      <%= render partial: 'blog/recent_blog_posts_sidebar', locals: { blog_posts: @recent_blog_posts } %>
     </div><!-- /.aside -->
+
   </div><!-- /.content-container -->
 </div><!-- /.wrapper -->

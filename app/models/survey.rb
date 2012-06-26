@@ -11,13 +11,13 @@ class Survey < ActiveRecord::Base
   accepts_nested_attributes_for :options, :reject_if => :all_blank, :allow_destroy => true
   after_save :create_or_update_action, :if => :attached_to_conversation?
   after_save :send_end_notification_email_later
-  
+
   alias_method :participants, :respondents
 
   def attached_to_conversation?
     surveyable && surveyable.is_a?(Conversation)
   end
-  
+
   def create_or_update_action
     if self.action.present?
       self.action.update_attributes(:conversation_id => self.surveyable_id) if self.surveyable_id_changed?
@@ -25,11 +25,11 @@ class Survey < ActiveRecord::Base
       self.build_action(:conversation_id => self.surveyable_id).save if self.surveyable_id.present?
     end
   end
-  
+
   def conversation_id
     self.surveyable_id if attached_to_conversation?
   end
-  
+
   def days_until_end_date
     (end_date - Date.today).to_i if end_date && end_date > Date.today
   end
