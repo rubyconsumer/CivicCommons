@@ -9,5 +9,8 @@ describe FeaturedOpportunity do
   end
   describe "Validations" do
     it {should validate_presence_of :conversation_id}
+    it {should validate_presence_of :actions}
+    it {should validate_presence_of :contributions}
+    it {should validate_presence_of :reflections}
   end
 end

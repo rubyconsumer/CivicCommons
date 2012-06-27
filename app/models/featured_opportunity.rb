@@ -4,7 +4,7 @@ class FeaturedOpportunity < ActiveRecord::Base
   has_and_belongs_to_many :actions, :join_table => :featured_opportunities_actions, :uniq => true
   has_and_belongs_to_many :reflections, :join_table  => :featured_opportunities_reflections, :uniq => true
 
-  validates_presence_of :conversation_id
+  validates_presence_of :conversation_id, :contributions, :reflections, :actions
 
   def contribution
     self.contributions.first
