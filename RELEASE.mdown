@@ -18,11 +18,12 @@
 
 ### Chores
   * [Add Search Helper Spec](https://agilezen.com/project/18091/story/577)
+  * [ProfilePresenter Issue with Route URL's](https://agilezen.com/project/18091/story/583)
 
 ### Bug Fix
-  * [ProfilePresenter issue in Development mode](https://agilezen.com/project/18091/story/583)
   * [Search form not working on the new homepage](https://agilezen.com/project/18091/story/591)
   * [When creating a featured opportunity without selecting an action or reflection or contribution, it allows it to save in admin, but errors in homepage.](https://agilezen.com/project/18091/story/597)
+  * [Fix Typo in Civic Portion of Registration Principles Page.](https://agilezen.com/project/18091/story/602)
 
 ## 2.5
 
