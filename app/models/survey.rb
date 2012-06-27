@@ -12,7 +12,10 @@ class Survey < ActiveRecord::Base
   after_save :create_or_update_action, :if => :attached_to_conversation?
   after_save :send_end_notification_email_later
 
-  alias_method :participants, :respondents
+  # Participants in a survey are the survey owner and the respondents to the survey
+  def participants
+    ([person] + respondents).flatten.uniq
+  end
 
   def attached_to_conversation?
     surveyable && surveyable.is_a?(Conversation)

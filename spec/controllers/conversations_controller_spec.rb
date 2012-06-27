@@ -82,7 +82,7 @@ describe ConversationsController do
       get :index
 
       assigns(:active).first.contributions.size.should == 3
-      assigns(:active).first.participants.size.should == 1
+      assigns(:active).first.participants.size.should == 2
     end
 
   end

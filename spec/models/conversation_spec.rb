@@ -2,6 +2,9 @@ require 'spec_helper'
 
 
 describe Conversation do
+  let(:conversation) {FactoryGirl.create(:conversation, conversation_attributes)}
+  let(:conversation_attributes) {{}}
+
   context "Associations" do
     it { should have_many :contributions  }
     it { should have_attached_file :image }
@@ -31,6 +34,7 @@ describe Conversation do
       end
     end
   end
+
   describe "a valid conversation" do
     before :each do
       @conversation = FactoryGirl.build(:conversation)
@@ -78,8 +82,8 @@ describe Conversation do
     end
 
   end
-  context "about an issue" do
 
+  context "about an issue" do
     it "should sort by the latest updated conversations" do
       issue = FactoryGirl.create(:issue, :name => 'A first issue')
       conversation1 = FactoryGirl.create(:conversation, {:issues => [issue], :updated_at => (Time.now - 3.seconds)})
@@ -472,7 +476,6 @@ describe Conversation do
   end
 
   context "paperclip" do
-
     it "will have necessary db columns for paperclip" do
       should have_db_column(:image_file_name).of_type(:string)
       should have_db_column(:image_content_type).of_type(:string)
@@ -497,6 +500,78 @@ describe Conversation do
       default_url = Conversation.attachment_definitions[:image][:default_url].gsub(/\:style/, style)
       default_file = File.join(Rails.root, 'public', default_url)
       File.exist?(default_file)
+    end
+  end
+
+  describe "#action_participants" do
+    it "returns an array of uniq participants in conversation actions" do
+      person1 = double("person")
+      person2 = double("person")
+      person3 = double("person")
+      action1 = double("action")
+      action2 = double("action")
+
+      action1.stub(:participants).and_return([person1,person2])
+      action2.stub(:participants).and_return([person2,person3])
+
+      actions = [action1,action2]
+      conversation.stub(:actions).and_return(actions)
+
+      conversation.action_participants.should == [person1, person2, person3]
+    end
+  end
+
+  describe "#action_participants_count" do
+    it "returns a count of uniq participants in conversation actions" do
+      person1 = double("person")
+      person2 = double("person")
+      person3 = double("person")
+      action1 = double("action")
+      action2 = double("action")
+
+      action1.stub(:participants).and_return([person1,person2])
+      action2.stub(:participants).and_return([person2,person3])
+
+      actions = [action1,action2]
+      conversation.stub(:actions).and_return(actions)
+
+      conversation.action_participants_count.should == 3
+    end
+  end
+
+  describe "#reflection_participants" do
+    it "returns an array of uniq participants in conversation actions" do
+      person1 = double("person")
+      person2 = double("person")
+      person3 = double("person")
+      reflection1 = double("reflection")
+      reflection2 = double("reflection")
+
+      reflection1.stub(:participants).and_return([person1, person2])
+      reflection2.stub(:participants).and_return([person2, person3])
+
+      reflections = [reflection1, reflection2]
+      conversation.stub(:reflections).and_return(reflections)
+
+      conversation.reflection_participants.should == [person1, person2, person3]
+    end
+  end
+
+  describe "#reflection_participants_count" do
+    it "returns a count of uniq participants in conversation actions" do
+      person1 = double("person")
+      person2 = double("person")
+      person3 = double("person")
+      reflection1 = double("reflection")
+      reflection2 = double("reflection")
+
+      reflection1.stub(:participants).and_return([person1, person2])
+      reflection2.stub(:participants).and_return([person2, person3])
+
+      reflections = [reflection1, reflection2]
+      conversation.stub(:reflections).and_return(reflections)
+
+      conversation.reflection_participants_count.should == 3
     end
   end
 

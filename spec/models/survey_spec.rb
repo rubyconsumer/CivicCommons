@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe Survey do
   context "Associations" do
+
     context "has_many :options" do
       it "should have many options" do
         Survey.reflect_on_association(:options).macro.should == :has_many
@@ -19,7 +20,7 @@ describe Survey do
         Survey.reflect_on_association(:options).options[:dependent].should == :destroy
       end
     end
-    
+
     it "should belongs to person" do
       should belong_to(:person)
     end
@@ -27,7 +28,7 @@ describe Survey do
     it "should has one action as actionable" do
       should have_one(:action).dependent(:destroy)
     end
-    
+
     it "should have many respondents" do
       should have_many(:respondents).through(:survey_responses)
     end
@@ -63,7 +64,7 @@ describe Survey do
       end
     end
 
-  end
+  end # Associations
 
   context "Validations" do
     before(:each) do
@@ -77,7 +78,7 @@ describe Survey do
       @survey.errors[:end_date].should == ["can't be blank"]
     end
   end
-  
+
   context "Single Table Inheritance" do
     it "can be a Vote" do
       Vote.superclass.should == Survey
@@ -86,7 +87,7 @@ describe Survey do
       Poll.superclass.should == Survey
     end
   end
-  
+
   context "End Date" do
     it "should display the survey progress if show_progress is set to true AND end_date is less than today's date" do
       @survey = FactoryGirl.create(:survey, :end_date => 2.days.ago.to_date, :show_progress => true)
@@ -102,7 +103,7 @@ describe Survey do
       @survey.show_progress_now?.should == false
     end
   end
-  
+
   context "attached_to_conversation" do
     it "should show true if surveyable exists and if it is a Conversation" do
       @conversation = FactoryGirl.create(:conversation)
@@ -130,10 +131,8 @@ describe Survey do
         @vote.conversation_id.should be_nil
       end
     end
-    
   end
-  
-  
+
   context "active?" do
     it "should be active when there is no start_date" do
       @survey = FactoryGirl.create(:survey, :show_progress => true)
@@ -152,7 +151,7 @@ describe Survey do
       @survey.should be_active
     end
   end
-  
+
   context "expired?" do
     it "should not be expired when the end_date is in the future" do
       @survey = FactoryGirl.create(:survey, :show_progress => true, :end_date => 1.days.from_now.to_date)
@@ -197,6 +196,7 @@ describe Survey do
         Delayed::Job.last.run_at.to_date.should == the_date
       end
     end
+
     context "when running background job" do
       def given_a_survey_with_a_response
         @vote_survey_response = FactoryGirl.create(:vote_survey_response)
@@ -229,7 +229,7 @@ describe Survey do
       end
     end
   end
-  
+
   describe "after_create_or_update on action" do
     describe "after_update" do
       it "should not modify the action model if Survey is saved and there is an attached conversation and it has not changed" do
@@ -263,4 +263,20 @@ describe Survey do
       end
     end
   end
+
+  describe "#participants" do
+    it "returns the array of uniq respondents to the survey and the survey owner" do
+      survey = FactoryGirl.create(:survey)
+
+      owner = double("person")
+      respondent1 = double("respondent")
+      respondent2 = double("respondent")
+
+      survey.stub(:person).and_return(owner)
+      survey.stub(:respondents).and_return([respondent1, respondent2])
+
+      survey.participants.should == [owner, respondent1, respondent2]
+    end
+  end
+
 end

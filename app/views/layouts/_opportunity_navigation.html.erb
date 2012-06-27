@@ -10,13 +10,15 @@
     active: opportunity_navigation_item_selected?('actions') || opportunity_navigation_item_selected?('petitions') || opportunity_navigation_item_selected?('opportunity_votes'),
     title: 'Take Action',
     link: conversation_actions_path(conversation, :anchor => 'opportunity-nav'),
-    count: actions_count
+    count: actions_count,
+    show_person_icon: true
   } %>
   <%= render partial: '/layouts/opportunity_navigation_item', locals: {
     active: opportunity_navigation_item_selected?('reflections') || opportunity_navigation_item_selected?('reflection_comments'),
     title: 'Reflect',
     link: conversation_reflections_path(conversation, :anchor => 'opportunity-nav'),
-    count: reflections_count
+    count: reflections_count,
+    show_person_icon: true
   } %>
 </div>
 

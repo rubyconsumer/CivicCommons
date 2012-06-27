@@ -13,10 +13,12 @@ class Petition < ActiveRecord::Base
                         :person_id
   validates_numericality_of :signature_needed, :greater_than => 0, :allow_blank => true
 
+  # Participants of a Petition is the Petition Owner and it's Signers... or just the signers since a petition owner is required to sign the petition.
   alias_attribute :participants, :signers
 
   after_save :create_or_update_action
 
+  # Owner of the petition.
   def creator_name
     self.person.name
   end

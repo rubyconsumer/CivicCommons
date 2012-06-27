@@ -161,7 +161,7 @@ class Issue < ActiveRecord::Base
 
   def conversation_contributer_ids
     self.conversations.collect do |conversation|
-      conversation.participant_ids
+      conversation.contributor_ids
     end.uniq
   end
 

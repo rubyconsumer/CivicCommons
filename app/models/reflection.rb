@@ -8,8 +8,6 @@ class Reflection < ActiveRecord::Base
   validates_presence_of :title
   validates_presence_of :details
 
-  alias_attribute :participants, :owner
-
   attr_accessible :action_ids
   attr_accessible :title, :details, :conversation_id, :owner
 
@@ -30,6 +28,11 @@ class Reflection < ActiveRecord::Base
 
   def one_line_summary
     [person.name,title,details].delete_if(&:blank?).join(' - ')
+  end
+
+  # People Posting the Reflection or Comments to the Reflection
+  def participants
+    ([self.owner] + self.comments.collect(&:person_id)).flatten.uniq
   end
 
 end

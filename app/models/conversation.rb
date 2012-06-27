@@ -28,7 +28,7 @@ class Conversation < ActiveRecord::Base
   end
 
   # any person that has made a contribution to the convo
-  has_many :participants, :through => :confirmed_contributions,
+  has_many :contributors, :through => :confirmed_contributions,
            :source => :person, :uniq => true,
            :order => "contributions.created_at ASC"
 
@@ -90,12 +90,59 @@ class Conversation < ActiveRecord::Base
     action_conversations & reflection_conversations
   end
 
-  def action_participants
-    participants = self.actions.collect(&:participants).flatten.uniq
+  # Number of Contributors in this Conversation
+  def community_user_ids
+    rater_ids = RatingGroup.select(:person_id).where(contribution_id: contribution_ids).uniq.collect do |rating_group|
+      rating_group.person_id
+    end
+    person_ids = Array.new
+    person_ids += [owner]
+    person_ids += contributor_ids
+    person_ids += rater_ids
+    person_ids = person_ids.flatten.uniq.reject(&:blank?)
+    people = Person.select(:id).where(:id => person_ids).where('confirmed_at IS NOT NULL and locked_at IS NULL')
+    people.collect{ |person| person.id }
   end
 
+  # Number of Participants in related to the Talk portion of this Conversation
+  def participants
+    raters = RatingGroup.where(contribution_id: contribution_ids).collect{|rating_group| rating_group.person }.uniq
+    persons = [self.person]
+    persons += self.contributors
+    persons += raters
+    persons.flatten.uniq.reject(&:blank?)
+  end
+
+  # Number of Action Participants Related to this Conversation
+  #
+  # * Originator of Action
+  # * Number of people signing
+  # * Number of people voting
+  def action_participants
+    actions.collect(&:participants).flatten.uniq
+  end
+
+  # Number of Action Participants Related to this Conversation
+  #
+  # * Originator of Action
+  # * Number of people signing
+  # * Number of people voting
+  def action_participants_count
+    action_participants.count
+  end
+
+  # Reflection Participants Related to this Conversation
+  #
+  # * Number of people posting Reflection or Comments
   def reflection_participants
-    participants = self.reflections.collect(&:participants).flatten.uniq
+    reflections.collect(&:participants).flatten.uniq
+  end
+
+  # Number of Reflection Participants Related to this Conversation
+  #
+  # * Number of people posting Reflection or Comments
+  def reflection_participants_count
+    reflection_participants.count
   end
 
   def self.available_filters
@@ -172,19 +219,6 @@ class Conversation < ActiveRecord::Base
     others.each_with_index do |conversation, i|
       Conversation.where('id = ?', conversation.id).update_all(position: i + staff_picks_length)
     end
-  end
-
-  def community_user_ids
-    rater_ids = RatingGroup.select(:person_id).where(contribution_id: contribution_ids).uniq.collect do |rating_group|
-      rating_group.person_id
-    end
-    person_ids = Array.new
-    person_ids += [owner]
-    person_ids += participant_ids
-    person_ids += rater_ids
-    person_ids = person_ids.flatten.uniq.reject(&:blank?)
-    people = Person.select(:id).where(:id => person_ids).where('confirmed_at IS NOT NULL and locked_at IS NULL')
-    people.collect{ |person| person.id }
   end
 
   def user_generated?

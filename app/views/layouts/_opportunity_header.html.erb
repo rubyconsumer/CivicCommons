@@ -27,10 +27,10 @@
         </div>
 
         <%= render :partial => '/layouts/opportunity_navigation', :locals => {
-          conversation: @conversation,
-          participants_count: @conversation.community_user_ids.count,
-          actions_count: @conversation.actions.count,
-          reflections_count: @conversation.reflections.count
+          conversation:       @conversation,
+          participants_count: @conversation.participants.count,
+          actions_count:      @conversation.action_participants_count,
+          reflections_count:  @conversation.reflection_participants_count
         } %>
 
       </div><!-- /.main-content -->
