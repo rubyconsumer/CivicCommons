@@ -14,6 +14,7 @@
   * [Featured Opportunity Title Links to Conversation](https://agilezen.com/project/18091/story/595)
   * [View, not Sign,  Petitions in Featured Opportunity](https://agilezen.com/project/18091/story/596)
   * [Featured Action - View petition or Vote - take focus to Action part of the page](https://agilezen.com/project/18091/story/599)
+  * [Featured Reflection - Read reflection should take focus to the Reflection part of the page](https://agilezen.com/project/18091/story/600)
 
 ### Chores
   * [Add Search Helper Spec](https://agilezen.com/project/18091/story/577)

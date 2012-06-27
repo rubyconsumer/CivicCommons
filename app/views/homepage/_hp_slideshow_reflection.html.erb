@@ -10,6 +10,6 @@
     <div class="recent-item">
       <p class="bd"><%= truncate(Sanitize.clean(reflection.details), length:225).html_safe %></p>
     </div>
-    <%= link_to("Continue Reading", conversation_reflection_url(reflection.conversation, reflection)) %>
+    <%= link_to("Continue Reading", conversation_reflection_url(reflection.conversation, reflection, :anchor => 'opportunity-nav')) %>
   </div>
 </div>
