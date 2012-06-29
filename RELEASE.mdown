@@ -4,6 +4,7 @@
   * [Opportunity Navigation Displays Participant Count for Talk, Action and Reflection](https://agilezen.com/project/18091/story/582)
   * [Your Commons Recent Activity No Longer Displays Conversation Title](https://agilezen.com/project/18091/story/589)
   * [Recent Activity on Conversation Page No Longer Displays Conversation Title](https://agilezen.com/project/18091/story/590)
+  * [Your Commons Data Logging](https://agilezen.com/project/18091/story/598)
 
 
 ## 2.6

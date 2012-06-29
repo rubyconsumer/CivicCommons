@@ -23,6 +23,8 @@ protected
   end
 
   def render_widget(results)
+    @remote_url = params[:remote_url]
+    WidgetLog.create(:url => request.path, :remote_url => @remote_url)
     if results[:css].present?
       results[:css] << '/stylesheets/widget.css'
     else

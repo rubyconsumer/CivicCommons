@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120615033628) do
+ActiveRecord::Schema.define(:version => 20120629015541) do
 
   create_table "actions", :force => true do |t|
     t.integer  "conversation_id"
@@ -683,6 +683,14 @@ ActiveRecord::Schema.define(:version => 20120615033628) do
   end
 
   add_index "visits", ["visitable_id", "visitable_type"], :name => "index_visits_on_visitable_id_and_visitable_type"
+
+  create_table "widget_logs", :force => true do |t|
+    t.text     "remote_url"
+    t.string   "url"
+    t.datetime "created_at"
+  end
+
+  add_index "widget_logs", ["url"], :name => "index_widget_logs_on_url"
 
   create_table "zip_codes", :force => true do |t|
     t.integer  "region_id"

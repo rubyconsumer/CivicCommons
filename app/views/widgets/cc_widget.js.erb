@@ -53,7 +53,8 @@ function main() {
 
         /******* Load HTML *******/
         var base_url = '<%= request.protocol + request.host_with_port %>';
-        var jsonp_url = base_url + "<%= @data_source %>.embed?callback=?";
+        var remote_url = encodeURIComponent(document.URL);
+        var jsonp_url = base_url + "<%= @data_source %>.embed?callback=?"+ "&remote_url=" + remote_url;
         $.getJSON(jsonp_url, function(data) {
           <% if @styled # load in the widget css %>
           // load css

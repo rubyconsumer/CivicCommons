@@ -201,6 +201,9 @@ Civiccommons::Application.routes.draw do
     post '/content_items/type/:type/description/create', to: 'content_items#create_description'
     put '/content_items/type/:type/description/:id', to: 'content_items#update_description'
     resources :content_templates
+    resources :widget_stats, :only => [:index] do
+      get '/*widget_url', to: 'widget_stats#show', on: :collection, as: 'show'
+    end
     resources :conversations do
       put 'toggle_staff_pick', on: :member
       post 'update_order', on: :collection

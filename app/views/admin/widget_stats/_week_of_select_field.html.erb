@@ -1,0 +1,20 @@
+Week of <%= select_tag "week_of", options_for_select(weeks_ago_date_range_select(16),@week_of) %>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('#week_of').change(function(){
+      var url = window.location.href;    
+      var regex = /week_of=\d*/i;
+      if (url.indexOf('?') > -1){
+        if(url.match(regex)){
+          url = url.replace(regex, 'week_of=' + $(this).val())
+        }else{
+          url += '&week_of=' + $(this).val()
+        }
+      }else{
+         url += '?week_of=' + $(this).val()
+      }
+      window.location.href = url;
+    })
+  })
+</script>
