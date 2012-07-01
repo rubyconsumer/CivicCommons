@@ -18,14 +18,20 @@
   </div>
 </div>
 <script type="text/javascript">
+
+// This modal is for demo purposes - needs refactored
+
 $(function() {
   $.fn.colorbox({href:".action-prompt", inline:true, open:true});
+  $("#cboxClose").click(function() {
+    $(".action-prompt").remove();
+  });
 });
 </script>
 <div class="action-prompt">
-  <div class="pal">
-    <h4>Be the first to take action.</h4>
-    <p>A quick paragraph explaining why you should recommend an action to take, if you think the conversation has progressed to the point where it has become appropriate.</p>
+  <div class="pal modal-wrap">
+    <h3 class="mbl">Be the first to take action.</h3>
+    <p class="mbl">A quick paragraph explaining why you should recommend an action to take, if you think the conversation has progressed to the point where it has become appropriate.</p>
     <%= link_to 'Create a Vote',new_conversation_vote_path(@conversation, :anchor => 'opportunity-nav'), :class => 'button wide-button mbm' %>
     <span class="mrm">or</span>
     <%= link_to 'Write a Petition', new_conversation_petition_path(@conversation, :anchor => 'opportunity-nav'), :class => 'button wide-button' %>
