@@ -93,7 +93,11 @@ class VoteResponsePresenter
     survey_response.valid?
     survey_response.errors[:selected_option_ids].blank?
   end
-
+  
+  def only_one_selected_option?
+    selected_option_ids.length == 1
+  end
+  
   def save
     ActiveRecord::Base.transaction do
       survey_response.save!

@@ -5,6 +5,7 @@
   * [Your Commons Recent Activity No Longer Displays Conversation Title](https://agilezen.com/project/18091/story/589)
   * [Recent Activity on Conversation Page No Longer Displays Conversation Title](https://agilezen.com/project/18091/story/590)
   * [Your Commons Data Logging](https://agilezen.com/project/18091/story/598)
+  * [Add Logic to User Vote](https://agilezen.com/project/18091/story/604)
 
 
 ## 2.6

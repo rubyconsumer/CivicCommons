@@ -5,6 +5,7 @@ var reset_selected_option_positions = function(){
     $(this).attr('id', 'vote_response_presenter_selected_option_'+ index +'_id');
   })
 }
+
 $(document).ready(function() {
   
   //Add numbering on the li of the opportunity votes, so that it doesn't move as it is being dragged

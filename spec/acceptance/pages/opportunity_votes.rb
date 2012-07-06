@@ -69,6 +69,7 @@ module CivicCommonsDriver
         has_button :continue_with_invalid_options, 'Continue', :select_options_opportunity_vote
         
         has_button :continue, 'Continue', :rank_options_opportunity_vote
+        has_button :cast_vote, 'Cast my Vote', :opportunity_vote
         
         
         def find_option_check_box_for(position)
@@ -79,6 +80,12 @@ module CivicCommonsDriver
           element = find_option_check_box_for(position)
           check element[:id]
         end
+        
+        def unselect_option(position)
+          element = find_option_check_box_for(position)
+          uncheck element[:id]
+        end
+        
       end
       
       class RankOptions

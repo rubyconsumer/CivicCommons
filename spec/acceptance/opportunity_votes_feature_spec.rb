@@ -9,8 +9,7 @@ feature " Opportunity Votes", %q{
   FIRST_TITLE = 'First title here'
   FIRST_DESCRIPTION = 'First description here'
   SECOND_TITLE = 'Second title here'
-  SECOND_DESCRIPTION = 'Second description here'
-  
+  SECOND_DESCRIPTION = 'Second description here'  
     
   def given_a_conversation
     @conversation = FactoryGirl.create(:conversation)
@@ -133,6 +132,57 @@ feature " Opportunity Votes", %q{
     # then it should redirect to the vote page
     sleep 1
     current_page.current_path.should == conversation_vote_path(@conversation,@vote)
+  end
+  
+  context 'skipping ' do
+    before(:all) do
+      Capybara.ignore_hidden_elements = true
+    end
+
+    after(:all) do
+      Capybara.ignore_hidden_elements = false
+    end
+    
+    scenario "Skipping ranking votes, if user select only one option", :js => true do
+      given_a_vote_with_options_and_conversations
+      login_as :person
+      visit conversation_vote_path(@conversation,@vote)
+      set_current_page_to :select_options_opportunity_vote 
+      
+      # Initially, the rank option should be displayed
+      page.should have_selector('li.rank-options-tab')
+      page.should have_selector(:xpath, '//input[@value="Continue"]')
+      page.should_not have_selector(:xpath, '//input[@value="Cast my Vote"]')
+      
+      # when one option is selected, hide the rank option tab, and change the value of the button to "Cast my Vote"
+      current_page.select_option(2)
+      sleep 2
+      page.should_not have_selector('li.rank-options-tab')
+      page.should_not have_selector(:xpath, '//input[@value="Continue"]')
+      page.should have_selector(:xpath, '//input[@value="Cast my Vote"]')
+      
+      # when two option is selected, show the rank option tab, and change the value of the button back to "Continue"
+      current_page.select_option(4)
+      sleep 2
+      page.should have_selector('li.rank-options-tab')
+      page.should have_selector(:xpath, '//input[@value="Continue"]')
+      page.should_not have_selector(:xpath, '//input[@value="Cast my Vote"]')
+      
+      # Again when one option is selected only, hide the rank option tab, and change the value of the button to "Cast my Vote"
+      current_page.unselect_option(4)
+      sleep 2
+      page.should_not have_selector('li.rank-options-tab')
+      page.should_not have_selector(:xpath, '//input[@value="Continue"]')
+      page.should have_selector(:xpath, '//input[@value="Cast my Vote"]')
+      
+      # When I press cast my vote
+      click_cast_vote_button
+      # then it should redirect to the vote page
+      sleep 1
+      current_page.current_path.should == conversation_vote_path(@conversation,@vote)
+    end
+    
+    
   end
   
   scenario "Ability to vote, but there are errors when submitting", :js => true do

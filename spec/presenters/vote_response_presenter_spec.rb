@@ -7,6 +7,16 @@ describe VoteResponsePresenter do
     @survey_option1 = FactoryGirl.create(:survey_option,:survey_id => @survey.id, :position => 1)
     @presenter = VoteResponsePresenter.new(:person_id => @person.id,:survey_id => @survey.id)
   end
+  
+  def given_a_person_and_a_survey
+    @person = FactoryGirl.create(:registered_user)
+    @survey = FactoryGirl.create(:vote, max_selected_options: 3)
+    @survey_option1 = FactoryGirl.create(:survey_option,:survey_id => @survey.id, :position => 1)
+    @survey_option2 = FactoryGirl.create(:survey_option,:survey_id => @survey.id, :position => 2)
+    @survey_option3 = FactoryGirl.create(:survey_option,:survey_id => @survey.id, :position => 3)
+  end
+  
+  
   it "should allow for selected_option_1_id" do
     given_a_person_and_a_survey_and_presenter
     @presenter.selected_option_1_id.should be_nil
@@ -144,6 +154,25 @@ describe VoteResponsePresenter do
         @presenter.selected_option_1_id = @survey_option1.id
         @presenter.selected_option(1).should == @survey_option1
       end      
+    end
+    
+    context "only_one_selected_option?" do
+      it "should return true if selected option is one" do
+        given_a_person_and_a_survey
+        @presenter = VoteResponsePresenter.new(:person_id => @person.id,:survey_id => @survey.id, selected_option_ids:[@survey_option1.id])
+        @presenter.should be_only_one_selected_option
+      end
+      it "should return false if it's zero" do
+        given_a_person_and_a_survey
+        @presenter = VoteResponsePresenter.new(:person_id => @person.id,:survey_id => @survey.id)
+        @presenter.should_not be_only_one_selected_option
+      end
+      it "should return false if it's more than one" do
+        given_a_person_and_a_survey
+        @presenter = VoteResponsePresenter.new(:person_id => @person.id,:survey_id => @survey.id, selected_option_ids: [@survey_option1.id, @survey_option2.id])
+        @presenter.should_not be_only_one_selected_option
+      end
+      
     end
 
     
