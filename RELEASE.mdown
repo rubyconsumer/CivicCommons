@@ -7,6 +7,8 @@
   * [Your Commons Data Logging](https://agilezen.com/project/18091/story/598)
   * [Add Logic to User Vote](https://agilezen.com/project/18091/story/604)
 
+### Bug Fix
+  * [Admin Moderating Contributions May Add A Link to the Contribution](https://agilezen.com/project/18091/story/601)
 
 ## 2.6
 

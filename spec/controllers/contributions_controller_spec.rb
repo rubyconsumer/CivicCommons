@@ -8,8 +8,8 @@ describe ContributionsController do
     before do
         Contribution.stub(:find).and_return(contribution)
     end
-    it 'finds the contribution by id' do 
 
+    it 'finds the contribution by id' do
       delete :destroy, id: 1
       Contribution.should have_received(:find).with(1)
     end
@@ -35,16 +35,35 @@ describe ContributionsController do
 
     context "when unable to delete" do
       before do
-        contribution.stub(:destroy_by_user) { false } 
+        contribution.stub(:destroy_by_user) { false }
         contribution.stub(:errors) { [ 'no love', 'just hate'] }
         delete :destroy, id: 1, format: :js
-      end 
+      end
       it "responds with the contributions error messages" do
         response.body.should == "[\"no love\",\"just hate\"]"
       end
       it "responds with a status of unprocessable entity" do
         response.status.should == 422
       end
+    end
+  end
+
+  describe "POST: Update Contribution" do
+    let(:conversation) { stub_model(Conversation) }
+    let(:contribution) { stub_model(Contribution) }
+    let(:current_person) { 'Your Dad' }
+
+    before do
+        Conversation.stub(:find).and_return(conversation)
+        Contribution.stub(:find).and_return(contribution)
+
+        contribution.stub(:self_and_descendants).and_return([contribution])
+    end
+
+    it 'will gather embedly information when a new link/url is set' do
+      subject.should_receive(:fetch_embedly_information)
+
+      post :update, :id => "1150", :conversation_id => "450", contribution: { "1150" => {content: "hello world"}, "url"=>"www.google.com", "contribution_id"=> "1150", "id"=>"1150", :url=>"www.google.com"}
     end
   end
 

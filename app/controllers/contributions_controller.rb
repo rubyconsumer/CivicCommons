@@ -74,20 +74,17 @@ class ContributionsController < ApplicationController
     @contribution = Contribution.find(params[:id])
     @contributions = @contribution.self_and_descendants
     attributes = { contribution: params[:contribution][params[:id]] }
-    unless attributes[:contribution][:url].blank?
-      embedly = EmbedlyService.new
-      embedly.fetch_and_merge_params!(attributes)
-    end
+    attributes = fetch_embedly_information(attributes, params[:contribution][:url]) unless params[:contribution][:url].blank?
 
     success = @contribution.update_attributes_by_user(attributes, current_person)
     respond_to do |format|
       if success
         ratings = RatingGroup.ratings_for_conversation_by_contribution_with_count(@contribution.conversation, current_person)
-        format.html do 
+        format.html do
           if request.xhr?
             render(:partial => "conversations/threaded_contribution_template", :locals => { :ratings => ratings }, :collection => @contributions, :as => :contribution)
           else
-            redirect_to conversation_node_path(@contribution) 
+            redirect_to conversation_node_path(@contribution)
           end
         end
         format.js { render(:partial => "conversations/threaded_contribution_template", :locals => { :ratings => ratings }, :collection => @contributions, :as => :contribution) }
@@ -113,6 +110,13 @@ private
     if params.has_key?(:conversation_id)
       @conversation = Conversation.find(params[:conversation_id])
     end
+  end
+
+  def fetch_embedly_information(attributes, url)
+    attributes[:contribution][:url] = url
+    embedly = EmbedlyService.new
+    embedly.fetch_and_merge_params!(attributes)
+    attributes
   end
 
 end
