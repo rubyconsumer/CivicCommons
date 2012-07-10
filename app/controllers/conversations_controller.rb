@@ -86,7 +86,7 @@ class ConversationsController < ApplicationController
       format.any{ render :show}
     end
   end
-  
+
   def embed
     @conversation = Conversation.find(params[:id])
     render :layout => 'application'
@@ -154,7 +154,6 @@ class ConversationsController < ApplicationController
 
   #TODO Test, baby. Test!
   def preview_node_contribution
-
     errors = []
     unless params[:contribution][:url].blank?
       embedly = EmbedlyService.new
@@ -324,6 +323,5 @@ class ConversationsController < ApplicationController
       @start_from = @content_item.content_type
     end
   end
-
 
 end

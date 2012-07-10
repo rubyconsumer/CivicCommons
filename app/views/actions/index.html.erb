@@ -6,19 +6,12 @@
     </div><!-- /.main-content -->
 
     <div class="aside supplementary">
-        <div class="mod">
-          <div class="btn-group">
-            <a class="button dropdown-toggle full" href="#">
-              <span class="fl-left">Suggest an Action</span>
-              <span class="caret fl-right"></span>
-            </a>
-            <ul class="dropdown-menu full">
-              <li><%= link_to 'Create a Vote',new_conversation_vote_path(@conversation, :anchor => 'opportunity-nav') %></li>
-              <li class="divider"></li>
-              <li><%= link_to 'Write a Petition', new_conversation_petition_path(@conversation, :anchor => 'opportunity-nav') %></li>
-            </ul>
-          </div>
-        </div>
+      <p>
+        <%= link_to 'Create a Vote',    new_conversation_vote_path(@conversation, :anchor => 'opportunity-nav'), :class => "button wide-button" %>
+      </p>
+      <p>
+        <%= link_to 'Write a Petition', new_conversation_petition_path(@conversation, :anchor => 'opportunity-nav'), :class => "button wide-button" %></li>
+      </p>
 
       <% if @conversation.issues.standard_issue.size > 0 %>
         <%= render :partial => '/conversations/side_issues', :object => @conversation, :as => :conversation %>

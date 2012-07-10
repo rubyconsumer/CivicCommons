@@ -6,6 +6,7 @@
   * [Recent Activity on Conversation Page No Longer Displays Conversation Title](https://agilezen.com/project/18091/story/590)
   * [Your Commons Data Logging](https://agilezen.com/project/18091/story/598)
   * [Add Logic to User Vote](https://agilezen.com/project/18091/story/604)
+  * [Action Dropdown Change](https://agilezen.com/project/18091/story/607)
 
 ### Bug Fix
   * [Admin Moderating Contributions May Add A Link to the Contribution](https://agilezen.com/project/18091/story/601)
