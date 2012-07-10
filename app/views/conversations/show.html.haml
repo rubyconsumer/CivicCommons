@@ -30,11 +30,11 @@
       =render :partial => '/search/search', :locals => {:filter_type => 'conversations'}
       %p
         -if current_person
-          = link_to("Post to this Conversation", '#', :class => "text button post_to_conversation", :id => 'post_to_conversation', :title => 'Post to this conversation')
+          = link_to("Post to this Conversation", '#', :class => "text button wide-button post_to_conversation", :id => 'post_to_conversation', :title => 'Post to this conversation')
           :javascript
             enable_post_to_conversation($('#post_to_conversation'));
         -else
-          = link_to("Post to this Conversation", { :controller => :sessions, :action => :ajax_new }, :class => "text button", 'data-colorbox' => true )
+          = link_to("Post to this Conversation", { :controller => :sessions, :action => :ajax_new }, :class => "button wide-button", 'data-colorbox' => true )
       %p
         = render :partial => '/invites/invite_to_conversation', :locals => {:conversation => @conversation}
       - if @conversation.content_items.size > 0

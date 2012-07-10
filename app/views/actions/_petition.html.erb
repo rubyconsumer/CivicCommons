@@ -1,6 +1,5 @@
 <div class="entry-container reverse" data-petition-id="<%= petition.id %>">
   <div class="entry-meta">
-
     <h3><%= link_to petition.title, [@conversation, petition] %></h3>
     <p class="entry-contrib" title="<%= pluralize(petition.signers.count,'signer') %>"><%= petition.signers.count %></p>
   </div>
@@ -9,6 +8,12 @@
     <p class="entry-tags">Proposed by: <%= text_profile(petition.person) %> on <%= petition.created_at.to_date.to_s(:long) %>.</p>
     <div class="wysiwyg-formatted">
       <%= raw petition.description %>
+      <div class="group">
+        <% if !signed_in? || !petition.signed_by?(current_person) %>
+          <%= link_to 'Sign', sign_conversation_petition_path(@conversation, petition), :class => 'button fl-right', :remote => true %>
+        <% end %>
+        <%= link_to "Read and sign the full petition", [@conversation, petition] %>
+      </div>
     </div>
   </div>
 </div>
