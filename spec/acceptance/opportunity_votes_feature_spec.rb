@@ -143,6 +143,20 @@ feature " Opportunity Votes", %q{
       Capybara.ignore_hidden_elements = false
     end
     
+    scenario "Max selected option set to 1 should not display the second tab and set the button to 'Cast my Vote'", :js => true do
+      login_as :person
+      given_a_vote_with_options_and_conversations(:max_selected_options => 1)
+      visit conversation_vote_path(@conversation,@vote)
+      set_current_page_to :select_options_opportunity_vote
+      current_page.should have_content 'Select Option'
+      current_page.should have_content 'Please select up to 1 option' 
+      current_page.should_not have_content 'Step 2:'
+      page.should have_selector(:xpath, '//input[@value="Cast my Vote"]')
+      current_page.select_option(1)
+      click_cast_vote_button
+      current_page.current_path.should == conversation_vote_path(@conversation,@vote)
+    end
+    
     scenario "Skipping ranking votes, if user select only one option", :js => true do
       given_a_vote_with_options_and_conversations
       login_as :person
@@ -222,12 +236,12 @@ feature " Opportunity Votes", %q{
   end
   
   scenario "Visitor should be able to view a vote permalink without logging in" do
-    given_a_vote_with_options_and_conversations(:max_selected_options => 1)
+    given_a_vote_with_options_and_conversations(:max_selected_options => 3)
     visit conversation_vote_path(@conversation,@vote)
     set_current_page_to :select_options_opportunity_vote
     current_page.should have_content 'register for an account'
     current_page.should have_content 'Step 1:'
-    current_page.should have_content 'Please select up to 1 option' 
+    current_page.should have_content 'Please select up to 3 option' 
     current_page.select_option(1)
     click_continue_button
     #should prompt login

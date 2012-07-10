@@ -1,8 +1,15 @@
 <ul class="tab tab-section mtl mbl">
   <li class="<%= 'active' if step == 'select_options' %> select-options-tab">
-    <%= link_to raw('<strong>Step 1:</strong> Select Options'), select_options_link %>
+    <% if @vote_response_presenter.max_selected_options > 1 
+      tab_text = "<strong>Step 1:</strong> Select Options"
+    else
+      tab_text = 'Select Option'
+    end %>
+    <%= link_to raw(tab_text), select_options_link %>
   </li>
-  <li class="<%= 'active' if step == 'rank_options' %> rank-options-tab">
-    <%= link_to_function raw('<strong>Step 2:</strong> Rank Options'), (step == 'rank_options') ? 'return false;' : "$(this).closest('form').submit();return false;" %>
-  </li>
+  <% if @vote_response_presenter.max_selected_options > 1 %>
+    <li class="<%= 'active' if step == 'rank_options' %> rank-options-tab">
+      <%= link_to_function raw('<strong>Step 2:</strong> Rank Options'), (step == 'rank_options') ? 'return false;' : "$(this).closest('form').submit();return false;" %>
+    </li>
+  <% end %>
 </ul>

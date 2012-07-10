@@ -1,10 +1,20 @@
 var showRankOptionTab = function(){
   $('.rank-options-tab').fadeIn('slow');
-  $('input.continue.opportunity-button').val('Continue');
+
+  var $submit_button = $('input.continue.opportunity-button');
+  var max_selected_options = $submit_button.closest('form').data('max-selected-options');
+  if (parseInt(max_selected_options) > 1){
+    $submit_button.val('Continue');
+  }
 }
 var hideRankOptionTab = function(){
   $('.rank-options-tab').fadeOut('slow');
-  $('input.continue.opportunity-button').val('Cast my Vote');
+
+  var $submit_button = $('input.continue.opportunity-button');
+  var max_selected_options = $submit_button.closest('form').data('max-selected-options');
+  if (parseInt(max_selected_options) > 1){
+    $submit_button.val('Cast my Vote');
+  }
 }
 var selectOptionCheckBoxBehavior = function(){
   var $checked_boxes = $('input.option-checkbox:checked');
@@ -19,7 +29,7 @@ var selectOptionCheckBoxBehavior = function(){
 }
 
 $(document).ready(function() {
-  //initialize with the checkbox behavior
+  // initialize with the checkbox behavior
   selectOptionCheckBoxBehavior();
   
   $('input.option-checkbox').change(function(){

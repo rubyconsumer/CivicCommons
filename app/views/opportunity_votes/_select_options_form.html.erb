@@ -1,7 +1,7 @@
 <% content_for :header do %>
   <%= javascript_include_tag '/javascripts/lib/opportunity_votes/select_option' %>
 <% end %>
-<%= form_for @vote_response_presenter, :as => :vote_response_presenter, :url => select_options_conversation_vote_path(@conversation,@vote, :anchor => 'opportunity-nav')  do |form|%>
+<%= form_for @vote_response_presenter, :as => :vote_response_presenter, :url => select_options_conversation_vote_path(@conversation,@vote, :anchor => 'opportunity-nav' ), :html => {'data-max-selected-options' => @vote_response_presenter.max_selected_options}  do |form|%>
   <%= opportunity_vote_tab_nav('select_options') %>
   
   <h4 class="mtl mbl">Please select up to <%= pluralize(@vote_response_presenter.max_selected_options,'option') %></h4>
@@ -27,7 +27,13 @@
   <% end %>
 
   <fieldset>
-    <%= form.submit 'Continue', :class => "continue button opportunity-button" %> or
+    <% if@vote_response_presenter.max_selected_options > 1  
+        button_text = 'Continue'
+       else
+        button_text = 'Cast my Vote'
+       end
+    %>
+    <%= form.submit button_text, :class => "continue button opportunity-button" %> or
     <%= link_to 'Cancel', conversation_actions_path(@conversation), :id => 'cancel-contribution' %>
   </fieldset>
   
