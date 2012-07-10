@@ -2,6 +2,58 @@
   <div class="content-container">
 
     <div class="main-content">
+
+      <div class="entry-container reverse" data-vote-id="16">
+        <div class="entry-meta">
+          <h3><a href="#">Sample Petition</a></h3>
+          <p class="entry-contrib" title="8 voters">8</p>
+        </div>
+        <div class="entry-details full">
+          <p class="entry-tags">Proposed by: <a href="http://localhost:3000/user/dan-moulthrop" title="Dan Moulthrop">Dan Moulthrop</a> on June 27, 2012.</p>
+          <div class="wysiwyg-formatted">
+            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin augue nisi, fermentum vitae, imperdiet a, auctor eu, mi. Nulla imperdiet molestie purus. Duis arcu dui, pretium in, molestie id, convallis eget, orci. Praesent eget purus. Nullam sed nunc. Etiam quis orci ac metus consectetuer consequat.</p>
+            <div class="group">
+              <a href="#" class="button fl-right">Sign</a>
+              <a href="#">Read and sign the full petition</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="entry-container reverse" data-vote-id="16">
+        <div class="entry-meta">
+          <h3><a href="#">Sample Vote</a></h3>
+          <p class="entry-contrib" title="8 voters">8</p>
+        </div>
+        <div class="entry-details full">
+          <p class="entry-tags">Proposed by: <a href="http://localhost:3000/user/dan-moulthrop" title="Dan Moulthrop">Dan Moulthrop</a> on June 27, 2012.</p>
+          <div class="wysiwyg-formatted">
+            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin augue nisi, fermentum vitae, imperdiet a, auctor eu, mi. Nulla imperdiet molestie purus. Duis arcu dui, pretium in, molestie id, convallis eget, orci. Praesent eget purus. Nullam sed nunc. Etiam quis orci ac metus consectetuer consequat.</p>
+            <div class="group">
+              <a href="#" class="button fl-right">Vote</a>
+              <a href="#">Read and sign the full petition</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="entry-container reverse" data-vote-id="16">
+        <div class="entry-meta">
+          <h3><a href="#">Sample Petition</a></h3>
+          <p class="entry-contrib" title="8 voters">8</p>
+        </div>
+        <div class="entry-details full">
+          <p class="entry-tags">Proposed by: <a href="http://localhost:3000/user/dan-moulthrop" title="Dan Moulthrop">Dan Moulthrop</a> on June 27, 2012.</p>
+          <div class="wysiwyg-formatted">
+            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin augue nisi, fermentum vitae, imperdiet a, auctor eu, mi. Nulla imperdiet molestie purus. Duis arcu dui, pretium in, molestie id, convallis eget, orci. Praesent eget purus. Nullam sed nunc. Etiam quis orci ac metus consectetuer consequat.</p>
+            <div class="group">
+              <a href="#" class="button fl-right">Vote Results</a>
+              <a href="#">Read and sign the full petition</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <%= render :partial => '/actions/action', :collection => @actions %>
     </div><!-- /.main-content -->
 
@@ -15,6 +67,7 @@
         <%= render :partial => '/conversations/side_issues', :object => @conversation, :as => :conversation %>
       <% end %>
       <%= render :partial => '/shared/opportunity/side_participants', :locals => {participants: @participants} %>
+    </div>
   </div>
 </div>
 <script type="text/javascript">
