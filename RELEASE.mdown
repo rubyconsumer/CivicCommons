@@ -3,6 +3,9 @@
 ### External Changes
   * [Nested Contributions Allow Admin to Edit](https://agilezen.com/project/18091/story/609)
 
+### Bug Fix
+  * [Vote Result Description Properly Displays Markup](https://agilezen.com/project/18091/story/615)
+
 ### Chores
   * [Resolve missing fb-root console notification](https://agilezen.com/project/18091/story/612)
 
