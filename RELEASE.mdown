@@ -1,3 +1,8 @@
+## 2.8
+
+### External Changes
+  * [Nested Contributions Allow Admin to Edit](https://agilezen.com/project/18091/story/609)
+
 ## 2.7
 
 ### External Changes

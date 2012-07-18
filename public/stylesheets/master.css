@@ -2004,7 +2004,7 @@ div.convo-divider p.date-stamp {
 
 /*- Conversation Utility ----------*/
 
-.edit-contribution {float: right;}
+.edit-contribution {float: right; margin-right: 40px;}
 .contribution-thread-div .contribution-container .edit-contribution {margin-right: 40px;}
 .edit-contribution a {margin-left: 15px;}
 div.convo-utility {
