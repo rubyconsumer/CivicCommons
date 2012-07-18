@@ -9,7 +9,7 @@
     <div class="content-container">
   	  <div class="main-content">
         <h1>Voting Results</h1>
-        <p><%= @survey.description.html_safe %></p>
+        <p><%= @survey.description.html_safe if @survey.description.present? %></p>
         <p><%= back_to_surveyable(@survey) %></p>
       </div>
     </div>
