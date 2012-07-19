@@ -59,11 +59,39 @@
 .alert-admin {
 	background-color: #ffe3ac;
 	border-color: #eabe7c;
-	color: #d6a55e;
+	color: #bc9052;
 	margin-bottom: 8px;
 	padding: 3px 7px 3px 12px;
 }
 
 .alert-admin a {
 	margin: 0 5px;
+}
+
+/* Dismiss Buttons  */
+.alert .dismiss {
+  position: relative;
+  top: -18px;
+  right: -18px;
+  line-height: 18px;
+}
+
+button.dismiss {
+  padding: 0;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  -webkit-appearance: none;
+}
+
+.dismiss {
+  float: right;
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 18px;
+  color: black;
+  text-shadow: 0 1px 0 white;
+  text-decoration: none;
+  opacity: 0.2;
+  filter: alpha(opacity=20);
 }

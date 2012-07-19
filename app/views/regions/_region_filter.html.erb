@@ -1,0 +1,17 @@
+<form class="ui-widget inline-form group">
+  <input class="textbox small region-filter" />
+  <input class="submit mls" id="filter" type="submit" value="Filter" />
+</form>
+
+<script>
+  $(function() {
+    var availableFilters = [
+      "Macedonia, OH",
+      "Cleveland, OH",
+      "Akron, OH"
+    ];
+    $( ".region-filter" ).autocomplete({
+      source: availableFilters
+    });
+  });
+</script>

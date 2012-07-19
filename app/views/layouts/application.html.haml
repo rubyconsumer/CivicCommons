@@ -27,6 +27,7 @@
     = javascript_include_tag 'lib/jquery-plugins/mask-me.js'
     = javascript_include_tag 'lib/elements/togglable_field.js'
     = javascript_include_tag 'lib/dropdown.js'
+    = javascript_include_tag 'lib/alert.js'
     = javascript_tag '$.fx.off = true;' if Rails.env.test?
     = javascript_include_tag "lib/upgrade-browser.js"
     = javascript_include_tag "vendor/jquery/jquery.ui.touch-punch.min.js"
@@ -113,6 +114,7 @@
           <a href="/community" title="Community">Community</a>
       .nav-search
         = render :partial => 'search/search', locals: { filter_type: params[:filter] }
+    = render :partial => 'regions/notify'
     = yield :main_body
     #footer.footer
       #footer-inner

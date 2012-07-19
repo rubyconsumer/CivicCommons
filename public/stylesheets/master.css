@@ -373,6 +373,7 @@ label {
   text-align: right;
   width: 140px;
 }
+
 label.plain {
   display: inline;
   float: none;
@@ -382,6 +383,17 @@ label.plain {
   text-align: left;
   width: auto;
 }
+
+label.plain.plain-ext {
+  display: block;
+  padding-left: 5px;
+}
+
+.fl-check {
+  float: left;
+  margin-right: 12px;
+}
+
 .form-label-offset {margin: 5px 0 5px 160px;}
 .form-label-offset .title{
   display: block;
@@ -398,6 +410,15 @@ input.textbox, input.textbox.small, textarea.textbox {
   padding: 5px;
   width: 448px;
 }
+
+input.textbox.small {
+  width: 200px;
+}
+
+.inline-form {
+  display: inline;
+}
+
 .form-no-label {
   display: block;
   float: left;
@@ -424,6 +445,7 @@ label.checkbox {
 .aside label, div.call-out label {width: 70px;}
 .aside input.textbox, div.call-out input.textbox, .aside textarea, div.call-out textarea {width: 176px;}
 .mod input.textbox, .mod textarea {width: 156px;}
+.mod input.textbox.region-filter {width: 202px;}
 button.cancel, input.submit, input#contribution_submit {
   background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#B9C974), to(#9DAE55));
   background: -moz-linear-gradient(center top , #b9c974, #9dae55);
@@ -2532,6 +2554,14 @@ color: #51778e;
 
 /*- MISCELLANEOUS
 ----------------------------------------------------------------------*/
+
+/*- Regions ----------*/
+
+.region-name {
+  font-size: 1.6em;
+  margin-left: .2em;
+}
+
 
 /*- Temporary Fix Testing ----------*/
 

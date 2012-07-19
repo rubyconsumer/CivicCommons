@@ -1,13 +1,13 @@
 <fieldset class="form-group <%= issue_type.downcase %>s">
   <%= form.label :issues, "#{issue_type}(s)" %>
-  <table>
+  <table class="pts">
     <% issues.alphabetical.each_slice(2) do |slice| %>
       <tr>
         <% slice.each do |issue| %>
-          <td>
-            <%= check_box_tag "conversation[issue_ids][]", issue.id,
-              conversation.issues.include?(issue), { id: "conversation_issue_ids_#{issue.id}" } %>
-            <label class="plain" for="conversation_issue_ids_<%= issue.id %>">
+          <td class="pts pbs">
+            <label class="plain plain-ext" for="conversation_issue_ids_<%= issue.id %>">
+              <%= check_box_tag "conversation[issue_ids][]", issue.id,
+              conversation.issues.include?(issue), { id: "conversation_issue_ids_#{issue.id}", :class => "fl-check" } %>
               <%= issue.name %>
             </label>
           </td>

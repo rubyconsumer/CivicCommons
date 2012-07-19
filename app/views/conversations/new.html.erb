@@ -5,22 +5,23 @@
 
       <%= form_for setup_conversation(@conversation),:url => polymorphic_url([get_path_sym(@content_item), :conversations]), :html =>{:multipart => true} do |conversation| %>
         <%= render :partial => 'conversations/creation_errors', :locals => { :conversation => @conversation, :contributions => @conversation.contributions } %>
-        <br class="clear" />
 
         <%= render :partial => 'conversations/conversation_fields', :locals => { :form => conversation } %>
-        <br class="clear" />
 
         <p>Which issues is this conversation related to?</p>
         <%= render :partial => 'contributions/issue_selection_fields', :locals => { :form => conversation, :conversation => @conversation, :issues => Issue.standard_issue, :issue_type => "Issue" } %>
-        <br class="clear" />
+
+        <%# <p>Which projects is this conversation related to?</p> %>
+        <%# <%= render :partial => 'contributions/issue_selection_fields', :locals => { :form => conversation, :conversation => @conversation, :issues => Issue.managed_issue, :issue_type => "Project" } %1> %>
 
         <p>Get the ball rolling with a comment, question, or maybe a thought-provoking video you’ve already uploaded to YouTube.</p>
         <%= render :partial => 'contributions/contribution_fields', :locals => { :form => conversation, :contributions => @conversation.contributions } %>
-        <br class="clear" />
 
         <fieldset class="footer">
-          <%= conversation.submit 'Start My Conversation', :class => 'submit' %>
-          <%= link_to "Cancel", root_url %>
+          <div class="field-block mtl">
+            <%= conversation.submit 'Start My Conversation', :class => 'submit' %>
+            <%= link_to "Cancel", root_url %>
+          </div>
         </fieldset>
 
       <% end %>
