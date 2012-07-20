@@ -33,6 +33,11 @@ class Survey < ActiveRecord::Base
     self.surveyable_id if attached_to_conversation?
   end
 
+  # This does not use end_date_time_for_est to prevent issues where less than a day is considered a full day.
+  #
+  # Today is July 30
+  # End Date = July 31      # Result:1 day left         # Correct
+  # EST End Date = Aug 1    # Result:2 days left        # Wrong
   def days_until_end_date
     (end_date - Date.today).to_i if end_date && end_date > Date.today
   end
@@ -55,15 +60,24 @@ class Survey < ActiveRecord::Base
   end
 
   def send_end_notification_email_later
-    self.delay(:run_at => end_date).send_end_notification_email if end_date_changed?
+    self.delay(:run_at => real_end_date_time).send_end_notification_email if end_date_changed?
   end
 
   def active?
     start_date.blank? || (start_date && start_date <= Date.today)
   end
 
-  def expired?
-    !end_date.blank? && end_date.past?
+  # End of Day for Eastern Time in UTC format
+  #
+  # This is actually the end_date + 1 day since the date time will reflect when things are officially over.
+  # ex. If we want to end on July 31st, July 31st 11:59:59 is still not the end.  August 1st 00:00:00 is.
+  #
+  # This is for the Eastern Time zone since our users are EST.  Then it's converted to UTC for server use.
+  def real_end_date_time
+    Time.parse((end_date + 1).to_s)
   end
 
+  def expired?
+    !end_date.blank? && real_end_date_time.past?
+  end
 end

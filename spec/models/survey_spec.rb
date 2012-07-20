@@ -152,7 +152,7 @@ describe Survey do
     end
   end
 
-  context "expired?" do
+  describe "expired?" do
     it "should not be expired when the end_date is in the future" do
       @survey = FactoryGirl.create(:survey, :show_progress => true, :end_date => 1.days.from_now.to_date)
       @survey.should_not be_expired
@@ -166,6 +166,25 @@ describe Survey do
       @survey.should_not be_expired
     end
   end
+
+  describe "end_date_time_for_est" do
+    before(:each) do
+      # Freeze time to UTC server time
+      server_time = Time.utc(2012, 8, 1, 0, 0, 0)
+      Timecop.freeze(server_time).utc
+
+      @survey = FactoryGirl.create(:survey, :show_progress => true, :end_date => Date.new(2012, 8, 1))
+    end
+
+    it "uses end_date and adds a day to figure out the real end date." do
+      Date.parse(@survey.real_end_date_time.to_s).should == Date.new(2012, 8, 2)
+    end
+
+    it "uses end_date and adds a day to figure out the real end date." do
+      @survey.real_end_date_time.should == Time.utc(2012, 8, 2, 4, 0, 0)
+    end
+  end
+
   describe "#days_until_end_date" do
     it "counts number of days to end date" do
       end_date = Date.today + 1.day
@@ -190,10 +209,10 @@ describe Survey do
         @survey.save
         Delayed::Job.count.should == 2
       end
-      it "should have the delayed job run at the end_date" do
+      it "should have the delayed job run after the end_date" do
         the_date = Date.today
         @survey = FactoryGirl.create(:survey, :end_date => the_date, :show_progress => false)
-        Delayed::Job.last.run_at.to_date.should == the_date
+        Delayed::Job.last.run_at.to_date.should == the_date + 1
       end
     end
 

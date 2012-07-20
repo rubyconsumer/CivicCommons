@@ -6,10 +6,15 @@
 ### Bug Fix
   * [Vote Result Description Properly Displays Markup](https://agilezen.com/project/18091/story/615)
   * [Vote url variation based on type of votes](https://agilezen.com/project/18091/story/613)
+  * [Vote Timing Email vs Vote End is the Same](https://agilezen.com/project/18091/story/614)
 
 ### Chores
   * [Resolve missing fb-root console notification](https://agilezen.com/project/18091/story/612)
   * [Prep For Facebook Event Embed](https://agilezen.com/project/18091/story/618)
+
+### Requirements
+  * Set time zone to desired local time zone (ex. Eastern)
+  * Be sure to restart the database.
 
 ## 2.7
 
