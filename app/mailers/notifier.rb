@@ -66,14 +66,14 @@ class Notifier < Devise::Mailer
          :from => '"Curator of Conversation" <curator@theciviccommons.com>',
          :to => @person.email)
   end
-  
+
   def survey_confirmation(survey_response)
     @person = survey_response.person
     @survey = survey_response.survey
     @selected_survey_option_titles = survey_response.selected_survey_option_titles
     headers['X-SMTPAPI'] = '{"category": "survey_confirmation"}'
     mail(:subject => "Thanks for your #{@survey.type.to_s.downcase} participation.",:from => Devise.mailer_sender,:to => @person.email) do |format|
-      format.html do 
+      format.html do
         if @survey.is_a?(Vote)
           render :template => '/notifier/survey_vote_confirmation'
         end
@@ -86,7 +86,7 @@ class Notifier < Devise::Mailer
     @survey = survey
     headers['X-SMTPAPI'] = '{"category": "survey_ended"}'
     mail(:subject => "Check out the results of the \"#{survey.title}\" #{@survey.type.to_s.downcase}!",:from => Devise.mailer_sender,:to => @person.email) do |format|
-      format.html do 
+      format.html do
         if @survey.is_a?(Vote)
           render :template => '/notifier/survey_vote_ended'
         end
