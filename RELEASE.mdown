@@ -5,6 +5,7 @@
 
 ### Bug Fix
   * [Vote Result Description Properly Displays Markup](https://agilezen.com/project/18091/story/615)
+  * [Vote url variation based on type of votes](https://agilezen.com/project/18091/story/613)
 
 ### Chores
   * [Resolve missing fb-root console notification](https://agilezen.com/project/18091/story/612)

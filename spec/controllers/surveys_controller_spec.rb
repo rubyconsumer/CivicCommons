@@ -7,7 +7,7 @@ describe SurveysController do
   end
   
   def mock_survey(stubs={})
-    @mock_survey ||= mock_model(Vote,stubs).as_null_object
+    @mock_survey ||= mock_model(Vote,{:surveyable => nil}.merge(stubs)).as_null_object
   end
   
   def mock_issue(stubs={})
@@ -81,6 +81,16 @@ describe SurveysController do
       Survey.should_receive(:find).twice.and_return(mock_survey)
       get :show, :id => 123
     end
+  end
+  
+  describe "redirect_to_proper_url" do
+    it "should redirect to conversation_vote_url if survey is a surveyable and surveyable is a Conversation" do      
+      @survey = mock_survey(:surveyable => mock_conversation, :surveyable_type => 'Conversation', :id => 123)
+      Survey.stub(:find).and_return(@survey)
+      get :show, :id => 123      
+      response.should redirect_to conversation_vote_url(mock_conversation.id, @survey.id)
+    end
+    
   end
   
   describe "create_response" do

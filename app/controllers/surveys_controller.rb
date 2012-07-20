@@ -1,7 +1,9 @@
 class SurveysController < ApplicationController
   before_filter :require_user
   before_filter :find_survey, :only => [:show, :create_response]
+  before_filter :redirect_to_proper_url, :only => [:show]
   before_filter :allow_active_survey, :only => [:show]
+
 
   def show
     @survey_response_presenter = VoteResponsePresenter.new(:person_id => current_person.id, :survey_id => @survey.id)
@@ -52,6 +54,12 @@ protected
   def allow_active_survey
     unless @survey.active?
       render :template => "surveys/show_#{@survey.class.name.underscore}_inactive"
+    end
+  end
+  
+  def redirect_to_proper_url
+    if @survey.surveyable && @survey.surveyable_type == 'Conversation'
+      redirect_to conversation_vote_url(@survey.surveyable, @survey) 
     end
   end
 

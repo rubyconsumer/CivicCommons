@@ -2,6 +2,7 @@ class Notifier < Devise::Mailer
 
   layout 'mailer'
   add_template_helper(ConversationsHelper)
+  add_template_helper(SurveysHelper)
 
   def email_changed(old_email, new_email)
     @old_email = old_email

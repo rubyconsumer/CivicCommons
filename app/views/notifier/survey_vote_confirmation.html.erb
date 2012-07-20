@@ -1,6 +1,6 @@
 <h1>Thank you for voting!</h1>
 <p>
-  Thank for your vote on "<%= link_to @survey.title, send("#{@survey.type.underscore}_url".to_sym,@survey.id) %>"
+  Thank for your vote on "<%= link_to @survey.title, polymorphic_survey_url(@survey) %>"
 </p>
 <p>
    You selected <%= @selected_survey_option_titles.collect{|title| "\"#{title}\""}.to_sentence %>, and your ballot has been cast.

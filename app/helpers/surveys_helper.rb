@@ -30,4 +30,17 @@ module SurveysHelper
       send("#{survey_response.survey.type.underscore}_url".to_sym,survey_response.survey.id)
     end
   end
+  
+  def polymorphic_survey_url(survey)
+    case survey.type
+    when 'Vote'
+      if survey.surveyable && survey.surveyable_type == 'Conversation'
+        conversation_vote_url(survey.surveyable, survey, :anchor => 'opportunity-nav')
+      else
+        vote_url(survey.id)
+      end
+    else
+      send("#{survey.type.underscore}_url".to_sym, survey.id)
+    end    
+  end
 end
