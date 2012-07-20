@@ -9,6 +9,7 @@
 
 ### Chores
   * [Resolve missing fb-root console notification](https://agilezen.com/project/18091/story/612)
+  * [Prep For Facebook Event Embed](https://agilezen.com/project/18091/story/618)
 
 ## 2.7
 

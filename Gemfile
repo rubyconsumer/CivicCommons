@@ -7,6 +7,8 @@ gem 'devise', '1.5.2'
 gem 'omniauth', '1.0.1'
 gem 'omniauth-facebook'
 
+gem 'fb_graph'
+
 gem 'rails', "~> 3.0.3"
 gem 'jquery-rails', '>= 1.0.3'
 

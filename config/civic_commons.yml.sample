@@ -11,6 +11,7 @@ development:
   facebook:
     api_key: 'crazyfacebookid'
     app_secret: 'facebooksecretsauce'
+    page_access_token: 'facebookPageTokenThatNeverExpires'
   mailer:
     mailchimp: true
     api_token: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-us1"
@@ -43,6 +44,7 @@ test:
   facebook:
     api_key: 'crazyfacebookid'
     app_secret: 'facebooksecretsauce'
+    page_access_token: 'facebookPageTokenThatNeverExpires'
   mailer:
     mailchimp: true
     api_token: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-us1"
@@ -107,6 +109,7 @@ staging:
   facebook:
     api_key: 'crazyfacebookid'
     app_secret: 'facebooksecretsauce'
+    page_access_token: 'facebookPageTokenThatNeverExpires'
   mailer:
     mailchimp: true
     api_token: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-us1"
