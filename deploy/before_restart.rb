@@ -23,6 +23,12 @@ else
   run "echo Config Airbrake Connection....... IGNORE"
 end
 
+# Set Server TimeZone to Eastern.
+#   Details: https://support.cloud.engineyard.com/entries/21016508-set-the-time-zone-for-an-instance
+run "echo Setting Server TimeZone to Eastern (Detroit)..."
+run "sudo ln -sf /usr/share/zoneinfo/America/Detroit /etc/localtime"
+run "ls -alFq /etc/localtime"
+
 # restart delayed_job process
 run "echo 'Restarting delayed_job process...'"
 run "echo '  cd #{release_path} && bundle exec script/delayed_job restart'"
