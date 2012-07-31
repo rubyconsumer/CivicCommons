@@ -2,6 +2,7 @@
 
 ### External Changes
   * [Facebook Like on Contributions](https://agilezen.com/project/18091/story/558)
+  * [Address Typos In Our Guiding Principles Page](https://agilezen.com/project/18091/story/623)
 
 
 ## 2.8
