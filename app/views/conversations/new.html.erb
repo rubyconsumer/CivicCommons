@@ -1,7 +1,7 @@
 <div class="wrapper">
   <div class="content-container">
     <div class="main-content">
-      <h1>Start a Conversation<%= " from #{@start_from}" if @start_from %></h1>
+      <h1>Start a Conversation<%= " from #{@start_from}: #{@content_item.title}" if @start_from %></h1>
 
       <%= form_for setup_conversation(@conversation),:url => polymorphic_url([get_path_sym(@content_item), :conversations]), :html =>{:multipart => true} do |conversation| %>
         <%= render :partial => 'conversations/creation_errors', :locals => { :conversation => @conversation, :contributions => @conversation.contributions } %>

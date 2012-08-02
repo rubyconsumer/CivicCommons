@@ -16,7 +16,7 @@ class BlogController < ApplicationController
     @current_topic = Topic.find_by_id(params[:topic])
     search = @current_topic ? @current_topic.blogposts : ContentItem.blog_post
     @blog_posts = search.recent_blog_posts(@current_author.try(:id))
-    
+
     respond_to do |format|
       format.xml { @blog_posts = @blog_posts.limit(25) }
       format.html { @blog_posts = @blog_posts.paginate(:page => params[:page], :per_page => 5) }
