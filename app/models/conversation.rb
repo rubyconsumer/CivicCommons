@@ -39,12 +39,15 @@ class Conversation < ActiveRecord::Base
 
   has_many :content_items_conversations, :uniq => true
   has_many :content_items, :through => :content_items_conversations, uniq: true
-
   has_many :surveys, :as => :surveyable
+  
   belongs_to :person, :foreign_key => "owner"
+  belongs_to :metro_region
+  
   delegate :name, :to => :person, :prefix => true
   delegate :standard_issue, :to => :issues
   delegate :managed_issue, :to => :issues
+  delegate :city_display_name, :to => :metro_region, :prefix => true, :allow_nil => true
 
   has_attached_file :image,
     :styles => {
@@ -67,6 +70,7 @@ class Conversation < ActiveRecord::Base
   validates_presence_of :title, :message => "Please choose a title for your conversation."
   validates_presence_of :summary, :message => "Please give us a short summary."
   validates_presence_of :zip_code, :message => "Please give us a zip code for a little geographic context."
+  validates_presence_of :metro_region_id, :message => 'Please give us a Location name.'
 
   after_create :set_initial_position, :subscribe_creator
 
@@ -285,6 +289,11 @@ class Conversation < ActiveRecord::Base
 
   def subscribe_creator
     Subscription.create_unless_exists(person, self)
+  end
+  
+  def metro_region_city_display_name=(record)
+    # ignore this attribute that comes back from form post, on a delegator method.
+    return true
   end
 
 end

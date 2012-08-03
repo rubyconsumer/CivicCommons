@@ -9,7 +9,16 @@
   <%= form.label :image %>
   <%= form.file_field :image %>
 </fieldset>
-<br class="clear" />
+
+<p>Enter the city name central to your conversation. We will link it to the nearest Metro area.</p>
+
+<fieldset class="form-group">
+  <div class="form-block">
+    <%= form.label :metro_region_city, 'Location' %>
+    <%= form.text_field :metro_region_city_display_name, :class => "textbox metro_region_city_display_name", :placeholder => "Enter the city name here" %>
+    <%= form.hidden_field :metro_region_id, :class => 'metro_region_id' %>
+  </div>
+</fieldset>
 
 <p>Give us a short description of what you want to accomplish in this conversation. (By "short," we mean about 250 characters, or two sentences.)</p>
 <fieldset class="form-group">
@@ -18,3 +27,11 @@
 </fieldset>
 
 <%= form.hidden_field :zip_code, value: 'ALL' %>
+
+<script type="text/javascript">
+  var selected = function(event, ui){
+    $('.metro_region_id').val(ui.item.id)
+  }
+  $( ".metro_region_city_display_name" ).autocomplete({source:'/search/metro_regions/city', select: selected, autoFocus: true});
+  
+</script>

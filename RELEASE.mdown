@@ -2,7 +2,8 @@
 
 ### External Changes
   * [Users Can Only Select Issues, Not Projects, To Relate To A Conversation](https://agilezen.com/project/18091/story/628)
-
+  * [Starting a conversation requires a city/metro area](https://agilezen.com/project/18091/story/626)
+  
 
 ## 2.9
 

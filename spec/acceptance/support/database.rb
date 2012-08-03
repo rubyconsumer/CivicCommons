@@ -100,6 +100,10 @@ module CivicCommonsDriver
     def self.create_topic(attributes={})
       FactoryGirl.create :topic, attributes
     end
+    
+    def self.create_metro_region(attributes={})
+      FactoryGirl.create :metro_region, attributes
+    end
 
     def self.has_a_topic_without_issues
       create_topic({:issues => []})

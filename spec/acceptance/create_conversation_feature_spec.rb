@@ -6,10 +6,14 @@ feature "User Creates a User-Conversation", %q{
 } do
   background do
     database.create_issue name: "They are important"
+    database.create_project name: "Projects are important"
+    database.create_metro_region
+    database.create_metro_region
   end
 
 
   scenario "starting a conversation", :js => true do
+    stub_metro_region_search
     login_as :person
     follow_start_conversation_link
     agree_to_responsibilities
@@ -19,6 +23,7 @@ feature "User Creates a User-Conversation", %q{
   end
 
   scenario "inviting a friend when starting a conversation", :js => true do
+    stub_metro_region_search
     login_as :person
     follow_start_conversation_link
 
@@ -28,6 +33,7 @@ feature "User Creates a User-Conversation", %q{
     friend.should have_been_sent_an_invitation_to_join conversation
   end
   scenario "starting an invalid conversation", :js => true do
+    stub_metro_region_search
     login_as :person
     follow_start_conversation_link
     agree_to_responsibilities
@@ -49,6 +55,7 @@ feature "User Creates a User-Conversation", %q{
   context "on Blog posts" do
     background do
       database.create_blog_post title: "Blog post title here"
+      stub_metro_region_search
     end
     scenario "starting an invalid conversation with an attachment that needs a comment", :js => true do
       login_as :person
@@ -66,6 +73,7 @@ feature "User Creates a User-Conversation", %q{
   context "on Radio Shows" do
     background do
       database.create_radio_show title: "Radio show title here"
+      stub_metro_region_search
     end
     scenario "starting an invalid conversation with an attachment that needs a comment", :js => true do
       login_as :person
@@ -78,6 +86,13 @@ feature "User Creates a User-Conversation", %q{
       conversation.content_items.should == [database.latest_radio_show]
       the_current_page.should be_the_invite_a_friend_page_for_the conversation
     end
+  end
+  
+  def stub_metro_region_search
+    #stub the search MetroRegion.search on the search controller
+    metro_regions = MetroRegion.all
+    MetroRegion.should_receive(:search).and_return(metro_regions)
+    metro_regions.stub!(:results).and_return(metro_regions)
   end
 
   def friend

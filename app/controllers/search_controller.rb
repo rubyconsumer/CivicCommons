@@ -21,6 +21,13 @@ class SearchController < ApplicationController
     end
 
   end
+  
+  def metro_region_city
+    @results = MetroRegion.search{fulltext(params[:term])}.results
+    @metro_regions = @results.collect{|region| {:id => region.id, :label => region.city_display_name} }
+    
+    render :json => @metro_regions
+  end
 
   private
   def determine_model_class(model_string)

@@ -1,5 +1,7 @@
 require 'spec_helper'
 
 describe MetroRegion do
-  pending "add some examples to (or delete) #{__FILE__}"
+  context "Associations" do
+    it { should have_many :conversations}
+  end
 end

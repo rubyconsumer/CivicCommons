@@ -9,6 +9,7 @@ FactoryGirl.define do
     f.issues { |c| [c.association(:issue)] }
     f.from_community false
     f.association :person, :factory => :admin_person
+    f.metro_region_id '123'
   end
 
   factory :user_generated_conversation, :parent => :conversation do |f|

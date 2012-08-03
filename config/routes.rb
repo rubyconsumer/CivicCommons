@@ -55,6 +55,7 @@ Civiccommons::Application.routes.draw do
 
   #Search
   match '/search/results',                             to: 'search#results',                                 as: 'search'
+  match '/search/metro_regions/city',                  to: 'search#metro_region_city',                       as: 'metro_region_city_search'
 
   #Subscriptions
   post '/subscriptions/subscribe',                     to: 'subscriptions#subscribe'
