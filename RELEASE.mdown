@@ -4,6 +4,7 @@
   * [Facebook Like on Contributions](https://agilezen.com/project/18091/story/558)
   * [Start Conversation from Blog Post Displays Blog Title](https://agilezen.com/project/18091/story/611)
   * [Address Typos In Our Guiding Principles Page](https://agilezen.com/project/18091/story/623)
+  * [Move Search into Global Navigation Bar](https://agilezen.com/project/18091/story/625)
 
 
 ## 2.8
