@@ -2,7 +2,7 @@ class Admin::RegionsController < Admin::DashboardController
 
   def new
     @region = Region.new(params[:region])
-  end 
+  end
 
   def edit
     @region = Region.find(params[:id])

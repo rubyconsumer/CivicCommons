@@ -1,7 +1,7 @@
 class Region < ActiveRecord::Base
 
   before_save :create_zip_codes
-  
+
   has_many :zip_codes
   accepts_nested_attributes_for :zip_codes
 
@@ -51,7 +51,7 @@ class Region < ActiveRecord::Base
     end
     rv
   end
-                                    
+
   def default?
     self.name == Region.default_name
   end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120629015541) do
+ActiveRecord::Schema.define(:version => 20120806175650) do
 
   create_table "actions", :force => true do |t|
     t.integer  "conversation_id"
@@ -425,6 +425,18 @@ ActiveRecord::Schema.define(:version => 20120629015541) do
   add_index "managed_issue_pages", ["issue_id"], :name => "index_managed_issue_pages_on_issue_id"
   add_index "managed_issue_pages", ["person_id"], :name => "index_managed_issue_pages_on_person_id"
   add_index "managed_issue_pages", ["slug"], :name => "index_managed_issue_pages_on_slug", :unique => true
+
+  create_table "metro_regions", :force => true do |t|
+    t.string   "province"
+    t.string   "city_name"
+    t.string   "criteria_id"
+    t.string   "metro_name"
+    t.string   "display_name"
+    t.string   "metrocode"
+    t.string   "province_code"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "organization_details", :force => true do |t|
     t.integer  "person_id"

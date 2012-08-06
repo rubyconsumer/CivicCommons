@@ -225,15 +225,20 @@ Civiccommons::Application.routes.draw do
     end
     resources :topics
     resources :people do
-      get 'proxies',       on: :collection
-      put 'lock_access',   on: :member
-      put 'unlock_access', on: :member
-      put 'confirm',       on: :member
+      get 'proxies',        on: :collection
+      put 'lock_access',    on: :member
+      put 'unlock_access',  on: :member
+      put 'confirm',        on: :member
       get 'export_members', on: :collection
     end
     resources :user_registrations, only: [:new, :create]
     resources :featured_opportunities do
       get 'change_conversation_selection', on: :collection
+    end
+    resources :metro_regions do
+      get  'display_names',        on: :collection
+      get  'edit_display_names',   on: :member
+      put  'update_display_names', on: :member
     end
   end
 
