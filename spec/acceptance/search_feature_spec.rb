@@ -23,7 +23,7 @@ feature "Search the web site", %q{
     # Then I should be redirected to the search results page
     page.current_path.include?(search_results_page.path).should be_true
     # And I should see 'Conversation' as the highlighted filter
-    search_results_page.has_filter_selected?('Conversations').should be_true
+    search_results_page.has_filter_selected?('Conversations').should be_false
   end
 
   scenario "Search Filter for a conversation page" do
@@ -38,7 +38,7 @@ feature "Search the web site", %q{
     # Then I should be redirected to the search results page
     page.current_path.include?(search_results_page.path).should be_true
     # And I should see 'Conversation' as the highlighted filter
-    search_results_page.has_filter_selected?('Conversations').should be_true
+    search_results_page.has_filter_selected?('Conversations').should be_false
   end
 
   scenario "Search Filter for the community page" do
@@ -54,14 +54,14 @@ feature "Search the web site", %q{
     # Then I should be redirected to the search results page
     page.current_path.include?(search_results_page.path).should be_true
     # And I should see 'Community' as the highlighted filter
-    search_results_page.has_filter_selected?('Community').should be_true
+    search_results_page.has_filter_selected?('Community').should be_false
   end
 
   scenario "Search Filter for the issues page" do
     goto :issues_index
     search_for 'search term here'
     page.current_path.include?(search_results_page.path).should be_true
-    current_page.should have_issues_filter_selected
+    current_page.should_not have_issues_filter_selected
   end
 
   scenario "Search Filter for an issue page" do
@@ -69,7 +69,7 @@ feature "Search the web site", %q{
     goto :issue_detail, :for=> issue
     search_for 'search term here'
     current_page.should be :search_results
-    current_page.should have_issues_filter_selected
+    current_page.should_not have_issues_filter_selected
   end
 
   scenario "Search Filter for the projects page" do
@@ -82,7 +82,7 @@ feature "Search the web site", %q{
     # Then I should be redirected to the search results page
     page.current_path.include?(search_results_page.path).should be_true
     # And I should see 'Projects' as the highlighted filter
-    search_results_page.has_filter_selected?('Projects').should be_true
+    search_results_page.has_filter_selected?('Projects').should be_false
   end
 
 =begin
