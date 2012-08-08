@@ -7,6 +7,9 @@
   * [Address Typos In Our Guiding Principles Page](https://agilezen.com/project/18091/story/623)
   * [Move Search into Global Navigation Bar](https://agilezen.com/project/18091/story/625)
 
+### Bug Fix
+  * [Drag and drop vote options doesn't work on iPad](https://agilezen.com/project/18091/story/620)
+
 
 ## 2.8
 
