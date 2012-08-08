@@ -6,6 +6,7 @@
   * [Admin Ability to Edit Metro Names in Admin Tool for Display](https://agilezen.com/project/18091/story/622)
   * [Address Typos In Our Guiding Principles Page](https://agilezen.com/project/18091/story/623)
   * [Move Search into Global Navigation Bar](https://agilezen.com/project/18091/story/625)
+  * [Remove Search Box From Footer](https://agilezen.com/project/18091/story/629)
 
 ### Bug Fix
   * [Drag and drop vote options doesn't work on iPad](https://agilezen.com/project/18091/story/620)
