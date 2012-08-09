@@ -31,7 +31,6 @@ class Conversation
       fill_in_summary_with "stufffff!"
       fill_in_content_with "COOL! THIS IS AWESOME"
       select_issue "They are important"
-      select_project "Projects are important"
       add_link options[:link_to_related_website] if options.key? :link_to_related_website
     end
 

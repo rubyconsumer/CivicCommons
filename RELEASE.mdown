@@ -1,3 +1,9 @@
+## 3.0
+
+### External Changes
+  * [Users Can Only Select Issues, Not Projects, To Relate To A Conversation](https://agilezen.com/project/18091/story/628)
+
+
 ## 2.9
 
 ### External Changes

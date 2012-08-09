@@ -6,7 +6,6 @@ feature "User Creates a User-Conversation", %q{
 } do
   background do
     database.create_issue name: "They are important"
-    database.create_project name: "Projects are important"
   end
 
 
