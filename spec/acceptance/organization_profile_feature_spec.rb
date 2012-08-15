@@ -43,6 +43,7 @@ feature "Organization Profiles", %q{
     current_page.should have_subscriber_avatar person
     follow_unsubscribe_organization_link
     subscribe_organization_link.should be_visible
+    sleep 5
     current_page.should_not have_subscriber_avatar person
   end
 

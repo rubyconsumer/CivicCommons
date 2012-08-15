@@ -27,7 +27,6 @@
             =render :partial => 'conversations/contribution_tool', :locals => { :conversation => @conversation, :contribution => @contribution }
 
     .aside.supplementary
-      =render :partial => '/search/search', :locals => {:filter_type => 'conversations'}
       %p
         -if current_person
           = link_to("Post to this Conversation", '#', :class => "text button wide-button post_to_conversation", :id => 'post_to_conversation', :title => 'Post to this conversation')

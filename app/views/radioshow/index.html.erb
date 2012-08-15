@@ -20,7 +20,6 @@
       </div>
 
       <div class="aside supplementary">
-        <%= render :partial => '/search/search', locals: { filter_type: 'radioshows' } %>
         <%= render_radioshow_topics_sidebar %>
         <%= render partial: 'blog/recent_blog_posts_sidebar', locals: { blog_posts: @recent_blog_posts } %>
       </div>

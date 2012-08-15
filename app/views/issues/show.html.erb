@@ -49,7 +49,6 @@
       </div>
     </div><!-- /.main-content -->
     <div class='aside supplementary'>
-      <%= render :partial => '/search/search', locals: { filter_type: 'issues' } %>
     </div>
     <div id='media-contributions' class='aside supplementary'>
       <%= render :partial => "issues/contributions/contribution_template", :collection => @contributions, :as => :contribution %>
