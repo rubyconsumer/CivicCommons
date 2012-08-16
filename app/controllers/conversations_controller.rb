@@ -19,6 +19,7 @@ class ConversationsController < ApplicationController
     @popular = Conversation.get_top_visited(limit:3)
     @recent = Conversation.latest_created.limit(3)
     @recommended = Conversation.recommended.limit(3)
+    @top_metro_regions = MetroRegion.top_metro_regions(5)
 
     @recent_items = Activity.most_recent_activity_items(limit: 3)
     render :index, :layout => 'category_index'

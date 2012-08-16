@@ -30,7 +30,7 @@ module CivicCommonsDriver
       end
 
       def has_number_of_issues_for?(topic, number)
-        within 'ul.simple-list.block-link-list' do
+        within 'ul.simple-list.block-link-list.topics' do
            has_content? "#{topic.name} #{number}"
         end
       end

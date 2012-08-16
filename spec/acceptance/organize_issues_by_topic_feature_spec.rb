@@ -33,8 +33,9 @@ feature 'Organize Issues By Topic', %q{
     current_page.should_not have_listed topic_without_issues
   end
 
-  scenario "issues that shouldnt exist dont get counted" do
+  scenario "issues that shouldnt exist dont get counted"do
     database.has_an_issue :topics => [topic], :exclude_from_result=>true
+    database.create_metro_region
     goto :issues_index
     current_page.should have_number_of_issues_for(topic, 1)
   end
