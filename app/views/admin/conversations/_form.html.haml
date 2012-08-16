@@ -47,12 +47,25 @@
     =conversation.label :issues, "Select Issues"
     %br
     %table
-      - Issue.alphabetical.each_slice(2) do |slice|
+      - Issue.standard_issue.alphabetical.each_slice(2) do |slice|
         %tr
           -slice.each do |issue|
             %td
               =check_box_tag "conversation[issue_ids][]", issue.id, @conversation.issues.include?(issue), id: "issue_#{ issue.id }"
-              =issue.name
+              =issue.name + " " + issue.type
+
+    =hidden_field_tag 'conversation[issue_ids][]', ''
+
+  %p
+    =conversation.label :issues, "Select Managed Issues"
+    %br
+    %table
+      - Issue.managed_issue.alphabetical.each_slice(2) do |slice|
+        %tr
+          -slice.each do |issue|
+            %td
+              =check_box_tag "conversation[issue_ids][]", issue.id, @conversation.issues.include?(issue), id: "issue_#{ issue.id }"
+              =issue.name + " " + issue.type
 
     =hidden_field_tag 'conversation[issue_ids][]', ''
 

@@ -3,6 +3,7 @@
 ### External Changes
   * [Users Can Only Select Issues, Not Projects, To Relate To A Conversation](https://agilezen.com/project/18091/story/628)
   * [Starting a conversation requires a city/metro area](https://agilezen.com/project/18091/story/626)
+  * [Admins Can Associate Conversations To A Project In The Admin Panel](https://agilezen.com/project/18091/story/627)
   * [Remove Search from All "In page" locations except Home Page (now that it is in Global Nav)](https://agilezen.com/project/18091/story/634)
 
 ### Chores
