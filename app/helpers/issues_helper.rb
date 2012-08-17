@@ -16,7 +16,7 @@ module IssuesHelper
   def media_link_info(contribution)
     if contribution.has_attachment?
       link_to(contribution.attachment_file_name, contribution.attachment.url)
-    else 
+    else
       link_to(contribution.title, contribution.url)
     end
   end

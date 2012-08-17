@@ -1,4 +1,5 @@
 class SessionsController < Devise::SessionsController
+  include RegionHelper
 
   prepend_before_filter :require_no_authentication, :only => [:new, :create, :ajax_new, :ajax_create]
   prepend_before_filter :allow_params_authentication!, :only => [:create, :ajax_create]
@@ -15,6 +16,7 @@ class SessionsController < Devise::SessionsController
   def create
     super
     session[:previous] = nil
+    default_region(current_person.default_region)
   end
 
   def ajax_new

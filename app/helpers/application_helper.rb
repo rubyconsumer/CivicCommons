@@ -37,7 +37,7 @@ module ApplicationHelper
   end
 
   def nl2br(string)
-	  string.gsub(/\n/, '<br />') if string
+    string.gsub(/\n/, '<br />') if string
   end
 
   def url_for(options = nil)
@@ -60,7 +60,7 @@ module ApplicationHelper
     plural = pluralize count, singular, plural
     plural.gsub(/\d+ /, "")
   end
-  
+
   def cc_widget_embed_code(src_path, dom_id ='')
     src_path
     dom_id ||= 'civic-commons-widget'
