@@ -20,7 +20,7 @@ module CivicCommonsDriver
 
     has_link :connect_with_facebook, "facebook-connect", :home
     has_link :failing_connect_with_facebook, "facebook-connect"
-    has_link :i_dont_want_to_use_facebook, "I don't have a Facebook account", :registration_page
+    has_link :i_dont_want_to_use_facebook, "Register with an email address", :registration_page
 
     def has_an_error_for? field
       case field
