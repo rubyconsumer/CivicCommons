@@ -266,23 +266,28 @@ h6 a {
   text-decoration: none;
 }
 
-p.subtitle,
-p.region-desc {
+.subtitle,
+.region-desc {
   color: #999;
   font-size: 1.3em;
   margin: -15px 0 0 0;
 }
 
-p.subtitle {
+.subtitle {
   margin-bottom: 18px;
 }
 
-p.subtitle a {
+.subtitle a {
   color: #999;
 }
 
-p.subtitle a:hover {
+.subtitle a:hover {
   color: #2c87b7;
+}
+
+.heading-subtitle {
+  color: #999;
+  font-size: .8em;
 }
 
 .contribution-form-headline h3 {
@@ -1655,6 +1660,17 @@ div.four-col div.cols {
   margin-left: 20px;
   width: 220px;
 }
+
+.four-col-fluid .cols {
+  float: left;
+  margin-left: 2%;
+  width: 23.5%;
+}
+
+.four-col-fluid .cols:first-child {
+  margin-left: 0;
+}
+
 
 /*- Header and Logo ----------*/
 
@@ -3405,6 +3421,74 @@ input.textbox.input-short {
      -moz-border-radius: 0 0 4px 4px;
        -o-border-radius: 0 0 4px 4px;
           border-radius: 0 0 4px 4px;
+}
+
+.card.card-height {
+  min-height: 0;
+  height: auto !important;
+  height: 0;
+  overflow: hidden;
+}
+
+.js-accordion dt {
+  padding: 5px 0;
+  cursor: pointer;
+}
+
+.js-accordion dt:before {
+  content: "✚";
+  margin-right: 8px;
+  color: #ccc;
+}
+
+.js-accordion dt:hover {
+  color: #2c87b7;
+}
+
+.js-accordion dd {
+  margin-left: 22px;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  display: none;
+  border-bottom: 1px dashed #ddd;
+}
+
+.js-accordion dd p:last-child,
+.js-accordion dd ul:last-child {
+  margin-bottom: 0;
+}
+
+.js-accordion dd.show {
+  display: block;
+}
+
+.promotion-cta {
+  width: 150px;
+}
+
+.promotion-info {
+  float: left;
+  border-right: 1px solid #ddd;
+  width: 700px;
+  margin-right: 20px;
+  padding-right: 20px;
+}
+
+.promotion-title {
+  margin-bottom: 10px;
+}
+
+.subtitle.promotion-subtitle {
+  margin-top: 0;
+}
+
+.promotion-title {
+  font-size: 200%;
+}
+
+.promotion-price {
+  font-size: 160%;
+  color: #666;
 }
 
 

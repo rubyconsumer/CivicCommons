@@ -146,6 +146,11 @@ Civiccommons::Application.routes.draw do
   end
 
   resources :projects, only: [:index]
+  
+  resources :products_services, only: [:index] do
+    get '/promotion', to: 'products_services#promotion', on: :collection
+    post '/promotion', to: 'products_services#submit_promotion', on: :collection
+  end
 
   resources :conversations, only: [:index, :show, :new, :create] do
     get :embed, on: :member

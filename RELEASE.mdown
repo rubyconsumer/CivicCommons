@@ -3,6 +3,7 @@
 
 ### External Changes
   * [Admin Blog ONLY ability](https://agilezen.com/project/18091/story/652)
+  * [Add Product/Services page and form](https://agilezen.com/project/18091/story/661)
 
 ### Bug Fix
   * [AutoComplete Issues](https://agilezen.com/project/18091/story/659)

@@ -6,6 +6,7 @@ development:
   email:
     default_email: "myemail@example.com"
     support_email: "support@example.com"
+    products_services_email: 'products_services@example.com'
   embedly:
     key: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   facebook:
@@ -39,6 +40,7 @@ test:
   email:
     default_email: "my_default_email@example.com"
     support_email: "my_support_email@example.com"
+    products_services_email: 'products_services@example.com'
   embedly:
     key: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   facebook:
@@ -72,6 +74,7 @@ integration:
   email:
     default_email: "myemail@example.com"
     support_email: "support@example.com"
+    products_services_email: 'products_services@example.com'
   embedly:
     key: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   facebook:
@@ -104,6 +107,7 @@ staging:
   email:
     default_email: "myemail@example.com"
     support_email: "support@example.com"
+    products_services_email: 'products_services@example.com'
   embedly:
     key: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   facebook:
@@ -137,6 +141,7 @@ production:
   email:
     default_email: "myemail@example.com"
     support_email: "support@example.com"
+    products_services_email: 'products_services@example.com'
   embedly:
     key: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   facebook:

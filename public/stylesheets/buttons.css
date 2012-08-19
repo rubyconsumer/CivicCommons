@@ -96,6 +96,10 @@ a.button.active {
   width: 200px;
 }
 
+.button.button-block {
+  display: block;
+}
+
 .button.ico-btn {
   padding-bottom: 5px;
   padding-top: 2px;
