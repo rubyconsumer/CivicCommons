@@ -100,6 +100,11 @@ class Issue < ActiveRecord::Base
         custom_order
       end
     }
+  # Filters by metro region, if metrocode parameter is supplied, otherwise, ignores it.
+  scope :filter_metro_region, lambda{|metrocode| 
+      joins(:conversations => :metro_region).where(:metro_regions=>{metrocode: metrocode}).group('issues.id') if metrocode.present?
+    }
+  
 
   def self.random
     if (c = count) != 0

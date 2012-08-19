@@ -6,11 +6,12 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery
   include AvatarHelper
+  include RegionHelper
 
   layout 'application'
 
   before_filter :require_no_ssl
-  helper_method :with_format
+  helper_method :with_format, :default_region
 
 protected
   def verify_admin
@@ -87,5 +88,14 @@ protected
     self.formats = old_formats
     nil
   end
-
+  
+  # redirects to the previous page, if there are any
+  def redirect_to_back(default = root_url)
+    if !request.env["HTTP_REFERER"].blank? and request.env["HTTP_REFERER"] != request.env["REQUEST_URI"]
+      redirect_to :back
+    else
+      redirect_to default
+    end
+  end
+  
 end

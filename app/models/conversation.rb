@@ -82,6 +82,9 @@ class Conversation < ActiveRecord::Base
   scope :latest_updated, :order => 'updated_at DESC'
   scope :latest_created, where(:exclude_from_most_recent => false).order('created_at DESC')
   scope :alphabet_ascending_by_title, :order => 'title ASC'
+  
+  # Filters by metro region, if metrocode parameter is supplied, otherwise, ignores it.
+  scope :filter_metro_region, lambda{|metrocode| joins(:metro_region).where(:metro_regions=>{metrocode: metrocode}) if metrocode.present?}
 
   # Return conversations that have actions and reflections.
   def self.conversations_with_actions_and_reflections

@@ -20,12 +20,16 @@ class Topic < ActiveRecord::Base
 
   validates_presence_of :name
   validates_uniqueness_of :name
-
+  
+  # Filters by metro region, if metrocode parameter is supplied, otherwise, ignores it.
+  scope :filter_metro_region, lambda{|metrocode| 
+      joins(:issues=> {:conversations => :metro_region}).where(:metro_regions=>{metrocode: metrocode}).group('topics.id') if metrocode.present?
+    }
   scope :including_public_issues,
     joins(:issues).
-      select('topics.*,count(issues.id) AS issue_count').
+      select('topics.*,count(DISTINCT issues.id) AS issue_count').
       where(:issues=>{:exclude_from_result => false,:type => 'Issue'}).
-      group('topics.id').having('count(issues.id) > 0')
+      group('topics.id').having('count(DISTINCT issues.id) > 0')
 
   # Issue with conditions on joins: https://github.com/rails/rails/issues/2637
   # The conditions are incorrectly used as ON parameters for the JOIN instead of WHERE clause

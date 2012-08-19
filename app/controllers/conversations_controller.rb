@@ -1,6 +1,5 @@
 class ConversationsController < ApplicationController
   layout 'opportunity', :except => :index
-
   before_filter :force_friendly_id, :only => :show
   before_filter :require_user, :only => [
     :new,
@@ -15,10 +14,10 @@ class ConversationsController < ApplicationController
 
   # GET /conversations
   def index
-    @active = Conversation.most_active.limit(3)
-    @popular = Conversation.get_top_visited(limit:3)
-    @recent = Conversation.latest_created.limit(3)
-    @recommended = Conversation.recommended.limit(3)
+    @active = Conversation.filter_metro_region(default_region).most_active.limit(3)
+    @popular = Conversation.filter_metro_region(default_region).get_top_visited(limit:3)
+    @recent = Conversation.filter_metro_region(default_region).latest_created.limit(3)
+    @recommended = Conversation.filter_metro_region(default_region).recommended.limit(3)
     @top_metro_regions = MetroRegion.top_metro_regions(5)
 
     @recent_items = Activity.most_recent_activity_items(limit: 3)
@@ -41,8 +40,9 @@ class ConversationsController < ApplicationController
 
   def filter
     @filter = params[:filter]
-    @conversations = Conversation.filtered(@filter).paginate(:page => params[:page], :per_page => 12)
-
+    @conversations = Conversation.filter_metro_region(default_region).filtered(@filter).paginate(:page => params[:page], :per_page => 12)
+    @top_metro_regions = MetroRegion.top_metro_regions(5)
+    
     @recent_items = Activity.most_recent_activity_items(limit: 3)
     render :filter, :layout => 'category_index'
   end

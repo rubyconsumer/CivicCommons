@@ -1,7 +1,7 @@
 class MetroRegion < ActiveRecord::Base
   
   has_many :conversations, :dependent => :restrict
-  
+    
   searchable do
     text :city_display_name,:boost => 2
   end

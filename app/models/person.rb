@@ -164,6 +164,10 @@ class Person < ActiveRecord::Base
   def subscribed_to? mailing_type
     send(mailing_type)
   end
+  
+  def set_default_region(metrocode)
+    self.update_attribute(:default_region, metrocode) if MetroRegion.find_by_metrocode(metrocode)
+  end
 
   def check_to_send_welcome_email
     @send_welcome = true if newly_confirmed?

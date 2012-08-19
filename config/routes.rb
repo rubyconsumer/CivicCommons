@@ -64,6 +64,9 @@ Civiccommons::Application.routes.draw do
   #ToS
   get  '/tos/:contribution_id',                        to: 'tos#new',                                        as: 'new_tos'
   post '/tos/:contribution_id',                        to: 'tos#create',                                     as: 'tos'
+  
+  #MetroRegions
+  post '/metro_regions/filter/:metrocode',              to: 'metro_regions#filter',                           as: 'metro_region_filter'
 
   #UnsubscribeDigest
   get '/unsubscribe-me/:id',                           to: 'unsubscribe_digest#unsubscribe_me',              as: 'unsubscribe_confirmation'

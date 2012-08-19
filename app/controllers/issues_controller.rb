@@ -4,12 +4,12 @@ class IssuesController < ApplicationController
 
   # GET /issues
   def index
-    @topics = Topic.including_public_issues
+    @topics = Topic.filter_metro_region(default_region).including_public_issues
     @current_topic = Topic.find_by_id(params[:topic])
     @subtitle = @current_topic.name if @current_topic
 
     @search = @current_topic ? @current_topic.issues : Issue
-    @issues = @search.standard_issue.published.custom_order.paginate(:page => params[:page], :per_page => 20)
+    @issues = @search.filter_metro_region(default_region).standard_issue.published.custom_order.paginate(:page => params[:page], :per_page => 20)
     @recent_items = Activity.most_recent_activity_items(limit: 3)
     @top_metro_regions = MetroRegion.top_metro_regions(5)
   end
