@@ -3,8 +3,7 @@ class MetroRegion < ActiveRecord::Base
   has_many :conversations, :dependent => :restrict
   
   searchable do
-    text :city_name, :boost => 2, :default_boost => 2
-    text :province
+    text :city_display_name,:boost => 2
   end
   
   def city_display_name
