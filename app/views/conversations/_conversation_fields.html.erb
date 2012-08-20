@@ -28,10 +28,5 @@
 
 <%= form.hidden_field :zip_code, value: 'ALL' %>
 
-<script type="text/javascript">
-  var selected = function(event, ui){
-    $('.metro_region_id').val(ui.item.id)
-  }
-  $( ".metro_region_city_display_name" ).autocomplete({source:'/search/metro_regions/city', select: selected, autoFocus: true});
-  
-</script>
+<%= render :partial => "/conversations/region_autocomplete" %>
+
