@@ -67,6 +67,7 @@ Civiccommons::Application.routes.draw do
   
   #MetroRegions
   post '/metro_regions/filter/:metrocode',              to: 'metro_regions#filter',                           as: 'metro_region_filter'
+  post '/metro_regions/filter/',                        to: 'metro_regions#filter',                           as: 'metro_region_filter_form'
 
   #UnsubscribeDigest
   get '/unsubscribe-me/:id',                           to: 'unsubscribe_digest#unsubscribe_me',              as: 'unsubscribe_confirmation'

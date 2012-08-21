@@ -25,7 +25,7 @@ class SearchController < ApplicationController
   def metro_region_city
     @term = params[:term].to_s.gsub(/,|\./i,'')
     @results = MetroRegion.search{|q|q.fuzzy(:city_display_name, @term) }.results
-    @metro_regions = @results.collect{|region| {:id => region.id, :label => region.city_display_name} }
+    @metro_regions = @results.collect{|region| {:id => region.id, :label => region.city_display_name, :metrocode => region.metrocode} }
     
     render :json => @metro_regions
   end

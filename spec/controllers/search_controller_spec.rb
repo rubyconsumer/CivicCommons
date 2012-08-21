@@ -15,7 +15,7 @@ describe SearchController do
     end
     it "should return the correct result format" do
       get :metro_region_city, :term => 'Chicago'
-      response.body.should == "[{\"id\":123,\"label\":\"Chicago, Illinois\"}]"
+      response.body.should == "[{\"id\":123,\"label\":\"Chicago, Illinois\",\"metrocode\":null}]"
     end
   end
   describe "GET results" do

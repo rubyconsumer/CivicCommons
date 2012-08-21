@@ -114,7 +114,9 @@
           <a href="/community" title="Community">Community</a>
       .nav-search
         = render :partial => 'search/search', locals: { filter_type: params[:filter] }
-    = render :partial => 'regions/notify'
+    - if cc_metro_region != default_region
+      - if current_page?(:controller => :conversations, :action => :index) || current_page?(:controller => :issues, :action => :index) || current_page?(:controller => :projects, :action => :index)
+        = render :partial => 'regions/notify' 
     = yield :main_body
     #footer.footer
       #footer-inner

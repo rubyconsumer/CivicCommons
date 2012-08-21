@@ -2562,6 +2562,9 @@ color: #51778e;
   margin-left: .2em;
 }
 
+.region-filter-notifier .region-filter-container{
+  display:none;
+}
 
 /*- Temporary Fix Testing ----------*/
 

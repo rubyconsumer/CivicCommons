@@ -1,9 +1,13 @@
 <div class="wrapper">
-  <div class="alert alert-admin mts mbs pal">
-    <a class="dismiss" title="Remove Filter" href="#">&times;</a>
-    Viewing results for <strong class="region-name">Akron, OH</strong> <a href="#">change</a>
-
+  <div class="alert alert-admin mts mbs pal region-filter-notifier">
+    <%= link_to raw('&times;'), metro_region_filter_path(cc_metro_region), :title => "Remove Filter", :class => 'dismiss', :method => :post  %>
+    Viewing results for <strong class="region-name"><%= current_region.display_name if current_region.respond_to?(:display_name) %></strong> <a href="#" class="change-filter">change</a>
     <%= render :partial => 'regions/region_filter' %>
-
   </div>
 </div>
+<script type="text/javascript">
+  $(".region-filter-notifier a.change-filter").click(function(){
+    $('.region-filter-notifier .region-filter-container').show();
+    return false;
+  })
+</script>
