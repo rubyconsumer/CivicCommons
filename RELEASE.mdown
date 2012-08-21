@@ -9,6 +9,14 @@
   * [Registration Wording Change.](https://agilezen.com/project/18091/story/637)
   * [As A Logged In User, My Regional Filter Will Be Retained.](https://agilezen.com/project/18091/story/638)
   * [Add Top 5 Metro Area to Conversation, Issues, and Projects page](https://agilezen.com/project/18091/story/630)
+  * [As a User, my Regional Filter will be Retained.](https://agilezen.com/project/18091/story/639)
+  * [Add Metro Location Filter](https://agilezen.com/project/18091/story/631)
+  * [Add autocomplete by city to metro location filter aside.](https://agilezen.com/project/18091/story/632)
+
+### Post Deployment Instructions
+  * run `bundle exec rake sunspot:solr:reindex` on the server after deployment
+
+
 
 ### Chores
   * [Upgrade to rails 3.1](https://agilezen.com/project/18091/story/526)
