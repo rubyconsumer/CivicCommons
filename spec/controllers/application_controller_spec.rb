@@ -160,3 +160,29 @@ describe ApplicationControllerRenderWidget do
   end
 
 end
+
+class AnyController < ApplicationController
+end
+
+describe AnyController do
+  controller(AnyController) do
+    def index
+      redirect_to_back params[:url]
+    end
+  end
+  context "redirect_to_back" do
+    it "should redirect to :back if there is a env['HTTP_REFERER']" do
+      @request.env['HTTP_REFERER'] = 'http://previous.url.here'
+      get :index, :url => 'http://other.url.com'
+      response.should redirect_to 'http://previous.url.here'
+    end
+    it "should render the correct action if there isn't a env['HTTP_REFERER']" do
+      get :index, :url => 'http://other.url.com'
+      response.should redirect_to 'http://other.url.com'
+    end
+    it "should default to root_url if there isn't a  env['HTTP_REFERER']" do
+      get :index
+      response.should redirect_to 'http://test.host/'
+    end
+  end
+end

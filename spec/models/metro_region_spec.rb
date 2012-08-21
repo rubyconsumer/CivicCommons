@@ -13,12 +13,6 @@ describe MetroRegion do
       end
     end
     
-    def given_non_associated_conversations_and_metro_regions
-      5.times {FactoryGirl.create(:metro_region)}
-      5.times {FactoryGirl.create(:conversation)}
-    end
-    
-    
     it "should return the correct number of metro regions" do
       given_conversations_and_metro_regions
       MetroRegion.top_metro_regions.length.should == 5
@@ -29,10 +23,6 @@ describe MetroRegion do
       5.times do |i|
         MetroRegion.top_metro_regions.include?(@metro_regions[i]).should be_true
       end
-    end
-    it "should return nothing if there are no conversations that are associated with metro regions" do
-      given_non_associated_conversations_and_metro_regions
-      MetroRegion.top_metro_regions.length.should == 0
     end
     
     it "should return a different number of results if a parameter is passed" do

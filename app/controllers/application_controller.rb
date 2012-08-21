@@ -90,11 +90,11 @@ protected
   end
   
   # redirects to the previous page, if there are any
-  def redirect_to_back(default = root_url)
+  def redirect_to_back(default = nil)
     if !request.env["HTTP_REFERER"].blank? and request.env["HTTP_REFERER"] != request.env["REQUEST_URI"]
       redirect_to :back
     else
-      redirect_to default
+      redirect_to default || root_url
     end
   end
   

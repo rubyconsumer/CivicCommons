@@ -846,5 +846,19 @@ describe Person do
       Person.sunspot_options[:unless].should == :locked?
     end
   end
+  context "set_default_region" do
+    before(:each) do
+      @metro_region = FactoryGirl.create(:default_metro_region)
+      @person = FactoryGirl.create(:normal_person)
+    end
+    it "should set the default region if metro_region record is found" do
+      @person.should_receive(:update_attribute).with(:default_region, @metro_region.metrocode)
+      @person.set_default_region(@metro_region.metrocode)
+    end
+    it "should not set the default region if metro_region record is not found" do
+      @person.should_not_receive(:update_attribute).with(:default_region, 12345)
+      @person.set_default_region(12345)
+    end
+  end
 
 end

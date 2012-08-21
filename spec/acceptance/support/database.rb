@@ -114,11 +114,11 @@ module CivicCommonsDriver
     end
 
     def self.create_issue(attributes= {})
-      FactoryGirl.create :issue, attributes
+      FactoryGirl.create :issue_with_conversation, attributes
     end
 
     def self.create_project(attributes= {})
-      FactoryGirl.create :managed_issue, attributes
+      FactoryGirl.create :managed_issue_with_conversation, attributes
     end
 
     def self.create_blog_post(attributes = {})

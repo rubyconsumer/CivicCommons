@@ -13,4 +13,9 @@ FactoryGirl.define do
     f.image File.new(Rails.root + 'test/fixtures/images/test_image.jpg')
     f.topics { |topics| [topics.association(:topic)] }
   end
+  
+  factory :managed_issue_with_conversation, :parent => :managed_issue do |issue|
+    issue.conversations { |conversation| [conversation.association(:conversation)] }
+  end
+  
 end

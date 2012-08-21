@@ -16,11 +16,11 @@ describe IssuesController do
 
       factory_limit = 2
       (1..factory_limit).each do |i|
-        FactoryGirl.create(:issue, :exclude_from_result => false, :topics => [Topic.first], :position => factory_limit-i)
+        FactoryGirl.create(:issue_with_conversation, :exclude_from_result => false, :topics => [Topic.first], :position => factory_limit-i)
       end
 
       (1..2).each do
-        FactoryGirl.create(:issue, :exclude_from_result => true)
+        FactoryGirl.create(:issue_with_conversation, :exclude_from_result => true)
       end
 
     end

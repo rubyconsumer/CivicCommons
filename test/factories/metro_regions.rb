@@ -8,4 +8,7 @@ FactoryGirl.define do
     f.sequence(:metrocode) {|n| "10#{n}"}
     f.sequence(:province_code) {|n| "Provice Code #{n}"}
   end
+  factory :default_metro_region, :parent => :metro_region do |f|
+    f.sequence(:metrocode) {|n| "510"}
+  end
 end
