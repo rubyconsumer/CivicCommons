@@ -12,14 +12,13 @@
   * [As a User, my Regional Filter will be Retained.](https://agilezen.com/project/18091/story/639)
   * [Add Metro Location Filter](https://agilezen.com/project/18091/story/631)
   * [Add autocomplete by city to metro location filter aside.](https://agilezen.com/project/18091/story/632)
-
-### Post Deployment Instructions
-  * run `bundle exec rake sunspot:solr:reindex` on the server after deployment
-
-
+  * [Regions Filter Shows for Cleveland, OH Region.](https://agilezen.com/project/18091/story/644)
 
 ### Chores
   * [Upgrade to rails 3.1](https://agilezen.com/project/18091/story/526)
+
+### Post Deployment Instructions
+  * run `bundle exec rake sunspot:solr:reindex` on the server after deployment
 
 
 ## 2.9
