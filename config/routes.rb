@@ -64,10 +64,11 @@ Civiccommons::Application.routes.draw do
   #ToS
   get  '/tos/:contribution_id',                        to: 'tos#new',                                        as: 'new_tos'
   post '/tos/:contribution_id',                        to: 'tos#create',                                     as: 'tos'
-  
+
   #MetroRegions
-  post '/metro_regions/filter/:metrocode',              to: 'metro_regions#filter',                           as: 'metro_region_filter'
-  post '/metro_regions/filter/',                        to: 'metro_regions#filter',                           as: 'metro_region_filter_form'
+  post '/metro_regions/filter/cancel',                 to: 'metro_regions#cancel_regions_filter',            as: 'cancel_metro_region_filter'
+  post '/metro_regions/filter/:metrocode',             to: 'metro_regions#filter',                           as: 'metro_region_filter'
+  post '/metro_regions/filter/',                       to: 'metro_regions#filter',                           as: 'metro_region_filter_form'
 
   #UnsubscribeDigest
   get '/unsubscribe-me/:id',                           to: 'unsubscribe_digest#unsubscribe_me',              as: 'unsubscribe_confirmation'

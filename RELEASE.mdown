@@ -13,6 +13,7 @@
   * [Add Metro Location Filter](https://agilezen.com/project/18091/story/631)
   * [Add autocomplete by city to metro location filter aside.](https://agilezen.com/project/18091/story/632)
   * [Regions Filter Shows for Cleveland, OH Region.](https://agilezen.com/project/18091/story/644)
+  * [Canceling Regions Filter, Will Remove Users Default Filter.](https://agilezen.com/project/18091/story/645)
 
 ### Chores
   * [Upgrade to rails 3.1](https://agilezen.com/project/18091/story/526)
