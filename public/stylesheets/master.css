@@ -3169,6 +3169,11 @@ div.blog img.callout {float: left; width: 32px; height: 32px; padding-right: 5px
   width: 100%;
 }
 
+/*- GET SATISFACTION STYLE
+----------------------------------------------------------------------*/
+a#fdbk_tab {
+  right: 0%;
+}
 
 /*- OPPORTUNITY PAGE STYLES
 ----------------------------------------------------------------------*/
