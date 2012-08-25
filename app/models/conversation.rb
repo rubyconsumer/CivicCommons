@@ -14,6 +14,7 @@ class Conversation < ActiveRecord::Base
     text :summary, :stored => true, :boost => 2, :default_boost => 2 do
       Sanitize.clean(summary, :remove_contents => ['style','script'])
     end
+    integer :region_metrocodes, :multiple => true
   end
   has_many :contributions, :dependent => :destroy
   has_many :confirmed_contributions, :class_name => 'Contribution',
@@ -151,6 +152,12 @@ class Conversation < ActiveRecord::Base
   def reflection_participants_count
     reflection_participants.count
   end
+  
+  # region_metrocodes is plural because this method is available across several models, which is used to index the metrocodes in Solr.
+  def region_metrocodes
+    [metro_region.metrocode].compact if metro_region_id.present? &&  metro_region.present?
+  end
+  
 
   def self.available_filters
     {

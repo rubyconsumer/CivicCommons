@@ -10,12 +10,28 @@ class SearchService
     end
   end
 
-  def fetch_results(query = nil, *models)
+  def fetch_results(query = nil, options = {})
+    models = [options.delete(:models)]
     fields = accepted_fields(models)
     fields[:fragment_size] = -1
+    region_metrocodes = options.delete(:region_metrocodes)
+    
     results = @search.search(models) do
       keywords(query) do
         highlight fields
+      end
+      
+      # If region_metrocodes present, then filter conversation and issues, and ignore filter an other objects
+      if region_metrocodes.present?
+        classes_with_regional_metrocodes = [Conversation, Issue, ManagedIssue]
+        any_of do
+          all_of do
+             with(:class, classes_with_regional_metrocodes)
+             with(:region_metrocodes, region_metrocodes) 
+          end
+          without(:class, classes_with_regional_metrocodes)
+        end
+        
       end
     end
 
@@ -24,18 +40,23 @@ class SearchService
     end
   end
 
-  def fetch_filtered_results(query = nil, filter = nil, *models)
+  def fetch_filtered_results(query = nil, filter = nil, options = {})
+    models = [options.delete(:models)]
     fields = accepted_fields(models)
     fields[:fragment_size] = -1
+    region_metrocodes = options.delete(:region_metrocodes)
     results = @search.search(models) do
       with(:content_type, 'BlogPost') if filter == 'blogs'
       with(:content_type, 'RadioShow') if filter == 'radioshows'
       with(:type, 'Issue') if filter == 'issues'
-      if filter == 'projects'
+      case filter
+      when 'projects'
         any_of do
           with(:type, 'ManagedIssue')
           with(:type, 'ManagedIssuePage')
         end
+      when 'issues', 'conversations'
+        with(:region_metrocodes, region_metrocodes) if region_metrocodes.present?
       end
       keywords(query) do
         highlight fields

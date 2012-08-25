@@ -575,5 +575,14 @@ describe Conversation do
       conversation.reflection_participants_count.should == 3
     end
   end
-
+  describe "region_metrocodes" do
+    it "should return nil if there isn't an associated metro region" do
+      @conversation_no_metro = FactoryGirl.create(:conversation,  metro_region: nil, metro_region_id:123456789)
+      @conversation_no_metro.region_metrocodes.should == nil
+    end
+    it "should return the metrocode value if an associated metro region is available" do
+      @conversation_with_metro = FactoryGirl.create(:conversation)
+      @conversation_with_metro.region_metrocodes.should == ['510']
+    end
+  end
 end

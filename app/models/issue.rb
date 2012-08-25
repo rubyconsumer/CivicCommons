@@ -13,6 +13,7 @@ class Issue < ActiveRecord::Base
       Sanitize.clean(summary, :remove_contents => ['style','script'])
     end
     string :type
+    integer :region_metrocodes, :multiple => true
   end
 
   ALL_TYPES = ['Issue', 'ManagedIssue']
@@ -221,6 +222,13 @@ class Issue < ActiveRecord::Base
   def require_topic
     errors.add(:base, "Please select at least one Topic") if self.topic_ids.blank?
   end
+  
+  def region_metrocodes
+    conversations.collect do |conversation| 
+      conversation.metro_region.metrocode if conversation.metro_region_id.present? &&  conversation.metro_region.present?
+    end.compact
+  end
+  
 
   private
 
@@ -243,5 +251,6 @@ class Issue < ActiveRecord::Base
   define_method(:title) do
     name
   end
+  
 
 end

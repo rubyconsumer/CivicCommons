@@ -4,7 +4,7 @@
   <ul class="simple-list block-link-list">
     <%- @top_metro_regions.each do |metro_region| -%>
       <li>
-        <%= link_to raw("<span>#{metro_region.display_name}</span>"), metro_region_filter_url(metro_region.metrocode), :method => :post %>
+        <%= link_to raw("<span>#{metro_region.display_name}</span>" ), metro_region_filter_url(metro_region.metrocode), :method => :post, :class => (default_region.to_s == metro_region.metrocode ? 'active' : '') %>
       </li>
     <%- end -%>
   </ul>

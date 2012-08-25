@@ -1,7 +1,13 @@
 require 'spec_helper'
 
 describe SearchService do
-
+  
+  def create_hit(result)
+    hit = double("Hit")
+    hit.stub(:result) { result }
+    hit
+  end
+  
   context "Initialization" do
 
     before(:each) do
@@ -15,7 +21,7 @@ describe SearchService do
 
       @mock_search.should_receive(:search).with([Conversation]).and_return(@mock_search)
       @mock_search.should_receive(:hits).and_return([])
-      @search.fetch_results(params[:q], Conversation).should == []
+      @search.fetch_results(params[:q], :models => Conversation).should == []
     end
 
     it "should return an empty set of results" do
@@ -32,10 +38,5 @@ describe SearchService do
       @search.fetch_results('contribution', Contribution).should == [confirmed_contribution_hit]
     end
 
-    def create_hit(result)
-      hit = double("Hit")
-      hit.stub(:result) { result }
-      hit
-    end
   end
 end

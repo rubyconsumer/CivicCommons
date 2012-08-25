@@ -489,4 +489,14 @@ describe Issue do
       end
     end
   end
+  describe "region_metrocodes" do
+    it "should return nil if there isn't an associated metro region" do
+      @issue_no_metro = FactoryGirl.create(:issue)
+      @issue_no_metro.region_metrocodes.should == []
+    end
+    it "should return the metrocode value if an associated metro region is available" do
+      @issue_with_metro = FactoryGirl.create(:issue_with_conversation)
+      @issue_with_metro.region_metrocodes.should == ['510']
+    end
+  end
 end

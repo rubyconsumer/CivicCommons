@@ -39,6 +39,7 @@
       <% if(@results.length > 0 or params.key?(:filter)) %>
 	    <div class="search-filter">
         <div class="mod">
+          <%= render :partial => '/metro_regions/top_metro_side' %>
           <h3>Filter Results</h3>
           <ul>
             <% 

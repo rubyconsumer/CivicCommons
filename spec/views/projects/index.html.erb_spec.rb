@@ -7,6 +7,7 @@ describe '/projects/index.html.erb' do
       summary: 'original summary'
     )
     @top_metro_regions = [FactoryGirl.create(:metro_region)]
+    view.stub!(:user_region).and_return(510)
   end
 
   it "should show the ManagedIssues's index summaries" do
