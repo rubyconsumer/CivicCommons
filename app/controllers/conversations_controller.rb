@@ -14,10 +14,15 @@ class ConversationsController < ApplicationController
 
   # GET /conversations
   def index
-    @active = Conversation.filter_metro_region(default_region).most_active.limit(3)
-    @popular = Conversation.filter_metro_region(default_region).get_top_visited(limit:3)
-    @recent = Conversation.filter_metro_region(default_region).latest_created.limit(3)
-    @recommended = Conversation.filter_metro_region(default_region).recommended.limit(3)
+    if default_region == cc_metro_region
+      @popular = Conversation.filter_metro_region(default_region).get_top_visited(limit:3)
+      @recent = Conversation.filter_metro_region(default_region).latest_created.limit(3)
+      @recommended = Conversation.filter_metro_region(default_region).recommended.limit(3)
+      @active = Conversation.filter_metro_region(default_region).most_active.limit(3)
+    else
+      @all_conversations = Conversation.filter_metro_region(default_region).paginate(:page => params[:page], :per_page => 12)
+    end
+    
     @top_metro_regions = MetroRegion.top_metro_regions(5)
 
     @recent_items = Activity.most_recent_activity_items(limit: 3)

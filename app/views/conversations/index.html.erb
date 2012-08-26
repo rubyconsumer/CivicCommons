@@ -6,32 +6,38 @@
 
       <%= render :partial => 'layouts/create_conversation' %>
 
-      <% if @recommended.size > 0 %>
+      <% if @all_conversations.present? && @all_conversations.size > 0 %>
         <div class="conversation-tile-group group">
-          <h3>Recommended Conversations</h3>
-          <%= render :partial => '/conversations/conversation_band', :locals => {:conversations => @recommended} %>
-          <%= link_to "See more recommended conversations", conversations_filter_url(:recommended), :class => 'see-more' %>
+          <h3>All Conversations</h3>
+          <%= render :partial => '/conversations/conversation_band', :locals => {:conversations => @all_conversations} %>
         </div>
       <% end %>
 
-      <div class="conversation-tile-group group">
-        <h3>Most Active Conversations</h3>
-        <%= render :partial => '/conversations/conversation_band', :locals => {:conversations => @active} %>
-        <%= link_to "See more active conversations", conversations_filter_url(:active), :class => 'see-more' %>
-      </div>
+      <% if @active && @active.length > 0 %>
+        <div class="conversation-tile-group group">
+            <h3>
+              <%= default_region == cc_metro_region ? 'Most Active' : 'All' %> Conversations
+            </h3>
+          <%= render :partial => '/conversations/conversation_band', :locals => {:conversations => @active} %>
+          <%= link_to "See more active conversations", conversations_filter_url(:active), :class => 'see-more' %>
+        </div>
+      <% end %>
 
-      <div class="conversation-tile-group group">
-        <h3>Most Popular Conversations</h3>
-        <%= render :partial => '/conversations/conversation_band', :locals => {:conversations => @popular} %>
-        <%= link_to "See more popular conversations", conversations_filter_url(:popular), :class => 'see-more' %>
-      </div>
-
-      <div class="conversation-tile-group group">
-        <h3>Newest Conversations</h3>
-        <%= render :partial => '/conversations/conversation_band', :locals => {:conversations => @recent} %>
-        <%= link_to "See more of the newest conversations", conversations_filter_url(:recent), :class => 'see-more' %>
-      </div>
-
+      <% if @popular && @popular.length > 0 %>
+        <div class="conversation-tile-group group">
+          <h3>Most Popular Conversations</h3>
+          <%= render :partial => '/conversations/conversation_band', :locals => {:conversations => @popular} %>
+          <%= link_to "See more popular conversations", conversations_filter_url(:popular), :class => 'see-more' %>
+        </div>
+      <% end %>
+      
+      <% if @recent && @recent.length > 0 %>
+        <div class="conversation-tile-group group">
+          <h3>Newest Conversations</h3>
+          <%= render :partial => '/conversations/conversation_band', :locals => {:conversations => @recent} %>
+          <%= link_to "See more of the newest conversations", conversations_filter_url(:recent), :class => 'see-more' %>
+        </div>
+      <% end %>
     </div><!-- /.main-content -->
 
     <div class='aside supplementary'>
