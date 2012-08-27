@@ -17,6 +17,7 @@
   * [Move Get Satisfaction to Bottom Right Corner.](https://agilezen.com/project/18091/story/647)
   * [Add Regional Filtering on Search results](https://agilezen.com/project/18091/story/641)
   * [Conversation Index - REgional Filters](https://agilezen.com/project/18091/story/648)
+  * [Remove Facebook Like from Contributions](https://agilezen.com/project/18091/story/650)
 
 ### Chores
   * [Upgrade to rails 3.1](https://agilezen.com/project/18091/story/526)

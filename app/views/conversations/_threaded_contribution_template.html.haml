@@ -31,7 +31,7 @@
                             :id => "action-link-#{contribution.id}",
                             'data-colorbox' => true,
                             :title => "Alert Us of Terms of Service Violations")
-              = render :partial => "conversations/contribution_social_buttons", :locals =>{:contribution => contribution}
+              =# render :partial => "conversations/contribution_social_buttons", :locals =>{:contribution => contribution}
               %div.button-wrapper
                 = rating_buttons(contribution, @ratings || ratings)
                 -if current_person
