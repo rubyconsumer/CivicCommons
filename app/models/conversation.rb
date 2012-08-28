@@ -41,10 +41,10 @@ class Conversation < ActiveRecord::Base
   has_many :content_items_conversations, :uniq => true
   has_many :content_items, :through => :content_items_conversations, uniq: true
   has_many :surveys, :as => :surveyable
-  
+
   belongs_to :person, :foreign_key => "owner"
   belongs_to :metro_region
-  
+
   delegate :name, :to => :person, :prefix => true
   delegate :standard_issue, :to => :issues
   delegate :managed_issue, :to => :issues
@@ -83,7 +83,7 @@ class Conversation < ActiveRecord::Base
   scope :latest_updated, :order => 'updated_at DESC'
   scope :latest_created, where(:exclude_from_most_recent => false).order('created_at DESC')
   scope :alphabet_ascending_by_title, :order => 'title ASC'
-  
+
   # Filters by metro region, if metrocode parameter is supplied, otherwise, ignores it.
   scope :filter_metro_region, lambda{|metrocode| joins(:metro_region).where(:metro_regions=>{metrocode: metrocode}) if metrocode.present?}
 
@@ -152,12 +152,12 @@ class Conversation < ActiveRecord::Base
   def reflection_participants_count
     reflection_participants.count
   end
-  
+
   # region_metrocodes is plural because this method is available across several models, which is used to index the metrocodes in Solr.
   def region_metrocodes
     [metro_region.metrocode].compact if metro_region_id.present? &&  metro_region.present?
   end
-  
+
 
   def self.available_filters
     {
@@ -300,7 +300,7 @@ class Conversation < ActiveRecord::Base
   def subscribe_creator
     Subscription.create_unless_exists(person, self)
   end
-  
+
   def metro_region_city_display_name=(record)
     # ignore this attribute that comes back from form post, on a delegator method.
     return true

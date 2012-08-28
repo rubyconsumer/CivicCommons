@@ -43,6 +43,9 @@ class Admin::MetroRegionsController < Admin::DashboardController
   def update_display_names
     @region = MetroRegion.find params[:id]
     MetroRegion.update_all ["display_name = ?", params[:metro_region][:display_name]], ["display_name = ?", @region.display_name]
+
+    @region.reload
+    @region.update_amazon_slideout_image
     redirect_to "/admin/metro_regions/display_names", :notice => "Region updated"
   end
 

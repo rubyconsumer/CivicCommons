@@ -18,12 +18,14 @@
   * [Add Regional Filtering on Search results](https://agilezen.com/project/18091/story/641)
   * [Conversation Index - REgional Filters](https://agilezen.com/project/18091/story/648)
   * [Remove Facebook Like from Contributions](https://agilezen.com/project/18091/story/650)
+  * [Pre-Generate Regions Text Images](https://agilezen.com/project/18091/story/651)
 
 ### Chores
   * [Upgrade to rails 3.1](https://agilezen.com/project/18091/story/526)
 
 ### Post Deployment Instructions
   * run `bundle exec rake sunspot:solr:reindex` on the server after deployment
+  * bundle exec rake generate_slideout_images
 
 
 ## 2.9
