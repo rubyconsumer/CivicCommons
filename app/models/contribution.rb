@@ -8,6 +8,7 @@ class Contribution < ActiveRecord::Base
     text :content, :stored => true, :boost => 1, :default_boost => 1 do
       Sanitize.clean(content, :remove_contents => ['style','script'])
     end
+    integer :region_metrocodes, :multiple => true
   end
 
   attr_accessor :top_level
@@ -296,6 +297,10 @@ class Contribution < ActiveRecord::Base
     else
       false
     end
+  end
+  
+  def region_metrocodes
+    item.region_metrocodes if item
   end
 
 

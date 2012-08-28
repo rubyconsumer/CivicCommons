@@ -21,9 +21,9 @@ class SearchService
         highlight fields
       end
       
-      # If region_metrocodes present, then filter conversation and issues, and ignore filter an other objects
+      # If region_metrocodes present, then filter conversation and issues, Contribution, and ignore filter an other objects
       if region_metrocodes.present?
-        classes_with_regional_metrocodes = [Conversation, Issue, ManagedIssue]
+        classes_with_regional_metrocodes = [Conversation, Issue, ManagedIssue, Contribution]
         any_of do
           all_of do
              with(:class, classes_with_regional_metrocodes)
@@ -55,7 +55,7 @@ class SearchService
           with(:type, 'ManagedIssue')
           with(:type, 'ManagedIssuePage')
         end
-      when 'issues', 'conversations'
+      when 'issues', 'conversations', 'contributions'
         with(:region_metrocodes, region_metrocodes) if region_metrocodes.present?
       end
       keywords(query) do
