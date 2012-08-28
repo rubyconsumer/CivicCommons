@@ -25,10 +25,10 @@ describe RegionHelper do
           helper.default_region.should == 4321
         end
       end
-      it "should retun 510 as a default region(metrocode)" do
+      it "should retun nil as a default region(metrocode)" do
         helper.stub!(:current_person).and_return(stub_person)
         helper.stub!(:signed_in?).and_return(false)
-        helper.default_region.should == 510
+        helper.default_region.should == nil
       end
     end
     context "and a paramater is supplied" do

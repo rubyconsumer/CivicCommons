@@ -1,0 +1,57 @@
+<div class="js-slideout region-slideout" >
+  <div class="inner-expanded" style="display:none;">
+
+    <div class="current-region-section" style = "">
+      <a class="dismiss" data-dismiss="alert" href="#">&times;</a>
+      <p class="region-name mbn"><%= current_region.display_name %></p>
+      <%= link_to 'remove filter', cancel_metro_region_filter_path, :method => :post %>
+      <% if region_recent_conversations %>
+        <p class="region-subtitle">Recent Conversations</p>
+        <ul>
+          <%= render :partial => '/metro_regions/tab_conversation', :collection => region_recent_conversations, :as => :conversation %>
+        </ul>
+      <% end %>
+      <a href="#" class="change-region button tertiary">Change Location</a>
+    </div>
+
+    <div class="change-region-section" style="display:none;">
+      <a class="dismiss" data-dismiss="alert" href="#">&times;</a>
+      <p class="region-name mbn">Change Location</p>
+      <p>Enter a Location Below.</p>
+      <%= render :partial => '/regions/region_filter' %>
+    </div>    
+    
+  </div>
+  <div class="inner-contracted">
+    <a class="expand-region-tab" href="#" title="Displaying Results for <%= current_region.display_name %>"><%= image_tag(region_tab_image_url) %></a>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    var $regionSlideout = $('.region-slideout');
+    
+    // clicking the expand region tab
+    $('.expand-region-tab', $regionSlideout).click(function(){
+      $('.inner-expanded', $regionSlideout).show();
+      $('.inner-contracted', $regionSlideout).hide();
+      return false
+    });
+    
+    // clicking dismiss(x) link
+    $(".dismiss", $regionSlideout).click(function() {
+      $('.inner-expanded', $regionSlideout).hide();
+      $('.inner-contracted', $regionSlideout).show();
+      $('.change-region-section', $regionSlideout).hide();
+      $('.current-region-section', $regionSlideout).show();
+      
+      return false
+    });
+    
+    // Clicking the change region button
+    $('.change-region', $regionSlideout).click(function(){
+      $('.change-region-section', $regionSlideout).show();
+      $('.current-region-section', $regionSlideout).hide();
+    })
+  });
+</script>

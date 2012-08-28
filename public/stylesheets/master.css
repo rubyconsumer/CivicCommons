@@ -453,6 +453,7 @@ button.cancel, input.submit, input#contribution_submit {
   border: 1px solid #94a647;
   color: #fff;
   display: inline-block;
+  font-family: Helvetica, Arial, sans-serif;
   font-size: 1em;
   font-weight: bold;
   line-height: 1.4;
@@ -2367,7 +2368,8 @@ div.conversation-input-container {margin-bottom: 25px;}
 /*- Search Form Styles ----------*/
 
 #search {margin-bottom: 20px;}
-#search form input.textbox {
+#search form input.textbox,
+form.region-filter-container input.textbox {
   background: transparent;
   border: 1px solid #b4b4b5;
   float: left;
@@ -2389,9 +2391,17 @@ div.conversation-input-container {margin-bottom: 25px;}
 #search.errors form input.textbox {border-color: #a33333;}
 #search.errors .error {font-weight: bold;}
 #search form input.textbox:focus {outline: 0 none;}
-#search input.submit {
+
+#search input.submit,
+form.region-filter-container input.submit {
   float: right;
   margin: 0;
+}
+
+form.region-filter-container {
+  display: block;
+  overflow: hidden;
+  margin-bottom: 10px;
 }
 
 /*- Search Input in Global Nav ----------*/
@@ -2554,17 +2564,6 @@ color: #51778e;
 
 /*- MISCELLANEOUS
 ----------------------------------------------------------------------*/
-
-/*- Regions ----------*/
-
-.region-name {
-  font-size: 1.6em;
-  margin-left: .2em;
-}
-
-.region-filter-notifier .region-filter-container{
-  display:none;
-}
 
 /*- Temporary Fix Testing ----------*/
 

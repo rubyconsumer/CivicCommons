@@ -4,6 +4,10 @@ module RegionHelper
   def cc_metro_region
     510
   end
+  
+  def region_tab_image_url
+    "http://s3.amazonaws.com/#{S3Config.bucket.to_s}/images-regions/#{default_region}.png"
+  end
 
   # Set up the Default Region for the User
   # If one is not given, default to 510 - Cleveland-Akron (Canton) OH
@@ -16,7 +20,7 @@ module RegionHelper
       cookies.permanent[:default_region] = {:value => "#{region}"}
     end
 
-    return region.present? ? region.to_i : cc_metro_region
+    return region.present? ? region.to_i : nil
   end
 
   def current_region

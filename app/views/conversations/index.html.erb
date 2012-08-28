@@ -16,7 +16,7 @@
       <% if @active && @active.length > 0 %>
         <div class="conversation-tile-group group">
             <h3>
-              <%= default_region == cc_metro_region ? 'Most Active' : 'All' %> Conversations
+              Most Active Conversations
             </h3>
           <%= render :partial => '/conversations/conversation_band', :locals => {:conversations => @active} %>
           <%= link_to "See more active conversations", conversations_filter_url(:active), :class => 'see-more' %>

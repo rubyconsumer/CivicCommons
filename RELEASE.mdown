@@ -1,3 +1,4 @@
+
 ## 3.0
 
 ### External Changes
@@ -19,6 +20,7 @@
   * [Conversation Index - REgional Filters](https://agilezen.com/project/18091/story/648)
   * [Remove Facebook Like from Contributions](https://agilezen.com/project/18091/story/650)
   * [Pre-Generate Regions Text Images](https://agilezen.com/project/18091/story/651)
+  * [Regional Filter SlideOut](https://agilezen.com/project/18091/story/649)
 
 ## Bug Fix
   * [Activity erring out, when admin creates a Vote from Admin interface](https://agilezen.com/project/18091/story/654)

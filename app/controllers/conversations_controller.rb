@@ -14,7 +14,7 @@ class ConversationsController < ApplicationController
 
   # GET /conversations
   def index
-    if default_region == cc_metro_region
+    if default_region == cc_metro_region || default_region.blank?
       @popular = Conversation.filter_metro_region(default_region).get_top_visited(limit:3)
       @recent = Conversation.filter_metro_region(default_region).latest_created.limit(3)
       @recommended = Conversation.filter_metro_region(default_region).recommended.limit(3)

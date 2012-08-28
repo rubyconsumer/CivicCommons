@@ -46,6 +46,7 @@
     = stylesheet_link_tag "icons", :media => "screen, projection"
     = stylesheet_link_tag "hero", :media => "screen, projection"
     = stylesheet_link_tag "arrowbox", :media => "screen, projection"
+    = stylesheet_link_tag "regions", :media => "screen, projection"
     = stylesheet_link_tag "ie", :media => "screen, projection"
     = stylesheet_link_tag "ui-lightness/jquery-ui-1.8.16.custom", :media => "screen, projection"
     = stylesheet_link_tag "jquery.loadmask", :media => "screen, projection"
@@ -116,7 +117,7 @@
         = render :partial => 'search/search', locals: { filter_type: params[:filter] }
     - if user_region
       - if current_page?(:controller => :conversations, :action => :index) || current_page?(:controller => :issues, :action => :index) || current_page?(:controller => :projects, :action => :index) || current_page?(:controller => :search, :action => :results)
-        = render :partial => 'regions/notify'
+        = render :partial => 'regions/region_slideout'
     = yield :main_body
     #footer.footer
       #footer-inner

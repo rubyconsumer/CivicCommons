@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
   layout 'application'
 
   before_filter :require_no_ssl
-  helper_method :with_format, :default_region
+  helper_method :with_format, :default_region, :region_recent_conversations
 
 protected
   def verify_admin
@@ -96,6 +96,10 @@ protected
     else
       redirect_to default || root_url
     end
+  end
+  
+  def region_recent_conversations
+    Conversation.filter_metro_region(default_region).latest_created.limit(6)
   end
   
 end
