@@ -55,8 +55,8 @@ module Civiccommons
     # Add <style> tags to the bad_tags collection so that internal styles are not shown
     config.action_view.sanitized_allowed_attributes = ['style']
     config.action_view.sanitized_bad_tags = ['style']
-    
+
     # Enable the asset pipeline
-    config.assets.enabled = false
+    config.assets.enabled = true
   end
 end
