@@ -20,6 +20,9 @@
   * [Remove Facebook Like from Contributions](https://agilezen.com/project/18091/story/650)
   * [Pre-Generate Regions Text Images](https://agilezen.com/project/18091/story/651)
 
+## Bug Fix
+  * [Activity erring out, when admin creates a Vote from Admin interface](https://agilezen.com/project/18091/story/654)
+
 ### Chores
   * [Upgrade to rails 3.1](https://agilezen.com/project/18091/story/526)
 
