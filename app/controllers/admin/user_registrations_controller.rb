@@ -1,4 +1,6 @@
 class Admin::UserRegistrationsController < Admin::DashboardController
+  
+  authorize_resource :class => :admin_user_registrations
 
   def new
     @person = Person.new

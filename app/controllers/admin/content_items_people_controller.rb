@@ -1,4 +1,7 @@
 class Admin::ContentItemsPeopleController < Admin::DashboardController
+  
+  authorize_resource :class => :admin_people
+  
   before_filter :get_content_item
   #GET admin/content_items/123/people
   def index

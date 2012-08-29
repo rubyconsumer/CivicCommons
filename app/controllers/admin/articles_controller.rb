@@ -1,4 +1,6 @@
 class Admin::ArticlesController < Admin::DashboardController
+  
+  authorize_resource :class => :admin_articles
 
   # GET /articles
   # GET /articles.xml

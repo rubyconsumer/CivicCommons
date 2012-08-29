@@ -1,5 +1,7 @@
 class Admin::ContentItemsController < Admin::DashboardController
-
+  
+  load_and_authorize_resource :content_item
+  
   #GET admin/content_items
   def index
     if params[:type]
@@ -117,6 +119,13 @@ class Admin::ContentItemsController < Admin::DashboardController
       embed_code = EmbedlyService.get_simple_embed(external_link)
     end
     return embed_code
+  end
+  
+  def verify_admin_and_content_item_admin
+    if require_user and not current_person.admin? and not current_person.blog_admin?
+      flash[:error] = "You must be an admin to view this page."
+      redirect_to secure_session_url(current_person)
+    end
   end
 
 end

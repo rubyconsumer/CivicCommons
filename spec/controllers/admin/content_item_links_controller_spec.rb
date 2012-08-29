@@ -6,6 +6,7 @@ describe Admin::ContentItemLinksController do
   
   before(:each) do  
     @controller.stub(:verify_admin).and_return(true)
+    # Admin::ContentItemLinksController.should_receive(:authorize_resource).and_return(true)
   end
 
   def stub_content_item(attributes={})
@@ -22,6 +23,7 @@ describe Admin::ContentItemLinksController do
 
   before(:each) do
     ContentItem.stub!(:find).and_return(stub_content_item)
+    @controller.stub(:current_person).and_return(stub_person(:admin => true))
   end
 
   describe "GET index" do

@@ -1,4 +1,6 @@
 class Admin::ContentTemplatesController < Admin::DashboardController
+  
+  authorize_resource :class => :admin_content_templates
 
   # GET /admin/content_templates
   def index

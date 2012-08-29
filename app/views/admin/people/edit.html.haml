@@ -27,10 +27,17 @@
   %p
     =person.label :admin
     =person.check_box :admin
+
+  %p
+    =person.label :blog_admin, 'Blog Admin'
+    =person.check_box :blog_admin
+    %br
+    (Blog admins can manage blogs only, but for this resriction to work, the "Admin" checkbox must be unchecked.)
+
     
-    %p
-    =person.label :proxy
-    =person.check_box :proxy
+  %p
+  =person.label :proxy
+  =person.check_box :proxy
     
   %p
     =person.submit

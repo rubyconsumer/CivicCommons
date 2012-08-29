@@ -72,5 +72,10 @@ FactoryGirl.define do |f|
   end
 
   factory :admin, :parent => :admin_person
+  
+  factory :blog_admin_person, :parent => :admin_person do |u|
+    u.admin false
+    u.blog_admin true
+  end
 
 end

@@ -1,4 +1,7 @@
 class Admin::FeaturedHomepageController < Admin::DashboardController
+  
+  authorize_resource :class => :admin_featured_homepages
+  
   def index
     @items = []
 

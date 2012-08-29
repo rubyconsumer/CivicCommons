@@ -1,4 +1,7 @@
 class Admin::PeopleController < Admin::DashboardController
+  
+  authorize_resource :class => :admin_people
+  
   before_filter :prepare_stats, :only => [:index, :proxies]
   
   def export_members
@@ -44,6 +47,7 @@ class Admin::PeopleController < Admin::DashboardController
     @person = Person.find(params[:id])
     if params[:person] && params[:person][:admin] && current_person.admin?
       @person.admin = params[:person][:admin]
+      @person.blog_admin = params[:person][:blog_admin]
     end
     
     if @person.update_attributes(params[:person])

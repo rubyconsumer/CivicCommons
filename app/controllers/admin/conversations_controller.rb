@@ -1,4 +1,6 @@
 class Admin::ConversationsController < Admin::DashboardController
+  
+  authorize_resource :class => :admin_conversations
 
   #GET admin/conversations
   def index

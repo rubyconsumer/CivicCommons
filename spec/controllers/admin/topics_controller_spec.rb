@@ -6,14 +6,19 @@ require 'spec_helper'
 
 describe Admin::TopicsController do
   
-  before(:each) do
-    @controller.stub(:verify_admin).and_return(true)
+  def stub_person(attributes={})
+    @person ||= stub_model(Person, attributes).as_null_object
   end
-
+  
   def mock_topic(stubs={})
     @mock_topic ||= mock_model(Topic, stubs).as_null_object
   end
-
+  
+  before(:each) do
+    @controller.stub(:verify_admin).and_return(true)
+    @controller.stub(:current_person).and_return(stub_person(:admin => true))
+  end
+  
   describe "GET index" do
     it "assigns all topics as @topics" do
       Topic.stub(:all) { [mock_topic] }

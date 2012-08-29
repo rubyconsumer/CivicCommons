@@ -1,4 +1,6 @@
 class Admin::IssuesController < Admin::DashboardController
+  
+  authorize_resource :class => :admin_issues
 
   #GET admin/issues/
   def index

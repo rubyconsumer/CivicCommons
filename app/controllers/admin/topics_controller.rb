@@ -1,4 +1,7 @@
 class Admin::TopicsController < Admin::DashboardController
+  
+  authorize_resource :class => :admin_topics
+  
   # GET /admin/topics
   # GET /admin/topics.xml
   def index

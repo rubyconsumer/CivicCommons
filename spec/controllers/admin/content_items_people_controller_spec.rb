@@ -2,11 +2,6 @@ require 'spec_helper'
 
 
 describe Admin::ContentItemsPeopleController do
-  
-  
-  before(:each) do  
-    @controller.stub(:verify_admin).and_return(true)
-  end
 
   def stub_content_item(attributes={})
     @content_item ||= stub_model(ContentItem,attributes).as_null_object
@@ -15,8 +10,10 @@ describe Admin::ContentItemsPeopleController do
   def stub_person(attributes={})
     @person ||= stub_model(Person, attributes).as_null_object
   end
-
-  before(:each) do
+  
+  before(:each) do  
+    @controller.stub(:verify_admin).and_return(true)
+    @controller.stub(:current_person).and_return(stub_person(:admin => true))
     # sign_in FactoryGirl.create(:admin_person)
     ContentItem.stub!(:find).and_return(stub_content_item)
   end

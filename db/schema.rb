@@ -505,6 +505,7 @@ ActiveRecord::Schema.define(:version => 20120912180424) do
     t.string   "slug"
     t.string   "avatar_cached_image_url"
     t.integer  "default_region"
+    t.boolean  "blog_admin"
   end
 
   add_index "people", ["cached_slug"], :name => "index_people_on_cached_slug", :unique => true

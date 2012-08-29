@@ -1,4 +1,6 @@
 class Admin::CuratedFeedsController < Admin::DashboardController
+  
+  authorize_resource :class => :admin_curated_feeds
 
   # GET /admin/curated_feeds
   def index 

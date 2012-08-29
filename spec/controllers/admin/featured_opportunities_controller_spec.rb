@@ -1,10 +1,11 @@
 require 'spec_helper'
 
 describe Admin::FeaturedOpportunitiesController do
-  before(:each) do
-    @controller.stub(:verify_admin).and_return(true)
+  
+  def stub_person(attributes={})
+    @person ||= stub_model(Person, attributes).as_null_object
   end
-
+  
   def mock_featured_opportunity(stubs={})
     @mock_featured_opportunity ||= mock_model(FeaturedOpportunity, stubs).as_null_object
   end
@@ -23,6 +24,11 @@ describe Admin::FeaturedOpportunitiesController do
 
   def mock_reflection(stubs={})
     @mock_reflection ||= mock_model(Reflection, stubs).as_null_object
+  end
+  
+  before(:each) do
+    @controller.stub(:verify_admin).and_return(true)
+    @controller.stub(:current_person).and_return(stub_person(:admin => true))
   end
 
   describe "GET 'show'" do

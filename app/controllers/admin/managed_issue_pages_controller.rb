@@ -1,4 +1,6 @@
 class Admin::ManagedIssuePagesController < Admin::DashboardController
+  
+  authorize_resource :class => :admin_managed_issue_pages
 
   # GET /admin/issues/1/pages
   def all

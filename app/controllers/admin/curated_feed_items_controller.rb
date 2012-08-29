@@ -1,4 +1,6 @@
 class Admin::CuratedFeedItemsController < Admin::DashboardController
+  
+  authorize_resource :class => :admin_curated_feed_items
 
   # GET /admin/feeds/1/items/1
   def show

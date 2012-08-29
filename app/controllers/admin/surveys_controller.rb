@@ -1,4 +1,7 @@
 class Admin::SurveysController < Admin::DashboardController
+  
+  authorize_resource :class => :admin_surveys
+  
   # GET /admin/surveys
   # GET /admin/surveys.xml
   def index

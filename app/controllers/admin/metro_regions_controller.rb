@@ -1,4 +1,6 @@
 class Admin::MetroRegionsController < Admin::DashboardController
+  
+  authorize_resource :class => :admin_metro_regions
 
   def new
     @region = MetroRegion.new(params[:region])

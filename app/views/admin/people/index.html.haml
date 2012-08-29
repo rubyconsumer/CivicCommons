@@ -42,16 +42,19 @@
       %th Name
       %th Email
       %th Admin
+      %th Blog Admin
       %th Proxy
       %th Confirmed
       %th Status
+      %th{:colspan => 2} Actions
   %tbody
     -@people.each_with_index do |person, index|
       - locked = person.locked_at?
       %tr
         %td=link_to person.name, admin_person_path(person)
-        %td=person.email
+        %td= mail_to person.email, truncate(person.email, :length=>25), :title => person.email
         %td=person.admin?
+        %td=person.blog_admin?
         %td=person.proxy?
         - if person.confirmed_at?
           %td=person.confirmed_at.to_s(:yyyymmdd)

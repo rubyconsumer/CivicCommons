@@ -4,6 +4,7 @@ gem 'newrelic_rpm'
 
 gem 'mysql2', '~> 0.3'
 gem 'devise', '1.5.2'
+gem "cancan", '1.6.8'
 gem 'omniauth', '1.0.1'
 gem 'omniauth-facebook'
 

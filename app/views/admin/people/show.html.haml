@@ -20,6 +20,9 @@
       %td Admin?
       %td=@person.admin? ? "Yes" : "No"
     %tr
+      %td Blog Admin?
+      %td=@person.blog_admin? ? "Yes" : "No"
+    %tr
       %td Created At?
       %td=@person.created_at? ? "#{@person.created_at}" : "-"
     %tr

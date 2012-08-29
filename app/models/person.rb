@@ -51,7 +51,7 @@ class Person < ActiveRecord::Base
                   :facebook_unlinking
 
   # Setup protected attributes
-  attr_protected :admin
+  attr_protected :admin, :blog_admin
 
   has_many :authentications, :dependent => :destroy
   has_many :organization_members

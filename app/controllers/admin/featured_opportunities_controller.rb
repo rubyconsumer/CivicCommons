@@ -1,4 +1,6 @@
 class Admin::FeaturedOpportunitiesController < Admin::DashboardController
+  
+  authorize_resource :class => :admin_featured_opportunities
 
   def show
     @featured_opportunity = FeaturedOpportunity.find(params[:id])
