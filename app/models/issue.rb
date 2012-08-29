@@ -13,6 +13,7 @@ class Issue < ActiveRecord::Base
       Sanitize.clean(summary, :remove_contents => ['style','script'])
     end
     string :type
+    integer :region_metrocodes, :multiple => true
   end
 
   ALL_TYPES = ['Issue', 'ManagedIssue']
