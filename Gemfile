@@ -12,6 +12,7 @@ gem 'fb_graph'
 
 gem 'rails', "3.1.0"
 gem 'jquery-rails', '>= 1.0.3'
+gem 'sass-rails'
 
 gem 'haml', '~> 3.1.4'
 gem 'date_validator'
