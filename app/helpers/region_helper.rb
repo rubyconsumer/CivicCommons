@@ -4,7 +4,7 @@ module RegionHelper
   def cc_metro_region
     510
   end
-  
+
   def region_tab_image_url
     "http://s3.amazonaws.com/#{S3Config.bucket.to_s}/images-regions/#{default_region}.png"
   end

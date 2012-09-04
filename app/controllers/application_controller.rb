@@ -88,7 +88,7 @@ protected
     self.formats = old_formats
     nil
   end
-  
+
   # redirects to the previous page, if there are any
   def redirect_to_back(default = nil)
     if !request.env["HTTP_REFERER"].blank? and request.env["HTTP_REFERER"] != request.env["REQUEST_URI"]
@@ -97,9 +97,9 @@ protected
       redirect_to default || root_url
     end
   end
-  
+
   def region_recent_conversations
     Conversation.filter_metro_region(default_region).latest_created.limit(6)
   end
-  
+
 end

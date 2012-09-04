@@ -19,8 +19,8 @@
       <p class="region-name mbn">Change Location</p>
       <p>Enter a Location Below.</p>
       <%= render :partial => '/regions/region_filter' %>
-    </div>    
-    
+    </div>
+
   </div>
   <div class="inner-contracted">
     <a class="expand-region-tab" href="#" title="Displaying Results for <%= current_region.display_name %>"><%= image_tag(region_tab_image_url) %></a>
@@ -30,24 +30,24 @@
 <script type="text/javascript">
   $(document).ready(function() {
     var $regionSlideout = $('.region-slideout');
-    
+
     // clicking the expand region tab
     $('.expand-region-tab', $regionSlideout).click(function(){
       $('.inner-expanded', $regionSlideout).show();
       $('.inner-contracted', $regionSlideout).hide();
       return false
     });
-    
+
     // clicking dismiss(x) link
     $(".dismiss", $regionSlideout).click(function() {
       $('.inner-expanded', $regionSlideout).hide();
       $('.inner-contracted', $regionSlideout).show();
       $('.change-region-section', $regionSlideout).hide();
       $('.current-region-section', $regionSlideout).show();
-      
+
       return false
     });
-    
+
     // Clicking the change region button
     $('.change-region', $regionSlideout).click(function(){
       $('.change-region-section', $regionSlideout).show();

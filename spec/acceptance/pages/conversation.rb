@@ -11,7 +11,7 @@ class Conversation
       "/conversations/#{@conversation.slug}"
     end
   end
-  
+
   class Index
     SHORT_NAME = :conversations
     include Page
@@ -19,7 +19,7 @@ class Conversation
       "/conversations"
     end
   end
-  
+
   class Start
     SHORT_NAME = :start_conversation
     include Page
