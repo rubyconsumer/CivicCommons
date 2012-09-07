@@ -1,4 +1,11 @@
 
+## 3.1
+
+### External Changes
+
+### Chores
+  * [Update Engine Yard Chef Recipe for Solr](https://agilezen.com/project/18091/story/656)
+
 ## 3.0
 
 ### External Changes
