@@ -5,6 +5,7 @@
   * [Admin Blog ONLY ability](https://agilezen.com/project/18091/story/652)
   * [Add Product/Services page and form](https://agilezen.com/project/18091/story/661)
   * [Ad to Access Product Page - put on the Home Page](https://agilezen.com/project/18091/story/668)
+  * [Apply design changes for regional nav filter.](https://agilezen.com/project/18091/story/662)
 
 ### Bug Fix
   * [AutoComplete Issues](https://agilezen.com/project/18091/story/659)
@@ -17,6 +18,7 @@
 ### Post Deployment Instructions
   * bundle exec rake update_metro_region_city_province_token
   * bundle exec rake sunspot:solr:reindex
+  * bundle exec rake generate_slideout_images
 
 ## 3.0
 

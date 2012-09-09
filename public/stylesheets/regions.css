@@ -2,20 +2,54 @@
   position: fixed;
   left: 0;
   top: 15%;
-  padding: 20px;
-/*  width: 250px;*/
   color: #fff;
   font-size: .75em;
-  background-color: #6a727f;
   z-index: 10000;
+}
+
+.region-slideout .inner-expanded {
+  padding: 20px;
+  background-color: #575e69;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(106, 114, 127)), to(rgb(69, 74, 84)));
+  background-image: -webkit-linear-gradient(top, rgb(106, 114, 127), rgb(69, 74, 84));
+  background-image: -moz-linear-gradient(top, rgb(106, 114, 127), rgb(69, 74, 84));
+  background-image: -o-linear-gradient(top, rgb(106, 114, 127), rgb(69, 74, 84));
+  background-image: -ms-linear-gradient(top, rgb(106, 114, 127), rgb(69, 74, 84));
+  background-image: linear-gradient(top, rgb(106, 114, 127), rgb(69, 74, 84));
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#6a727f', EndColorStr='#454a54');
   -webkit-border-radius: 0 4px 4px 0;
      -moz-border-radius: 0 4px 4px 0;
        -o-border-radius: 0 4px 4px 0;
           border-radius: 0 4px 4px 0;
+  -webkit-box-shadow: 2px 2px 4px rgba(0, 0, 0, .2);
+     -moz-box-shadow: 2px 2px 4px rgba(0, 0, 0, .2);
+       -o-box-shadow: 2px 2px 4px rgba(0, 0, 0, .2);
+          box-shadow: 2px 2px 4px rgba(0, 0, 0, .2);
+}
+
+.region-slideout .inner-contracted {
+  padding: 45px 20px 20px;
+  background-color: #879d38;
+  background-image: url(../images/cc_gripper.png);
+  background-position: center 10px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  -webkit-border-radius: 0 4px 4px 0;
+     -moz-border-radius: 0 4px 4px 0;
+       -o-border-radius: 0 4px 4px 0;
+          border-radius: 0 4px 4px 0;
+  -webkit-box-shadow: 2px 2px 4px rgba(0, 0, 0, .2);
+     -moz-box-shadow: 2px 2px 4px rgba(0, 0, 0, .2);
+       -o-box-shadow: 2px 2px 4px rgba(0, 0, 0, .2);
+          box-shadow: 2px 2px 4px rgba(0, 0, 0, .2);
 }
 
 .region-slideout a {
   color: #eee;
+}
+
+.region-slideout a.dismiss {
+  opacity: .3;
 }
 
 .region-slideout a:hover {

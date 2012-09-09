@@ -22,30 +22,29 @@
     </div>
 
   </div>
-  <div class="inner-contracted">
+  <div class="inner-contracted js-expand-region-tab">
     <a class="expand-region-tab" href="#" title="Displaying Results for <%= current_region.display_name %>"><%= image_tag(region_tab_image_url) %></a>
   </div>
 </div>
 
 <script type="text/javascript">
   $(document).ready(function() {
-    var $regionSlideout = $('.region-slideout');
+    var $regionSlideout = $('.js-slideout');
 
     // clicking the expand region tab
-    $('.expand-region-tab', $regionSlideout).click(function(){
-      $('.inner-expanded', $regionSlideout).show();
+    $('.js-expand-region-tab', $regionSlideout).click(function(){
+      $('.inner-expanded', $regionSlideout).fadeIn('fast');
       $('.inner-contracted', $regionSlideout).hide();
-      return false
+      return false;
     });
 
     // clicking dismiss(x) link
     $(".dismiss", $regionSlideout).click(function() {
       $('.inner-expanded', $regionSlideout).hide();
-      $('.inner-contracted', $regionSlideout).show();
+      $('.inner-contracted', $regionSlideout).fadeIn('fast');
       $('.change-region-section', $regionSlideout).hide();
       $('.current-region-section', $regionSlideout).show();
-
-      return false
+      return false;
     });
 
     // Clicking the change region button
