@@ -22,7 +22,7 @@ class ConversationsController < ApplicationController
     else
       @all_conversations = Conversation.filter_metro_region(default_region).paginate(:page => params[:page], :per_page => 12)
     end
-    
+
     @top_metro_regions = MetroRegion.top_metro_regions(5)
 
     @recent_items = Activity.most_recent_activity_items(limit: 3)
@@ -47,7 +47,7 @@ class ConversationsController < ApplicationController
     @filter = params[:filter]
     @conversations = Conversation.filter_metro_region(default_region).filtered(@filter).paginate(:page => params[:page], :per_page => 12)
     @top_metro_regions = MetroRegion.top_metro_regions(5)
-    
+
     @recent_items = Activity.most_recent_activity_items(limit: 3)
     render :filter, :layout => 'category_index'
   end
