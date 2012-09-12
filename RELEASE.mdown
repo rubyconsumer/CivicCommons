@@ -3,8 +3,15 @@
 
 ### External Changes
 
+### Bug Fix
+  * [AutoComplete Issues](https://agilezen.com/project/18091/story/659)
+
 ### Chores
   * [Update Engine Yard Chef Recipe for Solr](https://agilezen.com/project/18091/story/656)
+
+### Post Deployment Instructions
+  * bundle exec rake update_metro_region_city_province_token
+  * bundle exec rake sunspot:solr:reindex
 
 ## 3.0
 

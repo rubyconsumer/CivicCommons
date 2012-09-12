@@ -18,3 +18,9 @@ task :generate_slideout_images => :environment do
   end
 end
 
+desc "index Metro region token into the database"
+task :update_metro_region_city_province_token => :environment do
+  puts "Updating MetroRegion's city_province_token"
+  MetroRegion.update_all_city_province_token
+end
+

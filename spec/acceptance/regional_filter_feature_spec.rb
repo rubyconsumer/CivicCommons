@@ -9,7 +9,7 @@ feature "Regional Filter", %q{
   def stub_metro_region_search
     #stub the search MetroRegion.search on the search controller
     metro_regions = MetroRegion.all
-    MetroRegion.should_receive(:search).and_return(metro_regions)
+    MetroRegion.should_receive(:search_city_province).and_return(metro_regions)
     metro_regions.stub!(:results).and_return(metro_regions)
   end
 

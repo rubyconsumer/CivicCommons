@@ -6,7 +6,7 @@ describe SearchController do
       @stub_metro_region ||= stub_model(MetroRegion, options).as_null_object
     end
     before(:each) do
-      MetroRegion.stub!(:search).and_return(stub_metro_region(:id => 123,:city_display_name => 'Chicago, Illinois'))
+      MetroRegion.stub!(:search_city_province).and_return([stub_metro_region(:id => 123,:city_display_name => 'Chicago, Illinois')])
       stub_metro_region.stub!(:results).and_return([stub_metro_region])
     end
     it "should return the result in json" do

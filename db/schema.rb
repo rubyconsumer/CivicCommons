@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120817160523) do
+ActiveRecord::Schema.define(:version => 20120912180424) do
 
   create_table "actions", :force => true do |t|
     t.integer  "conversation_id"
@@ -437,7 +437,10 @@ ActiveRecord::Schema.define(:version => 20120817160523) do
     t.string   "province_code"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "city_province_token"
   end
+
+  add_index "metro_regions", ["city_province_token"], :name => "index_metro_regions_on_city_province_token"
 
   create_table "organization_details", :force => true do |t|
     t.integer  "person_id"
