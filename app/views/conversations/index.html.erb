@@ -13,6 +13,14 @@
         </div>
       <% end %>
 
+      <% if @recommended && @recommended.size > 0 %>
+        <div class="conversation-tile-group group">
+          <h3>Recommended Conversations</h3>
+          <%= render :partial => '/conversations/conversation_band', :locals => {:conversations => @recommended} %>
+          <%= link_to "See more recommended conversations", conversations_filter_url(:recommended), :class => 'see-more' %>
+        </div>
+      <% end %>
+
       <% if @active && @active.length > 0 %>
         <div class="conversation-tile-group group">
             <h3>

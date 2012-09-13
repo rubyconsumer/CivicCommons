@@ -8,6 +8,7 @@
 
 ### Chores
   * [Update Engine Yard Chef Recipe for Solr.](https://agilezen.com/project/18091/story/656)
+  * [Bring Back Recommanded Conversations to Conversation Index Page.](https://agilezen.com/project/18091/story/660)
   * [Remove Most Popular Conversations.](https://agilezen.com/project/18091/story/663)
 
 ### Post Deployment Instructions
