@@ -23,14 +23,6 @@
         </div>
       <% end %>
 
-      <% if @popular && @popular.length > 0 %>
-        <div class="conversation-tile-group group">
-          <h3>Most Popular Conversations</h3>
-          <%= render :partial => '/conversations/conversation_band', :locals => {:conversations => @popular} %>
-          <%= link_to "See more popular conversations", conversations_filter_url(:popular), :class => 'see-more' %>
-        </div>
-      <% end %>
-
       <% if @recent && @recent.length > 0 %>
         <div class="conversation-tile-group group">
           <h3>Newest Conversations</h3>

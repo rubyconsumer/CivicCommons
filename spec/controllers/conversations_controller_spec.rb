@@ -1,4 +1,3 @@
-
 require 'spec_helper'
 
 describe ConversationsController do
@@ -64,11 +63,9 @@ describe ConversationsController do
       @new_conversation = FactoryGirl.create(:conversation, {:created_at => (Time.now - 1.day), :updated_at => (Time.now - 2.seconds), :last_visit_date => Time.now, :recent_visits => 1})
     end
 
-    it "assigns all conversations as @active, @popular, and @recent" do
+    it "assigns all conversations as @active, and @recent" do
       get :index
       assigns(:active).length.should == 0 # since no contributions were made
-      assigns(:popular).first.should == @old_conversation
-      assigns(:popular).last.should == @new_conversation
       assigns(:recent).first.should == @new_conversation
       assigns(:recent).last.should == @old_conversation
     end
@@ -84,7 +81,7 @@ describe ConversationsController do
       assigns(:active).first.contributions.size.should == 3
       assigns(:active).first.participants.size.should == 2
     end
-    
+
     context "metro regions" do
       it "should only return @all_conversations if metro region is other than the CivicCommon's region" do
         @controller.stub!(:default_region).and_return(1234)
@@ -92,20 +89,18 @@ describe ConversationsController do
         get :index
         assigns(:all_conversations).should_not be_nil
         assigns(:active).should be_nil
-        assigns(:popular).should be_nil
         assigns(:recent).should be_nil
         assigns(:recommended).should be_nil
       end
-      it "should return @active, @popular, @recent, @recomended conversations if metro region is the same as CivicCommon's region" do
+      it "should return @active, @recent, @recomended conversations if metro region is the same as CivicCommon's region" do
         @controller.stub!(:default_region).and_return(510)
         @controller.stub!(:cc_metro_region).and_return(510)
         get :index
         assigns(:active).should_not be_nil
-        assigns(:popular).should_not be_nil
         assigns(:recent).should_not be_nil
         assigns(:recommended).should_not be_nil
       end
-      
+
     end
 
   end
