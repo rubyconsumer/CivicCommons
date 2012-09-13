@@ -1,0 +1,31 @@
+.notification-main {
+  position: relative;
+  float: right;
+  height: 40px;
+  width: 58px;
+  background: url(/images/notification_main.png) no-repeat;
+}
+
+.notification {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  padding: 1px 3px;
+  background-color: #ccc;
+  color: #fff;
+  font-weight: bold;
+  text-shadow: 0 -1px 1px rgba(0,0,0,.3);
+  border: 3px solid #fff;
+  -webkit-border-radius: 15px;
+     -moz-border-radius: 15px;
+       -o-border-radius: 15px;
+          border-radius: 15px;
+  -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.3);
+     -moz-box-shadow: 0 1px 1px rgba(0,0,0,.3);
+       -o-box-shadow: 0 1px 1px rgba(0,0,0,.3);
+          box-shadow: 0 1px 1px rgba(0,0,0,.3);
+}
+
+.notification-info {
+  background-color: #b73123;
+}
