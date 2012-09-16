@@ -16,8 +16,8 @@
   <div class="content-container">
 
     <div class="main-content">
-      <%= render partial: 'hp_conversation_panels' %>
       <%= render partial: 'hp_blog_panel', locals: {blog_post: @recent_blog_post} if @recent_blog_post.present? %>
+      <%= render partial: 'hp_conversation_panels' %>
     </div><!-- /.main-content -->
 
     <div class="aside supplementary">
