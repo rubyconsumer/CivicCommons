@@ -1,5 +1,9 @@
 /* Styles for the hero section of the homepage */
 
+.feature-mast.feature-mast-hero .wrapper {
+  border-bottom: none;
+}
+
 .feature-mast-hero .mod {
   margin-bottom: 10px;
   margin-right: 20px;
@@ -36,9 +40,6 @@
   width: 256px;
 }
 
-.slideshow-container {
-}
-
 .slideshow-inner {
   padding: 10px;
   margin: 0 10px;
@@ -66,7 +67,7 @@
 /* Slideshow Navigation Settings */
 
 .slideshow-nav {
-  margin: 0 auto 20px;
+  margin: 0 auto 10px;
   overflow: hidden;
   text-align: center;
   width: auto;
