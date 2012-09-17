@@ -15,7 +15,7 @@ class ProductsServicesController < ApplicationController
         @promotion_form_presenter.question).deliver
       
       flash[:notice] = "Thank you contacting us! We'll get back to you shortly!"
-      redirect_to promotion_products_services_path
+      redirect_to products_services_path
     else
       render :action => :promotion
     end
