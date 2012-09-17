@@ -19,7 +19,7 @@ describe HomepageController do
       mock_blog = mock_model(ContentItem)
 
       mock_blog_posts = [mock_blog, mock_blog, mock_blog]
-      mock_blog_posts.should_receive(:first).once.and_return(mock_blog)
+      mock_blog_posts.should_receive(:limit).once.and_return(mock_blog_posts)
 
       ContentItem.stub(:recent_blog_posts).and_return(mock_blog_posts)
 

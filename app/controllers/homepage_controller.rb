@@ -8,7 +8,7 @@ class HomepageController < ApplicationController
     @featured_opportunities = FeaturedOpportunity.all
 
     @recent_items = Activity.most_recent_activity_items(limit: 3)
-    @recent_blog_post = ContentItem.recent_blog_posts.first
+    @recent_blog_posts = ContentItem.recent_blog_posts.limit(3)
 
     respond_to do |format|
       format.html
