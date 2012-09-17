@@ -163,7 +163,6 @@ class Conversation < ActiveRecord::Base
     {
       :recommended => :recommended,
       :active => :most_active,
-      :popular => :get_top_visited,
       :recent => :latest_created
     }
   end
