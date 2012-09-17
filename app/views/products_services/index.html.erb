@@ -6,7 +6,7 @@
         <h2 class="promotion-title mtn">Classic</h2>
         <div class="fl-right promotion-cta">
           <h3 class="mtn promotion-price">Free</h3>
-          <%= link_to 'Learn More', promotion_products_services_path, class: 'button button-block' %>
+          <%= link_to 'Learn More', promotion_products_services_path(:product => 'Classic'), class: 'button button-block' %>
         </div>
         <div class="promotion-info">
           <ul>
@@ -24,7 +24,7 @@
         <h2 class="promotion-title mtn">Pro</h2>
         <div class="fl-right promotion-cta">
           <h3 class="mtn promotion-price">$2,500</h3>
-          <%= link_to 'Learn More', promotion_products_services_path, class: 'button button-block' %>
+          <%= link_to 'Learn More', promotion_products_services_path(:product => 'Pro'), class: 'button button-block' %>
         </div>
         <div class="promotion-info">
           <p>All of the above, plus...</p>
@@ -44,7 +44,7 @@
         <h2 class="promotion-title mtn">Premium</h2>
         <div class="fl-right promotion-cta">
           <h3 class="mtn promotion-price">$7,500</h3>
-          <%= link_to 'Learn More', promotion_products_services_path, class: 'button button-block' %>
+          <%= link_to 'Learn More', promotion_products_services_path(:product => 'Premium'), class: 'button button-block' %>
         </div>
         <div class="promotion-info">
           <p>All of the above, plus...</p>

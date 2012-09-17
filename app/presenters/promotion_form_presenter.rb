@@ -4,7 +4,8 @@ class PromotionFormPresenter < PresenterForm
   
   attr_accessor :name,
                 :email, 
-                :question
+                :question,
+                :product
 
   validates_presence_of :email, :name
   validate :email_formatting

@@ -9,6 +9,7 @@
   * [Ad to Access Product Page - put on the Home Page](https://agilezen.com/project/18091/story/668)
   * [Remove Most Popular Conversation from Right Aside](https://agilezen.com/project/18091/story/669)
   * [Learn More Contact Form - Return user to Product Services Page](https://agilezen.com/project/18091/story/672)
+  * [Add Product selected Hidden Code to Learn More](https://agilezen.com/project/18091/story/673)
 
 ### Bug Fix
   * [AutoComplete Issues](https://agilezen.com/project/18091/story/659)

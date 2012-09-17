@@ -22,6 +22,7 @@
           <label for="question">Question</label>
           <%= f.text_area :question, :class => 'textbox', :rows => 3 %>
         </div>
+        <%= f.hidden_field :product %>
         <div class="form-block">
           <%= f.submit 'Send Your Question', :class => 'submit' %> or <a href="#">Cancel</a>
         </div>

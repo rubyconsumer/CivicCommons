@@ -1,4 +1,4 @@
-<h1>Engagement Services Form Request from <%= @name %> (<%= @email %>)</h1>
+<h1>Engagement Services Form Request from <%= @name %> (<%= @email %>) <%= @product.present? ? ('about '+ @product) : '' %></h1>
 <p>
   <%= @question %>
 </p>

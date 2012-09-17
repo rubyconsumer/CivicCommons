@@ -94,13 +94,14 @@ class Notifier < Devise::Mailer
     end
   end
 
-  def products_services_promo(name, email, question)
+  def products_services_promo(name, email, question, product = '')
     @name = name
     @email = email
     @question = question
+    @product = product
     
     headers['X-SMTPAPI'] = '{"category": "products_services_promo"}'
-    mail(:subject => "Engagement Services Form Request: #{name}", 
+    mail(:subject => "Engagement Services Form Request from #{name} #{product.present? ? ('about '+ product) : ''}", 
          :from => email,
          :to => Civiccommons::Config.email["products_services_email"])
   end
