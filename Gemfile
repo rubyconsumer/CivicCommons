@@ -56,7 +56,7 @@ gem 'fitter-happier', '= 0.0.1'
 
 gem 'sixarm_ruby_email_address_validation'
 
-gem 'profanity_filter'
+gem 'profanity_filter', :git => 'git://github.com/CivicCommons/profanity_filter.git'
 
 gem "ckeditor", "3.6.3"
 gem 'prawn_rails'

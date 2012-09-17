@@ -5,6 +5,7 @@
   * [Admin Blog ONLY ability](https://agilezen.com/project/18091/story/652)
   * [Add Product/Services page and form](https://agilezen.com/project/18091/story/661)
   * [Apply design changes for regional nav filter.](https://agilezen.com/project/18091/story/662)
+  * [Civic Commons profanity filter adjustments.](https://agilezen.com/project/18091/story/666)
   * [Ad to Access Product Page - put on the Home Page](https://agilezen.com/project/18091/story/668)
   * [Remove Most Popular Conversation from Right Aside](https://agilezen.com/project/18091/story/669)
 

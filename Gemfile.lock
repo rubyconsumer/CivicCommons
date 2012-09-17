@@ -1,4 +1,10 @@
 GIT
+  remote: git://github.com/CivicCommons/profanity_filter.git
+  revision: 5d33a6eae6181e245aef519dd9272cb688a9af5b
+  specs:
+    profanity_filter (0.1.1)
+
+GIT
   remote: git://github.com/nesquena/query_reviewer.git
   revision: 7422e5cbcf601d8844b97135d4919c5f06c823bf
   specs:
@@ -246,7 +252,6 @@ GEM
     prawn_rails (0.0.8)
       prawn (>= 0.11.1)
       rails (>= 3.0.0)
-    profanity_filter (0.1.1)
     progress_bar (0.4.0)
       highline (~> 1.6.1)
       options (~> 2.3.0)
@@ -444,7 +449,7 @@ DEPENDENCIES
   paperclip (= 2.3.8)
   prawn (>= 1.0.0.rc1)
   prawn_rails
-  profanity_filter
+  profanity_filter!
   progress_bar
   query_reviewer!
   rack-test (~> 0.6.0)
