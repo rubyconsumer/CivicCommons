@@ -13,7 +13,7 @@ class MetroRegion < ActiveRecord::Base
   def indexed_city_province_token
     "#{city_name.to_s.downcase.gsub(/\s/i, '-')}-#{province.to_s.downcase.gsub(/\s/i, '-')}"
   end
-  
+
   def city_display_name
     "#{city_name}, #{province}"
   end
@@ -45,7 +45,7 @@ class MetroRegion < ActiveRecord::Base
     slideout_image = self.generate_slideout_image
     AWS::S3::S3Object.store("#{self.metrocode}.png", open(slideout_image) , "#{S3Config.bucket}/images-regions")
   end
-  
+
   def self.top_metro_regions(limit = 5)
     sql = <<-SQL
       SELECT m.*, count(m.id) as count_mid from metro_regions m join conversations c on c.`metro_region_id` = m.id
@@ -60,14 +60,14 @@ class MetroRegion < ActiveRecord::Base
   def self.metrocodes
     self.group(:metrocode)
   end
-  
+
   def self.update_all_city_province_token
     MetroRegion.all.each do |metro_region|
       metro_region.city_province_token = metro_region.indexed_city_province_token
       metro_region.save(:validate => false)
     end
   end
-  
+
   def self.search_city_province(q)
     q = q.to_s.gsub(/,|\./i,'') #remove comma
     q = q.gsub(/\s/i, '-') # sub whitespace into '-' because the tokens are using '-'
