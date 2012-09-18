@@ -1,16 +1,16 @@
 <div class="three-col-sm mbs">
   <div class="cols tmp-title">
+    <h4><%= link_to "More Recommended", conversations_filter_url(:recommended) %></h4>
+  </div>
+  <div class="cols tmp-title">
     <h4><%= link_to "More Recent", conversations_filter_url(:recent) %></h4>
   </div>
   <div class="cols tmp-title">
     <h4><%= link_to "More Active", conversations_filter_url(:active) %></h4>
   </div>
-  <div class="cols tmp-title">
-    <h4><%= link_to "More Popular", conversations_filter_url(:popular) %></h4>
-  </div>
 </div>
 <div class="three-col-sm">
+  <%= render partial: 'hp_conversation_panel', locals: {conversation: @most_recommended_conversation.first} if @most_recommended_conversation.first.present? %>
   <%= render partial: 'hp_conversation_panel', locals: {conversation: @most_recent_conversation.first} if @most_recent_conversation.first.present? %>
   <%= render partial: 'hp_conversation_panel', locals: {conversation: @most_active_conversation.first} if @most_active_conversation.first.present? %>
-  <%= render partial: 'hp_conversation_panel', locals: {conversation: @most_popular_conversation.first} if @most_popular_conversation.first.present? %>
 </div>

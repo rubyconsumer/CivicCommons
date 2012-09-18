@@ -11,6 +11,7 @@
   * [Homepage Blog Rotation](https://agilezen.com/project/18091/story/671)
   * [Learn More Contact Form - Return user to Product Services Page](https://agilezen.com/project/18091/story/672)
   * [Add Product selected Hidden Code to Learn More](https://agilezen.com/project/18091/story/673)
+  * [Replace Most Popular with Recommended on Homepage.](https://agilezen.com/project/18091/story/675)
 
 ### Bug Fix
   * [AutoComplete Issues](https://agilezen.com/project/18091/story/659)
