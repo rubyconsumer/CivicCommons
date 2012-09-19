@@ -9,7 +9,7 @@
   });
 </script>
 <div class="blog-slideshow mbm">
-  <div class="media">
+  <div class="media card">
     <img class="img mrl" src="<%= blog_post.image.url(:panel) %>" alt="<%= blog_post.title %>" />
     <div class="bd">
       <h4><%= link_to blog_post.title, blog_path(blog_post) %></h4>
@@ -19,7 +19,7 @@
       <p><%= link_to "continue reading", blog_url(blog_post) %> or <%= link_to "read past posts", blog_index_url %></p>
     </div>
   </div>
-  <div class="media">
+  <div class="media card">
     <img class="img mrl" src="<%= blog_post.image.url(:panel) %>" alt="<%= blog_post.title %>" />
     <div class="bd">
       <h4><%= link_to blog_post.title, blog_path(blog_post) %></h4>
@@ -29,7 +29,7 @@
       <p><%= link_to "continue reading", blog_url(blog_post) %> or <%= link_to "read past posts", blog_index_url %></p>
     </div>
   </div>
-  <div class="media">
+  <div class="media card">
     <img class="img mrl" src="<%= blog_post.image.url(:panel) %>" alt="<%= blog_post.title %>" />
     <div class="bd">
       <h4><%= link_to blog_post.title, blog_path(blog_post) %></h4>
