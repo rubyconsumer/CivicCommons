@@ -1,11 +1,43 @@
-<div class="media mbl">
-  <img class="img mrl" src="<%= blog_post.image.url(:panel) %>" alt="<%= blog_post.title %>" />
-  <div class="bd">
-    <h4><%= link_to blog_post.title, blog_path(blog_post) %></h4>
-    <p>By: <%= link_to blog_post.author.name, user_path(blog_post.author) %></p>
-    <p><%= blog_post.summary.html_safe %>
-    </p>
-    <p><%= link_to "Continue reading", blog_url(blog_post) %> or <%= link_to "Read past posts", blog_index_url %></p>
+<script type="text/javascript">
+  $(function() {
+      $('.blog-slideshow').cycle({
+          fx:      'scrollHorz',
+          speed:   1000,
+          timeout: 15000,
+          pager:   '.blog-slideshow-nav',
+      });
+  });
+</script>
+<div class="blog-slideshow mbm">
+  <div class="media">
+    <img class="img mrl" src="<%= blog_post.image.url(:panel) %>" alt="<%= blog_post.title %>" />
+    <div class="bd">
+      <h4><%= link_to blog_post.title, blog_path(blog_post) %></h4>
+      <p>by: <%= link_to blog_post.author.name, user_path(blog_post.author) %></p>
+      <p><%= blog_post.summary.html_safe %>
+      </p>
+      <p><%= link_to "continue reading", blog_url(blog_post) %> or <%= link_to "read past posts", blog_index_url %></p>
+    </div>
+  </div>
+  <div class="media">
+    <img class="img mrl" src="<%= blog_post.image.url(:panel) %>" alt="<%= blog_post.title %>" />
+    <div class="bd">
+      <h4><%= link_to blog_post.title, blog_path(blog_post) %></h4>
+      <p>by: <%= link_to blog_post.author.name, user_path(blog_post.author) %></p>
+      <p><%= blog_post.summary.html_safe %>
+      </p>
+      <p><%= link_to "continue reading", blog_url(blog_post) %> or <%= link_to "read past posts", blog_index_url %></p>
+    </div>
+  </div>
+  <div class="media">
+    <img class="img mrl" src="<%= blog_post.image.url(:panel) %>" alt="<%= blog_post.title %>" />
+    <div class="bd">
+      <h4><%= link_to blog_post.title, blog_path(blog_post) %></h4>
+      <p>by: <%= link_to blog_post.author.name, user_path(blog_post.author) %></p>
+      <p><%= blog_post.summary.html_safe %>
+      </p>
+      <p><%= link_to "continue reading", blog_url(blog_post) %> or <%= link_to "read past posts", blog_index_url %></p>
+    </div>
   </div>
 </div>
-
+<div class="blog-slideshow-nav slideshow-nav mbl"></div>
