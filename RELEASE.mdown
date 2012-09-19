@@ -1,3 +1,7 @@
+## 3.2
+
+### External Changes
+  * [Homepage Blog Feature Restyle](https://agilezen.com/project/18091/story/678)
 
 ## 3.1
 

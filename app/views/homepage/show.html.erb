@@ -16,7 +16,7 @@
   <div class="content-container">
 
     <div class="main-content">
-      <%= render partial: 'hp_blog_panel', locals: {blog_post: @recent_blog_posts.sample} if @recent_blog_posts.present? %>
+      <%= render partial: 'hp_blog_panels', locals: {blog_posts: @recent_blog_posts} if @recent_blog_posts.present? %>
       <%= render partial: 'hp_conversation_panels' %>
     </div><!-- /.main-content -->
 

@@ -1,0 +1,16 @@
+<script type="text/javascript">
+  $(function() {
+      $('.blog-slideshow').cycle({
+          fx:      'scrollHorz',
+          speed:   1000,
+          timeout: 15000,
+          pager:   '.blog-slideshow-nav',
+      });
+  });
+</script>
+<div class="blog-slideshow mbm">
+  <% blog_posts.each do |blog_post| %>
+    <%= render partial: 'hp_blog_panel', locals: {blog_post: blog_post} if blog_post.present? %>
+  <% end %>
+</div>
+<div class="blog-slideshow-nav slideshow-nav mbl"></div>
