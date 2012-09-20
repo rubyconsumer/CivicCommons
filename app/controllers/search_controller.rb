@@ -3,7 +3,7 @@ class SearchController < ApplicationController
 
     search_service = SearchService.new
     @top_metro_regions = MetroRegion.top_metro_regions(5)
-    
+
     if params[:filter] and not determine_model_class(params[:filter]).nil?
       @models_to_search = determine_model_class(params[:filter])
     else
@@ -22,12 +22,12 @@ class SearchController < ApplicationController
     end
 
   end
-  
+
   def metro_region_city
     unless params[:term] =~ /^\s*$/i
       @results = MetroRegion.search_city_province(params[:term])
       @metro_regions = @results.collect{|region| {:id => region.id, :label => region.city_display_name, :metrocode => region.metrocode} }
-    
+
       render :json => @metro_regions
     end
   end

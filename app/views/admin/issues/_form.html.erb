@@ -1,4 +1,4 @@
-<%= form_for [:admin, @issue], :html =>{ :multipart => true } do |f| %>
+<%= form_for [:admin, @issue], :as => :issue, :url => [:admin, @issue.becomes(Issue)], :html =>{ :multipart => true } do |f| %>
   <%= show_errors @issue %>
 
   <%= render :partial => "/admin/shared/meta_info", :locals => {:meta_object => f} %>
@@ -33,13 +33,13 @@
   <p>
     <%= f.label :type %>
     <% if @issue.id.present? %>
-      <i><%= @issue.type %></i>
+      <i><%= @issue.managed? ? "Managed Issue" : "Issue" %></i>
     <% else %>
       <%= f.select :type, Issue::ALL_TYPES %>
     <% end %>
   </p>
 
-  <% if @issue.type == 'ManagedIssue' %>
+  <% if @issue.managed? %>
     <p>
       <%= f.label :index %>
       <br />

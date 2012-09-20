@@ -3,6 +3,9 @@
 ### External Changes
   * [Homepage Blog Feature Restyle](https://agilezen.com/project/18091/story/678)
 
+### Bug Fix
+  * [Ability to Select Index Page for Managed Issue Pages](https://agilezen.com/project/18091/story/676)
+
 ## 3.1
 
 ### External Changes

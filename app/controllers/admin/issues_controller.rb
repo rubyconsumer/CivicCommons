@@ -1,5 +1,5 @@
 class Admin::IssuesController < Admin::DashboardController
-  
+
   authorize_resource :class => :admin_issues
 
   #GET admin/issues/
@@ -32,8 +32,10 @@ class Admin::IssuesController < Admin::DashboardController
 
   #GET admin/issues/:id/edit
   def edit
-    @issue = Issue.find(params[:id]).becomes(Issue)
+    @issue = Issue.find(params[:id])
     @topics = Topic.all
+
+    render "/admin/issues/edit"
   end
 
   #PUT admin/issues/:id

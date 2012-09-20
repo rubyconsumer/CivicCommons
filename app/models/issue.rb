@@ -102,10 +102,10 @@ class Issue < ActiveRecord::Base
       end
     }
   # Filters by metro region, if metrocode parameter is supplied, otherwise, ignores it.
-  scope :filter_metro_region, lambda{|metrocode| 
+  scope :filter_metro_region, lambda{|metrocode|
       joins(:conversations => :metro_region).where(:metro_regions=>{metrocode: metrocode}).group('issues.id') if metrocode.present?
     }
-  
+
 
   def self.random
     if (c = count) != 0
@@ -218,17 +218,21 @@ class Issue < ActiveRecord::Base
     topics.include?(topic)
   end
 
+  define_method(:title) do
+    name
+  end
+
+  def region_metrocodes
+    conversations.collect do |conversation|
+      conversation.metro_region.metrocode if conversation.metro_region_id.present? &&  conversation.metro_region.present?
+    end.compact.uniq
+  end
+
   #validation
   def require_topic
     errors.add(:base, "Please select at least one Topic") if self.topic_ids.blank?
   end
-  
-  def region_metrocodes
-    conversations.collect do |conversation| 
-      conversation.metro_region.metrocode if conversation.metro_region_id.present? &&  conversation.metro_region.present?
-    end.compact.uniq
-  end
-  
+
 
   private
 
@@ -247,10 +251,5 @@ class Issue < ActiveRecord::Base
       self.position = Issue.maximum('position') ? Issue.maximum('position') + 1 : 0
     end
   end
-
-  define_method(:title) do
-    name
-  end
-  
 
 end
