@@ -663,7 +663,7 @@ form #middle-name {width: 23px;}
 /*- Facebook Connect in Settings ----------*/
 
 a.connectacct-link {
-  background: url(/images/fb_connect.png) no-repeat 0 0;
+  background: image-url("fb_connect.png") no-repeat 0 0;
   display: block;
   float: left;
   height: 32px;
@@ -672,7 +672,7 @@ a.connectacct-link {
   text-indent: -9999px;
   width: 257px;
 }
-a.connectacct-link.disconnect-fb {background-image: url(/images/fb_disconnect.png);}
+a.connectacct-link.disconnect-fb {background-image: image-url("fb_disconnect.png");}
 a.connectacct-link:hover, a.connectacct-link:focus, a.connectacct-link.disconnect-fb:hover, a.connectacct-link.disconnect-fb:focus {background-position: bottom;}
 fieldset.footer {margin-bottom: 2em;}
 
@@ -913,15 +913,15 @@ a.see-more {
 }
 
 .ico-person-white {
-  background: url(../images/icons/person-ico-white.png) no-repeat;
+  background: image-url("icons/person-ico-white.png") no-repeat;
 }
 
 .ico-facebook {
-  background: url(../images/icons/facebook-ico.png) no-repeat;
+  background: image-url("icons/facebook-ico.png") no-repeat;
 }
 
 .ico-twitter {
-  background: url(../images/icons/twitter-ico.png) no-repeat;
+  background: image-url("icons/twitter-ico.png") no-repeat;
 }
 
 
@@ -932,10 +932,10 @@ a.see-more {
   margin-bottom: 1em;
   padding-left: 25px;
 }
-.dnld.video {background: url(/images/video.png) no-repeat 0 3px;}
-.dnld.document {background: url(/images/document.png) no-repeat 0 3px;}
-.dnld.link {background: url(/images/link.png) no-repeat 0 3px;}
-.dnld.image {background: url(/images/image.png) no-repeat 0 3px;}
+.dnld.video {background: image-url("video.png") no-repeat 0 3px;}
+.dnld.document {background: image-url("document.png") no-repeat 0 3px;}
+.dnld.link {background: image-url("link.png") no-repeat 0 3px;}
+.dnld.image {background: image-url("image.png") no-repeat 0 3px;}
 .dnld.image img {max-width: 595px;}
 .dnld strong {display: block;}
 .dnld p {margin-bottom: .2em;}
@@ -1009,7 +1009,7 @@ div.three-col-sm div.photobank img {margin: 0 0 6px 6px;}
   background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#a2b562), to(#96a957));
   background: -moz-linear-gradient(center top , #a2b562, #96a957);
   background-color: #99ac5d;
-  background-image: url(/images/voting-arrow-background.png);
+  background-image: image-url("voting-arrow-background.png");
   color: #fff;
   cursor: pointer;
   display: block;
@@ -1026,7 +1026,7 @@ div.three-col-sm div.photobank img {margin: 0 0 6px 6px;}
 }
 .survey-option .clear-both {clear: both;}
 .survey-option .select .select-icon {
-  background-image: url(/images/voting-arrow.png);
+  background-image: image-url("voting-arrow.png");
   display: block;
   height: 15px;
   text-indent: -9999px;
@@ -1036,7 +1036,7 @@ div.three-col-sm div.photobank img {margin: 0 0 6px 6px;}
   width: 15px;
 }
 .survey-option .unselect .unselect-icon {
-  background-image: url(/images/voting-close.png);
+  background-image: image-url("voting-close.png");
   display: block;
   height: 22px;
   width: 22px;
@@ -1109,20 +1109,20 @@ div.three-col-sm div.photobank img {margin: 0 0 6px 6px;}
   background: -moz-linear-gradient(center top , #a2b562, #96a957);
 }
 .vote-time {
-  background: url(../images/calendar-f.png) no-repeat 0 8px;
+  background: image-url("calendar-f.png") no-repeat 0 8px;
   border-top: 1px solid #ccc;
   font-weight: bold;
   padding: 10px 0 2px 25px;
 }
 .vote-band {margin-left: 0;}
 .vote-band li {
-  background: url(/images/voting-icon.png) no-repeat 0 0;
+  background: image-url("voting-icon.png") no-repeat 0 0;
   list-style: none;
   margin: 0 0 1em 0;
   padding-left: 20px;
 }
 .vote-band li.closed {
-  background-image: url(/images/voting-icon-closed.png);
+  background-image: image-url("voting-icon-closed.png");
   color: #777;
 }
 /* Opportunity Votes -------
@@ -1448,17 +1448,17 @@ div.three-col-sm div.photobank img {margin: 0 0 6px 6px;}
 }
 
 .entry-contrib {
-  background: url(/images/people-i.png) no-repeat 0 2px;
+  background: image-url("people-i.png") no-repeat 0 2px;
   padding: 2px 0 2px 31px;
 }
 
 .entry-conv {
-  background: url(/images/conv-i.png) no-repeat 0 2px;
+  background: image-url("conv-i.png") no-repeat 0 2px;
   padding: 2px 0 2px 24px;
 }
 
 .entry-res {
-  background: url(/images/doc-i.png) no-repeat 0 2px;
+  background: image-url("doc-i.png") no-repeat 0 2px;
   padding: 2px 0 2px 21px;
 }
 
@@ -1528,10 +1528,10 @@ ul.profile-extras li {
   margin-right: 1.5em;
   padding-left: 20px;
 }
-li.website-profile {background: url(/images/globe.png) no-repeat 0 0;}
-li.twitter-profile {background: url(/images/twitter.png) no-repeat 0 0;}
-li.email-profile {background: url(/images/email.png) no-repeat 0 0;}
-li.fb-profile {background: url(/images/facebook.png) no-repeat 0 0;}
+li.website-profile {background: image-url("globe.png") no-repeat 0 0;}
+li.twitter-profile {background: image-url("twitter.png") no-repeat 0 0;}
+li.email-profile {background: image-url("email.png") no-repeat 0 0;}
+li.fb-profile {background: image-url("facebook.png") no-repeat 0 0;}
 ul.profile-extras a:link {
   color: #858383;
   text-decoration: none;
@@ -1558,14 +1558,14 @@ ul.profile-extras a:hover {color: #2c87b7;}
   padding: 0 0 0 35px;
   margin-bottom: 35px;
 }
-.profile .recent-item.contribution {background: url(/images/contrib-r.png) no-repeat 2px 4px;}
-.profile .recent-item.conversation {background: url(/images/conv-r.png) no-repeat 2px 4px;}
-.profile .recent-item.rating {background: url(/images/voting-icon.png) no-repeat 7px 4px;}
-.profile .recent-item.issue {background: url(/images/issues-r.png) no-repeat 2px 4px;}
-.profile .recent-item.petition {background: url(/images/petition-r.png) no-repeat 2px 0;}
-.profile .recent-item.petition-signature {background: url(/images/petition_sig-r.png) no-repeat 2px 0;}
-.profile .recent-item.reflection {background: url(/images/reflection-r.png) no-repeat 2px 0;}
-.profile .recent-item.reflection-comment {background: url(/images/reflection_comment-r.png) no-repeat 2px 2px;}
+.profile .recent-item.contribution {background: image-url("contrib-r.png") no-repeat 2px 4px;}
+.profile .recent-item.conversation {background: image-url("conv-r.png") no-repeat 2px 4px;}
+.profile .recent-item.rating {background: image-url("voting-icon.png") no-repeat 7px 4px;}
+.profile .recent-item.issue {background: image-url("issues-r.png") no-repeat 2px 4px;}
+.profile .recent-item.petition {background: image-url("petition-r.png") no-repeat 2px 0;}
+.profile .recent-item.petition-signature {background: image-url("petition_sig-r.png") no-repeat 2px 0;}
+.profile .recent-item.reflection {background: image-url("reflection-r.png") no-repeat 2px 0;}
+.profile .recent-item.reflection-comment {background: image-url("reflection_comment-r.png") no-repeat 2px 2px;}
 .profile .issue p {padding-left: 0;}
 .profile h3 {margin-bottom: 1em;}
 .profile .divided {border-top: none;}
@@ -1678,7 +1678,7 @@ div.four-col div.cols {
 
 /*- Header and Logo ----------*/
 
-#header-wrapper {background: url(/images/header_bg.png) no-repeat bottom center;}
+#header-wrapper {background: image-url("header_bg.png") no-repeat bottom center;}
 #header {
   border-bottom: 1px solid #c3c6cd;
   line-height: 1.6em;
@@ -1688,7 +1688,7 @@ div.four-col div.cols {
   width: 940px;
 }
 a#logo {
-  background: url(/images/cc_logo_4.png) no-repeat;
+  background: image-url("cc_logo_4.png") no-repeat;
   display: block;
   float: left;
   height: 62px;
@@ -1714,7 +1714,7 @@ div#user p {margin-bottom: .7em;}
 .signed-out div#user p {margin-bottom: .3em;}
 *:first-child+html div.signed-out div#user {display: inline;}
 a.fb-login-btn {
-  background: url(/images/fb_login.png) no-repeat 0 0;
+  background: image-url("fb_login.png") no-repeat 0 0;
   display: block;
   height: 27px;
   outline: none;
@@ -1723,7 +1723,7 @@ a.fb-login-btn {
 }
 a.fb-login-btn:hover, a.fb-login-btn:focus {background-position: bottom;}
 a.cc-login-btn {
-  background: url(/images/cc_login_img.png) no-repeat 0 0;
+  background: image-url("cc_login_img.png") no-repeat 0 0;
   display: block;
   height: 26px;
   outline: none;
@@ -1738,7 +1738,7 @@ div.login-actions p {
 }
 .important a {font-weight: bold;}
 .build-commons {
-  background: url(/images/build_commons.png) no-repeat 0 0;
+  background: image-url("build_commons.png") no-repeat 0 0;
   padding: 5px 0 5px 27px;
 }
 #login-status h4, .important p {margin-bottom: .1em;}
@@ -1827,7 +1827,7 @@ div.login-actions p {
 }
 
 /* .main-nav li a:hover { */
-/*   background: url(/images/top_arrow.png) no-repeat 50% 0; */
+/*   background: image-url("top_arrow.png") no-repeat 50% 0; */
 /* } */
 
 /*- Feature Area ----------*/
@@ -1940,7 +1940,7 @@ form.contribution_edit .add-link, form.contribution_edit .add-file {
 }
 #contribution-add-link, #contribution-add-file,
 form.contribution_edit .add-link, form.contribution_edit .add-file {
-  background: url(/images/icons/sm_add.png) no-repeat 0 2px;
+  background: image-url("icons/sm_add.png") no-repeat 0 2px;
   padding-left: 20px;
 }
 div.contribution-container {zoom: 1;}
@@ -1995,15 +1995,15 @@ div.contribution-container.collapsed > .comment > .content {
   padding: 10px 20px 0 60px;
   min-height: 30px;
 }
-.add-link.section div {background-image: url(/images/icons/link-btn.png);}
-/* #contribution-add-link:hover {background-image: url(/images/icons/link-btn-hvr.png);} */
+.add-link.section div {background-image: image-url("icons/link-btn.png");}
+/* #contribution-add-link:hover {background-image: image-url("icons/link-btn-hvr.png");} */
 .add-file.section div {
-  background-image: url(/images/icons/image-btn.png);
+  background-image: image-url("icons/image-btn.png");
   background-position: 15px 13px;
 }
-/* #contribution-add-file:hover {background-image: url(/images/icons/image-btn-hvr.png);} */
+/* #contribution-add-file:hover {background-image: image-url("icons/image-btn-hvr.png");} */
 .contrib_tool_container .section .close {
-  background: url(/images/close.png) no-repeat 0 0;
+  background: image-url("close.png") no-repeat 0 0;
   display: none;
   height: 16px;
   position: absolute;
@@ -2072,7 +2072,7 @@ div.convo-utility span.respond {
 }
 html.js div.productive {display: none;}
 div.productive {
-  background: #d6d6d6 url(../images/productivity_bg.gif) repeat-x top;
+  background: #d6d6d6 image-url("productivity_bg.gif") repeat-x top;
   clear: both;
   overflow: hidden;
   padding: 10px;
@@ -2130,7 +2130,7 @@ div.link-meta p.link-title a:hover, div.link-meta p.link-quot a:hover, div.link-
 .contribution-container .contribution-toggle {display: none;}
 .thread-list .thread-list .contribution-container .content {padding-right: 40px;}
 .thread-list .thread-list .contribution-container .contribution-toggle {
-  background: url(../images/accordion-icon.png) no-repeat 0 0;
+  background: image-url("accordion-icon.png") no-repeat 0 0;
   display: block;
   height: 27px;
   position: absolute;
@@ -2294,16 +2294,16 @@ a.social-media-ico {
   width: 16px;
 }
 a.social-media-ico:hover {opacity: 1;}
-a.facebook_ico {background: url(/images/facebook_16.png) no-repeat;}
-a.twitter_ico {background: url(/images/twitter_16.png) no-repeat;}
-a.youtube_ico {background: url(/images/youtube_16.png) no-repeat;}
-a.rss_ico {background: url(/images/rss_16.png) no-repeat;}
+a.facebook_ico {background: image-url("facebook_16.png") no-repeat;}
+a.twitter_ico {background: image-url("twitter_16.png") no-repeat;}
+a.youtube_ico {background: image-url("youtube_16.png") no-repeat;}
+a.rss_ico {background: image-url("rss_16.png") no-repeat;}
 div#cc-footer {
   border-top: 1px solid #c3c6cd;
   padding: 20px 0 0 0;
 }
 div#cc-footer p {
-  background: url(/images/cc_footer.png) no-repeat 0 0;
+  background: image-url("cc_footer.png") no-repeat 0 0;
   padding: 3px 0px 5px 50px;
   width: 650px;
 }
@@ -2368,13 +2368,13 @@ div.conversation-input-container {margin-bottom: 25px;}
 .comment-type.reply {background-color: transparent;}
 .comment-type.answer {background-color: transparent;}
 .comment-type.unofficial {
-  background: #f00 url(/images/comment-unofficial.png) no-repeat right;
+  background: #f00 image-url("comment-unofficial.png") no-repeat right;
   padding: 0;
   padding-left: 50px;
   height: 15px;
 }
 .comment-type.question {
-  background: url(/images/comment-question.png) no-repeat right;
+  background: image-url("comment-question.png") no-repeat right;
   padding: 0;
   padding-left: 58px;
   width: 12px;
@@ -2486,14 +2486,14 @@ form.region-filter-container {
   margin-bottom: 10px;
   padding: 2px 0 2px 35px;
 }
-.community-result {background: url("/images/people-r.png") no-repeat 0 2px;}
-.issue-result {background: url("/images/issues-r.png") no-repeat 4px 2px;}
-.project-result {background: url("/images/project-s.png") no-repeat 4px 2px;}
-.conversation-result {background: url("/images/conv-r.png") no-repeat 2px 4px;}
-.contribution-result {background: url("/images/contrib-r.png") no-repeat 2px 2px;}
-.radio-result {background: url("/images/search/radio-s.png") no-repeat 2px 2px;}
-.news-result {background: url("/images/search/news-s.png") no-repeat 2px 2px;}
-.blog-result {background: url("/images/search/blog-s.png") no-repeat 5px 2px;}
+.community-result {background: image-url("people-r.png") no-repeat 0 2px;}
+.issue-result {background: image-url("issues-r.png") no-repeat 4px 2px;}
+.project-result {background: image-url("project-s.png") no-repeat 4px 2px;}
+.conversation-result {background: image-url("conv-r.png") no-repeat 2px 4px;}
+.contribution-result {background: image-url("contrib-r.png") no-repeat 2px 2px;}
+.radio-result {background: image-url("search/radio-s.png") no-repeat 2px 2px;}
+.news-result {background: image-url("search/news-s.png") no-repeat 2px 2px;}
+.blog-result {background: image-url("search/blog-s.png") no-repeat 5px 2px;}
 .results .offset-2 {min-height: 50px;}
 .results a img.callout {border: 1px solid #bbb;}
 .results a:hover img.callout {border-color: #999;}
@@ -2502,7 +2502,7 @@ form.region-filter-container {
 
 a.remove-search-filter:link, a.remove-search-filter:visited {
   color: #777;
-  background: url(../images/close.png) no-repeat 0 0;
+  background: image-url("close.png") no-repeat 0 0;
   padding: 0 0 2px 20px;
   text-decoration: none;
 }
@@ -2515,7 +2515,7 @@ a.remove-search-filter:hover {
 
 a.remove-filter:link, a.remove-filter:visited {
 color: #777;
-background: url(../images/close.png) no-repeat 0 0;
+background: image-url("close.png") no-repeat 0 0;
 padding: 0 0 2px 20px;
 text-decoration: none;
 }
@@ -2539,7 +2539,7 @@ color: #51778e;
   box-shadow: 0 0 15px rgba(0,0,0,.5);
 }
 .maintenance .call-out div {
-  background: url(/images/cc_logo_4.png) no-repeat bottom right;
+  background: image-url("cc_logo_4.png") no-repeat bottom right;
   margin: 25px;
   min-height: 180px;
   height: auto !important;
@@ -2576,10 +2576,10 @@ color: #51778e;
   margin-bottom: 1em;
   padding-left: 28px;
 }
-.home-link {background: url(../images/home-r.png) no-repeat 2px 0;}
-.conv-link {background: url(../images/conv-r.png) no-repeat 0 2px;}
-.issue-link {background: url(../images/issues-r.png) no-repeat 2px 2px;}
-.community-link {background: url(../images/people-r.png) no-repeat 0 2px;}
+.home-link {background: image-url("home-r.png") no-repeat 2px 0;}
+.conv-link {background: image-url("conv-r.png") no-repeat 0 2px;}
+.issue-link {background: image-url("issues-r.png") no-repeat 2px 2px;}
+.community-link {background: image-url("people-r.png") no-repeat 0 2px;}
 
 
 /*- MISCELLANEOUS
@@ -2730,7 +2730,7 @@ div.three-col-sm div.cols.call-out p {
 }
 
 .no-rgba .project-banner-titlebar {
-  background: url(/images/t_grid_bg.png) repeat;
+  background: image-url("t_grid_bg.png") repeat;
 }
 
 .project-banner-title {
@@ -2900,22 +2900,22 @@ vertical-align: middle;
 /*- Conversation Filters ----------*/
 
 .aside .f-conv ul.feat-list li a#active-f {
-  background-image: url(../images/people-f.png);
+  background-image: image-url("people-f.png");
   background-position: 10px 7px;
 }
 .aside .f-conv ul.feat-list li a#active-f:hover, .aside .f-conv ul.feat-list li a#active-f.active {background-position: 10px -58px;}
 .aside .f-conv ul.feat-list li a#recommended-f {
-  background-image: url(../images/recommended-f.png);
+  background-image: image-url("recommended-f.png");
   background-position: 12px 4px;
 }
 .aside .f-conv ul.feat-list li a#recommended-f:hover, .aside .f-conv ul.feat-list li a#recommended-f.active {background-position: 12px -56px;}
 .aside .f-conv ul.feat-list li a#popular-f {
-  background-image: url(../images/popular-f.png);
+  background-image: image-url("popular-f.png");
   background-position: 12px 7px;
 }
 .aside .f-conv ul.feat-list li a#popular-f:hover, .aside .f-conv ul.feat-list li a#popular-f.active {background-position: 12px -57px;}
 .aside .f-conv ul.feat-list li a#recent-f {
-  background-image: url(../images/calendar-f.png);
+  background-image: image-url("calendar-f.png");
   background-position: 14px 5px;
 }
 .aside .f-conv ul.feat-list li a#recent-f:hover, .aside .f-conv ul.feat-list li a#recent-f.active {background-position: 14px -56px;}
@@ -2924,37 +2924,37 @@ vertical-align: middle;
 /*- Community Filters ----------*/
 
 .site-filter li a#active-member {
-  background-image: url(../images/people-f.png);
+  background-image: image-url("people-f.png");
   background-position: 10px 7px;
 }
 .site-filter li a#active-member:hover, .site-filter li a#active-member.active {background-position: 10px -58px;}
 .site-filter li a#newest-member {
-  background-image: url(../images/calendar-f.png);
+  background-image: image-url("calendar-f.png");
   background-position: 14px 5px;
 }
 .site-filter li a#newest-member:hover, .site-filter li a#newest-member.active {background-position: 14px -56px;}
 .site-filter li a#persuasive-member {
-  background-image: url(../images/popular-f.png);
+  background-image: image-url("popular-f.png");
   background-position: 12px 7px;
 }
 .site-filter li a#persuasive-member:hover, .site-filter li a#persuasive-member.active {background-position: 12px -57px;}
 .site-filter li a#alphabetical {
-  background-image: url(../images/alpha-f.png);
+  background-image: image-url("alpha-f.png");
   background-position: 12px 7px;
 }
 .site-filter li a#alphabetical:hover, .site-filter li a#alphabetical.active {background-position: 12px -59px;}
 .site-filter li a#alpha-member {
-  background-image: url(../images/alpha-f.png);
+  background-image: image-url("alpha-f.png");
   background-position: 12px 7px;
 }
 .site-filter li a#alpha-member:hover, .site-filter li a#alpha-member.active {background-position: 12px -59px;}
 .site-filter li a#inspiring-member {
-  background-image: url(../images/inspire-f.png);
+  background-image: image-url("inspire-f.png");
   background-position: 12px 5px;
 }
 .site-filter li a#inspiring-member:hover, .site-filter li a#inspiring-member.active {background-position: 12px -54px;}
 .site-filter li a#informative-member {
-  background-image: url(../images/inform-f.png);
+  background-image: image-url("inform-f.png");
   background-position: 12px 4px;
 }
 .site-filter li a#informative-member:hover, .site-filter li a#informative-member.active {background-position: 12px -55px;}
@@ -2962,37 +2962,37 @@ vertical-align: middle;
 /*- Search Filters ----------*/
 
 .aside .search-filter ul li a#conv-s {
-  background-image: url(../images/search/conv-s.png);
+  background-image: image-url("search/conv-s.png");
   background-position: 12px 6px;
 }
 .aside .search-filter ul li a#conv-s:hover, .aside .search-filter ul li a#conv-s.active {background-position: 12px -57px;}
 .aside .search-filter ul li a#comm-s {
-  background-image: url(../images/search/comm-s.png);
+  background-image: image-url("search/comm-s.png");
   background-position: 10px 7px;
 }
 .aside .search-filter ul li a#comm-s:hover, .aside .search-filter ul li a#comm-s.active {background-position: 10px -58px;}
 .aside .search-filter ul li a#issues-s {
-  background-image: url(../images/search/issues-s.png);
+  background-image: image-url("search/issues-s.png");
   background-position: 12px 7px;
 }
 .aside .search-filter ul li a#issues-s:hover, .aside .search-filter ul li a#issues-s.active {background-position: 12px -57px;}
 .aside .search-filter ul li a#blog-s {
-  background-image: url(../images/search/blog-f.png);
+  background-image: image-url("search/blog-f.png");
   background-position: 11px 4px;
 }
 .aside .search-filter ul li a#blog-s:hover, .aside .search-filter ul li a#blog-s.active {background-position: 11px -55px;}
 .aside .search-filter ul li a#radio-s {
-  background-image: url(../images/search/radio-f.png);
+  background-image: image-url("search/radio-f.png");
   background-position: 11px 3px;
 }
 .aside .search-filter ul li a#radio-s:hover, .aside .search-filter ul li a#radio-s.active {background-position: 11px -53px;}
 .aside .search-filter ul li a#contrib-s {
-  background-image: url(../images/search/contrib-f.png);
+  background-image: image-url("search/contrib-f.png");
   background-position: 11px 7px;
 }
 .aside .search-filter ul li a#contrib-s:hover, .aside .search-filter ul li a#contrib-s.active {background-position: 11px -59px;}
 .aside .search-filter ul li a#project-s {
-  background-image: url(../images/search/project-f.png);
+  background-image: image-url("search/project-f.png");
   background-position: 11px 4px;
 }
 .aside .search-filter ul li a#project-s:hover, .aside .search-filter ul li a#project-s.active {background-position: 11px -56px;}
@@ -3001,7 +3001,7 @@ vertical-align: middle;
 /*- Create Conversation Feature ----------*/
 
 .convo-create {
-  background: #dbedf5 url(../images/convo_create_bg.gif) repeat-x bottom;
+  background: #dbedf5 image-url("convo_create_bg.gif") repeat-x bottom;
   border: 1px solid #9db4bc;
   color: #51778e;
   font-size: 1.167em;
@@ -3024,7 +3024,7 @@ vertical-align: middle;
   width: 320px;
 }
 .convo-create .convo-create-btn {
-  background: url(../images/create_convo_btn.png) no-repeat 0 0;
+  background: image-url("create_convo_btn.png") no-repeat 0 0;
   display: block;
   float: right;
   height: 46px;
@@ -3040,7 +3040,7 @@ vertical-align: middle;
 
 div#cboxLoadedContent div.tab-strip, div#cboxLoadedContent div.invite-form, div#cboxLoadedContent div.tos-form {font-size: .75em;}
 div.convo-popup, div#cboxLoadedContent {
-  background: #eaeaea url(../images/convo_popup_bg.gif) repeat-x top;
+  background: #eaeaea image-url("convo_popup_bg.gif") repeat-x top;
   border: 1px solid #ced1d6;
   width: 620px;
 }
@@ -3052,7 +3052,7 @@ div.convo-popup ul, div#cboxLoadedContent div.tab-strip-options ul {
   padding: 0;
 }
 div.convo-popup li, div#cboxLoadedContent div.tab-strip-options ul li a {
-  background: #dbdbdb url(../images/convo_popup_li.gif) repeat-x top;
+  background: #dbdbdb image-url("convo_popup_li.gif") repeat-x top;
   color: #777;
   font-weight: bold;
   list-style: none;
@@ -3259,7 +3259,7 @@ input.textbox.input-short {
 }
 
 .ui-datepicker-trigger {
-  background: url(../images/calendar-f.png) no-repeat 0 0;
+  background: image-url("calendar-f.png") no-repeat 0 0;
   border: none;
   cursor: pointer;
 	height: 18px;
@@ -3327,7 +3327,7 @@ input.textbox.input-short {
 }
 
 #ui-datepicker-div .ui-widget-header .ui-icon {
-	background-image: url(ui-lightness/images/ui-icons_ffffff_256x240.png);
+	background-image: image-url("ui-lightness/images/ui-icons_ffffff_256x240.png");
 }
 
 #ui-datepicker-div .ui-state-default:hover,
@@ -3370,7 +3370,7 @@ input.textbox.input-short {
 }
 
 .date-picker {
-	background: url(../images/calendar-f.png) no-repeat 0 0;
+	background: image-url("calendar-f.png") no-repeat 0 0;
 	display: inline-block;
 	height: 18px;
   overflow: hidden;
