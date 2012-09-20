@@ -17,7 +17,7 @@ module MetaHelper
     if meta_data.is_a?(ContentItem) #&& meta_data.content_type_is_blog_post?
       meta_title = meta_data.page_title ? meta_data.page_title : meta_data.title
       meta_info[:page_title]       = "The Civic Commons #{meta_data.h_content_type}: #{Sanitize.clean(meta_title, :remove_contents => ['style','script'])}"
-      meta_info[:image_url]        = "/images/cc_podcast_small.jpg"
+      meta_info[:image_url]        = asset_path("cc_podcast_small.jpg")
     end
 
     #puts "meta_data:#{meta_data.inspect}"
