@@ -171,7 +171,7 @@ table.tablesorter thead tr th, table.tablesorter tfoot tr th {
   padding: 4px;
 }
 table.tablesorter thead tr .header {
-  background-image: url(/images/bg.gif);
+  background-image: image-url("bg.gif");
   background-repeat: no-repeat;
   background-position: center right;
   cursor: pointer;
@@ -194,10 +194,10 @@ table.tablesorter tbody tr.odd td {
   background-color:#F0F0F6;
 }
 table.tablesorter thead tr .headerSortUp {
-  background-image: url(/images/asc.gif);
+  background-image: image-url("asc.gif");
 }
 table.tablesorter thead tr .headerSortDown {
-  background-image: url(/images/desc.gif);
+  background-image: image-url("desc.gif");
 }
 table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
 background-color: #8dbdd8;
@@ -240,12 +240,12 @@ table.topics td {
 
 .staff_pick.off,
 .staff_pick.on:hover {
-  background: transparent url('../images/icons/star_empty.png') 0 0 no-repeat;
+  background: transparent image-url("icons/star_empty.png") 0 0 no-repeat;
 }
 
 .staff_pick.on,
 .staff_pick.off:hover {
-  background: transparent url('../images/icons/star_full.png') 0 0 no-repeat;
+  background: transparent image-url("icons/star_full.png") 0 0 no-repeat;
 }
 textarea.tinymce{width:695px;}
 
