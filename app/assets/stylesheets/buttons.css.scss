@@ -216,7 +216,7 @@ a.button.active {
 ---------------------------------*/
 
 a.button span.itunes {
-  background: url(/images/icons/itunes-ico.png) no-repeat 0 2px;
+  background: image-url("icons/itunes-ico.png") no-repeat 0 2px;
   padding: 2px 0 2px 18px;
 }
 
@@ -225,7 +225,7 @@ a.button:active span.itunes {
 }
 
 a.button span.rss {
-  background: url(/images/icons/rss-ico.png) no-repeat 0 2px;
+  background: image-url("icons/rss-ico.png") no-repeat 0 2px;
   padding: 2px 0 2px 18px;
 }
 
@@ -234,7 +234,7 @@ a.button:active span.rss {
 }
 
 a.button span.stitcher {
-  background: url(/images/icons/stitcher-ico.png) no-repeat 0 1px;
+  background: image-url("icons/stitcher-ico.png") no-repeat 0 1px;
   padding: 2px 0 2px 18px;
 }
 
