@@ -1,3 +1,4 @@
+<div class="blog-slideshow-container">
   <div class="media card">
     <%= image_tag blog_post.image.url(:panel), :class => 'img mrl', :alt => blog_post.title %>
     <div class="bd">
@@ -8,3 +9,4 @@
       <p><%= link_to "continue reading", blog_url(blog_post) %> or <%= link_to "read past posts", blog_index_url %></p>
     </div>
   </div>
+</div>
