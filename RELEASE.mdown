@@ -3,6 +3,7 @@
 ### External Changes
   * [Homepage Blog Feature Restyle](https://agilezen.com/project/18091/story/678)
   * [Start Notification Structure](https://agilezen.com/project/18091/story/658)
+  * [Homepage Blog Panel Styling](https://agilezen.com/project/18091/story/695)
 
 ### Bug Fix
   * [Ability to Select Index Page for Managed Issue Pages](https://agilezen.com/project/18091/story/676)
