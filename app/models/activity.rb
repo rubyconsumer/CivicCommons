@@ -38,7 +38,8 @@ class Activity < ActiveRecord::Base
       end
 
       attributes = attr
-    elsif attributes.is_a?(ActiveRecord::Base) # if it's not a valid Activity type, and it's an activerecord object, then nullify it, because it breaks in rails >= 3.1
+    elsif attributes.is_a?(ActiveRecord::Base)
+      # if it's not a valid Activity type, and it's an activerecord object, then nullify it, because it breaks in rails >= 3.1 (Perry)
       attributes = nil
     end
     super(attributes)
