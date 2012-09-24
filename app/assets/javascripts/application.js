@@ -5,20 +5,20 @@
 // the compiled file.
 //
 //= require 'application.js'
-//= require 'vendor/jquery/jquery-1.4.4.min'
-//= require 'vendor/jquery/jquery-ui-1.8.16.custom.min'
-//= require 'vendor/jquery/jquery-ui-timepicker-addon-0.5.min'
-//= require 'vendor/modernizr-1.5.min'
-//= require 'vendor/underscore.js'
-//= require 'vendor/backbone-0.5.3.js'
+//= require 'jquery/jquery-1.4.4.min'
+//= require 'jquery/jquery-ui-1.8.16.custom.min'
+//= require 'jquery/jquery-ui-timepicker-addon-0.5.min'
+//= require 'modernizr-1.5.min'
+//= require 'underscore.js'
+//= require 'backbone-0.5.3.js'
 //= require 'jquery_ujs'
-//= require 'vendor/jquery/jquery.colorbox-min'
-//= require 'vendor/jquery/jquery.form'
-//= require 'vendor/jquery/jquery.remotipart'
-//= require 'vendor/jquery/jquery.loadmask.min'
-//= require 'vendor/jquery/jquery.hashchange.min'
-//= require 'vendor/jquery/jquery.easytabs'
-//= require 'vendor/jquery/jquery.cookie'
+//= require 'jquery/jquery.colorbox-min'
+//= require 'jquery/jquery.form'
+//= require 'jquery/jquery.remotipart'
+//= require 'jquery/jquery.loadmask.min'
+//= require 'jquery/jquery.hashchange.min'
+//= require 'jquery/jquery.easytabs'
+//= require 'jquery/jquery.cookie'
 //= require 'lib/authentication'
 //= require 'lib/omniauth_handler'
 //= require 'lib/conversations/rating_button'
@@ -30,5 +30,5 @@
 //= require 'lib/dropdown.js'
 //= require 'lib/alert.js'
 //= require "lib/upgrade-browser.js"
-//= require "vendor/jquery/jquery.ui.touch-punch.min.js"
+//= require "jquery/jquery.ui.touch-punch.min.js"
 //= require_self
