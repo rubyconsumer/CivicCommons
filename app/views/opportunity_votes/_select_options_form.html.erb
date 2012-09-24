@@ -1,5 +1,5 @@
 <% content_for :header do %>
-  <%= javascript_include_tag '/javascripts/lib/opportunity_votes/select_option' %>
+  <%= javascript_include_tag 'opportunity_votes/select_option' %>
 <% end %>
 <%= form_for @vote_response_presenter, :as => :vote_response_presenter, :url => select_options_conversation_vote_path(@conversation,@vote, :anchor => 'opportunity-nav' ), :html => {'data-max-selected-options' => @vote_response_presenter.max_selected_options}  do |form|%>
   <%= opportunity_vote_tab_nav('select_options') %>

@@ -1,6 +1,6 @@
 <% content_for(:header) do %>
-  <%= javascript_include_tag 'vendor/jquery.equalheights.js' %>
-  <%= javascript_include_tag 'lib/surveys' %>
+  <%= javascript_include_tag 'jquery.equalheights.js' %>
+  <%= javascript_include_tag 'surveys' %>
   <%= render :partial => '/shared/show_colorbox.js', :locals => {:path => successful_votes_path} if flash[:vote_successful] %>
 <% end %>
 <% content_for(:main_body) do %>
