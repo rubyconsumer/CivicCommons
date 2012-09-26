@@ -30,9 +30,9 @@ protected
     @remote_url = params[:remote_url]
     WidgetLog.create(:url => request.path, :remote_url => @remote_url)
     if results[:css].present?
-      results[:css] << '/stylesheets/widget.css'
+      results[:css] << '/assets/widget.css'
     else
-      results[:css] = ['/stylesheets/widget.css']
+      results[:css] = ['/assets/widget.css']
     end
     json = results.to_json
     callback = params[:callback]

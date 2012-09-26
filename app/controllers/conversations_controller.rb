@@ -84,7 +84,7 @@ class ConversationsController < ApplicationController
         html = render_to_string
         json = {
           :html => html,
-          :js => ['/javascripts/lib/conversations/show_embed.js']
+          :js => ['/assets/conversations/show_embed.js']
           }
         render_widget(json)
       end
@@ -120,7 +120,7 @@ class ConversationsController < ApplicationController
           :html => html,
           :page => @page,
           :next_page => @next_page,
-          :js => ['/javascripts/lib/conversations/activities.embed.js']
+          :js => ['/assets/conversations/activities.embed.js']
           }
         render_widget(json)
       end
