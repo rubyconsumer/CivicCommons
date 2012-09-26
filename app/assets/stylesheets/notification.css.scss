@@ -10,9 +10,11 @@
   position: absolute;
   top: -5px;
   right: -5px;
-  padding: 1px 3px;
+  padding: 4px 3px;
   background-color: #ccc;
   color: #fff;
+  line-height: 1;
+  font-size: 10px;
   font-weight: bold;
   text-shadow: 0 -1px 1px rgba(0,0,0,.3);
   border: 3px solid #fff;
@@ -30,3 +32,10 @@
 .notification-info {
   background-color: #b73123;
 }
+
+.notification-inactive {
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)"; /* IE 8 */
+  filter: alpha(opacity=50); /* IE 5-7 */
+  -moz-opacity: .5;
+       opacity: .5;
+  }
