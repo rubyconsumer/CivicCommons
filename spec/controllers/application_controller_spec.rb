@@ -156,7 +156,7 @@ describe ApplicationControllerRenderWidget do
 
   it "should set the callback for jsonp" do
     get :index, :callback => 'jsonp1234'
-    response.body.should == "jsonp1234({\"css\":[\"/stylesheets/widget.css\"]})"
+    response.body.should == "jsonp1234({\"css\":[\"/assets/widget.css\"]})"
   end
 
 end

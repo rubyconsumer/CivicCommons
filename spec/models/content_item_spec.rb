@@ -197,7 +197,8 @@ describe ContentItem do
 
     def paperclip_default_file_exists?(style)
       default_url = ContentItem.attachment_definitions[:image][:default_url].gsub(/\:style/, style)
-      default_file = File.join(Rails.root, 'public', default_url)
+      default_url.gsub!(/\/*assets/i, '') # needed due to asset pipeline
+      default_file = File.join(Rails.root, 'app/assets/images', default_url)
       File.exist?(default_file)
     end
 
