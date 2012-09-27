@@ -167,7 +167,7 @@ describe ConversationsController do
 
     it "should return with the format embed" do
       get :show, :id => @convo.slug, :format => :embed, :callback => 'callback1234'
-      response.body.should == "callback1234({\"html\":\"\",\"js\":[\"/javascripts/lib/conversations/show_embed.js\"],\"css\":[\"/stylesheets/widget.css\"]})"
+      response.body.should == "callback1234({\"html\":\"\",\"js\":[\"/assets/conversations/show_embed.js\"],\"css\":[\"/assets/widget.css\"]})"
     end
   end
 

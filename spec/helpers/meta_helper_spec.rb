@@ -68,7 +68,7 @@ describe MetaHelper do
         object_with_image_url = FactoryGirl.build(:conversation)
 
         setup_meta_info(object_with_image_url)
-        @meta_info[:image_url].should == "/images/convo_img_panel.gif"
+        @meta_info[:image_url].should == "/assets/convo_img_panel.gif"
       end
     end
   end
@@ -146,7 +146,7 @@ describe MetaHelper do
       @result[:meta_tags].should == "tag1, tag2, tag3"
     end
     it "should set the image_url" do
-      @result[:image_url].should == "/images/convo_img_panel.gif"
+      @result[:image_url].should == "/assets/convo_img_panel.gif"
     end
   end
   

@@ -1,0 +1,104 @@
+/* Styles for the hero section of the homepage */
+
+.feature-mast.feature-mast-hero .wrapper {
+  border-bottom: none;
+}
+
+.feature-mast-hero .mod {
+  margin-bottom: 10px;
+  margin-right: 20px;
+}
+
+.feature-mast-hero h2 {
+  margin-top: 0;
+}
+
+.feature-mast-hero h1 {
+  margin-bottom: 10px;
+  margin-left: 5px;
+}
+
+.wrapper.wrapper-hero {
+  width: 960px;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid #ccc;
+  min-height: 280px;
+  padding: 20px;
+  -webkit-border-radius: 4px;
+     -moz-border-radius: 4px;
+       -o-border-radius: 4px;
+          border-radius: 4px;
+}
+
+.feature-mast-hero .card {
+  min-height: 256px;
+  height: auto !important;
+  height: 256px;
+  width: 256px;
+}
+
+.slideshow-inner {
+  padding: 10px;
+  margin: 0 10px;
+  overflow: hidden;
+  background-color: #e1e1e1;
+  border: 1px solid #ccc;
+  -webkit-border-radius: 6px;
+     -moz-border-radius: 6px;
+       -o-border-radius: 6px;
+          border-radius: 6px;
+}
+
+.slideshow {
+  min-height: 354px;
+  height: auto !important;
+  height: 354px;
+  position: relative;
+}
+
+.slideshow .fl-left {
+  margin-right: 10px;
+  margin-bottom: 0px;
+}
+
+/* Slideshow Navigation Settings */
+
+.slideshow-nav {
+  margin: 0 auto 10px;
+  overflow: hidden;
+  text-align: center;
+  width: auto;
+}
+
+.slideshow-nav a {
+  background: image-url("slideshow_bullets.png") no-repeat 0 0;
+  display: inline-block;
+  height: 20px;
+  text-indent: -9999px;
+  width: 22px;
+  zoom: 1;
+  *display: inline; /* Targets IE7 and tricks it to display as if it were inline-block */
+}
+
+.slideshow-nav .activeSlide,
+.slideshow-nav a:hover {
+  background-position: 0 -22px;
+}
+
+.feature-mast-hero .recent-item {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.feature-mast-hero .recent-item .bd {
+  background-color: #eee;
+  border-color: #ccc;
+  padding-bottom: 10px;
+  -webkit-border-radius: 0;
+     -moz-border-radius: 0;
+       -o-border-radius: 0;
+          border-radius: 0;
+}

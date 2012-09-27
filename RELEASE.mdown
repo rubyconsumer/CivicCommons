@@ -7,6 +7,9 @@
 ### Bug Fix
   * [Ability to Select Index Page for Managed Issue Pages](https://agilezen.com/project/18091/story/676)
 
+### Chores
+  * [Migrate App to Use Rails Asset Pipeline](https://agilezen.com/project/18091/story/646)
+
 ## 3.1
 
 ### External Changes

@@ -1,6 +1,6 @@
 <% content_for(:header) do %>
-  <%= javascript_include_tag 'vendor/jquery.equalheights.js' %>
-  <%= javascript_include_tag 'lib/surveys' %>
+  <%= javascript_include_tag 'jquery.equalheights.js' %>
+  <%= javascript_include_tag 'surveys' %>
 <% end %>
 <% content_for(:main_body) do %>
   <%= render :partial => "#{@surveyable.class.name.pluralize.underscore}/survey_header", :object => @surveyable if @surveyable %>
