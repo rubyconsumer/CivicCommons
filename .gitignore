@@ -33,3 +33,4 @@ specrunner.*.html
 Guardfile
 rack-test
 public/images/regions/
+public/assets

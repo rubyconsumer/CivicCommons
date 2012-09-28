@@ -115,3 +115,9 @@ group :cool_toys do
   gem 'launchy'
   gem "ruby-debug19"
 end
+
+group :assets do
+  gem 'sass-rails'
+  gem 'coffee-rails'
+  gem 'uglifier'
+end
