@@ -38,7 +38,7 @@ class ContentItem < ActiveRecord::Base
     :storage => :s3,
     :s3_credentials => S3Config.credential_file,
     :path => IMAGE_ATTACHMENT_PATH,
-    :default_url => ActionController::Base.helpers.asset_path('convo_img_:style.gif')
+    :default_url => 'assets/convo_img_:style.gif'
 
   validates_attachment_content_type :image,
                                     :content_type => /image\/*/,

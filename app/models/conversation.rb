@@ -57,7 +57,7 @@ class Conversation < ActiveRecord::Base
     :storage => :s3,
     :s3_credentials => S3Config.credential_file,
     :path => IMAGE_ATTACHMENT_PATH,
-    :default_url => lambda { |image| image.instance.set_default_url}
+    :default_url => 'assets/convo_img_:style.gif'
   validates_attachment_content_type :image,
                                     :content_type => /image\/*/,
                                     :message => "Not a valid image file."
@@ -78,10 +78,6 @@ class Conversation < ActiveRecord::Base
   friendly_id :title, :use => :slugged
   def should_generate_new_friendly_id?
     new_record? || slug.nil?
-  end
-  
-  def set_default_url
-    ActionController::Base.helpers.asset_path('convo_img_:style.gif')
   end
 
   scope :latest_updated, :order => 'updated_at DESC'
