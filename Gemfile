@@ -13,7 +13,6 @@ gem 'fb_graph'
 
 gem 'rails', "3.1.0"
 gem 'jquery-rails', '>= 1.0.3'
-gem 'sass-rails'
 
 gem 'haml', '~> 3.1.4'
 
@@ -72,6 +71,7 @@ gem 'carrierwave'
 gem 'mini_magick'
 
 gem 'rails_autolink' # auto_link was removed on rails 3.1, this is for migration purposes. A suggestion is to use Rinku
+gem 'sass'
 
 group :development do
   gem "rails3-generators"
@@ -117,7 +117,7 @@ group :cool_toys do
 end
 
 group :assets do
-  gem 'sass-rails'
+  gem 'sass-rails', '3.1.4'
   gem 'coffee-rails'
   gem 'uglifier'
 end
