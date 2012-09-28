@@ -385,6 +385,9 @@ GEM
       ffi (~> 1.0)
       mime-types (~> 1.18)
     tzinfo (0.3.33)
+    uglifier (1.3.0)
+      execjs (>= 0.3.0)
+      multi_json (~> 1.0, >= 1.0.2)
     warden (1.2.1)
       rack (>= 1.0)
     webmock (1.6.4)
@@ -477,6 +480,7 @@ DEPENDENCIES
   sunspot_rails
   sunspot_solr
   timecop (~> 0.3.5)
+  uglifier
   webmock (~> 1.6.2)
   webrat (~> 0.7.3)
   will_paginate (~> 3.0.3)

@@ -3,6 +3,7 @@ source 'http://rubygems.org'
 gem 'newrelic_rpm'
 
 gem 'mysql2', '~> 0.3'
+
 gem 'devise', '1.5.2'
 gem "cancan", '1.6.8'
 gem 'omniauth', '1.0.1'
@@ -15,6 +16,9 @@ gem 'jquery-rails', '>= 1.0.3'
 gem 'sass-rails'
 
 gem 'haml', '~> 3.1.4'
+
+gem 'uglifier'
+
 gem 'date_validator'
 gem "will_paginate", "~> 3.0.3"
 
