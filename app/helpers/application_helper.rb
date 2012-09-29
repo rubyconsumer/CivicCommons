@@ -66,5 +66,14 @@ module ApplicationHelper
     dom_id ||= 'civic-commons-widget'
     render :partial => '/widgets/cc_widget_embed_code', :locals => {:src_path => src_path, :dom_id => dom_id}
   end
+  
+  def asset_url(asset)
+    "#{request.protocol}#{request.host_with_port}#{asset_path(asset)}"
+  end
+  
+  def mailer_asset_url(asset)
+    base_url = root_url.to_s.gsub(/\/$/i,'')
+    base_url + asset_path(asset)
+  end
 
 end

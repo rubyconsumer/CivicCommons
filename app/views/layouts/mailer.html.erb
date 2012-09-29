@@ -11,7 +11,9 @@
           <!--Header-->
           <table width="600px" border="0" cellspacing="0" cellpadding="0"><tr>
               <td style="padding:20px 0;" align="left">
-                <a href="<%= root_url %>"><img src="<%= root_url %>images/cc_logo_4.png" width="179" height="62" alt="The Civic Commons Logo" style="border:0;" /></a>
+                <a href="<%= root_url %>">
+                  <%= image_tag mailer_asset_url('cc_logo_4.png'), :width => 179, :height => 62, :alt => "The Civic Commons Logo", :style=>"border:0;" %>
+                </a>
               </td>
           </tr></table>
           <!--Header-->

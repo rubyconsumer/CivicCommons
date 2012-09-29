@@ -76,7 +76,7 @@ function SelectionList() {
           var id = issue_detail.issue.id;
           output += '<a href="/issues/' + id + ' title="' + description + '">' + description + "</a>\n";
           output += '<input name="issue_ids[]" id="issue_'+id+'" type="hidden" value="'+id+'" />\n';
-          output += '<a href="javascript:void()" onclick="drop_issue(' + id + ')" title="' + description + '"><img src="/images/trash-can.png" alt=" [remove issue] "></a>' + "\n";
+          output += '<a href="javascript:void()" onclick="drop_issue(' + id + ')" title="' + description + '"><img src="<%= asset_path "trash-can.png"%>" alt=" [remove issue] "></a>' + "\n";
           output += "</li>\n";
         }
         output += "</ul>\n";
