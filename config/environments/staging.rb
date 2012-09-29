@@ -32,6 +32,10 @@ Civiccommons::Application.configure do
   # For devise gem
   config.action_mailer.default_url_options = { :host => Civiccommons::Config.devise['mailer_host'] }
   
+  # Disable Rails's static asset server
+  # In production, Apache or nginx will already do this
+  config.serve_static_assets = false
+  
   # Compress JavaScripts and CSS
   config.assets.compress = true
 
