@@ -84,4 +84,5 @@ Civiccommons::Application.configure do
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
   # config.assets.precompile += %w( search.js )
+  config.assets.precompile += Ckeditor.assets
 end

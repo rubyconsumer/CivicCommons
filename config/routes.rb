@@ -1,5 +1,7 @@
 Civiccommons::Application.routes.draw do
 
+  mount Ckeditor::Engine => '/ckeditor'
+
   # ----------------------------------------
   #   ROUTES README
   # ----------------------------------------
