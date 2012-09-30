@@ -80,9 +80,9 @@ GEM
       activesupport (~> 3.0)
     childprocess (0.3.2)
       ffi (~> 1.0.6)
-    ckeditor (3.6.3)
-      mime-types (~> 1.16)
-      orm_adapter (~> 0.0.5)
+    ckeditor (3.7.3)
+      mime-types
+      orm_adapter
     coffee-rails (3.1.1)
       coffee-script (>= 2.2.0)
       railties (~> 3.1.0)
@@ -422,7 +422,7 @@ DEPENDENCIES
   cancan (= 1.6.8)
   capybara (~> 1.1.2)
   carrierwave
-  ckeditor (= 3.6.3)
+  ckeditor (= 3.7.3)
   coffee-rails
   daemons
   database_cleaner (~> 0.7.2)
