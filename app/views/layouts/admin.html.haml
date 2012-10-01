@@ -1,17 +1,9 @@
 !!!
 %html
   %head
-    =javascript_include_tag 'jquery/jquery-1.4.4.min'
-    =javascript_include_tag 'jquery_ujs'
-    =javascript_include_tag 'master'
+    =javascript_include_tag 'admin'
     =stylesheet_link_tag 'admin.css'
     =stylesheet_link_tag 'ui-lightness/jquery-ui-1.8.16.custom.css'
-
-    =javascript_include_tag 'jquery/jquery.tablesorter.min'
-    =javascript_include_tag 'admin/sort_table'
-    =javascript_include_tag 'admin/apply_tiny_mce'
-    =javascript_include_tag 'jquery/jquery-ui-1.8.16.custom.min.js'
-    =javascript_include_tag 'tiny_mce/jquery.tinymce.js'
     =javascript_tag '$.fx.off = true;' if Rails.env.test?
     %title CivicCommons Admin
   %body

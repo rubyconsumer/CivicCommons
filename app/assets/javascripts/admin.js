@@ -1,0 +1,10 @@
+//=require 'jquery/jquery-1.4.4.min'
+//=require 'jquery_ujs'
+//=require 'master'
+//=require 'jquery/jquery.tablesorter.min'
+//=require 'admin/sort_table'
+//=require 'admin/apply_tiny_mce'
+//=require 'jquery/jquery-ui-1.8.16.custom.min.js'
+//=require 'tiny_mce/jquery.tinymce.js'
+//=require 'ckeditor/init'
+//=require_self
