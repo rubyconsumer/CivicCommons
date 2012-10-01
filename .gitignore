@@ -34,3 +34,4 @@ Guardfile
 rack-test
 public/images/regions/
 public/assets
+.sass-cache
