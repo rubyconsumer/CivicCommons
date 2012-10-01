@@ -3,6 +3,7 @@
 ### External Changes
   * [Homepage Blog Feature Restyle](https://agilezen.com/project/18091/story/678)
   * [Start Notification Structure](https://agilezen.com/project/18091/story/658)
+  * [Use updated profanitfy filter to allow keyword porn](https://agilezen.com/project/18091/story/682)
   * [Homepage Blog Panel Styling](https://agilezen.com/project/18091/story/695)
 
 ### Bug Fix
