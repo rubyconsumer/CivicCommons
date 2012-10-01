@@ -4,7 +4,6 @@
 // It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
 // the compiled file.
 //
-//= require 'application.js'
 //= require 'jquery/jquery-1.4.4.min'
 //= require 'jquery/jquery-ui-1.8.16.custom.min'
 //= require 'jquery/jquery-ui-timepicker-addon-0.5.min'
@@ -32,4 +31,5 @@
 //= require "upgrade-browser.js"
 //= require "jquery/jquery.ui.touch-punch.min.js"
 //= require 'ckeditor/init'
+//= require 'ckeditor_config'
 //= require_self
