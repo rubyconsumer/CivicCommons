@@ -31,4 +31,5 @@
 //= require 'alert.js'
 //= require "upgrade-browser.js"
 //= require "jquery/jquery.ui.touch-punch.min.js"
+//= require 'ckeditor/init'
 //= require_self
