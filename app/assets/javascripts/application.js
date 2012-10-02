@@ -31,5 +31,5 @@
 //= require "upgrade-browser.js"
 //= require "jquery/jquery.ui.touch-punch.min.js"
 //= require 'ckeditor/init'
-//= require 'ckeditor_config'
+
 //= require_self

@@ -7,5 +7,4 @@
 //=require 'jquery/jquery-ui-1.8.16.custom.min.js'
 //=require 'tiny_mce/jquery.tinymce.js'
 //=require 'ckeditor/init'
-//=require 'ckeditor_config'
 //=require_self
