@@ -343,9 +343,29 @@ a.button:active span.stitcher {
 	text-align: left;
 }
 
+// Full Width Button Group
 
-/* Button Dropdowns
----------------------------------*/
+.full-width {
+  zoom: 1;
+
+  > div {
+    display: table;
+    float: none;
+    width: 100%;
+  }
+
+  .button {
+    display: table-cell;
+    float: none;
+    border-left-width: 0;
+
+    &:first-child {
+      border-left-width: 1px;
+    }
+  }
+}
+
+// Button Dropdowns
 
 .btn-group .full {
   max-width: none;
