@@ -7,4 +7,7 @@
 //=require 'jquery/jquery-ui-1.8.16.custom.min.js'
 //=require 'tiny_mce/jquery.tinymce.js'
 //=require 'ckeditor/init'
+//=require admin/conversation_sorting
+//=require admin/featured_homepage.js
+//=require admin/issue_sorting
 //=require_self

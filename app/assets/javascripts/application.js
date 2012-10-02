@@ -31,5 +31,30 @@
 //= require "upgrade-browser.js"
 //= require "jquery/jquery.ui.touch-punch.min.js"
 //= require 'ckeditor/init'
+//= require jquery/jquery.fancybox-1.3.4.pack.js
+
+//= require 'tiny_mce/jquery.tinymce.js'
+//= require 'contributions/contribution_tool.js'
+
+//= require 'conversations/show'
+
+//= require issues/show
+//= require subscriptions/show
+
+//= require link-form
+//= require opportunity_votes/create_vote
+//= require opportunity_votes/voting
+//= require opportunity_votes/vote_result
+//= require opportunity_votes/select_option
+
+//= require registrations
+//= require registration_page
+
+//= require jquery.equalheights
+//= require surveys
+
+//= require users/edit
+
+//= require memberships
 
 //= require_self

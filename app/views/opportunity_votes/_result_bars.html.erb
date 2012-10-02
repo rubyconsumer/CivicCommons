@@ -1,7 +1,3 @@
-<% content_for :header do %>
-  <%= javascript_include_tag 'opportunity_votes/vote_result' %>
-<% end %>
-
 <div class="voting-results">
   <% @vote_progress_service.progress_result.each_with_index do |option, index| %>
     <div class="vote-container">

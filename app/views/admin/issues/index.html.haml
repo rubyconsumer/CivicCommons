@@ -22,5 +22,4 @@
         %td= issue.is_a?(ManagedIssue) ? link_to('Pages', admin_issue_pages_path(issue)) : nil
         %td= link_to 'Edit', edit_admin_issue_path(issue)
         %td= link_to 'Delete', admin_issue_path(issue), :confirm => "Are you sure?", :method => :delete
-=javascript_include_tag 'admin/issue_sorting'
 =link_to "Add Issue", new_admin_issue_path

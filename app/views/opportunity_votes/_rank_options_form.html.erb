@@ -1,6 +1,3 @@
-<% content_for :header do %>
-  <%= javascript_include_tag 'opportunity_votes/voting' %>
-<% end %>
 <%= form_for @vote_response_presenter, :as => :vote_response_presenter, :url => rank_options_conversation_vote_path(@conversation,@vote)  do |form|%>
   <%= opportunity_vote_tab_nav('rank_options') %>
   <h4 class="mtl mbl">Drag the selected options into order of importance:</h4>
