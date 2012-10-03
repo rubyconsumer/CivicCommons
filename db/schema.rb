@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120912180424) do
+ActiveRecord::Schema.define(:version => 20120921141759) do
 
   create_table "actions", :force => true do |t|
     t.integer  "conversation_id"
@@ -441,6 +441,17 @@ ActiveRecord::Schema.define(:version => 20120912180424) do
   end
 
   add_index "metro_regions", ["city_province_token"], :name => "index_metro_regions_on_city_province_token"
+
+  create_table "notifications", :force => true do |t|
+    t.integer  "person_id"
+    t.integer  "item_id"
+    t.string   "item_type"
+    t.string   "status"
+    t.datetime "viewed_at"
+    t.datetime "expire_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "organization_details", :force => true do |t|
     t.integer  "person_id"

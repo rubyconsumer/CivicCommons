@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
 
   before_filter :require_no_ssl
   helper_method :with_format, :default_region, :region_recent_conversations
-  
+
   rescue_from CanCan::AccessDenied do |exception|
     flash[:notice] = exception.message
     redirect_to root_url
@@ -104,7 +104,7 @@ protected
   def region_recent_conversations
     Conversation.filter_metro_region(default_region).latest_created.limit(6)
   end
-  
+
   def current_ability
     @current_ability ||= ::Ability.new(current_person)
   end

@@ -1,4 +1,5 @@
 class HomepageController < ApplicationController
+  layout 'homepage'
 
   def show
     @most_recent_conversation  = Conversation.latest_created.limit(1)

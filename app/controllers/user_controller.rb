@@ -13,9 +13,9 @@ class UserController < ApplicationController
 
   def join_as_member
     @organization = Organization.find(params[:id])
-    if @organization && @organization.join_as_member(current_person) 
+    if @organization && @organization.join_as_member(current_person)
       respond_to do |format|
-        format.js { render :template => '/organizations/join_as_member.js'  } 
+        format.js { render :template => '/organizations/join_as_member', :format => 'js' }
       end
     else
       respond_to do |format|
@@ -28,7 +28,7 @@ class UserController < ApplicationController
     @organization = Organization.find(params[:id])
     if @organization && @organization.remove_member(current_person)
       respond_to do |format|
-        format.js { render :template => '/organizations/remove_membership.js' }
+        format.js { render :template => '/organizations/remove_membership', :format => 'js' }
       end
     else
       respond_to do |format|

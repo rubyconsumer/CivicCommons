@@ -28,9 +28,9 @@ class AuthenticationController < ApplicationController
     @person.unlink_from_facebook(params[:person])
     if @person.valid?
       sign_in @person, :event => :authentication, :bypass => true
-      render :template => '/authentication/fb_unlinking_success.html'
+      render :template => '/authentication/fb_unlinking_success', :format => 'html'
     else
-      render :template => '/authentication/before_facebook_unlinking.html'
+      render :template => '/authentication/before_facebook_unlinking', :format => 'html'
     end
   end
 

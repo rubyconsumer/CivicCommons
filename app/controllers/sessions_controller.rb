@@ -1,4 +1,5 @@
 class SessionsController < Devise::SessionsController
+  layout 'devise/sessions'
   include RegionHelper
 
   prepend_before_filter :require_no_authentication, :only => [:new, :create, :ajax_new, :ajax_create]
