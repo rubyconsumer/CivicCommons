@@ -33,7 +33,7 @@ module MetaHelper
     @meta_info[:page_title]= "The Civic Commons Comment on: #{conversation.page_title.present? ? conversation.page_title : conversation.title}"
     @meta_info[:meta_description] = clean_and_truncate(contribution.content)
     @meta_info[:meta_tags] = conversation.meta_tags
-    @meta_info[:image_url] = conversation.image.url(:panel) if conversation.respond_to?(:image) && conversation.image.present?
+    @meta_info[:image_url] = ActionController::Base.helpers.asset_path(conversation.image.url(:panel)) if conversation.respond_to?(:image) && conversation.image.present?
     
     @meta_info = sanitize_meta_values(@meta_info)
   end
@@ -50,7 +50,7 @@ module MetaHelper
     @meta_info[:page_title]       = Sanitize.clean(meta_data.title)             if meta_data.title && @meta_info[:page_title].nil? && meta_data.page_title.nil?
     @meta_info[:meta_description] = Sanitize.clean(meta_data.meta_description)  if meta_data.meta_description.present?
     @meta_info[:meta_tags]        = Sanitize.clean(meta_data.meta_tags)         if meta_data.meta_tags.present?
-    @meta_info[:image_url]        = Sanitize.clean(meta_data.image.url(:panel)) if meta_data.respond_to?(:image) && meta_data.image.present?
+    @meta_info[:image_url]        = Sanitize.clean(ActionController::Base.helpers.asset_path(meta_data.image.url(:panel))) if meta_data.respond_to?(:image) && meta_data.image.present?
     #puts "post setup_meta_info:#{@meta_info.inspect}"
   end
 end

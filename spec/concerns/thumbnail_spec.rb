@@ -45,7 +45,7 @@ end
 describe "default_image" do
   it "will return paperclip's :default_url if set, or nil" do
     instance = FactoryGirl.build(:conversation)
-    instance.default_image.should == '/assets/convo_img_original.gif'
+    instance.default_image.should == 'convo_img_original.gif'
 
     instance = FactoryGirl.build(:issue)
     instance.default_image.should == nil
