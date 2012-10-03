@@ -1,6 +1,4 @@
-
-/* Button Styles
----------------------------------*/
+// Button styles
 
 a.button,
 .button,
@@ -105,8 +103,7 @@ a.button.active {
   padding-top: 2px;
 }
 
-/* Alternate Colors
----------------------------------*/
+// Alternate colors
 
 .button.secondary {
   background-color: #a8cce4;
@@ -153,7 +150,7 @@ a.button.active {
   background-image: linear-gradient(top, #ededed, #e0e0e0);
   filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#ededed', EndColorStr='#e0e0e0');
   border-color: #bbb;
-  color: #333;
+  color: #555;
   text-shadow: 0 1px 0px rgba(255,255,255,.3);
 }
 
@@ -180,40 +177,7 @@ a.button.active {
   filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#ced2d2', EndColorStr='#c9cccc');
 }
 
-.button.tertiary {
-  background-color: #efefef;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#f9f9f9), to(#e6e6e6));
-  background-image: -webkit-linear-gradient(top, #f9f9f9, #e6e6e6);
-  background-image: -moz-linear-gradient(top, #f9f9f9, #e6e6e6);
-  background-image: -ms-linear-gradient(top, #f9f9f9, #e6e6e6);
-  background-image: linear-gradient(top, #f9f9f9, #e6e6e6);
-  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#f9f9f9', EndColorStr='#e6e6e6');
-  border-color: #bbb;
-  color: #888;
-  text-shadow: none;
-}
-
-.button.tertiary:hover {
-  background-color: #e3e5e6;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#e8ebed), to(#dee0e0));
-  background-image: -webkit-linear-gradient(top, #e8ebed, #dee0e0);
-  background-image: -moz-linear-gradient(top, #e8ebed, #dee0e0);
-  background-image: -ms-linear-gradient(top, #e8ebed, #dee0e0);
-  background-image: linear-gradient(top, #e8ebed, #dee0e0);
-  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#e8ebed', EndColorStr='#dee0e0');
-  color: #888;
-}
-
-.button.tertiary:active,
-.button.tertiary.active {
-  background: #fff;
-  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#ffffff', EndColorStr='#ffffff');
-  color: #888;
-}
-
-
-/* Radio Show Buttons
----------------------------------*/
+// Radio show buttons
 
 a.button span.itunes {
   background: image-url("icons/itunes-ico.png") no-repeat 0 2px;
@@ -242,9 +206,7 @@ a.button:active span.stitcher {
   background-position: 0 -63px;
 }
 
-
-/* Button Numbers
----------------------------------*/
+// Button numbers
 
 .button .number {
 	color: #fff;
@@ -258,9 +220,7 @@ a.button:active span.stitcher {
           border-radius: 2px;
 }
 
-
-/* Button Groups
----------------------------------*/
+// Button groups
 
 .btn-group {
 	position: relative;
@@ -327,10 +287,7 @@ a.button:active span.stitcher {
 	zoom: 1;
 }
 
-
-/* Large Button Group
-   (opportunities, etc.)
----------------------------------*/
+// Large button group
 
 .btn-group.btn-group-large .button {
   font-size: 13px;
@@ -338,7 +295,7 @@ a.button:active span.stitcher {
 	width: 150px;
 }
 
-/* TODO: Need to refactor and make large buttons indepenedent of button group (BD) */
+ // TODO: Need to refactor and make large buttons indepenedent of button group (BD)
 .btn-group-large .text-left {
 	text-align: left;
 }
