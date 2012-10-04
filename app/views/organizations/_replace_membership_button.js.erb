@@ -1,1 +1,1 @@
-$('.membership').replaceWith("<%= escape_javascript(render :partial => '/organizations/membership_button.html')%>");
+$('.membership').replaceWith("<%= escape_javascript(render(:partial => '/organizations/membership_button', :format => 'html'))%>");

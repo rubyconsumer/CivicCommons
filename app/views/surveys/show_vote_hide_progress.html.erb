@@ -1,5 +1,5 @@
 <% content_for(:header) do %>
-  <%= render :partial => '/shared/show_colorbox.js', :locals => {:path => successful_votes_path} if flash[:vote_successful] %>
+  <%= render(:partial => '/shared/show_colorbox', :format => 'js', :locals => {:path => successful_votes_path}) if flash[:vote_successful] %>
 <% end %>
 <% content_for(:main_body) do %>
   <%= render :partial => "#{@surveyable.class.name.pluralize.underscore}/survey_header", :object => @surveyable if @surveyable %>
@@ -16,16 +16,16 @@
       </div>
     </div>
     <div class="content-container">
-    	<div class="main-content">
-    		<div class="survey-options  <%= 'disabled' unless @survey_response_presenter.allowed? %>">
+      <div class="main-content">
+        <div class="survey-options  <%= 'disabled' unless @survey_response_presenter.allowed? %>">
             <div class="sortable">
               <%= render :partial => 'survey_options/survey_option_vote', :collection => @survey_response_presenter.available_options, :as => :option %>
             </div>
           </div>
-    	</div>
-    	<div class="aside supplementary">
+      </div>
+      <div class="aside supplementary">
           <%= render :partial => '/surveys/vote_form' %>
-    	</div>
-    </div>      
+      </div>
+    </div>
   </div>
 <% end %>

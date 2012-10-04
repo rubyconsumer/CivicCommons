@@ -1,4 +1,4 @@
 var $photobank = $('.org-subscribers .photobank');
 if ($photobank.find('.img-container[data-subscriber-id=<%=current_person.id%>]').length < 1){
-  $photobank.append("<%= escape_javascript (render :partial => '/organizations/subscriber_avatar.html', :object => current_person, :as => :subscriber) %>");
+  $photobank.append("<%= escape_javascript (render(:partial => '/organizations/subscriber_avatar', :format => 'html', :object => current_person, :as => :subscriber)) %>");
 }

@@ -1,12 +1,12 @@
 <script type='text/javascript'>
   $(document).ready(function() {
-    setTimeout(function(){ 
+    setTimeout(function(){
         var post_to_decline_path = function(){
           $.post('<%= decline_fb_auth_path %>')
           return false;
           };
-        $.colorbox({opacity:0.5, 
-            html:'<%= escape_javascript(render :partial => "/shared/suggest_facebook_auth.html") %>',
+        $.colorbox({opacity:0.5,
+            html:'<%= escape_javascript(render :partial => "/shared/suggest_facebook_auth", :format => 'html') %>',
             onClosed: post_to_decline_path});
         $('a.decline-facebook-auth').click(function(){
             $.colorbox.close();
