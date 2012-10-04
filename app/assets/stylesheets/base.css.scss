@@ -1,0 +1,13 @@
+// Base styles
+
+.img-flex {
+  max-width: 100%;
+}
+
+* html .img-flex {
+  width: 100%;
+}
+
+*:first-child+html .img-flex {
+  width: 100%;
+} 
