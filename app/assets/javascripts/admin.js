@@ -1,12 +1,12 @@
 //=require 'jquery/jquery-1.4.4.min'
+//=require 'jquery/jquery-ui-1.8.16.custom.min.js'
 //=require 'jquery_ujs'
-//=require 'master'
+//=require 'tiny_mce/jquery.tinymce.js'
 //=require 'jquery/jquery.tablesorter.min'
+//=require 'ckeditor/init'
+//=require 'master'
 //=require 'admin/sort_table'
 //=require 'admin/apply_tiny_mce'
-//=require 'jquery/jquery-ui-1.8.16.custom.min.js'
-//=require 'tiny_mce/jquery.tinymce.js'
-//=require 'ckeditor/init'
 //=require admin/conversation_sorting
 //=require admin/featured_homepage.js
 //=require admin/issue_sorting
