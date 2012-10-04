@@ -84,7 +84,7 @@ Civiccommons::Application.configure do
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
   # config.assets.precompile += %w( search.js )
-  config.assets.precompile += %w( admin.js IE9.js ie7-recalc.js show_colorbox.js )
-  config.assets.precompile += %w( ie.css admin.css )
+  config.assets.precompile += %w( admin.js IE9.js ie7-recalc.js show_colorbox.js activities.embed.js )
+  config.assets.precompile += %w( ie.css admin.css widget.css )
   config.assets.precompile += Ckeditor.assets
 end
