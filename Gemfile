@@ -118,6 +118,7 @@ end
 
 group :assets do
   gem 'sass-rails', '3.1.4'
+  gem 'compass-rails'
   gem 'coffee-rails'
   gem 'uglifier'
 end
