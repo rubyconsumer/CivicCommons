@@ -1,6 +1,6 @@
+@import 'mixins';
 
-/* Base Styles
----------------------------------*/
+// Base styles
 
 body {
   background: #f9f9f9 image-url("body_bg.gif") repeat;
@@ -56,9 +56,19 @@ img.advert {
   max-width: 100%;
 }
 
+.img-flex {
+  max-width: 100%;
+}
 
-/* Typography
----------------------------------*/
+* html .img-flex {
+  width: 100%;
+}
+
+*:first-child+html .img-flex {
+  width: 100%;
+} 
+
+// Typography
 
 #header-wrapper,
 .wrapper,

@@ -1,0 +1,47 @@
+@import 'mixins';
+
+// Grid
+
+// Set initial grid and layout variables
+$cols: 12;
+$base-width: 960;
+$context: 940;
+$gutter: 20;
+
+// Grid system (based on 960 grid)
+$col-width: percentage(($base-width / $cols) / $context);
+$gutter-width: percentage($gutter / $context);
+
+@function grid-width($cols) {
+  @return $col-width * $cols - $gutter-width;
+}
+
+@mixin column($num) {
+  .col-#{$num} {
+    width: grid-width($num);
+    margin-left: $gutter-width;
+    float: left;
+
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+
+  @media screen and (max-width: 700px) {
+
+    .col-#{$num} {
+      width: 100%;
+      margin-left: 0;
+      float: none;
+    }
+  }
+}
+
+.row {
+  margin-bottom: 20px;
+  @include clearfix;
+}
+
+@for $i from 1 to $cols + 1 {
+  @include column($i);
+}
