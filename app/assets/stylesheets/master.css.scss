@@ -3000,7 +3000,8 @@ vertical-align: middle;
 
 /*- Create Conversation Feature ----------*/
 
-.convo-create {
+.convo-create,
+.convo-create-sm {
   background: #dbedf5 image-url("convo_create_bg.gif") repeat-x bottom;
   border: 1px solid #9db4bc;
   color: #51778e;
@@ -3008,22 +3009,30 @@ vertical-align: middle;
   margin-bottom: 20px;
   padding: 20px 20px 15px;
   text-shadow: 0 1px 1px rgba(255,255,255,.9);
-  -webkit-border-radius: 4px;
-     -moz-border-radius: 4px;
-       -o-border-radius: 4px;
-          border-radius: 4px;
-  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
-     -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
-       -o-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
-          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  @include border-radius(4px);
+  @include box-shadow(0 1px 3px rgba(0, 0, 0, 0.15));
 }
-.convo-create p {
+
+.convo-create-sm {
+  padding: 20px;
+}
+
+.convo-create p,
+.convo-create-sm p {
   float: left;
   line-height: 1.5em;
   margin-bottom: 0;
   width: 320px;
 }
-.convo-create .convo-create-btn {
+
+.convo-create-sm p {
+  float: none;
+  margin-bottom: 1em;
+  width: auto;
+}
+
+.convo-create .convo-create-btn,
+.convo-create-sm .convo-create-btn {
   background: image-url("create_convo_btn.png") no-repeat 0 0;
   display: block;
   float: right;
@@ -3032,8 +3041,12 @@ vertical-align: middle;
   text-indent: -9999px;
   width: 189px;
 }
-.convo-create .convo-create-btn:hover {background-position: bottom;}
 
+.convo-create-sm .convo-create-btn {
+  float: none;
+}
+
+.convo-create .convo-create-btn:hover {background-position: bottom;}
 
 /*- STYLES FOR CONVO MODAL POPUP
 ----------------------------------------------------------------------*/
