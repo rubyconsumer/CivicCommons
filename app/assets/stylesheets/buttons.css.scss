@@ -1,5 +1,3 @@
-@import 'mixins';
-
 // Button styles
 
 a.button,
@@ -18,8 +16,8 @@ a.off_button,
   text-decoration: none;
   text-shadow: 0 -1px 0 rgba(0,0,0,.3);
   @include border-radius(4px);
-  @include gradient(#b9c974, #9dae55, top, bottom);
-  @include box-shadow((0 1px 1px rgba(255,255,255,1), 0 0 1px rgba(255,255,255,1) inset));
+  @include background-image(linear-gradient(#b9c974, #9dae55));
+  @include box-shadow(rgba(255,255,255,1) 0 1px 1px, rgba(255,255,255,.2) 0 1px 1px inset);
 }
 
 a.button.button-mini {
@@ -50,7 +48,7 @@ a.off_button:hover,
 input.submit:hover,
 input#contribution_submit:hover {
   cursor: pointer;
-  @include gradient(#a2af5d, #7b893b, top, bottom);
+  @include background-image(linear-gradient(#a2af5d, #7b893b));
 }
 
 a.button:active,
@@ -58,7 +56,7 @@ a.off_button:active,
 input.submit:active,
 input#contribution_submit:active,
 a.button.active {
-  @include gradient(#879642, #7b893b, top, bottom);
+  @include background-image(linear-gradient(#879642, #7b893b));
   @include box-shadow(0 2px 3px rgba(0,0,0,.2) inset);
 }
 
@@ -79,32 +77,32 @@ a.button.active {
 
 .button.secondary {
   border-color: #637988;
-  @include gradient(#a8cce4, #7e9aac, top, bottom);
+  @include background-image(linear-gradient(#a8cce4, #7e9aac));
 }
 
 .button.secondary:hover {
-  @include gradient(#95b5ca, #6c8595, top, bottom);
+  @include background-image(linear-gradient(#95b5ca, #6c8595));
 }
 
 .button.secondary:active,
 .button.secondary.active {
-  @include gradient(#7793a6, #6c8595, top, bottom);
+  @include background-image(linear-gradient(#7793a6, #6c8595));
 }
 
 .button.tertiary {
   border-color: #bbb;
   color: #555;
   text-shadow: 0 1px 0px rgba(255,255,255,.3);
-  @include gradient(#ededed, #e0e0e0, top, bottom);
+  @include background-image(linear-gradient(#ededed, #e0e0e0));
 }
 
 .button.tertiary:hover {
-  @include gradient(#e0e2e2, #c9cccc, top, bottom);
+  @include background-image(linear-gradient(#e0e2e2, #c9cccc));
 }
 
 .button.tertiary:active,
 .button.tertiary.active {
-  @include gradient(#ced2d2, #c9cccc, top, bottom);
+  @include background-image(linear-gradient(#ced2d2, #c9cccc));
 }
 
 // Radio show buttons
