@@ -9,6 +9,7 @@
 
 ### Bug Fix
   * [Ability to Select Index Page for Managed Issue Pages](https://agilezen.com/project/18091/story/676)
+  * [Styling of Static Assets - The "We'll be right back." has no styling.](https://agilezen.com/project/18091/story/703)
 
 ### Chores
   * [Migrate App to Use Rails Asset Pipeline](https://agilezen.com/project/18091/story/646)
