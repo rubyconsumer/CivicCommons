@@ -1,4 +1,4 @@
-<%= render(:partial => '/organizations/replace_membership_button', :format => 'js') %>
+<%= render(:partial => '/organizations/replace_membership_button.js', :format => 'js') %>
 $('.org-members .empty').remove();
 $photobank = $('.org-members .photobank');
 if ($photobank.find('.img-container[data-member-id=<%=current_person.id%>]').length < 1){

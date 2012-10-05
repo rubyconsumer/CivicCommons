@@ -6,7 +6,7 @@
           return false;
           };
         $.colorbox({opacity:0.5,
-            html:'<%= escape_javascript(render :partial => "/shared/suggest_facebook_auth", :format => 'html') %>',
+            html:'<%= escape_javascript(render :partial => "/shared/suggest_facebook_auth.html") %>',
             onClosed: post_to_decline_path});
         $('a.decline-facebook-auth').click(function(){
             $.colorbox.close();

@@ -9,7 +9,7 @@ class WidgetsController < ApplicationController
     @styled = !(params[:styled] == "0")
 
     respond_to do |format|
-      format.js{render :template => '/widgets/cc_widget', :format => 'js'}
+      format.js{render :template => '/widgets/cc_widget.js', :format => 'js'}
     end
   end
 end

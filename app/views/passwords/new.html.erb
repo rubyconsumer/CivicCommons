@@ -27,5 +27,5 @@
       </div>
     </div>
   </div>
-  <%= render(:partial => '/shared/show_colorbox', :format => 'js', :locals => {:path => fb_auth_forgot_password_path}) if @fb_auth_forgot_password == true %>
+  <%= render(:partial => '/shared/show_colorbox.js', :locals => {:path => fb_auth_forgot_password_path}) if @fb_auth_forgot_password == true %>
 <% end %>
