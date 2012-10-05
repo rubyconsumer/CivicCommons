@@ -478,7 +478,9 @@ button.cancel, input.submit, input#contribution_submit {
   text-decoration: none;
   text-shadow: 0 -1px 0px rgba(0,0,0,.3);
   @include border-radius(4px);
-  @include background-image(linear-gradient(#b9c974, #9dae55));
+  background-color: #abbb64;
+  @include background-image(linear-gradient(top, rgb(185, 201, 116), rgb(157, 174, 85)));
+  @include filter-gradient(rgb(185, 201, 116), rgb(157, 174, 85), vertical);
   @include box-shadow(rgba(255,255,255,1) 0 1px 1px, rgba(255,255,255,.2) 0 1px 1px inset);
 }
 button.cancel {

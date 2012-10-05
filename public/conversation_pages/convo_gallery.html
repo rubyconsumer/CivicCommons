@@ -37,26 +37,6 @@
       
       <!--[if gte IE 7]><!-->
       <link href="/assets/application.css?body=1" media="screen, projection" rel="stylesheet" type="text/css" />
-      <link href="/assets/reset.css?body=1" media="screen, projection" rel="stylesheet" type="text/css" />
-      <link href="/assets/mixins.css?body=1" media="screen, projection" rel="stylesheet" type="text/css" />
-      <link href="/assets/grid.css?body=1" media="screen, projection" rel="stylesheet" type="text/css" />
-      <link href="/assets/master.css?body=1" media="screen, projection" rel="stylesheet" type="text/css" />
-      <link href="/assets/buttons.css?body=1" media="screen, projection" rel="stylesheet" type="text/css" />
-      <link href="/assets/dropdown.css?body=1" media="screen, projection" rel="stylesheet" type="text/css" />
-      <link href="/assets/labels.css?body=1" media="screen, projection" rel="stylesheet" type="text/css" />
-      <link href="/assets/forms.css?body=1" media="screen, projection" rel="stylesheet" type="text/css" />
-      <link href="/assets/tabs.css?body=1" media="screen, projection" rel="stylesheet" type="text/css" />
-      <link href="/assets/spacing.css?body=1" media="screen, projection" rel="stylesheet" type="text/css" />
-      <link href="/assets/icons.css?body=1" media="screen, projection" rel="stylesheet" type="text/css" />
-      <link href="/assets/hero.css?body=1" media="screen, projection" rel="stylesheet" type="text/css" />
-      <link href="/assets/arrowbox.css?body=1" media="screen, projection" rel="stylesheet" type="text/css" />
-      <link href="/assets/regions.css?body=1" media="screen, projection" rel="stylesheet" type="text/css" />
-      <link href="/assets/lists.css?body=1" media="screen, projection" rel="stylesheet" type="text/css" />
-      <link href="/assets/convo-gallery.css?body=1" media="screen, projection" rel="stylesheet" type="text/css" />
-      <link href="/assets/ie.css?body=1" media="screen, projection" rel="stylesheet" type="text/css" />
-      <link href="/assets/ui-lightness/jquery-ui-1.8.16.custom.css?body=1" media="screen, projection" rel="stylesheet" type="text/css" />
-      <link href="/assets/jquery.loadmask.css?body=1" media="screen, projection" rel="stylesheet" type="text/css" />
-      <link href="/assets/colorbox.css?body=1" media="screen, projection" rel="stylesheet" type="text/css" />
       <!--<![endif]-->
     <script type='text/javascript'>
       //<![CDATA[
@@ -130,19 +110,81 @@
       <div class="content-container">
         <div class="main-content">
           <h1>Conversations</h1>
-          <h2>Take Note</h2>
-            <div class="cols">
-              <img class="flex" src=" http://placehold.it/400x400" alt="" />
+          <p class="subtitle">Take Note</p>
+          <div class="row">
+            <div class="col-4">
+              <img class="img-flex" src=" http://placehold.it/200x200" alt="" />
             </div>
-            <div class="cols">
-              <img class="flex" src=" http://placehold.it/400x400" alt="" />
+            <div class="col-4">
+              <img class="img-flex" src=" http://placehold.it/200x200" alt="" />
             </div>
-            <div class="cols">
-              <img class="flex" src=" http://placehold.it/400x400" alt="" />
+            <div class="col-4">
+              <img class="img-flex" src=" http://placehold.it/200x200" alt="" />
             </div>
+          </div>
+          <ul class="tab tab-section">
+            <li class="active"><a href="#most-popular">Most Popular</a></li>
+            <li><a href="#most-active">Most Active</a></li>
+          </ul>
+          <div class="row">
+            <div class="col-3"><img class="img-flex" src=" http://placehold.it/200x200" alt="" /></div>
+            <div class="col-3"><img class="img-flex" src=" http://placehold.it/200x200" alt="" /></div>
+            <div class="col-3"><img class="img-flex" src=" http://placehold.it/200x200" alt="" /></div>
+            <div class="col-3"><img class="img-flex" src=" http://placehold.it/200x200" alt="" /></div>
+          </div>
+          <div class="row">
+            <div class="col-3"><img class="img-flex" src=" http://placehold.it/200x200" alt="" /></div>
+            <div class="col-3"><img class="img-flex" src=" http://placehold.it/200x200" alt="" /></div>
+            <div class="col-3"><img class="img-flex" src=" http://placehold.it/200x200" alt="" /></div>
+            <div class="col-3"><img class="img-flex" src=" http://placehold.it/200x200" alt="" /></div>
+          </div>
+          <div class="row">
+            <div class="col-3"><img class="img-flex" src=" http://placehold.it/200x200" alt="" /></div>
+            <div class="col-3"><img class="img-flex" src=" http://placehold.it/200x200" alt="" /></div>
+            <div class="col-3"><img class="img-flex" src=" http://placehold.it/200x200" alt="" /></div>
+            <div class="col-3"><img class="img-flex" src=" http://placehold.it/200x200" alt="" /></div>
           </div>
         </div><!-- /.main-content -->
         <div class="aside">
+          <div class="mod">
+            <h3>Filter by Metro Area</h3>
+            <form accept-charset="UTF-8" action="/metro_regions/filter" class="ui-widget inline-form group region-filter-container" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="✓"><input name="authenticity_token" type="hidden" value="WAdhivK/PIwSQFJSlwOVSATzwKgSybOrCecJUy/j6Jg="></div>
+              <input class="textbox small side-region-filter ui-autocomplete-input" name="region-filter-input" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true">
+              <input class="side-metrocode" name="metrocode" type="hidden">
+              <input class="submit mls" id="filter" type="submit" value="Filter">
+            </form>
+            <script>
+              $(function() {
+                $( ".side-region-filter" ).autocomplete({
+                  source:'/search/metro_regions/city',
+                  select: function(event, ui){
+                   $('.side-metrocode').val(ui.item.metrocode)
+                  }
+                });
+              });
+            </script>
+            <ul class="simple-list block-link-list">
+              <li><a href="http://localhost:3000/metro_regions/filter/510" class="" data-method="post" rel="nofollow"><span>Cleveland-Akron (Canton) OH</span></a></li>
+              <li><a href="http://localhost:3000/metro_regions/filter/505" class="" data-method="post" rel="nofollow"><span>Detroit MI</span></a></li>
+              <li><a href="http://localhost:3000/metro_regions/filter/542" class="" data-method="post" rel="nofollow"><span>Dayton OH</span></a></li>
+              <li><a href="http://localhost:3000/metro_regions/filter/511" class="" data-method="post" rel="nofollow"><span>Washington DC (Hagerstown MD)</span></a></li>
+            </ul>
+          </div>
+
+          <div class="mod">
+            <h3>Filter Issues by Topic:</h3>
+            <ul class="simple-list block-link-list topics">
+              <li><a href="/issues?topic=1" class=""><span>Education</span> <em>6</em></a></li>
+              <li><a href="/issues?topic=2" class=""><span>Environment</span> <em>5</em></a></li>
+              <li><a href="/issues?topic=3" class=""><span>Arts</span> <em>2</em></a></li>
+              <li><a href="/issues?topic=4" class=""><span>Economy</span> <em>12</em></a></li>
+              <li><a href="/issues?topic=5" class=""><span>Crime &amp; Safety</span> <em>6</em></a></li>
+              <li><a href="/issues?topic=6" class=""><span>Community</span> <em>11</em></a></li>
+              <li><a href="/issues?topic=7" class=""><span>Government</span> <em>11</em></a></li>
+              <li><a href="/issues?topic=8" class=""><span>Health</span> <em>2</em></a></li>
+            </ul>
+          </div>
+
         </div><!-- /.aside -->
       </div>
     </div>

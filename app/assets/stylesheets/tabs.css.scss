@@ -1,6 +1,4 @@
-/* Tabs Base
-   (from Bootstrap)
----------------------------------*/
+// Tabs base
 
 .tab {
   list-style: none;
@@ -19,9 +17,7 @@
   color: #2c87b7;
 }
 
-
-/* Tabs
----------------------------------*/
+// Tabs
 
 .tab-section > li {
   float: left;
@@ -48,10 +44,7 @@
   border: 1px solid #bbb;
   padding-top: 9px;
   padding-bottom: 9px;
-  -webkit-border-radius: 4px 4px 0 0;
-     -moz-border-radius: 4px 4px 0 0;
-       -o-border-radius: 4px 4px 0 0;
-          border-radius: 4px 4px 0 0;
+  @include border-radius (4px 4px 0 0);
 }
 
 .tab-section > li > a:hover {

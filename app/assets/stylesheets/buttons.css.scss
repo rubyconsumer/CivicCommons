@@ -16,7 +16,9 @@ a.off_button,
   text-decoration: none;
   text-shadow: 0 -1px 0 rgba(0,0,0,.3);
   @include border-radius(4px);
-  @include background-image(linear-gradient(#b9c974, #9dae55));
+  background-color: #abbb64;
+  @include background-image(linear-gradient(top, rgb(185, 201, 116), rgb(157, 174, 85)));
+  @include filter-gradient(rgb(185, 201, 116), rgb(157, 174, 85), vertical);
   @include box-shadow(rgba(255,255,255,1) 0 1px 1px, rgba(255,255,255,.2) 0 1px 1px inset);
 }
 
@@ -48,7 +50,9 @@ a.off_button:hover,
 input.submit:hover,
 input#contribution_submit:hover {
   cursor: pointer;
-  @include background-image(linear-gradient(#a2af5d, #7b893b));
+  background-color: #8e9c4c;
+  @include background-image(linear-gradient(top, rgb(162, 175, 93), rgb(123, 137, 59)));
+  @include filter-gradient(rgb(162, 175, 93), rgb(123, 137, 59), vertical);
 }
 
 a.button:active,
@@ -56,7 +60,9 @@ a.off_button:active,
 input.submit:active,
 input#contribution_submit:active,
 a.button.active {
-  @include background-image(linear-gradient(#879642, #7b893b));
+  background-color: #818f3e;
+  @include background-image(linear-gradient(top, rgb(135, 150, 66), rgb(123, 137, 59)));
+  @include filter-gradient(rgb(135, 150, 66), rgb(123, 137, 59), vertical);
   @include box-shadow(0 2px 3px rgba(0,0,0,.2) inset);
 }
 
@@ -77,32 +83,44 @@ a.button.active {
 
 .button.secondary {
   border-color: #637988;
-  @include background-image(linear-gradient(#a8cce4, #7e9aac));
+  background-color: #93b3c8;
+  @include background-image(linear-gradient(top, rgb(168, 204, 228), rgb(126, 154, 172)));
+  @include filter-gradient(rgb(168, 204, 228), rgb(126, 154, 172), vertical);
 }
 
 .button.secondary:hover {
-  @include background-image(linear-gradient(#95b5ca, #6c8595));
+  background-color: #809daf;
+  @include background-image(linear-gradient(top, rgb(149, 181, 202), rgb(108, 133, 149)));
+  @include filter-gradient(rgb(149, 181, 202), rgb(108, 133, 149), vertical);
 }
 
 .button.secondary:active,
 .button.secondary.active {
-  @include background-image(linear-gradient(#7793a6, #6c8595));
+  background-color: #718c9d;
+  @include background-image(linear-gradient(top, rgb(119, 147, 166), rgb(108, 133, 149)));
+  @include filter-gradient(rgb(119, 147, 166), rgb(108, 133, 149), vertical);
 }
 
 .button.tertiary {
   border-color: #bbb;
   color: #555;
   text-shadow: 0 1px 0px rgba(255,255,255,.3);
-  @include background-image(linear-gradient(#ededed, #e0e0e0));
+  background-color: #e6e6e6;
+  @include background-image(linear-gradient(top, rgb(237, 237, 237), rgb(224, 224, 224)));
+  @include filter-gradient(rgb(237, 237, 237), rgb(224, 224, 224), vertical);
 }
 
 .button.tertiary:hover {
-  @include background-image(linear-gradient(#e0e2e2, #c9cccc));
+  background-color: #d4d7d7;
+  @include background-image(linear-gradient(top, rgb(224, 226, 226), rgb(201, 204, 204)));
+  @include filter-gradient(rgb(224, 226, 226), rgb(201, 204, 204), vertical);
 }
 
 .button.tertiary:active,
 .button.tertiary.active {
-  @include background-image(linear-gradient(#ced2d2, #c9cccc));
+  background-color: #cbcfcf;
+  @include background-image(linear-gradient(top, rgb(206, 210, 210), rgb(201, 204, 204)));
+  @include filter-gradient(rgb(206, 210, 210), rgb(201, 204, 204), vertical);
 }
 
 // Radio show buttons
