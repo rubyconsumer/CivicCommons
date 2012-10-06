@@ -1,5 +1,6 @@
 .blog-slideshow {
-  width: 620px;
+  width: 640px;
+  margin: 0 -10px;
 }
 
 .blog-slideshow .card {
@@ -8,8 +9,9 @@
   height: 175px;
 }
 
-.blog-slideshow-container {
+.blog-slideshow-inner {
   padding: 10px;
+  margin: 0 10px;
   overflow: hidden;
   background-color: #e1e1e1;
   border: 1px solid #ccc;

@@ -6,6 +6,7 @@
   * [Use updated profanitfy filter to allow keyword porn](https://agilezen.com/project/18091/story/682)
   * [Update Start a Conversation Page.](https://agilezen.com/project/18091/story/691)
   * [Homepage Blog Panel Styling](https://agilezen.com/project/18091/story/695)
+  * [Fix whitespace issue on blog carousel](https://agilezen.com/project/18091/story/707)
 
 ### Bug Fix
   * [Ability to Select Index Page for Managed Issue Pages](https://agilezen.com/project/18091/story/676)
