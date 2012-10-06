@@ -66,14 +66,32 @@ module ApplicationHelper
     dom_id ||= 'civic-commons-widget'
     render :partial => '/widgets/cc_widget_embed_code', :locals => {:src_path => src_path, :dom_id => dom_id}
   end
-  
+
   def asset_url(asset)
     "#{request.protocol}#{request.host_with_port}#{asset_path(asset)}"
   end
-  
+
   def mailer_asset_url(asset)
     base_url = root_url.to_s.gsub(/\/$/i,'')
     base_url + asset_path(asset)
   end
 
+  # Determine if we should display the Regions Filter Tab
+  #
+  # since the conversations/filter doesn't exist, we wrap it all with a begin/rescue
+  def show_regions_filter_tab?
+    begin
+      if current_page?(:controller => :conversations, :action => :index) ||
+        current_page?(:controller => :issues, :action => :index) ||
+        current_page?(:controller => :projects, :action => :index) ||
+        current_page?(:controller => :search, :action => :results) ||
+        current_page?(:controller => :conversations, :action => :filter)
+        true
+      else
+        false
+      end
+    rescue
+      false
+    end
+  end
 end

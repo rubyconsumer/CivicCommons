@@ -1,14 +1,15 @@
 ## 3.2
 
 ### External Changes
-  * [Homepage Blog Feature Restyle](https://agilezen.com/project/18091/story/678)
   * [Start Notification Structure](https://agilezen.com/project/18091/story/658)
+  * [Homepage Blog Feature Restyle](https://agilezen.com/project/18091/story/678)
   * [Use updated profanitfy filter to allow keyword porn](https://agilezen.com/project/18091/story/682)
   * [Update Start a Conversation Page.](https://agilezen.com/project/18091/story/691)
   * [Homepage Blog Panel Styling](https://agilezen.com/project/18091/story/695)
 
 ### Bug Fix
   * [Ability to Select Index Page for Managed Issue Pages](https://agilezen.com/project/18091/story/676)
+  * [Regional Filter Tab Missing When Other 3 Filters are Engaged](https://agilezen.com/project/18091/story/700)
   * [Styling of Static Assets - The "We'll be right back." has no styling.](https://agilezen.com/project/18091/story/703)
 
 ### Chores

@@ -75,7 +75,7 @@
       .nav-search
         = render :partial => 'search/search', locals: { filter_type: params[:filter] }
     - if user_region
-      - if current_page?(:controller => :conversations, :action => :index) || current_page?(:controller => :issues, :action => :index) || current_page?(:controller => :projects, :action => :index) || current_page?(:controller => :search, :action => :results)
+      - if show_regions_filter_tab?
         = render :partial => 'regions/region_slideout'
     = yield :main_body
     #footer.footer
