@@ -13,6 +13,9 @@
   * [Regional Filter Tab Missing When Other 3 Filters are Engaged](https://agilezen.com/project/18091/story/700)
   * [Styling of Static Assets - The "We'll be right back." has no styling.](https://agilezen.com/project/18091/story/703)
   * [Facebook Popup Causes Error on Server.](https://agilezen.com/project/18091/story/710)
+  * [all browsers - add a conversation broken](https://agilezen.com/project/18091/story/712)
+  * [respond to a conversation broken - all browsers](https://agilezen.com/project/18091/story/713)
+  * [conversation edit - delete not working in any browser](https://agilezen.com/project/18091/story/714)
 
 ### Chores
   * [Migrate App to Use Rails Asset Pipeline](https://agilezen.com/project/18091/story/646)
