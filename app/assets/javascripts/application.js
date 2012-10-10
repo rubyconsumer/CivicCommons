@@ -7,7 +7,7 @@
 //= require 'jquery/jquery-1.4.4'
 //= require 'jquery/jquery-ui-1.8.16'
 //= require 'jquery/jquery-ui-timepicker-addon-0.5'
-//= require 'modernizr-1.5'
+//= require 'modernizr-2.6.1'
 //= require 'underscore.js'
 //= require 'backbone-0.5.3.js'
 //= require 'jquery_ujs'
