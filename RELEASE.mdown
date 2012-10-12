@@ -8,6 +8,7 @@
   * [Homepage Blog Panel Styling](https://agilezen.com/project/18091/story/695)
   * [Fix whitespace issue on blog carousel](https://agilezen.com/project/18091/story/707)
   * [Adjust Background Color to Match body_bg.gif more closely.](https://agilezen.com/project/18091/story/711)
+  * [Add Clearfix Code to Clear Button.](https://agilezen.com/project/18091/story/711)
 
 ### Bug Fix
   * [Ability to Select Index Page for Managed Issue Pages](https://agilezen.com/project/18091/story/676)
