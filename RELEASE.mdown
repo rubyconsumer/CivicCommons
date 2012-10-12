@@ -18,6 +18,7 @@
   * [conversation edit - delete not working in any browser](https://agilezen.com/project/18091/story/714)
   * [Most Recent & Recommended Should Show Different Conversations](https://agilezen.com/project/18091/story/715)
   * [ie9, ie8 missing ckeditor from vote, reflection](https://agilezen.com/project/18091/story/717)
+  * [Add "Services" Top Navigation - go to services page.](https://agilezen.com/project/18091/story/724)
 
 ### Chores
   * [Migrate App to Use Rails Asset Pipeline](https://agilezen.com/project/18091/story/646)
