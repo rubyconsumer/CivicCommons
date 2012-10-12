@@ -11,6 +11,7 @@
 ### Bug Fix
   * [Ability to Select Index Page for Managed Issue Pages](https://agilezen.com/project/18091/story/676)
   * [Regional Filter Tab Missing When Other 3 Filters are Engaged](https://agilezen.com/project/18091/story/700)
+  * [Update Admin Interface Styling.](https://agilezen.com/project/18091/story/701)
   * [Styling of Static Assets - The "We'll be right back." has no styling.](https://agilezen.com/project/18091/story/703)
   * [Facebook Popup Causes Error on Server.](https://agilezen.com/project/18091/story/710)
   * [all browsers - add a conversation broken](https://agilezen.com/project/18091/story/712)
