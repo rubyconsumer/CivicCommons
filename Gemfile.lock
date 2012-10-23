@@ -485,7 +485,7 @@ DEPENDENCIES
   query_reviewer!
   rack-test (~> 0.6.0)
   rails (~> 3.1.0)
-  rails-dev-tweaks (~> 0.6.1)
+  rails-dev-tweaks
   rails3-generators
   rails_autolink
   remotipart

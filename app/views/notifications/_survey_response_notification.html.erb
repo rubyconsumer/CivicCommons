@@ -1,0 +1,10 @@
+<li>
+<a href="<%= conversation_vote_path(item.conversation_id, item.survey) %>">
+  <div class="media">
+    <%= profile_image(notification.person, 20, 'img') %>
+    <div class="bd">
+      <p><strong><%= notification.person_name %></strong> voted in '<%= item.survey.title %>'</p>
+    </div>
+  </div>
+</a>
+</li>

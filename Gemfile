@@ -14,8 +14,6 @@ gem 'fb_graph'
 gem 'rails', "~> 3.1.0"
 gem 'jquery-rails', '>= 1.0.3'
 
-gem 'rails-dev-tweaks', '~> 0.6.1'
-
 gem 'haml', '~> 3.1.4'
 
 gem 'uglifier'
@@ -82,6 +80,7 @@ group :development do
   gem "ruby_parser"
   gem "engineyard"
   gem "ruby-debug19"
+  gem 'rails-dev-tweaks'
 end
 
 group :test do

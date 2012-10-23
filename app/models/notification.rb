@@ -1,6 +1,7 @@
 # The Notification model is based off of the Activity model.
 # The main difference is that the Notification model is per person.
 class Notification < ActiveRecord::Base
+
   belongs_to :item, polymorphic: true
   belongs_to :person
   belongs_to :receiver, :class_name => 'Person'
@@ -13,6 +14,18 @@ class Notification < ActiveRecord::Base
 
   VALID_TYPES = [ Conversation, Contribution, Issue, RatingGroup, SurveyResponse,
                   Petition, PetitionSignature, Reflection, ReflectionComment, Survey]
+
+  delegate :name, :to => :person, :prefix => true
+
+  # Items title
+  # * Whitespace trimmed from the left and right
+  def item_title
+    item.title.strip
+  end
+
+  def item_content
+    Sanitize.clean(item.content, :remove_contents => ['script', 'style']).strip
+  end
 
   # Accept an Active Record object of valid type
   def initialize(attributes = nil)
@@ -35,43 +48,43 @@ class Notification < ActiveRecord::Base
       end
 
       attributes = attr
-    elsif attributes.is_a?(ActiveRecord::Base) 
+    elsif attributes.is_a?(ActiveRecord::Base)
       # if it's not a valid Notification type, and it's an activerecord object, then nullify it, because it breaks in rails >= 3.1 (Perry)
       attributes = nil
     end
     super(attributes)
   end
-  
+
   def self.commented_on_created_reflection_notification(reflection_comment)
     if reflection_comment.reflection
       Notification.update_or_create_notification(reflection_comment, reflection_comment.person_id, reflection_comment.reflection.owner)
     end
   end
-  
+
   def self.commented_on_commented_reflection_notification(reflection_comment)
     if reflection_comment.reflection
       Notification.update_or_create_notification(reflection_comment, reflection_comment.person_id, reflection_comment.reflection.commenter_ids)
     end
   end
-    
+
   def self.contributed_on_created_conversation_notification(contribution)
     if contribution.conversation
       Notification.update_or_create_notification(contribution, contribution.owner, contribution.conversation.owner)
     end
   end
-  
+
   def self.contributed_on_contribution_notification(contribution)
     if contribution.parent
       Notification.update_or_create_notification(contribution, contribution.owner, contribution.parent.owner)
     end
   end
-  
+
   def self.contributed_on_followed_conversation_notification(contribution)
     if contribution.conversation
       Notification.update_or_create_notification(contribution, contribution.owner, contribution.conversation.subscriber_ids)
     end
   end
-  
+
   def self.create_for(item)
     case item
     when Contribution
@@ -96,31 +109,31 @@ class Notification < ActiveRecord::Base
       self.commented_on_commented_reflection_notification(item)
     end
   end
-  
+
   def self.destroy_commented_on_commented_reflection_notification(reflection_comment)
     if reflection_comment.reflection
       Notification.destroy_notification(reflection_comment, reflection_comment.person_id, reflection_comment.reflection.commenter_ids)
     end
   end
-  
+
   def self.destroy_commented_on_created_reflection_notification(reflection_comment)
     if reflection_comment.reflection
       Notification.destroy_notification(reflection_comment, reflection_comment.person_id, reflection_comment.reflection.owner)
     end
   end
-  
+
   def self.destroy_contributed_on_created_conversation_notification(contribution)
     if contribution.conversation
       Notification.destroy_notification(contribution, contribution.owner, contribution.conversation.owner)
     end
   end
-  
+
   def self.destroy_contributed_on_contribution_notification(contribution)
     if contribution.parent
       Notification.destroy_notification(contribution, contribution.owner, contribution.parent.owner)
     end
   end
-  
+
   def self.destroy_contributed_on_followed_conversation_notification(contribution)
     if contribution.conversation
       Notification.destroy_notification(contribution, contribution.owner, contribution.conversation.subscriber_ids)
@@ -132,25 +145,25 @@ class Notification < ActiveRecord::Base
       Notification.destroy_notification(rating_group, rating_group.person_id, rating_group.contribution.owner)
     end
   end
-  
+
   def self.destroy_rated_on_followed_conversation_notification(rating_group)
     if rating_group.conversation
       Notification.destroy_notification(rating_group, rating_group.person_id, rating_group.conversation.subscriber_ids)
     end
   end
-  
+
   def self.destroy_reflected_on_followed_conversation_notification(reflection)
     if reflection.conversation
       Notification.destroy_notification(reflection, reflection.owner, reflection.conversation.subscriber_ids)
     end
   end
-  
+
   def self.destroy_signed_petition_on_followed_conversation_notification(petition_signature)
     if petition_signature.petition && petition_signature.petition.conversation
       Notification.destroy_notification(petition_signature, petition_signature.person_id, petition_signature.petition.conversation.subscriber_ids)
     end
   end
-  
+
   def self.destroy_for(item)
     case item
     when Contribution
@@ -175,50 +188,50 @@ class Notification < ActiveRecord::Base
       self.destroy_commented_on_commented_reflection_notification(item)
     end
   end
-  
+
   def self.destroy_signed_on_created_petition_notification(petition_signature)
     if petition_signature.petition
       Notification.destroy_notification(petition_signature, petition_signature.person_id, petition_signature.petition.person_id)
     end
   end
-  
+
   def self.destroy_signed_on_signed_petition_notification(petition_signature)
     if petition_signature.petition
       Notification.destroy_notification(petition_signature, petition_signature.person_id, petition_signature.petition.signer_ids)
     end
   end
-  
+
   def self.destroy_notification(item, person_id, receiver_id)
     receiver_id.delete(person_id) if receiver_id.is_a?(Array)
-    if person_id != receiver_id 
+    if person_id != receiver_id
       Notification.destroy_all(:item_id => item.id, :item_type => item.class.name, :person_id => person_id, :receiver_id =>  receiver_id)
     end
   end
-  
+
   def self.destroy_voted_on_created_vote_notification(survey_response)
     if survey_response.survey && survey_response.survey.conversation
       Notification.destroy_notification(survey_response, survey_response.person_id, survey_response.survey.person_id)
     end
   end
-  
+
   def self.destroy_voted_on_followed_conversation_notification(survey_response)
     if survey_response.survey && survey_response.survey.conversation
       Notification.destroy_notification(survey_response, survey_response.person_id, survey_response.survey.conversation.subscriber_ids)
     end
   end
-  
+
   def self.destroy_voted_on_voted_vote_notification(survey_response)
     if survey_response.survey
       Notification.destroy_notification(survey_response, survey_response.person_id, survey_response.survey.respondent_ids)
     end
   end
-  
+
   def self.signed_on_created_petition_notification(petition_signature)
     if petition_signature.petition
       Notification.update_or_create_notification(petition_signature, petition_signature.person_id, petition_signature.petition.person_id)
     end
   end
-  
+
   def self.rated_on_contribution_notification(rating_group)
     if rating_group.contribution
       Notification.update_or_create_notification(rating_group, rating_group.person_id, rating_group.contribution.owner)
@@ -230,25 +243,25 @@ class Notification < ActiveRecord::Base
       Notification.update_or_create_notification(petition_signature, petition_signature.person_id, petition_signature.petition.conversation.subscriber_ids)
     end
   end
-  
+
   def self.signed_on_signed_petition_notification(petition_signature)
     if petition_signature.petition
       Notification.update_or_create_notification(petition_signature, petition_signature.person_id, petition_signature.petition.signer_ids)
     end
   end
-  
+
   def self.rated_on_followed_conversation_notification(rating_group)
     if rating_group.conversation
       Notification.update_or_create_notification(rating_group, rating_group.person_id, rating_group.conversation.subscriber_ids)
     end
   end
-  
+
   def self.reflected_on_followed_conversation_notification(reflection)
     if reflection.conversation
       Notification.update_or_create_notification(reflection, reflection.owner, reflection.conversation.subscriber_ids)
     end
   end
-  
+
   def self.update_or_create_notification(item, person_id, receiver_id)
     if receiver_id.is_a?(Array)
       Notification.update_or_create_multiple_notifications(item, person_id, receiver_id)
@@ -256,10 +269,10 @@ class Notification < ActiveRecord::Base
       Notification.update_or_create_single_notification(item, person_id, receiver_id)
     end
   end
-  
+
   def self.update_or_create_single_notification(item, person_id, receiver_id)
     if person_id != receiver_id
-      notification = Notification.where(:item_id => item.id, :item_type => item.class.name, :person_id => person_id, :receiver_id => receiver_id).first 
+      notification = Notification.where(:item_id => item.id, :item_type => item.class.name, :person_id => person_id, :receiver_id => receiver_id).first
       if notification
         notification.attributes = Notification.new(item).attributes
       else
@@ -270,13 +283,13 @@ class Notification < ActiveRecord::Base
       return notification
     end
   end
-  
+
   def self.update_or_create_multiple_notifications(item, person_id, receiver_ids)
     receiver_ids.each do |receiver_id|
       Notification.update_or_create_single_notification(item, person_id, receiver_id)
     end
   end
-  
+
   # Check if item is a valid type for Activity
   def self.valid_type?(item)
     ok = false
@@ -297,23 +310,23 @@ class Notification < ActiveRecord::Base
     end
     return ok
   end
-  
+
   def self.voted_on_created_vote_notification(survey_response)
     if survey_response.survey
       Notification.update_or_create_notification(survey_response, survey_response.person_id, survey_response.survey.person_id)
     end
   end
-  
+
   def self.voted_on_followed_conversation_notification(survey_response)
     if survey_response.survey && survey_response.survey.conversation
       Notification.update_or_create_notification(survey_response, survey_response.person_id, survey_response.survey.conversation.subscriber_ids)
     end
   end
-  
+
   def self.voted_on_voted_vote_notification(survey_response)
     if survey_response.survey
       Notification.update_or_create_notification(survey_response, survey_response.person_id, survey_response.survey.respondent_ids)
     end
   end
-  
+
 end

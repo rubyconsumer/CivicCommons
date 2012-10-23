@@ -12,6 +12,10 @@ class Survey < ActiveRecord::Base
   after_save :create_or_update_action, :if => :attached_to_conversation?
   after_save :send_end_notification_email_later
 
+  define_method(:content) do
+    details
+  end
+
   # Participants in a survey are the survey owner and the respondents to the survey
   
   def respondent_ids

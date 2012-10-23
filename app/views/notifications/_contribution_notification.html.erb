@@ -1,0 +1,10 @@
+<li>
+<a href="<%= url_to_contribution(item) %>">
+  <div class="media">
+    <%= profile_image(notification.person, 20, 'img') %>
+    <div class="bd">
+      <p><strong><%= notification.person_name %></strong> contributed to <%= notification.item_title %> and said: "<%= notification.item_content %>"</p>
+    </div>
+  </div>
+</a>
+</li>

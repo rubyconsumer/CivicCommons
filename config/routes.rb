@@ -147,6 +147,8 @@ Civiccommons::Application.routes.draw do
     get '/community', to: 'community#index',   as: 'community'
   end
 
+  resources :notifications
+
   resources :projects, only: [:index]
 
   resources :products_services, only: [:index] do
