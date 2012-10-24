@@ -69,9 +69,21 @@ class Notification < ActiveRecord::Base
     end
   end
   
+  def self.contributed_on_contribution_notification(contribution)
+    if contribution.parent
+      Notification.update_or_create_notification(contribution, contribution.parent.owner)
+    end
+  end
+  
   def self.destroy_contributed_on_created_conversation_notification(contribution)
     if contribution.conversation
       Notification.destroy_notification(contribution, contribution.conversation.owner)
+    end
+  end
+  
+  def self.destroy_contributed_on_contribution_notification(contribution)
+    if contribution.parent
+      Notification.destroy_notification(contribution, contribution.parent.owner)
     end
   end
   
@@ -95,6 +107,7 @@ class Notification < ActiveRecord::Base
     case item
     when Contribution
       self.contributed_on_created_conversation_notification(item)
+      self.contributed_on_contribution_notification(item)
     else
     end
   end
@@ -103,6 +116,7 @@ class Notification < ActiveRecord::Base
     case item
     when Contribution
       self.destroy_contributed_on_created_conversation_notification(item)
+      self.destroy_contributed_on_contribution_notification(item)
     else
     end
   end

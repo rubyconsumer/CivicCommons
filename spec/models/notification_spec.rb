@@ -5,6 +5,11 @@ describe Notification do
     @contribution = FactoryGirl.create(:contribution)
   end
   
+  def given_a_contribution_with_parent_contribution
+    @parent_contribution = FactoryGirl.create(:contribution)
+    @contribution = FactoryGirl.create(:contribution,:conversation_id => @parent_contribution.conversation.id, :parent_id => @parent_contribution.id)
+  end
+  
   describe "update_or_create_notification" do
     it "should save a notification if it exists" do
       given_a_contribution_with_conversation
@@ -47,7 +52,22 @@ describe Notification do
         Notification.count.should == 0
       end
     end
-
+    
+    describe "contributed_on_contribution_notification" do
+      it "should create notification to the contribution's parent's owner" do
+        given_a_contribution_with_parent_contribution
+        Notification.contributed_on_contribution_notification(@contribution)
+        Notification.last.receiver_id.should == @parent_contribution.owner
+      end
+      it "should not create a notification if parent doesn't exist" do
+        given_a_contribution_with_parent_contribution
+        @contribution.parent = nil
+        @contribution.save
+        Notification.contributed_on_contribution_notification(@contribution)
+        Notification.count.should == 0
+      end
+    end
+    
     describe "destroy_contributed_on_created_conversation_notification" do
       it "should destroy the Notification record" do
         given_a_contribution_with_conversation
@@ -57,6 +77,16 @@ describe Notification do
         Notification.count.should == 0
       end
     end
+    describe "destroy_contributed_on_contribution_notification" do
+      it "should destroy the Notification record" do
+        given_a_contribution_with_parent_contribution
+        Notification.contributed_on_contribution_notification(@contribution)
+        Notification.count.should == 1
+        Notification.destroy_contributed_on_contribution_notification(@contribution)
+        Notification.count.should == 0
+      end
+    end    
+    
   end
   
   describe "create_for" do
@@ -64,6 +94,11 @@ describe Notification do
       it "should call the contributed_on_created_conversation_notification method" do
         given_a_contribution_with_conversation
         Notification.should_receive(:contributed_on_created_conversation_notification)
+        Notification.create_for(@contribution)
+      end
+      it "should call the contributed_on_contribution_notification method" do
+        given_a_contribution_with_conversation
+        Notification.should_receive(:contributed_on_contribution_notification)
         Notification.create_for(@contribution)
       end
     end
@@ -76,6 +111,12 @@ describe Notification do
         Notification.should_receive(:destroy_contributed_on_created_conversation_notification)
         Notification.destroy_for(@contribution)
       end
+      it "should call the destroy_contributed_on_contribution_notification method" do
+        given_a_contribution_with_conversation
+        Notification.should_receive(:destroy_contributed_on_contribution_notification)
+        Notification.destroy_for(@contribution)
+      end
+      
     end
   end
   
