@@ -41,6 +41,64 @@ class Notification < ActiveRecord::Base
     end
     super(attributes)
   end
+    
+  def self.contributed_on_created_conversation_notification(contribution)
+    if contribution.conversation
+      Notification.update_or_create_notification(contribution, contribution.conversation.owner)
+    end
+  end
+  
+  def self.contributed_on_contribution_notification(contribution)
+    if contribution.parent
+      Notification.update_or_create_notification(contribution, contribution.parent.owner)
+    end
+  end
+  
+  def self.create_for(item)
+    case item
+    when Contribution
+      self.contributed_on_created_conversation_notification(item)
+      self.contributed_on_contribution_notification(item)
+    else
+    end
+  end
+  
+  def self.destroy_contributed_on_created_conversation_notification(contribution)
+    if contribution.conversation
+      Notification.destroy_notification(contribution, contribution.conversation.owner)
+    end
+  end
+  
+  def self.destroy_contributed_on_contribution_notification(contribution)
+    if contribution.parent
+      Notification.destroy_notification(contribution, contribution.parent.owner)
+    end
+  end
+  
+  def self.destroy_for(item)
+    case item
+    when Contribution
+      self.destroy_contributed_on_created_conversation_notification(item)
+      self.destroy_contributed_on_contribution_notification(item)
+    else
+    end
+  end
+  
+  def self.destroy_notification(item, receiver_id)
+    Notification.destroy_all(:item_id => item.id, :item_type => item.class.name, :receiver_id =>  receiver_id)
+  end  
+  
+  def self.update_or_create_notification(item, receiver_id)
+    notification = Notification.where(:item_id => item.id, :item_type => item.class.name, :receiver_id => receiver_id).first 
+    if notification
+      notification.attributes = Notification.new(item).attributes
+    else
+      notification = Notification.new(item)
+      notification.receiver_id = receiver_id
+    end
+    notification.save
+    return notification
+  end
   
   # Check if item is a valid type for Activity
   def self.valid_type?(item)
@@ -63,61 +121,4 @@ class Notification < ActiveRecord::Base
     return ok
   end
   
-  def self.contributed_on_created_conversation_notification(contribution)
-    if contribution.conversation
-      Notification.update_or_create_notification(contribution, contribution.conversation.owner)
-    end
-  end
-  
-  def self.contributed_on_contribution_notification(contribution)
-    if contribution.parent
-      Notification.update_or_create_notification(contribution, contribution.parent.owner)
-    end
-  end
-  
-  def self.destroy_contributed_on_created_conversation_notification(contribution)
-    if contribution.conversation
-      Notification.destroy_notification(contribution, contribution.conversation.owner)
-    end
-  end
-  
-  def self.destroy_contributed_on_contribution_notification(contribution)
-    if contribution.parent
-      Notification.destroy_notification(contribution, contribution.parent.owner)
-    end
-  end
-  
-  def self.destroy_notification(item, receiver_id)
-    Notification.destroy_all(:item_id => item.id, :item_type => item.class.name, :receiver_id =>  receiver_id)
-  end
-    
-  def self.update_or_create_notification(item, receiver_id)
-    notification = Notification.where(:item_id => item.id, :item_type => item.class.name, :receiver_id => receiver_id).first 
-    if notification
-      notification.attributes = Notification.new(item).attributes
-    else
-      notification = Notification.new(item)
-      notification.receiver_id = receiver_id
-    end
-    notification.save
-    return notification
-  end
-
-  def self.create_for(item)
-    case item
-    when Contribution
-      self.contributed_on_created_conversation_notification(item)
-      self.contributed_on_contribution_notification(item)
-    else
-    end
-  end
-  
-  def self.destroy_for(item)
-    case item
-    when Contribution
-      self.destroy_contributed_on_created_conversation_notification(item)
-      self.destroy_contributed_on_contribution_notification(item)
-    else
-    end
-  end
 end
