@@ -10,6 +10,10 @@ describe Notification do
     @contribution = FactoryGirl.create(:contribution,:conversation_id => @parent_contribution.conversation.id, :parent_id => @parent_contribution.id)
   end
   
+  def given_a_rating_group
+    @rating_group = FactoryGirl.create(:rating_group)
+  end
+  
   describe "update_or_create_notification" do
     it "should save a notification if it exists" do
       given_a_contribution_with_conversation
@@ -96,8 +100,37 @@ describe Notification do
         Notification.destroy_contributed_on_contribution_notification(@contribution)
         Notification.count.should == 0
       end
-    end    
-    
+    end
+  end
+  
+  context "with RatingGroup" do
+    describe "rated_on_contribution_notification" do
+      it "should create the notification record" do
+        given_a_rating_group
+        Notification.count.should == 0
+        Notification.rated_on_contribution_notification(@rating_group)
+        Notification.count.should == 1
+      end
+      it "should set the rating group creator as person_id" do
+        given_a_rating_group
+        Notification.rated_on_contribution_notification(@rating_group)
+        Notification.last.person_id.should == @rating_group.person_id
+      end
+      it "should set the rating group's contribution's owner as receiver_id" do
+        given_a_rating_group
+        Notification.rated_on_contribution_notification(@rating_group)
+        Notification.last.receiver_id.should == @rating_group.contribution.owner
+      end
+    end
+    describe "destroy_rated_on_contribution_notification" do
+      it "should destroy the notification record" do
+        given_a_rating_group
+        Notification.rated_on_contribution_notification(@rating_group)
+        Notification.count.should == 1
+        Notification.destroy_rated_on_contribution_notification(@rating_group)
+        Notification.count.should == 0
+      end
+    end
   end
   
   describe "create_for" do

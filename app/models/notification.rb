@@ -59,6 +59,8 @@ class Notification < ActiveRecord::Base
     when Contribution
       self.contributed_on_created_conversation_notification(item)
       self.contributed_on_contribution_notification(item)
+    when RatingGroup
+      self.rated_on_contribution_notification(item)
     else
     end
   end
@@ -74,12 +76,20 @@ class Notification < ActiveRecord::Base
       Notification.destroy_notification(contribution, contribution.owner, contribution.parent.owner)
     end
   end
+
+  def self.destroy_rated_on_contribution_notification(rating_group)
+    if rating_group.contribution
+      Notification.destroy_notification(rating_group, rating_group.person_id, rating_group.contribution.owner)
+    end
+  end  
   
   def self.destroy_for(item)
     case item
     when Contribution
       self.destroy_contributed_on_created_conversation_notification(item)
       self.destroy_contributed_on_contribution_notification(item)
+    when RatingGroup
+      self.destroy_rated_on_contribution_notification(item)
     else
     end
   end
@@ -88,7 +98,13 @@ class Notification < ActiveRecord::Base
     if person_id != receiver_id
       Notification.destroy_all(:item_id => item.id, :item_type => item.class.name, :person_id => person_id, :receiver_id =>  receiver_id)
     end
-  end  
+  end
+  
+  def self.rated_on_contribution_notification(rating_group)
+    if rating_group.contribution
+      Notification.update_or_create_notification(rating_group, rating_group.person_id, rating_group.contribution.owner)
+    end
+  end
   
   def self.update_or_create_notification(item, person_id, receiver_id)
     if person_id != receiver_id
