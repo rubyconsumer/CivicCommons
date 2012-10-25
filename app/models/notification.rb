@@ -71,6 +71,8 @@ class Notification < ActiveRecord::Base
       self.rated_on_followed_conversation_notification(item)
     when SurveyResponse
       self.voted_on_followed_conversation_notification(item)
+    when PetitionSignature
+      self.signed_petition_on_followed_conversation_notification(item)
     end
   end
   
@@ -104,6 +106,12 @@ class Notification < ActiveRecord::Base
     end
   end
   
+  def self.destroy_signed_petition_on_followed_conversation_notification(petition_signature)
+    if petition_signature.petition && petition_signature.petition.conversation
+      Notification.destroy_notification(petition_signature, petition_signature.person_id, petition_signature.petition.conversation.subscriber_ids)
+    end
+  end
+  
   def self.destroy_for(item)
     case item
     when Contribution
@@ -115,6 +123,8 @@ class Notification < ActiveRecord::Base
       self.destroy_rated_on_followed_conversation_notification(item)
     when SurveyResponse
       self.destroy_voted_on_followed_conversation_notification(item)
+    when PetitionSignature
+      self.destroy_signed_petition_on_followed_conversation_notification(item)
     end
   end
   
@@ -134,6 +144,12 @@ class Notification < ActiveRecord::Base
   def self.rated_on_contribution_notification(rating_group)
     if rating_group.contribution
       Notification.update_or_create_notification(rating_group, rating_group.person_id, rating_group.contribution.owner)
+    end
+  end
+
+  def self.signed_petition_on_followed_conversation_notification(petition_signature)
+    if petition_signature.petition && petition_signature.petition.conversation
+      Notification.update_or_create_notification(petition_signature, petition_signature.person_id, petition_signature.petition.conversation.subscriber_ids)
     end
   end
   
