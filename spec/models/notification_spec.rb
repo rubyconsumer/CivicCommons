@@ -16,6 +16,13 @@ describe Notification do
     @contribution = FactoryGirl.create(:contribution, :conversation => @conversation)
   end
   
+  def given_rating_group_with_contribution_with_conversation_and_subscriptions
+    @conversation = FactoryGirl.create(:conversation)
+    @subscription = FactoryGirl.create(:conversation_subscription, :subscribable => @conversation)
+    @contribution = FactoryGirl.create(:contribution, :conversation => @conversation)
+    @rating_group = FactoryGirl.create(:rating_group, :contribution => @contribution)
+  end
+  
   def given_a_rating_group
     @rating_group = FactoryGirl.create(:rating_group)
   end
@@ -164,6 +171,20 @@ describe Notification do
         Notification.last.receiver_id.should == @rating_group.contribution.owner
       end
     end
+    
+    describe "rated_on_followed_conversation_notification" do
+      it "should create multiple records on followers of conversation" do
+        given_rating_group_with_contribution_with_conversation_and_subscriptions
+        Notification.rated_on_followed_conversation_notification(@rating_group)
+        Notification.count.should == 2
+      end
+      it "should send to the correct receivers" do
+        given_rating_group_with_contribution_with_conversation_and_subscriptions
+        Notification.rated_on_followed_conversation_notification(@rating_group)
+        (Notification.all.collect(&:receiver_id) - @conversation.subscriptions.collect(&:person_id)).should == []
+      end
+    end    
+    
     describe "destroy_rated_on_contribution_notification" do
       it "should destroy the notification record" do
         given_a_rating_group
@@ -173,6 +194,17 @@ describe Notification do
         Notification.count.should == 0
       end
     end
+    
+    describe "destroy_rated_on_followed_conversation_notification" do
+      it "should destroy the notification record" do
+        given_rating_group_with_contribution_with_conversation_and_subscriptions
+        Notification.rated_on_followed_conversation_notification(@rating_group)
+        Notification.count.should == 2
+        Notification.destroy_rated_on_followed_conversation_notification(@rating_group)
+        Notification.count.should == 0
+      end
+    end
+    
   end
   
   describe "create_for" do
@@ -193,6 +225,19 @@ describe Notification do
         Notification.create_for(@contribution)
       end
     end
+    context "on RatingGroup" do
+      it "should call the rated_on_contribution_notification method" do
+        given_rating_group_with_contribution_with_conversation_and_subscriptions
+        Notification.should_receive(:rated_on_contribution_notification)
+        Notification.create_for(@rating_group)
+      end
+      
+      it "should call the rated_on_followed_conversation_notification method" do
+        given_rating_group_with_contribution_with_conversation_and_subscriptions
+        Notification.should_receive(:rated_on_followed_conversation_notification)
+        Notification.create_for(@rating_group)
+      end
+    end
   end
   
   describe "destroy_for" do
@@ -211,6 +256,18 @@ describe Notification do
         given_a_contribution_with_conversation
         Notification.should_receive(:destroy_contributed_on_followed_conversation_notification)
         Notification.destroy_for(@contribution)
+      end      
+    end
+    context "on RatingGroup" do
+      it "should call the destroy_rated_on_contribution_notification method" do
+        given_rating_group_with_contribution_with_conversation_and_subscriptions
+        Notification.should_receive(:destroy_rated_on_contribution_notification)
+        Notification.destroy_for(@rating_group)
+      end
+      it "should call the destroy_rated_on_followed_conversation_notification method" do
+        given_rating_group_with_contribution_with_conversation_and_subscriptions
+        Notification.should_receive(:destroy_rated_on_followed_conversation_notification)
+        Notification.destroy_for(@rating_group)
       end      
     end
   end

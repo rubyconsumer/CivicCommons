@@ -56,7 +56,7 @@ class Notification < ActiveRecord::Base
   
   def self.contributed_on_followed_conversation_notification(contribution)
     if contribution.conversation
-      Notification.update_or_create_notification(contribution, contribution.owner, contribution.conversation.subscriptions.collect(&:person_id))
+      Notification.update_or_create_notification(contribution, contribution.owner, contribution.conversation.subscriber_ids)
     end
   end
   
@@ -68,6 +68,7 @@ class Notification < ActiveRecord::Base
       self.contributed_on_followed_conversation_notification(item)
     when RatingGroup
       self.rated_on_contribution_notification(item)
+      self.rated_on_followed_conversation_notification(item)
     else
     end
   end
@@ -86,7 +87,7 @@ class Notification < ActiveRecord::Base
   
   def self.destroy_contributed_on_followed_conversation_notification(contribution)
     if contribution.conversation
-      Notification.destroy_notification(contribution, contribution.owner, contribution.conversation.subscriptions.collect(&:person_id))
+      Notification.destroy_notification(contribution, contribution.owner, contribution.conversation.subscriber_ids)
     end
   end
 
@@ -94,7 +95,13 @@ class Notification < ActiveRecord::Base
     if rating_group.contribution
       Notification.destroy_notification(rating_group, rating_group.person_id, rating_group.contribution.owner)
     end
-  end  
+  end
+  
+  def self.destroy_rated_on_followed_conversation_notification(rating_group)
+    if rating_group.conversation
+      Notification.destroy_notification(rating_group, rating_group.person_id, rating_group.conversation.subscriber_ids)
+    end
+  end
   
   def self.destroy_for(item)
     case item
@@ -104,6 +111,7 @@ class Notification < ActiveRecord::Base
       self.destroy_contributed_on_followed_conversation_notification(item)
     when RatingGroup
       self.destroy_rated_on_contribution_notification(item)
+      self.destroy_rated_on_followed_conversation_notification(item)
     else
     end
   end
@@ -118,6 +126,12 @@ class Notification < ActiveRecord::Base
   def self.rated_on_contribution_notification(rating_group)
     if rating_group.contribution
       Notification.update_or_create_notification(rating_group, rating_group.person_id, rating_group.contribution.owner)
+    end
+  end
+  
+  def self.rated_on_followed_conversation_notification(rating_group)
+    if rating_group.conversation
+      Notification.update_or_create_notification(rating_group, rating_group.person_id, rating_group.conversation.subscriber_ids)
     end
   end
   

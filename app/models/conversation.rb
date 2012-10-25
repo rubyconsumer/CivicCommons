@@ -302,6 +302,10 @@ class Conversation < ActiveRecord::Base
       self.update_attribute(:position, 0)
     end
   end
+  
+  def subscriber_ids
+    subscriptions ? subscriptions.collect(&:person_id) : []
+  end
 
   def subscribe_creator
     Subscription.create_unless_exists(person, self)
