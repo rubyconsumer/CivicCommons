@@ -54,11 +54,18 @@ class Notification < ActiveRecord::Base
     end
   end
   
+  def self.contributed_on_followed_conversation_notification(contribution)
+    if contribution.conversation
+      Notification.update_or_create_notification(contribution, contribution.owner, contribution.conversation.subscriptions.collect(&:person_id))
+    end
+  end
+  
   def self.create_for(item)
     case item
     when Contribution
       self.contributed_on_created_conversation_notification(item)
       self.contributed_on_contribution_notification(item)
+      self.contributed_on_followed_conversation_notification(item)
     when RatingGroup
       self.rated_on_contribution_notification(item)
     else
@@ -76,6 +83,12 @@ class Notification < ActiveRecord::Base
       Notification.destroy_notification(contribution, contribution.owner, contribution.parent.owner)
     end
   end
+  
+  def self.destroy_contributed_on_followed_conversation_notification(contribution)
+    if contribution.conversation
+      Notification.destroy_notification(contribution, contribution.owner, contribution.conversation.subscriptions.collect(&:person_id))
+    end
+  end
 
   def self.destroy_rated_on_contribution_notification(rating_group)
     if rating_group.contribution
@@ -88,6 +101,7 @@ class Notification < ActiveRecord::Base
     when Contribution
       self.destroy_contributed_on_created_conversation_notification(item)
       self.destroy_contributed_on_contribution_notification(item)
+      self.destroy_contributed_on_followed_conversation_notification(item)
     when RatingGroup
       self.destroy_rated_on_contribution_notification(item)
     else
@@ -95,7 +109,8 @@ class Notification < ActiveRecord::Base
   end
   
   def self.destroy_notification(item, person_id, receiver_id)
-    if person_id != receiver_id
+    receiver_id.delete(person_id) if receiver_id.is_a?(Array)
+    if person_id != receiver_id 
       Notification.destroy_all(:item_id => item.id, :item_type => item.class.name, :person_id => person_id, :receiver_id =>  receiver_id)
     end
   end
@@ -107,6 +122,14 @@ class Notification < ActiveRecord::Base
   end
   
   def self.update_or_create_notification(item, person_id, receiver_id)
+    if receiver_id.is_a?(Array)
+      Notification.update_or_create_multiple_notifications(item, person_id, receiver_id)
+    else
+      Notification.update_or_create_single_notification(item, person_id, receiver_id)
+    end    
+  end
+  
+  def self.update_or_create_single_notification(item, person_id, receiver_id)
     if person_id != receiver_id
       notification = Notification.where(:item_id => item.id, :item_type => item.class.name, :person_id => person_id, :receiver_id => receiver_id).first 
       if notification
@@ -117,6 +140,12 @@ class Notification < ActiveRecord::Base
       end
       notification.save
       return notification
+    end
+  end
+  
+  def self.update_or_create_multiple_notifications(item, person_id, receiver_ids)
+    receiver_ids.each do |receiver_id|
+      Notification.update_or_create_single_notification(item, person_id, receiver_id)
     end
   end
   

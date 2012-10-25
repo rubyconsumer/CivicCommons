@@ -10,6 +10,12 @@ describe Notification do
     @contribution = FactoryGirl.create(:contribution,:conversation_id => @parent_contribution.conversation.id, :parent_id => @parent_contribution.id)
   end
   
+  def given_contribution_with_conversation_and_subscriptions
+    @conversation = FactoryGirl.create(:conversation)
+    @subscription = FactoryGirl.create(:conversation_subscription, :subscribable => @conversation)
+    @contribution = FactoryGirl.create(:contribution, :conversation => @conversation)
+  end
+  
   def given_a_rating_group
     @rating_group = FactoryGirl.create(:rating_group)
   end
@@ -34,6 +40,12 @@ describe Notification do
       Notification.update_or_create_notification(@contribution, @contribution.owner, @contribution.owner)
       Notification.count.should == 0
     end
+    it "should create multiple notifications if receiver_ids array is passed" do
+      given_a_contribution_with_conversation
+      Notification.count.should == 0
+      Notification.update_or_create_notification(@contribution, @contribution.owner, [100,200,300])
+      Notification.count.should == 3
+    end
   end
   
   describe "destroy_notification" do
@@ -49,6 +61,11 @@ describe Notification do
       given_a_contribution_with_conversation
       Notification.should_not_receive(:destroy_all)
       Notification.destroy_notification(@contribution, @contribution.owner, @contribution.owner)
+    end
+    it "should allow receiver_ids to be an array" do
+      given_a_contribution_with_conversation
+      Notification.should_receive(:destroy_all).with(hash_including(:receiver_id => [100,200,300]))
+      Notification.destroy_notification(@contribution, @contribution.owner,[100,200,300])
     end
   end
   
@@ -83,6 +100,19 @@ describe Notification do
       end
     end
     
+    describe "contributed_on_followed_conversation_notification" do
+      it "should create multiple records on followers of conversation" do
+        given_contribution_with_conversation_and_subscriptions
+        Notification.contributed_on_followed_conversation_notification(@contribution)
+        Notification.count.should == 2
+      end
+      it "should send to the correct receivers" do
+        given_contribution_with_conversation_and_subscriptions
+        Notification.contributed_on_followed_conversation_notification(@contribution)
+        (Notification.all.collect(&:receiver_id) - @conversation.subscriptions.collect(&:person_id)).should == []
+      end
+    end
+    
     describe "destroy_contributed_on_created_conversation_notification" do
       it "should destroy the Notification record" do
         given_a_contribution_with_conversation
@@ -101,6 +131,18 @@ describe Notification do
         Notification.count.should == 0
       end
     end
+    
+    describe "destroy_contributed_on_followed_conversation_notification" do
+      it "should destroy the Notification records" do
+        given_contribution_with_conversation_and_subscriptions
+        Notification.contributed_on_followed_conversation_notification(@contribution)
+        Notification.count.should == 2
+        Notification.destroy_contributed_on_followed_conversation_notification(@contribution)
+        Notification.count.should == 0
+      end
+    end
+    
+    
   end
   
   context "with RatingGroup" do
@@ -145,6 +187,11 @@ describe Notification do
         Notification.should_receive(:contributed_on_contribution_notification)
         Notification.create_for(@contribution)
       end
+      it "should call the contributed_on_followed_conversation_notification method" do
+        given_a_contribution_with_conversation
+        Notification.should_receive(:contributed_on_followed_conversation_notification)
+        Notification.create_for(@contribution)
+      end
     end
   end
   
@@ -160,7 +207,11 @@ describe Notification do
         Notification.should_receive(:destroy_contributed_on_contribution_notification)
         Notification.destroy_for(@contribution)
       end
-      
+      it "should call the destroy_contributed_on_followed_conversation_notification method" do
+        given_a_contribution_with_conversation
+        Notification.should_receive(:destroy_contributed_on_followed_conversation_notification)
+        Notification.destroy_for(@contribution)
+      end      
     end
   end
   
