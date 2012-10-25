@@ -69,6 +69,8 @@ class Notification < ActiveRecord::Base
     when RatingGroup
       self.rated_on_contribution_notification(item)
       self.rated_on_followed_conversation_notification(item)
+    when Reflection
+      self.reflected_on_followed_conversation_notification(item)
     when SurveyResponse
       self.voted_on_followed_conversation_notification(item)
     when PetitionSignature
@@ -106,6 +108,12 @@ class Notification < ActiveRecord::Base
     end
   end
   
+  def self.destroy_reflected_on_followed_conversation_notification(reflection)
+    if reflection.conversation
+      Notification.destroy_notification(reflection, reflection.owner, reflection.conversation.subscriber_ids)
+    end
+  end
+  
   def self.destroy_signed_petition_on_followed_conversation_notification(petition_signature)
     if petition_signature.petition && petition_signature.petition.conversation
       Notification.destroy_notification(petition_signature, petition_signature.person_id, petition_signature.petition.conversation.subscriber_ids)
@@ -121,6 +129,8 @@ class Notification < ActiveRecord::Base
     when RatingGroup
       self.destroy_rated_on_contribution_notification(item)
       self.destroy_rated_on_followed_conversation_notification(item)
+    when Reflection
+      self.destroy_reflected_on_followed_conversation_notification(item)
     when SurveyResponse
       self.destroy_voted_on_followed_conversation_notification(item)
     when PetitionSignature
@@ -156,6 +166,12 @@ class Notification < ActiveRecord::Base
   def self.rated_on_followed_conversation_notification(rating_group)
     if rating_group.conversation
       Notification.update_or_create_notification(rating_group, rating_group.person_id, rating_group.conversation.subscriber_ids)
+    end
+  end
+  
+  def self.reflected_on_followed_conversation_notification(reflection)
+    if reflection.conversation
+      Notification.update_or_create_notification(reflection, reflection.owner, reflection.conversation.subscriber_ids)
     end
   end
   
