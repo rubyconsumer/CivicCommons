@@ -73,6 +73,7 @@ class Notification < ActiveRecord::Base
       self.reflected_on_followed_conversation_notification(item)
     when SurveyResponse
       self.voted_on_followed_conversation_notification(item)
+      self.voted_on_created_vote_notification(item)
     when PetitionSignature
       self.signed_petition_on_followed_conversation_notification(item)
     end
@@ -133,6 +134,7 @@ class Notification < ActiveRecord::Base
       self.destroy_reflected_on_followed_conversation_notification(item)
     when SurveyResponse
       self.destroy_voted_on_followed_conversation_notification(item)
+      self.destroy_voted_on_created_vote_notification(item)
     when PetitionSignature
       self.destroy_signed_petition_on_followed_conversation_notification(item)
     end
@@ -142,6 +144,12 @@ class Notification < ActiveRecord::Base
     receiver_id.delete(person_id) if receiver_id.is_a?(Array)
     if person_id != receiver_id 
       Notification.destroy_all(:item_id => item.id, :item_type => item.class.name, :person_id => person_id, :receiver_id =>  receiver_id)
+    end
+  end
+  
+  def self.destroy_voted_on_created_vote_notification(survey_response)
+    if survey_response.survey && survey_response.survey.conversation
+      Notification.destroy_notification(survey_response, survey_response.person_id, survey_response.survey.person_id)
     end
   end
   
@@ -222,6 +230,12 @@ class Notification < ActiveRecord::Base
       end
     end
     return ok
+  end
+  
+  def self.voted_on_created_vote_notification(survey_response)
+    if survey_response.survey
+      Notification.update_or_create_notification(survey_response, survey_response.person_id, survey_response.survey.person_id)
+    end
   end
   
   def self.voted_on_followed_conversation_notification(survey_response)
