@@ -23,6 +23,13 @@ describe Notification do
     @rating_group = FactoryGirl.create(:rating_group, :contribution => @contribution)
   end
   
+  def given_survey_response_with_conversation_and_subscriptions
+    @conversation = FactoryGirl.create(:conversation)
+    @subscription = FactoryGirl.create(:conversation_subscription, :subscribable => @conversation)
+    @vote = FactoryGirl.create(:vote, :surveyable => @conversation)
+    @survey_response = FactoryGirl.create(:survey_response, :survey => @vote)
+  end
+  
   def given_a_rating_group
     @rating_group = FactoryGirl.create(:rating_group)
   end
@@ -206,6 +213,31 @@ describe Notification do
     end
     
   end
+
+  context "with SurveyResponse" do
+    describe "voted_on_followed_conversation_notification" do
+      it "should create multiple records on followers of conversation" do
+        given_survey_response_with_conversation_and_subscriptions
+        Notification.voted_on_followed_conversation_notification(@survey_response)
+        Notification.count.should == 2
+      end
+      it "should send to the correct receivers" do
+        given_survey_response_with_conversation_and_subscriptions
+        Notification.voted_on_followed_conversation_notification(@survey_response)
+        (Notification.all.collect(&:receiver_id) - @conversation.subscriptions.collect(&:person_id)).should == []
+      end
+    end
+    
+    describe "destroy_voted_on_followed_conversation_notification" do
+      it "should destroy the notification record" do
+        given_survey_response_with_conversation_and_subscriptions
+        Notification.voted_on_followed_conversation_notification(@survey_response)
+        Notification.count.should == 2
+        Notification.destroy_voted_on_followed_conversation_notification(@survey_response)
+        Notification.count.should == 0
+      end
+    end
+  end
   
   describe "create_for" do
     context "on Contribution" do
@@ -236,6 +268,13 @@ describe Notification do
         given_rating_group_with_contribution_with_conversation_and_subscriptions
         Notification.should_receive(:rated_on_followed_conversation_notification)
         Notification.create_for(@rating_group)
+      end
+    end
+    context "on SurveyResponse" do
+      it "should call the voted_on_followed_conversation_notification method" do
+        given_survey_response_with_conversation_and_subscriptions
+        Notification.should_receive(:voted_on_followed_conversation_notification)
+        Notification.create_for(@survey_response)
       end
     end
   end
@@ -269,6 +308,13 @@ describe Notification do
         Notification.should_receive(:destroy_rated_on_followed_conversation_notification)
         Notification.destroy_for(@rating_group)
       end      
+    end
+    context "on SurveyResponse" do
+      it "should call the destroy_rated_on_followed_conversation_notification method" do
+        given_survey_response_with_conversation_and_subscriptions
+        Notification.should_receive(:destroy_voted_on_followed_conversation_notification)
+        Notification.destroy_for(@survey_response)
+      end
     end
   end
   

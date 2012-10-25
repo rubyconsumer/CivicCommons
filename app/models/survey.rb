@@ -13,6 +13,11 @@ class Survey < ActiveRecord::Base
   after_save :send_end_notification_email_later
 
   # Participants in a survey are the survey owner and the respondents to the survey
+  
+  def conversation
+    surveyable if attached_to_conversation?
+  end
+  
   def participants
     ([person] + respondents).flatten.uniq
   end
