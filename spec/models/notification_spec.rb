@@ -13,27 +13,38 @@ describe Notification do
   describe "update_or_create_notification" do
     it "should save a notification if it exists" do
       given_a_contribution_with_conversation
-      Notification.update_or_create_notification(@contribution, 123)
+      Notification.update_or_create_notification(@contribution, @contribution.owner, 123)
       Notification.count.should == 1
-      Notification.update_or_create_notification(@contribution, 123)
+      Notification.update_or_create_notification(@contribution, @contribution.owner, 123)
       Notification.count.should == 1
     end
     it "should create a notification if it doesn't exist" do
       given_a_contribution_with_conversation
       Notification.count.should == 0
-      Notification.update_or_create_notification(@contribution, 123)
+      Notification.update_or_create_notification(@contribution, @contribution.owner, 123)
       Notification.count.should == 1
+    end
+    it "should not create a notification if person_id and receiver_id is the same" do
+      given_a_contribution_with_conversation
+      Notification.count.should == 0
+      Notification.update_or_create_notification(@contribution, @contribution.owner, @contribution.owner)
+      Notification.count.should == 0
     end
   end
   
   describe "destroy_notification" do
     it "should destroy the notification" do
       given_a_contribution_with_conversation
-      Notification.update_or_create_notification(@contribution, 123)
-      Notification.update_or_create_notification(@contribution, 999)
+      Notification.update_or_create_notification(@contribution, @contribution.owner, 123)
+      Notification.update_or_create_notification(@contribution, @contribution.owner, 999)
       Notification.count.should == 2
-      Notification.destroy_notification(@contribution, 123)
+      Notification.destroy_notification(@contribution, @contribution.owner, 123)
       Notification.count.should == 1
+    end
+    it "should not do anything if person_id and receiver_id is the same" do
+      given_a_contribution_with_conversation
+      Notification.should_not_receive(:destroy_all)
+      Notification.destroy_notification(@contribution, @contribution.owner, @contribution.owner)
     end
   end
   

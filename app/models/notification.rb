@@ -44,13 +44,13 @@ class Notification < ActiveRecord::Base
     
   def self.contributed_on_created_conversation_notification(contribution)
     if contribution.conversation
-      Notification.update_or_create_notification(contribution, contribution.conversation.owner)
+      Notification.update_or_create_notification(contribution, contribution.owner, contribution.conversation.owner)
     end
   end
   
   def self.contributed_on_contribution_notification(contribution)
     if contribution.parent
-      Notification.update_or_create_notification(contribution, contribution.parent.owner)
+      Notification.update_or_create_notification(contribution, contribution.owner, contribution.parent.owner)
     end
   end
   
@@ -65,13 +65,13 @@ class Notification < ActiveRecord::Base
   
   def self.destroy_contributed_on_created_conversation_notification(contribution)
     if contribution.conversation
-      Notification.destroy_notification(contribution, contribution.conversation.owner)
+      Notification.destroy_notification(contribution, contribution.owner, contribution.conversation.owner)
     end
   end
   
   def self.destroy_contributed_on_contribution_notification(contribution)
     if contribution.parent
-      Notification.destroy_notification(contribution, contribution.parent.owner)
+      Notification.destroy_notification(contribution, contribution.owner, contribution.parent.owner)
     end
   end
   
@@ -84,20 +84,24 @@ class Notification < ActiveRecord::Base
     end
   end
   
-  def self.destroy_notification(item, receiver_id)
-    Notification.destroy_all(:item_id => item.id, :item_type => item.class.name, :receiver_id =>  receiver_id)
+  def self.destroy_notification(item, person_id, receiver_id)
+    if person_id != receiver_id
+      Notification.destroy_all(:item_id => item.id, :item_type => item.class.name, :person_id => person_id, :receiver_id =>  receiver_id)
+    end
   end  
   
-  def self.update_or_create_notification(item, receiver_id)
-    notification = Notification.where(:item_id => item.id, :item_type => item.class.name, :receiver_id => receiver_id).first 
-    if notification
-      notification.attributes = Notification.new(item).attributes
-    else
-      notification = Notification.new(item)
-      notification.receiver_id = receiver_id
+  def self.update_or_create_notification(item, person_id, receiver_id)
+    if person_id != receiver_id
+      notification = Notification.where(:item_id => item.id, :item_type => item.class.name, :person_id => person_id, :receiver_id => receiver_id).first 
+      if notification
+        notification.attributes = Notification.new(item).attributes
+      else
+        notification = Notification.new(item)
+        notification.receiver_id = receiver_id
+      end
+      notification.save
+      return notification
     end
-    notification.save
-    return notification
   end
   
   # Check if item is a valid type for Activity
