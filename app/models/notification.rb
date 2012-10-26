@@ -47,6 +47,12 @@ class Notification < ActiveRecord::Base
       Notification.update_or_create_notification(reflection_comment, reflection_comment.person_id, reflection_comment.reflection.owner)
     end
   end
+  
+  def self.commented_on_commented_reflection_notification(reflection_comment)
+    if reflection_comment.reflection
+      Notification.update_or_create_notification(reflection_comment, reflection_comment.person_id, reflection_comment.reflection.commenter_ids)
+    end
+  end
     
   def self.contributed_on_created_conversation_notification(contribution)
     if contribution.conversation
@@ -87,6 +93,13 @@ class Notification < ActiveRecord::Base
       self.signed_on_signed_petition_notification(item)
     when ReflectionComment
       self.commented_on_created_reflection_notification(item)
+      self.commented_on_commented_reflection_notification(item)
+    end
+  end
+  
+  def self.destroy_commented_on_commented_reflection_notification(reflection_comment)
+    if reflection_comment.reflection
+      Notification.destroy_notification(reflection_comment, reflection_comment.person_id, reflection_comment.reflection.commenter_ids)
     end
   end
   
@@ -159,6 +172,7 @@ class Notification < ActiveRecord::Base
       self.destroy_signed_on_signed_petition_notification(item)
     when ReflectionComment
       self.destroy_commented_on_created_reflection_notification(item)
+      self.destroy_commented_on_commented_reflection_notification(item)
     end
   end
   

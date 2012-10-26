@@ -63,6 +63,12 @@ describe Notification do
     @reflection_comment = FactoryGirl.create(:reflection_comment, :reflection => @reflection)
   end
   
+  def given_3_reflection_comments
+    @reflection = FactoryGirl.create(:reflection)
+    @reflection_comment = FactoryGirl.create(:reflection_comment, :reflection => @reflection)
+    @reflection_comment2 = FactoryGirl.create(:reflection_comment, :reflection => @reflection)
+    @reflection_comment3 = FactoryGirl.create(:reflection_comment, :reflection => @reflection)
+  end
   
   def given_a_rating_group
     @rating_group = FactoryGirl.create(:rating_group)
@@ -431,6 +437,19 @@ describe Notification do
       end
     end
     
+    describe "commented_on_commented_reflection_notification" do
+      it "should create multiple records on followers of conversation" do
+        given_3_reflection_comments
+        Notification.commented_on_commented_reflection_notification(@reflection_comment)
+        Notification.count.should == 2
+      end
+      it "should send to the correct receivers" do
+        given_3_reflection_comments
+        Notification.commented_on_commented_reflection_notification(@reflection_comment)
+        (Notification.all.collect(&:receiver_id) - @reflection_comment.reflection.commenter_ids).should == []
+      end
+    end
+    
     describe "destroy_commented_on_created_reflection_notification" do
       it "should destroy the notification record" do
         given_reflection_comment_with_reflection
@@ -439,7 +458,18 @@ describe Notification do
         Notification.destroy_commented_on_created_reflection_notification(@reflection_comment)
         Notification.count.should == 0
       end
-    end    
+    end
+    
+    describe "destroy_commented_on_created_reflection_notification" do
+      it "should destroy the notification record" do
+        given_3_reflection_comments
+        Notification.commented_on_commented_reflection_notification(@reflection_comment)
+        Notification.count.should == 2
+        Notification.destroy_commented_on_commented_reflection_notification(@reflection_comment)
+        Notification.count.should == 0
+      end
+    end
+    
   end  
   
   describe "create_for" do
@@ -518,6 +548,11 @@ describe Notification do
       it "should call the commented_on_created_reflection_notification method" do
         given_reflection_comment_with_reflection
         Notification.should_receive(:commented_on_created_reflection_notification)
+        Notification.create_for(@reflection_comment)
+      end
+      it "should call the commented_on_commented_reflection_notification method" do
+        given_reflection_comment_with_reflection
+        Notification.should_receive(:commented_on_commented_reflection_notification)
         Notification.create_for(@reflection_comment)
       end
     end
@@ -599,6 +634,11 @@ describe Notification do
       it "should call the destroy_commented_on_created_reflection_notification method" do
         given_reflection_comment_with_reflection
         Notification.should_receive(:destroy_commented_on_created_reflection_notification)
+        Notification.destroy_for(@reflection_comment)
+      end
+      it "should call the destroy_commented_on_commented_reflection_notification method" do
+        given_reflection_comment_with_reflection
+        Notification.should_receive(:destroy_commented_on_commented_reflection_notification)
         Notification.destroy_for(@reflection_comment)
       end
     end
