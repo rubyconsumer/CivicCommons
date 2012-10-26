@@ -44,6 +44,13 @@ describe Notification do
     @petition_signature = FactoryGirl.create(:petition_signature, :petition => @petition)
   end
   
+  def given_3_petition_signatures
+    @petition = FactoryGirl.create(:unsigned_petition, :conversation => @conversation)
+    @petition_signature = FactoryGirl.create(:petition_signature, :petition => @petition)
+    @petition_signature2 = FactoryGirl.create(:petition_signature, :petition => @petition)
+    @petition_signature3 = FactoryGirl.create(:petition_signature, :petition => @petition)
+  end
+  
   def given_reflection_with_conversation_and_subscriptions
     @conversation = FactoryGirl.create(:conversation)
     @subscription = FactoryGirl.create(:conversation_subscription, :subscribable => @conversation)
@@ -320,7 +327,20 @@ describe Notification do
       end
     end
     
-    describe "destroy_voted_on_followed_conversation_notification" do
+    describe "signed_on_created_petition_notification" do
+      it "should create multiple records on followers of conversation" do
+        given_3_petition_signatures
+        Notification.signed_on_created_petition_notification(@petition_signature)
+        Notification.count.should == 1
+      end
+      it "should send to the correct receiver" do
+        given_3_petition_signatures
+        Notification.signed_on_created_petition_notification(@petition_signature)
+        Notification.last.receiver_id = @petition.person_id
+      end
+    end
+    
+    describe "destroy_signed_petition_on_followed_conversation_notification" do
       it "should destroy the notification record" do
         given_petition_signature_with_conversation_and_subscriptions
         Notification.signed_petition_on_followed_conversation_notification(@petition_signature)
@@ -328,7 +348,16 @@ describe Notification do
         Notification.destroy_signed_petition_on_followed_conversation_notification(@petition_signature)
         Notification.count.should == 0
       end
-    end    
+    end 
+    describe "destroy_signed_on_created_petition_notification" do
+      it "should destroy the notification record" do
+        given_petition_signature_with_conversation_and_subscriptions
+        Notification.signed_on_created_petition_notification(@petition_signature)
+        Notification.count.should == 1
+        Notification.destroy_signed_on_created_petition_notification(@petition_signature)
+        Notification.count.should == 0
+      end
+    end
   end
   
   describe "with Reflection" do
@@ -411,6 +440,11 @@ describe Notification do
         Notification.should_receive(:signed_petition_on_followed_conversation_notification)
         Notification.create_for(@petition_signature)
       end
+      it "should call the signed_on_created_petition_notification method" do
+        given_petition_signature_with_conversation_and_subscriptions
+        Notification.should_receive(:signed_on_created_petition_notification)
+        Notification.create_for(@petition_signature)
+      end
     end
     context "on Reflection" do
       it "should call the reflected_on_followed_conversation_notification method" do
@@ -473,6 +507,11 @@ describe Notification do
       it "should call the destroy_signed_petition_on_followed_conversation_notification method" do
         given_petition_signature_with_conversation_and_subscriptions
         Notification.should_receive(:destroy_signed_petition_on_followed_conversation_notification)
+        Notification.destroy_for(@petition_signature)
+      end
+      it "should call the destroy_signed_on_created_petition_notification method" do
+        given_petition_signature_with_conversation_and_subscriptions
+        Notification.should_receive(:destroy_signed_on_created_petition_notification)
         Notification.destroy_for(@petition_signature)
       end
     end

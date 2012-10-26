@@ -77,6 +77,7 @@ class Notification < ActiveRecord::Base
       self.voted_on_voted_vote_notification(item)
     when PetitionSignature
       self.signed_petition_on_followed_conversation_notification(item)
+      self.signed_on_created_petition_notification(item)
     end
   end
   
@@ -139,6 +140,13 @@ class Notification < ActiveRecord::Base
       self.destroy_voted_on_voted_vote_notification(item)
     when PetitionSignature
       self.destroy_signed_petition_on_followed_conversation_notification(item)
+      self.destroy_signed_on_created_petition_notification(item)
+    end
+  end
+  
+  def self.destroy_signed_on_created_petition_notification(petition_signature)
+    if petition_signature.petition
+      Notification.destroy_notification(petition_signature, petition_signature.person_id, petition_signature.petition.person_id)
     end
   end
   
@@ -164,6 +172,12 @@ class Notification < ActiveRecord::Base
   def self.destroy_voted_on_voted_vote_notification(survey_response)
     if survey_response.survey
       Notification.destroy_notification(survey_response, survey_response.person_id, survey_response.survey.respondent_ids)
+    end
+  end
+  
+  def self.signed_on_created_petition_notification(petition_signature)
+    if petition_signature.petition
+      Notification.update_or_create_notification(petition_signature, petition_signature.person_id, petition_signature.petition.person_id)
     end
   end
   
@@ -196,7 +210,7 @@ class Notification < ActiveRecord::Base
       Notification.update_or_create_multiple_notifications(item, person_id, receiver_id)
     else
       Notification.update_or_create_single_notification(item, person_id, receiver_id)
-    end    
+    end
   end
   
   def self.update_or_create_single_notification(item, person_id, receiver_id)
