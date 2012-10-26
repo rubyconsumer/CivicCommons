@@ -58,6 +58,11 @@ describe Notification do
     @reflection = FactoryGirl.create(:reflection, :conversation => @conversation)
   end
   
+  def given_reflection_comment_with_reflection
+    @reflection = FactoryGirl.create(:reflection)
+    @reflection_comment = FactoryGirl.create(:reflection_comment, :reflection => @reflection)
+  end
+  
   
   def given_a_rating_group
     @rating_group = FactoryGirl.create(:rating_group)
@@ -405,7 +410,37 @@ describe Notification do
       end
     end    
   end
-  
+
+  describe "with ReflectionComment" do
+    describe "commented_on_created_reflection_notification" do
+      it "should create the notification record" do
+        given_reflection_comment_with_reflection
+        Notification.count.should == 0
+        Notification.commented_on_created_reflection_notification(@reflection_comment)
+        Notification.count.should == 1
+      end
+      it "should set the correct person_id" do
+        given_reflection_comment_with_reflection
+        Notification.commented_on_created_reflection_notification(@reflection_comment)
+        Notification.last.person_id.should == @reflection_comment.person_id
+      end
+      it "should set correct receiver_id" do
+        given_reflection_comment_with_reflection
+        Notification.commented_on_created_reflection_notification(@reflection_comment)
+        Notification.last.receiver_id.should == @reflection_comment.reflection.owner
+      end
+    end
+    
+    describe "destroy_commented_on_created_reflection_notification" do
+      it "should destroy the notification record" do
+        given_reflection_comment_with_reflection
+        Notification.commented_on_created_reflection_notification(@reflection_comment)
+        Notification.count.should == 1
+        Notification.destroy_commented_on_created_reflection_notification(@reflection_comment)
+        Notification.count.should == 0
+      end
+    end    
+  end  
   
   describe "create_for" do
     context "on Contribution" do
@@ -477,6 +512,13 @@ describe Notification do
         given_reflection_with_conversation_and_subscriptions
         Notification.should_receive(:reflected_on_followed_conversation_notification)
         Notification.create_for(@reflection)
+      end
+    end
+    context "on ReflectionComment" do
+      it "should call the commented_on_created_reflection_notification method" do
+        given_reflection_comment_with_reflection
+        Notification.should_receive(:commented_on_created_reflection_notification)
+        Notification.create_for(@reflection_comment)
       end
     end
   end
@@ -553,6 +595,12 @@ describe Notification do
         Notification.destroy_for(@reflection)
       end
     end
+    context "on ReflectionComment" do
+      it "should call the destroy_commented_on_created_reflection_notification method" do
+        given_reflection_comment_with_reflection
+        Notification.should_receive(:destroy_commented_on_created_reflection_notification)
+        Notification.destroy_for(@reflection_comment)
+      end
+    end
   end
-  
 end
