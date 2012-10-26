@@ -78,6 +78,7 @@ class Notification < ActiveRecord::Base
     when PetitionSignature
       self.signed_petition_on_followed_conversation_notification(item)
       self.signed_on_created_petition_notification(item)
+      self.signed_on_signed_petition_notification(item)
     end
   end
   
@@ -141,12 +142,19 @@ class Notification < ActiveRecord::Base
     when PetitionSignature
       self.destroy_signed_petition_on_followed_conversation_notification(item)
       self.destroy_signed_on_created_petition_notification(item)
+      self.destroy_signed_on_signed_petition_notification(item)
     end
   end
   
   def self.destroy_signed_on_created_petition_notification(petition_signature)
     if petition_signature.petition
       Notification.destroy_notification(petition_signature, petition_signature.person_id, petition_signature.petition.person_id)
+    end
+  end
+  
+  def self.destroy_signed_on_signed_petition_notification(petition_signature)
+    if petition_signature.petition
+      Notification.destroy_notification(petition_signature, petition_signature.person_id, petition_signature.petition.signer_ids)
     end
   end
   
@@ -190,6 +198,12 @@ class Notification < ActiveRecord::Base
   def self.signed_petition_on_followed_conversation_notification(petition_signature)
     if petition_signature.petition && petition_signature.petition.conversation
       Notification.update_or_create_notification(petition_signature, petition_signature.person_id, petition_signature.petition.conversation.subscriber_ids)
+    end
+  end
+  
+  def self.signed_on_signed_petition_notification(petition_signature)
+    if petition_signature.petition
+      Notification.update_or_create_notification(petition_signature, petition_signature.person_id, petition_signature.petition.signer_ids)
     end
   end
   
