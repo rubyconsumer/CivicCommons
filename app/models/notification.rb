@@ -74,6 +74,7 @@ class Notification < ActiveRecord::Base
     when SurveyResponse
       self.voted_on_followed_conversation_notification(item)
       self.voted_on_created_vote_notification(item)
+      self.voted_on_voted_vote_notification(item)
     when PetitionSignature
       self.signed_petition_on_followed_conversation_notification(item)
     end
@@ -135,6 +136,7 @@ class Notification < ActiveRecord::Base
     when SurveyResponse
       self.destroy_voted_on_followed_conversation_notification(item)
       self.destroy_voted_on_created_vote_notification(item)
+      self.destroy_voted_on_voted_vote_notification(item)
     when PetitionSignature
       self.destroy_signed_petition_on_followed_conversation_notification(item)
     end
@@ -156,6 +158,12 @@ class Notification < ActiveRecord::Base
   def self.destroy_voted_on_followed_conversation_notification(survey_response)
     if survey_response.survey && survey_response.survey.conversation
       Notification.destroy_notification(survey_response, survey_response.person_id, survey_response.survey.conversation.subscriber_ids)
+    end
+  end
+  
+  def self.destroy_voted_on_voted_vote_notification(survey_response)
+    if survey_response.survey
+      Notification.destroy_notification(survey_response, survey_response.person_id, survey_response.survey.respondent_ids)
     end
   end
   
@@ -241,6 +249,12 @@ class Notification < ActiveRecord::Base
   def self.voted_on_followed_conversation_notification(survey_response)
     if survey_response.survey && survey_response.survey.conversation
       Notification.update_or_create_notification(survey_response, survey_response.person_id, survey_response.survey.conversation.subscriber_ids)
+    end
+  end
+  
+  def self.voted_on_voted_vote_notification(survey_response)
+    if survey_response.survey
+      Notification.update_or_create_notification(survey_response, survey_response.person_id, survey_response.survey.respondent_ids)
     end
   end
   

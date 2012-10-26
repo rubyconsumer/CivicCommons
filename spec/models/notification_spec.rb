@@ -30,6 +30,13 @@ describe Notification do
     @survey_response = FactoryGirl.create(:survey_response, :survey => @vote)
   end
   
+  def given_3_survey_responses_with_vote
+    @vote = FactoryGirl.create(:vote, :surveyable => @conversation)
+    @survey_response = FactoryGirl.create(:survey_response, :survey => @vote)
+    @survey_response2 = FactoryGirl.create(:survey_response, :survey => @vote)
+    @survey_response3 = FactoryGirl.create(:survey_response, :survey => @vote)
+  end
+  
   def given_petition_signature_with_conversation_and_subscriptions
     @conversation = FactoryGirl.create(:conversation)
     @subscription = FactoryGirl.create(:conversation_subscription, :subscribable => @conversation)
@@ -225,7 +232,6 @@ describe Notification do
         Notification.count.should == 0
       end
     end
-    
   end
 
   context "with SurveyResponse" do
@@ -259,7 +265,18 @@ describe Notification do
         (Notification.all.collect(&:receiver_id) - @conversation.subscriptions.collect(&:person_id)).should == []
       end
     end
-
+    describe "voted_on_voted_vote_notification" do
+      it "should create multiple records on followers of conversation" do
+        given_3_survey_responses_with_vote
+        Notification.voted_on_voted_vote_notification(@survey_response)
+        Notification.count.should == 2
+      end
+      it "should send to the correct receivers" do
+        given_3_survey_responses_with_vote
+        Notification.voted_on_followed_conversation_notification(@survey_response)
+        (Notification.all.collect(&:receiver_id) - @vote.respondent_ids).should == []
+      end
+    end
     describe "destroy_voted_on_created_vote_notification" do
       it "should destroy the notification record" do
         given_survey_response_with_conversation_and_subscriptions
@@ -275,6 +292,15 @@ describe Notification do
         Notification.voted_on_followed_conversation_notification(@survey_response)
         Notification.count.should == 2
         Notification.destroy_voted_on_followed_conversation_notification(@survey_response)
+        Notification.count.should == 0
+      end
+    end
+    describe "destroy_voted_on_followed_conversation_notification" do
+      it "should destroy the notification record" do
+        given_3_survey_responses_with_vote
+        Notification.voted_on_voted_vote_notification(@survey_response)
+        Notification.count.should == 2
+        Notification.destroy_voted_on_voted_vote_notification(@survey_response)
         Notification.count.should == 0
       end
     end
@@ -373,6 +399,11 @@ describe Notification do
         Notification.should_receive(:voted_on_created_vote_notification)
         Notification.create_for(@survey_response)
       end
+      it "should call the voted_on_voted_vote_notification method" do
+        given_survey_response_with_conversation_and_subscriptions
+        Notification.should_receive(:voted_on_voted_vote_notification)
+        Notification.create_for(@survey_response)
+      end
     end
     context "on PetitionSignature" do
       it "should call the signed_petition_on_followed_conversation_notification method" do
@@ -430,6 +461,11 @@ describe Notification do
       it "should call the destroy_voted_on_created_vote_notification method" do
         given_survey_response_with_conversation_and_subscriptions
         Notification.should_receive(:destroy_voted_on_created_vote_notification)
+        Notification.destroy_for(@survey_response)
+      end
+      it "should call the destroy_voted_on_vote_vote_notification method" do
+        given_survey_response_with_conversation_and_subscriptions
+        Notification.should_receive(:destroy_voted_on_voted_vote_notification)
         Notification.destroy_for(@survey_response)
       end
     end

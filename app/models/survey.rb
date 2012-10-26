@@ -14,6 +14,10 @@ class Survey < ActiveRecord::Base
 
   # Participants in a survey are the survey owner and the respondents to the survey
   
+  def respondent_ids
+    survey_responses.collect(&:person_id)
+  end
+  
   def conversation
     surveyable if attached_to_conversation?
   end
