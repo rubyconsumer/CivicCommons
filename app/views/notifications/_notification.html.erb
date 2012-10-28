@@ -1,10 +1,108 @@
 <% @notifications = [] if !@notifications.present? %>
-<div class="notification-main notification-<%= @notifications.count > 0 ? "active" : "inactive"%>">
-  <span class="notification notification-info dropdown dropdown-toggle"><%= @notifications.present? ? @notifications.count : "0" %></span>
-  <ul class="dropdown-menu dropdown-menu-large dropdown-menu-right">
+<div class="notification-container">
+  <div class="notification-main notification-<%= @notifications.count > 0 ? "active" : "inactive"%> dropdown dropdown-toggle">
+    <span class="notification notification-info"><%= @notifications.present? ? @notifications.count : "0" %></span>
+  </div>
+  <ul class="divided-list-vertical dropdown-menu dropdown-menu-large dropdown-menu-right">
     <% @notifications.each do |notification| %>
       <%= render :partial => "notifications/#{notification.item.class.to_s.underscore}_notification", :locals => {:notification => notification, :item => notification.item} %>
     <% end %>
+    <li>
+      <div class="media">
+          <a href="#" class="img">
+            <img src="http://placehold.it/20x20" alt="test" />
+          </a>
+        <div class="bd">
+          <a href="#">
+            <p><strong>Joe Smith</strong>  Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin augue nisi, fermentum vitae, imperdiet a, auctor eu, mi. Nulla imperdiet molestie purus. Duis arcu dui, pretium in, molestie id, convallis eget, orci.</p>
+          </a>
+        </div>
+      </div>
+    </li>
+    <li>
+      <div class="media">
+          <a href="#" class="img">
+            <img src="http://placehold.it/20x20" alt="test" />
+          </a>
+        <div class="bd">
+          <a href="#">
+            <p><strong>Joe Smith</strong> commented on your post.</p>
+          </a>
+        </div>
+      </div>
+    </li>
+    <li>
+      <div class="media">
+          <a href="#" class="img">
+            <img src="http://placehold.it/20x20" alt="test" />
+          </a>
+        <div class="bd">
+          <a href="#">
+            <p><strong>Joe Smith</strong> commented on your post.</p>
+          </a>
+        </div>
+      </div>
+    </li>
+    <li>
+      <div class="media">
+          <a href="#" class="img">
+            <img src="http://placehold.it/20x20" alt="test" />
+          </a>
+        <div class="bd">
+          <a href="#">
+            <p><strong>Joe Smith</strong> commented on your post.</p>
+          </a>
+        </div>
+      </div>
+    </li>
+    <li>
+      <div class="media">
+          <a href="#" class="img">
+            <img src="http://placehold.it/20x20" alt="test" />
+          </a>
+        <div class="bd">
+          <a href="#">
+            <p><strong>Joe Smith</strong> commented on your post.</p>
+          </a>
+        </div>
+      </div>
+    </li>
+    <li>
+      <div class="media">
+          <a href="#" class="img">
+            <img src="http://placehold.it/20x20" alt="test" />
+          </a>
+        <div class="bd">
+          <a href="#">
+            <p><strong>Joe Smith</strong> commented on your post.</p>
+          </a>
+        </div>
+      </div>
+    </li>
+    <li>
+      <div class="media">
+          <a href="#" class="img">
+            <img src="http://placehold.it/20x20" alt="test" />
+          </a>
+        <div class="bd">
+          <a href="#">
+            <p><strong>Joe Smith</strong> commented on your post.</p>
+          </a>
+        </div>
+      </div>
+    </li>
+    <li>
+      <div class="media">
+          <a href="#" class="img">
+            <img src="http://placehold.it/20x20" alt="test" />
+          </a>
+        <div class="bd">
+          <a href="#">
+            <p><strong>Joe Smith</strong> commented on your post.</p>
+          </a>
+        </div>
+      </div>
+    </li>
   </ul>
 </div>
 <%# end %>

@@ -1,9 +1,30 @@
-.notification-main {
+.notification-container {
   position: relative;
   float: right;
+
+  .dropdown-menu {
+    overflow-x: scroll;
+    max-height: 350px;
+
+    li {
+      margin: 5px;
+
+      a {
+        text-decoration: none;
+      }
+    }
+
+    > li > a {
+      display: block;
+    }
+  }
+}
+
+.notification-main {
   height: 40px;
   width: 58px;
-  background: url(/images/notification_main.png) no-repeat;
+  cursor: pointer;
+  background: image-url("notification_main.png") no-repeat top;
 }
 
 .notification {
@@ -18,7 +39,6 @@
   font-weight: bold;
   text-shadow: 0 -1px 1px rgba(0,0,0,.3);
   border: 3px solid #fff;
-  cursor: pointer;
   @include border-radius(15px);
   @include box-shadow(0 1px 1px rgba(0,0,0,.3));
 }
@@ -27,9 +47,10 @@
   background-color: #b73123;
 }
 
-// .notification-inactive {
-//   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)"; /* IE 8 */
-//   filter: alpha(opacity=50); /* IE 5-7 */
-//   -moz-opacity: .5;
-//        opacity: .5;
-//   }
+.notification-inactive {
+  background-position: bottom;
+
+  .notification {
+    display: none;
+  }
+}
