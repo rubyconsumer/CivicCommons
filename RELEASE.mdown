@@ -1,9 +1,15 @@
-## 3.3
+## 4.0
 
 ### External Changes
+  * [Notifications Backend Process](https://agilezen.com/project/18091/story/658)
+  * [Populate Notification Table with User Activity.](https://agilezen.com/project/18091/story/685)
   * [Edit Content on Services Page.](https://agilezen.com/project/18091/story/726)
   * [Use updated profanitfy filter to allow keyword he'll](https://agilezen.com/project/18091/story/729)
-  * [Populate Notification Table with User Activity.](https://agilezen.com/project/18091/story/685)
+  * [Notification Icon Should Reflect Status of Notifications Available.](https://agilezen.com/project/18091/story/738)
+  * [Notifications Display From Newest on Oldest](https://agilezen.com/project/18091/story/740)
+  * [Notifications should Word Wrap](https://agilezen.com/project/18091/story/741)
+  * [Notifications Links to Opportunity Navigation Anchor for Petitions, Votes and Reflections](https://agilezen.com/project/18091/story/742)
+  * [Display Basic Notifications](https://agilezen.com/project/18091/story/743)
 
 ### Bug Fix
   * [Ability to Click Retrieve Password Link](https://agilezen.com/project/18091/story/727)
