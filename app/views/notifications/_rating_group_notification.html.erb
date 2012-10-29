@@ -5,7 +5,6 @@
   rating = Rating.find_by_rating_group_id(item.id)
 %>
 <li>
-<a href="<%= conversation_node_url(contribution)  %>">
   <div class="media">
     <%= profile_image(notification.person, 20, 'img') %>
     <div class="bd">
@@ -14,6 +13,5 @@
       </a>
     </div>
   </div>
-</a>
 </li>
 
