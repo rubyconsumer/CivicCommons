@@ -3,7 +3,9 @@
   <div class="media">
     <%= profile_image(notification.person, 20, 'img') %>
     <div class="bd">
-      <p><strong><%= notification.person_name %></strong> voted in '<%= item.survey.title %>'</p>
+      <a href="<%= conversation_vote_path(item.conversation_id, item.survey, :anchor => 'opportunity-nav') %>">
+        <p><strong><%= notification.person_name %></strong> voted in '<%= item.survey.title %>'</p>
+      </a>
     </div>
   </div>
 </a>
