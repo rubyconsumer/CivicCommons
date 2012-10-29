@@ -52,6 +52,9 @@ Civiccommons::Application.routes.draw do
   post '/conversations/radio/:id',                     to: 'conversations#create_from_radioshow',            as: 'start_conversation_from_radioshow'
   get '/conversations/:id#node-:contribution_id',      to: 'conversations#show',                             as: 'conversations_node_show'
 
+  #Notifications
+  post '/notifications/viewed', to: 'notifications#viewed'
+
   #Curated Feed Item
   get '/curated_feed_items/:curated_feed_id',          to: 'curated_feed_item#curated_feed'
 

@@ -329,4 +329,16 @@ class Notification < ActiveRecord::Base
     end
   end
 
+  def viewed?
+    !self.viewed_at.blank?
+  end
+  def not_viewed?
+    self.viewed_at.blank?
+  end
+
+  def self.viewed(person)
+    notifications = self.where("receiver_id = ?", person).where("viewed_at = null")
+    notifications.update_all(:viewed_at => Time.now)
+  end
+
 end

@@ -8,4 +8,12 @@ class NotificationsController < ApplicationController
   def index
     @notifications = Notification.all
   end
+
+  def viewed
+    if current_person
+      Notification.viewed(current_person)
+
+      render :nothing => true
+    end
+  end
 end
